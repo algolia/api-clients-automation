@@ -28,6 +28,9 @@ public sealed class {{apiPackageName}}Config : AlgoliaConfig
     ReadTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.read}});
     WriteTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.write}});
     ConnectTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.connect}});
+    // Request-ID tracing is only supported by the search, recommend and
+    // composition APIs.
+    RequestIdEnabled = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}};
   }
 {{/hasRegionalHost}}
 {{^hasRegionalHost}}
@@ -44,6 +47,9 @@ public sealed class {{apiPackageName}}Config : AlgoliaConfig
     ReadTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.read}});
     WriteTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.write}});
     ConnectTimeout = TimeSpan.FromMilliseconds({{x-timeouts.server.connect}});
+    // Request-ID tracing is only supported by the search, recommend and
+    // composition APIs.
+    RequestIdEnabled = {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}};
   }
 {{/hasRegionalHost}}
 {{#hostWithAppID}}

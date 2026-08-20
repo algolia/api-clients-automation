@@ -107,7 +107,7 @@ public class AnalyticsClientRequestTests
     await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -193,7 +193,9 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -222,7 +224,9 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -251,7 +255,9 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -290,7 +296,9 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -329,7 +337,7 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -358,7 +366,7 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -387,7 +395,7 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -418,7 +426,7 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -449,7 +457,7 @@ public class AnalyticsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -850,6 +858,17 @@ public class AnalyticsClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
+  }
+
+  [Fact(DisplayName = "getPatternsFields")]
+  public async Task GetPatternsFieldsTest()
+  {
+    await client.GetPatternsFieldsAsync();
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/fields", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "get getPurchaseRate with minimal parameters")]
@@ -1544,6 +1563,314 @@ public class AnalyticsClientRequestTests
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsDistribution")]
+  public async Task QueryPatternsDistributionTest()
+  {
+    await client.QueryPatternsDistributionAsync(
+      new DistributionPayload
+      {
+        Distributions = new List<DistributionDefinition>
+        {
+          new DistributionDefinition
+          {
+            Kind = "clickPosition",
+            Bins = new List<BinEdge>
+            {
+              new BinEdge(1),
+              new BinEdge(2),
+              new BinEdge(3),
+              new BinEdge(4),
+              new BinEdge(5),
+            },
+          },
+        },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/distribution", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"distributions\":[{\"kind\":\"clickPosition\",\"bins\":[1,2,3,4,5]}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsScalar")]
+  public async Task QueryPatternsScalarTest()
+  {
+    await client.QueryPatternsScalarAsync(
+      new ScalarPayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "conversionRate" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/scalar", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"metrics\":[{\"kind\":\"conversionRate\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsTable with minimal parameters")]
+  public async Task QueryPatternsTableTest()
+  {
+    await client.QueryPatternsTableAsync(
+      new TablePayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/table", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsTable with all parameters")]
+  public async Task QueryPatternsTableTest1()
+  {
+    await client.QueryPatternsTableAsync(
+      new TablePayload
+      {
+        Domain = "core",
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        GroupBy = new List<FieldReference> { new FieldReference { Kind = "query" } },
+        Filters = new List<FilterDefinition> { new FilterDefinition { Kind = "clicked" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+        OrderBy = new List<OrderDefinition>
+        {
+          new OrderDefinition
+          {
+            Kind = "searchesCount",
+            Direction = Enum.Parse<OrderDirection>("Desc"),
+          },
+        },
+        Limit = 100,
+        Offset = 0,
+      },
+      "index"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/table", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"}],\"groupBy\":[{\"kind\":\"query\"}],\"filters\":[{\"kind\":\"clicked\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}],\"orderBy\":[{\"kind\":\"searchesCount\",\"direction\":\"desc\"}],\"limit\":100,\"offset\":0}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsTimeseries with minimal parameters")]
+  public async Task QueryPatternsTimeseriesTest()
+  {
+    await client.QueryPatternsTimeseriesAsync(
+      new TimeseriesPayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/timeseries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "queryPatternsTimeseries with all parameters")]
+  public async Task QueryPatternsTimeseriesTest1()
+  {
+    await client.QueryPatternsTimeseriesAsync(
+      new TimeseriesPayload
+      {
+        Domain = "core",
+        Metrics = new List<FieldReference>
+        {
+          new FieldReference { Kind = "searchesCount" },
+          new FieldReference { Domain = "abtesting", Kind = "isMsrQuery" },
+        },
+        GroupBy = new List<FieldReference> { new FieldReference { Kind = "index" } },
+        Filters = new List<FilterDefinition>
+        {
+          new FilterDefinition { Kind = "clicked" },
+          new FilterDefinition
+          {
+            Kind = "country",
+            Operator = "=",
+            Parameter = new ParameterReference { Kind = "country" },
+          },
+        },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "indexA", "indexB" }),
+          },
+          new ParameterDefinition
+          {
+            Kind = "startDate",
+            Value = new ParameterValue("2024-01-01T00:00:00Z"),
+          },
+          new ParameterDefinition
+          {
+            Kind = "endDate",
+            Value = new ParameterValue("2024-01-07T23:59:59Z"),
+          },
+          new ParameterDefinition { Kind = "country", Value = new ParameterValue("FR") },
+        },
+        Limit = 50,
+        Offset = 0,
+      },
+      "indexA,indexB"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/patterns/timeseries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"},{\"domain\":\"abtesting\",\"kind\":\"isMsrQuery\"}],\"groupBy\":[{\"kind\":\"index\"}],\"filters\":[{\"kind\":\"clicked\"},{\"kind\":\"country\",\"operator\":\"=\",\"parameter\":{\"kind\":\"country\"}}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"indexA\",\"indexB\"]},{\"kind\":\"startDate\",\"value\":\"2024-01-01T00:00:00Z\"},{\"kind\":\"endDate\",\"value\":\"2024-01-07T23:59:59Z\"},{\"kind\":\"country\",\"value\":\"FR\"}],\"limit\":50,\"offset\":0}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"indexA%2CindexB\"}"
     );
     Assert.NotNull(expectedQuery);
 

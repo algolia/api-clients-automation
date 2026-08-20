@@ -3414,6 +3414,82 @@ func SnippetForSaveObjectOfSearch() {
 	// SEPARATOR<
 }
 
+func SnippetForSaveObjectsOfSearch() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   every request of one helper call shares one Request-ID
+	*/
+
+	// >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{
+			{"objectID": "1", "name": "Adam"},
+			{"objectID": "2", "name": "Benoit"},
+			{"objectID": "3", "name": "Cyril"},
+			{"objectID": "4", "name": "David"},
+		},
+		search.WithWaitForTasks(true),
+		search.WithBatchSize(2),
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveObjectsOfSearch1() {
+	/*
+	   Snippet for the saveObjects method.
+
+	   every request of one helper call shares one Request-ID
+	*/
+
+	// >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SaveObjects(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{
+			{"objectID": "5", "name": "Eva"},
+			{"objectID": "6", "name": "Fred"},
+			{"objectID": "7", "name": "Gina"},
+			{"objectID": "8", "name": "Hugo"},
+		},
+		search.WithWaitForTasks(true),
+		search.WithBatchSize(2),
+	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForSaveObjectsOfSearch2() {
 	/*
 	   Snippet for the saveObjects method.

@@ -546,6 +546,54 @@ void snippetForgetComposition() async {
   // SEPARATOR<
 }
 
+// Snippet for the getComposition method.
+//
+// the Correlation-ID ends with the sent Request-ID
+void snippetForgetComposition1() async {
+  // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getComposition(
+    compositionID: "id1",
+    requestOptions: RequestOptions(
+      headers: {
+        'request-id': 'CtsE2eEcho4',
+      },
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getComposition method.
+//
+// the Correlation-ID ends with the Request-ID sent as a query parameter
+void snippetForgetComposition2() async {
+  // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getComposition(
+    compositionID: "id1",
+    requestOptions: RequestOptions(
+      urlParameters: {
+        'x-algolia-request-id': "CtsE2eEchoQ",
+      },
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getRule method.
 //
 // getRule

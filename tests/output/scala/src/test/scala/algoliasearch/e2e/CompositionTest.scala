@@ -34,6 +34,100 @@ class CompositionTest extends AnyFunSuite {
     }
   }
 
+  test("the Correlation-ID ends with the sent Request-ID1") {
+    val client = testClient()
+    val future = client.getComposition(
+      compositionID = "id1",
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withHeader("request-id", "CtsE2eEcho4")
+          .build()
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    val expected = parse("""{"objectID":"id1"}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
+    val httpResponse = Await.result(
+      client.customGetWithHTTPInfo[JObject](
+        path = "/1/compositions/id1".drop(1),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withHeader("request-id", "CtsE2eEcho4")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
+    val correlationId = httpResponse.headers.get("correlation-id").flatMap(_.headOption)
+    assert(correlationId.isDefined, "the response carries no Correlation-ID header")
+    assert(
+      correlationId.get.endsWith("CtsE2eEcho4"),
+      s"expected the Correlation-ID ${correlationId.get} to end with CtsE2eEcho4"
+    )
+  }
+
+  test("the Correlation-ID ends with the Request-ID sent as a query parameter2") {
+    val client = testClient()
+    val future = client.getComposition(
+      compositionID = "id1",
+      requestOptions = Some(
+        RequestOptions
+          .builder()
+          .withQueryParameter("x-algolia-request-id", "CtsE2eEchoQ")
+          .build()
+      )
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    val expected = parse("""{"objectID":"id1"}""")
+    val extracted = Extraction.decompose(response)
+    val diffRes = expected.diff(extracted)
+    if (diffRes.deleted != JNothing) {
+      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
+    }
+    if (diffRes.changed != JNothing) {
+      println(
+        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
+      )
+    }
+    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
+      fail("there is a difference between received and expected")
+    }
+    val httpResponse = Await.result(
+      client.customGetWithHTTPInfo[JObject](
+        path = "/1/compositions/id1".drop(1),
+        requestOptions = Some(
+          RequestOptions
+            .builder()
+            .withQueryParameter("x-algolia-request-id", "CtsE2eEchoQ")
+            .build()
+        )
+      ),
+      Duration.Inf
+    )
+    val correlationId = httpResponse.headers.get("correlation-id").flatMap(_.headOption)
+    assert(correlationId.isDefined, "the response carries no Correlation-ID header")
+    assert(
+      correlationId.get.endsWith("CtsE2eEchoQ"),
+      s"expected the Correlation-ID ${correlationId.get} to end with CtsE2eEchoQ"
+    )
+  }
+
   test("listCompositions1") {
     val client = testClient()
     val future = client.listCompositions(

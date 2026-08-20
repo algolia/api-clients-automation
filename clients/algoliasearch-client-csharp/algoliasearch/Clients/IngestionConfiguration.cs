@@ -28,13 +28,16 @@ public sealed class IngestionConfig : AlgoliaConfig
   /// <param name="apiKey">Your API Key</param>
   /// <param name="region">Targeted region </param>
   public IngestionConfig(string appId, string apiKey, string region)
-    : base(appId, apiKey, "Ingestion", "7.46.3")
+    : base(appId, apiKey, "Ingestion", "7.47.0")
   {
     DefaultHosts = GetDefaultHosts(region);
     Compression = CompressionType.None;
     ReadTimeout = TimeSpan.FromMilliseconds(25000);
     WriteTimeout = TimeSpan.FromMilliseconds(25000);
     ConnectTimeout = TimeSpan.FromMilliseconds(25000);
+    // Request-ID tracing is only supported by the search, recommend and
+    // composition APIs.
+    RequestIdEnabled = false;
   }
 
   private static List<StatefulHost> GetDefaultHosts(string region)

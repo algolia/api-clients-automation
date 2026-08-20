@@ -310,6 +310,28 @@ class SearchTest {
   }
 
   @Test
+  fun `the classic engine accepts a Request-ID sent as a query parameter1`() = runTest {
+    client.runTest(
+      call = {
+        searchRules(
+          indexName = "cts_e2e_browse",
+          searchRulesParams = SearchRulesParams(query = "zorro"),
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("x-algolia-request-id", "CtsE2eQry11")
+                }
+            ),
+        )
+      },
+      response = {
+        lenientJsonAssert("{\"nbHits\":1,\"nbPages\":1,\"page\":0}", Json.encodeToString(it))
+      },
+    )
+  }
+
+  @Test
   fun `search with special characters in indexName1`() = runTest {
     client.runTest(
       call = {

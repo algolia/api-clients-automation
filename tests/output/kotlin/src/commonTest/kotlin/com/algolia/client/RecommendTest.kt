@@ -76,7 +76,7 @@ class RecommendTest {
         customPost(path = "1/test")
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.46.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.47.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -111,6 +111,40 @@ class RecommendTest {
       },
       response = {
         assertNull(it)
+      },
+    )
+  }
+
+  @Test
+  fun `the recommend client sends a Request-ID`() = runTest {
+    val client =
+      RecommendClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/request-id/smoke/recommend/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
       },
     )
   }

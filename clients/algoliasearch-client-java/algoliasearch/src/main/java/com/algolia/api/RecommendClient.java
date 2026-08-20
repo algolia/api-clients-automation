@@ -39,7 +39,8 @@ public class RecommendClient extends ApiClient {
       getDefaultHosts(appId),
       Duration.ofMillis(2000L),
       Duration.ofMillis(5000L),
-      Duration.ofMillis(30000L)
+      Duration.ofMillis(30000L),
+      true
     );
   }
 

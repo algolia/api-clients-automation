@@ -1626,7 +1626,7 @@ func SnippetForGetConversationOfAgentStudio() {
 	   getConversation
 	*/
 
-	// >SEPARATOR getConversation getConversation
+	// >SEPARATOR getConversation default
 	// Initialize the client
 	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1637,35 +1637,6 @@ func SnippetForGetConversationOfAgentStudio() {
 	// Call the API
 	response, err := client.GetConversation(client.NewApiGetConversationRequest(
 		"test-conversation-id", "76710f1b-8231-42e5-b0d1-f43aac618e15"))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// >LOG
-	// print the response
-	print(response)
-	// SEPARATOR<
-}
-
-func SnippetForGetConversationOfAgentStudio1() {
-	/*
-	   Snippet for the getConversation method.
-
-	   e2e get conversation
-	*/
-
-	// >SEPARATOR getConversation e2e get conversation
-	// Initialize the client
-	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetConversation(client.NewApiGetConversationRequest(
-		"alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

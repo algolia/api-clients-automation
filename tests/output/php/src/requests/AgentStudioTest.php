@@ -382,7 +382,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -454,7 +454,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -480,7 +480,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -506,7 +506,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -534,7 +534,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -562,7 +562,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -588,7 +588,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -614,7 +614,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -641,7 +641,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -668,7 +668,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
@@ -1031,24 +1031,6 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    #[TestDox('e2e get conversation')]
-    public function testGetConversation1(): void
-    {
-        $client = $this->getClient();
-        $client->getConversation(
-            'alg_cnv_miss_yqcZtaOSPTF8bJsJ',
-            '76710f1b-8231-42e5-b0d1-f43aac618e15',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ',
                 'method' => 'GET',
                 'body' => null,
             ],

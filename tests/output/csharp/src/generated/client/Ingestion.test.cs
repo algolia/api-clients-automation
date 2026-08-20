@@ -134,7 +134,7 @@ public class IngestionClientTests
     await client.ValidateSourceBeforeUpdateAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName" },
-      new RequestOptionBuilder().SetWriteTimeout(TimeSpan.FromMilliseconds(3456)).Build()
+      options: new RequestOptionBuilder().SetWriteTimeout(TimeSpan.FromMilliseconds(3456)).Build()
     );
     EchoResponse result = _echo.LastResponse;
 
@@ -163,7 +163,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.46.3\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.47.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

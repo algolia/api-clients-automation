@@ -115,7 +115,7 @@ public class SnippetAnalyticsClient
     var response = await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -191,7 +191,9 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -217,7 +219,9 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -243,7 +247,9 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -269,7 +275,9 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -295,7 +303,7 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
     // print the response
@@ -321,7 +329,7 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
     // print the response
@@ -347,7 +355,7 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -375,7 +383,7 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -403,7 +411,7 @@ public class SnippetAnalyticsClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -757,6 +765,27 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoResultsRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetPatternsFields method.
+  ///
+  /// getPatternsFields
+  /// </summary>
+  public async Task SnippetForAnalyticsClientGetPatternsFields()
+  {
+    // >SEPARATOR getPatternsFields default
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetPatternsFieldsAsync();
     // >LOG
     // print the response
     Console.WriteLine(response);
@@ -1400,6 +1429,272 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetUsersCountAsync("index", "1999-09-19", "2001-01-01", "tag");
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsDistribution method.
+  ///
+  /// queryPatternsDistribution
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsDistribution()
+  {
+    // >SEPARATOR queryPatternsDistribution default
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsDistributionAsync(
+      new DistributionPayload
+      {
+        Distributions = new List<DistributionDefinition>
+        {
+          new DistributionDefinition
+          {
+            Kind = "clickPosition",
+            Bins = new List<BinEdge>
+            {
+              new BinEdge(1),
+              new BinEdge(2),
+              new BinEdge(3),
+              new BinEdge(4),
+              new BinEdge(5),
+            },
+          },
+        },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsScalar method.
+  ///
+  /// queryPatternsScalar
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsScalar()
+  {
+    // >SEPARATOR queryPatternsScalar default
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsScalarAsync(
+      new ScalarPayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "conversionRate" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsTable method.
+  ///
+  /// queryPatternsTable with minimal parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsTable()
+  {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsTableAsync(
+      new TablePayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsTable method.
+  ///
+  /// queryPatternsTable with all parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsTable1()
+  {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsTableAsync(
+      new TablePayload
+      {
+        Domain = "core",
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        GroupBy = new List<FieldReference> { new FieldReference { Kind = "query" } },
+        Filters = new List<FilterDefinition> { new FilterDefinition { Kind = "clicked" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+        OrderBy = new List<OrderDefinition>
+        {
+          new OrderDefinition
+          {
+            Kind = "searchesCount",
+            Direction = Enum.Parse<OrderDirection>("Desc"),
+          },
+        },
+        Limit = 100,
+        Offset = 0,
+      },
+      "index"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsTimeseries method.
+  ///
+  /// queryPatternsTimeseries with minimal parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsTimeseries()
+  {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsTimeseriesAsync(
+      new TimeseriesPayload
+      {
+        Metrics = new List<FieldReference> { new FieldReference { Kind = "searchesCount" } },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "index" }),
+          },
+        },
+      },
+      "index"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the QueryPatternsTimeseries method.
+  ///
+  /// queryPatternsTimeseries with all parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientQueryPatternsTimeseries1()
+  {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+    );
+
+    // Call the API
+    var response = await client.QueryPatternsTimeseriesAsync(
+      new TimeseriesPayload
+      {
+        Domain = "core",
+        Metrics = new List<FieldReference>
+        {
+          new FieldReference { Kind = "searchesCount" },
+          new FieldReference { Domain = "abtesting", Kind = "isMsrQuery" },
+        },
+        GroupBy = new List<FieldReference> { new FieldReference { Kind = "index" } },
+        Filters = new List<FilterDefinition>
+        {
+          new FilterDefinition { Kind = "clicked" },
+          new FilterDefinition
+          {
+            Kind = "country",
+            Operator = "=",
+            Parameter = new ParameterReference { Kind = "country" },
+          },
+        },
+        Parameters = new List<ParameterDefinition>
+        {
+          new ParameterDefinition
+          {
+            Kind = "indices",
+            Value = new ParameterValue(new List<string> { "indexA", "indexB" }),
+          },
+          new ParameterDefinition
+          {
+            Kind = "startDate",
+            Value = new ParameterValue("2024-01-01T00:00:00Z"),
+          },
+          new ParameterDefinition
+          {
+            Kind = "endDate",
+            Value = new ParameterValue("2024-01-07T23:59:59Z"),
+          },
+          new ParameterDefinition { Kind = "country", Value = new ParameterValue("FR") },
+        },
+        Limit = 50,
+        Offset = 0,
+      },
+      "indexA,indexB"
+    );
     // >LOG
     // print the response
     Console.WriteLine(response);

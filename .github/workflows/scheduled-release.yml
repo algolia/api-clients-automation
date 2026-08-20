@@ -5,15 +5,31 @@ on:
     - cron: '30 6 * * 2'
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   release:
     name: Scheduled/Manual Release
     runs-on: ubuntu-22.04
+    # the app token minted below lives 60 minutes, keep the job well under that so the release push cannot hit an expired credential
+    timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
+
+      # the app token must be the persisted credential: `yarn cli release` pushes the
+      # prepare-release branch with plain `git push`, which GITHUB_TOKEN can no longer do
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: main
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup
         id: setup
@@ -21,13 +37,6 @@ jobs:
         with:
           type: minimal
           language: dart # we need the dart deps because we use melos to bump dependencies for its client
-
-      - name: Generate GitHub App Token
-        id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
-        with:
-          client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
-          private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
       - run: yarn cli release
         env:

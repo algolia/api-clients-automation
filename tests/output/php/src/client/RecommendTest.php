@@ -98,7 +98,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.46.3\).*/',
+                '/^Algolia for PHP \(4.47.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -115,6 +115,20 @@ class RecommendTest extends TestCase implements HttpClientInterface
         $this->assertEquals(
             null,
             $res
+        );
+    }
+
+    #[TestDox('the recommend client sends a Request-ID')]
+    public function test0requestId(): void
+    {
+        $client = RecommendClient::createWithConfig(RecommendConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/smoke/recommend/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
         );
     }
 

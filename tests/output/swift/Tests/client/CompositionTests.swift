@@ -111,7 +111,7 @@ final class CompositionClientClientTests: XCTestCase {
 
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: XCTUnwrap(response.bodyData))
 
-        let pattern = "^Algolia for Swift \\(9.46.3\\).*"
+        let pattern = "^Algolia for Swift \\(9.47.0\\).*"
         XCTAssertNoThrow(
             try regexMatch(echoResponse.algoliaAgent, against: pattern),
             "Expected " + echoResponse.algoliaAgent + " to match the following regex: " + pattern
@@ -133,6 +133,23 @@ final class CompositionClientClientTests: XCTestCase {
         let response = try await client.customDelete(path: "1/test/no-content")
 
         XCTAssertTrue(response.value is Void)
+    }
+
+    /// the composition client sends a Request-ID
+    func testRequestIdTest0() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6694")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(path: "1/test/request-id/smoke/composition/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"status\":\"ok\"}")
     }
 
     /// switch API key

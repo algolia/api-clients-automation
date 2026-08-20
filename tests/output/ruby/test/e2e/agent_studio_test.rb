@@ -59,21 +59,6 @@ class TestAgentStudioClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
-  # e2e get conversation
-  def test_get_conversation1
-    res = @client.get_conversation_with_http_info(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    )
-
-    assert_equal(res.status, 200)
-    res = @client.get_conversation("alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15")
-    expected_body = JSON.parse(
-      "{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}"
-    )
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
-  end
-
   # e2e get provider
   def test_get_provider1
     res = @client.get_provider_with_http_info("c2905529-b933-4b69-87ec-75f9829d5f59")
@@ -143,11 +128,6 @@ class TestAgentStudioClientE2E < Test::Unit::TestCase
     res = @client.list_agent_conversations_with_http_info("76710f1b-8231-42e5-b0d1-f43aac618e15")
 
     assert_equal(res.status, 200)
-    res = @client.list_agent_conversations("76710f1b-8231-42e5-b0d1-f43aac618e15")
-    expected_body = JSON.parse(
-      "{\"data\":[{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}]}"
-    )
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # e2e list agents

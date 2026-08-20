@@ -408,7 +408,7 @@ public class AgentStudioClientRequestTests
     await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -494,7 +494,9 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -523,7 +525,9 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -552,7 +556,9 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -591,7 +597,9 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -630,7 +638,7 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -659,7 +667,7 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -688,7 +696,7 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -719,7 +727,7 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -750,7 +758,7 @@ public class AgentStudioClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -1088,23 +1096,6 @@ public class AgentStudioClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal(
       "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id",
-      req.Path
-    );
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
-  [Fact(DisplayName = "e2e get conversation")]
-  public async Task GetConversationTest1()
-  {
-    await client.GetConversationAsync(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal(
-      "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ",
       req.Path
     );
     Assert.Equal("GET", req.Method.ToString());

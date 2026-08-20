@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.3\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.43.0\).*/))
   end
 
   # call deleteObjects without error
@@ -1045,6 +1045,172 @@ class TestClientSearchClient < Test::Unit::TestCase
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
+  end
+
+  # the Request-ID stays stable across retries
+  def test_request_id0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6695,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6696,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_post("1/test/request-id/retry/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # each call mints a fresh Request-ID
+  def test_request_id1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/request-id/fresh/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    req = client.custom_get("1/test/request-id/fresh/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # a caller-supplied Request-ID is never overwritten
+  def test_request_id2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get(
+      "1/test/request-id/caller/ruby",
+      {},
+      {:header_params => {"request-id" => "CtsUserProvided"}}
+    )
+    assert_equal({:"requestId" => "CtsUserProvided"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # every request of one helper call shares one Request-ID
+  def test_request_id3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.save_objects(
+      "cts_request_id_ruby",
+      [
+        {objectID: "1", name: "Adam"},
+        {objectID: "2", name: "Benoit"},
+        {objectID: "3", name: "Cyril"},
+        {objectID: "4", name: "David"}
+      ],
+      true,
+      2
+    )
+    assert_equal(
+      [{:"taskID" => 42, :"objectIDs" => ["1", "2"]}, {:"taskID" => 42, :"objectIDs" => ["3", "4"]}],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+    req = client.save_objects(
+      "cts_request_id_ruby",
+      [
+        {objectID: "5", name: "Eva"},
+        {objectID: "6", name: "Fred"},
+        {objectID: "7", name: "Gina"},
+        {objectID: "8", name: "Hugo"}
+      ],
+      true,
+      2
+    )
+    assert_equal(
+      [{:"taskID" => 42, :"objectIDs" => ["5", "6"]}, {:"taskID" => 42, :"objectIDs" => ["7", "8"]}],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # client errors expose the Correlation-ID
+  def test_request_id4
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    begin
+      client.custom_get("1/test/request-id/error/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "400: request-id error test (Correlation-ID: CtsFixedCorrelationId)".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
   end
 
   # call saveObjects without error

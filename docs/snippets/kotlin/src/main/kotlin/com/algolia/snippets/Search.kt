@@ -2522,6 +2522,86 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSaveObjects() {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("3"))
+              put("name", JsonPrimitive("Cyril"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("4"))
+              put("name", JsonPrimitive("David"))
+            },
+          ),
+        waitForTasks = true,
+        batchSize = 2,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSaveObjects1() {
+    // >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.saveObjects(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("5"))
+              put("name", JsonPrimitive("Eva"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("6"))
+              put("name", JsonPrimitive("Fred"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("7"))
+              put("name", JsonPrimitive("Gina"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("8"))
+              put("name", JsonPrimitive("Hugo"))
+            },
+          ),
+        waitForTasks = true,
+        batchSize = 2,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSaveObjects2() {
     // >SEPARATOR saveObjects call saveObjects without error
     // Initialize the client
@@ -4808,6 +4888,28 @@ class SnippetSearchClient {
       client.searchRules(
         indexName = "<YOUR_INDEX_NAME>",
         searchRulesParams = SearchRulesParams(query = "zorro"),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearchRules1() {
+    // >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.searchRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        searchRulesParams = SearchRulesParams(query = "zorro"),
+        requestOptions =
+          RequestOptions(urlParameters = buildMap { put("x-algolia-request-id", "CtsE2eQry11") }),
       )
 
     // >LOG

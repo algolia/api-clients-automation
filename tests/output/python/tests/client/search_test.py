@@ -399,7 +399,7 @@ class TestSearchClient:
         _req = await _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.44.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.45.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     async def test_delete_objects_0(self):
@@ -1181,6 +1181,233 @@ class TestSearchClient:
         ) == loads(
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
+
+    async def test_request_id_0(self):
+        """
+        the Request-ID stays stable across retries
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6695,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6696,
+                ),
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_post(
+            path="1/test/request-id/retry/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
+    async def test_request_id_1(self):
+        """
+        each call mints a fresh Request-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/request-id/fresh/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+        _req = await _client.custom_get(
+            path="1/test/request-id/fresh/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
+    async def test_request_id_2(self):
+        """
+        a caller-supplied Request-ID is never overwritten
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/request-id/caller/python",
+            parameters={},
+            request_options={
+                "headers": loads("""{"request-id":"CtsUserProvided"}"""),
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"requestId":"CtsUserProvided"}""")
+
+    async def test_request_id_3(self):
+        """
+        every request of one helper call shares one Request-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.save_objects(
+            index_name="cts_request_id_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=2,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]"""
+        )
+        _req = await _client.save_objects(
+            index_name="cts_request_id_python",
+            objects=[
+                {
+                    "objectID": "5",
+                    "name": "Eva",
+                },
+                {
+                    "objectID": "6",
+                    "name": "Fred",
+                },
+                {
+                    "objectID": "7",
+                    "name": "Gina",
+                },
+                {
+                    "objectID": "8",
+                    "name": "Hugo",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=2,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]"""
+        )
+
+    async def test_request_id_4(self):
+        """
+        client errors expose the Correlation-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        try:
+            await _client.custom_get(
+                path="1/test/request-id/error/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e)
+                == "request-id error test (Correlation-ID: CtsFixedCorrelationId)"
+            )
 
     async def test_save_objects_0(self):
         """
@@ -2169,7 +2396,7 @@ class TestSearchClientSync:
         _req = _client.custom_post_with_http_info(
             path="1/test",
         )
-        regex_user_agent = compile("^Algolia for Python \\(4.44.4\\).*")
+        regex_user_agent = compile("^Algolia for Python \\(4.45.0\\).*")
         assert regex_user_agent.match(_req.headers.get("user-agent")) is not None
 
     def test_delete_objects_0(self):
@@ -2951,6 +3178,233 @@ class TestSearchClientSync:
         ) == loads(
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
+
+    def test_request_id_0(self):
+        """
+        the Request-ID stays stable across retries
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6695,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6696,
+                ),
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_post(
+            path="1/test/request-id/retry/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
+    def test_request_id_1(self):
+        """
+        each call mints a fresh Request-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/request-id/fresh/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+        _req = _client.custom_get(
+            path="1/test/request-id/fresh/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"status":"ok"}""")
+
+    def test_request_id_2(self):
+        """
+        a caller-supplied Request-ID is never overwritten
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/request-id/caller/python",
+            parameters={},
+            request_options={
+                "headers": loads("""{"request-id":"CtsUserProvided"}"""),
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"requestId":"CtsUserProvided"}""")
+
+    def test_request_id_3(self):
+        """
+        every request of one helper call shares one Request-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.save_objects(
+            index_name="cts_request_id_python",
+            objects=[
+                {
+                    "objectID": "1",
+                    "name": "Adam",
+                },
+                {
+                    "objectID": "2",
+                    "name": "Benoit",
+                },
+                {
+                    "objectID": "3",
+                    "name": "Cyril",
+                },
+                {
+                    "objectID": "4",
+                    "name": "David",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=2,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]"""
+        )
+        _req = _client.save_objects(
+            index_name="cts_request_id_python",
+            objects=[
+                {
+                    "objectID": "5",
+                    "name": "Eva",
+                },
+                {
+                    "objectID": "6",
+                    "name": "Fred",
+                },
+                {
+                    "objectID": "7",
+                    "name": "Gina",
+                },
+                {
+                    "objectID": "8",
+                    "name": "Hugo",
+                },
+            ],
+            wait_for_tasks=True,
+            batch_size=2,
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]"""
+        )
+
+    def test_request_id_4(self):
+        """
+        client errors expose the Correlation-ID
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6694,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.custom_get(
+                path="1/test/request-id/error/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                str(e)
+                == "request-id error test (Correlation-ID: CtsFixedCorrelationId)"
+            )
 
     def test_save_objects_0(self):
         """

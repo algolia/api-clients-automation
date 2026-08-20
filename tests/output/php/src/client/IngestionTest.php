@@ -131,7 +131,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['name' => 'newName',
             ],
-            [
+            requestOptions: [
                 'writeTimeout' => 3456 / 1000,
             ]
         );
@@ -170,7 +170,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.46.3\).*/',
+                '/^Algolia for PHP \(4.47.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );

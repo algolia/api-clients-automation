@@ -69,7 +69,7 @@ public class RecommendClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.46.3\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.47.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -100,6 +100,38 @@ public class RecommendClientTests
     var res = await client.CustomDeleteAsync("1/test/no-content");
 
     Assert.Equal(null, res);
+  }
+
+  [Fact(DisplayName = "the recommend client sends a Request-ID")]
+  public async Task RequestIdTest0()
+  {
+    RecommendConfig _config = new RecommendConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new RecommendClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/request-id/smoke/recommend/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "switch API key")]

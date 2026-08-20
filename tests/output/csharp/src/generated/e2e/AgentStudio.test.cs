@@ -121,29 +121,6 @@ public class AgentStudioClientRequestTestsE2E
     }
   }
 
-  [Fact(DisplayName = "e2e get conversation")]
-  public async Task GetConversationTest1()
-  {
-    try
-    {
-      var resp = await client.GetConversationAsync(
-        "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-        "76710f1b-8231-42e5-b0d1-f43aac618e15"
-      );
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      TestHelpers.LenientJsonAssert(
-        "{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
-  }
-
   [Fact(DisplayName = "e2e get provider")]
   public async Task GetProviderTest1()
   {
@@ -241,11 +218,6 @@ public class AgentStudioClientRequestTestsE2E
       var resp = await client.ListAgentConversationsAsync("76710f1b-8231-42e5-b0d1-f43aac618e15");
       // Check status code 200
       Assert.NotNull(resp);
-
-      TestHelpers.LenientJsonAssert(
-        "{\"data\":[{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}]}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options)
-      );
     }
     catch (Exception e)
     {

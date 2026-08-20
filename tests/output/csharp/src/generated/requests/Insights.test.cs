@@ -107,7 +107,7 @@ public class InsightsClientRequestTests
     await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -193,7 +193,9 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -222,7 +224,9 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -251,7 +255,9 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -290,7 +296,9 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
 
     var req = _echo.LastResponse;
@@ -329,7 +337,7 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
@@ -358,7 +366,7 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
@@ -387,7 +395,7 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -418,7 +426,7 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -449,7 +457,7 @@ public class InsightsClientRequestTests
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -579,7 +587,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1786406400000L,
+              Timestamp = 1787184000000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -592,7 +600,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1786406400000L,
+              Timestamp = 1787184000000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
           ),
@@ -604,7 +612,7 @@ public class InsightsClientRequestTests
     Assert.Equal("/1/events", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1786406400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1786406400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1787184000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1787184000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

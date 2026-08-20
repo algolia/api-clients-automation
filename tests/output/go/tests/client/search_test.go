@@ -509,7 +509,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.44.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.45.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // call deleteObjects without error.
@@ -1294,6 +1294,220 @@ func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
 			string(rawBody),
 		)
 	}
+}
+
+// the Request-ID stays stable across retries.
+func TestSearchrequestId0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6695", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6696", call.IsReadWrite),
+			},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomPost(client.NewApiCustomPostRequest(
+		"1/test/request-id/retry/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+}
+
+// each call mints a fresh Request-ID.
+func TestSearchrequestId1(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"1/test/request-id/fresh/go"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+	}
+	{
+		res, err = client.CustomGet(client.NewApiCustomGetRequest(
+			"1/test/request-id/fresh/go"))
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
+	}
+}
+
+// a caller-supplied Request-ID is never overwritten.
+func TestSearchrequestId2(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/request-id/caller/go").WithParameters(map[string]any{}), search.WithHeaderParam("request-id", "CtsUserProvided"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"requestId":"CtsUserProvided"}`, string(rawBody))
+}
+
+// every request of one helper call shares one Request-ID.
+func TestSearchrequestId3(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	{
+		res, err = client.SaveObjects(
+			"cts_request_id_go",
+			[]map[string]any{
+				{"objectID": "1", "name": "Adam"},
+				{"objectID": "2", "name": "Benoit"},
+				{"objectID": "3", "name": "Cyril"},
+				{"objectID": "4", "name": "David"},
+			},
+			search.WithWaitForTasks(true),
+			search.WithBatchSize(2),
+		)
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]`, string(rawBody))
+	}
+	{
+		res, err = client.SaveObjects(
+			"cts_request_id_go",
+			[]map[string]any{
+				{"objectID": "5", "name": "Eva"},
+				{"objectID": "6", "name": "Fred"},
+				{"objectID": "7", "name": "Gina"},
+				{"objectID": "8", "name": "Hugo"},
+			},
+			search.WithWaitForTasks(true),
+			search.WithBatchSize(2),
+		)
+		require.NoError(t, err)
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+		require.JSONEq(t, `[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]`, string(rawBody))
+	}
+}
+
+// client errors expose the Correlation-ID.
+func TestSearchrequestId4(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/request-id/error/go"))
+	require.EqualError(t, err, "API error [400] request-id error test (Correlation-ID: CtsFixedCorrelationId)")
 }
 
 // call saveObjects without error.

@@ -56,7 +56,7 @@ class TestClientRecommendClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.3\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.43.0\).*/))
   end
 
   # handles 204 No Content responses correctly
@@ -79,6 +79,28 @@ class TestClientRecommendClient < Test::Unit::TestCase
 
     req = client.custom_delete("1/test/no-content")
     assert_equal(nil, req)
+  end
+
+  # the recommend client sends a Request-ID
+  def test_request_id0
+    client = Algolia::RecommendClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "recommendClient"
+      )
+    )
+
+    req = client.custom_get("1/test/request-id/smoke/recommend/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # switch API key

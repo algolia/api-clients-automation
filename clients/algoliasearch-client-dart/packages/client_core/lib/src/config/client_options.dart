@@ -63,6 +63,12 @@ final class ClientOptions {
   /// Set to 'gzip' to enable gzip compression for POST/PUT requests.
   final String? compression;
 
+  /// Whether the transport sends a Request-ID, minted once per call and
+  /// reused across retries. Null keeps the generated client's setting (only
+  /// search, recommend, composition and algoliasearch mint); false disables
+  /// minting. A caller-supplied Request-ID is never overwritten.
+  final bool? requestIdEnabled;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
     this.connectTimeout = unsetTimeout,
@@ -76,6 +82,7 @@ final class ClientOptions {
     this.interceptors,
     this.httpClientAdapter,
     this.compression,
+    this.requestIdEnabled,
   });
 
   @override
@@ -93,7 +100,8 @@ final class ClientOptions {
           requester == other.requester &&
           interceptors == other.interceptors &&
           httpClientAdapter == other.httpClientAdapter &&
-          compression == other.compression;
+          compression == other.compression &&
+          requestIdEnabled == other.requestIdEnabled;
 
   @override
   int get hashCode =>
@@ -107,10 +115,11 @@ final class ClientOptions {
       requester.hashCode ^
       interceptors.hashCode ^
       httpClientAdapter.hashCode ^
-      compression.hashCode;
+      compression.hashCode ^
+      requestIdEnabled.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression, requestIdEnabled: $requestIdEnabled}';
   }
 }

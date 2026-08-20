@@ -157,7 +157,7 @@ class CompositionTest {
         customPost(path = "1/test")
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.46.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.47.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
@@ -192,6 +192,40 @@ class CompositionTest {
       },
       response = {
         assertNull(it)
+      },
+    )
+  }
+
+  @Test
+  fun `the composition client sends a Request-ID`() = runTest {
+    val client =
+      CompositionClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6694,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/request-id/smoke/composition/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"status":"ok"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
       },
     )
   }

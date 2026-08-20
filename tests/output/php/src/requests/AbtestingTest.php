@@ -141,7 +141,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -213,7 +213,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -239,7 +239,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -265,7 +265,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -293,7 +293,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -321,7 +321,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -347,7 +347,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -373,7 +373,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -400,7 +400,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -427,7 +427,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],

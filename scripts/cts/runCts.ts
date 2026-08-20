@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 
-import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.ts';
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath, YARN_HARDENED_MODE_PREFIX } from '../common.ts';
 import { getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
@@ -88,10 +88,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       break;
     }
     case 'javascript':
-      await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`, {
-        cwd,
-        language,
-      });
+      await run(
+        `${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'kotlin':
       await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
@@ -142,15 +145,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     }
-    case 'swift':
+    case 'swift': {
+      const swiftSuites = [...folders, ...(suites.client ? ['manual'] : [])];
       await run(
-        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${filter((f) => `--filter "${f}.*"`)}`,
+        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${swiftSuites.map((f) => `--filter "${f}.*"`).join(' ')}`,
         {
           cwd,
           language,
         },
       );
       break;
+    }
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
       return;
@@ -192,7 +197,8 @@ export async function runCts(
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
-    assertValidRequestIds(languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang)).length);
+    const requestIdLanguages = languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang));
+    assertValidRequestIds(requestIdLanguages.length, requestIdLanguages.filter((lang) => lang !== 'dart').length);
     assertNoRequestIdLeaks(languages.length);
     assertValidReplaceAllObjectsFailed(languages.length - skip('dart'));
     assertValidReplaceAllObjectsScopes(languages.length - skip('dart'));

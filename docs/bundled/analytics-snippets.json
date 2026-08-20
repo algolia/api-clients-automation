@@ -10,20 +10,20 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "var response = await client.CustomGetAsync(\"test/minimal\");",
       "allow get method for a custom path with all parameters": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters with space\" } }\n);",
-      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overridden\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
+      "requestOptions should be escaped too": "var response = await client.CustomGetAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"to be overridden\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"parameters with space\")\n    .AddExtraQueryParameters(\"and an array\", new List<object> { \"array\", \"with spaces\" })\n    .AddExtraHeader(\"x-header-1\", \"spaces are left alone\")\n    .Build()\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "var response = await client.CustomPostAsync(\"test/minimal\");",
       "allow post method for a custom path with all parameters": "var response = await client.CustomPostAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"body\", \"parameters\" } }\n);",
-      "requestOptions can override default query parameters": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query\", \"myQueryParameter\").Build()\n);",
-      "requestOptions merges query parameters with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"query2\", \"myQueryParameter\").Build()\n);",
-      "requestOptions can override default headers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
-      "requestOptions merges headers with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\").Build()\n);",
-      "requestOptions queryParameters accepts booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"isItWorking\", true).Build()\n);",
-      "requestOptions queryParameters accepts integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder().AddExtraQueryParameters(\"myParam\", 2).Build()\n);",
-      "requestOptions queryParameters accepts list of string": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { \"b and c\", \"d\" })\n    .Build()\n);",
-      "requestOptions queryParameters accepts list of booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { true, true, false })\n    .Build()\n);",
-      "requestOptions queryParameters accepts list of integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { 1, 2 })\n    .Build()\n);"
+      "requestOptions can override default query parameters": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query\", \"myQueryParameter\")\n    .Build()\n);",
+      "requestOptions merges query parameters with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"query2\", \"myQueryParameter\")\n    .Build()\n);",
+      "requestOptions can override default headers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    .Build()\n);",
+      "requestOptions merges headers with default ones": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraHeader(\"x-algolia-api-key\", \"ALGOLIA_API_KEY\")\n    .Build()\n);",
+      "requestOptions queryParameters accepts booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder().AddExtraQueryParameters(\"isItWorking\", true).Build()\n);",
+      "requestOptions queryParameters accepts integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder().AddExtraQueryParameters(\"myParam\", 2).Build()\n);",
+      "requestOptions queryParameters accepts list of string": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { \"b and c\", \"d\" })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of booleans": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { true, true, false })\n    .Build()\n);",
+      "requestOptions queryParameters accepts list of integers": "var response = await client.CustomPostAsync(\n  \"test/requestOptions\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } },\n  new Dictionary<string, string> { { \"facet\", \"filters\" } },\n  options: new RequestOptionBuilder()\n    .AddExtraQueryParameters(\"myParam\", new List<object> { 1, 2 })\n    .Build()\n);"
     },
     "customPut": {
       "allow put method for a custom path with minimal parameters": "var response = await client.CustomPutAsync(\"test/minimal\");",
@@ -56,6 +56,9 @@
     "getNoResultsRate": {
       "get getNoResultsRate with minimal parameters": "var response = await client.GetNoResultsRateAsync(\"index\");",
       "get getNoResultsRate with all parameters": "var response = await client.GetNoResultsRateAsync(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+    },
+    "getPatternsFields": {
+      "default": "var response = await client.GetPatternsFieldsAsync();"
     },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "var response = await client.GetPurchaseRateAsync(\"index\");",
@@ -109,6 +112,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "var response = await client.GetUsersCountAsync(\"index\");",
       "get getUsersCount with all parameters": "var response = await client.GetUsersCountAsync(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+    },
+    "queryPatternsDistribution": {
+      "default": "var response = await client.QueryPatternsDistributionAsync(\n  new DistributionPayload\n  {\n    Distributions = new List<DistributionDefinition>\n    {\n      new DistributionDefinition\n      {\n        Kind = \"clickPosition\",\n        Bins = new List<BinEdge>\n        {\n          new BinEdge(1),\n          new BinEdge(2),\n          new BinEdge(3),\n          new BinEdge(4),\n          new BinEdge(5),\n        },\n      },\n    },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"index\" }),\n      },\n    },\n  },\n  \"index\"\n);"
+    },
+    "queryPatternsScalar": {
+      "default": "var response = await client.QueryPatternsScalarAsync(\n  new ScalarPayload\n  {\n    Metrics = new List<FieldReference> { new FieldReference { Kind = \"conversionRate\" } },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"index\" }),\n      },\n    },\n  },\n  \"index\"\n);"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "var response = await client.QueryPatternsTableAsync(\n  new TablePayload\n  {\n    Metrics = new List<FieldReference> { new FieldReference { Kind = \"searchesCount\" } },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"index\" }),\n      },\n    },\n  },\n  \"index\"\n);",
+      "queryPatternsTable with all parameters": "var response = await client.QueryPatternsTableAsync(\n  new TablePayload\n  {\n    Domain = \"core\",\n    Metrics = new List<FieldReference> { new FieldReference { Kind = \"searchesCount\" } },\n    GroupBy = new List<FieldReference> { new FieldReference { Kind = \"query\" } },\n    Filters = new List<FilterDefinition> { new FilterDefinition { Kind = \"clicked\" } },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"index\" }),\n      },\n    },\n    OrderBy = new List<OrderDefinition>\n    {\n      new OrderDefinition\n      {\n        Kind = \"searchesCount\",\n        Direction = Enum.Parse<OrderDirection>(\"Desc\"),\n      },\n    },\n    Limit = 100,\n    Offset = 0,\n  },\n  \"index\"\n);"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "var response = await client.QueryPatternsTimeseriesAsync(\n  new TimeseriesPayload\n  {\n    Metrics = new List<FieldReference> { new FieldReference { Kind = \"searchesCount\" } },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"index\" }),\n      },\n    },\n  },\n  \"index\"\n);",
+      "queryPatternsTimeseries with all parameters": "var response = await client.QueryPatternsTimeseriesAsync(\n  new TimeseriesPayload\n  {\n    Domain = \"core\",\n    Metrics = new List<FieldReference>\n    {\n      new FieldReference { Kind = \"searchesCount\" },\n      new FieldReference { Domain = \"abtesting\", Kind = \"isMsrQuery\" },\n    },\n    GroupBy = new List<FieldReference> { new FieldReference { Kind = \"index\" } },\n    Filters = new List<FilterDefinition>\n    {\n      new FilterDefinition { Kind = \"clicked\" },\n      new FilterDefinition\n      {\n        Kind = \"country\",\n        Operator = \"=\",\n        Parameter = new ParameterReference { Kind = \"country\" },\n      },\n    },\n    Parameters = new List<ParameterDefinition>\n    {\n      new ParameterDefinition\n      {\n        Kind = \"indices\",\n        Value = new ParameterValue(new List<string> { \"indexA\", \"indexB\" }),\n      },\n      new ParameterDefinition\n      {\n        Kind = \"startDate\",\n        Value = new ParameterValue(\"2024-01-01T00:00:00Z\"),\n      },\n      new ParameterDefinition\n      {\n        Kind = \"endDate\",\n        Value = new ParameterValue(\"2024-01-07T23:59:59Z\"),\n      },\n      new ParameterDefinition { Kind = \"country\", Value = new ParameterValue(\"FR\") },\n    },\n    Limit = 50,\n    Offset = 0,\n  },\n  \"indexA,indexB\"\n);"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -176,6 +193,9 @@
       "get getNoResultsRate with minimal parameters": "response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "get getNoResultsRate with all parameters": "response, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(\n  \"index\").WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithTags(\"tag\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
+    "getPatternsFields": {
+      "default": "response, err := client.GetPatternsFields()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "get getPurchaseRate with all parameters": "response, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(\n  \"index\").WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithTags(\"tag\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -228,6 +248,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(\n  \"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "get getUsersCount with all parameters": "response, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(\n  \"index\").WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithTags(\"tag\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "queryPatternsDistribution": {
+      "default": "response, err := client.QueryPatternsDistribution(client.NewApiQueryPatternsDistributionRequest(\n\n  analytics.NewEmptyDistributionPayload().SetDistributions(\n    []analytics.DistributionDefinition{*analytics.NewEmptyDistributionDefinition().SetKind(\"clickPosition\").SetBins(\n      []analytics.BinEdge{*analytics.Int32AsBinEdge(1), *analytics.Int32AsBinEdge(2), *analytics.Int32AsBinEdge(3), *analytics.Int32AsBinEdge(4), *analytics.Int32AsBinEdge(5)})}).SetParameters(\n    []analytics.ParameterDefinition{\n      *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n        []string{\"index\"})),\n    }),\n).WithIndex(\"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "queryPatternsScalar": {
+      "default": "response, err := client.QueryPatternsScalar(client.NewApiQueryPatternsScalarRequest(\n\n  analytics.NewEmptyScalarPayload().SetMetrics(\n    []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"conversionRate\")}).SetParameters(\n    []analytics.ParameterDefinition{\n      *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n        []string{\"index\"})),\n    }),\n).WithIndex(\"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "response, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(\n\n  analytics.NewEmptyTablePayload().SetMetrics(\n    []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"searchesCount\")}).SetParameters(\n    []analytics.ParameterDefinition{\n      *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n        []string{\"index\"})),\n    }),\n).WithIndex(\"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "queryPatternsTable with all parameters": "response, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(\n\n  analytics.NewEmptyTablePayload().SetDomain(\"core\").SetMetrics(\n    []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"searchesCount\")}).SetGroupBy(\n    []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"query\")}).SetFilters(\n    []analytics.FilterDefinition{*analytics.NewEmptyFilterDefinition().SetKind(\"clicked\")}).SetParameters(\n    []analytics.ParameterDefinition{\n      *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n        []string{\"index\"})),\n    }).\n    SetOrderBy(\n      []analytics.OrderDefinition{\n        *analytics.NewEmptyOrderDefinition().SetKind(\"searchesCount\").SetDirection(analytics.OrderDirection(\"desc\")),\n      }).\n    SetLimit(100).SetOffset(0)).WithIndex(\"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "response, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(\n\n  analytics.NewEmptyTimeseriesPayload().SetMetrics(\n    []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"searchesCount\")}).SetParameters(\n    []analytics.ParameterDefinition{\n      *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n        []string{\"index\"})),\n    }),\n).WithIndex(\"index\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "queryPatternsTimeseries with all parameters": "response, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(\n\n  analytics.NewEmptyTimeseriesPayload().SetDomain(\"core\").SetMetrics(\n    []analytics.FieldReference{\n      *analytics.NewEmptyFieldReference().SetKind(\"searchesCount\"),\n      *analytics.NewEmptyFieldReference().SetDomain(\"abtesting\").SetKind(\"isMsrQuery\"),\n    }).\n    SetGroupBy(\n      []analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind(\"index\")}).SetFilters(\n    []analytics.FilterDefinition{\n      *analytics.NewEmptyFilterDefinition().SetKind(\"clicked\"),\n      *analytics.NewEmptyFilterDefinition().SetKind(\"country\").SetOperator(\"=\").SetParameter(\n        analytics.NewEmptyParameterReference().SetKind(\"country\")),\n    }).\n    SetParameters(\n      []analytics.ParameterDefinition{\n        *analytics.NewEmptyParameterDefinition().SetKind(\"indices\").SetValue(analytics.ArrayOfStringAsParameterValue(\n          []string{\"indexA\", \"indexB\"})),\n        *analytics.NewEmptyParameterDefinition().SetKind(\"startDate\").SetValue(analytics.StringAsParameterValue(\"2024-01-01T00:00:00Z\")),\n        *analytics.NewEmptyParameterDefinition().SetKind(\"endDate\").SetValue(analytics.StringAsParameterValue(\"2024-01-07T23:59:59Z\")),\n        *analytics.NewEmptyParameterDefinition().SetKind(\"country\").SetValue(analytics.StringAsParameterValue(\"FR\")),\n      }).\n    SetLimit(50).SetOffset(0)).WithIndex(\"indexA,indexB\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -294,6 +328,9 @@
       "get getNoResultsRate with minimal parameters": "GetNoResultsRateResponse response = client.getNoResultsRate(\"index\");",
       "get getNoResultsRate with all parameters": "GetNoResultsRateResponse response = client.getNoResultsRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
     },
+    "getPatternsFields": {
+      "default": "Catalog response = client.getPatternsFields();"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "GetPurchaseRateResponse response = client.getPurchaseRate(\"index\");",
       "get getPurchaseRate with all parameters": "GetPurchaseRateResponse response = client.getPurchaseRate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
@@ -346,6 +383,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "GetUsersCountResponse response = client.getUsersCount(\"index\");",
       "get getUsersCount with all parameters": "GetUsersCountResponse response = client.getUsersCount(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\");"
+    },
+    "queryPatternsDistribution": {
+      "default": "Map response = client.queryPatternsDistribution(\n  new DistributionPayload()\n    .setDistributions(\n      Arrays.asList(\n        new DistributionDefinition()\n          .setKind(\"clickPosition\")\n          .setBins(Arrays.asList(BinEdge.of(1), BinEdge.of(2), BinEdge.of(3), BinEdge.of(4), BinEdge.of(5)))\n      )\n    )\n    .setParameters(Arrays.asList(new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"index\"))))),\n  \"index\"\n);"
+    },
+    "queryPatternsScalar": {
+      "default": "Map response = client.queryPatternsScalar(\n  new ScalarPayload()\n    .setMetrics(Arrays.asList(new FieldReference().setKind(\"conversionRate\")))\n    .setParameters(Arrays.asList(new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"index\"))))),\n  \"index\"\n);"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "TableResponse response = client.queryPatternsTable(\n  new TablePayload()\n    .setMetrics(Arrays.asList(new FieldReference().setKind(\"searchesCount\")))\n    .setParameters(Arrays.asList(new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"index\"))))),\n  \"index\"\n);",
+      "queryPatternsTable with all parameters": "TableResponse response = client.queryPatternsTable(\n  new TablePayload()\n    .setDomain(\"core\")\n    .setMetrics(Arrays.asList(new FieldReference().setKind(\"searchesCount\")))\n    .setGroupBy(Arrays.asList(new FieldReference().setKind(\"query\")))\n    .setFilters(Arrays.asList(new FilterDefinition().setKind(\"clicked\")))\n    .setParameters(Arrays.asList(new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"index\")))))\n    .setOrderBy(Arrays.asList(new OrderDefinition().setKind(\"searchesCount\").setDirection(OrderDirection.DESC)))\n    .setLimit(100)\n    .setOffset(0),\n  \"index\"\n);"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "TimeseriesResponse response = client.queryPatternsTimeseries(\n  new TimeseriesPayload()\n    .setMetrics(Arrays.asList(new FieldReference().setKind(\"searchesCount\")))\n    .setParameters(Arrays.asList(new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"index\"))))),\n  \"index\"\n);",
+      "queryPatternsTimeseries with all parameters": "TimeseriesResponse response = client.queryPatternsTimeseries(\n  new TimeseriesPayload()\n    .setDomain(\"core\")\n    .setMetrics(\n      Arrays.asList(new FieldReference().setKind(\"searchesCount\"), new FieldReference().setDomain(\"abtesting\").setKind(\"isMsrQuery\"))\n    )\n    .setGroupBy(Arrays.asList(new FieldReference().setKind(\"index\")))\n    .setFilters(\n      Arrays.asList(\n        new FilterDefinition().setKind(\"clicked\"),\n        new FilterDefinition().setKind(\"country\").setOperator(\"=\").setParameter(new ParameterReference().setKind(\"country\"))\n      )\n    )\n    .setParameters(\n      Arrays.asList(\n        new ParameterDefinition().setKind(\"indices\").setValue(ParameterValue.of(Arrays.asList(\"indexA\", \"indexB\"))),\n        new ParameterDefinition().setKind(\"startDate\").setValue(ParameterValue.of(\"2024-01-01T00:00:00Z\")),\n        new ParameterDefinition().setKind(\"endDate\").setValue(ParameterValue.of(\"2024-01-07T23:59:59Z\")),\n        new ParameterDefinition().setKind(\"country\").setValue(ParameterValue.of(\"FR\"))\n      )\n    )\n    .setLimit(50)\n    .setOffset(0),\n  \"indexA,indexB\"\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
@@ -412,6 +463,9 @@
       "get getNoResultsRate with minimal parameters": "const response = await client.getNoResultsRate({ index: 'index' });",
       "get getNoResultsRate with all parameters": "const response = await client.getNoResultsRate({\n  index: 'index',\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  tags: 'tag',\n});"
     },
+    "getPatternsFields": {
+      "default": "const response = await client.getPatternsFields();"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "const response = await client.getPurchaseRate({ index: 'index' });",
       "get getPurchaseRate with all parameters": "const response = await client.getPurchaseRate({\n  index: 'index',\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  tags: 'tag',\n});"
@@ -464,6 +518,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "const response = await client.getUsersCount({ index: 'index' });",
       "get getUsersCount with all parameters": "const response = await client.getUsersCount({\n  index: 'index',\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  tags: 'tag',\n});"
+    },
+    "queryPatternsDistribution": {
+      "default": "const response = await client.queryPatternsDistribution({\n  distributionPayload: {\n    distributions: [{ kind: 'clickPosition', bins: [1, 2, 3, 4, 5] }],\n    parameters: [{ kind: 'indices', value: ['index'] }],\n  },\n  index: 'index',\n});"
+    },
+    "queryPatternsScalar": {
+      "default": "const response = await client.queryPatternsScalar({\n  scalarPayload: { metrics: [{ kind: 'conversionRate' }], parameters: [{ kind: 'indices', value: ['index'] }] },\n  index: 'index',\n});"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "const response = await client.queryPatternsTable({\n  tablePayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },\n  index: 'index',\n});",
+      "queryPatternsTable with all parameters": "const response = await client.queryPatternsTable({\n  tablePayload: {\n    domain: 'core',\n    metrics: [{ kind: 'searchesCount' }],\n    groupBy: [{ kind: 'query' }],\n    filters: [{ kind: 'clicked' }],\n    parameters: [{ kind: 'indices', value: ['index'] }],\n    orderBy: [{ kind: 'searchesCount', direction: 'desc' }],\n    limit: 100,\n    offset: 0,\n  },\n  index: 'index',\n});"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "const response = await client.queryPatternsTimeseries({\n  timeseriesPayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },\n  index: 'index',\n});",
+      "queryPatternsTimeseries with all parameters": "const response = await client.queryPatternsTimeseries({\n  timeseriesPayload: {\n    domain: 'core',\n    metrics: [{ kind: 'searchesCount' }, { domain: 'abtesting', kind: 'isMsrQuery' }],\n    groupBy: [{ kind: 'index' }],\n    filters: [{ kind: 'clicked' }, { kind: 'country', operator: '=', parameter: { kind: 'country' } }],\n    parameters: [\n      { kind: 'indices', value: ['indexA', 'indexB'] },\n      { kind: 'startDate', value: '2024-01-01T00:00:00Z' },\n      { kind: 'endDate', value: '2024-01-07T23:59:59Z' },\n      { kind: 'country', value: 'FR' },\n    ],\n    limit: 50,\n    offset: 0,\n  },\n  index: 'indexA,indexB',\n});"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
@@ -527,6 +595,9 @@
       "get getNoResultsRate with minimal parameters": "var response = client.getNoResultsRate(index = \"index\")",
       "get getNoResultsRate with all parameters": "var response =\n  client.getNoResultsRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
+    "getPatternsFields": {
+      "default": "var response = client.getPatternsFields()"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "var response = client.getPurchaseRate(index = \"index\")",
       "get getPurchaseRate with all parameters": "var response =\n  client.getPurchaseRate(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
@@ -580,6 +651,20 @@
       "get getUsersCount with minimal parameters": "var response = client.getUsersCount(index = \"index\")",
       "get getUsersCount with all parameters": "var response =\n  client.getUsersCount(\n    index = \"index\",\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    tags = \"tag\",\n  )"
     },
+    "queryPatternsDistribution": {
+      "default": "var response =\n  client.queryPatternsDistribution(\n    distributionPayload =\n      DistributionPayload(\n        distributions =\n          listOf(\n            DistributionDefinition(\n              kind = \"clickPosition\",\n              bins =\n                listOf(\n                  BinEdge.of(1),\n                  BinEdge.of(2),\n                  BinEdge.of(3),\n                  BinEdge.of(4),\n                  BinEdge.of(5),\n                ),\n            )\n          ),\n        parameters =\n          listOf(\n            ParameterDefinition(kind = \"indices\", value = ParameterValue.of(listOf(\"index\")))\n          ),\n      ),\n    index = \"index\",\n  )"
+    },
+    "queryPatternsScalar": {
+      "default": "var response =\n  client.queryPatternsScalar(\n    scalarPayload =\n      ScalarPayload(\n        metrics = listOf(FieldReference(kind = \"conversionRate\")),\n        parameters =\n          listOf(\n            ParameterDefinition(kind = \"indices\", value = ParameterValue.of(listOf(\"index\")))\n          ),\n      ),\n    index = \"index\",\n  )"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "var response =\n  client.queryPatternsTable(\n    tablePayload =\n      TablePayload(\n        metrics = listOf(FieldReference(kind = \"searchesCount\")),\n        parameters =\n          listOf(\n            ParameterDefinition(kind = \"indices\", value = ParameterValue.of(listOf(\"index\")))\n          ),\n      ),\n    index = \"index\",\n  )",
+      "queryPatternsTable with all parameters": "var response =\n  client.queryPatternsTable(\n    tablePayload =\n      TablePayload(\n        domain = \"core\",\n        metrics = listOf(FieldReference(kind = \"searchesCount\")),\n        groupBy = listOf(FieldReference(kind = \"query\")),\n        filters = listOf(FilterDefinition(kind = \"clicked\")),\n        parameters =\n          listOf(\n            ParameterDefinition(kind = \"indices\", value = ParameterValue.of(listOf(\"index\")))\n          ),\n        orderBy =\n          listOf(\n            OrderDefinition(\n              kind = \"searchesCount\",\n              direction = OrderDirection.entries.first { it.value == \"desc\" },\n            )\n          ),\n        limit = 100,\n        offset = 0,\n      ),\n    index = \"index\",\n  )"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "var response =\n  client.queryPatternsTimeseries(\n    timeseriesPayload =\n      TimeseriesPayload(\n        metrics = listOf(FieldReference(kind = \"searchesCount\")),\n        parameters =\n          listOf(\n            ParameterDefinition(kind = \"indices\", value = ParameterValue.of(listOf(\"index\")))\n          ),\n      ),\n    index = \"index\",\n  )",
+      "queryPatternsTimeseries with all parameters": "var response =\n  client.queryPatternsTimeseries(\n    timeseriesPayload =\n      TimeseriesPayload(\n        domain = \"core\",\n        metrics =\n          listOf(\n            FieldReference(kind = \"searchesCount\"),\n            FieldReference(domain = \"abtesting\", kind = \"isMsrQuery\"),\n          ),\n        groupBy = listOf(FieldReference(kind = \"index\")),\n        filters =\n          listOf(\n            FilterDefinition(kind = \"clicked\"),\n            FilterDefinition(\n              kind = \"country\",\n              operator = \"=\",\n              parameter = ParameterReference(kind = \"country\"),\n            ),\n          ),\n        parameters =\n          listOf(\n            ParameterDefinition(\n              kind = \"indices\",\n              value = ParameterValue.of(listOf(\"indexA\", \"indexB\")),\n            ),\n            ParameterDefinition(\n              kind = \"startDate\",\n              value = ParameterValue.of(\"2024-01-01T00:00:00Z\"),\n            ),\n            ParameterDefinition(\n              kind = \"endDate\",\n              value = ParameterValue.of(\"2024-01-07T23:59:59Z\"),\n            ),\n            ParameterDefinition(kind = \"country\", value = ParameterValue.of(\"FR\")),\n          ),\n        limit = 50,\n        offset = 0,\n      ),\n    index = \"indexA,indexB\",\n  )"
+    },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
     },
@@ -598,20 +683,20 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
       "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
-      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
       "allow post method for a custom path with all parameters": "$response = $client->customPost(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);",
-      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
-      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
-      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
-      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
-      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
-      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
+      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
+      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
     },
     "customPut": {
       "allow put method for a custom path with minimal parameters": "$response = $client->customPut(\n    'test/minimal',\n);",
@@ -644,6 +729,9 @@
     "getNoResultsRate": {
       "get getNoResultsRate with minimal parameters": "$response = $client->getNoResultsRate(\n    'index',\n);",
       "get getNoResultsRate with all parameters": "$response = $client->getNoResultsRate(\n    'index',\n    '1999-09-19',\n    '2001-01-01',\n    'tag',\n);"
+    },
+    "getPatternsFields": {
+      "default": "$response = $client->getPatternsFields();"
     },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "$response = $client->getPurchaseRate(\n    'index',\n);",
@@ -697,6 +785,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "$response = $client->getUsersCount(\n    'index',\n);",
       "get getUsersCount with all parameters": "$response = $client->getUsersCount(\n    'index',\n    '1999-09-19',\n    '2001-01-01',\n    'tag',\n);"
+    },
+    "queryPatternsDistribution": {
+      "default": "$response = $client->queryPatternsDistribution(\n    ['distributions' => [\n        ['kind' => 'clickPosition',\n            'bins' => [\n                1,\n\n                2,\n\n                3,\n\n                4,\n\n                5,\n            ],\n        ],\n    ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'index',\n                ],\n            ],\n        ],\n    ],\n    'index',\n);"
+    },
+    "queryPatternsScalar": {
+      "default": "$response = $client->queryPatternsScalar(\n    ['metrics' => [\n        ['kind' => 'conversionRate',\n        ],\n    ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'index',\n                ],\n            ],\n        ],\n    ],\n    'index',\n);"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "$response = $client->queryPatternsTable(\n    ['metrics' => [\n        ['kind' => 'searchesCount',\n        ],\n    ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'index',\n                ],\n            ],\n        ],\n    ],\n    'index',\n);",
+      "queryPatternsTable with all parameters": "$response = $client->queryPatternsTable(\n    ['domain' => 'core',\n        'metrics' => [\n            ['kind' => 'searchesCount',\n            ],\n        ],\n        'groupBy' => [\n            ['kind' => 'query',\n            ],\n        ],\n        'filters' => [\n            ['kind' => 'clicked',\n            ],\n        ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'index',\n                ],\n            ],\n        ],\n        'orderBy' => [\n            ['kind' => 'searchesCount',\n                'direction' => 'desc',\n            ],\n        ],\n        'limit' => 100,\n        'offset' => 0,\n    ],\n    'index',\n);"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "$response = $client->queryPatternsTimeseries(\n    ['metrics' => [\n        ['kind' => 'searchesCount',\n        ],\n    ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'index',\n                ],\n            ],\n        ],\n    ],\n    'index',\n);",
+      "queryPatternsTimeseries with all parameters": "$response = $client->queryPatternsTimeseries(\n    ['domain' => 'core',\n        'metrics' => [\n            ['kind' => 'searchesCount',\n            ],\n\n            ['domain' => 'abtesting',\n                'kind' => 'isMsrQuery',\n            ],\n        ],\n        'groupBy' => [\n            ['kind' => 'index',\n            ],\n        ],\n        'filters' => [\n            ['kind' => 'clicked',\n            ],\n\n            ['kind' => 'country',\n                'operator' => '=',\n                'parameter' => ['kind' => 'country',\n                ],\n            ],\n        ],\n        'parameters' => [\n            ['kind' => 'indices',\n                'value' => [\n                    'indexA',\n\n                    'indexB',\n                ],\n            ],\n\n            ['kind' => 'startDate',\n                'value' => '2024-01-01T00:00:00Z',\n            ],\n\n            ['kind' => 'endDate',\n                'value' => '2024-01-07T23:59:59Z',\n            ],\n\n            ['kind' => 'country',\n                'value' => 'FR',\n            ],\n        ],\n        'limit' => 50,\n        'offset' => 0,\n    ],\n    'indexA,indexB',\n);"
     },
     "setClientApiKey": {
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
@@ -763,6 +865,9 @@
       "get getNoResultsRate with minimal parameters": "response = client.get_no_results_rate(\n    index=\"index\",\n)",
       "get getNoResultsRate with all parameters": "response = client.get_no_results_rate(\n    index=\"index\",\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    tags=\"tag\",\n)"
     },
+    "getPatternsFields": {
+      "default": "response = client.get_patterns_fields()"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "response = client.get_purchase_rate(\n    index=\"index\",\n)",
       "get getPurchaseRate with all parameters": "response = client.get_purchase_rate(\n    index=\"index\",\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    tags=\"tag\",\n)"
@@ -815,6 +920,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "response = client.get_users_count(\n    index=\"index\",\n)",
       "get getUsersCount with all parameters": "response = client.get_users_count(\n    index=\"index\",\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    tags=\"tag\",\n)"
+    },
+    "queryPatternsDistribution": {
+      "default": "response = client.query_patterns_distribution(\n    distribution_payload={\n        \"distributions\": [\n            {\n                \"kind\": \"clickPosition\",\n                \"bins\": [\n                    1,\n                    2,\n                    3,\n                    4,\n                    5,\n                ],\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"index\",\n                ],\n            },\n        ],\n    },\n    index=\"index\",\n)"
+    },
+    "queryPatternsScalar": {
+      "default": "response = client.query_patterns_scalar(\n    scalar_payload={\n        \"metrics\": [\n            {\n                \"kind\": \"conversionRate\",\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"index\",\n                ],\n            },\n        ],\n    },\n    index=\"index\",\n)"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "response = client.query_patterns_table(\n    table_payload={\n        \"metrics\": [\n            {\n                \"kind\": \"searchesCount\",\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"index\",\n                ],\n            },\n        ],\n    },\n    index=\"index\",\n)",
+      "queryPatternsTable with all parameters": "response = client.query_patterns_table(\n    table_payload={\n        \"domain\": \"core\",\n        \"metrics\": [\n            {\n                \"kind\": \"searchesCount\",\n            },\n        ],\n        \"groupBy\": [\n            {\n                \"kind\": \"query\",\n            },\n        ],\n        \"filters\": [\n            {\n                \"kind\": \"clicked\",\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"index\",\n                ],\n            },\n        ],\n        \"orderBy\": [\n            {\n                \"kind\": \"searchesCount\",\n                \"direction\": \"desc\",\n            },\n        ],\n        \"limit\": 100,\n        \"offset\": 0,\n    },\n    index=\"index\",\n)"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "response = client.query_patterns_timeseries(\n    timeseries_payload={\n        \"metrics\": [\n            {\n                \"kind\": \"searchesCount\",\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"index\",\n                ],\n            },\n        ],\n    },\n    index=\"index\",\n)",
+      "queryPatternsTimeseries with all parameters": "response = client.query_patterns_timeseries(\n    timeseries_payload={\n        \"domain\": \"core\",\n        \"metrics\": [\n            {\n                \"kind\": \"searchesCount\",\n            },\n            {\n                \"domain\": \"abtesting\",\n                \"kind\": \"isMsrQuery\",\n            },\n        ],\n        \"groupBy\": [\n            {\n                \"kind\": \"index\",\n            },\n        ],\n        \"filters\": [\n            {\n                \"kind\": \"clicked\",\n            },\n            {\n                \"kind\": \"country\",\n                \"operator\": \"=\",\n                \"parameter\": {\n                    \"kind\": \"country\",\n                },\n            },\n        ],\n        \"parameters\": [\n            {\n                \"kind\": \"indices\",\n                \"value\": [\n                    \"indexA\",\n                    \"indexB\",\n                ],\n            },\n            {\n                \"kind\": \"startDate\",\n                \"value\": \"2024-01-01T00:00:00Z\",\n            },\n            {\n                \"kind\": \"endDate\",\n                \"value\": \"2024-01-07T23:59:59Z\",\n            },\n            {\n                \"kind\": \"country\",\n                \"value\": \"FR\",\n            },\n        ],\n        \"limit\": 50,\n        \"offset\": 0,\n    },\n    index=\"indexA,indexB\",\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
@@ -881,6 +1000,9 @@
       "get getNoResultsRate with minimal parameters": "response = client.get_no_results_rate(\"index\")",
       "get getNoResultsRate with all parameters": "response = client.get_no_results_rate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\")"
     },
+    "getPatternsFields": {
+      "default": "response = client.get_patterns_fields"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "response = client.get_purchase_rate(\"index\")",
       "get getPurchaseRate with all parameters": "response = client.get_purchase_rate(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\")"
@@ -933,6 +1055,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "response = client.get_users_count(\"index\")",
       "get getUsersCount with all parameters": "response = client.get_users_count(\"index\", \"1999-09-19\", \"2001-01-01\", \"tag\")"
+    },
+    "queryPatternsDistribution": {
+      "default": "response = client.query_patterns_distribution(\n  Algolia::Analytics::DistributionPayload.new(\n    distributions: [Algolia::Analytics::DistributionDefinition.new(kind: \"clickPosition\", bins: [1, 2, 3, 4, 5])],\n    parameters: [Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"index\"])]\n  ),\n  \"index\"\n)"
+    },
+    "queryPatternsScalar": {
+      "default": "response = client.query_patterns_scalar(\n  Algolia::Analytics::ScalarPayload.new(\n    metrics: [Algolia::Analytics::FieldReference.new(kind: \"conversionRate\")],\n    parameters: [Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"index\"])]\n  ),\n  \"index\"\n)"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "response = client.query_patterns_table(\n  Algolia::Analytics::TablePayload.new(\n    metrics: [Algolia::Analytics::FieldReference.new(kind: \"searchesCount\")],\n    parameters: [Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"index\"])]\n  ),\n  \"index\"\n)",
+      "queryPatternsTable with all parameters": "response = client.query_patterns_table(\n  Algolia::Analytics::TablePayload.new(\n    domain: \"core\",\n    metrics: [Algolia::Analytics::FieldReference.new(kind: \"searchesCount\")],\n    group_by: [Algolia::Analytics::FieldReference.new(kind: \"query\")],\n    filters: [Algolia::Analytics::FilterDefinition.new(kind: \"clicked\")],\n    parameters: [Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"index\"])],\n    order_by: [Algolia::Analytics::OrderDefinition.new(kind: \"searchesCount\", direction: \"desc\")],\n    limit: 100,\n    offset: 0\n  ),\n  \"index\"\n)"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "response = client.query_patterns_timeseries(\n  Algolia::Analytics::TimeseriesPayload.new(\n    metrics: [Algolia::Analytics::FieldReference.new(kind: \"searchesCount\")],\n    parameters: [Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"index\"])]\n  ),\n  \"index\"\n)",
+      "queryPatternsTimeseries with all parameters": "response = client.query_patterns_timeseries(\n  Algolia::Analytics::TimeseriesPayload.new(\n    domain: \"core\",\n    metrics: [\n      Algolia::Analytics::FieldReference.new(kind: \"searchesCount\"),\n      Algolia::Analytics::FieldReference.new(domain: \"abtesting\", kind: \"isMsrQuery\")\n    ],\n    group_by: [Algolia::Analytics::FieldReference.new(kind: \"index\")],\n    filters: [\n      Algolia::Analytics::FilterDefinition.new(kind: \"clicked\"),\n      Algolia::Analytics::FilterDefinition.new(\n        kind: \"country\",\n        operator: \"=\",\n        parameter: Algolia::Analytics::ParameterReference.new(kind: \"country\")\n      )\n    ],\n    parameters: [\n      Algolia::Analytics::ParameterDefinition.new(kind: \"indices\", value: [\"indexA\", \"indexB\"]),\n      Algolia::Analytics::ParameterDefinition.new(kind: \"startDate\", value: \"2024-01-01T00:00:00Z\"),\n      Algolia::Analytics::ParameterDefinition.new(kind: \"endDate\", value: \"2024-01-07T23:59:59Z\"),\n      Algolia::Analytics::ParameterDefinition.new(kind: \"country\", value: \"FR\")\n    ],\n    limit: 50,\n    offset: 0\n  ),\n  \"indexA,indexB\"\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
@@ -999,6 +1135,9 @@
       "get getNoResultsRate with minimal parameters": "val response = Await.result(\n  client.getNoResultsRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
       "get getNoResultsRate with all parameters": "val response = Await.result(\n  client.getNoResultsRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
+    "getPatternsFields": {
+      "default": "val response = Await.result(\n  client.getPatternsFields(\n  ),\n  Duration(100, \"sec\")\n)"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "val response = Await.result(\n  client.getPurchaseRate(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
       "get getPurchaseRate with all parameters": "val response = Await.result(\n  client.getPurchaseRate(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
@@ -1051,6 +1190,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "val response = Await.result(\n  client.getUsersCount(\n    index = \"index\"\n  ),\n  Duration(100, \"sec\")\n)",
       "get getUsersCount with all parameters": "val response = Await.result(\n  client.getUsersCount(\n    index = \"index\",\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    tags = Some(\"tag\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "queryPatternsDistribution": {
+      "default": "val response = Await.result(\n  client.queryPatternsDistribution(\n    distributionPayload = DistributionPayload(\n      distributions = Seq(\n        DistributionDefinition(\n          kind = \"clickPosition\",\n          bins = Seq(BinEdge(1), BinEdge(2), BinEdge(3), BinEdge(4), BinEdge(5))\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"index\"))\n        )\n      )\n    ),\n    index = Some(\"index\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "queryPatternsScalar": {
+      "default": "val response = Await.result(\n  client.queryPatternsScalar(\n    scalarPayload = ScalarPayload(\n      metrics = Seq(\n        FieldReference(\n          kind = \"conversionRate\"\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"index\"))\n        )\n      )\n    ),\n    index = Some(\"index\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "val response = Await.result(\n  client.queryPatternsTable(\n    tablePayload = TablePayload(\n      metrics = Seq(\n        FieldReference(\n          kind = \"searchesCount\"\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"index\"))\n        )\n      )\n    ),\n    index = Some(\"index\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "queryPatternsTable with all parameters": "val response = Await.result(\n  client.queryPatternsTable(\n    tablePayload = TablePayload(\n      domain = Some(\"core\"),\n      metrics = Seq(\n        FieldReference(\n          kind = \"searchesCount\"\n        )\n      ),\n      groupBy = Some(\n        Seq(\n          FieldReference(\n            kind = \"query\"\n          )\n        )\n      ),\n      filters = Some(\n        Seq(\n          FilterDefinition(\n            kind = \"clicked\"\n          )\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"index\"))\n        )\n      ),\n      orderBy = Some(\n        Seq(\n          OrderDefinition(\n            kind = \"searchesCount\",\n            direction = OrderDirection.withName(\"desc\")\n          )\n        )\n      ),\n      limit = Some(100),\n      offset = Some(0)\n    ),\n    index = Some(\"index\")\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "val response = Await.result(\n  client.queryPatternsTimeseries(\n    timeseriesPayload = TimeseriesPayload(\n      metrics = Seq(\n        FieldReference(\n          kind = \"searchesCount\"\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"index\"))\n        )\n      )\n    ),\n    index = Some(\"index\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "queryPatternsTimeseries with all parameters": "val response = Await.result(\n  client.queryPatternsTimeseries(\n    timeseriesPayload = TimeseriesPayload(\n      domain = Some(\"core\"),\n      metrics = Seq(\n        FieldReference(\n          kind = \"searchesCount\"\n        ),\n        FieldReference(\n          domain = Some(\"abtesting\"),\n          kind = \"isMsrQuery\"\n        )\n      ),\n      groupBy = Some(\n        Seq(\n          FieldReference(\n            kind = \"index\"\n          )\n        )\n      ),\n      filters = Some(\n        Seq(\n          FilterDefinition(\n            kind = \"clicked\"\n          ),\n          FilterDefinition(\n            kind = \"country\",\n            operator = Some(\"=\"),\n            parameter = Some(\n              ParameterReference(\n                kind = \"country\"\n              )\n            )\n          )\n        )\n      ),\n      parameters = Seq(\n        ParameterDefinition(\n          kind = \"indices\",\n          value = ParameterValue(Seq(\"indexA\", \"indexB\"))\n        ),\n        ParameterDefinition(\n          kind = \"startDate\",\n          value = ParameterValue(\"2024-01-01T00:00:00Z\")\n        ),\n        ParameterDefinition(\n          kind = \"endDate\",\n          value = ParameterValue(\"2024-01-07T23:59:59Z\")\n        ),\n        ParameterDefinition(\n          kind = \"country\",\n          value = ParameterValue(\"FR\")\n        )\n      ),\n      limit = Some(50),\n      offset = Some(0)\n    ),\n    index = Some(\"indexA,indexB\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
@@ -1117,6 +1270,9 @@
       "get getNoResultsRate with minimal parameters": "let response = try await client.getNoResultsRate(index: \"index\")",
       "get getNoResultsRate with all parameters": "let response = try await client.getNoResultsRate(\n    index: \"index\",\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    tags: \"tag\"\n)"
     },
+    "getPatternsFields": {
+      "default": "let response = try await client.getPatternsFields()"
+    },
     "getPurchaseRate": {
       "get getPurchaseRate with minimal parameters": "let response = try await client.getPurchaseRate(index: \"index\")",
       "get getPurchaseRate with all parameters": "let response = try await client.getPurchaseRate(\n    index: \"index\",\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    tags: \"tag\"\n)"
@@ -1169,6 +1325,20 @@
     "getUsersCount": {
       "get getUsersCount with minimal parameters": "let response = try await client.getUsersCount(index: \"index\")",
       "get getUsersCount with all parameters": "let response = try await client.getUsersCount(\n    index: \"index\",\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    tags: \"tag\"\n)"
+    },
+    "queryPatternsDistribution": {
+      "default": "let response = try await client.queryPatternsDistribution(\n    distributionPayload: DistributionPayload(distributions: [DistributionDefinition(\n        kind: \"clickPosition\",\n        bins: [BinEdge.int(1), BinEdge.int(2), BinEdge.int(3), BinEdge.int(4), BinEdge.int(5)]\n    )], parameters: [ParameterDefinition(kind: \"indices\", value: ParameterValue.arrayOfString([\"index\"]))]),\n    index: \"index\"\n)"
+    },
+    "queryPatternsScalar": {
+      "default": "let response = try await client.queryPatternsScalar(\n    scalarPayload: ScalarPayload(\n        metrics: [FieldReference(kind: \"conversionRate\")],\n        parameters: [ParameterDefinition(\n            kind: \"indices\",\n            value: ParameterValue.arrayOfString([\"index\"])\n        )]\n    ),\n    index: \"index\"\n)"
+    },
+    "queryPatternsTable": {
+      "queryPatternsTable with minimal parameters": "let response = try await client.queryPatternsTable(\n    tablePayload: TablePayload(\n        metrics: [FieldReference(kind: \"searchesCount\")],\n        parameters: [ParameterDefinition(\n            kind: \"indices\",\n            value: ParameterValue.arrayOfString([\"index\"])\n        )]\n    ),\n    index: \"index\"\n)",
+      "queryPatternsTable with all parameters": "let response = try await client.queryPatternsTable(\n    tablePayload: TablePayload(\n        domain: \"core\",\n        metrics: [FieldReference(kind: \"searchesCount\")],\n        groupBy: [FieldReference(kind: \"query\")],\n        filters: [FilterDefinition(kind: \"clicked\")],\n        parameters: [ParameterDefinition(\n            kind: \"indices\",\n            value: ParameterValue.arrayOfString([\"index\"])\n        )],\n        orderBy: [OrderDefinition(kind: \"searchesCount\", direction: OrderDirection.desc)],\n        limit: 100,\n        offset: 0\n    ),\n    index: \"index\"\n)"
+    },
+    "queryPatternsTimeseries": {
+      "queryPatternsTimeseries with minimal parameters": "let response = try await client.queryPatternsTimeseries(\n    timeseriesPayload: TimeseriesPayload(\n        metrics: [FieldReference(kind: \"searchesCount\")],\n        parameters: [ParameterDefinition(\n            kind: \"indices\",\n            value: ParameterValue.arrayOfString([\"index\"])\n        )]\n    ),\n    index: \"index\"\n)",
+      "queryPatternsTimeseries with all parameters": "let response = try await client.queryPatternsTimeseries(\n    timeseriesPayload: TimeseriesPayload(domain: \"core\", metrics: [\n        FieldReference(kind: \"searchesCount\"),\n        FieldReference(domain: \"abtesting\", kind: \"isMsrQuery\"),\n    ], groupBy: [FieldReference(kind: \"index\")], filters: [\n        FilterDefinition(kind: \"clicked\"),\n        FilterDefinition(kind: \"country\", operator: \"=\", parameter: ParameterReference(kind: \"country\")),\n    ], parameters: [\n        ParameterDefinition(kind: \"indices\", value: ParameterValue.arrayOfString([\"indexA\", \"indexB\"])),\n        ParameterDefinition(kind: \"startDate\", value: ParameterValue.string(\"2024-01-01T00:00:00Z\")),\n        ParameterDefinition(kind: \"endDate\", value: ParameterValue.string(\"2024-01-07T23:59:59Z\")),\n        ParameterDefinition(kind: \"country\", value: ParameterValue.string(\"FR\")),\n    ], limit: 50, offset: 0),\n    index: \"indexA,indexB\"\n)"
     },
     "setClientApiKey": {
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"

@@ -13,6 +13,8 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: ${{ !contains(github.event.head_commit.message, 'prepare release')}}
 
+permissions: {}
+
 # Uncomment the line below to enable artifacts debugging
 # env:
 #   ACTIONS_RUNNER_DEBUG: true
@@ -22,11 +24,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: the sticky comment is posted with the app token
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
+      # no checkout: no step in this job reads the workspace
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -47,14 +47,11 @@ jobs:
   setup:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
-      - name: debugging - dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
@@ -99,6 +96,9 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Check that the issue sync workflow matches its template
+        run: diff .github/workflows/issue.yml templates/issue.yml
+
       - name: Lint generators
         run: |
           yarn cli format java generators
@@ -135,6 +135,8 @@ jobs:
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -159,6 +161,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -195,6 +199,8 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -220,7 +226,7 @@ jobs:
         run: yarn cli generate javascript
 
       - name: Update `yarn.lock` for JavaScript
-        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
         run: cd clients/algoliasearch-client-javascript && yarn build
@@ -317,6 +323,8 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
@@ -432,6 +440,8 @@ jobs:
       needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
@@ -482,6 +492,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
@@ -644,7 +656,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          # commit comments need contents: write which this job does not have, the flag never produced a comment
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           netlify-config-path: ./netlify.toml
         env:
@@ -659,6 +672,8 @@ jobs:
   action_pins:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -675,12 +690,38 @@ jobs:
             exit 1
           fi
 
+      # scoped to .github, the client repo workflows still have known permission gaps (API-479 follow-up)
+      # single jq command on purpose: the default shell has no pipefail, a pipe would hide a jq failure behind a green gate
+      - name: Check that monorepo workflows keep least-privilege permissions
+        run: |
+          jq -r '.[] | select(.ident == "excessive-permissions") | select(.locations[0].symbolic.key.Local.verbatim_path | startswith("clients/") | not) | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1)"' zizmor.json > excessive.txt
+          if [[ -s excessive.txt ]]; then
+            echo "The following workflows grant more GITHUB_TOKEN permissions than they use:"
+            cat excessive.txt
+            exit 1
+          fi
+
       - name: Check that action refs in workflow templates are pinned to a commit SHA
         run: |
           grep -rnE 'uses:.*@' templates | grep -vE 'uses:\s*[^@]+@[0-9a-f]{40}(\s|$)' > unpinned-templates.txt || true
           if [[ -s unpinned-templates.txt ]]; then
             echo "The following action refs in templates/ are not pinned to a commit SHA:"
             cat unpinned-templates.txt
+            exit 1
+          fi
+
+      - name: Check that no retired bot secret is referenced
+        run: |
+          banned='ALGOLIA_BOT_TOKEN|ALGOLIA_BOT_APP_ID|GH_PERSONAL_ACCESS_TOKEN'
+          status=0
+          grep -rnE "secrets\.($banned)" .github clients/*/.github templates > pat-refs.txt || status=$?
+          if [[ -s pat-refs.txt ]]; then
+            echo "The following retired secrets are referenced, use the GitHub App token instead:"
+            cat pat-refs.txt
+            exit 1
+          fi
+          if [[ $status -gt 1 ]]; then
+            echo "grep could not read one of the scan paths, the check did not run"
             exit 1
           fi
 
@@ -711,8 +752,7 @@ jobs:
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: every step in this job uses the app token
     steps:
       - name: Generate GitHub App Token
         id: app-token

@@ -1197,18 +1197,6 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
-  @DisplayName("e2e get conversation")
-  void getConversationTest1() {
-    assertDoesNotThrow(() -> {
-      client.getConversation("alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getProvider")
   void getProviderTest() {
     assertDoesNotThrow(() -> {

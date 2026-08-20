@@ -46,6 +46,7 @@ export const DEPENDENCIES = {
         `templates/${lang}`,
         'templates/Bug_report.yml',
         'templates/issue.yml',
+        'templates/do-not-edit-this-repository.yml',
         'templates/LICENSE',
         // language related files
         langFolder,
@@ -89,7 +90,7 @@ export async function isBaseChanged(
   for (const [key, path] of Object.entries(dependencies)) {
     const diff = await getNbGitDiff({
       branch: baseBranch,
-      path: path.join(' '),
+      path,
     });
 
     if (output) {
