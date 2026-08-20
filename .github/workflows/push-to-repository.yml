@@ -14,10 +14,14 @@ on:
           - n8n-nodes-algolia
           - api-clients-mcp
 
+permissions: {}
+
 jobs:
   push:
     name: Push generated files to the given repository
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

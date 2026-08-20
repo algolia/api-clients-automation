@@ -81,6 +81,28 @@ class TestClientRecommendClient < Test::Unit::TestCase
     assert_equal(nil, req)
   end
 
+  # the recommend client sends a Request-ID
+  def test_request_id0
+    client = Algolia::RecommendClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "recommendClient"
+      )
+    )
+
+    req = client.custom_get("1/test/request-id/smoke/recommend/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
   # switch API key
   def test_set_client_api_key0
     client = Algolia::RecommendClient.create_with_config(

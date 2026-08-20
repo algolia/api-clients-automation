@@ -15,6 +15,41 @@ class TestCompositionClientE2E < Test::Unit::TestCase
     )
   end
 
+  # the Correlation-ID ends with the sent Request-ID
+  def test_get_composition1
+    res = @client.get_composition_with_http_info("id1", {:header_params => {"request-id" => "CtsE2eEcho4"}})
+
+    assert_equal(res.status, 200)
+    correlation_id = res.headers.find { |k, _| k.to_s.casecmp?("Correlation-ID") }&.last
+    assert_not_nil(correlation_id, "the response must carry a Correlation-ID header")
+    assert(correlation_id.end_with?("CtsE2eEcho4"), "Correlation-ID #{correlation_id} must end with CtsE2eEcho4")
+    res = @client.get_composition(
+      "id1",
+      {:header_params => JSON.parse("{\"request-id\":\"CtsE2eEcho4\"}", :symbolize_names => true)}
+    )
+    expected_body = JSON.parse("{\"objectID\":\"id1\"}")
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
+  # the Correlation-ID ends with the Request-ID sent as a query parameter
+  def test_get_composition2
+    res = @client.get_composition_with_http_info(
+      "id1",
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(res.status, 200)
+    correlation_id = res.headers.find { |k, _| k.to_s.casecmp?("Correlation-ID") }&.last
+    assert_not_nil(correlation_id, "the response must carry a Correlation-ID header")
+    assert(correlation_id.end_with?("CtsE2eEchoQ"), "Correlation-ID #{correlation_id} must end with CtsE2eEchoQ")
+    res = @client.get_composition(
+      "id1",
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}", :symbolize_names => true)}
+    )
+    expected_body = JSON.parse("{\"objectID\":\"id1\"}")
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # listCompositions
   def test_list_compositions1
     res = @client.list_compositions_with_http_info

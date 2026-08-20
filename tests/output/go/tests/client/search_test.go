@@ -1408,7 +1408,7 @@ func TestSearchrequestId2(t *testing.T) {
 
 	require.NoError(t, err)
 	res, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test/request-id/caller/go"), search.WithHeaderParam("request-id", "CtsUserProvided"))
+		"1/test/request-id/caller/go").WithParameters(map[string]any{}), search.WithHeaderParam("request-id", "CtsUserProvided"))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
