@@ -179,7 +179,9 @@ module Algolia
         request[:body] = build_body(body, request_options)
         request[:query_params] = Algolia::Transport.stringify_query_params(request_options.query_params)
         if request_id_query_param && request[:query_params].keys.none? { |k| k.to_s.casecmp?(RequestId::QUERY_PARAM) }
-          request[:query_params][RequestId::QUERY_PARAM.to_sym] = Algolia::Transport.encode_uri(request_id_query_param)
+          request[:query_params][RequestId::QUERY_PARAM.to_sym] = Algolia::Transport.encode_uri(
+            request_id_query_param.to_s
+          )
         end
 
         request[:header_params] = generate_header_params(body, request_options, request_id)

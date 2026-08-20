@@ -190,6 +190,17 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal([nil], requester.request_ids.uniq)
   end
 
+  def test_non_string_query_param_request_id_survives_retries
+    requester = FailingThenSucceedingRequester.new(1)
+    hosts = Array.new(2) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    client = search_client(search_config(requester: requester, hosts: hosts))
+
+    # Non-String values are stringified on attempt 1; the retry re-application must match.
+    client.custom_get("1/test", {}, {:query_params => {"x-algolia-request-id" => 42}})
+
+    assert_equal(%w[42 42], requester.query_request_ids)
+  end
+
   def test_caller_supplied_query_param_request_id_wins
     client = search_client
 
