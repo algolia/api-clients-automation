@@ -9,7 +9,19 @@ import { setupServer } from './index.ts';
 export const REQUEST_ID_FORMAT = /^[0-9A-Za-z]{11}$/;
 
 // languages that have ported Request-ID support (API-516)
-export const REQUEST_ID_LANGUAGES = ['csharp', 'dart', 'go', 'java', 'javascript', 'kotlin', 'php', 'python', 'scala', 'swift'];
+export const REQUEST_ID_LANGUAGES = [
+  'csharp',
+  'dart',
+  'go',
+  'java',
+  'javascript',
+  'kotlin',
+  'php',
+  'python',
+  'ruby',
+  'scala',
+  'swift',
+];
 
 const retryState: Record<string, string[]> = {};
 const freshState: Record<string, string[]> = {};
