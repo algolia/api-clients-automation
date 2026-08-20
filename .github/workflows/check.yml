@@ -684,12 +684,12 @@ jobs:
             exit 1
           fi
 
-      - name: Check that no personal access token secret is referenced
+      - name: Check that no retired bot secret is referenced
         run: |
-          banned='ALGOLIA_BOT_TOKEN|GH_PERSONAL_ACCESS_TOKEN'
+          banned='ALGOLIA_BOT_TOKEN|ALGOLIA_BOT_APP_ID|GH_PERSONAL_ACCESS_TOKEN'
           grep -rnE "secrets\.($banned)" .github clients/*/.github templates > pat-refs.txt || true
           if [[ -s pat-refs.txt ]]; then
-            echo "The following personal access token secrets are referenced, use the GitHub App token instead:"
+            echo "The following retired secrets are referenced, use the GitHub App token instead:"
             cat pat-refs.txt
             exit 1
           fi
