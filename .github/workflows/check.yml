@@ -710,6 +710,21 @@ jobs:
             exit 1
           fi
 
+      - name: Check that no retired bot secret is referenced
+        run: |
+          banned='ALGOLIA_BOT_TOKEN|ALGOLIA_BOT_APP_ID|GH_PERSONAL_ACCESS_TOKEN'
+          status=0
+          grep -rnE "secrets\.($banned)" .github clients/*/.github templates > pat-refs.txt || status=$?
+          if [[ -s pat-refs.txt ]]; then
+            echo "The following retired secrets are referenced, use the GitHub App token instead:"
+            cat pat-refs.txt
+            exit 1
+          fi
+          if [[ $status -gt 1 ]]; then
+            echo "grep could not read one of the scan paths, the check did not run"
+            exit 1
+          fi
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
