@@ -5,6 +5,12 @@ namespace Algolia\AlgoliaSearch\Iterators;
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 
+/**
+ * Iterates over all hits of an index resource by fetching pages on demand.
+ *
+ * `$requestOptions` carries browse/search parameters merged into each request body;
+ * transport-level options (headers, timeouts) belong in `$transportRequestOptions`.
+ */
 abstract class AbstractAlgoliaIterator implements \Iterator
 {
     protected $indexName;

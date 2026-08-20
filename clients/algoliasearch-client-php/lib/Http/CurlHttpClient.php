@@ -154,7 +154,7 @@ final class CurlHttpClient implements HttpClientInterface
      *
      * @return array<string, string[]>
      */
-    public static function parseHeaderLine(array $responseHeaders, $headerLine)
+    private static function parseHeaderLine(array $responseHeaders, $headerLine)
     {
         $parts = explode(':', $headerLine, 2);
 

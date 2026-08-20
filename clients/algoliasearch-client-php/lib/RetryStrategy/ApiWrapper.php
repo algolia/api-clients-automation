@@ -226,7 +226,7 @@ final class ApiWrapper implements ApiWrapperInterface
                 }
 
                 // DEBUG: response details
-                $this->log(LogLevel::DEBUG, 'Response headers: '.json_encode($response->getHeaders()), $logParams);
+                $this->log(LogLevel::DEBUG, 'Response headers: '.json_encode($this->filterHeaders($response->getHeaders())), $logParams);
                 $this->log(LogLevel::DEBUG, 'Response body: '.json_encode($responseBody), $logParams);
 
                 return $responseBody;
