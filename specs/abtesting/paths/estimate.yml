@@ -2,10 +2,16 @@ post:
   tags:
     - abtest
   operationId: estimateABTest
+  deprecated: true
   x-acl:
     - analytics
   summary: Estimate the sample size and duration of an A/B test
-  description: Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+  description: |
+    This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+    Replaced by `POST /3/abtests/estimate`.
+
+    Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
   requestBody:
     required: true
     content:
