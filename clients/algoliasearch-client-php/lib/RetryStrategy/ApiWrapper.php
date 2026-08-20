@@ -6,6 +6,7 @@ use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\Configuration;
 use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
+use Algolia\AlgoliaSearch\Exceptions\DeserializationException;
 use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
 use Algolia\AlgoliaSearch\Exceptions\RetriableException;
 use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
@@ -316,11 +317,7 @@ final class ApiWrapper implements ApiWrapperInterface
             } catch (\InvalidArgumentException $e) {
                 $this->log(LogLevel::ERROR, 'Failed to deserialize response: '.$e->getMessage());
 
-                if (null !== $correlationId) {
-                    throw new \InvalidArgumentException($e->getMessage().' (Correlation-ID: '.$correlationId.')', $e->getCode(), $e);
-                }
-
-                throw $e;
+                throw new DeserializationException($e->getMessage(), $e->getCode(), $e, $correlationId);
             }
         }
 

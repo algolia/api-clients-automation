@@ -78,20 +78,9 @@ final class CurlHttpClient implements HttpClientInterface
 
         $responseHeaders = [];
         curl_setopt($curlHandle, CURLOPT_HEADERFUNCTION, function ($handle, $header) use (&$responseHeaders) {
-            $length = strlen($header);
-            $parts = explode(':', $header, 2);
+            $responseHeaders = self::parseHeaderLine($responseHeaders, $header);
 
-            if (count($parts) < 2) {
-                if (0 === strpos($header, 'HTTP/')) {
-                    $responseHeaders = [];
-                }
-
-                return $length;
-            }
-
-            $responseHeaders[trim($parts[0])][] = trim($parts[1]);
-
-            return $length;
+            return strlen($header);
         });
 
         $method = $request->getMethod();
@@ -154,6 +143,28 @@ final class CurlHttpClient implements HttpClientInterface
             '1.1',
             $error
         );
+    }
+
+    /**
+     * Folds one raw curl header line into the accumulated response headers, resetting them when
+     * an `HTTP/` status line starts a new response.
+     *
+     * @param array<string, string[]> $responseHeaders
+     * @param string                  $headerLine
+     *
+     * @return array<string, string[]>
+     */
+    public static function parseHeaderLine(array $responseHeaders, $headerLine)
+    {
+        $parts = explode(':', $headerLine, 2);
+
+        if (count($parts) < 2) {
+            return 0 === strpos($headerLine, 'HTTP/') ? [] : $responseHeaders;
+        }
+
+        $responseHeaders[trim($parts[0])][] = trim($parts[1]);
+
+        return $responseHeaders;
     }
 
     private function getMHandle($curlHandle)

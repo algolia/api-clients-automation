@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\Configuration\IngestionConfig;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
+use Algolia\AlgoliaSearch\Exceptions\DeserializationException;
 use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
@@ -110,6 +111,23 @@ class RequestIdTest extends TestCase
         $this->searchClient($http, $config)->customGet('1/test');
 
         $this->assertSame([''], $this->sentRequestIds($http));
+    }
+
+    public function testAnOptedOutClientNeverMintsThroughHelpers(): void
+    {
+        $http = $this->recorder($this->saveObjectsResponses());
+        $config = $this->searchConfig()->setRequestIdEnabled(false);
+        $client = $this->searchClient($http, $config);
+
+        $client->saveObjects('cts_request_id_php', [
+            ['objectID' => '1', 'name' => 'Adam'],
+            ['objectID' => '2', 'name' => 'Benoit'],
+            ['objectID' => '3', 'name' => 'Cyril'],
+            ['objectID' => '4', 'name' => 'David'],
+        ], true, 2);
+        iterator_to_array($client->browseObjects('cts_request_id_php'));
+
+        $this->assertSame(['', '', '', '', ''], $this->sentRequestIds($http));
     }
 
     public function testTheIngestionClientNeverMints(): void
@@ -227,6 +245,8 @@ class RequestIdTest extends TestCase
             $this->searchClient($http)->customGet('1/test');
             $this->fail('Expected InvalidArgumentException to be thrown');
         } catch (\InvalidArgumentException $e) {
+            $this->assertInstanceOf(DeserializationException::class, $e);
+            $this->assertSame('CtsFixedCorrelationId', $e->getCorrelationId());
             $this->assertStringEndsWith('(Correlation-ID: CtsFixedCorrelationId)', $e->getMessage());
             $this->assertInstanceOf(\InvalidArgumentException::class, $e->getPrevious());
         }
@@ -242,6 +262,8 @@ class RequestIdTest extends TestCase
             $this->searchClient($http)->customGet('1/test');
             $this->fail('Expected InvalidArgumentException to be thrown');
         } catch (\InvalidArgumentException $e) {
+            $this->assertInstanceOf(DeserializationException::class, $e);
+            $this->assertNull($e->getCorrelationId());
             $this->assertStringNotContainsString('Correlation-ID', $e->getMessage());
         }
     }
