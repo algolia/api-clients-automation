@@ -1351,7 +1351,14 @@ class SearchClientClientTests {
       )
     );
 
-    Object res = client.customGet("1/test/request-id/caller/java", new RequestOptions().addExtraHeader("request-id", "CtsUserProvided"));
+    Object res = client.customGet(
+      "1/test/request-id/caller/java",
+      new HashMap() {
+        {
+        }
+      },
+      new RequestOptions().addExtraHeader("request-id", "CtsUserProvided")
+    );
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"requestId\":\"CtsUserProvided\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)

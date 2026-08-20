@@ -1340,6 +1340,7 @@ public class SearchClientTests
 
     var res = await client.CustomGetAsync(
       "1/test/request-id/caller/csharp",
+      new Dictionary<string, object> { },
       options: new RequestOptionBuilder().AddExtraHeader("request-id", "CtsUserProvided").Build()
     );
 

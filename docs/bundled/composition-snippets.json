@@ -681,7 +681,9 @@
       "default": "response = client.delete_composition_rule(\"1234\", \"5678\")"
     },
     "getComposition": {
-      "getComposition": "response = client.get_composition(\"foo\")"
+      "getComposition": "response = client.get_composition(\"foo\")",
+      "the Correlation-ID ends with the sent Request-ID": "response = client.get_composition(\"id1\", {:header_params => {\"request-id\" => \"CtsE2eEcho4\"}})",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "response = client.get_composition(\n  \"id1\",\n  {:query_params => JSON.parse(\"{\\\"x-algolia-request-id\\\":\\\"CtsE2eEchoQ\\\"}\", :symbolize_names => true)}\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\"foo\", \"123\")"

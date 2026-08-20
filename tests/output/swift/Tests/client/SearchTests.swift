@@ -880,6 +880,7 @@ final class SearchClientClientTests: XCTestCase {
 
         let response = try await client.customGet(
             path: "1/test/request-id/caller/swift",
+            parameters: [String: AnyCodable](),
             requestOptions: RequestOptions(
                 headers: ["request-id": "CtsUserProvided"]
             )
