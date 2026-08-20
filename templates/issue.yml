@@ -3,9 +3,8 @@ on:
   issues:
     types: [opened]
 
-permissions:
-  issues: write
-  contents: read
+# the sync script only reads the event payload and calls the Jira API with its own token
+permissions: {}
 
 jobs:
   sync:

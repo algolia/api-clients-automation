@@ -24,8 +24,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: the sticky comment is posted with the app token
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -694,9 +693,10 @@ jobs:
           fi
 
       # scoped to .github, the client repo workflows still have known permission gaps (API-479 follow-up)
+      # single jq command on purpose: the default shell has no pipefail, a pipe would hide a jq failure behind a green gate
       - name: Check that monorepo workflows keep least-privilege permissions
         run: |
-          jq -r '.[] | select(.ident == "excessive-permissions") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1)"' zizmor.json | grep -v '^clients/' | sort -u > excessive.txt || true
+          jq -r '.[] | select(.ident == "excessive-permissions") | select(.locations[0].symbolic.key.Local.verbatim_path | startswith("clients/") | not) | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1)"' zizmor.json > excessive.txt
           if [[ -s excessive.txt ]]; then
             echo "The following workflows grant more GITHUB_TOKEN permissions than they use:"
             cat excessive.txt
@@ -739,8 +739,7 @@ jobs:
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: every step in this job uses the app token
     steps:
       - name: Generate GitHub App Token
         id: app-token
