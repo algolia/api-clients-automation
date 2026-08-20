@@ -15,4 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - run: git push -d origin "generated/${{ github.head_ref }}" || true
+      - run: git push -d origin "generated/$HEAD_REF" || true
+        env:
+          # env indirection so the branch name is never interpolated into the shell script
+          HEAD_REF: ${{ github.head_ref }}
