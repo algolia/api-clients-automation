@@ -493,20 +493,20 @@
     "customGet": {
       "allow get method for a custom path with minimal parameters": "$response = $client->customGet(\n    'test/minimal',\n);",
       "allow get method for a custom path with all parameters": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'parameters with space',\n    ],\n);",
-      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
+      "requestOptions should be escaped too": "$response = $client->customGet(\n    'test/all',\n    ['query' => 'to be overridden',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query' => 'parameters with space',\n            'and an array' => ['array', 'with spaces',\n            ],\n        ],\n        'headers' => [\n            'x-header-1' => 'spaces are left alone',\n        ],\n    ]\n);"
     },
     "customPost": {
       "allow post method for a custom path with minimal parameters": "$response = $client->customPost(\n    'test/minimal',\n);",
       "allow post method for a custom path with all parameters": "$response = $client->customPost(\n    'test/all',\n    ['query' => 'parameters',\n    ],\n    ['body' => 'parameters',\n    ],\n);",
-      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
-      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
-      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
-      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
-      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
-      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
-      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
+      "requestOptions can override default query parameters": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions merges query parameters with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'query2' => 'myQueryParameter',\n        ], ]\n);",
+      "requestOptions can override default headers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions merges headers with default ones": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'headers' => [\n            'x-algolia-api-key' => 'ALGOLIA_API_KEY',\n        ],\n    ]\n);",
+      "requestOptions queryParameters accepts booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'isItWorking' => true,\n        ], ]\n);",
+      "requestOptions queryParameters accepts integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => 2,\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of string": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => ['b and c', 'd',\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of booleans": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => [true, true, false,\n            ],\n        ], ]\n);",
+      "requestOptions queryParameters accepts list of integers": "$response = $client->customPost(\n    'test/requestOptions',\n    ['query' => 'parameters',\n    ],\n    ['facet' => 'filters',\n    ],\n    requestOptions: [\n        'queryParameters' => [\n            'myParam' => [1, 2,\n            ],\n        ], ]\n);"
     },
     "customPut": {
       "allow put method for a custom path with minimal parameters": "$response = $client->customPut(\n    'test/minimal',\n);",
@@ -519,7 +519,9 @@
       "default": "$response = $client->deleteCompositionRule(\n    '1234',\n    '5678',\n);"
     },
     "getComposition": {
-      "getComposition": "$response = $client->getComposition(\n    'foo',\n);"
+      "getComposition": "$response = $client->getComposition(\n    'foo',\n);",
+      "the Correlation-ID ends with the sent Request-ID": "$response = $client->getComposition(\n    'id1',\n    requestOptions: [\n        'headers' => [\n            'request-id' => 'CtsE2eEcho4',\n        ],\n    ]\n);",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "$response = $client->getComposition(\n    'id1',\n    requestOptions: [\n        'queryParameters' => [\n            'x-algolia-request-id' => 'CtsE2eEchoQ',\n        ], ]\n);"
     },
     "getRule": {
       "default": "$response = $client->getRule(\n    'foo',\n    '123',\n);"
@@ -598,7 +600,9 @@
       "default": "response = client.delete_composition_rule(\n    composition_id=\"1234\",\n    object_id=\"5678\",\n)"
     },
     "getComposition": {
-      "getComposition": "response = client.get_composition(\n    composition_id=\"foo\",\n)"
+      "getComposition": "response = client.get_composition(\n    composition_id=\"foo\",\n)",
+      "the Correlation-ID ends with the sent Request-ID": "response = client.get_composition(\n    composition_id=\"id1\",\n    request_options={\n        \"headers\": loads(\"\"\"{\"request-id\":\"CtsE2eEcho4\"}\"\"\"),\n    },\n)",
+      "the Correlation-ID ends with the Request-ID sent as a query parameter": "response = client.get_composition(\n    composition_id=\"id1\",\n    request_options={\n        \"query_parameters\": loads(\"\"\"{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}\"\"\"),\n    },\n)"
     },
     "getRule": {
       "default": "response = client.get_rule(\n    composition_id=\"foo\",\n    object_id=\"123\",\n)"

@@ -131,7 +131,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['name' => 'newName',
             ],
-            [
+            requestOptions: [
                 'writeTimeout' => 3456 / 1000,
             ]
         );

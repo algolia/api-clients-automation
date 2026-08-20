@@ -16,6 +16,7 @@ export const REQUEST_ID_LANGUAGES = [
   'java',
   'javascript',
   'kotlin',
+  'php',
   'python',
   'ruby',
   'scala',

@@ -3062,6 +3062,90 @@ def snippet_for_save_object():
     # SEPARATOR<
 
 
+def snippet_for_save_objects():
+    """
+    Snippet for the saveObjects method.
+
+    every request of one helper call shares one Request-ID
+    """
+    # >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+            {
+                "objectID": "3",
+                "name": "Cyril",
+            },
+            {
+                "objectID": "4",
+                "name": "David",
+            },
+        ],
+        wait_for_tasks=True,
+        batch_size=2,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_objects1():
+    """
+    Snippet for the saveObjects method.
+
+    every request of one helper call shares one Request-ID
+    """
+    # >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.save_objects(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "5",
+                "name": "Eva",
+            },
+            {
+                "objectID": "6",
+                "name": "Fred",
+            },
+            {
+                "objectID": "7",
+                "name": "Gina",
+            },
+            {
+                "objectID": "8",
+                "name": "Hugo",
+            },
+        ],
+        wait_for_tasks=True,
+        batch_size=2,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_save_objects2():
     """
     Snippet for the saveObjects method.
@@ -5606,6 +5690,34 @@ def snippet_for_search_rules():
         index_name="<YOUR_INDEX_NAME>",
         search_rules_params={
             "query": "zorro",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_rules1():
+    """
+    Snippet for the searchRules method.
+
+    the classic engine accepts a Request-ID sent as a query parameter
+    """
+    # >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        search_rules_params={
+            "query": "zorro",
+        },
+        request_options={
+            "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
         },
     )
 

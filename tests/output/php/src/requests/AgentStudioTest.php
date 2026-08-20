@@ -382,7 +382,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -454,7 +454,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -480,7 +480,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -506,7 +506,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -534,7 +534,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -562,7 +562,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -588,7 +588,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -614,7 +614,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -641,7 +641,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -668,7 +668,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],

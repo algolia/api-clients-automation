@@ -441,6 +441,38 @@ class TestSearchClientE2E:
             == _expected_body
         )
 
+    async def test_search_rules_1(self):
+        """
+        the classic engine accepts a Request-ID sent as a query parameter
+        """
+        raw_resp = await SearchClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = await SearchClient(self._e2e_app_id, self._e2e_api_key).search_rules(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+        _expected_body = loads("""{"nbHits":1,"nbPages":1,"page":0}""")
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
     async def test_search_single_index_1(self):
         """
         search with special characters in indexName
@@ -938,6 +970,38 @@ class TestSearchClientSyncE2E:
         _expected_body = loads(
             """{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}"""
         )
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
+    def test_search_rules_1(self):
+        """
+        the classic engine accepts a Request-ID sent as a query parameter
+        """
+        raw_resp = SearchClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).search_rules_with_http_info(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        resp = SearchClientSync(self._e2e_app_id, self._e2e_api_key).search_rules(
+            index_name="cts_e2e_browse",
+            search_rules_params={
+                "query": "zorro",
+            },
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eQry11"}"""),
+            },
+        )
+        _expected_body = loads("""{"nbHits":1,"nbPages":1,"page":0}""")
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
             == _expected_body
