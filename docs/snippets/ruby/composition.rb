@@ -416,6 +416,43 @@ def snippet_for_get_composition
   # SEPARATOR<
 end
 
+# Snippet for the getComposition method.
+#
+# the Correlation-ID ends with the sent Request-ID
+def snippet_for_get_composition1
+  # >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_composition("id1", {:header_params => {"request-id" => "CtsE2eEcho4"}})
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getComposition method.
+#
+# the Correlation-ID ends with the Request-ID sent as a query parameter
+def snippet_for_get_composition2
+  # >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_composition(
+    "id1",
+    {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}", :symbolize_names => true)}
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the getRule method.
 #
 # getRule

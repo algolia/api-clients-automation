@@ -1240,6 +1240,7 @@ class SearchTest extends AnyFunSuite {
     var res = Await.result(
       client.customGet[JObject](
         path = "1/test/request-id/caller/scala",
+        parameters = Some(Map()),
         requestOptions = Some(
           RequestOptions
             .builder()
