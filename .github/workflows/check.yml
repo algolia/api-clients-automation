@@ -26,8 +26,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     # no GITHUB_TOKEN permissions: the sticky comment is posted with the app token
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
+      # no checkout: no step in this job reads the workspace
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -53,11 +52,6 @@ jobs:
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
-      - name: debugging - dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
@@ -101,6 +95,9 @@ jobs:
 
       - name: Lint GitHub actions
         run: yarn github-actions:lint
+
+      - name: Check that the issue sync workflow matches its template
+        run: diff .github/workflows/issue.yml templates/issue.yml
 
       - name: Lint generators
         run: |
@@ -659,7 +656,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          # commit comments need contents: write which this job does not have, the flag never produced a comment
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           netlify-config-path: ./netlify.toml
         env:

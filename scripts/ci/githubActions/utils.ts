@@ -46,6 +46,7 @@ export const DEPENDENCIES = {
         `templates/${lang}`,
         'templates/Bug_report.yml',
         'templates/issue.yml',
+        'templates/do-not-edit-this-repository.yml',
         'templates/LICENSE',
         // language related files
         langFolder,
