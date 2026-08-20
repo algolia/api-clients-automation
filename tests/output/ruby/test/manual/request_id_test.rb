@@ -6,18 +6,22 @@ require "test/unit"
 # Requester failing with a network error until the configured number of
 # attempts is reached, recording the Request-ID header of every attempt.
 class FailingThenSucceedingRequester
-  attr_reader :request_ids, :query_request_ids
+  attr_reader :request_ids, :query_request_ids, :headers_per_attempt, :query_params_per_attempt
 
   def initialize(failures)
     @failures = failures
     @attempts = 0
     @request_ids = []
     @query_request_ids = []
+    @headers_per_attempt = []
+    @query_params_per_attempt = []
   end
 
   def send_request(host, method, path, body, query_params, headers, timeout, connect_timeout)
     @request_ids << headers["request-id"]
     @query_request_ids << (query_params.find { |k, _| k.to_s.casecmp?("x-algolia-request-id") }&.last)
+    @headers_per_attempt << headers.dup
+    @query_params_per_attempt << query_params.dup
     @attempts += 1
 
     if @attempts <= @failures
@@ -188,6 +192,23 @@ class TestRequestId < Test::Unit::TestCase
     assert_equal(3, requester.query_request_ids.length)
     assert_equal(["QueryOwned"], requester.query_request_ids.uniq)
     assert_equal([nil], requester.request_ids.uniq)
+  end
+
+  def test_caller_request_options_survive_retries
+    requester = FailingThenSucceedingRequester.new(2)
+    hosts = Array.new(3) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
+    client = search_client(search_config(requester: requester, hosts: hosts))
+
+    client.custom_get(
+      "1/test",
+      {},
+      {:header_params => {"X-Algolia-User-ID" => "user1"}, :query_params => {"page" => 2}}
+    )
+
+    # Any caller header and query param rides every attempt, not just attempt 1.
+    assert_equal(3, requester.headers_per_attempt.length)
+    requester.headers_per_attempt.each { |headers| assert_equal("user1", headers["x-algolia-user-id"]) }
+    requester.query_params_per_attempt.each { |query_params| assert_equal("2", query_params[:page]) }
   end
 
   def test_non_string_query_param_request_id_survives_retries

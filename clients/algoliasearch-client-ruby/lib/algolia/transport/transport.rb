@@ -55,21 +55,23 @@ module Algolia
 
         # The Request-ID is minted once per execution, before the host loop, so that
         # every retry attempt shares the same value and each subsequent call gets a
-        # fresh one. The decision must also happen before the loop: RequestOptions#create
-        # consumes opts[:header_params] on the first attempt, so a caller-supplied ID is
-        # only visible here.
+        # fresh one.
         request_id = mint_request_id(opts)
 
-        # A Request-ID sent on the query-param channel must survive retries on that
-        # same channel: RequestOptions#create consumes opts[:query_params] on the
-        # first attempt, just like the header channel handled above.
-        request_id_query_param = RequestId.query_param_value(opts[:query_params])
+        # RequestOptions#create consumes these two channels from opts on every
+        # attempt: snapshot them once so retries send the caller's headers and
+        # query params too. The timeout keys deliberately stay consumable, the
+        # loop below recomputes them per host.
+        header_params = opts[:header_params]
+        query_params = opts[:query_params]
 
         # The Correlation-ID of the last retried attempt whose response carried a
         # non-empty one, surfaced on the exhaustion error for support tickets.
         last_correlation_id = nil
 
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
+          opts[:header_params] ||= header_params
+          opts[:query_params] ||= query_params
           opts[:timeout] ||= get_timeout(call_type)
           opts[:connect_timeout] ||= (@config.connect_timeout || Defaults::CONNECT_TIMEOUT) * (host.retry_count + 1)
 
@@ -78,7 +80,7 @@ module Algolia
           # TODO: what is this merge for ?
           # request_options.query_params.merge!(request_options.data) if method == :GET
 
-          request = build_request(method, path, body, request_options, request_id, request_id_query_param)
+          request = build_request(method, path, body, request_options, request_id)
           response = @requester.send_request(
             host,
             request[:method],
@@ -128,18 +130,18 @@ module Algolia
 
       private
 
-      # Returns the Request-ID applied to every attempt: the caller's request-option
-      # value when present, even on a disabled client (request options are consumed
-      # on the first attempt), nil when the feature is off or the caller supplied one
-      # through the config headers or the query parameter, otherwise a fresh mint.
+      # Returns a fresh Request-ID, or nil when the feature is off for this client
+      # or the caller already supplied one through the request options, the config
+      # default headers, or the x-algolia-request-id query parameter. Caller-supplied
+      # values ride their own channel on every attempt.
       #
       # @param opts [Hash]
       #
       # @return [String, nil]
       #
       def mint_request_id(opts)
-        return RequestId.value(opts[:header_params]) if RequestId.request_id?(opts[:header_params])
         return nil unless request_id_enabled?
+        return nil if RequestId.request_id?(opts[:header_params])
         return nil if RequestId.request_id?(@config.header_params)
         return nil if RequestId.request_id_query_param?(opts[:query_params])
 
@@ -168,21 +170,15 @@ module Algolia
       # @param [Hash] body
       # @param [RequestOptions] request_options
       # @param [String, nil] request_id
-      # @param [String, nil] request_id_query_param
       #
       # @return [Hash]
       #
-      def build_request(method, path, body, request_options, request_id = nil, request_id_query_param = nil)
+      def build_request(method, path, body, request_options, request_id = nil)
         request = {}
         request[:method] = method.downcase
         request[:path] = path
         request[:body] = build_body(body, request_options)
         request[:query_params] = Algolia::Transport.stringify_query_params(request_options.query_params)
-        if request_id_query_param && request[:query_params].keys.none? { |k| k.to_s.casecmp?(RequestId::QUERY_PARAM) }
-          request[:query_params][RequestId::QUERY_PARAM.to_sym] = Algolia::Transport.encode_uri(
-            request_id_query_param.to_s
-          )
-        end
 
         request[:header_params] = generate_header_params(body, request_options, request_id)
         request[:timeout] = request_options.timeout

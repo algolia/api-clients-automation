@@ -30,18 +30,6 @@ module Algolia
         headers.any? { |k, _| k.to_s.casecmp?(HEADER) }
       end
 
-      # The Request-ID value carried by the given headers, or nil when absent.
-      #
-      # @param headers [Hash, nil]
-      #
-      # @return [String, nil]
-      #
-      def self.value(headers)
-        return nil unless headers.respond_to?(:each_pair)
-
-        headers.find { |k, _| k.to_s.casecmp?(HEADER) }&.last
-      end
-
       # Whether the given query parameters already carry an x-algolia-request-id
       # entry, whatever its casing and key type. The server consults the query
       # parameter only when the header is absent, so minting a header would
@@ -55,18 +43,6 @@ module Algolia
         return false unless query_params.respond_to?(:each_pair)
 
         query_params.any? { |k, _| k.to_s.casecmp?(QUERY_PARAM) }
-      end
-
-      # The x-algolia-request-id value carried by the given query parameters, or nil when absent.
-      #
-      # @param query_params [Hash, nil]
-      #
-      # @return [String, nil]
-      #
-      def self.query_param_value(query_params)
-        return nil unless query_params.respond_to?(:each_pair)
-
-        query_params.find { |k, _| k.to_s.casecmp?(QUERY_PARAM) }&.last
       end
     end
   end
