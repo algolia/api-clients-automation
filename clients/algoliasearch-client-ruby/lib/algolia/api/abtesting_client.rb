@@ -69,10 +69,11 @@ module Algolia
       self
     end
 
-    # Creates a new A/B test.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests`.  Creates a new A/B test.
     #
     # Required API Key ACLs:
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param add_ab_tests_request [AddABTestsRequest]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -101,7 +102,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Creates a new A/B test.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests`.  Creates a new A/B test.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -305,10 +306,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # Deletes an A/B test by its ID.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `DELETE /3/abtests/{id}`.  Deletes an A/B test by its ID.
     #
     # Required API Key ACLs:
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param id [Integer] Unique A/B test identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -337,7 +339,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes an A/B test by its ID.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `DELETE /3/abtests/{id}`.  Deletes an A/B test by its ID.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -349,10 +351,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTestResponse")
     end
 
-    # Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/estimate`.  Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
     #
     # Required API Key ACLs:
     #   - analytics
+    # THIS OPERATION IS DEPRECATED
     # @param estimate_ab_test_request [EstimateABTestRequest]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -381,7 +384,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/estimate`.  Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -393,10 +396,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::EstimateABTestResponse")
     end
 
-    # Retrieves the details for an A/B test by its ID.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests/{id}`.  Retrieves the details for an A/B test by its ID.
     #
     # Required API Key ACLs:
     #   - analytics
+    # THIS OPERATION IS DEPRECATED
     # @param id [Integer] Unique A/B test identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -425,7 +429,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the details for an A/B test by its ID.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests/{id}`.  Retrieves the details for an A/B test by its ID.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -437,10 +441,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTest")
     end
 
-    # Lists all A/B tests you configured for this application.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests`.  Lists all A/B tests you configured for this application.
     #
     # Required API Key ACLs:
     #   - analytics
+    # THIS OPERATION IS DEPRECATED
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param index_prefix [String] Index name prefix. Only A/B tests for indices starting with this string are included in the response.
@@ -477,7 +482,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Lists all A/B tests you configured for this application.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests`.  Lists all A/B tests you configured for this application.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -492,10 +497,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ListABTestsResponse")
     end
 
-    # Stops an A/B test by its ID.  You can't restart stopped A/B tests.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/{id}/stop`.  Stops an A/B test by its ID.  You can't restart stopped A/B tests.
     #
     # Required API Key ACLs:
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param id [Integer] Unique A/B test identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -524,7 +530,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Stops an A/B test by its ID.  You can't restart stopped A/B tests.
+    # This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/{id}/stop`.  Stops an A/B test by its ID.  You can't restart stopped A/B tests.
     #
     # Required API Key ACLs:
     #   - editSettings
