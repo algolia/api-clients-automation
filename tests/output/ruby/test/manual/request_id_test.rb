@@ -223,7 +223,7 @@ class TestRequestId < Test::Unit::TestCase
     hosts = Array.new(2) { Algolia::Transport::StatefulHost.new("localhost", accept: READ | WRITE) }
     client = search_client(search_config(requester: requester, hosts: hosts))
 
-    # Non-String values are stringified on attempt 1; the retry re-application must match.
+    # Non-String values are stringified the same way on every attempt.
     client.custom_get("1/test", {}, {:query_params => {"x-algolia-request-id" => 42}})
 
     assert_equal(%w[42 42], requester.query_request_ids)

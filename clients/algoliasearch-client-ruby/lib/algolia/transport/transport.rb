@@ -58,10 +58,8 @@ module Algolia
         # fresh one.
         request_id = mint_request_id(opts)
 
-        # RequestOptions#create consumes these two channels from opts on every
-        # attempt: snapshot them once so retries send the caller's headers and
-        # query params too. The timeout keys deliberately stay consumable, the
-        # loop below recomputes them per host.
+        # create consumes these two channels from opts on every attempt: snapshot them
+        # so retries keep them. Timeout keys stay consumable, recomputed per host below.
         header_params = opts[:header_params]
         query_params = opts[:query_params]
 
