@@ -226,8 +226,9 @@ def replace_all_objects_with_transformation(
   rescue Exception => e
     begin
       delete_index(tmp_index_name, without_timeouts(search_request_options))
-    rescue StandardError
-      # ignored: the root cause is re-raised below
+    rescue StandardError => cleanup_error
+      # The root cause is re-raised below, but the orphaned index must not stay silent.
+      @api_client.logger.warn("Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}")
     end
 
     raise e
@@ -660,8 +661,9 @@ def replace_all_objects(index_name, objects, batch_size = 1000, scopes = [Search
   rescue Exception => e
     begin
       delete_index(tmp_index_name, without_timeouts(request_options))
-    rescue StandardError
-      # ignored: the root cause is re-raised below
+    rescue StandardError => cleanup_error
+      # The root cause is re-raised below, but the orphaned index must not stay silent.
+      @api_client.logger.warn("Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}")
     end
 
     raise e

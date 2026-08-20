@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "algolia"
+require "logger"
+require "stringio"
 require "test/unit"
 
 # Requester failing with a network error until the configured number of
@@ -37,10 +39,15 @@ end
 class CleanupRecordingRequester
   Recorded = Struct.new(:method, :path, :headers, :timeout, :connect_timeout)
 
-  attr_reader :requests
+  attr_reader :requests, :log_device
 
   def initialize
     @requests = []
+    @log_device = StringIO.new
+  end
+
+  def logger
+    @logger ||= Logger.new(@log_device)
   end
 
   def send_request(host, method, path, _body, _query_params, headers, timeout, connect_timeout)
@@ -390,6 +397,10 @@ class TestRequestId < Test::Unit::TestCase
     first = requester.requests.first
     assert_match(REQUEST_ID_FORMAT, first.headers["request-id"])
     assert_equal(first.headers["request-id"], delete.headers["request-id"])
+
+    # The double failure is not silent: the orphaned temp index is logged.
+    assert_true(requester.log_device.string.include?("cleanup-idx_tmp_"))
+    assert_true(requester.log_device.string.include?("delete it manually"))
 
     # ...but runs with the default timeouts, not the caller's.
     assert_equal(1234, first.timeout)
