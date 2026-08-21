@@ -1,0 +1,30 @@
+[
+  {
+    "testName": "saveVariantSettings",
+    "parameters": {
+      "id": 42,
+      "variantId": 2,
+      "saveSettingsRequest": {
+        "saveFeaturesSettings": true
+      }
+    },
+    "request": {
+      "path": "/3/abtests/42/settings/2",
+      "method": "POST",
+      "body": { "saveFeaturesSettings": true }
+    }
+  },
+  {
+    "testName": "saveVariantSettingsWithoutFeatures",
+    "parameters": {
+      "id": 42,
+      "variantId": 2,
+      "saveSettingsRequest": {}
+    },
+    "request": {
+      "path": "/3/abtests/42/settings/2",
+      "method": "POST",
+      "body": {}
+    }
+  }
+]

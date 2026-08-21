@@ -7,7 +7,6 @@ import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 
 public class Snippet {
 
@@ -97,14 +96,7 @@ public class Snippet {
         context.put("requestOptions", requestOptionsContext);
       }
 
-      // Determines whether the endpoint is expected to return a response payload deserialized
-      // and therefore a variable to store it into.
-      context.put("hasResponse", true);
-      for (CodegenResponse response : ope.responses) {
-        if (response.code.equals("204")) {
-          context.put("hasResponse", false);
-        }
-      }
+      context.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
       paramsType.enhanceParameters(parameters, context, ope);
     } catch (CTSException e) {
