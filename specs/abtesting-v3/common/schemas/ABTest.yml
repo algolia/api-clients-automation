@@ -34,6 +34,13 @@ ABTest:
       $ref: '#/MigratedABTestId'
     decision:
       $ref: '#/Decision'
+    hasEnoughEvidence:
+      type: boolean
+      description: |
+        Whether the A/B test has accumulated enough evidence to trust its result on the test's `primaryMetric`.
+
+        If omitted, the signal is unknown or not applicable. false means the test was evaluated but doesn't yet have enough evidence.
+      example: true
   required:
     - status
     - name
