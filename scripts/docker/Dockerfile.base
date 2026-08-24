@@ -1,5 +1,4 @@
-# versions must stay in sync with the config/.*-version files, CI checks the drift
-# digests are kept up to date by renovate (pinDigests), or run scripts/docker/update-pins.sh
+# versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
 FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
 FROM mcr.microsoft.com/dotnet/sdk:10.0.400@sha256:e1ffd2a92ae84c1291bc1b6887501f8af98e6331e7af6d4c8d37168c5e87a64c AS csharp-builder
 FROM golang:1.26.6-alpine@sha256:3889b425f035be855a72fb4755265311293b6d414521f0a519d819df32222d83 AS go-builder
@@ -24,7 +23,7 @@ RUN curl -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.
   && nvm install \
   && npm install -g yarn@1.22.22
 
-# SDKMAN, the bootstrap script is checksummed but downloads the sdkman-cli archive itself
+# SDKMAN
 ARG JAVA_VERSION
 RUN curl -s -o /tmp/sdkman-install.sh "https://get.sdkman.io" \
   && echo "b7bda3ce24f631d54d6b6b24f9ca32bc0a0e12dde12b2c3c73b1e28c5c36a364  /tmp/sdkman-install.sh" | sha256sum -c - \
