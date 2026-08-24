@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
+import { isAbsolute } from 'node:path';
 
 import type { Artifact, DownloadArtifactOptions, DownloadArtifactResponse, FindOptions } from '@actions/artifact';
 import { DefaultArtifactClient } from '@actions/artifact';
@@ -38,6 +39,10 @@ function getExpectedChecksums(): Map<string, string> {
 
 async function sha256(filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
+    if (filePath.includes('..') || isAbsolute(filePath)) {
+      reject(new Error('Invalid file path'));
+      return;
+    }
     const hash = createHash('sha256');
     createReadStream(filePath)
       .on('error', reject)
