@@ -26,13 +26,17 @@ async function download(
 
 // expected checksums come from the producing jobs' outputs, a trusted channel,
 // lines are `<sha256> <artifact name>`, artifacts without a line are not verified
+// a line that does not parse means a producing job output went missing, fail closed
 function getExpectedChecksums(): Map<string, string> {
   const checksums = new Map<string, string>();
   for (const line of core.getMultilineInput('expected-checksums')) {
     const [sha, name] = line.trim().split(/\s+/);
-    if (sha && name && /^[0-9a-f]{64}$/.test(sha)) {
-      checksums.set(name, sha);
+    if (!sha || !name || !/^[0-9a-f]{64}$/.test(sha)) {
+      throw new Error(
+        `Malformed expected-checksums line '${line}', the producing job's checksum output is probably missing`,
+      );
     }
+    checksums.set(name, sha);
   }
   return checksums;
 }
@@ -54,7 +58,7 @@ async function sha256(filePath: string): Promise<string> {
 async function verifyChecksum(checksums: Map<string, string>, artifactName: string, filePath: string): Promise<void> {
   const expected = checksums.get(artifactName);
   if (expected === undefined) {
-    core.info(`No checksum provided for the '${artifactName}' artifact, skipping verification`);
+    core.warning(`No checksum provided for the '${artifactName}' artifact, restoring it unverified`);
     return;
   }
   const actual = await sha256(filePath);
