@@ -24,9 +24,8 @@ async function download(
   }
 }
 
-// expected checksums come from the producing jobs' outputs, a trusted channel,
-// lines are `<sha256> <artifact name>`, artifacts without a line are not verified
-// a line that does not parse means a producing job output went missing, fail closed
+// lines are `<sha256> <artifact name>` coming from the producing jobs' outputs,
+// artifacts without a line are restored unverified, a line that does not parse fails
 function getExpectedChecksums(): Map<string, string> {
   const checksums = new Map<string, string>();
   for (const line of core.getMultilineInput('expected-checksums')) {
