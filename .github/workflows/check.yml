@@ -96,6 +96,9 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Check that the docker image pins match the config versions
+        run: bash scripts/docker/check-version-drift.sh
+
       - name: Check that the issue sync workflow matches its template
         run: diff .github/workflows/issue.yml templates/issue.yml
 

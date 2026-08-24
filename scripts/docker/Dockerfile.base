@@ -1,15 +1,11 @@
-ARG DART_VERSION
-ARG GO_VERSION
-ARG NODE_VERSION
-ARG PHP_VERSION
-ARG PYTHON_VERSION
-ARG CSHARP_VERSION
-
-FROM dart:${DART_VERSION} AS dart-builder
-FROM mcr.microsoft.com/dotnet/sdk:${CSHARP_VERSION} AS csharp-builder
-FROM golang:${GO_VERSION}-alpine AS go-builder
-FROM python:${PYTHON_VERSION}-trixie AS python-builder
-FROM php:${PHP_VERSION}-trixie AS builder
+# versions must stay in sync with the config/.*-version files, CI checks the drift
+# digests are kept up to date by renovate (pinDigests), or run scripts/docker/update-pins.sh
+FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0.400@sha256:e1ffd2a92ae84c1291bc1b6887501f8af98e6331e7af6d4c8d37168c5e87a64c AS csharp-builder
+FROM golang:1.26.6-alpine@sha256:3889b425f035be855a72fb4755265311293b6d414521f0a519d819df32222d83 AS go-builder
+FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
+FROM composer:2.10.2@sha256:4d71c3c2109c61d5415544264b59ad4087e4c5b7244481723664138fd36d5040 AS composer-builder
+FROM php:8.5.9-trixie@sha256:54d82ff9be6bd198145e90c917fc9b2e24230b42e52def8deb3554baf61c451a AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -22,19 +18,23 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY .nvmrc .nvmrc
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && source ~/.profile \
+RUN curl -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh \
+  && echo "8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643  /tmp/nvm-install.sh" | sha256sum -c - \
+  && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
   && npm install -g yarn
 
-# SDKMAN
+# SDKMAN, the bootstrap script is checksummed but downloads the sdkman-cli archive itself
 ARG JAVA_VERSION
-RUN curl -s "https://get.sdkman.io" | bash
+RUN curl -s -o /tmp/sdkman-install.sh "https://get.sdkman.io" \
+  && echo "b7bda3ce24f631d54d6b6b24f9ca32bc0a0e12dde12b2c3c73b1e28c5c36a364  /tmp/sdkman-install.sh" | sha256sum -c - \
+  && bash /tmp/sdkman-install.sh && rm /tmp/sdkman-install.sh
 RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install java ${JAVA_VERSION}-zulu \
   && sdk install sbt
 
 # Java formatter
-ADD https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar /tmp/java-formatter.jar
+ADD --checksum=sha256:25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4 https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar /tmp/java-formatter.jar
 
 
 # Python
@@ -51,7 +51,9 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
-  && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.10.1 \
+  && curl -sSfL -o /tmp/golangci-install.sh https://raw.githubusercontent.com/golangci/golangci-lint/v2.10.1/install.sh \
+  && echo "edfa587f31bde70db161d1e5b783e086a1627d7e2f7c91de5f7cca79bcdf8631  /tmp/golangci-install.sh" | sha256sum -c - \
+  && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin v2.10.1 && rm /tmp/golangci-install.sh \
   && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 # Dart
@@ -60,7 +62,7 @@ RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >> ~/.profil
   && dart pub global activate melos
 
 # PHP
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer-builder /usr/bin/composer /usr/local/bin/composer
 
 # C#
 COPY --from=csharp-builder /usr/share/dotnet /usr/share/dotnet

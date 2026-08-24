@@ -31,6 +31,13 @@
   ],
   "packageRules": [
     {
+      "description": "Keep the docker image digests in scripts/docker/ pinned and up to date",
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": true
+    },
+    {
       "matchDepTypes": [
         "required_provider"
       ],
@@ -101,6 +108,34 @@
         "\"(?<depName>.*?)\":\\s*\"(?<currentValue>\\d+.*?)\""
       ],
       "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "description": "Update golangci-lint, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "golangci-lint/v(?<currentValue>[0-9.]+)/install\\.sh",
+        "golangci-install\\.sh -b .+ v(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update nvm, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/"
+      ],
+      "matchStrings": [
+        "nvm-sh/nvm/v(?<currentValue>[0-9.]+)/install\\.sh"
+      ],
+      "depNameTemplate": "nvm-sh/nvm",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
     },
     {
       "customType": "regex",
