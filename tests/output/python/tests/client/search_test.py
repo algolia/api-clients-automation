@@ -1284,6 +1284,7 @@ class TestSearchClient:
         _client = SearchClient.create_with_config(config=_config)
         _req = await _client.custom_get(
             path="1/test/request-id/caller/python",
+            parameters={},
             request_options={
                 "headers": loads("""{"request-id":"CtsUserProvided"}"""),
             },
@@ -3280,6 +3281,7 @@ class TestSearchClientSync:
         _client = SearchClientSync.create_with_config(config=_config)
         _req = _client.custom_get(
             path="1/test/request-id/caller/python",
+            parameters={},
             request_options={
                 "headers": loads("""{"request-id":"CtsUserProvided"}"""),
             },

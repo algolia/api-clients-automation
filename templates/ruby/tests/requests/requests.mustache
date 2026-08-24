@@ -23,6 +23,9 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test::Unit:
     assert_equal('{{{serverPathSuffix}}}{{path}}', req.path)
     assert_equal({{#request.queryParameters}}{{{.}}}{{/request.queryParameters}}{{^request.queryParameters}}{}{{/request.queryParameters}}.to_a, req.query_params.to_a)
     assert(({{#request.headers}}{{{.}}}.transform_keys(&:to_s){{/request.headers}}{{^request.headers}}{}{{/request.headers}}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    {{#absentHeaders}}
+    assert(req.headers.keys.none? { |k| k.to_s.casecmp?('{{{.}}}') }, "header {{{.}}} must be absent: #{req.headers}")
+    {{/absentHeaders}}
     {{#body}}
     assert_equal(JSON.parse(%q({{{.}}})), JSON.parse(req.body))
     {{/body}}

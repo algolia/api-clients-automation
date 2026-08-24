@@ -271,6 +271,24 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # the classic engine accepts a Request-ID sent as a query parameter
+  def test_search_rules1
+    res = @client.search_rules_with_http_info(
+      "cts_e2e_browse",
+      Algolia::Search::SearchRulesParams.new(query: "zorro"),
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(res.status, 200)
+    res = @client.search_rules(
+      "cts_e2e_browse",
+      Algolia::Search::SearchRulesParams.new(query: "zorro"),
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+    )
+    expected_body = JSON.parse("{\"nbHits\":1,\"nbPages\":1,\"page\":0}")
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
   # search with special characters in indexName
   def test_search_single_index1
     res = @client.search_single_index_with_http_info("cts_e2e_space in index")

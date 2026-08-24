@@ -972,7 +972,7 @@ describe('requestId', () => {
     });
 
     const result = await client.customGet(
-      { path: '1/test/request-id/caller/javascript' },
+      { path: '1/test/request-id/caller/javascript', parameters: {} },
       {
         headers: { 'request-id': 'CtsUserProvided' },
       },

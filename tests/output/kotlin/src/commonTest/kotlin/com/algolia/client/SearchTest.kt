@@ -1672,6 +1672,7 @@ class SearchTest {
       call = {
         customGet(
           path = "1/test/request-id/caller/kotlin",
+          parameters = mapOf(),
           requestOptions =
             RequestOptions(
               headers =

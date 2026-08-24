@@ -318,6 +318,37 @@ class TestCompositionClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # the Correlation-ID ends with the sent Request-ID
+  def test_get_composition1
+    req = @client.get_composition_with_http_info("id1", {:header_params => {"request-id" => "CtsE2eEcho4"}})
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions/id1", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({:"request-id" => "CtsE2eEcho4"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # the Correlation-ID ends with the Request-ID sent as a query parameter
+  def test_get_composition2
+    req = @client.get_composition_with_http_info(
+      "id1",
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/compositions/id1", req.path)
+    assert_equal({:"x-algolia-request-id" => "CtsE2eEchoQ"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(
+      req.headers.keys.none? { |k| k.to_s.casecmp?("request-id") },
+      "header request-id must be absent: #{req.headers}"
+    )
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getRule
   def test_get_rule
     req = @client.get_rule_with_http_info("foo", "123")

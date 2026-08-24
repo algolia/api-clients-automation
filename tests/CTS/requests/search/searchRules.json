@@ -52,7 +52,7 @@
   },
   {
     "testName": "the classic engine accepts a Request-ID sent as a query parameter",
-    "skipLanguages": ["dart", "go", "ruby", "swift"],
+    "skipLanguages": ["dart", "go", "swift"],
     "parameters": {
       "indexName": "cts_e2e_browse",
       "searchRulesParams": {

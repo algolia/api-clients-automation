@@ -2935,6 +2935,25 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{\"query\":\"zorro\"}"), JSON.parse(req.body))
   end
 
+  # the classic engine accepts a Request-ID sent as a query parameter
+  def test_search_rules1
+    req = @client.search_rules_with_http_info(
+      "cts_e2e_browse",
+      Algolia::Search::SearchRulesParams.new(query: "zorro"),
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/cts_e2e_browse/rules/search", req.path)
+    assert_equal({:"x-algolia-request-id" => "CtsE2eQry11"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(
+      req.headers.keys.none? { |k| k.to_s.casecmp?("request-id") },
+      "header request-id must be absent: #{req.headers}"
+    )
+    assert_equal(JSON.parse("{\"query\":\"zorro\"}"), JSON.parse(req.body))
+  end
+
   # search with minimal parameters
   def test_search_single_index
     req = @client.search_single_index_with_http_info("indexName")

@@ -745,6 +745,7 @@ void main() {
     try {
       final res = await client.customGet(
         path: "1/test/request-id/caller/dart",
+        parameters: {},
         requestOptions: RequestOptions(
           headers: {
             'request-id': "CtsUserProvided",

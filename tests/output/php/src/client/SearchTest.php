@@ -869,6 +869,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
         $res = $client->customGet(
             '1/test/request-id/caller/php',
+            [],
             requestOptions: [
                 'headers' => [
                     'request-id' => 'CtsUserProvided',

@@ -4,15 +4,14 @@ on:
   pull_request:
     types: [opened, edited, synchronize]
 
+permissions: {}
+
 jobs:
   setup:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-
+      # no checkout: the action reads the title from the event payload
       - name: Pull Request title rules
         uses: Slashgear/action-check-pr-title@161cede0311ec624ae3ee76a2c27522f7b6fa2d8 # v5.0.1
         with:
