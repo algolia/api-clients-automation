@@ -38,6 +38,35 @@
       "pinDigests": true
     },
     {
+      "description": "The language image versions are governed by the config/.*-version files, only keep their digests fresh",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "dart",
+        "mcr.microsoft.com/dotnet/sdk",
+        "golang",
+        "python",
+        "php",
+        "ruby",
+        "swift"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Update the swiftformat docker image and the CI source build together",
+      "groupName": "swiftformat",
+      "matchPackageNames": [
+        "nicklockwood/SwiftFormat",
+        "ghcr.io/nicklockwood/swiftformat"
+      ]
+    },
+    {
       "matchDepTypes": [
         "required_provider"
       ],
@@ -361,6 +390,30 @@
         "pipx install poetry==(?<currentValue>[0-9.]+)"
       ],
       "depNameTemplate": "poetry",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "description": "Update pip in the base docker image",
+      "managerFilePatterns": [
+        "/Dockerfile/"
+      ],
+      "matchStrings": [
+        "pip install --upgrade pip==(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "pip",
+      "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "description": "Update pipx in the base docker image",
+      "managerFilePatterns": [
+        "/Dockerfile/"
+      ],
+      "matchStrings": [
+        "pipx==(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "pipx",
       "datasourceTemplate": "pypi"
     }
   ],
