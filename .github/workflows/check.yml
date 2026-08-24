@@ -174,12 +174,21 @@ jobs:
       - name: Building specs
         run: yarn cli build specs -s
 
+      - name: Zip artifact before storing
+        id: specs-zip
+        run: |
+          zip -r -y specs-bundle.zip ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          echo "SPECS_SHA=$(shasum -a 256 specs-bundle.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
       - name: Store bundled specs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: specs
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          path: specs-bundle.zip
+
+    outputs:
+      SPECS_SHA: ${{ steps.specs-zip.outputs.SPECS_SHA }}
 
   client_gen_javascript:
     timeout-minutes: 15
@@ -209,6 +218,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Remove generated clients
         if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
@@ -293,7 +303,10 @@ jobs:
         run: yarn cli build guides javascript
 
       - name: Zip artifact before storing
-        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+        id: js-zip
+        run: |
+          zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+          echo "JS_SHA=$(shasum -a 256 clients-javascript.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Store javascript clients
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -301,6 +314,9 @@ jobs:
           if-no-files-found: error
           name: clients-javascript
           path: clients-javascript.zip
+
+    outputs:
+      JS_SHA: ${{ steps.js-zip.outputs.JS_SHA }}
 
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
@@ -335,6 +351,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -452,6 +469,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -505,6 +523,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -528,6 +547,7 @@ jobs:
     timeout-minutes: 15
     needs:
       - setup
+      - specs
       - client_gen
       - client_gen_javascript
     if: |
@@ -561,6 +581,10 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
+          # the matrix client artifacts have no trusted checksum channel (matrix job outputs collide) and are restored unverified
+          expected-checksums: |
+            ${{ needs.specs.outputs.SPECS_SHA }} specs
+            ${{ needs.client_gen_javascript.outputs.JS_SHA }} clients-javascript
 
       - name: Setup
         uses: ./.github/actions/setup
