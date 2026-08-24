@@ -91,4 +91,52 @@ class TestTimeoutIntegration < Test::Unit::TestCase
       assert(elapsed > 1.5 && elapsed < 2.5, "After reset should be ~2s, got #{elapsed.round(2)}s")
     end
   end
+
+  # millisecond timeouts that are not multiples of 1000 must keep sub-second
+  # precision instead of being truncated by integer division (CR-12007)
+  def test_connect_timeout_millisecond_precision
+    host = Algolia::Transport::StatefulHost.new(
+      "10.255.255.1",
+      accept: READ | WRITE
+    )
+    config = Algolia::Configuration.new(
+      "test-app",
+      "test-key",
+      [host],
+      "TestClient",
+      connect_timeout: 2500
+    )
+    requester = Algolia::Http::HttpRequester.new("net_http_persistent", Algolia::LoggerHelper.create)
+    transporter = Algolia::Transport::Transport.new(config, requester)
+
+    start_time = Time.now
+    begin
+      transporter.request(READ, :GET, "/test", nil, {})
+      flunk("Request should have timed out")
+    rescue Algolia::AlgoliaUnreachableHostError
+      elapsed = Time.now - start_time
+      assert(elapsed > 2.25 && elapsed < 3.0, "Connect timeout of 2500ms should be ~2.5s, got #{elapsed.round(2)}s")
+    end
+  end
+
+  def test_read_timeout_millisecond_precision
+    config = Algolia::Configuration.new(
+      "test-app",
+      "test-key",
+      [create_server_host],
+      "TestClient",
+      read_timeout: 1500
+    )
+    requester = Algolia::Http::HttpRequester.new("net_http_persistent", Algolia::LoggerHelper.create)
+    transporter = Algolia::Transport::Transport.new(config, requester)
+
+    start_time = Time.now
+    begin
+      transporter.request(READ, :GET, "/1/long-wait", nil, {})
+      flunk("Request should have timed out")
+    rescue Algolia::AlgoliaUnreachableHostError
+      elapsed = Time.now - start_time
+      assert(elapsed > 1.25 && elapsed < 2.0, "Read timeout of 1500ms should be ~1.5s, got #{elapsed.round(2)}s")
+    end
+  end
 end
