@@ -584,7 +584,7 @@ jobs:
           # the matrix client artifacts have no trusted checksum channel (matrix job outputs collide) and are restored unverified
           expected-checksums: |
             ${{ needs.specs.outputs.SPECS_SHA }} specs
-            ${{ needs.client_gen_javascript.outputs.JS_SHA }} clients-javascript
+            ${{ needs.client_gen_javascript.result == 'success' && format('{0} clients-javascript', needs.client_gen_javascript.outputs.JS_SHA) || '' }}
 
       - name: Setup
         uses: ./.github/actions/setup

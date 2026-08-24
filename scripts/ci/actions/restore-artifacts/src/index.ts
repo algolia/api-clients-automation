@@ -57,7 +57,7 @@ async function sha256(filePath: string): Promise<string> {
 async function verifyChecksum(checksums: Map<string, string>, artifactName: string, filePath: string): Promise<void> {
   const expected = checksums.get(artifactName);
   if (expected === undefined) {
-    core.warning(`No checksum provided for the '${artifactName}' artifact, restoring it unverified`);
+    core.info(`No checksum provided for the '${artifactName}' artifact, restoring it unverified`);
     return;
   }
   const actual = await sha256(filePath);
