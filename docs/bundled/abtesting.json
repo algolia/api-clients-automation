@@ -3,7 +3,7 @@
   "info": {
     "title": "A/B Testing API",
     "summary": "The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience",
-    "description": "## Base URLs\n\nBase URLs for the A/B testing API:\n\n- `https://analytics.us.algolia.com`\n- `https://analytics.de.algolia.com`\n- `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the A/B testing API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nYou can make up to **100 requests per minute per app** to the A/B testing API.\nThe response includes headers with information about the limits.\n\n## Parameters\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe A/B testing API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the A/B Testing API is version 2, indicated by the `/2/` in each endpoint's URL.\n",
+    "description": "## Base URLs\n\nBase URLs for the A/B testing API:\n\n- `https://analytics.us.algolia.com`\n- `https://analytics.de.algolia.com`\n- `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the A/B testing API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nYou can make up to **100 requests per minute per app** to the A/B testing API.\nThe response includes headers with information about the limits.\n\n## Parameters\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe A/B testing API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nVersion 2 of the A/B Testing API, indicated by the `/2/` in each endpoint's URL, is deprecated.\nUse [version 3](https://www.algolia.com/doc/rest-api/abtesting-v3) instead.\n",
     "version": "2.0.0"
   },
   "servers": [
@@ -34,7 +34,7 @@
     {
       "name": "abtest",
       "x-displayName": "A/B testing",
-      "description": "Manage A/B tests.\n\nA/B tests are configurations one or more indices, usually your production index and an index with different settings that you want to test.\n"
+      "description": "Manage A/B tests.\n\nA/B tests are configurations one or more indices, usually your production index and an index with different settings that you want to test.\n\nThese operations are **deprecated**. Use the A/B Testing API v3 (`/3/abtests`) instead.\n"
     }
   ],
   "externalDocs": {
@@ -218,11 +218,12 @@
           "abtest"
         ],
         "operationId": "addABTests",
+        "deprecated": true,
         "x-acl": [
           "editSettings"
         ],
         "summary": "Create an A/B test",
-        "description": "Creates a new A/B test.",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `POST /3/abtests`.\n\nCreates a new A/B test.\n",
         "requestBody": {
           "required": true,
           "content": {
@@ -298,12 +299,13 @@
           "abtest"
         ],
         "operationId": "listABTests",
+        "deprecated": true,
         "x-mcp-tool": true,
         "x-acl": [
           "analytics"
         ],
         "summary": "List all A/B tests",
-        "description": "Lists all A/B tests you configured for this application.",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `GET /3/abtests`.\n\nLists all A/B tests you configured for this application.\n",
         "parameters": [
           {
             "name": "offset",
@@ -410,11 +412,12 @@
           "abtest"
         ],
         "operationId": "getABTest",
+        "deprecated": true,
         "x-acl": [
           "analytics"
         ],
         "summary": "Retrieve A/B test details",
-        "description": "Retrieves the details for an A/B test by its ID.",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `GET /3/abtests/{id}`.\n\nRetrieves the details for an A/B test by its ID.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/ID"
@@ -461,11 +464,12 @@
           "abtest"
         ],
         "operationId": "deleteABTest",
+        "deprecated": true,
         "x-acl": [
           "editSettings"
         ],
         "summary": "Delete an A/B test",
-        "description": "Deletes an A/B test by its ID.",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `DELETE /3/abtests/{id}`.\n\nDeletes an A/B test by its ID.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/ID"
@@ -514,11 +518,12 @@
           "abtest"
         ],
         "operationId": "stopABTest",
+        "deprecated": true,
         "x-acl": [
           "editSettings"
         ],
         "summary": "Stop an A/B test",
-        "description": "Stops an A/B test by its ID.\n\nYou can't restart stopped A/B tests.\n",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `POST /3/abtests/{id}/stop`.\n\nStops an A/B test by its ID.\n\nYou can't restart stopped A/B tests.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/ID"
@@ -567,11 +572,12 @@
           "abtest"
         ],
         "operationId": "estimateABTest",
+        "deprecated": true,
         "x-acl": [
           "analytics"
         ],
         "summary": "Estimate the sample size and duration of an A/B test",
-        "description": "Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.",
+        "description": "This endpoint is deprecated. Use the A/B Testing API v3 instead.\n\nReplaced by `POST /3/abtests/estimate`.\n\nGiven the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.\n",
         "requestBody": {
           "required": true,
           "content": {

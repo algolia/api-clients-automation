@@ -89,10 +89,13 @@ class AbtestingClient(
       options = clientOptions
     ) {
 
-  /** Creates a new A/B test.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`. Creates a new A/B
+    * test.
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     */
   def addABTests(addABTestsRequest: AddABTestsRequest, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -104,6 +107,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     */
   def addABTestsWithHTTPInfo(addABTestsRequest: AddABTestsRequest, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
@@ -323,10 +328,13 @@ class AbtestingClient(
       .build()
   }
 
-  /** Deletes an A/B test by its ID.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE /3/abtests/{id}`. Deletes an
+    * A/B test by its ID.
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
@@ -342,6 +350,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
@@ -364,11 +374,14 @@ class AbtestingClient(
       .build()
   }
 
-  /** Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of
-    * an A/B test based on historical traffic.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests/estimate`. Given the
+    * traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B
+    * test based on historical traffic.
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     */
   def estimateABTest(estimateABTestRequest: EstimateABTestRequest, requestOptions: Option[RequestOptions] = None)(
       implicit ec: ExecutionContext
@@ -384,6 +397,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     */
   def estimateABTestWithHTTPInfo(
       estimateABTestRequest: EstimateABTestRequest,
@@ -411,10 +426,13 @@ class AbtestingClient(
       .build()
   }
 
-  /** Retrieves the details for an A/B test by its ID.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests/{id}`. Retrieves the
+    * details for an A/B test by its ID.
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
@@ -428,6 +446,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
@@ -450,10 +470,13 @@ class AbtestingClient(
       .build()
   }
 
-  /** Lists all A/B tests you configured for this application.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`. Lists all A/B tests
+    * you configured for this application.
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     *
     * @param offset
     *   Position of the first item to return.
@@ -482,6 +505,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - analytics
+    *
+    * @deprecated
     *
     * @param offset
     *   Position of the first item to return.
@@ -525,10 +550,13 @@ class AbtestingClient(
       .build()
   }
 
-  /** Stops an A/B test by its ID. You can't restart stopped A/B tests.
+  /** This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests/{id}/stop`. Stops an
+    * A/B test by its ID. You can't restart stopped A/B tests.
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
@@ -543,6 +571,8 @@ class AbtestingClient(
     *
     * Required API Key ACLs:
     *   - editSettings
+    *
+    * @deprecated
     *
     * @param id
     *   Unique A/B test identifier.
