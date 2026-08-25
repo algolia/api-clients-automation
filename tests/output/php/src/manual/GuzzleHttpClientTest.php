@@ -6,6 +6,7 @@ use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
 use Algolia\AlgoliaSearch\Http\GuzzleHttpClient;
 use Algolia\AlgoliaSearch\Http\Psr7\Request;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ConnectTimeoutException;
 use GuzzleHttp\Exception\HandlerClosedException;
@@ -42,6 +43,10 @@ class GuzzleHttpClientTest extends TestCase
         $request = self::request();
 
         yield 'connection refused' => [new ConnectException('connection refused', $request)];
+
+        if (8 > ClientInterface::MAJOR_VERSION) {
+            return;
+        }
 
         yield 'connect timeout' => [new ConnectTimeoutException('connect timed out', $request)];
 

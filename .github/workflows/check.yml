@@ -427,6 +427,13 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+      # Kept last: downgrading rewrites composer.lock, which the artifact above must not carry.
+      - name: Run PHP CTS on Guzzle 7
+        if: ${{ matrix.client.language == 'php' && matrix.client.isMainVersion }}
+        run: |
+          composer update "guzzlehttp/guzzle:^7.0" --with-all-dependencies --working-dir=${{ matrix.client.path }}
+          yarn cli cts run php --no-requests --no-e2e -v
+
   kotlin_build_macos:
     timeout-minutes: 15
     runs-on: macos-14
