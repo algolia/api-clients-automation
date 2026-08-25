@@ -23,11 +23,10 @@ RUN curl -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.
   && nvm install \
   && npm install -g yarn@1.22.22
 
-# SDKMAN
+# SDKMAN, the installer is vendored (get.sdkman.io serves a mutable script), it still downloads the sdkman-cli archive itself
 ARG JAVA_VERSION
-RUN curl -s -o /tmp/sdkman-install.sh "https://get.sdkman.io" \
-  && echo "b7bda3ce24f631d54d6b6b24f9ca32bc0a0e12dde12b2c3c73b1e28c5c36a364  /tmp/sdkman-install.sh" | sha256sum -c - \
-  && bash /tmp/sdkman-install.sh && rm /tmp/sdkman-install.sh
+COPY scripts/docker/sdkman-install.sh /tmp/sdkman-install.sh
+RUN bash /tmp/sdkman-install.sh && rm /tmp/sdkman-install.sh
 RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install java ${JAVA_VERSION}-zulu \
   && sdk install sbt 2.0.6

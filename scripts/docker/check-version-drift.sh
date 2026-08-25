@@ -13,6 +13,7 @@ check() {
   expected=$(cat "config/$3")
   if [[ "$tag" != "$expected" ]]; then
     echo "$1: $2 is pinned to $tag but config/$3 says $expected"
+    echo "  -> update the FROM line in scripts/docker/$1 (scripts/docker/update-pins.sh prints the new digest)"
     fail=1
   fi
 }

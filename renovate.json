@@ -168,7 +168,7 @@
     },
     {
       "customType": "regex",
-      "description": "Update the java formatter",
+      "description": "Update the java formatter, the checksums next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
