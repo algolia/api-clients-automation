@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.91.3",
+        "guzzlehttp/guzzle": "^8.0",
         "phpunit/phpunit": "^10.0",
         "vlucas/phpdotenv": "^5.4",
         "phpstan/phpstan": "^1.12"
@@ -32,6 +33,11 @@
         "psr-4": { "Algolia\\AlgoliaSearch\\" : "lib/" },
         "files": [
             "lib/Http/Psr7/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/bootstrap.php"
         ]
     },
     "suggest": {
