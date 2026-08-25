@@ -40,17 +40,12 @@ public class TimeoutIntegrationTests
     };
   }
 
-  private static AlgoliaConfig CreateServerConfig(
-    TimeSpan connectTimeout,
-    TimeSpan readTimeout,
-    out StatefulHost host
-  )
+  private static AlgoliaConfig CreateServerConfig(TimeSpan connectTimeout, TimeSpan readTimeout)
   {
     var config = new SearchConfig("test-app", "test-key");
     config.ConnectTimeout = connectTimeout;
     config.ReadTimeout = readTimeout;
-    host = CreateServerHost();
-    config.CustomHosts = new List<StatefulHost> { host };
+    config.CustomHosts = new List<StatefulHost> { CreateServerHost() };
     return config;
   }
 
@@ -174,7 +169,7 @@ public class TimeoutIntegrationTests
   public async Task ReadTimeoutHonoredForSlowResponses()
   {
     // CR-12049: a response slower than ConnectTimeout but within ReadTimeout must succeed
-    var config = CreateServerConfig(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(2), out _);
+    var config = CreateServerConfig(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(2));
     var transport = new HttpTransport(
       config,
       new AlgoliaHttpRequester(NullLoggerFactory.Instance),
@@ -200,11 +195,7 @@ public class TimeoutIntegrationTests
   public async Task ReadTimeoutEnforcedWhenResponseTooSlow()
   {
     // a response slower than ConnectTimeout + ReadTimeout must time out
-    var config = CreateServerConfig(
-      TimeSpan.FromMilliseconds(200),
-      TimeSpan.FromMilliseconds(300),
-      out _
-    );
+    var config = CreateServerConfig(TimeSpan.FromMilliseconds(200), TimeSpan.FromMilliseconds(300));
     var transport = new HttpTransport(
       config,
       new AlgoliaHttpRequester(NullLoggerFactory.Instance),
@@ -232,11 +223,7 @@ public class TimeoutIntegrationTests
   public async Task ReadTimeoutEnforcedWhenBodyStalls()
   {
     // headers arrive instantly but the body stalls: the body read gets its own read budget
-    var config = CreateServerConfig(
-      TimeSpan.FromMilliseconds(500),
-      TimeSpan.FromMilliseconds(500),
-      out _
-    );
+    var config = CreateServerConfig(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
     var transport = new HttpTransport(
       config,
       new AlgoliaHttpRequester(NullLoggerFactory.Instance),
