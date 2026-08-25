@@ -1,3 +1,7 @@
+## [2.45.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.45.0...2.45.1)
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [2.45.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.44.0...2.45.0)
 
 - [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)

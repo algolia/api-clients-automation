@@ -1,3 +1,8 @@
+## [4.48.0](https://github.com/algolia/algoliasearch-client-php/compare/4.47.0...4.48.0)
+
+- [1b54a3d020](https://github.com/algolia/api-clients-automation/commit/1b54a3d020) feat(php): Request-ID and Correlation-ID support ([#6911](https://github.com/algolia/api-clients-automation/pull/6911)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.47.0](https://github.com/algolia/algoliasearch-client-php/compare/4.46.3...4.47.0)
 
 - [b5880f18d0](https://github.com/algolia/api-clients-automation/commit/b5880f18d0) fix(php): replace deprecated GuzzleHttp\choose_handler() ([#6828](https://github.com/algolia/api-clients-automation/pull/6828)) by [@eric-zaharia](https://github.com/eric-zaharia/)

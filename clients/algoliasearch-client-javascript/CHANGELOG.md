@@ -1,3 +1,8 @@
+## [5.57.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.57.0...5.57.1)
+
+- [120ed46971](https://github.com/algolia/api-clients-automation/commit/120ed46971) chore(ci): enable yarn hardened mode and immutable installs (API-476) ([#6915](https://github.com/algolia/api-clients-automation/pull/6915)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [5.57.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.56.0...5.57.0)
 
 - [816ba11161](https://github.com/algolia/api-clients-automation/commit/816ba11161) fix(javascript): add warning in replaceAllObjects for empty objects ([#6608](https://github.com/algolia/api-clients-automation/pull/6608)) by [@eric-zaharia](https://github.com/eric-zaharia/)
