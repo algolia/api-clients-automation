@@ -272,11 +272,11 @@ internal class HttpTransport : IDisposable
           if (_logger.IsEnabled(LogLevel.Information))
           {
             _logger.LogInformation(
-              "Retry {RetryCount}/{MaxRetries}: Timeout on {Host} after {ConnectTimeout}ms",
+              "Retry {RetryCount}/{MaxRetries}: Timeout on {Host} after {Elapsed}ms",
               attemptNumber,
               maxAttempts - 1,
               host.Url,
-              (int)connectTimeout.TotalMilliseconds
+              requestStopwatch.ElapsedMilliseconds
             );
           }
 
