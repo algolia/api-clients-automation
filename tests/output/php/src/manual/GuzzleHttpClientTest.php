@@ -31,9 +31,10 @@ class GuzzleHttpClientTest extends TestCase
     /**
      * @dataProvider retriableTransferFailures
      */
-    public function testTransferFailuresAreRaisedAsTimeouts(\Throwable $failure): void
+    public function testTransferFailuresAreRaisedAsTimeouts(\Throwable $failure, string $expectedMessage): void
     {
         $this->expectException(TimeoutException::class);
+        $this->expectExceptionMessage($expectedMessage);
 
         $this->transportFailingWith($failure)->sendRequest(self::request(), 5, 2);
     }
@@ -42,21 +43,23 @@ class GuzzleHttpClientTest extends TestCase
     {
         $request = self::request();
 
-        yield 'connection refused' => [new ConnectException('connection refused', $request)];
+        yield 'connection refused' => [new ConnectException('connection refused', $request), 'connection refused'];
 
         if (8 > ClientInterface::MAJOR_VERSION) {
+            yield 'curl timeout (errno 28)' => [new ConnectException('cURL error 28: operation timed out', $request, null, ['errno' => CURLE_OPERATION_TIMEDOUT]), 'Connection timed out'];
+
             return;
         }
 
-        yield 'connect timeout' => [new ConnectTimeoutException('connect timed out', $request)];
+        yield 'connect timeout' => [new ConnectTimeoutException('connect timed out', $request), 'Connection timed out'];
 
-        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request)];
+        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request), 'connection reset by peer'];
 
-        yield 'network timeout before headers' => [new NetworkTimeoutException('operation timed out', $request)];
+        yield 'network timeout before headers' => [new NetworkTimeoutException('operation timed out', $request), 'Connection timed out'];
 
-        yield 'read timeout after headers' => [new ResponseTimeoutException('operation timed out', $request, new GuzzleResponse(200, [], '{"hits":['))];
+        yield 'read timeout after headers' => [new ResponseTimeoutException('operation timed out', $request, new GuzzleResponse(200, [], '{"hits":[')), 'Connection timed out'];
 
-        yield 'handler closed mid-transfer' => [new HandlerClosedException('handler closed', $request)];
+        yield 'handler closed mid-transfer' => [new HandlerClosedException('handler closed', $request), 'handler closed'];
     }
 
     public function testFailuresCarryingAResponseReturnThatResponse(): void
