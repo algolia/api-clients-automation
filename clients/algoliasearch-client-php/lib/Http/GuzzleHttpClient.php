@@ -32,6 +32,7 @@ final class GuzzleHttpClient implements HttpClientInterface
             $response = $this->client->send($request, [
                 'timeout' => $timeout,
                 'connect_timeout' => $connectTimeout,
+                'decode_content' => 'gzip',
             ]);
         } catch (HandlerClosedException|NetworkExceptionInterface|ResponseTimeoutException $e) {
             throw new TimeoutException($e->getMessage(), 0, $e);
