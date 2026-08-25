@@ -108,7 +108,7 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         ...(suites.client ? [`${cwd}/src/manual/`] : []),
       ].join(' ');
       await run(
-        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${phpTestPaths}`,
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --bootstrap ./clients/algoliasearch-client-php/tests/bootstrap.php --testdox --fail-on-warning ${phpTestPaths}`,
         {
           language,
         },

@@ -35,11 +35,6 @@
             "lib/Http/Psr7/functions.php"
         ]
     },
-    "autoload-dev": {
-        "files": [
-            "tests/bootstrap.php"
-        ]
-    },
     "suggest": {
         "guzzlehttp/guzzle": "If you prefer to use Guzzle HTTP client instead of the Http Client implementation provided by the package"
     },
