@@ -427,7 +427,6 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
-      # Kept last: downgrading rewrites composer.lock, which the artifact above must not carry.
       - name: Run PHP CTS on Guzzle 7
         if: ${{ matrix.client.language == 'php' && matrix.client.isMainVersion }}
         run: |
