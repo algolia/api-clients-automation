@@ -187,7 +187,7 @@ The report must match this template **verbatim** — same headings, same bullet 
 The first line of the report MUST be the HTML marker exactly as shown — it is kept so any tooling that consumes the file can find and replace its output.
 
 ```
-<!-- type: pr-review -->
+<!-- type: api-clients-review -->
 ## PR Review
 
 ### Overview
@@ -210,7 +210,7 @@ If a single section has no findings, its body is exactly one line — `No blocki
 If no findings under any rule or the general pass, the body is exactly:
 
 ```
-<!-- type: pr-review -->
+<!-- type: api-clients-review -->
 ## PR Review
 
 ### Overview
@@ -221,4 +221,4 @@ No issues found under the review checklist.
 
 ## 5. Save the report
 
-Save the report to both `/tmp/pr-review-{pr-number}.md` and `pr-review-{pr-number}.md` at the repository root — do **not** post it as a GitHub PR comment. Print the full report text in your response so the user can read it directly.
+Save the report to both `/tmp/api-clients-review-{pr-number}.md` and `api-clients-review-{pr-number}.md` at the repository root — do **not** post it as a GitHub PR comment. Print the full report text in your response so the user can read it directly.
