@@ -164,6 +164,14 @@ Explain the response format, status codes, and error messages.
 
 State the current version of the API and how to determine it.
 
+## Beta APIs and endpoints
+
+Don't announce beta status in prose, in the API `description`, or in operation summaries and descriptions.
+Instead, set `x-beta: true` on the whole API or on a single operation.
+The documentation then displays a beta banner for that API or endpoint.
+
+For details, see [Beta APIs](./write-a-specification.md#beta-apis) and [Beta endpoints](./write-a-specification.md#beta-endpoints).
+
 ## Operation summaries
 
 Operations are endpoints combined with an HTTP verb.
