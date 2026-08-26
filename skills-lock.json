@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "api-clients-review": {
+      "source": "algolia/api-clients-review",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "0a9b87945cc3605e7f2728900b9a429507cb6e89fe34ece2aad47606fe742e2a"
+    }
+  }
+}
