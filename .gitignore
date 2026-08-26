@@ -60,4 +60,4 @@ swiftformat
 foo
 
 # reports saved by the api-clients-review skill
-.agents/reviews/*.md
+.agents/reviews/
