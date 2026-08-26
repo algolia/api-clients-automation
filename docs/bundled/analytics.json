@@ -3,7 +3,7 @@
   "info": {
     "title": "Analytics API",
     "summary": "The Analytics API gives you access to metrics related to your Algolia search experience",
-    "description": "## Base URLs\n\nBase URLs for the Analytics API:\n\n- `https://analytics.us.algolia.com`\n- `https://analytics.de.algolia.com`\n- `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the Analytics API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nYou can make up to **100 requests per minute per app** to the Analytics API.\nThe response includes headers with information about the limits.\n\n## Parameters\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Analytics API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\n- Successful responses return a `2xx` status\n- Client errors return a `4xx` status\n- Server errors are indicated by a `5xx` status.\n\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL.\n\nA Beta semantic patterns framework is also available under `/3/patterns/*` for building custom\nanalytics queries. These endpoints are under active development and may change without notice.\n\n## Query aggregation\n\nAlgolia accepts queries on each keystroke.\nTo ensure you have relevant analytics data, however, the series of keystrokes is aggregated to keep only the latest (final) user query.\nThis is called \"prefix\" aggregation.\n\nFor more information, see [Query agggregation and processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation).\n\nSee the analytics implementation overview for more information about query aggregation.\n",
+    "description": "## Base URLs\n\nBase URLs for the Analytics API:\n\n- `https://analytics.us.algolia.com`\n- `https://analytics.de.algolia.com`\n- `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the Analytics API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nYou can make up to **100 requests per minute per app** to the Analytics API.\nThe response includes headers with information about the limits.\n\n## Parameters\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Analytics API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\n- Successful responses return a `2xx` status\n- Client errors return a `4xx` status\n- Server errors are indicated by a `5xx` status.\n\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL.\n\nA semantic patterns framework is also available under `/3/patterns/*` for building custom\nanalytics queries.\n\n## Query aggregation\n\nAlgolia accepts queries on each keystroke.\nTo ensure you have relevant analytics data, however, the series of keystrokes is aggregated to keep only the latest (final) user query.\nThis is called \"prefix\" aggregation.\n\nFor more information, see [Query agggregation and processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation).\n\nSee the analytics implementation overview for more information about query aggregation.\n",
     "version": "2.0.0"
   },
   "servers": [
@@ -43,8 +43,8 @@
     },
     {
       "name": "pattern",
-      "x-displayName": "Patterns (Beta)",
-      "description": "Beta — the semantic patterns query framework (`/3/patterns/*`).\nBuild custom analytics queries from metrics, groupBy, filters, and parameters.\nThese endpoints are under active development and may change without notice.\n"
+      "x-displayName": "Patterns",
+      "description": "The semantic patterns query framework (`/3/patterns/*`).\nBuild custom analytics queries from metrics, groupBy, filters, and parameters.\n"
     },
     {
       "name": "revenue",
@@ -2088,10 +2088,11 @@
           "pattern"
         ],
         "operationId": "getPatternsFields",
+        "x-beta": true,
         "x-acl": [],
         "security": [],
-        "summary": "(Beta) Retrieve the field catalog",
-        "description": "**Beta**: this endpoint is under active development and may change without notice.\n\nReturns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,\ngroups, distributions). No authentication is required. Use it to discover valid `(domain, kind)`\npairs before building the other `/3/patterns/*` queries; two fields are combinable in one query\nonly when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field\nis actually used in a query.\n",
+        "summary": "Retrieve the field catalog",
+        "description": "Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,\ngroups, distributions). No authentication is required. Use it to discover valid `(domain, kind)`\npairs before building the other `/3/patterns/*` queries; two fields are combinable in one query\nonly when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field\nis actually used in a query.\n",
         "responses": {
           "200": {
             "description": "OK",
@@ -2129,11 +2130,12 @@
           "pattern"
         ],
         "operationId": "queryPatternsTimeseries",
+        "x-beta": true,
         "x-acl": [
           "analytics"
         ],
-        "summary": "(Beta) Query a metrics time series",
-        "description": "**Beta**: this endpoint is under active development and may change without notice.\n\nReturns one time series per `groupBy` combination, each with period `totals` and a per-day metric\nbreakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover\nvalid field kinds per domain with `/3/patterns/fields`.\n",
+        "summary": "Query a metrics time series",
+        "description": "Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric\nbreakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover\nvalid field kinds per domain with `/3/patterns/fields`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexQuery"
@@ -2192,11 +2194,12 @@
           "pattern"
         ],
         "operationId": "queryPatternsScalar",
+        "x-beta": true,
         "x-acl": [
           "analytics"
         ],
-        "summary": "(Beta) Query single-row aggregates",
-        "description": "**Beta**: this endpoint is under active development and may change without notice.\n\nAggregates the requested `metrics` over the whole period and returns a single object keyed by metric\nkind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per\ndomain with `/3/patterns/fields`.\n",
+        "summary": "Query single-row aggregates",
+        "description": "Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric\nkind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per\ndomain with `/3/patterns/fields`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexQuery"
@@ -2255,11 +2258,12 @@
           "pattern"
         ],
         "operationId": "queryPatternsTable",
+        "x-beta": true,
         "x-acl": [
           "analytics"
         ],
-        "summary": "(Beta) Query a grouped table",
-        "description": "**Beta**: this endpoint is under active development and may change without notice.\n\nReturns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;\n`groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.\nDiscover valid field kinds per domain with `/3/patterns/fields`.\n",
+        "summary": "Query a grouped table",
+        "description": "Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;\n`groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set.\nDiscover valid field kinds per domain with `/3/patterns/fields`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexQuery"
@@ -2318,11 +2322,12 @@
           "pattern"
         ],
         "operationId": "queryPatternsDistribution",
+        "x-beta": true,
         "x-acl": [
           "analytics"
         ],
-        "summary": "(Beta) Query a numeric distribution",
-        "description": "**Beta**: this endpoint is under active development and may change without notice.\n\nBuckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,\neach mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is\noptional. Discover valid field kinds per domain with `/3/patterns/fields`.\n",
+        "summary": "Query a numeric distribution",
+        "description": "Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,\neach mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is\noptional. Discover valid field kinds per domain with `/3/patterns/fields`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexQuery"
