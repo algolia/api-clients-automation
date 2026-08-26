@@ -58,3 +58,6 @@ pubspec.lock
 swiftformat
 
 foo
+
+# reports saved by the api-clients-review skill
+api-clients-review-*.md
