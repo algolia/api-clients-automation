@@ -746,11 +746,10 @@ def write_sidecar(ctx: ReviewContext, markdown: str, repo_root: Path | None = No
 def write_review_report(repo_root: Path, pr_number: str | None, text: str) -> list[Path]:
     tmp_path, repo_path = review_report_paths(repo_root, pr_number)
     repo_path.parent.mkdir(parents=True, exist_ok=True)
-    written: list[Path] = []
-    for path in (tmp_path, repo_path):
-        path.write_text(text, encoding="utf-8")
-        written.append(path)
-    return written
+    # Destinations are confined by review_report_paths (slug allowlist + .agents/reviews).
+    tmp_path.write_text(text, encoding="utf-8")
+    repo_path.write_text(text, encoding="utf-8")
+    return [tmp_path, repo_path]
 
 
 def build_parser() -> argparse.ArgumentParser:
