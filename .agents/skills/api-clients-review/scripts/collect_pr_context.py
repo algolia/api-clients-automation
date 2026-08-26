@@ -61,6 +61,10 @@ GH_PR_VIEW_FIELDS = (
 REVIEWS_DIR = Path(".agents") / "reviews"
 GITHUB_ACCEPT = "application/vnd.github+json"
 GITHUB_USER_AGENT = "api-clients-review"
+GITHUB_ID_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
+GITHUB_PR_NUMBER_RE = re.compile(r"^[0-9]+$")
+REPORT_SLUG_RE = re.compile(r"^(?:[0-9]+|current)$")
+ALLOWED_GITHUB_HOSTS = frozenset({"api.github.com", "github.com"})
 
 
 class HarnessError(RuntimeError):
@@ -130,11 +134,31 @@ def parse_target(tokens: list[str]) -> Target:
     )
 
 
+def _require_github_ids(owner: str | None, repo: str | None, number: str | None) -> tuple[str, str, str]:
+    if not owner or not GITHUB_ID_RE.fullmatch(owner):
+        raise HarnessError(f"Refusing unsafe GitHub owner {owner!r}")
+    if not repo or not GITHUB_ID_RE.fullmatch(repo):
+        raise HarnessError(f"Refusing unsafe GitHub repo {repo!r}")
+    if not number or not GITHUB_PR_NUMBER_RE.fullmatch(number):
+        raise HarnessError(f"Refusing unsafe PR number {number!r}")
+    return owner, repo, number
+
+
+def _report_slug(pr_number: str | None) -> str:
+    slug = pr_number or "current"
+    if not REPORT_SLUG_RE.fullmatch(slug):
+        raise HarnessError(f"Refusing unsafe review report slug {slug!r}")
+    return slug
+
+
 def review_report_paths(repo_root: Path, pr_number: str | None) -> tuple[Path, Path]:
     """Return (/tmp copy, in-repo copy under .agents/reviews/)."""
-    slug = pr_number or "current"
-    name = f"api-clients-review-{slug}.md"
-    return Path("/tmp") / name, repo_root / REVIEWS_DIR / name
+    name = f"api-clients-review-{_report_slug(pr_number)}.md"
+    reviews_dir = (repo_root / REVIEWS_DIR).resolve()
+    repo_path = (reviews_dir / name).resolve()
+    if repo_path.parent != reviews_dir:
+        raise HarnessError("Review report path escaped .agents/reviews/")
+    return Path("/tmp") / name, repo_path
 
 
 def resolve_forge(repo_root: Path, target: Target) -> Forge:
@@ -334,23 +358,61 @@ def _gh_repo_flags(forge: Forge) -> list[str]:
     return []
 
 
-def _github_http_json(path: str) -> Any:
+class _RejectRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        raise urllib.error.HTTPError(newurl, code, f"redirects disabled ({newurl})", headers, fp)
+
+
+_GITHUB_OPENER = urllib.request.build_opener(_RejectRedirects)
+
+
+def _assert_github_https_url(url: str, allowed_path_prefix: str | None = None) -> None:
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").lower()
+    if (
+        parsed.scheme != "https"
+        or host not in ALLOWED_GITHUB_HOSTS
+        or parsed.username
+        or parsed.password
+        or parsed.port not in (None, 443)
+        or ".." in parsed.path
+        or "\\" in parsed.path
+    ):
+        raise HarnessError(f"Refusing non-allowlisted GitHub URL {url!r}")
+    if allowed_path_prefix and not parsed.path.startswith(allowed_path_prefix):
+        raise HarnessError(f"Refusing GitHub URL path {parsed.path!r}")
+
+
+def _github_open(url: str, timeout: int, headers: dict[str, str]):
+    _assert_github_https_url(url)
+    request = urllib.request.Request(url, headers=headers)
+    return _GITHUB_OPENER.open(request, timeout=timeout)
+
+
+def _github_http_json(owner: str, repo: str, number: str, suffix: str) -> Any:
+    owner, repo, number = _require_github_ids(owner, repo, number)
+    if suffix not in {
+        f"pulls/{number}",
+        f"issues/{number}/comments",
+        f"pulls/{number}/reviews",
+        f"pulls/{number}/comments",
+    }:
+        raise HarnessError(f"Refusing GitHub API suffix {suffix!r}")
+    path = f"/repos/{owner}/{repo}/{suffix}"
     url = f"https://api.github.com{path}"
-    request = urllib.request.Request(
-        url,
-        headers={"Accept": GITHUB_ACCEPT, "User-Agent": GITHUB_USER_AGENT},
-    )
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with _github_open(url, timeout=30, headers={"Accept": GITHUB_ACCEPT, "User-Agent": GITHUB_USER_AGENT}) as response:
             return json.loads(response.read().decode("utf-8"))
     except urllib.error.URLError as exc:
         raise HarnessError(f"GitHub HTTP {path} failed: {exc}") from exc
 
 
-def _github_http_text(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": GITHUB_USER_AGENT})
+def _github_http_diff(owner: str, repo: str, number: str) -> str:
+    owner, repo, number = _require_github_ids(owner, repo, number)
+    url = f"https://github.com/{owner}/{repo}/pull/{number}.diff"
+    _assert_github_https_url(url, allowed_path_prefix=f"/{owner}/{repo}/pull/")
     try:
-        with urllib.request.urlopen(request, timeout=60) as response:
+        with _github_open(url, timeout=60, headers={"User-Agent": GITHUB_USER_AGENT}) as response:
             return response.read().decode("utf-8")
     except urllib.error.URLError as exc:
         raise HarnessError(f"GitHub HTTP fetch failed: {exc}") from exc
@@ -359,10 +421,10 @@ def _github_http_text(url: str) -> str:
 def collect_github_http(forge: Forge, target: Target) -> ReviewContext:
     if not forge.owner or not forge.repo or not target.number:
         raise HarnessError("GitHub HTTP fallback needs owner, repo, and PR number.")
-    owner, repo, number = forge.owner, forge.repo, target.number
-    meta = _github_http_json(f"/repos/{owner}/{repo}/pulls/{number}")
+    owner, repo, number = _require_github_ids(forge.owner, forge.repo, target.number)
+    meta = _github_http_json(owner, repo, number, f"pulls/{number}")
     comments: list[dict[str, Any]] = []
-    for item in _github_http_json(f"/repos/{owner}/{repo}/issues/{number}/comments") or []:
+    for item in _github_http_json(owner, repo, number, f"issues/{number}/comments") or []:
         comments.append(
             {
                 "kind": "issue",
@@ -370,7 +432,7 @@ def collect_github_http(forge: Forge, target: Target) -> ReviewContext:
                 "body": item.get("body") or "",
             }
         )
-    for item in _github_http_json(f"/repos/{owner}/{repo}/pulls/{number}/reviews") or []:
+    for item in _github_http_json(owner, repo, number, f"pulls/{number}/reviews") or []:
         comments.append(
             {
                 "kind": "review",
@@ -379,7 +441,7 @@ def collect_github_http(forge: Forge, target: Target) -> ReviewContext:
                 "body": item.get("body") or "",
             }
         )
-    for item in _github_http_json(f"/repos/{owner}/{repo}/pulls/{number}/comments") or []:
+    for item in _github_http_json(owner, repo, number, f"pulls/{number}/comments") or []:
         comments.append(
             {
                 "kind": "inline",
@@ -395,7 +457,7 @@ def collect_github_http(forge: Forge, target: Target) -> ReviewContext:
             labels.append(str(label.get("name") or ""))
         else:
             labels.append(str(label))
-    diff = _github_http_text(f"https://github.com/{owner}/{repo}/pull/{number}.diff")
+    diff = _github_http_diff(owner, repo, number)
     return ReviewContext(
         mode=target.mode,
         forge="github",
@@ -669,7 +731,7 @@ def render_markdown(ctx: ReviewContext) -> str:
 
 
 def write_sidecar(ctx: ReviewContext, markdown: str, repo_root: Path | None = None) -> list[Path]:
-    slug = ctx.number or "current"
+    slug = _report_slug(ctx.number)
     paths = [Path(f"/tmp/api-clients-review-context-{slug}.md")]
     written: list[Path] = []
     for path in paths:
