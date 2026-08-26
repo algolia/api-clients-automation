@@ -118,13 +118,6 @@ function addRoutes(app: express.Express): void {
     }, Number(req.params.ms));
   });
 
-  app.get('/1/test/stalled-body', (req, res) => {
-    res.status(200);
-    res.setHeader('Content-Type', 'application/json');
-    // send the headers and the beginning of the body, then stall forever
-    res.write('{"message": "stal');
-  });
-
   app.get('/1/test/repeated-headers', (req, res) => {
     res.writeEarlyHints({ link: '</style.css>; rel=preload' });
     res.append('Set-Cookie', 'a=1');

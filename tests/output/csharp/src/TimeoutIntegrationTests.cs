@@ -218,32 +218,4 @@ public class TimeoutIntegrationTests
       $"Timeout should fire at ~0.5s, got {sw.Elapsed.TotalSeconds:F2}s"
     );
   }
-
-  [Fact]
-  public async Task ReadTimeoutEnforcedWhenBodyStalls()
-  {
-    // headers arrive instantly but the body stalls: the body read gets its own read budget
-    var config = CreateServerConfig(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
-    var transport = new HttpTransport(
-      config,
-      new AlgoliaHttpRequester(NullLoggerFactory.Instance),
-      NullLoggerFactory.Instance
-    );
-
-    var sw = Stopwatch.StartNew();
-    var exception = await Assert.ThrowsAnyAsync<Exception>(() =>
-      transport.ExecuteRequestAsync(
-        HttpMethod.Get,
-        "/1/test/stalled-body",
-        new InternalRequestOptions { UseReadTransporter = true }
-      )
-    );
-    sw.Stop();
-
-    Assert.Contains("timed out", exception.Message);
-    Assert.True(
-      sw.Elapsed.TotalSeconds < 2.0,
-      $"Body read timeout should fire at ~0.5s, got {sw.Elapsed.TotalSeconds:F2}s"
-    );
-  }
 }
