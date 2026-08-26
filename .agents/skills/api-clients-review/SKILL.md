@@ -1,11 +1,7 @@
 ---
 name: api-clients-review
 description: Review an API clients pull request against a six-rule checklist (test correctness, dead or obsolete surface, template output, config mutation, documentation quality, cross-language consistency) plus a general review. Use when asked to review a PR, run api-clients-review, or check API client changes before merge.
-license: MIT
-compatibility: Requires git and Python 3.9+. GitHub PRs need the gh CLI; Origin/Cursor PRs need the origin CLI.
-metadata:
-  author: algolia
-  version: "2.1"
+compatibility: Requires git and Python 3.9+. Needs the gh CLI (or origin) to load PR context.
 ---
 
 # API clients PR review
@@ -13,8 +9,6 @@ metadata:
 You are reviewing a pull request in two passes: the custom checklist, then a general review pass. Within the checklist pass, stay strictly within the six rules. Do not propose stylistic or speculative changes outside that list, do not rewrite code that already meets the standard, and do not pad the report with generic praise.
 
 Read the full PR diff first, then read enough surrounding files to judge each finding in context before flagging anything.
-
-This skill follows the [Agent Skills](https://agentskills.io/specification) open standard. It is not tied to Claude Code, Cursor, Copilot, or any other single client.
 
 ## When to use
 
@@ -38,7 +32,7 @@ Track progress by printing the checklist in your response as you work. Use the e
 
 - ⏳ Read overlay review instructions (see below) — skip if none exist
 - ⏳ Resolve review target (user message or current branch)
-- ⏳ Collect PR context with the harness
+- ⏳ Collect PR context
 - ⏳ Apply review rules (test correctness, dead/obsolete surface, template output, config mutation, documentation quality, cross-language consistency)
 - ⏳ General review pass (correctness, conventions, performance, test coverage, security)
 - ⏳ Save review
@@ -53,11 +47,11 @@ If any of these files exist, read the first one that exists and apply it on top 
 
 1. `.agents/review-instructions.md`
 2. `.github/review-instructions.md`
-3. `.github/claude-review-instructions.md` (legacy name; still honor it)
+3. `.github/claude-review-instructions.md`
 
 ### Collect context
 
-Run the harness from the repository root (or from this skill directory). It prefers the forge in a PR URL over the local `git remote`, talks to `gh` or `origin` (with a public GitHub HTTP fallback), merges local unpushed changes in local mode, and strips generated files.
+From the repository root, run:
 
 ```sh
 python3 .agents/skills/api-clients-review/scripts/collect_pr_context.py
@@ -65,9 +59,9 @@ python3 .agents/skills/api-clients-review/scripts/collect_pr_context.py 1234
 python3 .agents/skills/api-clients-review/scripts/collect_pr_context.py https://github.com/org/repo/pull/1234
 ```
 
-If the script is invoked from inside the skill folder, `scripts/collect_pr_context.py` is the same entry point.
+If the script is invoked from this skill folder, `scripts/collect_pr_context.py` is the same entry point.
 
-Read the harness output in full. It already:
+Read the script output in full. It already:
 
 - Resolves local vs remote mode
 - Fetches PR metadata, the pushed diff, and existing review comments
@@ -105,4 +99,4 @@ Findings from this pass that are concrete and actionable go into the report's Bl
 
 The report must match [references/report.md](references/report.md) **verbatim** — same headings, same bullet format, same fallback lines. Do not add sections, prefaces, or summaries that are not in the template. Use `file:line` references for every finding.
 
-Save the report to both `/tmp/api-clients-review-{pr-number}.md` and `.agents/reviews/api-clients-review-{pr-number}.md` — do **not** post it as a GitHub or Origin PR comment. Print the full report text in your response so the user can read it directly.
+Create `.agents/reviews/` if it does not exist. Save the report to both `/tmp/api-clients-review-{pr-number}.md` and `.agents/reviews/api-clients-review-{pr-number}.md` — do **not** post it as a PR comment. Print the full report text in your response so the user can read it directly.
