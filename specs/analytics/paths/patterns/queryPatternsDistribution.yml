@@ -2,12 +2,11 @@ post:
   tags:
     - pattern
   operationId: queryPatternsDistribution
+  x-beta: true
   x-acl:
     - analytics
-  summary: (Beta) Query a numeric distribution
+  summary: Query a numeric distribution
   description: |
-    **Beta**: this endpoint is under active development and may change without notice.
-
     Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`,
     each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
     optional. Discover valid field kinds per domain with `/3/patterns/fields`.
