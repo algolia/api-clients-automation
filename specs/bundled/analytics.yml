@@ -28,10 +28,6 @@ info:
     ## Availability and authentication
 
 
-    Access to the Analytics API is available as part of the [Premium or Elevate
-    plans](https://www.algolia.com/pricing).
-
-
     Add these headers to authenticate requests:
 
 
