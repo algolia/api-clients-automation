@@ -2919,6 +2919,13 @@ paths:
                       title: log
                       type: object
                       properties:
+                        cid:
+                          type: string
+                          description: >-
+                            Correlation ID of the logged API request, also
+                            returned in that request's `Correlation-ID` response
+                            header.
+                          example: MyAppl-1tMcE-a7BqLm2Pd0Z
                         timestamp:
                           type: string
                           description: >-

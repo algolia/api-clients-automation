@@ -1051,10 +1051,6 @@ components:
           $ref: '#/components/schemas/MetricsFilters'
         errorCorrection:
           $ref: '#/components/schemas/ErrorCorrectionType'
-    MigratedABTestId:
-      type: integer
-      description: Unique migrated A/B test identifier.
-      example: 224
     Decision:
       type: object
       additionalProperties: false
@@ -1101,8 +1097,6 @@ components:
           $ref: '#/components/schemas/variants'
         configuration:
           $ref: '#/components/schemas/ABTestConfiguration'
-        migratedAbTestID:
-          $ref: '#/components/schemas/MigratedABTestId'
         decision:
           $ref: '#/components/schemas/Decision'
       required:
