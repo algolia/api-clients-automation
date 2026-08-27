@@ -90,11 +90,10 @@ info:
     `/2/` in each endpoint's URL.
 
 
-    A Beta semantic patterns framework is also available under `/3/patterns/*`
-    for building custom
+    A semantic patterns framework is also available under `/3/patterns/*` for
+    building custom
 
-    analytics queries. These endpoints are under active development and may
-    change without notice.
+    analytics queries.
 
 
     ## Query aggregation
@@ -139,15 +138,12 @@ tags:
     description: |
       Metrics related to filters.
   - name: pattern
-    x-displayName: Patterns (Beta)
+    x-displayName: Patterns
     description: >
-      Beta — the semantic patterns query framework (`/3/patterns/*`).
+      The semantic patterns query framework (`/3/patterns/*`).
 
       Build custom analytics queries from metrics, groupBy, filters, and
       parameters.
-
-      These endpoints are under active development and may change without
-      notice.
   - name: revenue
     x-displayName: Revenue
     description: |
@@ -1716,14 +1712,11 @@ paths:
       tags:
         - analytics
       operationId: getPatternsFields
+      x-beta: true
       x-acl: []
       security: []
-      summary: (Beta) Retrieve the field catalog
+      summary: Retrieve the field catalog
       description: >
-        **Beta**: this endpoint is under active development and may change
-        without notice.
-
-
         Returns the static catalog of analytics fields, grouped by domain and
         usage (metrics, filters,
 
@@ -1760,14 +1753,11 @@ paths:
       tags:
         - analytics
       operationId: queryPatternsTimeseries
+      x-beta: true
       x-acl:
         - analytics
-      summary: (Beta) Query a metrics time series
+      summary: Query a metrics time series
       description: >
-        **Beta**: this endpoint is under active development and may change
-        without notice.
-
-
         Returns one time series per `groupBy` combination, each with period
         `totals` and a per-day metric
 
@@ -1810,14 +1800,11 @@ paths:
       tags:
         - analytics
       operationId: queryPatternsScalar
+      x-beta: true
       x-acl:
         - analytics
-      summary: (Beta) Query single-row aggregates
+      summary: Query single-row aggregates
       description: >
-        **Beta**: this endpoint is under active development and may change
-        without notice.
-
-
         Aggregates the requested `metrics` over the whole period and returns a
         single object keyed by metric
 
@@ -1860,14 +1847,11 @@ paths:
       tags:
         - analytics
       operationId: queryPatternsTable
+      x-beta: true
       x-acl:
         - analytics
-      summary: (Beta) Query a grouped table
+      summary: Query a grouped table
       description: >
-        **Beta**: this endpoint is under active development and may change
-        without notice.
-
-
         Returns `rows`, each a flat object of the requested fields. `metrics`
         and `parameters` are required;
 
@@ -1910,14 +1894,11 @@ paths:
       tags:
         - analytics
       operationId: queryPatternsDistribution
+      x-beta: true
       x-acl:
         - analytics
-      summary: (Beta) Query a numeric distribution
+      summary: Query a numeric distribution
       description: >
-        **Beta**: this endpoint is under active development and may change
-        without notice.
-
-
         Buckets one or more numeric fields into histograms and returns an object
         keyed by `histogram<Field>`,
 
