@@ -11,9 +11,9 @@
   * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
   * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The Analytics API
   * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
-  * the API response. - Successful responses return a `2xx` status - Client errors return a `4xx` status - Server errors
-  * are indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The
-  * current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL. A semantic
+  * the API response. - Successful responses return a `2xx` status. - Client errors return a `4xx` status. - Server
+  * errors are indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version
+  * The current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL. A semantic
   * patterns framework is also available under `/3/patterns/_*` for building custom analytics queries. ## Query
   * aggregation Algolia accepts queries on each keystroke. To ensure you have relevant analytics data, however, the
   * series of keystrokes is aggregated to keep only the latest (final) user query. This is called \"prefix\"

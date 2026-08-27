@@ -1795,7 +1795,7 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response
+        Attributes to include in the API response.
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
@@ -1818,7 +1818,7 @@ components:
       example: 90
       description: >
         Relevancy threshold below which less relevant results aren't included in
-        the results
+        the results.
 
         You can only set `relevancyStrictness` on [virtual replica
         indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -1838,7 +1838,7 @@ components:
         - conten
         - content
       description: >
-        Attributes to highlight
+        Attributes to highlight.
 
         By default, all searchable attributes are highlighted.
 
@@ -1977,7 +1977,7 @@ components:
     allowTyposOnNumericTokens:
       type: boolean
       description: |
-        Whether to allow typos on numbers in the search query
+        Whether to allow typos on numbers in the search query.
         Turn off this setting to reduce the number of irrelevant matches
         when searching in large sets of similar numbers.
       default: true
@@ -2001,7 +2001,7 @@ components:
         attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
-          This can happen with attributes that are long blocks of text, such as product descriptions
+          This can happen with attributes that are long blocks of text, such as product descriptions.
         Consider alternatives such as `disableTypoToleranceOnWords` or adding
         synonyms if your attributes have intentional unusual spellings that
         might look like typos.
@@ -2110,7 +2110,7 @@ components:
     decompoundQuery:
       type: boolean
       description: >
-        Whether to split compound words in the query into their building blocks
+        Whether to split compound words in the query into their building blocks.
 
         For more information, see [Word
         segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
@@ -2232,7 +2232,7 @@ components:
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
-        queries
+        queries.
 
         Use the `advancedSyntaxFeatures` parameter to control which feature is
         supported.
@@ -2361,24 +2361,24 @@ components:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
-        matches
+        matches.
 
         By default, Algolia treats singular and plural forms of a word, and
         single-word synonyms, as
         [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
         matches when searching.
 
-        For example
+        For example:
 
-        - "swimsuit" and "swimsuits" are treated the same
+        - "swimsuit" and "swimsuits" are treated the same.
 
         - "swimsuit" and "swimwear" are treated the same (if they are
-        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
         - `ignorePlurals`.
-          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY" = "NYC", are considered exact matches
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
         - `multiWordsSynonym`.
           Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
@@ -2398,13 +2398,13 @@ components:
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
       description: |
-        Advanced search syntax features you want to support
+        Advanced search syntax features you want to support.
         - `exactPhrase`.
           Phrases in quotes must match exactly.
-          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
         - `excludeWords`.
           Query words prefixed with a `-` must not occur in a record.
-          For example, `search -engine` matches records that contain "search" but not "engine"
+          For example, `search -engine` matches records that contain "search" but not "engine".
         This setting only has an effect if `advancedSyntax` is true.
       default:
         - exactPhrase
@@ -2455,7 +2455,7 @@ components:
     replaceSynonymsInHighlight:
       type: boolean
       description: >
-        Whether to replace a highlighted word with the matched synonym
+        Whether to replace a highlighted word with the matched synonym.
 
         By default, the original words are highlighted even if a synonym
         matches.
@@ -2481,7 +2481,7 @@ components:
       minimum: 1
       maximum: 7
       description: >
-        Minimum proximity score for two matching words
+        Minimum proximity score for two matching words.
 
         This adjusts the [Proximity ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -2498,7 +2498,7 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of search and browse requests
+        Properties to include in the API response of search and browse requests.
 
         By default, all response properties are included.
 
@@ -2536,13 +2536,13 @@ components:
     sortFacetValuesBy:
       type: string
       description: >
-        Order in which to retrieve facet values
+        Order in which to retrieve facet values.
 
         - `count`.
           Facet values are retrieved by decreasing count.
-          The count is the number of matching records containing this facet value
+          The count is the number of matching records containing this facet value.
         - `alpha`.
-          Retrieve facet values alphabetically
+          Retrieve facet values alphabetically.
         This setting doesn't influence how facet values are displayed in your UI
         (see `renderingContent`).
 
@@ -2555,7 +2555,7 @@ components:
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
-        proximity
+        proximity.
 
         This setting only affects ranking if the Attribute ranking criterion
         comes before Proximity in the `ranking` setting.
@@ -2565,7 +2565,53 @@ components:
 
         Otherwise, the best matching attribute is determined by the order in the
         `searchableAttributes` setting.
+
+
+        Prefer `attributeCriteriaComputedBy`, which expresses the same two
+        behaviors and adds the `sum` strategy.
+
+        If you set both, `attributeCriteriaComputedBy` takes precedence.
       default: false
+      x-categories:
+        - Advanced
+    attributeCriteriaComputedBy:
+      type: string
+      title: attribute criteria computed by
+      enum:
+        - minProximity
+        - best
+        - sum
+      description: >
+        Strategy for computing the Attribute ranking criterion.
+
+        This mainly affects multi-word queries with matches in more than one
+        attribute.
+
+
+        The `ranking` setting decides whether `best` takes effect.
+
+        When Attribute comes after Proximity, which is the default order, the
+        engine always uses the `minProximity` strategy and ignores `best`.
+
+        To select `best`, move Attribute before Proximity in `ranking`.
+
+        The `sum` strategy applies in both orders.
+
+
+        - `minProximity`.
+          Pick the best matching attribute from the attributes that form the best proximity score.
+          On an ordered attribute, the match position breaks ties.
+        - `best`.
+          Pick the best matching attribute from all attributes that match any query word.
+          On an ordered attribute, the match position breaks ties.
+        - `sum`.
+          Add up a score for every query word instead of picking one attribute.
+          Each word's score comes from the attribute it matched, and from its position in that attribute when the attribute is ordered.
+          A query word that matches nothing adds a large penalty.
+          A record with a lower total ranks higher.
+          A record therefore cannot rank high only because one word of a multi-word query matched a top attribute.
+          Use `sum` with short, relevant attributes, and set long-text attributes to unordered.
+      default: best
       x-categories:
         - Advanced
     order:
@@ -2712,7 +2758,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking).
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -2854,6 +2900,8 @@ components:
           $ref: '#/components/schemas/sortFacetValuesBy'
         attributeCriteriaComputedByMinProximity:
           $ref: '#/components/schemas/attributeCriteriaComputedByMinProximity'
+        attributeCriteriaComputedBy:
+          $ref: '#/components/schemas/attributeCriteriaComputedBy'
         renderingContent:
           $ref: '#/components/schemas/renderingContent'
         enableReRanking:
@@ -3238,7 +3286,7 @@ components:
         - If you don't specify a time, the crawl can happen any time during the
         scheduled day.
 
-        - Specify times for the UTC (GMT+0) timezone
+        - Specify times for the UTC (GMT+0) timezone.
 
         - Include minutes when specifying a time. For example, "at 3:00 pm"
         instead of "at 3pm".
@@ -3275,7 +3323,7 @@ components:
             - These [rights and
             restrictions](https://www.algolia.com/doc/guides/security/api-keys/#rights-and-restrictions):
             `search`, `addObject`, `deleteObject`, `deleteIndex`, `settings`,
-            `editSettings`, `listIndexes`, `browse`
+            `editSettings`, `listIndexes`, `browse`.
 
             - Access to the correct set of indices, based on the crawler's
             `indexPrefix`.

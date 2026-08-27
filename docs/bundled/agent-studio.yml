@@ -3266,7 +3266,7 @@ paths:
         Tool Approval Flow (for MCP tools with requiresApproval: true):
 
         - Request 1: User sends message -> Agent requests tool call -> Return
-        approval request
+        approval request.
 
         - Request 2: User approves -> Execute tool -> Agent continues with
         result.
