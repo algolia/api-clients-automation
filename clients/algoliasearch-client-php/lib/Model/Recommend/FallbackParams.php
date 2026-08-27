@@ -143,7 +143,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'query' => null,
         'attributesForFaceting' => null,
         'replicas' => null,
-        'paginationLimitedTo' => null,
+        'paginationLimitedTo' => 'int64',
         'unretrievableAttributes' => null,
         'disableTypoToleranceOnWords' => null,
         'attributesToTransliterate' => null,

@@ -7518,7 +7518,7 @@ class SnippetSearchClient {
     // Call the API
     UpdatedAtResponse response = client.setSettings(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+      new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
       true
     );
     // >LOG
@@ -8615,7 +8615,7 @@ class SnippetSearchClient {
         .setMode(Mode.NEURAL_SEARCH)
         .setNumericAttributesForFiltering(Arrays.asList("algolia"))
         .setOptionalWords(OptionalWords.of(Arrays.asList("myspace")))
-        .setPaginationLimitedTo(0)
+        .setPaginationLimitedTo(0L)
         .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
         .setQueryType(QueryType.PREFIX_LAST)
         .setRanking(Arrays.asList("geo"))
@@ -9255,7 +9255,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setPaginationLimitedTo(1000));
+    UpdatedAtResponse response = client.setSettings("<YOUR_INDEX_NAME>", new IndexSettings().setPaginationLimitedTo(1000L));
     // >LOG
     // print the response
     System.out.println(response);

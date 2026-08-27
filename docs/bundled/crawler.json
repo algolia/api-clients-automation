@@ -1497,6 +1497,7 @@
           },
           "paginationLimitedTo": {
             "type": "integer",
+            "format": "int64",
             "example": 100,
             "description": "Maximum number of search results that can be obtained through pagination.\n\nHigher pagination limits might slow down your search.\nFor pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.\n",
             "default": 1000,

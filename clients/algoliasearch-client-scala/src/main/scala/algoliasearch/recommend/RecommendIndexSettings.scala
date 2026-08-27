@@ -287,7 +287,7 @@ import algoliasearch.recommend.SupportedLanguage._
 case class RecommendIndexSettings(
     attributesForFaceting: Option[Seq[String]] = scala.None,
     replicas: Option[Seq[String]] = scala.None,
-    paginationLimitedTo: Option[Int] = scala.None,
+    paginationLimitedTo: Option[Long] = scala.None,
     unretrievableAttributes: Option[Seq[String]] = scala.None,
     disableTypoToleranceOnWords: Option[Seq[String]] = scala.None,
     attributesToTransliterate: Option[Seq[String]] = scala.None,

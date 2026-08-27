@@ -6436,7 +6436,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "cts_e2e_settings",
-        new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+        new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
         true
       );
     });
@@ -7458,7 +7458,7 @@ class SearchClientRequestsTests {
           .setMode(Mode.NEURAL_SEARCH)
           .setNumericAttributesForFiltering(Arrays.asList("algolia"))
           .setOptionalWords(OptionalWords.of(Arrays.asList("myspace")))
-          .setPaginationLimitedTo(0)
+          .setPaginationLimitedTo(0L)
           .setQueryLanguages(Arrays.asList(SupportedLanguage.FR))
           .setQueryType(QueryType.PREFIX_LAST)
           .setRanking(Arrays.asList("geo"))
@@ -8010,7 +8010,7 @@ class SearchClientRequestsTests {
   @DisplayName("set_pagination_limit")
   void setSettingsTest88() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setPaginationLimitedTo(1000));
+      client.setSettings("theIndexName", new IndexSettings().setPaginationLimitedTo(1000L));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);

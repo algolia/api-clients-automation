@@ -64,7 +64,7 @@ public partial class IndexSettings
   /// </summary>
   /// <value>Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed. </value>
   [JsonPropertyName("paginationLimitedTo")]
-  public int? PaginationLimitedTo { get; set; }
+  public long? PaginationLimitedTo { get; set; }
 
   /// <summary>
   /// Attributes that can't be retrieved at query time.  This can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data), but don't want to include it in the search results. Attribute names are case-sensitive.

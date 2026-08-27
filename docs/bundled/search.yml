@@ -6872,7 +6872,7 @@ paths:
               "<YOUR_INDEX_NAME>",
               new IndexSettings
               {
-                PaginationLimitedTo = 10,
+                PaginationLimitedTo = 10L,
                 TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
               },
               true
@@ -6947,7 +6947,7 @@ paths:
 
             UpdatedAtResponse response = client.setSettings(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+              new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
               true
             );
 
@@ -6993,7 +6993,7 @@ paths:
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings =
                   IndexSettings(
-                    paginationLimitedTo = 10,
+                    paginationLimitedTo = 10L,
                     typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
                   ),
                 forwardToReplicas = true,
@@ -7092,7 +7092,7 @@ paths:
               client.setSettings(
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings = IndexSettings(
-                  paginationLimitedTo = Some(10),
+                  paginationLimitedTo = Some(10L),
                   typoTolerance = Some(TypoToleranceEnum.withName("false"))
                 ),
                 forwardToReplicas = Some(true)
@@ -7118,7 +7118,7 @@ paths:
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
                 indexSettings: IndexSettings(
-                    paginationLimitedTo: 10,
+                    paginationLimitedTo: Int64(10),
                     typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
                 ),
                 forwardToReplicas: true
@@ -24193,6 +24193,7 @@ components:
             - Performance
         paginationLimitedTo:
           type: integer
+          format: int64
           example: 100
           description: >
             Maximum number of search results that can be obtained through
@@ -24703,6 +24704,7 @@ components:
           $ref: '#/components/schemas/optionalWords'
         paginationLimitedTo:
           type: integer
+          format: int64
           example: 100
           description: >
             Maximum number of search results that can be obtained through
@@ -25299,6 +25301,7 @@ components:
           $ref: '#/components/schemas/optionalWords'
         paginationLimitedTo:
           type: integer
+          format: int64
           example: 100
           description: >
             Maximum number of search results that can be obtained through

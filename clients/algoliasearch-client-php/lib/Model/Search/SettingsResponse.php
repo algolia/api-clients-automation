@@ -92,7 +92,7 @@ class SettingsResponse extends AbstractModel implements ModelInterface, \ArrayAc
     protected static $modelFormats = [
         'attributesForFaceting' => null,
         'replicas' => null,
-        'paginationLimitedTo' => null,
+        'paginationLimitedTo' => 'int64',
         'unretrievableAttributes' => null,
         'disableTypoToleranceOnWords' => null,
         'attributesToTransliterate' => null,

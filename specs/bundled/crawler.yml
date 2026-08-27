@@ -1411,6 +1411,7 @@ components:
             - Ranking
         paginationLimitedTo:
           type: integer
+          format: int64
           example: 100
           description: >
             Maximum number of search results that can be obtained through

@@ -7721,7 +7721,7 @@ class SearchTest {
           indexName = "cts_e2e_settings",
           indexSettings =
             IndexSettings(
-              paginationLimitedTo = 10,
+              paginationLimitedTo = 10L,
               typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
             ),
           forwardToReplicas = true,
@@ -8907,7 +8907,7 @@ class SearchTest {
               mode = Mode.entries.first { it.value == "neuralSearch" },
               numericAttributesForFiltering = listOf("algolia"),
               optionalWords = OptionalWords.of(listOf("myspace")),
-              paginationLimitedTo = 0,
+              paginationLimitedTo = 0L,
               queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
               queryType = QueryType.entries.first { it.value == "prefixLast" },
               ranking = listOf("geo"),
@@ -9612,7 +9612,7 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(paginationLimitedTo = 1000),
+          indexSettings = IndexSettings(paginationLimitedTo = 1000L),
         )
       },
       intercept = {

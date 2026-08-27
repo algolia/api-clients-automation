@@ -93,7 +93,7 @@ class IndexSettings extends AbstractModel implements ModelInterface, \ArrayAcces
     protected static $modelFormats = [
         'attributesForFaceting' => null,
         'replicas' => null,
-        'paginationLimitedTo' => null,
+        'paginationLimitedTo' => 'int64',
         'unretrievableAttributes' => null,
         'disableTypoToleranceOnWords' => null,
         'attributesToTransliterate' => null,

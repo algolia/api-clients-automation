@@ -21,7 +21,7 @@ public class SettingsResponse {
   private List<String> replicas;
 
   @JsonProperty("paginationLimitedTo")
-  private Integer paginationLimitedTo;
+  private Long paginationLimitedTo;
 
   @JsonProperty("unretrievableAttributes")
   private List<String> unretrievableAttributes;
@@ -260,7 +260,7 @@ public class SettingsResponse {
     return replicas;
   }
 
-  public SettingsResponse setPaginationLimitedTo(Integer paginationLimitedTo) {
+  public SettingsResponse setPaginationLimitedTo(Long paginationLimitedTo) {
     this.paginationLimitedTo = paginationLimitedTo;
     return this;
   }
@@ -271,7 +271,7 @@ public class SettingsResponse {
    * beyond the 1,000th hit can't be guaranteed. maximum: 20000
    */
   @javax.annotation.Nullable
-  public Integer getPaginationLimitedTo() {
+  public Long getPaginationLimitedTo() {
     return paginationLimitedTo;
   }
 

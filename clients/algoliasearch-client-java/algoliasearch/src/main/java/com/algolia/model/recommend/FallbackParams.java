@@ -102,7 +102,7 @@ public class FallbackParams {
   private List<String> replicas;
 
   @JsonProperty("paginationLimitedTo")
-  private Integer paginationLimitedTo;
+  private Long paginationLimitedTo;
 
   @JsonProperty("unretrievableAttributes")
   private List<String> unretrievableAttributes;
@@ -753,7 +753,7 @@ public class FallbackParams {
     return replicas;
   }
 
-  public FallbackParams setPaginationLimitedTo(Integer paginationLimitedTo) {
+  public FallbackParams setPaginationLimitedTo(Long paginationLimitedTo) {
     this.paginationLimitedTo = paginationLimitedTo;
     return this;
   }
@@ -764,7 +764,7 @@ public class FallbackParams {
    * beyond the 1,000th hit can't be guaranteed. maximum: 20000
    */
   @javax.annotation.Nullable
-  public Integer getPaginationLimitedTo() {
+  public Long getPaginationLimitedTo() {
     return paginationLimitedTo;
   }
 

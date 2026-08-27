@@ -15,7 +15,7 @@ type IndexSettings struct {
 	// Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer be synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort).
 	Replicas []string `json:"replicas,omitempty"`
 	// Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
-	PaginationLimitedTo *int32 `json:"paginationLimitedTo,omitempty"`
+	PaginationLimitedTo *int64 `json:"paginationLimitedTo,omitempty"`
 	// Attributes that can't be retrieved at query time.  This can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data), but don't want to include it in the search results. Attribute names are case-sensitive.
 	UnretrievableAttributes []string `json:"unretrievableAttributes,omitempty"`
 	// Creates a list of [words which require exact matches](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#turn-off-typo-tolerance-for-certain-words). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation) for the specified words.
@@ -136,7 +136,7 @@ func WithIndexSettingsReplicas(val []string) IndexSettingsOption {
 	}
 }
 
-func WithIndexSettingsPaginationLimitedTo(val int32) IndexSettingsOption {
+func WithIndexSettingsPaginationLimitedTo(val int64) IndexSettingsOption {
 	return func(f *IndexSettings) {
 		f.PaginationLimitedTo = &val
 	}
@@ -583,9 +583,9 @@ func (o *IndexSettings) SetReplicas(v []string) *IndexSettings {
 }
 
 // GetPaginationLimitedTo returns the PaginationLimitedTo field value if set, zero value otherwise.
-func (o *IndexSettings) GetPaginationLimitedTo() int32 {
+func (o *IndexSettings) GetPaginationLimitedTo() int64 {
 	if o == nil || o.PaginationLimitedTo == nil {
-		var ret int32
+		var ret int64
 
 		return ret
 	}
@@ -595,7 +595,7 @@ func (o *IndexSettings) GetPaginationLimitedTo() int32 {
 
 // GetPaginationLimitedToOk returns a tuple with the PaginationLimitedTo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IndexSettings) GetPaginationLimitedToOk() (*int32, bool) {
+func (o *IndexSettings) GetPaginationLimitedToOk() (*int64, bool) {
 	if o == nil || o.PaginationLimitedTo == nil {
 		return nil, false
 	}
@@ -612,8 +612,8 @@ func (o *IndexSettings) HasPaginationLimitedTo() bool {
 	return false
 }
 
-// SetPaginationLimitedTo gets a reference to the given int32 and assigns it to the PaginationLimitedTo field.
-func (o *IndexSettings) SetPaginationLimitedTo(v int32) *IndexSettings {
+// SetPaginationLimitedTo gets a reference to the given int64 and assigns it to the PaginationLimitedTo field.
+func (o *IndexSettings) SetPaginationLimitedTo(v int64) *IndexSettings {
 	o.PaginationLimitedTo = &v
 
 	return o

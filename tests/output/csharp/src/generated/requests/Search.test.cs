@@ -7279,7 +7279,7 @@ public class SearchClientRequestTests
       "cts_e2e_settings",
       new IndexSettings
       {
-        PaginationLimitedTo = 10,
+        PaginationLimitedTo = 10L,
         TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
       },
       true
@@ -8572,7 +8572,7 @@ public class SearchClientRequestTests
         Mode = Enum.Parse<Mode>("NeuralSearch"),
         NumericAttributesForFiltering = new List<string> { "algolia" },
         OptionalWords = new OptionalWords(new List<string> { "myspace" }),
-        PaginationLimitedTo = 0,
+        PaginationLimitedTo = 0L,
         QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
         QueryType = Enum.Parse<QueryType>("PrefixLast"),
         Ranking = new List<string> { "geo" },
@@ -9296,7 +9296,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "set_pagination_limit")]
   public async Task SetSettingsTest88()
   {
-    await client.SetSettingsAsync("theIndexName", new IndexSettings { PaginationLimitedTo = 1000 });
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { PaginationLimitedTo = 1000L }
+    );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);

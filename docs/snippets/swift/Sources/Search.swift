@@ -7105,7 +7105,7 @@ final class SearchClientSnippet {
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
             indexSettings: IndexSettings(
-                paginationLimitedTo: 10,
+                paginationLimitedTo: Int64(10),
                 typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
             ),
             forwardToReplicas: true
@@ -8215,7 +8215,7 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(
                 attributesForFaceting: ["algolia"],
                 replicas: [""],
-                paginationLimitedTo: 0,
+                paginationLimitedTo: Int64(0),
                 unretrievableAttributes: ["foo"],
                 disableTypoToleranceOnWords: ["algolia"],
                 attributesToTransliterate: ["algolia"],
@@ -8955,7 +8955,7 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(paginationLimitedTo: 1000)
+            indexSettings: IndexSettings(paginationLimitedTo: Int64(1000))
         )
         // >LOG
         // print the response

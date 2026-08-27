@@ -313,7 +313,7 @@ public data class IndexSettings(
    * limits might slow down your search. For pagination limits above 1,000, the sorting of results
    * beyond the 1,000th hit can't be guaranteed.
    */
-  @SerialName(value = "paginationLimitedTo") val paginationLimitedTo: Int? = null,
+  @SerialName(value = "paginationLimitedTo") val paginationLimitedTo: Long? = null,
 
   /**
    * Attributes that can't be retrieved at query time. This can be useful if you want to use an

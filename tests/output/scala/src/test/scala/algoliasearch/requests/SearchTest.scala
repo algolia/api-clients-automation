@@ -7375,7 +7375,7 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "cts_e2e_settings",
       indexSettings = IndexSettings(
-        paginationLimitedTo = Some(10),
+        paginationLimitedTo = Some(10L),
         typoTolerance = Some(TypoToleranceEnum.withName("false"))
       ),
       forwardToReplicas = Some(true)
@@ -8565,7 +8565,7 @@ class SearchTest extends AnyFunSuite {
         mode = Some(Mode.withName("neuralSearch")),
         numericAttributesForFiltering = Some(Seq("algolia")),
         optionalWords = Some(OptionalWords(Seq("myspace"))),
-        paginationLimitedTo = Some(0),
+        paginationLimitedTo = Some(0L),
         queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
         queryType = Some(QueryType.withName("prefixLast")),
         ranking = Some(Seq("geo")),
@@ -9265,7 +9265,7 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "theIndexName",
       indexSettings = IndexSettings(
-        paginationLimitedTo = Some(1000)
+        paginationLimitedTo = Some(1000L)
       )
     )
 

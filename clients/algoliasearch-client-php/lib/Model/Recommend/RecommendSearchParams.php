@@ -143,7 +143,7 @@ class RecommendSearchParams extends AbstractModel implements ModelInterface, \Ar
         'query' => null,
         'attributesForFaceting' => null,
         'replicas' => null,
-        'paginationLimitedTo' => null,
+        'paginationLimitedTo' => 'int64',
         'unretrievableAttributes' => null,
         'disableTypoToleranceOnWords' => null,
         'attributesToTransliterate' => null,
