@@ -55,7 +55,7 @@ import algoliasearch.search.Acl._
   * @param indexes
   *   Index names or patterns that this API key can access. By default, an API key can access all indices in the same
   *   application. You can use leading and trailing wildcard characters (`*`): - `dev_*` matches all indices starting
-  *   with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" - `*_products_*` matches all indices containing
+  *   with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing
   *   \"_products_\".
   * @param maxHitsPerQuery
   *   Maximum number of results this API key can retrieve in one query. By default, there's no limit.
@@ -69,10 +69,10 @@ import algoliasearch.search.Acl._
   *   IP addresses. Creating an API key fails if the request is made from an IP address outside the restricted range.
   * @param referers
   *   Allowed HTTP referrers for this API key. By default, all referrers are allowed. You can use leading and trailing
-  *   wildcard characters (`*`): - `https://algolia.com/_*` allows all referrers starting with \"https://algolia.com/\"
-  *   \- `*.algolia.com` allows all referrers ending with \".algolia.com\" - `*algolia.com*` allows all referrers in the
-  *   domain \"algolia.com\". Like all HTTP headers, referrers can be spoofed. Don't rely on them to secure your data.
-  *   For more information, see [HTTP referrer
+  *   wildcard characters (`*`): - `https://algolia.com/_*` allows all referrers starting with \"https://algolia.com/\".
+  *   \- `*.algolia.com` allows all referrers ending with \".algolia.com\". - `*algolia.com*` allows all referrers in
+  *   the domain \"algolia.com\". Like all HTTP headers, referrers can be spoofed. Don't rely on them to secure your
+  *   data. For more information, see [HTTP referrer
   *   restrictions](https://www.algolia.com/doc/guides/security/security-best-practices/#http-referrers-restrictions).
   * @param validity
   *   Duration (in seconds) after which the API key expires. By default, API keys don't expire.

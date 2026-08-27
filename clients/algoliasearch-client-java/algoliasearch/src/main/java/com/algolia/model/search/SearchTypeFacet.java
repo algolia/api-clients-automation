@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * - `default`: perform a search query - `facet` [searches for facet
+ * - `default`: perform a search query. - `facet` [searches for facet
  * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
  */
 public enum SearchTypeFacet {

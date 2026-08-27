@@ -193,7 +193,7 @@ public class Params {
   }
 
   /**
-   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier
+   * Whether to include a `queryID` attribute in the response. The query ID is a unique identifier
    * for a search query and is required for tracking [click and conversion
    * events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
@@ -234,7 +234,7 @@ public class Params {
 
   /**
    * Whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking). This setting only has an
    * effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   @javax.annotation.Nullable
@@ -279,7 +279,7 @@ public class Params {
 
   /**
    * Facets for which to retrieve facet values that match the search criteria and the number of
-   * matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve
+   * matching facet values. To retrieve all facets, use the wildcard character `*`. To retrieve
    * disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more
    * information, see
    * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts)
@@ -427,7 +427,7 @@ public class Params {
 
   /**
    * ISO language codes that adjust settings that are useful for processing natural language queries
-   * (as opposed to keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of
+   * (as opposed to keyword searches). - Sets `removeStopWords` and `ignorePlurals` to the list of
    * provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a
    * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
@@ -517,7 +517,7 @@ public class Params {
   }
 
   /**
-   * Relevancy threshold below which less relevant results aren't included in the results You can
+   * Relevancy threshold below which less relevant results aren't included in the results. You can
    * only set `relevancyStrictness` on [virtual replica
    * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
    * Use this setting to strike a balance between the relevance and number of returned results.
@@ -541,7 +541,7 @@ public class Params {
   }
 
   /**
-   * Assigns a rule context to the run query [Rule
+   * Assigns a rule context to the run query. [Rule
    * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
    * are strings that you can use to trigger matching rules.
    */
