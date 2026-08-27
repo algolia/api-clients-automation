@@ -1,8 +1,7 @@
 /** Analytics API ## Base URLs Base URLs for the Analytics API: - `https://analytics.us.algolia.com` -
   * `https://analytics.de.algolia.com` - `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`) Use the
   * URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics). **All
-  * requests must use HTTPS.** ## Availability and authentication Access to the Analytics API is available as part of
-  * the [Premium or Elevate plans](https://www.algolia.com/pricing). Add these headers to authenticate requests: -
+  * requests must use HTTPS.** ## Availability and authentication Add these headers to authenticate requests: -
   * `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the necessary
   * permissions to make the request. The required access control list (ACL) to make a request is listed in each
   * endpoint's reference. You can find your application ID and API key in the [Algolia
