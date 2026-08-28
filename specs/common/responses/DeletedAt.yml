@@ -1,4 +1,8 @@
+# Reused by Search and Recommend only. Drop the Correlation-ID header below before reusing this response for an API that does not send it.
 description: OK
+headers:
+  Correlation-ID:
+    $ref: 'correlationId.yml#/Correlation-ID'
 content:
   application/json:
     schema:
