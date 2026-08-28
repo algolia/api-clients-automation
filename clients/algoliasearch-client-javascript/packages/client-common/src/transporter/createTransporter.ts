@@ -21,7 +21,7 @@ import {
   deserializeSuccess,
   deserializeSuccessWithHttpInfo,
   getLastCorrelationId,
-  serializeData,
+  serializeDataWithAuth,
   serializeHeaders,
   serializeUrl,
 } from './helpers';
@@ -40,6 +40,7 @@ export function createTransporter({
   baseHeaders,
   logger,
   baseQueryParameters,
+  baseBodyParameters,
   algoliaAgent,
   timeouts,
   requester,
@@ -49,6 +50,8 @@ export function createTransporter({
   compression,
   requestIdChannel,
 }: TransporterOptions): TransporterWithHttpInfo {
+  const bodyParameters: Headers = baseBodyParameters ?? {};
+
   function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
     if (
       requestIdChannel === undefined ||
@@ -112,7 +115,7 @@ export function createTransporter({
     /**
      * First we prepare the payload that do not depend from hosts.
      */
-    const serializedData = serializeData(request, requestOptions);
+    const { data: serializedData, applied } = serializeDataWithAuth(request, requestOptions, bodyParameters);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
 
     const wantsCompression =
@@ -164,6 +167,10 @@ export function createTransporter({
           queryParameters[key] = requestOptions.queryParameters[key].toString();
         }
       }
+    }
+
+    if (applied === false && bodyParameters.apiKey) {
+      queryParameters['x-algolia-api-key'] = bodyParameters.apiKey;
     }
 
     injectRequestId(headers, queryParameters);
@@ -305,6 +312,7 @@ export function createTransporter({
       transporter: {
         queryParameters: baseQueryParameters,
         headers: baseHeaders,
+        bodyParameters,
       },
     };
 
@@ -373,7 +381,7 @@ export function createTransporter({
       throw new Error('This requester does not support streaming');
     }
 
-    const data = serializeData(request, requestOptions);
+    const { data, applied } = serializeDataWithAuth(request, requestOptions, bodyParameters);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
     headers['accept'] = 'text/event-stream';
 
@@ -407,6 +415,10 @@ export function createTransporter({
           queryParameters[key] = requestOptions.queryParameters[key].toString();
         }
       }
+    }
+
+    if (applied === false && bodyParameters.apiKey) {
+      queryParameters['x-algolia-api-key'] = bodyParameters.apiKey;
     }
 
     injectRequestId(headers, queryParameters);
@@ -443,6 +455,7 @@ export function createTransporter({
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,
+    baseBodyParameters: bodyParameters,
     requestIdChannel,
     hosts,
     request: createRequest,

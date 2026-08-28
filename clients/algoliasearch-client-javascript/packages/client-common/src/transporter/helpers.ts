@@ -62,6 +62,32 @@ export function serializeData(request: Request, requestOptions: RequestOptions):
   return JSON.stringify(data);
 }
 
+export function serializeDataWithAuth(
+  request: Request,
+  requestOptions: RequestOptions,
+  bodyAuth: Headers,
+): { data: string | undefined; applied: boolean } {
+  if (!bodyAuth.apiKey) {
+    return { data: serializeData(request, requestOptions), applied: false };
+  }
+
+  if (request.method === 'GET' || (request.data === undefined && requestOptions.data === undefined)) {
+    return { data: undefined, applied: false };
+  }
+
+  if (Array.isArray(request.data)) {
+    return { data: JSON.stringify(request.data), applied: false };
+  }
+
+  const merged = { ...request.data, ...requestOptions.data };
+
+  if (request.data !== undefined && Object.prototype.hasOwnProperty.call(request.data, 'apiKey')) {
+    return { data: JSON.stringify(merged), applied: false };
+  }
+
+  return { data: JSON.stringify({ ...merged, ...bodyAuth }), applied: true };
+}
+
 export function serializeHeaders(
   baseHeaders: Headers,
   requestHeaders: Headers,

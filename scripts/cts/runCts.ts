@@ -87,15 +87,17 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       });
       break;
     }
-    case 'javascript':
+    case 'javascript': {
+      const jsPaths = [...folders.map((f) => `src/${f}`), ...(suites.client ? ['src/manual'] : [])].join(' ');
       await run(
-        `${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `src/${f}`)}`,
+        `${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${jsPaths}`,
         {
           cwd,
           language,
         },
       );
       break;
+    }
     case 'kotlin':
       await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
         language,

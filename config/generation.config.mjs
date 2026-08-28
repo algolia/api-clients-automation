@@ -89,6 +89,7 @@ export const patterns = [
 
   'tests/output/javascript/package.json',
   '!tests/output/javascript/yarn.lock',
+  '!tests/output/javascript/src/manual/**',
 
   // Kotlin
   '!clients/algoliasearch-client-kotlin/**',
