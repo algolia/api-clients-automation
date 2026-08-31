@@ -235,8 +235,8 @@ public class LoggingTests
 
     AssertLogMatches(
       LogLevel.Information,
-      @"Retry \d+/\d+: Retryable failure on .+ after \d+ms",
-      @"INFO log should match ""Retry {N}/{MAX}: Retryable failure on {HOST} after {ELAPSED}ms"""
+      @"Retry \d+/\d+: Timeout on .+ after \d+ms",
+      @"INFO log should match ""Retry {N}/{MAX}: Timeout on {HOST} after {TIMEOUT}ms"""
     );
 
     AssertLogMatches(
