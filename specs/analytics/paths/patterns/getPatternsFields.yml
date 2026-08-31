@@ -2,12 +2,11 @@ get:
   tags:
     - pattern
   operationId: getPatternsFields
+  x-beta: true
   x-acl: []
   security: []
-  summary: (Beta) Retrieve the field catalog
+  summary: Retrieve the field catalog
   description: |
-    **Beta**: this endpoint is under active development and may change without notice.
-
     Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
     groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)`
     pairs before building the other `/3/patterns/*` queries; two fields are combinable in one query
