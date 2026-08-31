@@ -1,4 +1,4 @@
-# Schemas for the Beta semantic patterns query framework (/3/patterns/*).
+# Schemas for the semantic patterns query framework (/3/patterns/*).
 
 FieldReference:
   type: object

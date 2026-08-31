@@ -2,10 +2,10 @@ import { algoliasearch } from 'algoliasearch';
 
 import type { SearchParams } from 'algoliasearch';
 
-const getAppIDFor = (_: string) => {
+const getAppIDFor = (__: string) => {
   return ''; // Implement your own logic here
 };
-const getIndexingApiKeyFor = (_: string) => {
+const getIndexingApiKeyFor = (__: string) => {
   return ''; // Implement your own logic here
 };
 
