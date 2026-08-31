@@ -19,7 +19,7 @@ public class TimeoutIntegrationTests
   private static (AlgoliaConfig, StatefulHost) CreateConfigWithHost(string hostUrl)
   {
     var config = new SearchConfig("test-app", "test-key");
-    // keep the read budget small so the connect-timeout scaling stays measurable
+    // keep ReadTimeout small so connect scaling stays measurable
     config.ReadTimeout = TimeSpan.FromMilliseconds(500);
     var host = new StatefulHost { Url = hostUrl, Accept = CallType.Read | CallType.Write };
     config.CustomHosts = new List<StatefulHost> { host };
@@ -52,8 +52,7 @@ public class TimeoutIntegrationTests
   [Fact]
   public async Task RetryCountStateful()
   {
-    // each attempt gets connectTimeout * (retryCount + 1) on top of the read budget:
-    // (2s + 0.5s) -> (4s + 0.5s) -> (6s + 0.5s)
+    // connect timeout scales with retryCount, plus 0.5s ReadTimeout: 2.5s -> 4.5s -> 6.5s
     var (config, _) = CreateConfigWithHost("10.255.255.1");
     var transport = new HttpTransport(
       config,
@@ -80,7 +79,6 @@ public class TimeoutIntegrationTests
       }
     }
 
-    // Connect timeout scales: ConnectTimeout (2s default) * (RetryCount+1), plus the 0.5s read budget
     // Request 1: 2s * 1 + 0.5s = 2.5s
     // Request 2: 2s * 2 + 0.5s = 4.5s
     // Request 3: 2s * 3 + 0.5s = 6.5s
@@ -139,7 +137,7 @@ public class TimeoutIntegrationTests
       $"retry_count should reset to 0, got {goodHost.RetryCount}"
     );
 
-    // point to bad host again, should timeout at ~2.5s (connect 2s + read 0.5s), not ~6.5s
+    // point to bad host again, should timeout at ~2.5s, not ~6.5s
     goodHost.Url = "10.255.255.1";
     goodHost.Port = null;
     goodHost.Scheme = HttpScheme.Https;
@@ -168,7 +166,6 @@ public class TimeoutIntegrationTests
   [Fact]
   public async Task ReadTimeoutHonoredForSlowResponses()
   {
-    // CR-12049: a response slower than ConnectTimeout but within ReadTimeout must succeed
     var config = CreateServerConfig(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(2));
     var transport = new HttpTransport(
       config,
@@ -194,7 +191,6 @@ public class TimeoutIntegrationTests
   [Fact]
   public async Task ReadTimeoutEnforcedWhenResponseTooSlow()
   {
-    // a response slower than ConnectTimeout + ReadTimeout must time out
     var config = CreateServerConfig(TimeSpan.FromMilliseconds(200), TimeSpan.FromMilliseconds(300));
     var transport = new HttpTransport(
       config,

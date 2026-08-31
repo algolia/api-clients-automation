@@ -40,8 +40,8 @@ internal class AlgoliaHttpRequester : IHttpRequester, IDisposable
   /// Send request to the REST API
   /// </summary>
   /// <param name="request">Request</param>
-  /// <param name="requestTimeout">Read/write timeout granted after the connection is established</param>
-  /// <param name="connectTimeout">Connect timeout granted first. HttpClient cannot bound this phase alone, so both timeouts are summed.</param>
+  /// <param name="requestTimeout">Read or write timeout, depending on the request type</param>
+  /// <param name="connectTimeout">Connect timeout</param>
   /// <param name="ct">Optional cancellation token</param>
   /// <returns></returns>
   public async Task<AlgoliaHttpResponse> SendRequestAsync(
@@ -76,9 +76,6 @@ internal class AlgoliaHttpRequester : IHttpRequester, IDisposable
 
     httpRequestMessage.Headers.Fill(request.Headers);
 
-    // TimeoutHandler is a single overall deadline. We can't split connect vs
-    // request timeouts because we target netstandard2.0 (no SocketsHttpHandler),
-    // so we sum both.
     httpRequestMessage.SetTimeout(connectTimeout + requestTimeout);
 
     try
