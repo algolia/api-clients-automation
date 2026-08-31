@@ -92,8 +92,6 @@ class TestTimeoutIntegration < Test::Unit::TestCase
     end
   end
 
-  # millisecond timeouts that are not multiples of 1000 must keep sub-second
-  # precision instead of being truncated by integer division (CR-12007)
   def test_connect_timeout_millisecond_precision
     host = Algolia::Transport::StatefulHost.new(
       "10.255.255.1",
