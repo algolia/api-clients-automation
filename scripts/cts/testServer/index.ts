@@ -18,6 +18,7 @@ import { gzipServer } from './gzip.ts';
 import { gzipResponseServer } from './gzipResponse.ts';
 import { noContentServer } from './noContent.ts';
 import { pushMockServer, pushMockServerRetriedOnce } from './pushMock.ts';
+import { rateLimitNeverCalledServer, rateLimitServer } from './rateLimit.ts';
 import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
 import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
@@ -57,6 +58,8 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       requestIdServer(),
       requestIdServerBis(),
       requestIdServerTer(),
+      rateLimitServer(),
+      rateLimitNeverCalledServer(),
     );
   }
   if (suites.benchmark) {
@@ -99,13 +102,13 @@ export async function setupServer(name: string, port: number, addRoutes: (app: E
   addRoutes(app);
 
   // 404 handler
-  app.use((req, _) => {
+  app.use((req, __) => {
     console.error(`[PORT ${port}] endpoint not implemented for`, req.method, req.url);
     expect.fail('endpoint not implemented');
   });
 
   // catch all error handler
-  app.use((err, _req, _res, _) => {
+  app.use((err, _req, _res, __) => {
     console.error(err.message);
     expect.fail(err.message);
   });

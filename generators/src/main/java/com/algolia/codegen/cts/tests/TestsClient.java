@@ -123,6 +123,12 @@ public class TestsClient extends TestsGenerator {
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               stepOut.put("gzipEncoding", gzipEncoding);
+
+              boolean hasMaxRateLimitRetries = step.parameters != null && step.parameters.containsKey("maxRateLimitRetries");
+              stepOut.put("hasMaxRateLimitRetries", hasMaxRateLimitRetries);
+              if (hasMaxRateLimitRetries) {
+                stepOut.put("maxRateLimitRetries", step.parameters.get("maxRateLimitRetries"));
+              }
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {

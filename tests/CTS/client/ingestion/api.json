@@ -1,6 +1,7 @@
 [
   {
     "testName": "can handle HTML error",
+    "skipLanguages": ["javascript"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -35,6 +36,50 @@
             "scala": "<html><body>429 Too Many Requests</body></html>",
             "swift": "HTTP error: Status code: 429 Message: No message",
             "dart": "429"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "testName": "can handle HTML error when rate-limit retries are disabled",
+    "skipLanguages": [
+      "csharp",
+      "dart",
+      "go",
+      "java",
+      "kotlin",
+      "php",
+      "python",
+      "ruby",
+      "scala",
+      "swift"
+    ],
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "maxRateLimitRetries": 0,
+          "customHosts": [
+            {
+              "port": 6676
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/html-error"
+        },
+        "expected": {
+          "error": {
+            "javascript": "Too Many Requests"
           }
         }
       }
