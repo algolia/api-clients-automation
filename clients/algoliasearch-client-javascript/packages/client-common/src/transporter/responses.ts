@@ -18,6 +18,27 @@ export function isRateLimited({ status }: Pick<Response, 'status'>): boolean {
   return ~~status === 429;
 }
 
+const HTTP_429_MESSAGE = /^HTTP 429(?:\D|$)/;
+
+/**
+ * 429 from `sendStream`: a status-bearing error, or the `HTTP 429:` string requesters used to throw.
+ */
+export function isRateLimitedError(error: unknown): boolean {
+  if (typeof error === 'object' && error !== null && 'status' in error) {
+    return isRateLimited(error as Pick<Response, 'status'>);
+  }
+
+  return error instanceof Error && HTTP_429_MESSAGE.test(error.message);
+}
+
+export function headersFromError(error: unknown): Headers | undefined {
+  if (typeof error === 'object' && error !== null && 'headers' in error) {
+    return (error as { headers?: Headers }).headers;
+  }
+
+  return undefined;
+}
+
 /**
  * `Retry-After` as a wait in milliseconds.
  * Only a positive whole-number-of-seconds string is honored; anything else (missing, `0`, HTTP-date, junk) waits 1s.

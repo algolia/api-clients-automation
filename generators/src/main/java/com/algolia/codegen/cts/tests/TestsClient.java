@@ -74,6 +74,12 @@ public class TestsClient extends TestsGenerator {
           System.out.println("Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language);
           continue skipTest;
         }
+        if (test.onlyLanguages != null && !test.onlyLanguages.contains(language)) {
+          System.out.println(
+            "Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language + " (onlyLanguages)"
+          );
+          continue skipTest;
+        }
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();

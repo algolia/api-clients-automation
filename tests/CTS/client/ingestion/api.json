@@ -43,18 +43,7 @@
   },
   {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "skipLanguages": [
-      "csharp",
-      "dart",
-      "go",
-      "java",
-      "kotlin",
-      "php",
-      "python",
-      "ruby",
-      "scala",
-      "swift"
-    ],
+    "onlyLanguages": ["javascript"],
     "autoCreateClient": false,
     "steps": [
       {

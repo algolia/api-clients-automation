@@ -18,9 +18,9 @@ None (API surface). Behavioral: 429 no longer fails on the first response by def
 - Put logic in hand-written JS transporter (`client-common`), not generated clients.
 - Intercept 429 **before** the 4xx-is-not-retryable path.
 - Strict `Retry-After` parse: positive integer string only; HTTP-date / `0` / missing / garbage → 1000ms.
-- CTS tests `skipLanguages` every language except `javascript`.
+- CTS tests use `onlyLanguages: ["javascript"]` so a new language does not pick them up until it implements wait-on-429.
 - HTML 429 ingestion test: JS must pass `maxRateLimitRetries: 0` so it stays a parse test, not a 3s wait.
-- SSE `requestStream` has no retry loop today — leave it.
+- SSE `requestStream` retries 429 on the same host (wait + `Retry-After`), matching `request`.
 - Non-blocking wait (`setTimeout` / Promise).
 
 ## Tasks
@@ -79,3 +79,4 @@ None (API surface). Behavioral: 429 no longer fails on the first response by def
 - 2026-09-01: T1–T4 and T6 implemented; client-common unit tests passed; CTS generate succeeded; CTS run still pending (needs built JS packages)
 - 2026-09-01: T5 done. `CI=1 yarn cli cts run javascript --no-e2e` passed (1123 tests). Draft PR blocked by GitHub SAML SSO on ManagePullRequest.
 - 2026-09-01: included `rateLimit.test.ts` in client-common vitest node project; exhausted-retry test no longer leaks an unhandled ApiError
+- 2026-09-01: review follow-ups: fake-timer wait assertions; `requestStream` 429 retry; `onlyLanguages: ["javascript"]`; docs point 429 wait at the JS transporter

@@ -1,4 +1,5 @@
 import type { Response as AlgoliaResponse, EndRequest, Requester } from '@algolia/client-common';
+import { StreamRequestError } from '@algolia/client-common';
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';
@@ -89,7 +90,11 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     if (!fetchRes.ok) {
       const text = await fetchRes.text();
-      throw new Error(`HTTP ${fetchRes.status}: ${text}`);
+      const headers: Record<string, string> = {};
+      fetchRes.headers.forEach((value, name) => {
+        headers[name] = value;
+      });
+      throw new StreamRequestError(fetchRes.status, text, headers);
     }
 
     if (fetchRes.body === null) {

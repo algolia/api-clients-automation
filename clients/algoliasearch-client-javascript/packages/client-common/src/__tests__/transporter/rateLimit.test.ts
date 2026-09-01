@@ -2,9 +2,9 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
-import { createTransporter } from '../../transporter';
-import { isRateLimited, parseRetryAfterMs } from '../../transporter/responses';
-import type { AlgoliaAgent, Host, Response } from '../../types';
+import { createTransporter, StreamRequestError } from '../../transporter';
+import { isRateLimited, isRateLimitedError, parseRetryAfterMs } from '../../transporter/responses';
+import type { AlgoliaAgent, Host, Requester, Response } from '../../types';
 
 const algoliaAgent: AlgoliaAgent = {
   value: 'test',
@@ -24,10 +24,19 @@ function json(status: number, body: unknown, headers?: Record<string, string>): 
   };
 }
 
+function emptyStream(): ReadableStream<Uint8Array> {
+  return new ReadableStream({
+    start(controller) {
+      controller.close();
+    },
+  });
+}
+
 function makeTransporter(
   send: (url: string) => Promise<Response> | Response,
-  options: { maxRateLimitRetries?: number } = {},
+  options: { maxRateLimitRetries?: number; sendStream?: Requester['sendStream'] } = {},
 ) {
+  const { sendStream, ...transporterOptions } = options;
   return createTransporter({
     hosts: [host('host-a.example'), host('host-b.example')],
     hostsCache: createNullCache(),
@@ -38,10 +47,11 @@ function makeTransporter(
     timeouts: { connect: 1000, read: 2000, write: 3000 },
     requester: {
       send: async (request) => send(request.url),
+      ...(sendStream === undefined ? {} : { sendStream }),
     },
     requestsCache: createNullCache(),
     responsesCache: createNullCache(),
-    ...options,
+    ...transporterOptions,
   });
 }
 
@@ -70,6 +80,15 @@ describe('isRateLimited', () => {
   });
 });
 
+describe('isRateLimitedError', () => {
+  test('detects StreamRequestError 429 and HTTP 429 messages', () => {
+    expect(isRateLimitedError(new StreamRequestError(429, 'Too many requests'))).toBe(true);
+    expect(isRateLimitedError(new Error('HTTP 429: Too many requests'))).toBe(true);
+    expect(isRateLimitedError(new StreamRequestError(500, 'error'))).toBe(false);
+    expect(isRateLimitedError(new Error('HTTP 500: error'))).toBe(false);
+  });
+});
+
 describe('transporter rate-limit retries', () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -90,7 +109,13 @@ describe('transporter rate-limit retries', () => {
     });
 
     const pending = transporter.request<{ message: string }>(request);
-    await vi.advanceTimersByTimeAsync(2000);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1999);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1);
     await expect(pending).resolves.toEqual({ message: 'ok' });
     expect(calls).toHaveLength(2);
     expect(calls.every((url) => url.includes('host-a.example'))).toBe(true);
@@ -107,7 +132,13 @@ describe('transporter rate-limit retries', () => {
     });
 
     const pending = transporter.request(request);
-    await vi.advanceTimersByTimeAsync(1000);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(999);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1);
     await expect(pending).resolves.toEqual({ message: 'ok' });
     expect(calls).toHaveLength(2);
   });
@@ -140,8 +171,12 @@ describe('transporter rate-limit retries', () => {
     const pending = transporter.request(request);
     const assertion = expect(pending).rejects.toMatchObject({ name: 'ApiError', status: 429 });
 
+    await vi.advanceTimersByTimeAsync(0);
+    expect(calls).toBe(1);
+
     for (let i = 0; i < 3; i++) {
       await vi.advanceTimersByTimeAsync(1000);
+      expect(calls).toBe(i + 2);
     }
 
     await assertion;
@@ -159,6 +194,9 @@ describe('transporter rate-limit retries', () => {
     });
 
     const pending = transporter.request(request);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+
     await vi.advanceTimersByTimeAsync(1000);
     await pending;
     expect(calls.filter((url) => url.includes('host-b.example'))).toHaveLength(0);
@@ -177,5 +215,47 @@ describe('transporter rate-limit retries', () => {
     await expect(transporter.request(request)).resolves.toEqual({ message: 'ok' });
     expect(calls.some((url) => url.includes('host-a.example'))).toBe(true);
     expect(calls.some((url) => url.includes('host-b.example'))).toBe(true);
+  });
+
+  test('requestStream waits Retry-After then retries on the same host', async () => {
+    const calls: string[] = [];
+    const transporter = makeTransporter(() => json(200, { message: 'ok' }), {
+      sendStream: async (endRequest) => {
+        calls.push(endRequest.url);
+        if (calls.length === 1) {
+          throw new StreamRequestError(429, 'Too many requests', { 'retry-after': '1' });
+        }
+        return emptyStream();
+      },
+    });
+
+    const pending = transporter.requestStream(request).next();
+    await vi.advanceTimersByTimeAsync(0);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(999);
+    expect(calls).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(1);
+    await pending;
+    expect(calls).toHaveLength(2);
+    expect(calls.every((url) => url.includes('host-a.example'))).toBe(true);
+  });
+
+  test('requestStream maxRateLimitRetries 0 fails on the first 429', async () => {
+    let calls = 0;
+    const transporter = makeTransporter(() => json(200, { message: 'ok' }), {
+      maxRateLimitRetries: 0,
+      sendStream: async () => {
+        calls++;
+        throw new StreamRequestError(429, 'Too many requests', { 'retry-after': '1' });
+      },
+    });
+
+    await expect(transporter.requestStream(request).next()).rejects.toMatchObject({
+      name: 'StreamRequestError',
+      status: 429,
+    });
+    expect(calls).toBe(1);
   });
 });
