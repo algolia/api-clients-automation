@@ -229,9 +229,15 @@ export function createTransporter({
 
       if (isRateLimited(response) && rateLimitRetriesLeft > 0) {
         rateLimitRetriesLeft--;
-        pushToStackTrace(response);
-        await wait(parseRetryAfterMs(response.headers));
         retryableHosts.push(host);
+        const stackFrame = pushToStackTrace(response);
+        const waitMs = parseRetryAfterMs(response.headers);
+        logger.info('Retryable failure', {
+          ...stackFrameWithoutCredentials(stackFrame),
+          wait: waitMs,
+          rateLimitRetriesLeft,
+        });
+        await wait(waitMs);
         return retry(retryableHosts, getTimeout);
       }
 
@@ -455,18 +461,25 @@ export function createTransporter({
 
     let rateLimitRetriesLeft = maxRateLimitRetries;
     while (true) {
+      let stream: ReadableStream<Uint8Array>;
       try {
-        const stream = await requester.sendStream(payload);
-        yield* iterSSEEvents(stream);
-        return;
+        stream = await requester.sendStream(payload);
       } catch (error) {
         if (isRateLimitedError(error) && rateLimitRetriesLeft > 0) {
           rateLimitRetriesLeft--;
-          await wait(parseRetryAfterMs(headersFromError(error)));
+          const waitMs = parseRetryAfterMs(headersFromError(error));
+          logger.info('Retryable failure', {
+            wait: waitMs,
+            rateLimitRetriesLeft,
+            host,
+          });
+          await wait(waitMs);
           continue;
         }
         throw error;
       }
+      yield* iterSSEEvents(stream);
+      return;
     }
   }
 

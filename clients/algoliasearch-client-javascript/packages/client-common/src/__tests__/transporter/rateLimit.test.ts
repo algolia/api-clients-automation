@@ -32,18 +32,30 @@ function emptyStream(): ReadableStream<Uint8Array> {
   });
 }
 
+function erroringStream(error: unknown): ReadableStream<Uint8Array> {
+  return new ReadableStream({
+    start(controller) {
+      controller.error(error);
+    },
+  });
+}
+
 function makeTransporter(
   send: (url: string) => Promise<Response> | Response,
-  options: { maxRateLimitRetries?: number; sendStream?: Requester['sendStream'] } = {},
+  options: {
+    maxRateLimitRetries?: number;
+    sendStream?: Requester['sendStream'];
+    logger?: ReturnType<typeof createNullLogger>;
+  } = {},
 ) {
-  const { sendStream, ...transporterOptions } = options;
+  const { sendStream, logger = createNullLogger(), ...transporterOptions } = options;
   return createTransporter({
     hosts: [host('host-a.example'), host('host-b.example')],
     hostsCache: createNullCache(),
     baseHeaders: {},
     baseQueryParameters: {},
     algoliaAgent,
-    logger: createNullLogger(),
+    logger,
     timeouts: { connect: 1000, read: 2000, write: 3000 },
     requester: {
       send: async (request) => send(request.url),
@@ -240,6 +252,71 @@ describe('transporter rate-limit retries', () => {
     await pending;
     expect(calls).toHaveLength(2);
     expect(calls.every((url) => url.includes('host-a.example'))).toBe(true);
+  });
+
+  test('logs wait duration and retries left before sleeping on 429', async () => {
+    const info = vi.fn().mockResolvedValue(undefined);
+    const transporter = makeTransporter(
+      (url) => {
+        if (url.includes('host-a.example') && info.mock.calls.length === 0) {
+          return json(429, { message: 'Too many requests' }, { 'retry-after': '2' });
+        }
+        return json(200, { message: 'ok' });
+      },
+      { logger: { ...createNullLogger(), info } },
+    );
+
+    const pending = transporter.request(request);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(info).toHaveBeenCalledTimes(1);
+    expect(info).toHaveBeenCalledWith(
+      'Retryable failure',
+      expect.objectContaining({
+        wait: 2000,
+        rateLimitRetriesLeft: 2,
+        triesLeft: 2,
+      }),
+    );
+
+    await vi.advanceTimersByTimeAsync(2000);
+    await pending;
+  });
+
+  test('429 stack frames count the retried host in triesLeft', async () => {
+    const transporter = makeTransporter(() => json(429, { message: 'Too many requests' }, { 'retry-after': '1' }));
+
+    const pending = transporter.request(request);
+    const assertion = expect(pending).rejects.toMatchObject({ name: 'ApiError', status: 429 });
+
+    await vi.advanceTimersByTimeAsync(0);
+    for (let i = 0; i < 3; i++) {
+      await vi.advanceTimersByTimeAsync(1000);
+    }
+
+    const error = await pending.then(
+      () => {
+        throw new Error('expected ApiError');
+      },
+      (err: { stackTrace: Array<{ triesLeft: number }> }) => err,
+    );
+    await assertion;
+    expect(error.stackTrace[0].triesLeft).toBe(2);
+  });
+
+  test('requestStream does not retry a 429-shaped error after sendStream succeeds', async () => {
+    let calls = 0;
+    const transporter = makeTransporter(() => json(200, { message: 'ok' }), {
+      sendStream: async () => {
+        calls++;
+        return erroringStream(new StreamRequestError(429, 'Too many requests', { 'retry-after': '1' }));
+      },
+    });
+
+    await expect(transporter.requestStream(request).next()).rejects.toMatchObject({
+      name: 'StreamRequestError',
+      status: 429,
+    });
+    expect(calls).toBe(1);
   });
 
   test('requestStream maxRateLimitRetries 0 fails on the first 429', async () => {

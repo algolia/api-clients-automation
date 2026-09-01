@@ -35,7 +35,7 @@
       },
       {
         "path": "packages/abtesting/dist/builds/browser.umd.js",
-        "maxSize": "6.5KB"
+        "maxSize": "6.75KB"
       },
       {
         "path": "packages/client-abtesting/dist/builds/browser.umd.js",
@@ -43,7 +43,7 @@
       },
       {
         "path": "packages/client-analytics/dist/builds/browser.umd.js",
-        "maxSize": "7.75KB"
+        "maxSize": "8KB"
       },
       {
         "path": "packages/composition/dist/builds/browser.umd.js",
@@ -55,7 +55,7 @@
       },
       {
         "path": "packages/client-personalization/dist/builds/browser.umd.js",
-        "maxSize": "6.25KB"
+        "maxSize": "6.5KB"
       },
       {
         "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
@@ -63,7 +63,7 @@
       },
       {
         "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "11KB"
+        "maxSize": "11.25KB"
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
@@ -71,11 +71,11 @@
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",
-        "maxSize": "6.25KB"
+        "maxSize": "6.5KB"
       },
       {
         "path": "packages/recommend/dist/builds/browser.umd.js",
-        "maxSize": "6.5KB"
+        "maxSize": "6.75KB"
       },
       {
         "path": "packages/agent-studio/dist/builds/browser.umd.js",
