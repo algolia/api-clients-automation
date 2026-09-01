@@ -1,3 +1,13 @@
+## [2.47.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.46.0...2.47.0)
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
+- [5672474ec5](https://github.com/algolia/api-clients-automation/commit/5672474ec5) fix(specs): remove plan restriction from Analytics API description ([#6955](https://github.com/algolia/api-clients-automation/pull/6955)) by [@kai687](https://github.com/kai687/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [2.46.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.45.0...2.46.0)
 
 - [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
