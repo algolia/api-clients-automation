@@ -133,6 +133,7 @@ metricResult:
         probabilityToBeBetter: 0.991
         relativeEffectCILow: 0.04
         relativeEffectCIHigh: 0.39
+        evidence: {'status': 'unavailable'}
 
 bayesianMetricResult:
   type: object
@@ -161,8 +162,8 @@ bayesianMetricResult:
 metricEvidence:
   type: object
   description: |
-    Sequential evidence accumulated for this variant metric.
-    Only present for the metric named by the A/B test's `primaryMetric`, and only on variants that are compared against the control.
+    Evidence verdict for this variant metric's comparison with the control.
+    Only present when the API has a verdict for the comparison. Omitted when evidence isn't applicable or no verdict exists.
   properties:
     status:
       $ref: '#/evidenceStatus'
@@ -176,16 +177,16 @@ evidenceStatus:
     This doesn't mean the A/B test has ended, and it doesn't declare a winning variant.
 
     - `enough`. Enough evidence has accumulated to trust this metric's result for this variant.
-    - `notEnough`. Evidence was computed but hasn't reached the threshold yet.
+    - `not_enough`. Evidence was computed but hasn't reached the threshold yet.
     - `collecting`. Evidence is still accumulating, so it's too early to report a verdict.
-    - `noData`. No usable data for this variant metric, and none is expected for it.
-    - `unavailable`. Evidence can't be computed from the available inputs or the A/B test's configuration.
-  example: enough
+    - `no_data`. No usable data for this variant metric, and none is expected for it.
+    - `unavailable`. Evidence can't be computed for this variant metric's comparison.
+  example: not_enough
   enum:
     - enough
-    - notEnough
+    - not_enough
     - collecting
-    - noData
+    - no_data
     - unavailable
 
 variantMetadata:
