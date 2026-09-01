@@ -138,12 +138,13 @@ describe('transporter rate-limit retries', () => {
     });
 
     const pending = transporter.request(request);
+    const assertion = expect(pending).rejects.toMatchObject({ name: 'ApiError', status: 429 });
 
     for (let i = 0; i < 3; i++) {
       await vi.advanceTimersByTimeAsync(1000);
     }
 
-    await expect(pending).rejects.toMatchObject({ name: 'ApiError', status: 429 });
+    await assertion;
     expect(calls).toBe(4);
   });
 

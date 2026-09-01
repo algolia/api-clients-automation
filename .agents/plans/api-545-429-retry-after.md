@@ -3,7 +3,7 @@
 - **Ticket:** [API-545](https://algolia.atlassian.net/browse/API-545)
 - **Kind:** feature
 - **Languages:** javascript
-- **Status:** in-progress
+- **Status:** done
 
 ## Goal
 
@@ -31,7 +31,7 @@ None (API surface). Behavioral: 429 no longer fails on the first response by def
 - **depends:** none
 - **verify:** `yarn test` in `clients/algoliasearch-client-javascript/packages/client-common`
 - **status:** done
-- **notes:** `yarn test` in client-common: 19 files, 137 tests passed (fake timers). 429 is handled before `isRetryable`; wait via `setTimeout`; same host is re-queued.
+- **notes:** `yarn test` in client-common: 20 files, 146 tests passed (fake timers; `rateLimit.test.ts` added to node project in `vitest.config.ts`). 429 is handled before `isRetryable`; wait via `setTimeout`; same host is re-queued. Exhausted-retry assertion attaches `.rejects` before advancing timers to avoid unhandled rejection.
 
 ### T2 — CTS mock server
 
@@ -62,8 +62,8 @@ None (API surface). Behavioral: 429 no longer fails on the first response by def
 - **files:** generated `tests/output/javascript/**` (side-effect)
 - **depends:** T1, T4
 - **verify:** `CI=1 yarn cli cts generate javascript && CI=1 yarn cli cts run javascript --no-e2e`
-- **status:** pending
-- **notes:** e2e suite skipped here (needs live keys; CI runs it separately). Must `yarn build` the JS clients before `cts run` so `tsc` can resolve `algoliasearch`.
+- **status:** done
+- **notes:** `CI=1 yarn cli cts run javascript --no-e2e`: 27 files, 1123 tests passed. Isolated 429 cases: Retry-After 1020ms, missing header 1004ms, exhausted 3010ms, fail-fast 2ms, HTML with retries disabled 17ms. e2e skipped (needs live keys).
 
 ### T6 — JSDoc + website retry note
 
@@ -77,3 +77,5 @@ None (API surface). Behavioral: 429 no longer fails on the first response by def
 
 - 2026-09-01: plan written
 - 2026-09-01: T1–T4 and T6 implemented; client-common unit tests passed; CTS generate succeeded; CTS run still pending (needs built JS packages)
+- 2026-09-01: T5 done. `CI=1 yarn cli cts run javascript --no-e2e` passed (1123 tests). Draft PR blocked by GitHub SAML SSO on ManagePullRequest.
+- 2026-09-01: included `rateLimit.test.ts` in client-common vitest node project; exhausted-retry test no longer leaks an unhandled ApiError
