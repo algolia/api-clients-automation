@@ -149,6 +149,13 @@ export type TransporterOptions = {
   baseQueryParameters: QueryParameters;
 
   /**
+   * Auth-only body slot for credentials that must travel in the JSON body
+   * (the API key as `apiKey` when `authMode` is `'WithinBody'`).
+   * Not a general request-body merge — do not put arbitrary payload fields here.
+   */
+  baseBodyParameters?: Headers;
+
+  /**
    * The user agent used. Sent on query parameters.
    */
   algoliaAgent: AlgoliaAgent;
@@ -185,6 +192,11 @@ export type Transporter = TransporterOptions & {
  * existing implementations of `Transporter` remain type-valid.
  */
 export type TransporterWithHttpInfo = Transporter & {
+  /**
+   * Auth-only body slot. Always present on the transporter returned by `createTransporter`.
+   */
+  baseBodyParameters: Headers;
+
   /**
    * Performs a request and returns the full HTTP response information — status code,
    * headers (when the requester captures them), raw body and deserialized data.

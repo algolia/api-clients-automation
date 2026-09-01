@@ -61,3 +61,6 @@ foo
 
 # reports saved by the api-clients-review skill
 .agents/reviews/
+
+# Agent coordination ledgers (skills under .agents/ stay tracked)
+.agents/plans/
