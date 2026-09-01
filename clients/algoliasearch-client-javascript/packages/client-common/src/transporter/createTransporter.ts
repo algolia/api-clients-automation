@@ -26,7 +26,7 @@ import {
   serializeUrl,
 } from './helpers';
 import { generateRequestId } from './requestId';
-import { isRetryable, isSuccess } from './responses';
+import { isRateLimited, isRetryable, isSuccess, parseRetryAfterMs } from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
 type RetryableOptions = {
@@ -48,6 +48,7 @@ export function createTransporter({
   compress,
   compression,
   requestIdChannel,
+  maxRateLimitRetries = 3,
 }: TransporterOptions): TransporterWithHttpInfo {
   function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
     if (
@@ -169,6 +170,12 @@ export function createTransporter({
     injectRequestId(headers, queryParameters);
 
     let timeoutsCount = 0;
+    let rateLimitRetriesLeft = maxRateLimitRetries;
+
+    const wait = (ms: number): Promise<void> =>
+      new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      });
 
     const retry = async (
       retryableHosts: Host[],
@@ -212,6 +219,14 @@ export function createTransporter({
       };
 
       const response = await requester.send(payload);
+
+      if (isRateLimited(response) && rateLimitRetriesLeft > 0) {
+        rateLimitRetriesLeft--;
+        pushToStackTrace(response);
+        await wait(parseRetryAfterMs(response.headers));
+        retryableHosts.push(host);
+        return retry(retryableHosts, getTimeout);
+      }
 
       if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);
@@ -445,6 +460,7 @@ export function createTransporter({
     baseQueryParameters,
     requestIdChannel,
     hosts,
+    maxRateLimitRetries,
     request: createRequest,
     requestWithHttpInfo: createRequestWithHttpInfo,
     requestStream,
