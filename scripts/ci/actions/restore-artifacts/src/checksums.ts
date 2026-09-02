@@ -1,6 +1,5 @@
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { isAbsolute } from 'node:path';
 
 import * as core from '@actions/core';
 
@@ -22,10 +21,6 @@ export function parseExpectedChecksums(lines: string[]): Map<string, string> {
 
 export async function sha256(filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    if (filePath.includes('..') || isAbsolute(filePath)) {
-      reject(new Error('Invalid file path'));
-      return;
-    }
     const hash = createHash('sha256');
     createReadStream(filePath)
       .on('error', reject)

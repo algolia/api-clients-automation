@@ -1,17 +1,28 @@
 import { createHash } from 'node:crypto';
 import fsp from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { parseExpectedChecksums, sha256, verifyChecksum } from '../checksums.ts';
 
-// relative path on purpose, sha256 rejects absolute paths
-const TMP_FILE = '.vitest-checksum-fixture';
 const PAYLOAD = 'artifact payload';
 const PAYLOAD_SHA = createHash('sha256').update(PAYLOAD).digest('hex');
 
+let tmpDir: string;
+let tmpFile: string;
+
+beforeAll(async () => {
+  tmpDir = await fsp.mkdtemp(join(tmpdir(), 'restore-artifacts-checksum-'));
+  tmpFile = join(tmpDir, 'fixture.bin');
+  await fsp.writeFile(tmpFile, PAYLOAD);
+});
+
 afterAll(async () => {
-  await fsp.rm(TMP_FILE, { force: true });
+  if (tmpDir !== undefined) {
+    await fsp.rm(tmpDir, { recursive: true, force: true });
+  }
 });
 
 describe('parseExpectedChecksums', () => {
@@ -39,17 +50,15 @@ describe('parseExpectedChecksums', () => {
 });
 
 describe('sha256', () => {
-  it('rejects path traversal and absolute paths', async () => {
-    await expect(sha256('../etc/passwd')).rejects.toThrow('Invalid file path');
-    await expect(sha256('/etc/passwd')).rejects.toThrow('Invalid file path');
+  it('hashes a file at an absolute path', async () => {
+    await expect(sha256(tmpFile)).resolves.toEqual(PAYLOAD_SHA);
   });
 });
 
 describe('verifyChecksum', () => {
   it('passes on a matching file and throws on a mismatch', async () => {
-    await fsp.writeFile(TMP_FILE, PAYLOAD);
-    await expect(verifyChecksum(new Map([['specs', PAYLOAD_SHA]]), 'specs', TMP_FILE)).resolves.toBeUndefined();
-    await expect(verifyChecksum(new Map([['specs', 'b'.repeat(64)]]), 'specs', TMP_FILE)).rejects.toThrow(
+    await expect(verifyChecksum(new Map([['specs', PAYLOAD_SHA]]), 'specs', tmpFile)).resolves.toBeUndefined();
+    await expect(verifyChecksum(new Map([['specs', 'b'.repeat(64)]]), 'specs', tmpFile)).rejects.toThrow(
       /Checksum mismatch for the 'specs' artifact/,
     );
   });
