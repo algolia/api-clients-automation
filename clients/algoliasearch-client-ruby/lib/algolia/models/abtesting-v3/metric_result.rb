@@ -8,6 +8,7 @@ require "time"
 module Algolia
   module AbtestingV3
     class MetricResult
+      # Metric name. Revenue per search results use `revenue_per_search`.
       attr_accessor :name
 
       # Date and time when the metric was last updated, in RFC 3339 format.
@@ -24,7 +25,7 @@ module Algolia
       # PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
       attr_accessor :p_value
 
-      # Dimension defined during test creation.
+      # Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
       attr_accessor :dimension
 
       attr_accessor :metadata
@@ -34,6 +35,8 @@ module Algolia
 
       # Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
       attr_accessor :significant
+
+      attr_accessor :bayesian
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -47,7 +50,8 @@ module Algolia
           :dimension => :dimension,
           :metadata => :metadata,
           :critical_value => :criticalValue,
-          :significant => :significant
+          :significant => :significant,
+          :bayesian => :bayesian
         }
       end
 
@@ -63,7 +67,8 @@ module Algolia
           :dimension => :"String",
           :metadata => :"MetricMetadata",
           :critical_value => :"Float",
-          :significant => :"Boolean"
+          :significant => :"Boolean",
+          :bayesian => :"BayesianMetricResult"
         }
       end
 
@@ -125,8 +130,6 @@ module Algolia
 
         if attributes.key?(:p_value)
           self.p_value = attributes[:p_value]
-        else
-          self.p_value = nil
         end
 
         if attributes.key?(:dimension)
@@ -144,6 +147,10 @@ module Algolia
         if attributes.key?(:significant)
           self.significant = attributes[:significant]
         end
+
+        if attributes.key?(:bayesian)
+          self.bayesian = attributes[:bayesian]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -160,7 +167,8 @@ module Algolia
           dimension == other.dimension &&
           metadata == other.metadata &&
           critical_value == other.critical_value &&
-          significant == other.significant
+          significant == other.significant &&
+          bayesian == other.bayesian
       end
 
       # @see the `==` method
@@ -182,7 +190,8 @@ module Algolia
           dimension,
           metadata,
           critical_value,
-          significant
+          significant,
+          bayesian
         ].hash
       end
 

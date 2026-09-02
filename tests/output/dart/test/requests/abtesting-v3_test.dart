@@ -44,6 +44,50 @@ void main() {
     ),
   );
 
+  // applyVariantSettings
+  test(
+    'applyVariantSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.applyVariantSettings(
+        id: 42,
+        variantId: 2,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2/apply');
+        expect(request.method, 'post');
+        expect(request.body, {});
+      },
+    ),
+  );
+
+  // applyVariantSettings
+  test(
+    'revert applied settings via the control variant',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.applyVariantSettings(
+        id: 42,
+        variantId: 1,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/1/apply');
+        expect(request.method, 'post');
+        expect(request.body, {});
+      },
+    ),
+  );
+
   // customDelete
   test(
     'allow del method for a custom path with minimal parameters',
@@ -664,6 +708,27 @@ void main() {
     ),
   );
 
+  // getABTestSettings
+  test(
+    'getABTestSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getABTestSettings(
+        id: 42,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getTimeseries
   test(
     'getTimeseries',
@@ -727,6 +792,54 @@ void main() {
         expectParams(request.queryParameters,
             """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}""");
         expect(request.body, null);
+      },
+    ),
+  );
+
+  // saveVariantSettings
+  test(
+    'saveVariantSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveVariantSettings(
+        id: 42,
+        variantId: 2,
+        saveSettingsRequest: SaveSettingsRequest(
+          saveFeaturesSettings: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"saveFeaturesSettings":true}""");
+      },
+    ),
+  );
+
+  // saveVariantSettings
+  test(
+    'saveVariantSettingsWithoutFeatures',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveVariantSettings(
+        id: 42,
+        variantId: 2,
+        saveSettingsRequest: SaveSettingsRequest(),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
       },
     ),
   );

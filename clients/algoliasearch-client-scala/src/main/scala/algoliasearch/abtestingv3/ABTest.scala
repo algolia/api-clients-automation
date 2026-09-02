@@ -39,6 +39,8 @@ import algoliasearch.abtestingv3.Status._
   *   Date and time when the A/B test was stopped, in RFC 3339 format.
   * @param name
   *   A/B test name.
+  * @param hypothesis
+  *   Expected outcome of the A/B test.
   * @param variants
   *   A/B test variants. The first variant is your _control_ index, typically your production index. All of the
   *   additional variants are indexes with changed settings that you want to test against the control.
@@ -50,6 +52,7 @@ case class ABTest(
     endAt: String,
     stoppedAt: Option[String] = scala.None,
     name: String,
+    hypothesis: String,
     status: Status,
     variants: Seq[Variant],
     configuration: Option[ABTestConfiguration] = scala.None,

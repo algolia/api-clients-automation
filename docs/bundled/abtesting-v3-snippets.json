@@ -6,6 +6,10 @@
     "addABTests": {
       "default": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"myMetric\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
     },
+    "applyVariantSettings": {
+      "applyVariantSettings": "await client.ApplyVariantSettingsAsync(42, 2);",
+      "revert applied settings via the control variant": "await client.ApplyVariantSettingsAsync(42, 1);"
+    },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
       "allow del method for a custom path with all parameters": "var response = await client.CustomDeleteAsync(\n  \"test/all\",\n  new Dictionary<string, object> { { \"query\", \"parameters\" } }\n);"
@@ -41,12 +45,19 @@
     "getABTest": {
       "default": "var response = await client.GetABTestAsync(42);"
     },
+    "getABTestSettings": {
+      "default": "var response = await client.GetABTestSettingsAsync(42);"
+    },
     "getTimeseries": {
       "default": "var response = await client.GetTimeseriesAsync(42);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
       "listABTests with parameters": "var response = await client.ListABTestsAsync(\n  0,\n  21,\n  \"cts_e2e ab\",\n  \"t\",\n  Enum.Parse<Direction>(\"Asc\")\n);"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "await client.SaveVariantSettingsAsync(\n  42,\n  2,\n  new SaveSettingsRequest { SaveFeaturesSettings = true }\n);",
+      "saveVariantSettingsWithoutFeatures": "await client.SaveVariantSettingsAsync(42, 2, new SaveSettingsRequest { });"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -64,6 +75,10 @@
     },
     "addABTests": {
       "default": "final response = await client.addABTests(\n  addABTestsRequest: AddABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"myMetric\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "await client.applyVariantSettings(\n  id: 42,\n  variantId: 2,\n);",
+      "revert applied settings via the control variant": "await client.applyVariantSettings(\n  id: 42,\n  variantId: 1,\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);",
@@ -100,12 +115,19 @@
     "getABTest": {
       "default": "final response = await client.getABTest(\n  id: 42,\n);"
     },
+    "getABTestSettings": {
+      "default": "final response = await client.getABTestSettings(\n  id: 42,\n);"
+    },
     "getTimeseries": {
       "default": "final response = await client.getTimeseries(\n  id: 42,\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "final response = await client.listABTests();",
       "listABTests with parameters": "final response = await client.listABTests(\n  offset: 0,\n  limit: 21,\n  indexPrefix: \"cts_e2e ab\",\n  indexSuffix: \"t\",\n  direction: Direction.fromJson(\"asc\"),\n);"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "await client.saveVariantSettings(\n  id: 42,\n  variantId: 2,\n  saveSettingsRequest: SaveSettingsRequest(\n    saveFeaturesSettings: true,\n  ),\n);",
+      "saveVariantSettingsWithoutFeatures": "await client.saveVariantSettings(\n  id: 42,\n  variantId: 2,\n  saveSettingsRequest: SaveSettingsRequest(),\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
@@ -123,6 +145,10 @@
     },
     "addABTests": {
       "default": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtestingV3.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"myMetric\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(\n  42, 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "revert applied settings via the control variant": "err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(\n  42, 1))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -159,12 +185,19 @@
     "getABTest": {
       "default": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
+    "getABTestSettings": {
+      "default": "response, err := client.GetABTestSettings(client.NewApiGetABTestSettingsRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
     "getTimeseries": {
       "default": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "listABTests with parameters": "response, err := client.ListABTests(\n  client.NewApiListABTestsRequest().\n    WithOffset(0).\n    WithLimit(21).\n    WithIndexPrefix(\"cts_e2e ab\").\n    WithIndexSuffix(\"t\").\n    WithDirection(abtestingV3.Direction(\"asc\")),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(\n  42, 2,\n  abtestingV3.NewEmptySaveSettingsRequest().SetSaveFeaturesSettings(true)))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "saveVariantSettingsWithoutFeatures": "err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(\n  42, 2,\n  abtestingV3.NewEmptySaveSettingsRequest()))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -182,6 +215,10 @@
     },
     "addABTests": {
       "default": "ABTestResponse response = client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "client.applyVariantSettings(42, 2);",
+      "revert applied settings via the control variant": "client.applyVariantSettings(42, 1);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
@@ -218,12 +255,19 @@
     "getABTest": {
       "default": "ABTest response = client.getABTest(42);"
     },
+    "getABTestSettings": {
+      "default": "ABTestSettingsResponse response = client.getABTestSettings(42);"
+    },
     "getTimeseries": {
       "default": "Timeseries response = client.getTimeseries(42);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
       "listABTests with parameters": "ListABTestsResponse response = client.listABTests(0, 21, \"cts_e2e ab\", \"t\", Direction.ASC);"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));",
+      "saveVariantSettingsWithoutFeatures": "client.saveVariantSettings(42, 2, new SaveSettingsRequest());"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
@@ -241,6 +285,10 @@
     },
     "addABTests": {
       "default": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "await client.applyVariantSettings({ id: 42, variantId: 2 });",
+      "revert applied settings via the control variant": "await client.applyVariantSettings({ id: 42, variantId: 1 });"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
@@ -277,12 +325,19 @@
     "getABTest": {
       "default": "const response = await client.getABTest({ id: 42 });"
     },
+    "getABTestSettings": {
+      "default": "const response = await client.getABTestSettings({ id: 42 });"
+    },
     "getTimeseries": {
       "default": "const response = await client.getTimeseries({ id: 42 });"
     },
     "listABTests": {
       "listABTests with minimal parameters": "const response = await client.listABTests();",
       "listABTests with parameters": "const response = await client.listABTests({\n  offset: 0,\n  limit: 21,\n  indexPrefix: 'cts_e2e ab',\n  indexSuffix: 't',\n  direction: 'asc',\n});"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: { saveFeaturesSettings: true } });",
+      "saveVariantSettingsWithoutFeatures": "await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: {} });"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
@@ -297,6 +352,10 @@
   "kotlin": {
     "addABTests": {
       "default": "var response =\n  client.addABTests(\n    addABTestsRequest =\n      AddABTestsRequest(\n        endAt = \"2022-12-31T00:00:00.000Z\",\n        name = \"myABTest\",\n        metrics = listOf(CreateMetric(name = \"myMetric\")),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 30),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "client.applyVariantSettings(id = 42, variantId = 2)",
+      "revert applied settings via the control variant": "client.applyVariantSettings(id = 42, variantId = 1)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
@@ -333,12 +392,19 @@
     "getABTest": {
       "default": "var response = client.getABTest(id = 42)"
     },
+    "getABTestSettings": {
+      "default": "var response = client.getABTestSettings(id = 42)"
+    },
     "getTimeseries": {
       "default": "var response = client.getTimeseries(id = 42)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = client.listABTests()",
       "listABTests with parameters": "var response =\n  client.listABTests(\n    offset = 0,\n    limit = 21,\n    indexPrefix = \"cts_e2e ab\",\n    indexSuffix = \"t\",\n    direction = Direction.entries.first { it.value == \"asc\" },\n  )"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "client.saveVariantSettings(\n  id = 42,\n  variantId = 2,\n  saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),\n)",
+      "saveVariantSettingsWithoutFeatures": "client.saveVariantSettings(id = 42, variantId = 2, saveSettingsRequest = SaveSettingsRequest())"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
@@ -356,6 +422,10 @@
     },
     "addABTests": {
       "default": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'myMetric',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "$client->applyVariantSettings(\n    42,\n    2,\n);",
+      "revert applied settings via the control variant": "$client->applyVariantSettings(\n    42,\n    1,\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
@@ -392,12 +462,19 @@
     "getABTest": {
       "default": "$response = $client->getABTest(\n    42,\n);"
     },
+    "getABTestSettings": {
+      "default": "$response = $client->getABTestSettings(\n    42,\n);"
+    },
     "getTimeseries": {
       "default": "$response = $client->getTimeseries(\n    42,\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "$response = $client->listABTests();",
       "listABTests with parameters": "$response = $client->listABTests(\n    0,\n    21,\n    'cts_e2e ab',\n    't',\n    'asc',\n);"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "$client->saveVariantSettings(\n    42,\n    2,\n    ['saveFeaturesSettings' => true,\n    ],\n);",
+      "saveVariantSettingsWithoutFeatures": "$client->saveVariantSettings(\n    42,\n    2,\n    [],\n);"
     },
     "setClientApiKey": {
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
@@ -415,6 +492,10 @@
     },
     "addABTests": {
       "default": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"myMetric\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "client.apply_variant_settings(\n    id=42,\n    variant_id=2,\n)",
+      "revert applied settings via the control variant": "client.apply_variant_settings(\n    id=42,\n    variant_id=1,\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
@@ -451,12 +532,19 @@
     "getABTest": {
       "default": "response = client.get_ab_test(\n    id=42,\n)"
     },
+    "getABTestSettings": {
+      "default": "response = client.get_ab_test_settings(\n    id=42,\n)"
+    },
     "getTimeseries": {
       "default": "response = client.get_timeseries(\n    id=42,\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests()",
       "listABTests with parameters": "response = client.list_ab_tests(\n    offset=0,\n    limit=21,\n    index_prefix=\"cts_e2e ab\",\n    index_suffix=\"t\",\n    direction=\"asc\",\n)"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "client.save_variant_settings(\n    id=42,\n    variant_id=2,\n    save_settings_request={\n        \"saveFeaturesSettings\": True,\n    },\n)",
+      "saveVariantSettingsWithoutFeatures": "client.save_variant_settings(\n    id=42,\n    variant_id=2,\n    save_settings_request={},\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
@@ -474,6 +562,10 @@
     },
     "addABTests": {
       "default": "response = client.add_ab_tests(\n  Algolia::AbtestingV3::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"myMetric\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "client.apply_variant_settings(42, 2)",
+      "revert applied settings via the control variant": "client.apply_variant_settings(42, 1)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
@@ -510,12 +602,19 @@
     "getABTest": {
       "default": "response = client.get_ab_test(42)"
     },
+    "getABTestSettings": {
+      "default": "response = client.get_ab_test_settings(42)"
+    },
     "getTimeseries": {
       "default": "response = client.get_timeseries(42)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests",
       "listABTests with parameters": "response = client.list_ab_tests(0, 21, \"cts_e2e ab\", \"t\", \"asc\")"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "client.save_variant_settings(42, 2, Algolia::AbtestingV3::SaveSettingsRequest.new(save_features_settings: true))",
+      "saveVariantSettingsWithoutFeatures": "client.save_variant_settings(42, 2, Algolia::AbtestingV3::SaveSettingsRequest.new)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
@@ -533,6 +632,10 @@
     },
     "addABTests": {
       "default": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"myMetric\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "Await.result(\n  client.applyVariantSettings(\n    id = 42,\n    variantId = 2\n  ),\n  Duration(100, \"sec\")\n)",
+      "revert applied settings via the control variant": "Await.result(\n  client.applyVariantSettings(\n    id = 42,\n    variantId = 1\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -569,12 +672,19 @@
     "getABTest": {
       "default": "val response = Await.result(\n  client.getABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
     },
+    "getABTestSettings": {
+      "default": "val response = Await.result(\n  client.getABTestSettings(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
+    },
     "getTimeseries": {
       "default": "val response = Await.result(\n  client.getTimeseries(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
       "listABTests with parameters": "val response = Await.result(\n  client.listABTests(\n    offset = Some(0),\n    limit = Some(21),\n    indexPrefix = Some(\"cts_e2e ab\"),\n    indexSuffix = Some(\"t\"),\n    direction = Some(Direction.withName(\"asc\"))\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "Await.result(\n  client.saveVariantSettings(\n    id = 42,\n    variantId = 2,\n    saveSettingsRequest = SaveSettingsRequest(\n      saveFeaturesSettings = Some(true)\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "saveVariantSettingsWithoutFeatures": "Await.result(\n  client.saveVariantSettings(\n    id = 42,\n    variantId = 2,\n    saveSettingsRequest = SaveSettingsRequest(\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
@@ -592,6 +702,10 @@
     },
     "addABTests": {
       "default": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+    },
+    "applyVariantSettings": {
+      "applyVariantSettings": "try await client.applyVariantSettings(id: 42, variantId: 2)",
+      "revert applied settings via the control variant": "try await client.applyVariantSettings(id: 42, variantId: 1)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
@@ -628,12 +742,19 @@
     "getABTest": {
       "default": "let response = try await client.getABTest(id: 42)"
     },
+    "getABTestSettings": {
+      "default": "let response = try await client.getABTestSettings(id: 42)"
+    },
     "getTimeseries": {
       "default": "let response = try await client.getTimeseries(id: 42)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "let response = try await client.listABTests()",
       "listABTests with parameters": "let response = try await client.listABTests(\n    offset: 0,\n    limit: 21,\n    indexPrefix: \"cts_e2e ab\",\n    indexSuffix: \"t\",\n    direction: AbtestingV3Direction.asc\n)"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "try await client.saveVariantSettings(\n    id: 42,\n    variantId: 2,\n    saveSettingsRequest: SaveSettingsRequest(saveFeaturesSettings: true)\n)",
+      "saveVariantSettingsWithoutFeatures": "try await client.saveVariantSettings(id: 42, variantId: 2, saveSettingsRequest: SaveSettingsRequest())"
     },
     "setClientApiKey": {
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"

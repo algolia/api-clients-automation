@@ -27,6 +27,8 @@ package algoliasearch.abtestingv3
   *
   * @param name
   *   A/B test name.
+  * @param hypothesis
+  *   Expected outcome of the A/B test.
   * @param variants
   *   A/B test variants.
   * @param metrics
@@ -36,6 +38,7 @@ package algoliasearch.abtestingv3
   */
 case class AddABTestsRequest(
     name: String,
+    hypothesis: Option[String] = scala.None,
     variants: Seq[AddABTestsVariant],
     metrics: Seq[CreateMetric],
     configuration: Option[ABTestConfiguration] = scala.None,
