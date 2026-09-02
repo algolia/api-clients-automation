@@ -132,7 +132,7 @@ export type TransporterOptions = {
   /**
    * How many times to wait and retry on the same host after HTTP 429.
    * Default is 3. `0` fails on the first 429 (no wait).
-   * Wait time is `Retry-After` in whole seconds (capped at 60 seconds), or 1 second if the header is missing or invalid.
+   * Wait time is `Retry-After` in whole seconds, or 1 second if the header is missing or invalid.
    */
   maxRateLimitRetries?: number | undefined;
 
