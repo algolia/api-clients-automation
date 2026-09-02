@@ -13,7 +13,14 @@ done
 echo
 echo "== download checksums =="
 # the sdkman installer is vendored at scripts/docker/sdkman-install.sh, re-download it from https://get.sdkman.io to update it
+# hash a saved body, not a pipe: curl -sfL writes nothing on failure, and shasum of empty stdin is a real digest
 grep -rhoE 'https://[^" ]+\.(sh|jar|tar\.gz)' scripts/docker/Dockerfile.* .github/actions/setup/action.yml | sort -u | while read -r url; do
-  sum=$(curl -sfL --retry 3 "$url" | shasum -a 256 | awk '{print $1}' || true)
-  echo "${sum:-<unresolved>}  $url"
+  tmp=$(mktemp)
+  if curl -sfL --retry 3 -o "$tmp" "$url" && [[ -s "$tmp" ]]; then
+    sum=$(shasum -a 256 "$tmp" | awk '{print $1}')
+  else
+    sum="<unresolved>"
+  fi
+  rm -f "$tmp"
+  echo "${sum}  $url"
 done
