@@ -134,7 +134,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.57.0';
+export const apiClientVersion = '5.58.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -494,7 +494,7 @@ export function createSearchClient({
       };
 
       return createIterablePromise<SearchSynonymsResponse>({
-        func: (_) => {
+        func: (__) => {
           const resp = this.searchSynonyms(
             {
               indexName,
