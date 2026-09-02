@@ -47,6 +47,52 @@ def snippet_for_add_ab_tests():
     # SEPARATOR<
 
 
+def snippet_for_apply_variant_settings():
+    """
+    Snippet for the applyVariantSettings method.
+
+    applyVariantSettings
+    """
+    # >SEPARATOR applyVariantSettings applyVariantSettings
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    client.apply_variant_settings(
+        id=42,
+        variant_id=2,
+    )
+
+    # >LOG
+    # SEPARATOR<
+
+
+def snippet_for_apply_variant_settings1():
+    """
+    Snippet for the applyVariantSettings method.
+
+    revert applied settings via the control variant
+    """
+    # >SEPARATOR applyVariantSettings revert applied settings via the control variant
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    client.apply_variant_settings(
+        id=42,
+        variant_id=1,
+    )
+
+    # >LOG
+    # SEPARATOR<
+
+
 def snippet_for_custom_delete():
     """
     Snippet for the customDelete method.
@@ -676,6 +722,30 @@ def snippet_for_get_ab_test():
     # SEPARATOR<
 
 
+def snippet_for_get_ab_test_settings():
+    """
+    Snippet for the getABTestSettings method.
+
+    getABTestSettings
+    """
+    # >SEPARATOR getABTestSettings default
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_ab_test_settings(
+        id=42,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_timeseries():
     """
     Snippet for the getTimeseries method.
@@ -747,6 +817,56 @@ def snippet_for_list_ab_tests1():
     # >LOG
     # print the response
     print(response)
+    # SEPARATOR<
+
+
+def snippet_for_save_variant_settings():
+    """
+    Snippet for the saveVariantSettings method.
+
+    saveVariantSettings
+    """
+    # >SEPARATOR saveVariantSettings saveVariantSettings
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    client.save_variant_settings(
+        id=42,
+        variant_id=2,
+        save_settings_request={
+            "saveFeaturesSettings": True,
+        },
+    )
+
+    # >LOG
+    # SEPARATOR<
+
+
+def snippet_for_save_variant_settings1():
+    """
+    Snippet for the saveVariantSettings method.
+
+    saveVariantSettingsWithoutFeatures
+    """
+    # >SEPARATOR saveVariantSettings saveVariantSettingsWithoutFeatures
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    client.save_variant_settings(
+        id=42,
+        variant_id=2,
+        save_settings_request={},
+    )
+
+    # >LOG
     # SEPARATOR<
 
 

@@ -54,6 +54,54 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// applyVariantSettings
+    func testApplyVariantSettingsTest() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.applyVariantSettingsWithHTTPInfo(id: 42, variantId: 2)
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings/2/apply")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// revert applied settings via the control variant
+    func testApplyVariantSettingsTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.applyVariantSettingsWithHTTPInfo(id: 42, variantId: 1)
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings/1/apply")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
@@ -819,6 +867,28 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// getABTestSettings
+    func testGetABTestSettingsTest() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getABTestSettingsWithHTTPInfo(id: 42)
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getTimeseries
     func testGetTimeseriesTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
@@ -898,6 +968,70 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// saveVariantSettings
+    func testSaveVariantSettingsTest() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveVariantSettingsWithHTTPInfo(
+            id: 42,
+            variantId: 2,
+            saveSettingsRequest: SaveSettingsRequest(saveFeaturesSettings: true)
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"saveFeaturesSettings\":true}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings/2")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// saveVariantSettingsWithoutFeatures
+    func testSaveVariantSettingsTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.saveVariantSettingsWithHTTPInfo(
+            id: 42,
+            variantId: 2,
+            saveSettingsRequest: SaveSettingsRequest()
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings/2")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// stopABTest
