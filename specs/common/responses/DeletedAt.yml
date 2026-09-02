@@ -1,4 +1,4 @@
-# Reused by Search and Recommend only. Drop the Correlation-ID header below before reusing this response for an API that does not send it.
+# Only APIs on {appId}.algolia.net send Correlation-ID. Drop the header below if another API reuses this response.
 description: OK
 headers:
   Correlation-ID:
