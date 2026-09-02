@@ -589,7 +589,9 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
-          # the matrix client artifacts have no trusted checksum channel (matrix job outputs collide) and are restored unverified
+          # Recorded decision: checksums cover 2 of ~11 artifacts codegen consumes (specs + javascript).
+          # Matrix client zips restored into the checkout that codegen then pushes have no trusted
+          # job-output channel (matrix legs collide) and stay covered only by upload-artifact immutability.
           expected-checksums: |
             ${{ needs.specs.outputs.SPECS_SHA }} specs
             ${{ needs.client_gen_javascript.result == 'success' && format('{0} clients-javascript', needs.client_gen_javascript.outputs.JS_SHA) || '' }}
