@@ -31,9 +31,9 @@ function langState(lang: string): LangState {
   return state[lang];
 }
 
-function assertDelay(timestamps: number[]): void {
+function assertDelay(timestamps: number[], expectedMs: number): void {
   expect(timestamps.length).to.be.at.least(2);
-  expect(timestamps[1] - timestamps[0]).to.be.closeTo(1000, 400);
+  expect(timestamps[1] - timestamps[0]).to.be.closeTo(expectedMs, 400);
 }
 
 export function assertValidRateLimitRetries(javascriptRan: boolean): void {
@@ -45,11 +45,12 @@ export function assertValidRateLimitRetries(javascriptRan: boolean): void {
   expect(langs.length, 'rate-limit mock was never hit').to.be.at.least(1);
 
   for (const [lang, langState] of Object.entries(state)) {
+    // 2s proves Retry-After was parsed: the fallback wait for a missing header is 1s.
     expect(langState.retryAfterCalls, `${lang} retry-after calls`).to.equal(2);
-    assertDelay(langState.retryAfterTimestamps);
+    assertDelay(langState.retryAfterTimestamps, 2000);
 
     expect(langState.missingHeaderCalls, `${lang} missing-header calls`).to.equal(2);
-    assertDelay(langState.missingHeaderTimestamps);
+    assertDelay(langState.missingHeaderTimestamps, 1000);
 
     expect(langState.exhaustedCalls, `${lang} exhausted calls`).to.equal(4);
     expect(langState.zeroRetriesCalls, `${lang} zero-retries calls`).to.equal(1);
@@ -67,7 +68,7 @@ function addRoutes(app: express.Express): void {
     current.retryAfterTimestamps.push(Date.now());
 
     if (current.retryAfterCalls === 1) {
-      res.setHeader('Retry-After', '1');
+      res.setHeader('Retry-After', '2');
       res.status(429).json({ message: 'Too many requests' });
       return;
     }
