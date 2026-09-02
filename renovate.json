@@ -104,7 +104,22 @@
     },
     {
       "customType": "regex",
-      "description": "Update the java formatter",
+      "description": "Update golangci-lint, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "golangci-lint/v(?<currentValue>[0-9.]+)/install\\.sh",
+        "golangci-install\\.sh -b .+ v(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the java formatter, the checksums next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
@@ -276,6 +291,32 @@
       ],
       "depNameTemplate": "nicklockwood/SwiftFormat",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update melos",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "dart pub global activate melos (?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "melos",
+      "datasourceTemplate": "dart"
+    },
+    {
+      "customType": "regex",
+      "description": "Update poetry",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "pipx install poetry==(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "poetry",
+      "datasourceTemplate": "pypi"
     }
   ],
   "github-actions": {
