@@ -37,12 +37,10 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
 }
 
 export function assertValidRateLimitRetries(javascriptRan: boolean): void {
-  if (!javascriptRan) {
-    return;
+  // Only JavaScript implements 429 retries so far, but any language that hit the mock is validated.
+  if (javascriptRan) {
+    expect(Object.keys(state).length, 'rate-limit mock was never hit').to.be.at.least(1);
   }
-
-  const langs = Object.keys(state);
-  expect(langs.length, 'rate-limit mock was never hit').to.be.at.least(1);
 
   for (const [lang, langState] of Object.entries(state)) {
     // 2s proves Retry-After was parsed: the fallback wait for a missing header is 1s.
