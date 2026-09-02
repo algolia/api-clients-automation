@@ -35,6 +35,9 @@
       "matchDatasources": [
         "docker"
       ],
+      "matchFileNames": [
+        "scripts/docker/**"
+      ],
       "pinDigests": true
     },
     {

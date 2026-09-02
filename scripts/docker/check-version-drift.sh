@@ -1,15 +1,28 @@
 #!/bin/bash
 # fails when a pinned FROM tag in scripts/docker/ diverges from its config/.*-version file
+#
+# this check compares the human-readable tag only. docker resolves the image by
+# digest and ignores the tag, so a tag/digest mismatch still builds (and this
+# script still passes). Renovate's pinDigests rule is what refreshes the digest.
 set -euo pipefail
 
 get_tag() {
-  grep -Eo "FROM $2:[^@ ]+" "scripts/docker/$1" | head -1 | sed -E "s,FROM $2:,,;s,-(alpine|trixie|jammy)$,,"
+  local match
+  match=$(grep -Eo "FROM $2:[^@ ]+" "scripts/docker/$1" | head -1) || true
+  if [[ -z "$match" ]]; then
+    echo "no FROM $2 found in scripts/docker/$1" >&2
+    return 1
+  fi
+  sed -E "s,FROM $2:,,;s,-(alpine|trixie|jammy)$,,;" <<< "$match"
 }
 
 fail=0
 check() {
   local tag expected
-  tag=$(get_tag "$1" "$2")
+  if ! tag=$(get_tag "$1" "$2"); then
+    fail=1
+    return
+  fi
   expected=$(cat "config/$3")
   if [[ "$tag" != "$expected" ]]; then
     echo "$1: $2 is pinned to $tag but config/$3 says $expected"

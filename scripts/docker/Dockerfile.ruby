@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # version must stay in sync with config/.ruby-version, CI checks the drift
 FROM ruby:4.0.6-trixie@sha256:72e26fdc615b21e9fa0a811f3c7572103a5adafd8ad34735ac316789cd74267f
 
