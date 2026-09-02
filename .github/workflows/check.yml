@@ -123,6 +123,8 @@ jobs:
 
       RUN_WEBSITE: ${{ steps.diff.outputs.WEBSITE_CHANGED > 0 }}
 
+      RUN_DOCKER: ${{ steps.diff.outputs.DOCKER_CHANGED > 0 }}
+
       SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
       RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
@@ -728,6 +730,29 @@ jobs:
             exit 1
           fi
 
+  # yarn docker:setup is the only consumer of these images; a version bump that
+  # leaves a stale checksum is invisible to the tag drift check and to every
+  # other CI job, so build them when scripts/docker/ changes
+  docker_images:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    needs: setup
+    if: ${{ needs.setup.outputs.RUN_DOCKER == 'true' }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [base, ruby, swift]
+    name: docker ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build ${{ matrix.image }} image
+        run: |
+          export JAVA_VERSION=$(cat config/.java-version)
+          docker compose build --progress=plain ${{ matrix.image }}
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -736,10 +761,11 @@ jobs:
       - swift_build_linux
       - kotlin_build_macos
       - action_pins
+      - docker_images
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") ]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") || ("${{ needs.docker_images.result }}" != "skipped" && "${{ needs.docker_images.result }}" != "success") ]]; then
             echo "a needed step failed"
             exit 1
           fi
