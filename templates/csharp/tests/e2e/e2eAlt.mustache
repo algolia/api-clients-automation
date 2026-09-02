@@ -1,0 +1,77 @@
+// {{generationBanner}}
+using Algolia.Search.Http;
+using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
+using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
+using Xunit;
+using System.Text.Json;
+using Quibble.Xunit;
+using dotenv.net;
+{{#isSearchClient}}
+using Action = Algolia.Search.Models.Search.Action;
+using Range = Algolia.Search.Models.Search.Range;
+{{/isSearchClient}}
+{{#isIngestionClient}}
+using Action = Algolia.Search.Models.Ingestion.Action;
+{{/isIngestionClient}}
+{{#isCompositionClient}}
+using Action = Algolia.Search.Models.Composition.Action;
+{{/isCompositionClient}}
+
+namespace Algolia.Search.e2eAlt;
+
+public class {{client}}RequestTestsE2EAlt
+{
+  private readonly {{client}} client;
+
+  public {{client}}RequestTestsE2EAlt()
+  {
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+
+    var appId = Environment.GetEnvironmentVariable("METIS_APPLICATION_ID");
+    if (appId == null)
+    {
+      throw new Exception("please provide an `METIS_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var apiKey = Environment.GetEnvironmentVariable("METIS_API_KEY");
+    if (apiKey == null)
+    {
+      throw new Exception("please provide an `METIS_API_KEY` env var for e2e tests");
+    }
+
+    client = new {{client}}(new {{clientPrefix}}Config(appId, apiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
+  }
+
+  [Fact]
+  public void Dispose()
+  {
+
+  }
+
+  {{#blocksE2E}}
+  {{#tests}}
+  [Fact(DisplayName = "{{{testName}}}")]
+  public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
+  {
+      try {
+        var resp = {{> tests/method}};
+      {{#response}}
+      {{#statusCode}}
+          // Check status code {{statusCode}}
+          Assert.NotNull(resp);
+      {{/statusCode}}
+
+      {{#body}}
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
+      {{/body}}
+      } catch (Exception e)
+      {
+        Assert.Fail("An exception was thrown: " + e.Message);
+      }
+    {{/response}}
+  }
+  {{/tests}}
+  {{/blocksE2E}}
+}
