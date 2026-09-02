@@ -5,13 +5,16 @@ package algoliasearch.api
 
 import algoliasearch.abtestingv3.ABTest
 import algoliasearch.abtestingv3.ABTestResponse
+import algoliasearch.abtestingv3.ABTestSettingsResponse
 import algoliasearch.abtestingv3.AddABTestsRequest
+import algoliasearch.abtestingv3.ConflictResponse
 import algoliasearch.abtestingv3.Direction._
 import algoliasearch.abtestingv3.ErrorBase
 import algoliasearch.abtestingv3.EstimateABTestRequest
 import algoliasearch.abtestingv3.EstimateABTestResponse
 import algoliasearch.abtestingv3.ListABTestsResponse
 import algoliasearch.abtestingv3.MetricName._
+import algoliasearch.abtestingv3.SaveSettingsRequest
 import algoliasearch.abtestingv3.Timeseries
 import algoliasearch.abtestingv3._
 import algoliasearch.ApiClient
@@ -124,6 +127,60 @@ class AbtestingV3Client(
       .withMethod("POST")
       .withPath(s"/3/abtests")
       .withBody(addABTestsRequest)
+      .build()
+  }
+
+  /** Applies the captured settings of the given variant to the control index. The settings must first be captured with
+    * the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this
+    * operation with the control variant (variant 1). Settings can be applied up to 14 days after the A/B test ends, and
+    * reverted up to 15 days after. Later requests return `400`. Each set of captured settings can only be applied once,
+    * and settings that were reverted can't be applied again. Both cases return `400`. The control index must not be in
+    * use by an active A/B test. Otherwise, the request returns `422`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def applyVariantSettings(id: Int, variantId: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Unit] = Future {
+    execute[Unit](applyVariantSettingsHttpRequest(id = id, variantId = variantId), requestOptions)
+  }
+
+  /** Variant of `applyVariantSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def applyVariantSettingsWithHTTPInfo(id: Int, variantId: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](applyVariantSettingsHttpRequest(id = id, variantId = variantId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `applyVariantSettings` and
+    * `applyVariantSettingsWithHTTPInfo`.
+    */
+  private def applyVariantSettingsHttpRequest(id: Int, variantId: Int): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `applyVariantSettings`.")
+    requireNotNull(variantId, "Parameter `variantId` is required when calling `applyVariantSettings`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/abtests/${escape(id)}/settings/${escape(variantId)}/apply")
       .build()
   }
 
@@ -453,6 +510,50 @@ class AbtestingV3Client(
       .build()
   }
 
+  /** Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the
+    * control index. Settings are captured by the `saveVariantSettings` operation. The response includes an entry for
+    * the control (variant 1) alongside the captured variant, so the control's original configuration can be restored
+    * later. Returns `404` if no settings have been captured for the A/B test.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def getABTestSettings(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[ABTestSettingsResponse] = Future {
+    execute[ABTestSettingsResponse](getABTestSettingsHttpRequest(id = id), requestOptions)
+  }
+
+  /** Variant of `getABTestSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def getABTestSettingsWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTestSettingsResponse]] = Future {
+    executeWithHttpInfo[ABTestSettingsResponse](getABTestSettingsHttpRequest(id = id), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getABTestSettings` and `getABTestSettingsWithHTTPInfo`.
+    */
+  private def getABTestSettingsHttpRequest(id: Int): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `getABTestSettings`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/3/abtests/${escape(id)}/settings")
+      .build()
+  }
+
   /** Retrieves timeseries for an A/B test by its ID.
     *
     * Required API Key ACLs:
@@ -622,6 +723,80 @@ class AbtestingV3Client(
       .withQueryParameter("indexPrefix", indexPrefix)
       .withQueryParameter("indexSuffix", indexSuffix)
       .withQueryParameter("direction", direction)
+      .build()
+  }
+
+  /** Captures the settings of the given variant and of the control, then stops the A/B test. The captured settings can
+    * later be applied to the control index with the `applyVariantSettings` operation, and read back with the
+    * `getABTestSettings` operation. The A/B test must have reached 80% of its planned duration. Earlier requests return
+    * `400`. Settings can only be captured once per A/B test. A second request returns `409`. `synonyms` and
+    * `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def saveVariantSettings(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[Unit] = Future {
+    execute[Unit](
+      saveVariantSettingsHttpRequest(id = id, variantId = variantId, saveSettingsRequest = saveSettingsRequest),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveVariantSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def saveVariantSettingsWithHTTPInfo(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](
+      saveVariantSettingsHttpRequest(id = id, variantId = variantId, saveSettingsRequest = saveSettingsRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveVariantSettings` and
+    * `saveVariantSettingsWithHTTPInfo`.
+    */
+  private def saveVariantSettingsHttpRequest(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest
+  ): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `saveVariantSettings`.")
+    requireNotNull(variantId, "Parameter `variantId` is required when calling `saveVariantSettings`.")
+    requireNotNull(
+      saveSettingsRequest,
+      "Parameter `saveSettingsRequest` is required when calling `saveVariantSettings`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/abtests/${escape(id)}/settings/${escape(variantId)}")
+      .withBody(saveSettingsRequest)
       .build()
   }
 

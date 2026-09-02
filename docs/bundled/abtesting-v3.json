@@ -741,6 +741,181 @@
         }
       }
     },
+    "/3/abtests/{id}/settings": {
+      "get": {
+        "tags": [
+          "abtest"
+        ],
+        "operationId": "getABTestSettings",
+        "x-acl": [
+          "analytics"
+        ],
+        "summary": "Retrieve captured A/B test settings",
+        "description": "Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.\n\nSettings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.\n\nReturns `404` if no settings have been captured for the A/B test.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-ratelimit-limit": {
+                "$ref": "#/components/headers/x-ratelimit-limit"
+              },
+              "x-ratelimit-remaining": {
+                "$ref": "#/components/headers/x-ratelimit-remaining"
+              },
+              "x-ratelimit-reset": {
+                "$ref": "#/components/headers/x-ratelimit-reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ABTestSettingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/3/abtests/{id}/settings/{variantId}": {
+      "post": {
+        "tags": [
+          "abtest"
+        ],
+        "operationId": "saveVariantSettings",
+        "x-acl": [
+          "analytics",
+          "editSettings"
+        ],
+        "summary": "Capture a variant's settings and stop the A/B test",
+        "description": "Captures the settings of the given variant and of the control, then stops the A/B test.\n\nThe captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.\n\nThe A/B test must have reached 80% of its planned duration. Earlier requests return `400`.\n\nSettings can only be captured once per A/B test. A second request returns `409`.\n\n`synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          },
+          {
+            "$ref": "#/components/parameters/VariantID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSettingsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-ratelimit-limit": {
+                "$ref": "#/components/headers/x-ratelimit-limit"
+              },
+              "x-ratelimit-remaining": {
+                "$ref": "#/components/headers/x-ratelimit-remaining"
+              },
+              "x-ratelimit-reset": {
+                "$ref": "#/components/headers/x-ratelimit-reset"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/3/abtests/{id}/settings/{variantId}/apply": {
+      "post": {
+        "tags": [
+          "abtest"
+        ],
+        "operationId": "applyVariantSettings",
+        "x-acl": [
+          "analytics",
+          "editSettings"
+        ],
+        "summary": "Apply a variant's captured settings to the control index",
+        "description": "Applies the captured settings of the given variant to the control index.\n\nThe settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).\n\nSettings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.\n\nEach set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.\n\nThe control index must not be in use by an active A/B test. Otherwise, the request returns `422`.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ID"
+          },
+          {
+            "$ref": "#/components/parameters/VariantID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-ratelimit-limit": {
+                "$ref": "#/components/headers/x-ratelimit-limit"
+              },
+              "x-ratelimit-remaining": {
+                "$ref": "#/components/headers/x-ratelimit-remaining"
+              },
+              "x-ratelimit-reset": {
+                "$ref": "#/components/headers/x-ratelimit-reset"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
     "/setClientApiKey": {
       "get": {
         "x-helper": true,
@@ -831,6 +1006,17 @@
         "schema": {
           "type": "string",
           "example": "2023-01-21"
+        }
+      },
+      "VariantID": {
+        "in": "path",
+        "name": "variantId",
+        "description": "One-based index of the A/B test variant. The control is variant 1.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "example": 2
         }
       }
     },
@@ -1514,6 +1700,110 @@
           "abTestID",
           "variants"
         ]
+      },
+      "FeatureSettings": {
+        "type": "object",
+        "description": "Feature-specific settings captured for a variant.",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the feature the settings belong to.",
+            "example": "reranking"
+          },
+          "settings": {
+            "description": "Feature settings payload. The shape depends on the feature."
+          }
+        },
+        "required": [
+          "name",
+          "settings"
+        ]
+      },
+      "VariantSettings": {
+        "type": "object",
+        "description": "Settings captured for one A/B test variant.",
+        "additionalProperties": false,
+        "properties": {
+          "variantId": {
+            "type": "integer",
+            "description": "One-based index of the variant within the A/B test. The control is variant 1.",
+            "example": 2
+          },
+          "applied": {
+            "type": "boolean",
+            "description": "Whether the variant's settings have been applied to the control index."
+          },
+          "featuresSettings": {
+            "type": "array",
+            "description": "Feature-specific settings captured for the variant.",
+            "items": {
+              "$ref": "#/components/schemas/FeatureSettings"
+            }
+          },
+          "indexSettings": {
+            "type": "object",
+            "description": "Index settings captured for the variant."
+          },
+          "applyTimestamp": {
+            "type": "string",
+            "description": "Date and time when the variant's settings were applied to the control index, in RFC 3339 format.",
+            "example": "2023-06-17T00:00:00Z"
+          },
+          "revertTimestamp": {
+            "type": "string",
+            "description": "Date and time when the applied settings were reverted on the control index, in RFC 3339 format.",
+            "example": "2023-06-18T00:00:00Z"
+          },
+          "declaredTimestamp": {
+            "type": "string",
+            "description": "Date and time when the variant's settings were captured, in RFC 3339 format.",
+            "example": "2023-06-16T00:00:00Z"
+          },
+          "expiredTimestamp": {
+            "type": "string",
+            "description": "Date and time when the captured settings expired, in RFC 3339 format.",
+            "example": "2023-07-16T00:00:00Z"
+          }
+        },
+        "required": [
+          "variantId",
+          "applied"
+        ]
+      },
+      "ABTestSettingsResponse": {
+        "type": "object",
+        "description": "Captured settings of an A/B test.",
+        "additionalProperties": false,
+        "properties": {
+          "abtestSettings": {
+            "type": "array",
+            "description": "Captured settings for each variant of the A/B test.",
+            "items": {
+              "$ref": "#/components/schemas/VariantSettings"
+            }
+          },
+          "controlIndexInUse": {
+            "type": "boolean",
+            "description": "Whether another active A/B test is using the control index."
+          }
+        },
+        "required": [
+          "abtestSettings",
+          "controlIndexInUse"
+        ]
+      },
+      "SaveSettingsRequest": {
+        "type": "object",
+        "description": "Options for capturing a variant's settings.",
+        "additionalProperties": false,
+        "properties": {
+          "saveFeaturesSettings": {
+            "type": "boolean",
+            "description": "Whether to also capture feature-specific settings for the variant.",
+            "default": false
+          }
+        }
       }
     },
     "responses": {
@@ -1563,6 +1853,34 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "title": "conflictResponse",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409,
+                  "description": "Status code."
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Conflict",
+                  "description": "Response message."
+                }
+              }
             }
           }
         }

@@ -58,6 +58,42 @@ class AbtestingV3Test {
     )
   }
 
+  // applyVariantSettings
+
+  @Test
+  fun `applyVariantSettings`() = runTest {
+    client.runTest(
+      call = {
+        applyVariantSettings(
+          id = 42,
+          variantId = 2,
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2/apply".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `revert applied settings via the control variant1`() = runTest {
+    client.runTest(
+      call = {
+        applyVariantSettings(
+          id = 42,
+          variantId = 1,
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/1/apply".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
   // customDelete
 
   @Test
@@ -618,6 +654,22 @@ class AbtestingV3Test {
     )
   }
 
+  // getABTestSettings
+
+  @Test
+  fun `getABTestSettings`() = runTest {
+    client.runTest(
+      call = {
+        getABTestSettings(id = 42)
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getTimeseries
 
   @Test
@@ -670,6 +722,44 @@ class AbtestingV3Test {
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
+      },
+    )
+  }
+
+  // saveVariantSettings
+
+  @Test
+  fun `saveVariantSettings`() = runTest {
+    client.runTest(
+      call = {
+        saveVariantSettings(
+          id = 42,
+          variantId = 2,
+          saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"saveFeaturesSettings":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `saveVariantSettingsWithoutFeatures1`() = runTest {
+    client.runTest(
+      call = {
+        saveVariantSettings(
+          id = 42,
+          variantId = 2,
+          saveSettingsRequest = SaveSettingsRequest(),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
       },
     )
   }

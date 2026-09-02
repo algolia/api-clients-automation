@@ -39,6 +39,26 @@ describe('addABTests', () => {
   });
 });
 
+describe('applyVariantSettings', () => {
+  test('applyVariantSettings', async () => {
+    const req = (await client.applyVariantSettings({ id: 42, variantId: 2 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2/apply');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('revert applied settings via the control variant', async () => {
+    const req = (await client.applyVariantSettings({ id: 42, variantId: 1 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/1/apply');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
@@ -325,6 +345,17 @@ describe('getABTest', () => {
   });
 });
 
+describe('getABTestSettings', () => {
+  test('getABTestSettings', async () => {
+    const req = (await client.getABTestSettings({ id: 42 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getTimeseries', () => {
   test('getTimeseries', async () => {
     const req = (await client.getTimeseries({ id: 42 })) as unknown as EchoResponse;
@@ -365,6 +396,34 @@ describe('listABTests', () => {
       indexSuffix: 't',
       direction: 'asc',
     });
+  });
+});
+
+describe('saveVariantSettings', () => {
+  test('saveVariantSettings', async () => {
+    const req = (await client.saveVariantSettings({
+      id: 42,
+      variantId: 2,
+      saveSettingsRequest: { saveFeaturesSettings: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ saveFeaturesSettings: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('saveVariantSettingsWithoutFeatures', async () => {
+    const req = (await client.saveVariantSettings({
+      id: 42,
+      variantId: 2,
+      saveSettingsRequest: {},
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

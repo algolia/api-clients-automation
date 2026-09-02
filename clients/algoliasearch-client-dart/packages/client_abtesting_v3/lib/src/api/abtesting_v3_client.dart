@@ -6,12 +6,14 @@ import 'package:algolia_client_abtesting_v3/src/version.dart';
 
 import 'package:algolia_client_abtesting_v3/src/model/ab_test.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_response.dart';
+import 'package:algolia_client_abtesting_v3/src/model/ab_test_settings_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/add_ab_tests_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/direction.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/list_ab_tests_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_name.dart';
+import 'package:algolia_client_abtesting_v3/src/model/save_settings_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries.dart';
 
 final class AbtestingV3Client implements ApiClient {
@@ -93,6 +95,34 @@ final class AbtestingV3Client implements ApiClient {
       response,
       'ABTestResponse',
       growable: true,
+    );
+  }
+
+  /// Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [id] Unique A/B test identifier.
+  /// * [variantId] One-based index of the A/B test variant. The control is variant 1.
+  /// * [requestOptions] additional request configuration.
+  Future<void> applyVariantSettings({
+    required int id,
+    required int variantId,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/3/abtests/{id}/settings/{variantId}/apply'
+          .replaceAll('{' r'id' '}', Uri.encodeComponent(id.toString()))
+          .replaceAll(
+              '{' r'variantId' '}', Uri.encodeComponent(variantId.toString())),
+    );
+    await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
     );
   }
 
@@ -322,6 +352,34 @@ final class AbtestingV3Client implements ApiClient {
     );
   }
 
+  /// Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if no settings have been captured for the A/B test.
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///
+  /// Parameters:
+  /// * [id] Unique A/B test identifier.
+  /// * [requestOptions] additional request configuration.
+  Future<ABTestSettingsResponse> getABTestSettings({
+    required int id,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/3/abtests/{id}/settings'
+          .replaceAll('{' r'id' '}', Uri.encodeComponent(id.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<ABTestSettingsResponse, ABTestSettingsResponse>(
+      response,
+      'ABTestSettingsResponse',
+      growable: true,
+    );
+  }
+
   /// Retrieves timeseries for an A/B test by its ID.
   ///
   /// Required API Key ACLs:
@@ -400,6 +458,37 @@ final class AbtestingV3Client implements ApiClient {
       response,
       'ListABTestsResponse',
       growable: true,
+    );
+  }
+
+  /// Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [id] Unique A/B test identifier.
+  /// * [variantId] One-based index of the A/B test variant. The control is variant 1.
+  /// * [saveSettingsRequest]
+  /// * [requestOptions] additional request configuration.
+  Future<void> saveVariantSettings({
+    required int id,
+    required int variantId,
+    required SaveSettingsRequest saveSettingsRequest,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/3/abtests/{id}/settings/{variantId}'
+          .replaceAll('{' r'id' '}', Uri.encodeComponent(id.toString()))
+          .replaceAll(
+              '{' r'variantId' '}', Uri.encodeComponent(variantId.toString())),
+      body: saveSettingsRequest.toJson(),
+    );
+    await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
     );
   }
 
