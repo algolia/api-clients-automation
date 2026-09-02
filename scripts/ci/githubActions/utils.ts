@@ -9,6 +9,7 @@ export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows'],
   SCRIPTS_CHANGED: [
     'scripts',
+    ':!scripts/docker',
     'eslint',
     'yarn.lock',
     '.eslintrc.cjs',
