@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # version must stay in sync with config/.ruby-version, CI checks the drift
-FROM ruby:4.0.6-trixie@sha256:72e26fdc615b21e9fa0a811f3c7572103a5adafd8ad34735ac316789cd74267f
+FROM ruby:4.0.6-trixie@sha256:8dc3950712ad2078bdd275b890419ba2fd3aab5a0653b291a7325f0d8a24ca05
 
 ADD --checksum=sha256:619535a281c64874a4fc74dd55ebbdbc5b9d788a063bfca47bc2e25b5c18464a https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-aarch64.tar.gz rubyfmt.tar.gz
 RUN tar -xzf rubyfmt.tar.gz && \
