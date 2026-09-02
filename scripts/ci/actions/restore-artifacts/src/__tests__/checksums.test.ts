@@ -3,9 +3,17 @@ import fsp from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import * as core from '@actions/core';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { parseExpectedChecksums, sha256, verifyChecksum } from '../checksums.ts';
+
+vi.mock('@actions/core', () => {
+  return {
+    info: vi.fn(),
+    warning: vi.fn(),
+  };
+});
 
 const PAYLOAD = 'artifact payload';
 const PAYLOAD_SHA = createHash('sha256').update(PAYLOAD).digest('hex');
@@ -65,5 +73,8 @@ describe('verifyChecksum', () => {
 
   it('skips artifacts that have no expected checksum', async () => {
     await expect(verifyChecksum(new Map(), 'clients-go', 'does-not-exist.zip')).resolves.toBeUndefined();
+    expect(core.warning).toHaveBeenCalledWith(
+      "No checksum provided for the 'clients-go' artifact, restoring it unverified",
+    );
   });
 });
