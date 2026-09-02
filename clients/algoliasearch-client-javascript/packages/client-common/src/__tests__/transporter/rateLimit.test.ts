@@ -74,6 +74,12 @@ describe('parseRetryAfterMs', () => {
     expect(parseRetryAfterMs({ 'retry-after': '2' })).toBe(2000);
   });
 
+  test('caps the honored wait at 60s', () => {
+    expect(parseRetryAfterMs({ 'retry-after': '60' })).toBe(60000);
+    expect(parseRetryAfterMs({ 'retry-after': '61' })).toBe(60000);
+    expect(parseRetryAfterMs({ 'retry-after': '86400' })).toBe(60000);
+  });
+
   test('falls back to 1s when missing, 0, HTTP-date, or junk', () => {
     expect(parseRetryAfterMs(undefined)).toBe(1000);
     expect(parseRetryAfterMs({})).toBe(1000);
