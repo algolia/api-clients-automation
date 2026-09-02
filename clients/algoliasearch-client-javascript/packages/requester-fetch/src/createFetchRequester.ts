@@ -12,6 +12,14 @@ function getErrorMessage(error: unknown, abortContent: string): string {
   return error instanceof Error ? error.message : 'Network request failed';
 }
 
+function toResponseHeaders(fetchHeaders: Headers): Record<string, string> {
+  const headers: Record<string, string> = {};
+  fetchHeaders.forEach((value, name) => {
+    headers[name] = value;
+  });
+  return headers;
+}
+
 export type FetchRequesterOptions = {
   readonly requesterOptions?: RequestInit | undefined;
 };
@@ -56,14 +64,10 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     try {
       const content = await fetchRes.text();
-      const headers: Record<string, string> = {};
-      fetchRes.headers.forEach((value, name) => {
-        headers[name] = value;
-      });
 
       return {
         content,
-        headers,
+        headers: toResponseHeaders(fetchRes.headers),
         isTimedOut: false,
         status: fetchRes.status,
       };
@@ -90,11 +94,7 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     if (!fetchRes.ok) {
       const text = await fetchRes.text();
-      const headers: Record<string, string> = {};
-      fetchRes.headers.forEach((value, name) => {
-        headers[name] = value;
-      });
-      throw new StreamRequestError(fetchRes.status, text, headers);
+      throw new StreamRequestError(fetchRes.status, text, toResponseHeaders(fetchRes.headers));
     }
 
     if (fetchRes.body === null) {
