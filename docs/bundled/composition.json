@@ -284,6 +284,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -365,6 +370,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -411,6 +421,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -454,6 +469,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -504,6 +524,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -554,6 +579,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -636,6 +666,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -702,6 +737,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -758,6 +798,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -811,6 +856,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -867,6 +917,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -955,6 +1010,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -1050,6 +1110,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -1136,6 +1201,11 @@
         "responses": {
           "200": {
             "description": "OK",
+            "headers": {
+              "Correlation-ID": {
+                "$ref": "#/components/headers/Correlation-ID"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -4631,6 +4701,15 @@
               "$ref": "#/components/schemas/ErrorBase"
             }
           }
+        }
+      }
+    },
+    "headers": {
+      "Correlation-ID": {
+        "description": "Identifies the request in Algolia's logs, where it's the `cid` property of a log entry.\nInclude it when you contact the Algolia support team about a specific request.\nRetried requests can share an identifier, so don't use it as a unique key.\n",
+        "example": "MyAppl-1tMcE-a7BqLm2Pd0Z",
+        "schema": {
+          "type": "string"
         }
       }
     }
