@@ -143,9 +143,10 @@
     },
     {
       "customType": "regex",
-      "description": "Update golangci-lint in the docker images; action.yml is managed in #6942",
+      "description": "Update golangci-lint, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
-        "/Dockerfile/"
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
         "golangci-lint/v(?<currentValue>[0-9.]+)/install\\.sh",
@@ -370,9 +371,10 @@
     },
     {
       "customType": "regex",
-      "description": "Update melos in the docker images; action.yml is managed in #6942",
+      "description": "Update melos",
       "managerFilePatterns": [
-        "/Dockerfile/"
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
         "dart pub global activate melos (?<currentValue>[0-9.]+)"
@@ -382,12 +384,13 @@
     },
     {
       "customType": "regex",
-      "description": "Update poetry in the docker images; action.yml is managed in #6942",
+      "description": "Update poetry",
       "managerFilePatterns": [
-        "/Dockerfile/"
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "pipx install poetry==(?<currentValue>[0-9]+\\.[0-9.]+)"
+        "pipx install poetry==(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
       ],
       "depNameTemplate": "poetry",
       "datasourceTemplate": "pypi"
@@ -415,6 +418,32 @@
       ],
       "depNameTemplate": "pipx",
       "datasourceTemplate": "pypi"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_NATIVE_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliNativeVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli-native",
+      "datasourceTemplate": "github-releases"
     }
   ],
   "github-actions": {
