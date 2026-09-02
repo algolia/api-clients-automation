@@ -7,7 +7,11 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Configuration for the smallest difference between test variants you want to detect. */
+/**
+ * Configuration for the smallest difference between test variants you want to detect. Applies only
+ * to Frequentist tests, where it powers the fixed-horizon sample-size estimate. Requests with
+ * `method: bayesian` that include `minimumDetectableEffect` are rejected.
+ */
 public class MinimumDetectableEffect {
 
   @JsonProperty("size")

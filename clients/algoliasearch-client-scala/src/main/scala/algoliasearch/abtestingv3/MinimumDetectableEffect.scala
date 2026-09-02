@@ -25,7 +25,9 @@ package algoliasearch.abtestingv3
 
 import algoliasearch.abtestingv3.EffectMetric._
 
-/** Configuration for the smallest difference between test variants you want to detect.
+/** Configuration for the smallest difference between test variants you want to detect. Applies only to Frequentist
+  * tests, where it powers the fixed-horizon sample-size estimate. Requests with `method: bayesian` that include
+  * `minimumDetectableEffect` are rejected.
   *
   * @param size
   *   Smallest difference in an observable metric between variants. For example, to detect a 10% difference between
