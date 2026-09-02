@@ -71,6 +71,12 @@ describe('verifyChecksum', () => {
     );
   });
 
+  it('fails closed when the file is missing but a checksum is expected', async () => {
+    await expect(
+      verifyChecksum(new Map([['specs', PAYLOAD_SHA]]), 'specs', join(tmpDir, 'missing.zip')),
+    ).rejects.toThrow(/ENOENT/);
+  });
+
   it('skips artifacts that have no expected checksum', async () => {
     await expect(verifyChecksum(new Map(), 'clients-go', 'does-not-exist.zip')).resolves.toBeUndefined();
     expect(core.warning).toHaveBeenCalledWith(
