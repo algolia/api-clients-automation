@@ -52,7 +52,7 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1787443200000L,
+                    timestamp = 1788220800000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                   ),
@@ -62,7 +62,7 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1787443200000L,
+                    timestamp = 1788220800000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                   ),
                 )

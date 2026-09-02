@@ -3416,12 +3416,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns the
-   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
-   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
-   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
-   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
-   * actually used in a query.
+   * Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+   * groups, distributions). No authentication is required. Use it to discover valid `(domain,
+   * kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in
+   * one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when
+   * that field is actually used in a query.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3432,12 +3431,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns the
-   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
-   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
-   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
-   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
-   * actually used in a query.
+   * Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+   * groups, distributions). No authentication is required. Use it to discover valid `(domain,
+   * kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in
+   * one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when
+   * that field is actually used in a query.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3448,12 +3446,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns the
-   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
-   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
-   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
-   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
-   * actually used in a query.
+   * Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+   * groups, distributions). No authentication is required. Use it to discover valid `(domain,
+   * kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in
+   * one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when
+   * that field is actually used in a query.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3462,12 +3459,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns the
-   * static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups,
-   * distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs
-   * before building the other `/3/patterns/_*` queries; two fields are combinable in one query only
-   * when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is
-   * actually used in a query.
+   * Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters,
+   * groups, distributions). No authentication is required. Use it to discover valid `(domain,
+   * kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in
+   * one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when
+   * that field is actually used in a query.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3476,10 +3472,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
-   * filters, groups, distributions). No authentication is required. Use it to discover valid
-   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * (asynchronously) Returns the static catalog of analytics fields, grouped by domain and usage
+   * (metrics, filters, groups, distributions). No authentication is required. Use it to discover
+   * valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
    * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
    * ACLs needed when that field is actually used in a query.
    *
@@ -3494,10 +3489,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
-   * filters, groups, distributions). No authentication is required. Use it to discover valid
-   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * (asynchronously) Returns the static catalog of analytics fields, grouped by domain and usage
+   * (metrics, filters, groups, distributions). No authentication is required. Use it to discover
+   * valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
    * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
    * ACLs needed when that field is actually used in a query.
    *
@@ -3513,10 +3507,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
-   * filters, groups, distributions). No authentication is required. Use it to discover valid
-   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * (asynchronously) Returns the static catalog of analytics fields, grouped by domain and usage
+   * (metrics, filters, groups, distributions). No authentication is required. Use it to discover
+   * valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
    * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
    * ACLs needed when that field is actually used in a query.
    *
@@ -3527,10 +3520,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns the static catalog of analytics fields, grouped by domain and usage (metrics,
-   * filters, groups, distributions). No authentication is required. Use it to discover valid
-   * `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
+   * (asynchronously) Returns the static catalog of analytics fields, grouped by domain and usage
+   * (metrics, filters, groups, distributions). No authentication is required. Use it to discover
+   * valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are
    * combinable in one query only when their `roots` intersect. Each entry's `requires` lists the
    * ACLs needed when that field is actually used in a query.
    *
@@ -8424,10 +8416,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8446,10 +8438,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8468,10 +8460,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8485,10 +8477,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8502,10 +8494,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8520,10 +8512,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8538,10 +8530,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8551,10 +8543,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Buckets one
-   * or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each
-   * mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Buckets one or more numeric fields into histograms and returns an object keyed by
+   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
+   * required; `filters` is optional. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8564,10 +8556,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8595,10 +8586,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8626,10 +8616,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8646,10 +8635,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8666,10 +8654,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8685,10 +8672,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8704,10 +8690,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8719,10 +8704,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Buckets one or more numeric fields into histograms and returns an object keyed by
-   * `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are
-   * required; `filters` is optional. Discover valid field kinds per domain with
+   * (asynchronously) Buckets one or more numeric fields into histograms and returns an object keyed
+   * by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters`
+   * are required; `filters` is optional. Discover valid field kinds per domain with
    * `/3/patterns/fields`.
    *
    * @param distributionPayload (required)
@@ -8734,10 +8718,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8756,10 +8739,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8778,10 +8760,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8794,10 +8775,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8810,10 +8790,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8826,10 +8805,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8842,10 +8820,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8855,10 +8832,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Aggregates
-   * the requested `metrics` over the whole period and returns a single object keyed by metric kind.
-   * `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per
-   * domain with `/3/patterns/fields`.
+   * Aggregates the requested `metrics` over the whole period and returns a single object keyed by
+   * metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid
+   * field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -8868,10 +8844,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8898,10 +8873,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8928,10 +8902,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8945,10 +8918,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -8962,10 +8934,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8980,10 +8951,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -8998,10 +8968,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9012,10 +8981,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Aggregates the requested `metrics` over the whole period and returns a single object
-   * keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover
-   * valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Aggregates the requested `metrics` over the whole period and returns a single
+   * object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional.
+   * Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9026,10 +8994,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9045,10 +9012,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9064,10 +9030,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9080,10 +9045,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9096,10 +9060,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9112,10 +9075,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9128,10 +9090,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9141,10 +9102,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns
-   * `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required;
-   * `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy`
-   * is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are
+   * required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when
+   * `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9154,10 +9114,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9184,10 +9144,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9214,10 +9174,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9231,10 +9191,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9248,10 +9208,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9266,10 +9226,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9284,10 +9244,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9297,10 +9257,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters`
-   * are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required
-   * when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns `rows`, each a flat object of the requested fields. `metrics` and
+   * `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy`
+   * is required when `groupBy` is set. Discover valid field kinds per domain with
+   * `/3/patterns/fields`.
    *
    * @param tablePayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9311,10 +9271,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9333,10 +9292,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9355,10 +9313,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9372,10 +9329,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9389,10 +9345,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9405,10 +9360,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9421,10 +9375,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9434,10 +9387,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * **Beta**: this endpoint is under active development and may change without notice. Returns one
-   * time series per `groupBy` combination, each with period `totals` and a per-day metric
-   * breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional.
-   * Discover valid field kinds per domain with `/3/patterns/fields`.
+   * Returns one time series per `groupBy` combination, each with period `totals` and a per-day
+   * metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
+   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9447,10 +9399,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9477,10 +9428,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9507,10 +9457,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9524,10 +9473,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param index Comma-separated list of indices the request runs on, used for authorization.
@@ -9541,10 +9489,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9559,10 +9506,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -9577,10 +9523,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -9591,10 +9536,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) **Beta**: this endpoint is under active development and may change without
-   * notice. Returns one time series per `groupBy` combination, each with period `totals` and a
-   * per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are
-   * optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+   * (asynchronously) Returns one time series per `groupBy` combination, each with period `totals`
+   * and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and
+   * `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
    *
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

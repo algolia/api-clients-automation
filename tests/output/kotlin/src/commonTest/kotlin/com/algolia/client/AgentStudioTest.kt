@@ -84,7 +84,7 @@ class AgentStudioTest {
         customPost(path = "1/test")
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.47.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.48.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),

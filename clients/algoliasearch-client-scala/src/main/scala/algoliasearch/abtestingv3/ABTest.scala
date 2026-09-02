@@ -42,8 +42,6 @@ import algoliasearch.abtestingv3.Status._
   * @param variants
   *   A/B test variants. The first variant is your _control_ index, typically your production index. All of the
   *   additional variants are indexes with changed settings that you want to test against the control.
-  * @param migratedAbTestID
-  *   Unique migrated A/B test identifier.
   */
 case class ABTest(
     abTestID: Int,
@@ -55,6 +53,5 @@ case class ABTest(
     status: Status,
     variants: Seq[Variant],
     configuration: Option[ABTestConfiguration] = scala.None,
-    migratedAbTestID: Option[Int] = scala.None,
     decision: Option[Decision] = scala.None
 )
