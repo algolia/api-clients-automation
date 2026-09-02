@@ -313,7 +313,7 @@
         "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "pipx install poetry==(?<currentValue>[0-9.]+)"
+        "pipx install poetry==(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
       ],
       "depNameTemplate": "poetry",
       "datasourceTemplate": "pypi"

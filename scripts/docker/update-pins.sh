@@ -12,7 +12,6 @@ done
 
 echo
 echo "== download checksums =="
-# the sdkman installer is vendored at scripts/docker/sdkman-install.sh, re-download it from https://get.sdkman.io to update it
 grep -rhoE 'https://[^" ]+\.(sh|jar|tar\.gz)' scripts/docker/Dockerfile.* .github/actions/setup/action.yml | sort -u | while read -r url; do
   sum=$(curl -sfL --retry 3 "$url" | shasum -a 256 | awk '{print $1}' || true)
   echo "${sum:-<unresolved>}  $url"
