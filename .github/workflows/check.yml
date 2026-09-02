@@ -163,6 +163,8 @@ jobs:
     needs: setup
     permissions:
       contents: read
+    outputs:
+      SPECS_SHA: ${{ steps.specs-zip.outputs.SPECS_SHA }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -187,9 +189,6 @@ jobs:
           name: specs
           path: specs-bundle.zip
 
-    outputs:
-      SPECS_SHA: ${{ steps.specs-zip.outputs.SPECS_SHA }}
-
   client_gen_javascript:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
@@ -210,6 +209,8 @@ jobs:
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     permissions:
       contents: read
+    outputs:
+      JS_SHA: ${{ steps.js-zip.outputs.JS_SHA }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -314,9 +315,6 @@ jobs:
           if-no-files-found: error
           name: clients-javascript
           path: clients-javascript.zip
-
-    outputs:
-      JS_SHA: ${{ steps.js-zip.outputs.JS_SHA }}
 
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
