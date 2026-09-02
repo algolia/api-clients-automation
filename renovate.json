@@ -59,7 +59,10 @@
         "minor",
         "patch"
       ],
-      "enabled": false
+      "enabled": false,
+      "matchFileNames": [
+        "scripts/docker/**"
+      ]
     },
     {
       "description": "Update the swiftformat docker image and the CI source build together",

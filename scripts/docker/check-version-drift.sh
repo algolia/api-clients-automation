@@ -20,11 +20,13 @@ tag_of() {
   sed -E 's/-(alpine|trixie|jammy)$//' <<< "$tag"
 }
 
-have_docker=0
-if command -v docker >/dev/null 2>&1; then
-  have_docker=1
-else
-  echo "docker not found; skipping tag/digest resolution" >&2
+# live digest resolution hits the registries, so it only runs where docker changes are being
+# validated (DRIFT_CHECK_LIVE=1 in the docker_images job); an upstream re-push or a registry
+# rate limit must not fail unrelated CI runs
+check_live=${DRIFT_CHECK_LIVE:-0}
+if [[ "$check_live" == "1" ]] && ! command -v docker >/dev/null 2>&1; then
+  echo "DRIFT_CHECK_LIVE=1 requires docker" >&2
+  exit 1
 fi
 
 extract_ver() {
@@ -61,7 +63,7 @@ check() {
     fail=1
     return
   fi
-  if [[ "$have_docker" -eq 0 ]]; then
+  if [[ "$check_live" != "1" ]]; then
     return
   fi
   live=$(docker buildx imagetools inspect "$ref" 2>/dev/null | awk '/^Digest:/{print $2; exit}') || true

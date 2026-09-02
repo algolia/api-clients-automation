@@ -756,6 +756,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Check that the pinned digests are what the tags resolve to
+        run: bash scripts/docker/check-version-drift.sh
+        env:
+          DRIFT_CHECK_LIVE: '1'
+
       - name: Build ${{ matrix.image }} image
         run: |
           export JAVA_VERSION=$(cat config/.java-version)
