@@ -26,7 +26,7 @@ get:
       description: OK
       headers:
         Correlation-ID:
-          $ref: '../../../common/responses/correlationId.yml#/Correlation-ID'
+          $ref: '../../common/responses/correlationId.yml#/Correlation-ID'
       content:
         application/json:
           schema:
