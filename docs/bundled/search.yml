@@ -19018,6 +19018,13 @@ paths:
                           format: uri-reference
                           description: URL of the API endpoint.
                           example: /1/indexes
+                        cid:
+                          type: string
+                          description: >-
+                            Correlation ID of the logged API request, also
+                            returned in that request's `Correlation-ID` response
+                            header.
+                          example: MyAppl-1tMcE-a7BqLm2Pd0Z
                         index:
                           type: string
                           description: Index targeted by the query.

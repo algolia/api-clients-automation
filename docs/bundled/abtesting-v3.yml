@@ -3843,10 +3843,6 @@ components:
           $ref: '#/components/schemas/MetricsFilters'
         minimumDetectableEffect:
           $ref: '#/components/schemas/MinimumDetectableEffect'
-    MigratedABTestId:
-      type: integer
-      description: Unique migrated A/B test identifier.
-      example: 224
     Decision:
       type: object
       additionalProperties: false
@@ -3893,8 +3889,6 @@ components:
           $ref: '#/components/schemas/ABTestConfiguration'
         decision:
           $ref: '#/components/schemas/Decision'
-        migratedAbTestID:
-          $ref: '#/components/schemas/MigratedABTestId'
         stoppedAt:
           $ref: '#/components/schemas/stoppedAt'
       required:

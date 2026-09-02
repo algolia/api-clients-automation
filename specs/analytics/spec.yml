@@ -20,8 +20,6 @@ info:
 
     ## Availability and authentication
 
-    Access to the Analytics API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).
-
     Add these headers to authenticate requests:
 
     - `x-algolia-application-id`. Your Algolia application ID.
@@ -56,8 +54,8 @@ info:
 
     The current version of the Analytics API is version 2, indicated by the `/2/` in each endpoint's URL.
 
-    A Beta semantic patterns framework is also available under `/3/patterns/*` for building custom
-    analytics queries. These endpoints are under active development and may change without notice.
+    A semantic patterns framework is also available under `/3/patterns/*` for building custom
+    analytics queries.
 
     ## Query aggregation
 
@@ -99,11 +97,10 @@ tags:
     description: |
       Metrics related to filters.
   - name: pattern
-    x-displayName: Patterns (Beta)
+    x-displayName: Patterns
     description: |
-      Beta — the semantic patterns query framework (`/3/patterns/*`).
+      The semantic patterns query framework (`/3/patterns/*`).
       Build custom analytics queries from metrics, groupBy, filters, and parameters.
-      These endpoints are under active development and may change without notice.
   - name: revenue
     x-displayName: Revenue
     description: |
@@ -190,9 +187,9 @@ paths:
   /2/status:
     $ref: 'paths/status/getStatus.yml'
 
-  # ##############################
-  # ### Patterns (Beta) — /3/ ####
-  # ##############################
+  # ######################
+  # ### Patterns — /3/ ###
+  # ######################
   /3/patterns/fields:
     $ref: 'paths/patterns/getPatternsFields.yml'
   /3/patterns/timeseries:
