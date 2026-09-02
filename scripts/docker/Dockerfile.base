@@ -42,7 +42,7 @@ COPY --from=python-builder /usr/local/lib/ /usr/local/lib/
 RUN echo "export PATH=$PATH:/usr/local/bin/python" >> ~/.profile \
   && echo "export PATH=$PATH:/usr/local/bin/pip" >> ~/.profile \
   && pip install --upgrade pip==26.2.1 pipx==1.16.7 && pipx ensurepath \
-  && pipx install poetry==2.4.1
+  && pipx install poetry==2.4.2
 ENV VIRTUAL_ENV=/opt/env
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
@@ -58,7 +58,7 @@ RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && sou
 # Dart
 COPY --from=dart-builder /usr/lib/dart/ /usr/lib/dart/
 RUN echo "export PATH=/usr/lib/dart/bin:/root/.pub-cache/bin:$PATH" >> ~/.profile && source ~/.profile \
-  && dart pub global activate melos 8.3.0
+  && dart pub global activate melos 8.6.0
 
 # PHP
 COPY --from=composer-builder /usr/bin/composer /usr/local/bin/composer
