@@ -1,7 +1,8 @@
 #!/bin/bash
 # fails when a pinned FROM tag in scripts/docker/ diverges from its config/.*-version file,
-# when the digest next to that tag is not what the tag currently resolves to,
-# or when a shared tool pin in the docker images diverges from the CI setup action
+# when any pinned FROM line is missing its digest, when a pinned digest is not what the tag
+# currently resolves to (DRIFT_CHECK_LIVE=1 only), or when a shared tool pin in the docker
+# images diverges from the CI setup action
 set -euo pipefail
 
 get_from() {
@@ -40,6 +41,38 @@ extract_ver() {
 }
 
 fail=0
+
+# digest-only: the ref carries no config/.*-version file, so only verify it is pinned
+# and (when live) that the pin still matches what the tag resolves to
+check_digest() {
+  local from ref pinned live
+  if ! from=$(get_from "$1" "$2"); then
+    fail=1
+    return
+  fi
+  ref="${from%%@*}"
+  if [[ "$from" != *@* ]]; then
+    echo "$1: $2 FROM line has no digest"
+    fail=1
+    return
+  fi
+  pinned="${from#*@}"
+  if [[ "$check_live" != "1" ]]; then
+    return
+  fi
+  live=$(docker buildx imagetools inspect "$ref" 2>/dev/null | awk '/^Digest:/{print $2; exit}') || true
+  if [[ -z "$live" ]]; then
+    echo "$1: could not resolve $ref (docker buildx imagetools inspect)"
+    fail=1
+    return
+  fi
+  if [[ "$live" != "$pinned" ]]; then
+    echo "$1: $ref resolves to $live but the Dockerfile pins $pinned"
+    echo "  -> run scripts/docker/update-pins.sh and paste the new digest"
+    fail=1
+  fi
+}
+
 check() {
   local from ref tag expected pinned live
   if ! from=$(get_from "$1" "$2"); then
@@ -104,6 +137,10 @@ check Dockerfile.base python .python-version
 check Dockerfile.base php .php-version
 check Dockerfile.ruby ruby .ruby-version
 check Dockerfile.swift swift .swift-version
+
+# no config/.*-version file governs these two, renovate owns their versions
+check_digest Dockerfile.base composer
+check_digest Dockerfile.swift ghcr.io/nicklockwood/swiftformat
 
 check_shared_pin melos 'dart pub global activate melos ([0-9]+\.[0-9]+\.[0-9]+)'
 check_shared_pin poetry 'pipx install poetry==([0-9]+\.[0-9]+\.[0-9]+)'

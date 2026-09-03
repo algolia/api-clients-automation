@@ -63,7 +63,7 @@ export const DEPENDENCIES = {
   ),
   WEBSITE_CHANGED: ['website', 'scripts/website', 'package.json', 'netlify.toml'],
   // kept out of COMMON_DEPENDENCIES so a docker pin bump does not rerun every client job
-  DOCKER_CHANGED: ['scripts/docker', 'docker-compose.yml', '.nvmrc'],
+  DOCKER_CHANGED: ['scripts/docker', 'docker-compose.yml', '.nvmrc', 'config/.java-version'],
 };
 
 export function getVersionFileForLanguage(lang: Language): string {
