@@ -1,8 +1,31 @@
 import time
-from typing import List
+from re import fullmatch
+from typing import List, Mapping, Optional
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.hosts import Host
+
+RATE_LIMIT_STATUS_CODE = 429
+DEFAULT_RATE_LIMIT_WAIT_SECONDS = 1.0
+
+
+def parse_retry_after_seconds(headers: Optional[Mapping[str, str]]) -> float:
+    """`Retry-After` as a wait in seconds.
+
+    Only a positive whole number of seconds is honored; a missing, empty, zero,
+    negative, HTTP-date or otherwise unparseable value waits 1 second.
+    """
+    raw = (headers.get("retry-after") or "").strip() if headers else ""
+
+    if fullmatch(r"\d+", raw) is None:
+        return DEFAULT_RATE_LIMIT_WAIT_SECONDS
+
+    seconds = int(raw)
+
+    if seconds <= 0:
+        return DEFAULT_RATE_LIMIT_WAIT_SECONDS
+
+    return float(seconds)
 
 
 class RetryOutcome:
@@ -38,6 +61,12 @@ class RetryStrategy:
             return RetryOutcome.SUCCESS
 
         return RetryOutcome.FAIL
+
+    def is_rate_limited(self, response: ApiResponse) -> bool:
+        return response.status_code == RATE_LIMIT_STATUS_CODE
+
+    def rate_limit_wait_seconds(self, response: ApiResponse) -> float:
+        return parse_retry_after_seconds(response.headers)
 
     def _is_success(self, response: ApiResponse) -> bool:
         return response.status_code is not None and (response.status_code // 100) == 2
