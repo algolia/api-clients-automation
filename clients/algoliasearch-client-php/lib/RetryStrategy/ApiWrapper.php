@@ -28,6 +28,8 @@ final class ApiWrapper implements ApiWrapperInterface
 {
     private const COMPRESSION_THRESHOLD = 750;
 
+    private const DEFAULT_RATE_LIMIT_WAIT_MICROSECONDS = 1000000;
+
     /**
      * @var HttpClientInterface
      */
@@ -168,6 +170,7 @@ final class ApiWrapper implements ApiWrapperInterface
 
         $hostCount = count($hosts);
         $attemptNumber = 0;
+        $rateLimitRetriesLeft = $this->config->getMaxRateLimitRetries();
         $totalStartTime = microtime(true);
         $errors = [];
 
@@ -211,6 +214,23 @@ final class ApiWrapper implements ApiWrapperInterface
                     $timeout,
                     $connectTimeout
                 );
+
+                while (429 === $response->getStatusCode() && $rateLimitRetriesLeft > 0) {
+                    --$rateLimitRetriesLeft;
+                    $waitMicroseconds = $this->rateLimitWaitMicroseconds($response);
+
+                    $this->log(LogLevel::INFO, 'Retryable failure: '.$method.' '.$sanitizedUrl.' - 429, waiting '.round($waitMicroseconds / 1000).'ms ('.$rateLimitRetriesLeft.' rate limit retries left)', $logParams);
+
+                    usleep($waitMicroseconds);
+
+                    $startTime = microtime(true);
+
+                    $response = $this->http->sendRequest(
+                        $request,
+                        $timeout,
+                        $connectTimeout
+                    );
+                }
 
                 $statusCode = $response->getStatusCode();
                 $durationMs = round((microtime(true) - $startTime) * 1000);
@@ -392,6 +412,21 @@ final class ApiWrapper implements ApiWrapperInterface
     private function log($level, $message, array $context = [])
     {
         $this->logger->log($level, 'Algolia API client: '.$message, $context);
+    }
+
+    /**
+     * `Retry-After` as a wait in microseconds. Only a positive whole number of seconds is honored;
+     * a missing, empty, zero, negative, non-numeric or HTTP-date value waits 1 second.
+     */
+    private function rateLimitWaitMicroseconds(ResponseInterface $response): int
+    {
+        $retryAfter = trim($response->getHeaderLine('Retry-After'));
+
+        if (preg_match('/^\d+$/', $retryAfter) && (int) $retryAfter > 0) {
+            return ((int) $retryAfter) * 1000000;
+        }
+
+        return self::DEFAULT_RATE_LIMIT_WAIT_MICROSECONDS;
     }
 
     private function filterHeaders(array $headers): array

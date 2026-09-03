@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "php"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "php"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "php"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -508,7 +508,8 @@
         },
         "expected": {
           "error": {
-            "javascript": "Too many requests"
+            "javascript": "Too many requests",
+            "php": "Too many requests"
           }
         }
       }
@@ -516,7 +517,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "php"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -540,7 +541,8 @@
         },
         "expected": {
           "error": {
-            "javascript": "Too many requests"
+            "javascript": "Too many requests",
+            "php": "Too many requests"
           }
         }
       }
