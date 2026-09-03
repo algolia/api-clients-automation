@@ -19,6 +19,9 @@
     {{/customHosts}}
     ],
     {{/hasCustomHosts}}
+    {{#hasMaxRateLimitRetries}}
+    maxRateLimitRetries: {{maxRateLimitRetries}},
+    {{/hasMaxRateLimitRetries}}
     {{#gzipEncoding}}
     compression: 'gzip',
     {{/gzipEncoding}}
@@ -57,8 +60,11 @@
         protocol: 'http'
       },
       {{/customHosts}}
-      ]
+      ],
       {{/hasCustomHosts}}
+      {{#hasMaxRateLimitRetries}}
+      maxRateLimitRetries: {{maxRateLimitRetries}},
+      {{/hasMaxRateLimitRetries}}
   },
  {{#hasRegionalHost}}
  // @ts-ignore
