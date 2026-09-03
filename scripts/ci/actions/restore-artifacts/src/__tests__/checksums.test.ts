@@ -74,7 +74,7 @@ describe('verifyChecksum', () => {
   it('fails closed when the file is missing but a checksum is expected', async () => {
     await expect(
       verifyChecksum(new Map([['specs', PAYLOAD_SHA]]), 'specs', join(tmpDir, 'missing.zip')),
-    ).rejects.toThrow(/ENOENT/);
+    ).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
   it('skips artifacts that have no expected checksum', async () => {
