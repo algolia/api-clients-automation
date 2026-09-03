@@ -1,0 +1,8 @@
+Correlation-ID:
+  description: |
+    Identifies the request in Algolia's logs, where it's the `cid` property of a log entry.
+    Include it when you contact the Algolia support team about a specific request.
+    Retried requests can share an identifier, so don't use it as a unique key.
+  example: MyAppl-1tMcE-a7BqLm2Pd0Z
+  schema:
+    type: string
