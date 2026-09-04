@@ -1,7 +1,7 @@
 [
   {
     "testName": "can handle HTML error",
-    "skipLanguages": ["javascript"],
+    "skipLanguages": ["javascript", "go", "swift", "csharp"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -42,7 +42,7 @@
   },
   {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "go", "swift", "csharp"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -67,7 +67,10 @@
         },
         "expected": {
           "error": {
-            "javascript": "Too Many Requests"
+            "javascript": "Too Many Requests",
+            "csharp": "<html><body>429 too many requests</body></html>",
+            "go": "API error [429] Too Many Requests",
+            "swift": "HTTP error: Status code: 429 Message: No message"
           }
         }
       }

@@ -206,7 +206,12 @@ export async function runCts(
     assertValidWaitForApiKey(languages.length - skip('dart'));
     assertPushMockValid(languages.length);
     assertValidChunkedPushWait(languages.length);
-    assertValidRateLimitRetries(languages.includes('javascript'));
+    assertValidRateLimitRetries(
+      languages.includes('javascript') ||
+        languages.includes('go') ||
+        languages.includes('swift') ||
+        languages.includes('csharp'),
+    );
   }
   if (withBenchmarkServer) {
     printBenchmarkReport();

@@ -267,6 +267,88 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// retries 429 on the same host using Retry-After
+    func testApiTest13() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6697")!),
+                RetryableHost(url: URL(string: "http://" +
+                        (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                        ":6698")!),
+            ]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(path: "1/test/rate-limit/retry-after/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"message\":\"ok rate limit retry\"}")
+    }
+
+    /// retries 429 with a 1s wait when Retry-After is missing
+    func testApiTest14() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6697")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(path: "1/test/rate-limit/missing-header/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"message\":\"ok rate limit retry\"}")
+    }
+
+    /// returns 429 after maxRateLimitRetries is used up
+    func testApiTest15() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6697")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.customGet(path: "1/test/rate-limit/exhausted/swift")
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 429 Message: Too many requests")
+        }
+    }
+
+    /// fails on the first 429 when maxRateLimitRetries is 0
+    func testApiTest16() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6697")!],
+            maxRateLimitRetries: 0
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.customGet(path: "1/test/rate-limit/zero-retries/swift")
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "HTTP error: Status code: 429 Message: Too many requests")
+        }
+    }
+
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)

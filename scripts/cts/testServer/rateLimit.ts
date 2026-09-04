@@ -36,9 +36,9 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
   expect(timestamps[1] - timestamps[0]).to.be.closeTo(expectedMs, 400);
 }
 
-export function assertValidRateLimitRetries(javascriptRan: boolean): void {
-  // Only JavaScript implements 429 retries so far, but any language that hit the mock is validated.
-  if (javascriptRan) {
+export function assertValidRateLimitRetries(implemented: boolean): void {
+  // Languages that wait on 429 (JS, Go, Swift, C#) must actually hit the mock.
+  if (implemented) {
     expect(Object.keys(state).length, 'rate-limit mock was never hit').to.be.at.least(1);
   }
 
