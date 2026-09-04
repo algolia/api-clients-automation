@@ -30,7 +30,7 @@ var transformationOptions = new TransformationOptions("{{{transformationRegion}}
         LastUse = DateTime.UtcNow,
         Accept = CallType.Read | CallType.Write,
       }{{^-last}},{{/-last}}{{/customHosts}}
-  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
+  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}{{#hasMaxRateLimitRetries}},MaxRateLimitRetries = {{maxRateLimitRetries}}{{/hasMaxRateLimitRetries}}
 }, transformationOptions);
 {{/hasCustomHosts}}
 {{^hasCustomHosts}}
@@ -50,7 +50,7 @@ var transformationOptions = new TransformationOptions("{{{transformationRegion}}
         LastUse = DateTime.UtcNow,
         Accept = CallType.Read | CallType.Write,
       }{{^-last}},{{/-last}}{{/customHosts}}
-  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}
+  }{{#gzipEncoding}},Compression = CompressionType.Gzip{{/gzipEncoding}}{{#hasMaxRateLimitRetries}},MaxRateLimitRetries = {{maxRateLimitRetries}}{{/hasMaxRateLimitRetries}}
 };
 {{^autoCreateClient}}var client = {{/autoCreateClient}}new {{client}}(_config);
 {{/hasCustomHosts}}
