@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import * as core from '@actions/core';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { parseExpectedChecksums, sha256, verifyChecksum } from '../checksums.ts';
+import { parseExpectedChecksums, sha256, verifyChecksum, warnAboutUnverified } from '../checksums.ts';
 
 vi.mock('@actions/core', () => {
   return {
@@ -77,10 +77,20 @@ describe('verifyChecksum', () => {
     ).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
-  it('skips artifacts that have no expected checksum', async () => {
+  it('skips artifacts that have no expected checksum without annotating each one', async () => {
     await expect(verifyChecksum(new Map(), 'clients-go', 'does-not-exist.zip')).resolves.toBeUndefined();
-    expect(core.warning).toHaveBeenCalledWith(
+    expect(core.info).toHaveBeenCalledWith(
       "No checksum provided for the 'clients-go' artifact, restoring it unverified",
+    );
+    expect(core.warning).not.toHaveBeenCalled();
+  });
+
+  it('reports every unverified artifact in a single warning', async () => {
+    await verifyChecksum(new Map(), 'clients-php', 'does-not-exist.zip');
+    warnAboutUnverified();
+    expect(core.warning).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(core.warning).mock.calls[0][0]).toMatch(
+      /Restored \d+ artifact\(s\) without checksum verification: .*clients-php/,
     );
   });
 });

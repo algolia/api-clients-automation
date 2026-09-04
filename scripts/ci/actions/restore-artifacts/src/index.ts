@@ -4,7 +4,7 @@ import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import * as io from '@actions/io';
 
-import { parseExpectedChecksums, verifyChecksum } from './checksums.ts';
+import { parseExpectedChecksums, verifyChecksum, warnAboutUnverified } from './checksums.ts';
 
 async function download(
   client: DefaultArtifactClient,
@@ -91,6 +91,7 @@ async function run(): Promise<void> {
     } else {
       throw new Error(`Unknown type: ${actionType}`);
     }
+    warnAboutUnverified();
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);

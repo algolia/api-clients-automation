@@ -29,6 +29,10 @@ export async function sha256(filePath: string): Promise<string> {
   });
 }
 
+// one annotation per run, not per artifact: the unverified set is a known residual and there are
+// more languages than GitHub renders annotations for, so a real warning would be crowded out
+const unverified: string[] = [];
+
 export async function verifyChecksum(
   checksums: Map<string, string>,
   artifactName: string,
@@ -36,7 +40,8 @@ export async function verifyChecksum(
 ): Promise<void> {
   const expected = checksums.get(artifactName);
   if (expected === undefined) {
-    core.warning(`No checksum provided for the '${artifactName}' artifact, restoring it unverified`);
+    core.info(`No checksum provided for the '${artifactName}' artifact, restoring it unverified`);
+    unverified.push(artifactName);
     return;
   }
   const actual = await sha256(filePath);
@@ -44,4 +49,11 @@ export async function verifyChecksum(
     throw new Error(`Checksum mismatch for the '${artifactName}' artifact: expected ${expected}, got ${actual}`);
   }
   core.info(`Checksum verified for the '${artifactName}' artifact`);
+}
+
+export function warnAboutUnverified(): void {
+  if (unverified.length === 0) {
+    return;
+  }
+  core.warning(`Restored ${unverified.length} artifact(s) without checksum verification: ${unverified.join(', ')}`);
 }
