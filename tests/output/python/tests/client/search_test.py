@@ -376,6 +376,124 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""{"message":"success server response"}""")
 
+    async def test_api_13(self):
+        """
+        retries 429 on the same host using Retry-After
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6698,
+                ),
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/rate-limit/retry-after/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    async def test_api_14(self):
+        """
+        retries 429 with a 1s wait when Retry-After is missing
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/rate-limit/missing-header/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    async def test_api_15(self):
+        """
+        returns 429 after maxRateLimitRetries is used up
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        try:
+            await _client.custom_get(
+                path="1/test/rate-limit/exhausted/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Too many requests"
+
+    async def test_api_16(self):
+        """
+        fails on the first 429 when maxRateLimitRetries is 0
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _config.max_rate_limit_retries = 0
+        _client = SearchClient.create_with_config(config=_config)
+        try:
+            await _client.custom_get(
+                path="1/test/rate-limit/zero-retries/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Too many requests"
+
     async def test_common_api_0(self):
         """
         calls api with correct user agent
@@ -2372,6 +2490,124 @@ class TestSearchClientSync:
             if isinstance(_req, list)
             else _req.to_dict()
         ) == loads("""{"message":"success server response"}""")
+
+    def test_api_13(self):
+        """
+        retries 429 on the same host using Retry-After
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                ),
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6698,
+                ),
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/rate-limit/retry-after/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    def test_api_14(self):
+        """
+        retries 429 with a 1s wait when Retry-After is missing
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/rate-limit/missing-header/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    def test_api_15(self):
+        """
+        returns 429 after maxRateLimitRetries is used up
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.custom_get(
+                path="1/test/rate-limit/exhausted/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Too many requests"
+
+    def test_api_16(self):
+        """
+        fails on the first 429 when maxRateLimitRetries is 0
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _config.max_rate_limit_retries = 0
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.custom_get(
+                path="1/test/rate-limit/zero-retries/python",
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert str(e) == "Too many requests"
 
     def test_common_api_0(self):
         """

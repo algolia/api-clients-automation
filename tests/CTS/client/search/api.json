@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["javascript", "swift"],
+    "onlyLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["javascript", "swift"],
+    "onlyLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["javascript", "swift"],
+    "onlyLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -509,6 +509,7 @@
         "expected": {
           "error": {
             "javascript": "Too many requests",
+            "python": "Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
@@ -517,7 +518,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["javascript", "swift"],
+    "onlyLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -542,6 +543,7 @@
         "expected": {
           "error": {
             "javascript": "Too many requests",
+            "python": "Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
