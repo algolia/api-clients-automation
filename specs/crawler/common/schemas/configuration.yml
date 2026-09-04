@@ -21,7 +21,7 @@ Configuration:
 
         The API key must have:
 
-        - These [rights and restrictions](https://www.algolia.com/doc/guides/security/api-keys/#rights-and-restrictions): `search`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`, `listIndexes`, `browse`
+        - These [rights and restrictions](https://www.algolia.com/doc/guides/security/api-keys/#rights-and-restrictions): `search`, `addObject`, `deleteObject`, `deleteIndex`, `settings`, `editSettings`, `listIndexes`, `browse`.
         - Access to the correct set of indices, based on the crawler's `indexPrefix`.
         For example, if the prefix is `crawler_`, the API key must have access to `crawler_*`.
 
@@ -573,7 +573,7 @@ schedule:
     - The interval between two scheduled crawls must be at least 24 hours.
     - To crawl daily, use "every 1 day" instead of "everyday" or "every day".
     - If you don't specify a time, the crawl can happen any time during the scheduled day.
-    - Specify times for the UTC (GMT+0) timezone
+    - Specify times for the UTC (GMT+0) timezone.
     - Include minutes when specifying a time. For example, "at 3:00 pm" instead of "at 3pm".
     - Use "at 12:00 am" to specify midnight, not "at 00:00 am".
   example: every weekday at 12:00 pm
