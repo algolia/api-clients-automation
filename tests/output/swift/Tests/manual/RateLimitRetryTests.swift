@@ -17,6 +17,11 @@ private final class RateLimitRequestBuilder: RequestBuilder {
     private(set) var urls: [URL] = []
     var jsonBody: String = "{\"message\":\"ok\"}"
 
+    init() {
+        self.statuses = []
+        self.retryAfter = nil
+    }
+
     init(statuses: [Int], retryAfter: String? = nil) {
         self.statuses = statuses
         self.retryAfter = retryAfter
