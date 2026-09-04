@@ -128,7 +128,16 @@ check_shared_pin() {
   local action_ver docker_ver
   action_ver=$(extract_ver .github/actions/setup/action.yml "$regex")
   docker_ver=$(extract_ver "$docker_file" "$docker_regex")
-  if [[ -z "$action_ver" || -z "$docker_ver" ]]; then
+  # fail closed: every pair below is a pin this script asserts exists, so a missing match means
+  # the pin was removed or renamed, which would otherwise silently disable its comparison
+  if [[ -z "$action_ver" ]]; then
+    echo "$name: no pinned version found in .github/actions/setup/action.yml"
+    fail=1
+    return
+  fi
+  if [[ -z "$docker_ver" ]]; then
+    echo "$name: no pinned version found in $docker_file"
+    fail=1
     return
   fi
   if [[ "$action_ver" != "$docker_ver" ]]; then
