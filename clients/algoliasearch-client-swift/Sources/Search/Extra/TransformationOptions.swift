@@ -36,6 +36,9 @@ public struct TransformationOptions {
     /// Additional headers merged into every request.
     public var defaultHeaders: [String: String]?
 
+    /// Override how many times a 429 is waited out on the same host.
+    public var maxRateLimitRetries: Int?
+
     /// - parameter region: The Algolia region for the Ingestion API (`Region.us` or `Region.eu`). Required.
     /// - parameter readTimeout: Override the read timeout.
     /// - parameter writeTimeout: Override the write timeout.
@@ -48,7 +51,8 @@ public struct TransformationOptions {
         writeTimeout: TimeInterval? = nil,
         hosts: [RetryableHost]? = nil,
         compression: CompressionAlgorithm? = nil,
-        defaultHeaders: [String: String]? = nil
+        defaultHeaders: [String: String]? = nil,
+        maxRateLimitRetries: Int? = nil
     ) {
         self.region = region
         self.readTimeout = readTimeout
@@ -56,5 +60,6 @@ public struct TransformationOptions {
         self.hosts = hosts
         self.compression = compression
         self.defaultHeaders = defaultHeaders
+        self.maxRateLimitRetries = maxRateLimitRetries
     }
 }

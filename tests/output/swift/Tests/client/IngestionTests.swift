@@ -11,7 +11,7 @@ final class IngestionClientClientTests: XCTestCase {
     let APPLICATION_ID = "my_application_id"
     let API_KEY = "my_api_key"
 
-    /// can handle HTML error
+    /// can handle HTML error when rate-limit retries are disabled
     func testApiTest0() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: "test-app-id",
@@ -19,7 +19,8 @@ final class IngestionClientClientTests: XCTestCase {
             region: Region(rawValue: "us"),
             hosts: [RetryableHost(url: URL(string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
-                    ":6676")!)]
+                    ":6676")!],
+            maxRateLimitRetries: 0
         )
         let transporter = Transporter(configuration: configuration)
         let client = IngestionClient(configuration: configuration, transporter: transporter)
