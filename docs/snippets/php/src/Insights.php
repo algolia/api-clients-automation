@@ -589,7 +589,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1788220800000,
+                    'timestamp' => 1788480000000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -603,7 +603,7 @@ class SnippetInsightsClient
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1788220800000,
+                    'timestamp' => 1788480000000,
                     'objectIDs' => [
                         '9780545139700',
 
