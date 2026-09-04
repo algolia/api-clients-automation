@@ -6140,14 +6140,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:5.3.0":
-  version: 5.3.0
-  resolution: "js-yaml@npm:5.3.0"
+"js-yaml@npm:5.4.1":
+  version: 5.4.1
+  resolution: "js-yaml@npm:5.4.1"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.mjs
-  checksum: 10/6c7e8ea8dd5643d9df73f4aa796f3572537284e9b819b74ef919467452bfa4624f8f7477cfc775c91db7e2f32387133b1b6c4e95aef9702be6bb042ae554884a
+  checksum: 10/6fff9ee00bd59aeb7e1484b4281f5e927b117cbfbf3ffa6c0fef0c58519317eb61527e93c4aa70f417709229bc1eeed63cba773913577a64405975a72fba7180
   languageName: node
   linkType: hard
 
@@ -8251,7 +8251,7 @@ __metadata:
     express: "npm:5.2.1"
     folder-hash: "npm:4.1.3"
     fs-extra: "npm:11.4.0"
-    js-yaml: "npm:5.3.0"
+    js-yaml: "npm:5.4.1"
     knip: "npm:6.32.2"
     micromatch: "npm:4.0.8"
     semver: "npm:7.8.5"
