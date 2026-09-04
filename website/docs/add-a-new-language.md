@@ -60,10 +60,10 @@ The constructor of the client can be edited (from the `.mustache` files) to acce
 
 The retry strategy cannot be generated and needs to be implemented outside of the generated client folder. You can achieve this by creating a `utils` (_or any naming that you find relevant_) folder and add a transporter and retry strategy logic to it.
 
-HTTP 429 is not a host-failover case. The JavaScript and Go transporters wait on the **same host** (`Retry-After` in whole seconds, or 1 second if the header is missing or invalid) up to `maxRateLimitRetries` (default 3; `0` fails on the first 429). Other languages still treat 429 as a non-retryable 4xx until that behavior is ported. 5xx, timeouts, and network errors still try other hosts.
+HTTP 429 is not a host-failover case. The JavaScript, Python, and Go transporters wait on the **same host** (`Retry-After` in whole seconds, or 1 second if the header is missing or invalid) up to `maxRateLimitRetries` / `max_rate_limit_retries` (default 3; `0` fails on the first 429). Other languages still treat 429 as a non-retryable 4xx until that behavior is ported. 5xx, timeouts, and network errors still try other hosts.
 
 - [429 wait/retry on the JavaScript transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-common/src/transporter/createTransporter.ts)
-- [429 wait/retry on the Go transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-go/algolia/transport/transport.go)
+- [429 wait/retry on the Python transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-python/algoliasearch/http/transporter.py)
 - [Host failover on the PHP client](https://github.com/algolia/api-clients-automation/tree/main/clients/algoliasearch-client-php/lib/RetryStrategy)
 
 ### Different client hosts

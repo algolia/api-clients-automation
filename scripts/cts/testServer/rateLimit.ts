@@ -33,25 +33,43 @@ function langState(lang: string): LangState {
 
 function assertDelay(timestamps: number[], expectedMs: number): void {
   expect(timestamps.length).to.be.at.least(2);
-  expect(timestamps[1] - timestamps[0]).to.be.closeTo(expectedMs, 400);
+
+  for (let i = 0; i + 1 < timestamps.length; i += 2) {
+    expect(timestamps[i + 1] - timestamps[i]).to.be.closeTo(expectedMs, 400);
+  }
 }
 
-export function assertValidRateLimitRetries(implemented: boolean): void {
-  // Languages that wait on 429 (JavaScript and Go) must actually hit the mock.
-  if (implemented) {
+// Languages that implement 429 wait-and-retry.
+const RATE_LIMIT_LANGUAGES = ['javascript', 'python', 'go'];
+
+// Languages whose client CTS suite runs once per mode (python: async + sync, see withSyncTests in TestsClient.java).
+const DOUBLE_RUN_LANGUAGES = ['python'];
+
+export function rateLimitRuns(languages: string[]): Record<string, number> {
+  return Object.fromEntries(
+    languages
+      .filter((lang) => RATE_LIMIT_LANGUAGES.includes(lang))
+      .map((lang) => [lang, DOUBLE_RUN_LANGUAGES.includes(lang) ? 2 : 1]),
+  );
+}
+
+export function assertValidRateLimitRetries(runs: Record<string, number>): void {
+  if (Object.keys(runs).length > 0) {
     expect(Object.keys(state).length, 'rate-limit mock was never hit').to.be.at.least(1);
   }
 
   for (const [lang, langState] of Object.entries(state)) {
+    const runCount = runs[lang] ?? 1;
+
     // 2s proves Retry-After was parsed: the fallback wait for a missing header is 1s.
-    expect(langState.retryAfterCalls, `${lang} retry-after calls`).to.equal(2);
+    expect(langState.retryAfterCalls, `${lang} retry-after calls`).to.equal(2 * runCount);
     assertDelay(langState.retryAfterTimestamps, 2000);
 
-    expect(langState.missingHeaderCalls, `${lang} missing-header calls`).to.equal(2);
+    expect(langState.missingHeaderCalls, `${lang} missing-header calls`).to.equal(2 * runCount);
     assertDelay(langState.missingHeaderTimestamps, 1000);
 
-    expect(langState.exhaustedCalls, `${lang} exhausted calls`).to.equal(4);
-    expect(langState.zeroRetriesCalls, `${lang} zero-retries calls`).to.equal(1);
+    expect(langState.exhaustedCalls, `${lang} exhausted calls`).to.equal(4 * runCount);
+    expect(langState.zeroRetriesCalls, `${lang} zero-retries calls`).to.equal(1 * runCount);
   }
 
   for (const [lang, callCount] of Object.entries(neverCalledState)) {
@@ -60,12 +78,14 @@ export function assertValidRateLimitRetries(implemented: boolean): void {
 }
 
 function addRoutes(app: express.Express): void {
+  // The % 2 alternation assumes each language's runs are sequential (a single test file per
+  // mode), so a 429→200 pair never interleaves with another run's calls in assertDelay.
   app.get('/1/test/rate-limit/retry-after/:lang', (req, res) => {
     const current = langState(req.params.lang);
     current.retryAfterCalls++;
     current.retryAfterTimestamps.push(Date.now());
 
-    if (current.retryAfterCalls === 1) {
+    if (current.retryAfterCalls % 2 === 1) {
       res.setHeader('Retry-After', '2');
       res.status(429).json({ message: 'Too many requests' });
       return;
@@ -79,7 +99,7 @@ function addRoutes(app: express.Express): void {
     current.missingHeaderCalls++;
     current.missingHeaderTimestamps.push(Date.now());
 
-    if (current.missingHeaderCalls === 1) {
+    if (current.missingHeaderCalls % 2 === 1) {
       res.status(429).json({ message: 'Too many requests' });
       return;
     }
