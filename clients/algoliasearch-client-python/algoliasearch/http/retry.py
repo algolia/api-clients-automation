@@ -62,12 +62,6 @@ class RetryStrategy:
 
         return RetryOutcome.FAIL
 
-    def is_rate_limited(self, response: ApiResponse) -> bool:
-        return response.status_code == RATE_LIMIT_STATUS_CODE
-
-    def rate_limit_wait_seconds(self, response: ApiResponse) -> float:
-        return parse_retry_after_seconds(response.headers)
-
     def _is_success(self, response: ApiResponse) -> bool:
         return response.status_code is not None and (response.status_code // 100) == 2
 

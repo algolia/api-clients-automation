@@ -121,11 +121,11 @@ class Transporter(BaseTransporter):
                 last_correlation_id = correlation_id or last_correlation_id
 
                 if (
-                    self._retry_strategy.is_rate_limited(response)
+                    response.status_code == RATE_LIMIT_STATUS_CODE
                     and rate_limit_retries_left > 0
                 ):
                     rate_limit_retries_left -= 1
-                    await sleep(self._retry_strategy.rate_limit_wait_seconds(response))
+                    await sleep(parse_retry_after_seconds(response.headers))
                     continue
 
                 break
