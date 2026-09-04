@@ -1,8 +1,9 @@
 #!/bin/bash
-# fails when a pinned FROM tag in scripts/docker/ diverges from its config/.*-version file,
-# when any pinned FROM line is missing its digest, when a pinned digest is not what the tag
-# currently resolves to (DRIFT_CHECK_LIVE=1 only), or when a shared tool pin in the docker
-# images diverges from the CI setup action
+# always fails when a pinned FROM line is missing its digest, or when a shared tool pin in the
+# docker images diverges from the CI setup action.
+# With DRIFT_CHECK_TAGS=1 it also fails when a pinned FROM tag diverges from its
+# config/.*-version file, and with DRIFT_CHECK_LIVE=1 when a pinned digest is not what the tag
+# currently resolves to. Both extras run only in the docker jobs.
 set -euo pipefail
 
 get_from() {
@@ -25,6 +26,10 @@ tag_of() {
 # validated (DRIFT_CHECK_LIVE=1 in the docker_images job); an upstream re-push or a registry
 # rate limit must not fail unrelated CI runs
 check_live=${DRIFT_CHECK_LIVE:-0}
+# tag-vs-config comparison only runs where a docker change is being validated
+# (DRIFT_CHECK_TAGS=1): a renovate bump of config/.*-version legitimately lands before the
+# Dockerfile tag is refreshed, and that must not fail the setup job every other job needs
+check_tags=${DRIFT_CHECK_TAGS:-0}
 if [[ "$check_live" == "1" ]] && ! command -v docker >/dev/null 2>&1; then
   echo "DRIFT_CHECK_LIVE=1 requires docker" >&2
   exit 1
@@ -84,12 +89,14 @@ check() {
   if [[ "$from" == *@* ]]; then
     pinned="${from#*@}"
   fi
-  tag=$(tag_of "$from")
-  expected=$(cat "config/$3")
-  if [[ "$tag" != "$expected" ]]; then
-    echo "$1: $2 is pinned to $tag but config/$3 says $expected"
-    echo "  -> update the FROM line in scripts/docker/$1 (scripts/docker/update-pins.sh prints the new digest)"
-    fail=1
+  if [[ "$check_tags" == "1" ]]; then
+    tag=$(tag_of "$from")
+    expected=$(cat "config/$3")
+    if [[ "$tag" != "$expected" ]]; then
+      echo "$1: $2 is pinned to $tag but config/$3 says $expected"
+      echo "  -> update the FROM line in scripts/docker/$1 (scripts/docker/update-pins.sh prints the new digest)"
+      fail=1
+    fi
   fi
   if [[ -z "$pinned" ]]; then
     echo "$1: $2 FROM line has no digest"
@@ -117,9 +124,10 @@ check_shared_pin() {
   local name=$1
   local regex=$2
   local docker_file=${3:-scripts/docker/Dockerfile.base}
+  local docker_regex=${4:-$regex}
   local action_ver docker_ver
   action_ver=$(extract_ver .github/actions/setup/action.yml "$regex")
-  docker_ver=$(extract_ver "$docker_file" "$regex")
+  docker_ver=$(extract_ver "$docker_file" "$docker_regex")
   if [[ -z "$action_ver" || -z "$docker_ver" ]]; then
     return
   fi
@@ -147,5 +155,8 @@ check_shared_pin poetry 'pipx install poetry==([0-9]+\.[0-9]+\.[0-9]+)'
 check_shared_pin golangci-lint 'golangci-lint/v([0-9]+\.[0-9]+\.[0-9]+)/install\.sh'
 check_shared_pin google-java-format 'google-java-format/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/'
 check_shared_pin rubyfmt 'rubyfmt/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/' scripts/docker/Dockerfile.ruby
+# the ARG that used to keep these two in one renovate manager is gone, and the docker tag and
+# the CI source build now resolve from different datasources, so compare them explicitly
+check_shared_pin swiftformat 'SWIFTFORMAT_VERSION=([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.swift 'swiftformat:([0-9]+\.[0-9]+\.[0-9]+)@'
 
 exit $fail

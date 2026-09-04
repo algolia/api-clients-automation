@@ -96,7 +96,7 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
-      - name: Check that the docker image pins match the config versions
+      - name: Check that the docker images are digest pinned and share the CI tool versions
         run: bash scripts/docker/check-version-drift.sh
 
       - name: Check that the issue sync workflow matches its template
@@ -773,9 +773,10 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Check that the pinned digests are what the tags resolve to
+      - name: Check the pinned tags against the config versions and the live digests
         run: bash scripts/docker/check-version-drift.sh
         env:
+          DRIFT_CHECK_TAGS: '1'
           DRIFT_CHECK_LIVE: '1'
 
   check_green:

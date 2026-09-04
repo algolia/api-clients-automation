@@ -62,8 +62,17 @@ export const DEPENDENCIES = {
     { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
   ),
   WEBSITE_CHANGED: ['website', 'scripts/website', 'package.json', 'netlify.toml'],
-  // kept out of COMMON_DEPENDENCIES so a docker pin bump does not rerun every client job
-  DOCKER_CHANGED: ['scripts/docker', 'docker-compose.yml', '.nvmrc', 'config/.java-version'],
+  // kept out of COMMON_DEPENDENCIES so a docker pin bump does not rerun every client job.
+  // the config version files are here so a renovate language bump reaches the tag drift check;
+  // java is listed by its real path because config/.java-version is a symlink and its blob
+  // holds the target string, so a version change never shows up under the config/ path
+  DOCKER_CHANGED: [
+    'scripts/docker',
+    'docker-compose.yml',
+    '.nvmrc',
+    'config/.*-version',
+    'clients/algoliasearch-client-java/.java-version',
+  ],
 };
 
 export function getVersionFileForLanguage(lang: Language): string {
