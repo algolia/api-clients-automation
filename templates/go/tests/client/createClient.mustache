@@ -11,6 +11,9 @@ cfg = {{clientPrefix}}.{{clientName}}Configuration{
     {{#hasCustomHosts}}
     Hosts: []transport.StatefulHost{ {{#customHosts}}transport.NewStatefulHost("http", tests.GetLocalhost() + ":{{port}}", call.IsReadWrite),{{/customHosts}} },
     {{/hasCustomHosts}}
+    {{#hasMaxRateLimitRetries}}
+    MaxRateLimitRetries: utils.ToPtr({{maxRateLimitRetries}}),
+    {{/hasMaxRateLimitRetries}}
     {{#gzipEncoding}}
     Compression: compression.GZIP,
     {{/gzipEncoding}}
