@@ -11,4 +11,7 @@ _config = {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}("{{
         {{#gzipEncoding}}
         {{#isError}}    {{/isError}}_config.compression_type = "gzip"
         {{/gzipEncoding}}
+        {{#hasMaxRateLimitRetries}}
+        {{#isError}}    {{/isError}}_config.max_rate_limit_retries = {{maxRateLimitRetries}}
+        {{/hasMaxRateLimitRetries}}
         {{#isError}}    {{/isError}}_client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}.create_with_config(config=_config{{#useEchoRequester}}, transporter=EchoTransporter{{#isSyncClient}}Sync{{/isSyncClient}}(_config){{/useEchoRequester}})
