@@ -42,7 +42,7 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
 // Languages that implement 429 wait-and-retry.
 const RATE_LIMIT_LANGUAGES = ['javascript', 'python'];
 
-// Languages whose client CTS suite runs once per mode (python: async + sync, see TestsClient.java:25).
+// Languages whose client CTS suite runs once per mode (python: async + sync, see withSyncTests in TestsClient.java).
 const DOUBLE_RUN_LANGUAGES = ['python'];
 
 export function rateLimitRuns(languages: string[]): Record<string, number> {
@@ -78,6 +78,8 @@ export function assertValidRateLimitRetries(runs: Record<string, number>): void 
 }
 
 function addRoutes(app: express.Express): void {
+  // The % 2 alternation assumes each language's runs are sequential (a single test file per
+  // mode), so a 429→200 pair never interleaves with another run's calls in assertDelay.
   app.get('/1/test/rate-limit/retry-after/:lang', (req, res) => {
     const current = langState(req.params.lang);
     current.retryAfterCalls++;
