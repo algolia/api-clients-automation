@@ -35,7 +35,9 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
-      run: curl --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar" > /tmp/java-formatter.jar
+      run: |
+        curl -f --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar" -o /tmp/java-formatter.jar
+        echo "25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4  /tmp/java-formatter.jar" | shasum -a 256 -c -
 
     # JavaScript for monorepo and tooling
     - name: Install Node
@@ -65,7 +67,7 @@ runs:
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
       shell: bash
-      run: dart pub global activate melos
+      run: dart pub global activate melos 8.6.0
 
     # Golang
     - name: Install golang
@@ -79,7 +81,9 @@ runs:
       if: ${{ inputs.language == 'go' }}
       shell: bash
       run: |
-        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.10.1
+        curl --retry 3 -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v2.10.1/install.sh -o /tmp/golangci-install.sh
+        echo "edfa587f31bde70db161d1e5b783e086a1627d7e2f7c91de5f7cca79bcdf8631  /tmp/golangci-install.sh" | shasum -a 256 -c -
+        sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin v2.10.1
         go install golang.org/x/tools/cmd/goimports@v0.22.0
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
@@ -128,7 +132,7 @@ runs:
     - name: Install poetry
       if: ${{ inputs.language == 'python' }}
       shell: bash
-      run: pipx install poetry==2
+      run: pipx install poetry==2.4.2
 
     - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       if: ${{ inputs.language == 'python' }}
@@ -153,7 +157,8 @@ runs:
       if: ${{ inputs.language == 'ruby' }}
       shell: bash
       run: |
-        curl --retry 3 -L https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-x86_64.tar.gz > rubyfmt.tar.gz
+        curl -f --retry 3 -L https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-x86_64.tar.gz -o rubyfmt.tar.gz
+        echo "c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17  rubyfmt.tar.gz" | shasum -a 256 -c -
         tar -xzf rubyfmt.tar.gz
         mv tmp/releases/v0.10.0-Linux/rubyfmt /usr/local/bin
         rm -rf rubyfmt.tar.gz tmp
@@ -162,6 +167,8 @@ runs:
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
       uses: sbt/setup-sbt@8feba82adc7f01ddcf8165b86f778bdb5b82cebc # v1.5.7
+      with:
+        sbt-runner-version: 2.0.6
 
     # Swift deps
     - name: Install swift
