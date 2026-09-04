@@ -4,9 +4,11 @@
 
 import Foundation
 
-enum RateLimitRetry {
+/// Shared 429 Retry-After wait helpers used by the transporter and generated
+/// client configurations.
+public enum RateLimitRetry {
     static let defaultWaitNanoseconds: UInt64 = 1_000_000_000
-    static let defaultMaxRetries: Int = 3
+    public static let defaultMaxRetries: Int = 3
 
     /// `Retry-After` as a wait in nanoseconds.
     /// Only a positive whole-number-of-seconds string is honored; anything else
