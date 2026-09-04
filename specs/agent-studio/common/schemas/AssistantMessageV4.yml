@@ -1,25 +1,28 @@
 AssistantMessageV4:
   properties:
     id:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: id
     role:
-      type: string
       const: assistant
-      title: role
       default: assistant
-    content:
+      title: role
       type: string
+    content:
       title: content
+      type: string
     parts:
       items:
-        $ref: 'AssistantPartV4.yml#/AssistantPartV4'
-      type: array
+        $ref: AssistantPartV4.yml#/AssistantPartV4
       title: parts
+      type: array
     toolInvocations:
-      $ref: 'ToolInvocationsUnion.yml#/ToolInvocationsUnion'
-  type: object
+      $ref: ToolInvocationsUnion.yml#/ToolInvocationsUnion
   required:
-    - role
-    - content
+  - role
+  - content
   title: assistantMessageV4
+  type: object

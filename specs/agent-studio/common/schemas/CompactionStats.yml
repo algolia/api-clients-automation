@@ -1,0 +1,51 @@
+CompactionStats:
+  properties:
+    compacted:
+      type: boolean
+      title: compacted
+      description: Whether a summary was actually produced. False means the payload
+        passed through untouched (nothing older than the kept tail, or no summarizable
+        text).
+    chunksProcessed:
+      type: integer
+      title: chunksprocessed
+      description: Number of transcript chunks summarized in the map phase. 0 on passthrough,
+        1 when the transcript fit in a single summarizer call.
+      default: 0
+    passes:
+      type: integer
+      title: passes
+      description: Number of summarizer rounds. 1 for a direct summary; 2+ when chunk
+        summaries had to be merged (map-reduce).
+      default: 0
+    summarizerPromptTokens:
+      oneOf:
+      - type: integer
+      - type: 'null'
+      title: summarizerprompttokens
+      description: Provider-reported input tokens summed across every summarizer call.
+        Null when the provider reported no usage metadata.
+    summarizerCompletionTokens:
+      oneOf:
+      - type: integer
+      - type: 'null'
+      title: summarizercompletiontokens
+      description: Provider-reported output tokens summed across every summarizer
+        call. Null when the provider reported no usage metadata.
+    targetTokensEstimate:
+      oneOf:
+      - type: integer
+      - type: 'null'
+      title: targettokensestimate
+      description: The requested output budget, echoed back when `targetTokensEstimate`
+        was set.
+  type: object
+  required:
+  - compacted
+  title: compactionStats
+  description: |-
+    Compaction-specific telemetry, returned only by ``/context/compact``.
+
+    Kept separate from :class:`ContextStats` so the deterministic ``/context/trim`` contract stays
+    free of LLM-shaped fields. ``compacted`` makes the short-conversation passthrough detectable:
+    without it a caller cannot tell a no-op from a summary that happened to be short.

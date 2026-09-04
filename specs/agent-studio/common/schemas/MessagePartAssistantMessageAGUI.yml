@@ -1,0 +1,13 @@
+MessagePartAssistantMessageAGUI:
+  oneOf:
+  - $ref: TextPartAGUI.yml#/TextPartAGUI
+  - $ref: ReasoningPartAGUI.yml#/ReasoningPartAGUI
+  - $ref: ToolCallPartAGUI.yml#/ToolCallPartAGUI
+  - $ref: ToolCallResultPartAGUI.yml#/ToolCallResultPartAGUI
+  discriminator:
+    mapping:
+      text: TextPartAGUI.yml#/TextPartAGUI
+      thinking: ReasoningPartAGUI.yml#/ReasoningPartAGUI
+      tool-call: ToolCallPartAGUI.yml#/ToolCallPartAGUI
+      tool-result: ToolCallResultPartAGUI.yml#/ToolCallResultPartAGUI
+    propertyName: type

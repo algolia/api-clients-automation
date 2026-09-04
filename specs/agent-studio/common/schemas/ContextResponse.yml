@@ -1,0 +1,16 @@
+ContextResponse:
+  properties:
+    messages:
+      $ref: MessagesUnion.yml#/MessagesUnion
+    stats:
+      $ref: ContextStats.yml#/ContextStats
+    compaction:
+      oneOf:
+      - $ref: CompactionStats.yml#/CompactionStats
+      - type: 'null'
+  type: object
+  required:
+  - messages
+  - stats
+  title: contextResponse
+  description: Result of a context operation, ready to feed to ``/completions``.

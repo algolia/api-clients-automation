@@ -1,0 +1,5 @@
+OneOfEnum:
+  type: integer
+  enum:
+  - 0
+  - 1

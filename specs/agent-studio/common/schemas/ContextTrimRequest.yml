@@ -1,0 +1,27 @@
+ContextTrimRequest:
+  properties:
+    messages:
+      $ref: MessagesUnion.yml#/MessagesUnion
+    keepLastMessages:
+      type: integer
+      minimum: 0.0
+      title: keeplastmessages
+      description: Keep only the last N messages, dropping older ones. Applied before
+        the token budget.
+    maxTokensEstimate:
+      type: integer
+      minimum: 0.0
+      title: maxtokensestimate
+      description: Drop oldest messages until the estimated token total fits this
+        budget (heuristic).
+    dropToolParts:
+      type: boolean
+      title: droptoolparts
+      description: Strip tool-invocation/result parts from the messages that are kept.
+        Applied before the token budget, so the budget counts only surviving content.
+      default: false
+  type: object
+  required:
+  - messages
+  title: contextTrimRequest
+  description: Deterministic trim request (no LLM calls).

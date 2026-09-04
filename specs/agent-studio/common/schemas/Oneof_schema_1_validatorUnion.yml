@@ -1,0 +1,6 @@
+Oneof_schema_1_validatorUnion:
+  oneOf:
+  - items:
+      $ref: FacetFiltersUnion.yml#/FacetFiltersUnion
+    type: array
+  - type: 'null'

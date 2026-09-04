@@ -1,19 +1,20 @@
 NumberParam:
+  description: A number search parameter with exposure control and optional constraints.
   properties:
     exposed:
-      type: boolean
       title: exposed
+      type: boolean
     default:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
+      default: null
       title: default
     constraint:
       oneOf:
-        - $ref: 'NumberParamConstraint.yml#/NumberParamConstraint'
-        - type: 'null'
-  type: object
+      - $ref: NumberParamConstraint.yml#/NumberParamConstraint
+      - type: 'null'
   required:
-    - exposed
+  - exposed
   title: numberParam
-  description: A number search parameter with exposure control and optional constraints.
+  type: object

@@ -1,0 +1,45 @@
+post:
+  tags:
+  - Context
+  operationId: compactContext
+  x-acl:
+  - search
+  summary: Compact Context
+  description: |-
+    Summarize the older part of a conversation into a single user message via the caller's LLM.
+
+    Everything except the trailing `keepLastMessages` messages is summarized; the summary is
+    returned as a user-role message followed by the kept tail verbatim. The caller's provider runs
+    the summary, so cost is theirs by construction.
+
+    A conversation too large for the summarizer's context window is split into chunks that each fit,
+    summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the
+    request. When the conversation still cannot be summarized (it needs more chunks than the server
+    allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.
+
+    Two optional controls shape the output. `instructions` adds caller guidance inside the
+    server-owned prompt frame, so it steers the summary without the model echoing the wording back.
+    `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.
+
+    The `compaction` block reports what happened: `compacted` is `false` when the payload passed
+    through untouched (nothing older than the kept tail), alongside chunk/pass counts and the
+    summarizer's own token usage.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../common/schemas/ContextCompactRequest.yml#/ContextCompactRequest
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/ContextResponse.yml#/ContextResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
