@@ -96,6 +96,8 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      # the tag-vs-config and live digest comparisons run in the docker jobs instead, so a
+      # renovate version bump cannot fail the job every other job depends on
       - name: Check that the docker images are digest pinned and share the CI tool versions
         run: bash scripts/docker/check-version-drift.sh
 
