@@ -336,16 +336,15 @@
     },
     {
       "customType": "regex",
-      "description": "Update swiftformat version",
+      "description": "Update swiftformat in the CI setup action, version and the commit its tag points at",
       "managerFilePatterns": [
-        "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "SWIFTFORMAT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "SWIFTFORMAT_VERSION=(?<currentValue>[0-9.]+)[\\s\\S]*?SWIFTFORMAT_SHA=(?<currentDigest>[0-9a-f]{40})"
       ],
       "depNameTemplate": "nicklockwood/SwiftFormat",
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-tags"
     },
     {
       "customType": "regex",
