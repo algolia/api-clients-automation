@@ -2,6 +2,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Algolia.Search.Http;
 using Algolia.Search.Models.Common;
 using Algolia.Search.Serializer;
@@ -90,6 +92,17 @@ namespace Algolia.Search.Clients
     /// or DefaultHeaders is never overwritten.
     /// </summary>
     public bool RequestIdEnabled { get; set; }
+
+    /// <summary>
+    /// How many times a 429 is waited out on the same host. Default 3; 0 fails
+    /// on the first 429.
+    /// </summary>
+    public int MaxRateLimitRetries { get; set; } = 3;
+
+    /// <summary>
+    /// Delay used between same-host 429 retries. Tests replace this to avoid wall-clock waits.
+    /// </summary>
+    internal Func<TimeSpan, CancellationToken, Task> RateLimitDelayAsync { get; set; }
 
     /// <summary>
     /// Configurations hosts
