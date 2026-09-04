@@ -173,6 +173,7 @@ export const patterns = [
 
   'tests/output/swift/Package.swift',
   '!tests/output/swift/manual/**',
+  '!tests/output/swift/Tests/manual/**',
   '!tests/output/swift/Utils/**',
 
   'clients/**/LICENSE',
