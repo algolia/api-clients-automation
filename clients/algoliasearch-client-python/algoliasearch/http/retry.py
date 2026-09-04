@@ -17,7 +17,7 @@ def parse_retry_after_seconds(headers: Optional[Mapping[str, str]]) -> float:
     """
     raw = (headers.get("retry-after") or "").strip() if headers else ""
 
-    if fullmatch(r"\d+", raw) is None:
+    if fullmatch(r"[0-9]+", raw) is None:
         return DEFAULT_RATE_LIMIT_WAIT_SECONDS
 
     seconds = int(raw)

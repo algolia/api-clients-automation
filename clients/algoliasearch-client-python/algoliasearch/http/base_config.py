@@ -35,9 +35,7 @@ class BaseConfig:
 
         self.request_id_enabled: bool = False
 
-        # How many times to wait and retry on the same host after HTTP 429.
-        # 0 fails on the first 429. The wait is `Retry-After` in whole seconds,
-        # or 1 second when the header is missing or invalid.
+        # Same-host retries after HTTP 429; 0 fails on the first 429.
         self.max_rate_limit_retries: int = 3
 
     def set_client_api_key(self, api_key: str) -> None:

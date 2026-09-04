@@ -211,6 +211,7 @@ def test_retry_after_honors_only_positive_whole_seconds() -> None:
         "1.5",
         "+2",
         "120abc",
+        "٦٠",
         "Wed, 21 Oct 2015 07:28:00 GMT",
     ]:
         assert (

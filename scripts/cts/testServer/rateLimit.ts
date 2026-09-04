@@ -39,11 +39,10 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
   }
 }
 
-// Languages that implement 429 wait-and-retry. Append yours when the port lands.
+// Languages that implement 429 wait-and-retry.
 const RATE_LIMIT_LANGUAGES = ['javascript', 'python'];
 
-// Languages whose client CTS suite is emitted more than once, so every mock
-// route is hit once per mode (python: async + sync, see TestsClient.java:25).
+// Languages whose client CTS suite runs once per mode (python: async + sync, see TestsClient.java:25).
 const DOUBLE_RUN_LANGUAGES = ['python'];
 
 export function rateLimitRuns(languages: string[]): Record<string, number> {
