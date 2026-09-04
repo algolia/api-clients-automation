@@ -103,7 +103,7 @@
     "@algolia/requester-testing": "5.58.0",
     "@arethetypeswrong/cli": "0.18.5",
     "@cloudflare/vitest-pool-workers": "0.22.0",
-    "@cloudflare/workers-types": "5.20260819.1",
+    "@cloudflare/workers-types": "5.20260901.1",
     "@types/node": "26.2.0",
     "jsdom": "30.0.1",
     "publint": "0.3.24",

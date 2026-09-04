@@ -493,10 +493,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:5.20260819.1":
-  version: 5.20260819.1
-  resolution: "@cloudflare/workers-types@npm:5.20260819.1"
-  checksum: 10/6764b105d42357e6747fdfd2344c56daf09364d56a379aa17533019fc5105c39358b5b294a5af9b57a77c0386f55f82ce395ab817b958340261718f62f8fd49d
+"@cloudflare/workers-types@npm:5.20260901.1":
+  version: 5.20260901.1
+  resolution: "@cloudflare/workers-types@npm:5.20260901.1"
+  checksum: 10/452b2840c166487be6318d05a922da085f2f94bfcd2cb8a9af3e735f6c206cd862a51e0cfabe8c3e1b2440ba94772b18754a50f8021eacdae202035439470b29
   languageName: node
   linkType: hard
 
@@ -3203,7 +3203,7 @@ __metadata:
     "@algolia/requester-testing": "npm:5.58.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
     "@cloudflare/vitest-pool-workers": "npm:0.22.0"
-    "@cloudflare/workers-types": "npm:5.20260819.1"
+    "@cloudflare/workers-types": "npm:5.20260901.1"
     "@types/node": "npm:26.2.0"
     jsdom: "npm:30.0.1"
     publint: "npm:0.3.24"
