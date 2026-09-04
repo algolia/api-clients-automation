@@ -19,7 +19,7 @@ final class IngestionClientClientTests: XCTestCase {
             region: Region(rawValue: "us"),
             hosts: [RetryableHost(url: URL(string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
-                    ":6676")!],
+                    ":6676")!)],
             maxRateLimitRetries: 0
         )
         let transporter = Transporter(configuration: configuration)

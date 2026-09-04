@@ -8,7 +8,7 @@ import Foundation
 /// client configurations.
 public enum RateLimitRetry {
     static let defaultWaitNanoseconds: UInt64 = 1_000_000_000
-    public static let defaultMaxRetries: Int = 3
+    public static let defaultMaxRetries = 3
 
     /// `Retry-After` as a wait in nanoseconds.
     /// Only a positive whole-number-of-seconds string is honored; anything else
