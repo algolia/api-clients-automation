@@ -2,8 +2,10 @@
 
 namespace Algolia\AlgoliaSearch\Tests;
 
+use Algolia\AlgoliaSearch\Api\IngestionClient;
 use Algolia\AlgoliaSearch\Api\SearchClient;
 use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Configuration\TransformationOptions;
 use Algolia\AlgoliaSearch\Exceptions\AlgoliaException;
 use Algolia\AlgoliaSearch\Exceptions\BadRequestException;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
@@ -139,6 +141,22 @@ class RateLimitRetryTest extends TestCase
     public function testTheDefaultBudgetIsThree(): void
     {
         $this->assertSame(3, SearchConfig::create('test-app-id', 'test-api-key')->getMaxRateLimitRetries());
+    }
+
+    public function testTransformationOptionsCarryTheirOwnBudget(): void
+    {
+        $this->assertSame(3, $this->transformationBudget(new TransformationOptions('us')));
+        $this->assertSame(0, $this->transformationBudget((new TransformationOptions('us'))->setMaxRateLimitRetries(0)));
+    }
+
+    private function transformationBudget(TransformationOptions $transformationOptions): int
+    {
+        $client = SearchClient::createWithConfig(
+            SearchConfig::create('test-app-id', 'test-api-key')->setTransformationOptions($transformationOptions)
+        );
+        $transporter = (new \ReflectionProperty(SearchClient::class, 'ingestionTransporter'))->getValue($client);
+
+        return (new \ReflectionProperty(IngestionClient::class, 'config'))->getValue($transporter)->getMaxRateLimitRetries();
     }
 
     private function recorder(callable $responder)

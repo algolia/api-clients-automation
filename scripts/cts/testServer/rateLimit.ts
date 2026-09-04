@@ -10,6 +10,8 @@ type LangState = {
   retryAfterTimestamps: number[];
   missingHeaderCalls: number;
   missingHeaderTimestamps: number[];
+  invalidHeaderCalls: number;
+  invalidHeaderTimestamps: number[];
   exhaustedCalls: number;
   zeroRetriesCalls: number;
 };
@@ -24,6 +26,8 @@ function langState(lang: string): LangState {
       retryAfterTimestamps: [],
       missingHeaderCalls: 0,
       missingHeaderTimestamps: [],
+      invalidHeaderCalls: 0,
+      invalidHeaderTimestamps: [],
       exhaustedCalls: 0,
       zeroRetriesCalls: 0,
     };
@@ -43,7 +47,7 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
 const RATE_LIMIT_LANGUAGES = ['javascript', 'php'];
 
 // Languages whose client CTS suite is emitted more than once, so every mock
-// route is hit once per mode (python: async + sync, see TestsClient.java:25).
+// route is hit once per mode (python: async + sync, see TestsClient's `withSyncTests`).
 const DOUBLE_RUN_LANGUAGES = ['python'];
 
 export function rateLimitRuns(languages: string[]): Record<string, number> {
@@ -68,6 +72,9 @@ export function assertValidRateLimitRetries(runs: Record<string, number>): void 
 
     expect(langState.missingHeaderCalls, `${lang} missing-header calls`).to.equal(2 * runCount);
     assertDelay(langState.missingHeaderTimestamps, 1000);
+
+    expect(langState.invalidHeaderCalls, `${lang} invalid-header calls`).to.equal(2 * runCount);
+    assertDelay(langState.invalidHeaderTimestamps, 1000);
 
     expect(langState.exhaustedCalls, `${lang} exhausted calls`).to.equal(4 * runCount);
     expect(langState.zeroRetriesCalls, `${lang} zero-retries calls`).to.equal(1 * runCount);
@@ -99,6 +106,20 @@ function addRoutes(app: express.Express): void {
     current.missingHeaderTimestamps.push(Date.now());
 
     if (current.missingHeaderCalls % 2 === 1) {
+      res.status(429).json({ message: 'Too many requests' });
+      return;
+    }
+
+    res.status(200).json({ message: 'ok rate limit retry' });
+  });
+
+  app.get('/1/test/rate-limit/invalid-header/:lang', (req, res) => {
+    const current = langState(req.params.lang);
+    current.invalidHeaderCalls++;
+    current.invalidHeaderTimestamps.push(Date.now());
+
+    if (current.invalidHeaderCalls % 2 === 1) {
+      res.setHeader('Retry-After', '0');
       res.status(429).json({ message: 'Too many requests' });
       return;
     }
