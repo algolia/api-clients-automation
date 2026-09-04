@@ -110,7 +110,7 @@ hostLoop:
 			if sent && req.GetBody != nil {
 				req.Body, err = req.GetBody()
 				if err != nil {
-					break hostLoop
+					return nil, nil, fmt.Errorf("cannot recreate request body: %w", err)
 				}
 			}
 
@@ -148,7 +148,8 @@ hostLoop:
 
 				cancel()
 
-				if sleepErr := t.sleep(ctx, wait); sleepErr != nil {
+				sleepErr := t.sleep(ctx, wait)
+				if sleepErr != nil {
 					return nil, nil, sleepErr
 				}
 
@@ -196,6 +197,7 @@ hostLoop:
 				}
 
 				cancel()
+
 				continue hostLoop
 			}
 		}
@@ -275,7 +277,7 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 
 			req.Body, err = req.GetBody()
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("cannot recreate request body: %w", err)
 			}
 		}
 
@@ -300,7 +302,8 @@ func (t *Transport) RequestStream(ctx context.Context, req *http.Request, k call
 				_ = res.Body.Close()
 			}
 
-			if sleepErr := t.sleep(ctx, wait); sleepErr != nil {
+			sleepErr := t.sleep(ctx, wait)
+			if sleepErr != nil {
 				return nil, sleepErr
 			}
 

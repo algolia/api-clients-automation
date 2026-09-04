@@ -1,3 +1,4 @@
+//nolint:testpackage // Tests unexported parseRetryAfter, resolveMaxRateLimitRetries, and isRateLimited.
 package transport
 
 import (
@@ -28,6 +29,7 @@ func TestParseRetryAfter(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 

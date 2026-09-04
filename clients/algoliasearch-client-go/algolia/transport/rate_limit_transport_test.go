@@ -1,3 +1,4 @@
+//nolint:testpackage // Tests unexported Transport.sleep and newTestTransport helpers.
 package transport
 
 import (
@@ -52,17 +53,22 @@ func newGetRequest(t *testing.T, path string) *http.Request {
 func TestRequestWaitsRetryAfterOnSameHost(t *testing.T) {
 	t.Parallel()
 
-	var calls atomic.Int32
-	var waits []time.Duration
+	var (
+		calls atomic.Int32
+		waits []time.Duration
+	)
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		calls.Add(1)
+
 		if calls.Load() == 1 {
 			w.Header().Set("Retry-After", "2")
 			w.WriteHeader(http.StatusTooManyRequests)
 			_, _ = w.Write([]byte(`{"message":"Too many requests"}`))
+
 			return
 		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"message":"ok"}`))
 	}))
@@ -71,6 +77,7 @@ func TestRequestWaitsRetryAfterOnSameHost(t *testing.T) {
 	tr := newTestTransport(t, srv.URL, 1, nil)
 	tr.sleep = func(_ context.Context, d time.Duration) error {
 		waits = append(waits, d)
+
 		return nil
 	}
 
@@ -83,12 +90,15 @@ func TestRequestWaitsRetryAfterOnSameHost(t *testing.T) {
 	if res.StatusCode != http.StatusOK {
 		t.Fatalf("status = %d", res.StatusCode)
 	}
+
 	if string(body) != `{"message":"ok"}` {
 		t.Fatalf("body = %s", body)
 	}
+
 	if calls.Load() != 2 {
 		t.Fatalf("calls = %d, want 2", calls.Load())
 	}
+
 	if len(waits) != 1 || waits[0] != 2*time.Second {
 		t.Fatalf("waits = %v, want [2s]", waits)
 	}
@@ -97,16 +107,21 @@ func TestRequestWaitsRetryAfterOnSameHost(t *testing.T) {
 func TestRequestMissingRetryAfterWaitsOneSecond(t *testing.T) {
 	t.Parallel()
 
-	var calls atomic.Int32
-	var waits []time.Duration
+	var (
+		calls atomic.Int32
+		waits []time.Duration
+	)
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		calls.Add(1)
+
 		if calls.Load() == 1 {
 			w.WriteHeader(http.StatusTooManyRequests)
 			_, _ = w.Write([]byte(`{"message":"Too many requests"}`))
+
 			return
 		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"message":"ok"}`))
 	}))
@@ -115,13 +130,16 @@ func TestRequestMissingRetryAfterWaitsOneSecond(t *testing.T) {
 	tr := newTestTransport(t, srv.URL, 0, nil)
 	tr.sleep = func(_ context.Context, d time.Duration) error {
 		waits = append(waits, d)
+
 		return nil
 	}
 
-	_, _, err := tr.Request(context.Background(), newGetRequest(t, "/1/test"), call.Read, RequestConfiguration{})
+	res, _, err := tr.Request(context.Background(), newGetRequest(t, "/1/test"), call.Read, RequestConfiguration{})
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer res.Body.Close()
+
 	if len(waits) != 1 || waits[0] != time.Second {
 		t.Fatalf("waits = %v, want [1s]", waits)
 	}
@@ -131,6 +149,7 @@ func TestRequestMaxRateLimitRetriesZeroFailsImmediately(t *testing.T) {
 	t.Parallel()
 
 	var calls atomic.Int32
+
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		calls.Add(1)
 		w.Header().Set("Retry-After", "1")
@@ -140,6 +159,7 @@ func TestRequestMaxRateLimitRetriesZeroFailsImmediately(t *testing.T) {
 	defer srv.Close()
 
 	tr := newTestTransport(t, srv.URL, 0, utils.ToPtr(0))
+
 	res, _, err := tr.Request(context.Background(), newGetRequest(t, "/1/test"), call.Read, RequestConfiguration{})
 	if err != nil {
 		t.Fatal(err)
@@ -149,6 +169,7 @@ func TestRequestMaxRateLimitRetriesZeroFailsImmediately(t *testing.T) {
 	if res.StatusCode != http.StatusTooManyRequests {
 		t.Fatalf("status = %d", res.StatusCode)
 	}
+
 	if calls.Load() != 1 {
 		t.Fatalf("calls = %d, want 1", calls.Load())
 	}
@@ -158,6 +179,7 @@ func TestRequestExhaustsMaxRateLimitRetries(t *testing.T) {
 	t.Parallel()
 
 	var calls atomic.Int32
+
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		calls.Add(1)
 		w.Header().Set("Retry-After", "1")
@@ -167,6 +189,7 @@ func TestRequestExhaustsMaxRateLimitRetries(t *testing.T) {
 	defer srv.Close()
 
 	tr := newTestTransport(t, srv.URL, 0, nil)
+
 	res, _, err := tr.Request(context.Background(), newGetRequest(t, "/1/test"), call.Read, RequestConfiguration{})
 	if err != nil {
 		t.Fatal(err)
@@ -176,6 +199,7 @@ func TestRequestExhaustsMaxRateLimitRetries(t *testing.T) {
 	if res.StatusCode != http.StatusTooManyRequests {
 		t.Fatalf("status = %d", res.StatusCode)
 	}
+
 	if calls.Load() != 4 {
 		t.Fatalf("calls = %d, want 4", calls.Load())
 	}
@@ -185,6 +209,7 @@ func TestRequestStillFailsOverOn5xx(t *testing.T) {
 	t.Parallel()
 
 	var firstCalls atomic.Int32
+
 	first := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		firstCalls.Add(1)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -217,6 +242,7 @@ func TestRequestStillFailsOverOn5xx(t *testing.T) {
 	if res.StatusCode != http.StatusOK {
 		t.Fatalf("status = %d", res.StatusCode)
 	}
+
 	if firstCalls.Load() != 1 {
 		t.Fatalf("first host calls = %d", firstCalls.Load())
 	}
@@ -225,17 +251,22 @@ func TestRequestStillFailsOverOn5xx(t *testing.T) {
 func TestRequestStreamRetries429(t *testing.T) {
 	t.Parallel()
 
-	var calls atomic.Int32
-	var waits []time.Duration
+	var (
+		calls atomic.Int32
+		waits []time.Duration
+	)
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		calls.Add(1)
+
 		if calls.Load() == 1 {
 			w.Header().Set("Retry-After", "1")
 			w.WriteHeader(http.StatusTooManyRequests)
 			_, _ = w.Write([]byte(`{"message":"Too many requests"}`))
+
 			return
 		}
+
 		w.Header().Set("Content-Type", "text/event-stream")
 		_, _ = io.WriteString(w, "data: ok\n\n")
 	}))
@@ -244,6 +275,7 @@ func TestRequestStreamRetries429(t *testing.T) {
 	tr := newTestTransport(t, srv.URL, 0, nil)
 	tr.sleep = func(_ context.Context, d time.Duration) error {
 		waits = append(waits, d)
+
 		return nil
 	}
 
@@ -256,6 +288,7 @@ func TestRequestStreamRetries429(t *testing.T) {
 	if calls.Load() != 2 {
 		t.Fatalf("calls = %d, want 2", calls.Load())
 	}
+
 	if len(waits) != 1 || waits[0] != time.Second {
 		t.Fatalf("waits = %v", waits)
 	}

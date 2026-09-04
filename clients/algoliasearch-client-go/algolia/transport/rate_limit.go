@@ -2,6 +2,7 @@ package transport
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -19,11 +20,7 @@ const (
 var retryAfterDigits = regexp.MustCompile(`^\d+$`)
 
 func parseRetryAfter(header http.Header) time.Duration {
-	if header == nil {
-		return defaultRateLimitWait
-	}
-
-	raw := strings.TrimSpace(header.Get("Retry-After"))
+	raw := strings.TrimSpace(headerValue(header, "Retry-After"))
 	if !retryAfterDigits.MatchString(raw) {
 		return defaultRateLimitWait
 	}
@@ -34,6 +31,24 @@ func parseRetryAfter(header http.Header) time.Duration {
 	}
 
 	return time.Duration(seconds) * time.Second
+}
+
+func headerValue(header http.Header, name string) string {
+	if header == nil {
+		return ""
+	}
+
+	if v := header.Get(name); v != "" {
+		return v
+	}
+
+	for key, values := range header {
+		if strings.EqualFold(key, name) && len(values) > 0 {
+			return values[0]
+		}
+	}
+
+	return ""
 }
 
 func isRateLimited(code int) bool {
@@ -60,6 +75,6 @@ func defaultSleep(ctx context.Context, d time.Duration) error {
 	case <-timer.C:
 		return nil
 	case <-ctx.Done():
-		return ctx.Err()
+		return fmt.Errorf("rate limit wait cancelled: %w", ctx.Err())
 	}
 }
