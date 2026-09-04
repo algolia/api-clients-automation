@@ -361,12 +361,14 @@
     },
     {
       "customType": "regex",
-      "description": "Update sbt in the base docker image",
+      "description": "Update the sbt runner in the base docker image and the CI setup action",
       "managerFilePatterns": [
-        "/Dockerfile/"
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "sdk install sbt (?<currentValue>[0-9.]+)"
+        "sdk install sbt (?<currentValue>[0-9.]+)",
+        "sbt-runner-version: (?<currentValue>[0-9.]+)"
       ],
       "depNameTemplate": "sbt/sbt",
       "datasourceTemplate": "github-releases",
