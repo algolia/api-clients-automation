@@ -12,6 +12,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
@@ -474,6 +475,144 @@ func TestSearchapi12(t *testing.T) {
 		require.NoError(t, err)
 		require.JSONEq(t, `{"message":"success server response"}`, string(rawBody))
 	}
+}
+
+// retries 429 on the same host using Retry-After.
+func TestSearchapi13(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts: []transport.StatefulHost{
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6697", call.IsReadWrite),
+				transport.NewStatefulHost("http", tests.GetLocalhost()+":6698", call.IsReadWrite),
+			},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/rate-limit/retry-after/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok rate limit retry"}`, string(rawBody))
+}
+
+// retries 429 with a 1s wait when Retry-After is missing.
+func TestSearchapi14(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6697", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/rate-limit/missing-header/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok rate limit retry"}`, string(rawBody))
+}
+
+// returns 429 after maxRateLimitRetries is used up.
+func TestSearchapi15(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6697", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/rate-limit/exhausted/go"))
+	require.EqualError(t, err, "API error [429] Too many requests")
+}
+
+// fails on the first 429 when maxRateLimitRetries is 0.
+func TestSearchapi16(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:               "test-app-id",
+			ApiKey:              "test-api-key",
+			Hosts:               []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6697", call.IsReadWrite)},
+			MaxRateLimitRetries: utils.ToPtr(0),
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/rate-limit/zero-retries/go"))
+	require.EqualError(t, err, "API error [429] Too many requests")
 }
 
 // calls api with correct user agent.

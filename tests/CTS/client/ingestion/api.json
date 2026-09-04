@@ -1,7 +1,7 @@
 [
   {
     "testName": "can handle HTML error",
-    "skipLanguages": ["javascript"],
+    "skipLanguages": ["javascript", "go"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -42,7 +42,7 @@
   },
   {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["javascript"],
+    "onlyLanguages": ["javascript", "go"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -67,7 +67,8 @@
         },
         "expected": {
           "error": {
-            "javascript": "Too Many Requests"
+            "javascript": "Too Many Requests",
+            "go": "API error [429] Too Many Requests"
           }
         }
       }
