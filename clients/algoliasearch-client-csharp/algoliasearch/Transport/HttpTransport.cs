@@ -162,7 +162,9 @@ internal class HttpTransport : IDisposable
         );
         var requestTimeout = GetTimeOut(callType, requestOptions);
         var baseConnectTimeout =
-          requestOptions?.ConnectTimeout ?? _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout;
+          requestOptions?.ConnectTimeout
+          ?? _algoliaConfig.ConnectTimeout
+          ?? Defaults.ConnectTimeout;
         var connectTimeout = TimeSpan.FromTicks(baseConnectTimeout.Ticks * (host.RetryCount + 1));
 
         if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
@@ -215,122 +217,122 @@ internal class HttpTransport : IDisposable
 
         switch (_retryStrategy.Decide(host, response))
         {
-        case RetryOutcomeType.Success:
-          if (_logger.IsEnabled(LogLevel.Information))
-          {
-            _logger.LogInformation(
-              "{Method} {SanitizedUrl} - {StatusCode} ({Duration}ms)",
-              request.Method,
-              SanitizeUrl(request.Uri),
-              response.HttpStatusCode,
-              requestStopwatch.ElapsedMilliseconds
-            );
-
-            if (attemptNumber > 1)
+          case RetryOutcomeType.Success:
+            if (_logger.IsEnabled(LogLevel.Information))
             {
-              overallStopwatch.Stop();
               _logger.LogInformation(
-                "Request completed on attempt {Attempt}/{MaxAttempts} (total: {TotalDuration}ms)",
-                attemptNumber,
-                maxAttempts,
-                overallStopwatch.ElapsedMilliseconds
+                "{Method} {SanitizedUrl} - {StatusCode} ({Duration}ms)",
+                request.Method,
+                SanitizeUrl(request.Uri),
+                response.HttpStatusCode,
+                requestStopwatch.ElapsedMilliseconds
               );
-            }
-          }
 
-          if (_logger.IsEnabled(LogLevel.Trace))
-          {
-            if (response.ResponseHeaders != null)
-            {
-              foreach (var header in response.ResponseHeaders)
+              if (attemptNumber > 1)
               {
-                _logger.LogTrace(
-                  "Response header: {HeaderName}: {HeaderValue}",
-                  header.Key,
-                  header.Value
+                overallStopwatch.Stop();
+                _logger.LogInformation(
+                  "Request completed on attempt {Attempt}/{MaxAttempts} (total: {TotalDuration}ms)",
+                  attemptNumber,
+                  maxAttempts,
+                  overallStopwatch.ElapsedMilliseconds
                 );
               }
             }
 
-            if (response.Body != null)
+            if (_logger.IsEnabled(LogLevel.Trace))
             {
-              var reader = new StreamReader(response.Body);
-              var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-              _logger.LogTrace("Response HTTP {HttpCode}: {Json}", response.HttpStatusCode, json);
-              response.Body.Seek(0, SeekOrigin.Begin);
+              if (response.ResponseHeaders != null)
+              {
+                foreach (var header in response.ResponseHeaders)
+                {
+                  _logger.LogTrace(
+                    "Response header: {HeaderName}: {HeaderValue}",
+                    header.Key,
+                    header.Value
+                  );
+                }
+              }
+
+              if (response.Body != null)
+              {
+                var reader = new StreamReader(response.Body);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                _logger.LogTrace("Response HTTP {HttpCode}: {Json}", response.HttpStatusCode, json);
+                response.Body.Seek(0, SeekOrigin.Begin);
+              }
             }
-          }
 
-          if (typeof(TResult) == typeof(VoidResult))
-          {
-            return new VoidResult() as TResult;
-          }
+            if (typeof(TResult) == typeof(VoidResult))
+            {
+              return new VoidResult() as TResult;
+            }
 
-          // Returns the raw response when using `*WithHTTPInfo` methods.
-          if (typeof(TResult) == typeof(AlgoliaHttpResponse))
-          {
-            return response as TResult;
-          }
+            // Returns the raw response when using `*WithHTTPInfo` methods.
+            if (typeof(TResult) == typeof(AlgoliaHttpResponse))
+            {
+              return response as TResult;
+            }
 
-          TResult deserialized;
-          try
-          {
-            deserialized = await _serializer
-              .Deserialize<TResult>(response.Body)
-              .ConfigureAwait(false);
-          }
-          catch (AlgoliaException ex)
-          {
-            ex.CorrelationId = GetCorrelationId(response);
-            throw;
-          }
+            TResult deserialized;
+            try
+            {
+              deserialized = await _serializer
+                .Deserialize<TResult>(response.Body)
+                .ConfigureAwait(false);
+            }
+            catch (AlgoliaException ex)
+            {
+              ex.CorrelationId = GetCorrelationId(response);
+              throw;
+            }
 
-          if (_logger.IsEnabled(LogLevel.Debug))
-          {
-            _logger.LogDebug("Object created: {ObjectCreated}", deserialized);
-          }
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+              _logger.LogDebug("Object created: {ObjectCreated}", deserialized);
+            }
 
-          return deserialized;
-        case RetryOutcomeType.Retry:
-          if (_logger.IsEnabled(LogLevel.Information))
-          {
-            _logger.LogInformation(
-              "Retry {RetryCount}/{MaxRetries}: Timeout on {Host} after {ConnectTimeout}ms",
-              attemptNumber,
-              maxAttempts - 1,
-              host.Url,
-              (int)connectTimeout.TotalMilliseconds
-            );
-          }
+            return deserialized;
+          case RetryOutcomeType.Retry:
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+              _logger.LogInformation(
+                "Retry {RetryCount}/{MaxRetries}: Timeout on {Host} after {ConnectTimeout}ms",
+                attemptNumber,
+                maxAttempts - 1,
+                host.Url,
+                (int)connectTimeout.TotalMilliseconds
+              );
+            }
 
-          if (_logger.IsEnabled(LogLevel.Debug))
-          {
-            _logger.LogDebug(
-              "Retrying ... Retryable error for response HTTP {HttpCode} : {Error}",
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+              _logger.LogDebug(
+                "Retrying ... Retryable error for response HTTP {HttpCode} : {Error}",
+                response.HttpStatusCode,
+                response.Error
+              );
+            }
+
+            moveToNextHost = true;
+            break;
+          case RetryOutcomeType.Failure:
+            if (_logger.IsEnabled(LogLevel.Error))
+            {
+              _logger.LogError(
+                "Retry strategy with failure outcome. Response HTTP {HttpCode} : {Error}",
+                response.HttpStatusCode,
+                response.Error
+              );
+            }
+
+            throw new AlgoliaApiException(
+              response.Error,
               response.HttpStatusCode,
-              response.Error
+              GetCorrelationId(response)
             );
-          }
-
-          moveToNextHost = true;
-          break;
-        case RetryOutcomeType.Failure:
-          if (_logger.IsEnabled(LogLevel.Error))
-          {
-            _logger.LogError(
-              "Retry strategy with failure outcome. Response HTTP {HttpCode} : {Error}",
-              response.HttpStatusCode,
-              response.Error
-            );
-          }
-
-          throw new AlgoliaApiException(
-            response.Error,
-            response.HttpStatusCode,
-            GetCorrelationId(response)
-          );
-        default:
-          throw new ArgumentOutOfRangeException();
+          default:
+            throw new ArgumentOutOfRangeException();
         }
       }
     }
