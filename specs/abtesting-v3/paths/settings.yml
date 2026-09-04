@@ -1,0 +1,39 @@
+get:
+  tags:
+    - abtest
+  operationId: getABTestSettings
+  x-acl:
+    - analytics
+  summary: Retrieve captured A/B test settings
+  description: |
+    Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.
+
+    Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.
+
+    Returns `404` if no settings have been captured for the A/B test.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ABTestSettings.yml#/ABTestSettingsResponse'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'

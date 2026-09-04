@@ -1,0 +1,24 @@
+[
+  {
+    "testName": "applyVariantSettings",
+    "parameters": {
+      "id": 42,
+      "variantId": 2
+    },
+    "request": {
+      "path": "/3/abtests/42/settings/2/apply",
+      "method": "POST"
+    }
+  },
+  {
+    "testName": "revert applied settings via the control variant",
+    "parameters": {
+      "id": 42,
+      "variantId": 1
+    },
+    "request": {
+      "path": "/3/abtests/42/settings/1/apply",
+      "method": "POST"
+    }
+  }
+]

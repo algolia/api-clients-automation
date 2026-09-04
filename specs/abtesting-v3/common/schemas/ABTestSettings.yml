@@ -1,0 +1,81 @@
+FeatureSettings:
+  type: object
+  description: Feature-specific settings captured for a variant.
+  additionalProperties: false
+  properties:
+    name:
+      type: string
+      description: Name of the feature the settings belong to.
+      example: 'reranking'
+    settings:
+      description: Feature settings payload. The shape depends on the feature.
+  required:
+    - name
+    - settings
+
+VariantSettings:
+  type: object
+  description: Settings captured for one A/B test variant.
+  additionalProperties: false
+  properties:
+    variantId:
+      type: integer
+      description: One-based index of the variant within the A/B test. The control is variant 1.
+      example: 2
+    applied:
+      type: boolean
+      description: Whether the variant's settings have been applied to the control index.
+    featuresSettings:
+      type: array
+      description: Feature-specific settings captured for the variant.
+      items:
+        $ref: '#/FeatureSettings'
+    indexSettings:
+      type: object
+      description: Index settings captured for the variant.
+    applyTimestamp:
+      type: string
+      description: Date and time when the variant's settings were applied to the control index, in RFC 3339 format.
+      example: 2023-06-17T00:00:00Z
+    revertTimestamp:
+      type: string
+      description: Date and time when the applied settings were reverted on the control index, in RFC 3339 format.
+      example: 2023-06-18T00:00:00Z
+    declaredTimestamp:
+      type: string
+      description: Date and time when the variant's settings were captured, in RFC 3339 format.
+      example: 2023-06-16T00:00:00Z
+    expiredTimestamp:
+      type: string
+      description: Date and time when the captured settings expired, in RFC 3339 format.
+      example: 2023-07-16T00:00:00Z
+  required:
+    - variantId
+    - applied
+
+ABTestSettingsResponse:
+  type: object
+  description: Captured settings of an A/B test.
+  additionalProperties: false
+  properties:
+    abtestSettings:
+      type: array
+      description: Captured settings for each variant of the A/B test.
+      items:
+        $ref: '#/VariantSettings'
+    controlIndexInUse:
+      type: boolean
+      description: Whether another active A/B test is using the control index.
+  required:
+    - abtestSettings
+    - controlIndexInUse
+
+SaveSettingsRequest:
+  type: object
+  description: Options for capturing a variant's settings.
+  additionalProperties: false
+  properties:
+    saveFeaturesSettings:
+      type: boolean
+      description: Whether to also capture feature-specific settings for the variant.
+      default: false
