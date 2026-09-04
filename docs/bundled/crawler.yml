@@ -405,10 +405,8 @@ paths:
                     items:
                       type: string
                     example:
-                      - >-
-                        https://www.algolia.com/blog/engineering/challenging-migration-heroku-google-kubernetes-engine
-                      - >-
-                        https://www.algolia.com/blog/engineering/a-tale-of-two-engines-algolia-unity
+                      - https://www.algolia.com/blog/engineering/challenging-migration-heroku-google-kubernetes-engine
+                      - https://www.algolia.com/blog/engineering/a-tale-of-two-engines-algolia-unity
                   logs:
                     type: array
                     description: Logs from the record extraction.

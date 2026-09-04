@@ -1173,8 +1173,7 @@ paths:
         `indexName`.
       operationId: pushTask
       externalDocs:
-        url: >-
-          https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data
+        url: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data
         description: Pre-indexing data transformation.
       x-acl:
         - addObject
