@@ -107,7 +107,7 @@
     "@types/node": "26.2.0",
     "jsdom": "30.0.1",
     "publint": "0.3.24",
-    "rollup": "4.62.4",
+    "rollup": "4.63.1",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.1.11"
