@@ -1,23 +1,29 @@
 AlgoliaSearchToolConfig:
   properties:
     name:
-      type: string
       maxLength: 32
       minLength: 3
       title: name
-    type:
       type: string
+    type:
       const: algolia_search_index
-      title: type
       default: algolia_search_index
+      title: type
+      type: string
     indices:
       items:
-        $ref: 'AlgoliaSearchToolIndexConfig.yml#/AlgoliaSearchToolIndexConfig'
-      type: array
+        $ref: AlgoliaSearchToolIndexConfig.yml#/AlgoliaSearchToolIndexConfig
       title: indices
-  type: object
+      type: array
+    mode:
+      $ref: ModeEnum.yml#/ModeEnum
+    allowUnlistedIndices:
+      default: false
+      title: allowunlistedindices
+      type: boolean
   required:
-    - type
-    - name
-    - indices
+  - type
+  - name
+  - indices
   title: algoliaSearchToolConfig
+  type: object

@@ -1,0 +1,19 @@
+MessageEvent:
+  properties:
+    eventType:
+      type: string
+      title: eventtype
+    eventName:
+      type: string
+      title: eventname
+    objectId:
+      oneOf:
+      - type: string
+      - type: 'null'
+      title: objectid
+  type: object
+  required:
+  - eventType
+  - eventName
+  title: messageEvent
+  description: An Insights event attributed to an assistant message.

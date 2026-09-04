@@ -1,0 +1,27 @@
+ImpactAnalytics:
+  properties:
+    hasView:
+      type: boolean
+      title: hasview
+    hasClick:
+      type: boolean
+      title: hasclick
+    hasConversion:
+      type: boolean
+      title: hasconversion
+    hasAlgoliaSearch:
+      type: boolean
+      title: hasalgoliasearch
+  type: object
+  required:
+  - hasView
+  - hasClick
+  - hasConversion
+  - hasAlgoliaSearch
+  title: impactAnalytics
+  description: |-
+    Outcome signals from the BQ SSOT dataset.
+
+    Present (non-null) only when includeImpactAnalytics=true and BQ is reachable.
+    null means data is unavailable (BQ path skipped or failed) -- NOT that there are zero outcomes.
+    Callers should render null as a data-load error rather than as zero-value badges.

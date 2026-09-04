@@ -1,0 +1,37 @@
+ContextStats:
+  properties:
+    messagesBefore:
+      type: integer
+      title: messagesbefore
+      description: Message count before the operation.
+    messagesAfter:
+      type: integer
+      title: messagesafter
+      description: Message count after the operation.
+    tokensBeforeEstimate:
+      type: integer
+      title: tokensbeforeestimate
+      description: Estimated token count before the operation.
+    tokensAfterEstimate:
+      type: integer
+      title: tokensafterestimate
+      description: Estimated token count after the operation.
+    messagesDropped:
+      type: integer
+      title: messagesdropped
+      description: Net reduction in message count (before - after).
+  type: object
+  required:
+  - messagesBefore
+  - messagesAfter
+  - tokensBeforeEstimate
+  - tokensAfterEstimate
+  - messagesDropped
+  title: contextStats
+  description: |-
+    Before/after accounting for a context operation.
+
+    ``tokens*Estimate`` fields are heuristic (tiktoken BPE over the serialized messages), not an
+    authoritative provider count. ``messages_dropped`` is the net reduction in message count
+    (``messages_before - messages_after``); for compaction the summarized tail is replaced by a
+    single summary message, so this reflects the net change rather than a raw delete count.

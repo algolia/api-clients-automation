@@ -1,41 +1,62 @@
 ToolInvocationV4:
+  description: Model for tool invocation in a Message.
   properties:
     toolCallId:
-      type: string
       title: toolcallid
-    toolName:
       type: string
+    toolName:
       title: toolname
+      type: string
     args:
       additionalProperties: true
-      type: object
       title: args
-    result:
       type: object
-      additionalProperties: true
+    result:
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: 'null'
+      default: null
       title: result
     step:
-      type: integer
+      oneOf:
+      - type: integer
+      - type: 'null'
+      default: null
       title: step
     state:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: state
     providerOptions:
-      additionalProperties: true
-      type: object
+      oneOf:
+      - additionalProperties: true
+        type: object
+      - type: 'null'
+      default: null
       title: provideroptions
     requiresApproval:
-      type: boolean
+      oneOf:
+      - type: boolean
+      - type: 'null'
+      default: null
       title: requiresapproval
     description:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: description
     argsHash:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: argshash
-  type: object
   required:
-    - toolCallId
-    - toolName
+  - toolCallId
+  - toolName
   title: toolInvocationV4
-  description: Model for tool invocation in a Message.
+  type: object

@@ -1,61 +1,61 @@
 get:
   tags:
-    - Agents
+  - Agents
   operationId: listAgents
   x-acl:
-    - settings
+  - settings
   summary: List Agents
   description: List all agents with pagination and filtering.
   parameters:
-    - name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        description: Page number.
-        default: 1
-        title: page
+  - name: page
+    in: query
+    required: false
+    schema:
+      type: integer
+      minimum: 1
       description: Page number.
-    - name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        description: Items per page.
-        default: 10
-        title: limit
+      default: 1
+      title: page
+    description: Page number.
+  - name: limit
+    in: query
+    required: false
+    schema:
+      type: integer
+      minimum: 1
       description: Items per page.
-    - name: providerId
-      in: query
-      required: false
-      schema:
-        oneOf:
-          - type: string
-          - type: 'null'
-        description: Filter by provider id.
-        title: providerid
+      default: 10
+      title: limit
+    description: Items per page.
+  - name: providerId
+    in: query
+    required: false
+    schema:
+      oneOf:
+      - type: string
+      - type: 'null'
       description: Filter by provider id.
+      title: providerid
+    description: Filter by provider id.
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/PaginatedAgentsResponse.yml#/PaginatedAgentsResponse'
+            $ref: ../../common/schemas/PaginatedAgentsResponse.yml#/PaginatedAgentsResponse
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
 post:
   tags:
-    - Agents
+  - Agents
   operationId: createAgent
   x-acl:
-    - editSettings
+  - editSettings
   summary: Create Agent
   description: Create a new agent.
   requestBody:
@@ -63,17 +63,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/AgentConfigCreate.yml#/AgentConfigCreate'
+          $ref: ../../common/schemas/AgentConfigCreate.yml#/AgentConfigCreate
   responses:
     '201':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/AgentWithVersionResponse.yml#/AgentWithVersionResponse'
+            $ref: ../../common/schemas/AgentWithVersionResponse.yml#/AgentWithVersionResponse
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

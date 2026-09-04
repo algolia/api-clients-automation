@@ -1,11 +1,11 @@
 get:
   tags:
-    - Providers
+  - Providers
   operationId: listModels
   x-acl:
-    - settings
+  - settings
   summary: Get Provider Models
-  description: Get Provider Models.
+  description: Get Provider Models
   responses:
     '200':
       description: Successful Response.
@@ -23,4 +23,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

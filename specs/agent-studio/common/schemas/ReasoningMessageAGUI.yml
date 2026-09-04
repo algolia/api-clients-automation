@@ -1,0 +1,23 @@
+ReasoningMessageAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    role:
+      const: reasoning
+      default: reasoning
+      title: role
+      type: string
+    content:
+      title: content
+      type: string
+    encryptedValue:
+      type: string
+      default: null
+      title: encryptedvalue
+  required:
+  - role
+  - id
+  - content
+  title: reasoningMessageAGUI
+  type: object

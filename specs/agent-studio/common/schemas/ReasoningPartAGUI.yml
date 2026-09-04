@@ -1,0 +1,19 @@
+ReasoningPartAGUI:
+  properties:
+    type:
+      const: thinking
+      default: thinking
+      title: type
+      type: string
+    content:
+      title: content
+      type: string
+    stepId:
+      type: string
+      default: null
+      title: stepid
+  required:
+  - type
+  - content
+  title: reasoningPartAGUI
+  type: object

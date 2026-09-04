@@ -1,37 +1,49 @@
 AlgoliaDisplayResultsToolConfig:
+  description: Configuration for the algolia_display_results tool.
   properties:
     name:
-      type: string
       const: algolia_display_results
+      default: algolia_display_results
       title: name
-      default: algolia_display_results
-    type:
       type: string
+    type:
       const: algolia_display_results
-      title: type
       default: algolia_display_results
+      title: type
+      type: string
+    isTerminal:
+      default: false
+      description: When true, a successful tool invocation ends the agent graph (no
+        further LLM turn). Use for chat experiences where the display payload IS the
+        final response. Leave false to let the main LLM produce a concluding assistant
+        message after the tool runs.
+      title: isterminal
+      type: boolean
     minGroups:
-      type: integer
-      minimum: 1.0
-      title: mingroups
       default: 1
+      description: minimum number of result groups.
+      minimum: 1
+      title: mingroups
+      type: integer
     maxGroups:
-      type: integer
-      minimum: 1.0
+      default: 3
+      description: maximum number of result groups.
+      minimum: 1
       title: maxgroups
-      default: 3
+      type: integer
     minResultsPerGroup:
-      type: integer
-      minimum: 1.0
-      title: minresultspergroup
       default: 3
-    maxResultsPerGroup:
+      description: minimum hits per group.
+      minimum: 1
+      title: minresultspergroup
       type: integer
-      minimum: 1.0
-      title: maxresultspergroup
+    maxResultsPerGroup:
       default: 6
-  type: object
+      description: maximum hits per group.
+      minimum: 1
+      title: maxresultspergroup
+      type: integer
   title: algoliaDisplayResultsToolConfig
-  description: Configuration for the algolia_display_results tool.
+  type: object
   required:
-    - type
+  - type

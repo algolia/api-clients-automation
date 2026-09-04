@@ -1,0 +1,15 @@
+ToolConfigOutput:
+  oneOf:
+  - $ref: ClientSideToolConfig.yml#/ClientSideToolConfig
+  - $ref: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+  - $ref: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+  - $ref: McpServerToolConfig.yml#/McpServerToolConfig
+  - $ref: UnknownToolConfig.yml#/UnknownToolConfig
+  discriminator:
+    propertyName: type
+    mapping:
+      algolia_recommend: '#/$defs/AlgoliaRecommendToolConfig'
+      algolia_search_index: '#/$defs/AlgoliaSearchToolConfig'
+      client_side: '#/$defs/ClientSideToolConfig'
+      mcp_tools: '#/$defs/McpServerToolConfig'
+      unknown: '#/$defs/UnknownToolConfig'

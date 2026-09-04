@@ -1,0 +1,28 @@
+GuardrailViolationDataV5:
+  additionalProperties: true
+  description: |-
+    Payload of a persisted ``data-guardrail-violation`` part.
+
+    Mirrors the outbound shape emitted by ``v5/stream.py:_guardrail_violation`` (category,
+    guardrailType, fallbackResponse). Unknown keys are tolerated so a newer client that carries
+    extra violation detail still round-trips without a 422.
+  properties:
+    category:
+      title: category
+      type: string
+    guardrailType:
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
+      title: guardrailtype
+    fallbackResponse:
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
+      title: fallbackresponse
+  required:
+  - category
+  title: guardrailViolationDataV5
+  type: object

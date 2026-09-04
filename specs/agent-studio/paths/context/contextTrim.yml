@@ -1,0 +1,35 @@
+post:
+  tags:
+  - Context
+  operationId: trimContext
+  x-acl:
+  - search
+  summary: Trim Context
+  description: |-
+    Deterministically trim a conversation payload (no LLM calls).
+
+    Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts
+    from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed
+    messages plus before/after stats.
+
+    With no constraints set, the messages are returned unchanged and only the stats are computed -
+    a deliberate, cheap "how big is my context?" probe (no LLM call, no mutation).
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../common/schemas/ContextTrimRequest.yml#/ContextTrimRequest
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/ContextResponse.yml#/ContextResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
