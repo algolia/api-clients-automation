@@ -19,7 +19,10 @@
       "feedbackVote": 1,
       "page": 2,
       "limit": 10,
-      "xAlgoliaSecureUserToken": null
+      "includeImpactAnalytics": true,
+      "clicked": true,
+      "converted": false,
+      "hasAlgoliaSearch": true
     },
     "request": {
       "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
@@ -30,7 +33,11 @@
         "includeFeedback": "true",
         "feedbackVote": "1",
         "page": "2",
-        "limit": "10"
+        "limit": "10",
+        "includeImpactAnalytics": "true",
+        "clicked": "true",
+        "converted": "false",
+        "hasAlgoliaSearch": "true"
       }
     },
     "response": {
