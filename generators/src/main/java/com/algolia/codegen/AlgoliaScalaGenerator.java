@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.ScalaSttpClientCodegen;
+import org.openapitools.codegen.model.EnumVarMap;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
@@ -214,7 +215,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
   }
 
   @Override
-  protected void postProcessEnumVars(List<Map<String, Object>> enumVars) {
+  protected void postProcessEnumVars(List<EnumVarMap> enumVars) {
     Collections.reverse(enumVars);
     enumVars.forEach(v -> {
       String name = (String) v.get("name");
@@ -232,7 +233,7 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     Collections.reverse(enumVars);
   }
 
-  private String getUniqueEnumName(String name, List<Map<String, Object>> enumVars) {
+  private String getUniqueEnumName(String name, List<EnumVarMap> enumVars) {
     long count = enumVars
       .stream()
       .filter(v -> ((String) v.get("name")).equalsIgnoreCase(name))
