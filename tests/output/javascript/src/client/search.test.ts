@@ -283,6 +283,89 @@ describe('api', () => {
       expect(result).toEqual({ message: 'success server response' });
     }
   }, 25000);
+
+  test('retries 429 on the same host using Retry-After', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6698,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/retry-after/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
+  test('retries 429 with a 1s wait when Retry-After is missing', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/missing-header/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
+  test('returns 429 after maxRateLimitRetries is used up', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/test/rate-limit/exhausted/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Too many requests');
+    }
+  }, 25000);
+
+  test('fails on the first 429 when maxRateLimitRetries is 0', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      maxRateLimitRetries: 0,
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/test/rate-limit/zero-retries/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Too many requests');
+    }
+  }, 25000);
 });
 
 describe('commonApi', () => {

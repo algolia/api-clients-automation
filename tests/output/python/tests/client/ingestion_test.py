@@ -20,7 +20,7 @@ class TestIngestionClient:
 
     async def test_api_0(self):
         """
-        can handle HTML error
+        can handle HTML error when rate-limit retries are disabled
         """
 
         _config = IngestionConfig("test-app-id", "test-api-key", "us")
@@ -35,6 +35,7 @@ class TestIngestionClient:
                 )
             ]
         )
+        _config.max_rate_limit_retries = 0
         _client = IngestionClient.create_with_config(config=_config)
         try:
             await _client.custom_get(
@@ -291,7 +292,7 @@ class TestIngestionClientSync:
 
     def test_api_0(self):
         """
-        can handle HTML error
+        can handle HTML error when rate-limit retries are disabled
         """
 
         _config = IngestionConfig("test-app-id", "test-api-key", "us")
@@ -306,6 +307,7 @@ class TestIngestionClientSync:
                 )
             ]
         )
+        _config.max_rate_limit_retries = 0
         _client = IngestionClientSync.create_with_config(config=_config)
         try:
             _client.custom_get(

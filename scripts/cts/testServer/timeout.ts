@@ -112,6 +112,12 @@ function addRoutes(app: express.Express): void {
     res.json({ success: true });
   });
 
+  app.get('/1/test/delayed-headers/:ms', (req, res) => {
+    setTimeout(() => {
+      res.json({ message: 'delayed response' });
+    }, Number(req.params.ms));
+  });
+
   app.get('/1/test/repeated-headers', (req, res) => {
     res.writeEarlyHints({ link: '</style.css>; rel=preload' });
     res.append('Set-Cookie', 'a=1');

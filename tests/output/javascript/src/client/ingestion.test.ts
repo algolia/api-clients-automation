@@ -14,7 +14,7 @@ function createClient() {
 }
 
 describe('api', () => {
-  test('can handle HTML error', async () => {
+  test('can handle HTML error when rate-limit retries are disabled', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key').initIngestion({
       options: {
         hosts: [
@@ -25,6 +25,7 @@ describe('api', () => {
             protocol: 'http',
           },
         ],
+        maxRateLimitRetries: 0,
       },
       // @ts-ignore
       region: 'us',
