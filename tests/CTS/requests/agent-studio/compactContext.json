@@ -1,0 +1,70 @@
+[
+  {
+    "testName": "compactContext with required parameters",
+    "parameters": {
+      "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+      "model": "gpt-4o-mini",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello, how are you?"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/unstable/context/compact",
+      "method": "POST",
+      "body": {
+        "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+        "model": "gpt-4o-mini",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "compactContext with all parameters",
+    "parameters": {
+      "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+      "model": "gpt-4o-mini",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello, how are you?"
+        },
+        {
+          "role": "assistant",
+          "content": "I am well."
+        }
+      ],
+      "keepLastMessages": 2,
+      "instructions": "keep every product reference",
+      "targetTokensEstimate": 128
+    },
+    "request": {
+      "path": "/1/unstable/context/compact",
+      "method": "POST",
+      "body": {
+        "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+        "model": "gpt-4o-mini",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          },
+          {
+            "role": "assistant",
+            "content": "I am well."
+          }
+        ],
+        "keepLastMessages": 2,
+        "instructions": "keep every product reference",
+        "targetTokensEstimate": 128
+      }
+    }
+  }
+]
