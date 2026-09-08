@@ -5,6 +5,7 @@ post:
   x-acl:
     - search
   x-streaming: true
+  x-codegen-request-body-name: agentCompletionRequest
   summary: Create Completion
   description: |-
     Create a completion for the specified agent.
