@@ -1,0 +1,24 @@
+{{> licenseInfo}}
+package com.algolia.client.dsl.generated
+
+import com.algolia.client.dsl.AlgoliaDsl
+import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.model.search.*
+import kotlinx.serialization.json.*
+
+{{#dslModels}}
+@AlgoliaDsl
+@AlgoliaExperimentalDsl
+public class {{classname}}Builder {
+{{#vars}}
+  public var {{{name}}}: {{> data_class_field_type}}{{#required}}{{#isNullable}}? = null{{/isNullable}}{{/required}}{{^required}}? = null{{/required}}
+{{/vars}}
+
+  internal fun build(): {{classname}} = {{classname}}(
+{{#vars}}
+    {{{name}}} = {{{name}}},
+{{/vars}}
+  )
+}
+
+{{/dslModels}}

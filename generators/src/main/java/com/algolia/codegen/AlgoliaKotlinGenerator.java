@@ -18,6 +18,10 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
+  private static final Set<String> SEARCH_DSL_MODELS = Collections.unmodifiableSet(
+    new LinkedHashSet<>(Arrays.asList("SearchParamsObject", "IndexSettings", "BrowseParamsObject", "DeleteByParams", "ConsequenceParams"))
+  );
+
   @Override
   public String getName() {
     return "algolia-kotlin";
@@ -113,6 +117,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("ApiClient.kt.mustache", apiFolder, "ApiClient.kt"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
+
+    if ("search".equals(client)) {
+      final String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
+      supportingFiles.add(new SupportingFile("dsl.mustache", dslFolder, "SearchDsl.kt"));
+    }
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
@@ -220,7 +229,33 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
+    collectSearchDslModels(models);
     return models;
+  }
+
+  private void collectSearchDslModels(Map<String, ModelsMap> models) {
+    if (!"search".equals(additionalProperties.get("client"))) {
+      return;
+    }
+
+    Map<String, CodegenModel> byClassname = new HashMap<>();
+    for (ModelsMap modelContainer : models.values()) {
+      CodegenModel model = modelContainer.getModels().get(0).getModel();
+      byClassname.put(model.classname, model);
+    }
+
+    List<Map<String, Object>> dslModels = new ArrayList<>();
+    for (String classname : SEARCH_DSL_MODELS) {
+      CodegenModel model = byClassname.get(classname);
+      if (model == null) {
+        continue;
+      }
+      Map<String, Object> dslModel = new LinkedHashMap<>();
+      dslModel.put("classname", model.classname);
+      dslModel.put("vars", model.vars);
+      dslModels.add(dslModel);
+    }
+    additionalProperties.put("dslModels", dslModels);
   }
 
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
