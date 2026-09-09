@@ -18,10 +18,6 @@ import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
-  private static final Set<String> SEARCH_DSL_MODELS = Collections.unmodifiableSet(
-    new LinkedHashSet<>(Arrays.asList("SearchParamsObject", "IndexSettings", "BrowseParamsObject", "DeleteByParams", "ConsequenceParams"))
-  );
-
   @Override
   public String getName() {
     return "algolia-kotlin";
@@ -229,33 +225,52 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
-    collectSearchDslModels(models);
     return models;
   }
 
-  private void collectSearchDslModels(Map<String, ModelsMap> models) {
+  private void collectSearchDslModels(OperationsMap operations, List<ModelMap> allModels) {
     if (!"search".equals(additionalProperties.get("client"))) {
       return;
     }
 
-    Map<String, CodegenModel> byClassname = new HashMap<>();
-    for (ModelsMap modelContainer : models.values()) {
-      CodegenModel model = modelContainer.getModels().get(0).getModel();
-      byClassname.put(model.classname, model);
-    }
-
-    List<Map<String, Object>> dslModels = new ArrayList<>();
-    for (String classname : SEARCH_DSL_MODELS) {
-      CodegenModel model = byClassname.get(classname);
-      if (model == null) {
+    Set<String> orphans = new HashSet<>(ModelPruner.getOrphanModelNames(this, operations, allModels));
+    List<CodegenModel> objectModels = new ArrayList<>();
+    for (ModelMap modelMap : allModels) {
+      CodegenModel model = modelMap.getModel();
+      if (orphans.contains(toModelName(model.name))) {
         continue;
       }
+      if (isSearchDslObjectModel(model)) {
+        objectModels.add(model);
+      }
+    }
+    objectModels.sort(Comparator.comparing(model -> model.classname));
+
+    List<Map<String, Object>> dslModels = new ArrayList<>();
+    for (CodegenModel model : objectModels) {
       Map<String, Object> dslModel = new LinkedHashMap<>();
       dslModel.put("classname", model.classname);
       dslModel.put("vars", model.vars);
       dslModels.add(dslModel);
     }
     additionalProperties.put("dslModels", dslModels);
+  }
+
+  /**
+   * Object models get a builder. OneOf wrappers (FacetFilters, SearchParams) and enums do not: they
+   * have no constructor fields to assign.
+   */
+  private static boolean isSearchDslObjectModel(CodegenModel model) {
+    if (model.isEnum) {
+      return false;
+    }
+    if (Boolean.TRUE.equals(model.vendorExtensions.get("x-is-one-of"))) {
+      return false;
+    }
+    if (Boolean.TRUE.equals(model.vendorExtensions.get("x-map-parent"))) {
+      return false;
+    }
+    return model.vars != null && !model.vars.isEmpty();
   }
 
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
@@ -308,6 +323,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
     ModelPruner.removeOrphanModelFiles(this, operations, models);
+    collectSearchDslModels(operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
