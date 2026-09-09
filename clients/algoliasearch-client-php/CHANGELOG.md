@@ -1,5 +1,7 @@
 ## [4.49.0](https://github.com/algolia/algoliasearch-client-php/compare/4.48.0...4.49.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
 - [1b54a3d020](https://github.com/algolia/api-clients-automation/commit/1b54a3d020) feat(php): Request-ID and Correlation-ID support ([#6911](https://github.com/algolia/api-clients-automation/pull/6911)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)

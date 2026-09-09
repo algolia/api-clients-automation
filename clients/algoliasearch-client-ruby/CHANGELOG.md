@@ -1,5 +1,7 @@
 ## [3.45.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.44.0...3.45.0)
 
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
 - [c974374aff](https://github.com/algolia/api-clients-automation/commit/c974374aff) feat(ruby): Request-ID and Correlation-ID support ([#6877](https://github.com/algolia/api-clients-automation/pull/6877)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
 - [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
