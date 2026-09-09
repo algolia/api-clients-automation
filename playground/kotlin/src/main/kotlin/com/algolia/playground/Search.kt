@@ -3,6 +3,8 @@ package com.algolia.playground
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.CompressionType
+import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.searchSingleIndex
 import com.algolia.client.model.search.SearchForHits
 import com.algolia.client.model.search.SearchMethodParams
 import com.algolia.client.model.search.SearchResponse
@@ -10,6 +12,7 @@ import io.github.cdimascio.dotenv.Dotenv
 import io.ktor.client.plugins.logging.*
 import kotlin.system.exitProcess
 
+@OptIn(AlgoliaExperimentalDsl::class)
 suspend fun main() {
     val dotenv = Dotenv.configure().directory("../").load()
 
@@ -33,6 +36,12 @@ suspend fun main() {
     val result = searchResponses.results[0] as SearchResponse
     val hits = result.hits
     println(hits)
+
+    // search index (DSL)
+    val dslResult = client.searchSingleIndex(indexName) {
+        query = "a"
+    }
+    println(dslResult.hits)
 
     exitProcess(0)
 }

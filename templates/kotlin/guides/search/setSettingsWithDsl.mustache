@@ -1,0 +1,22 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+suspend fun setSettingsWithDsl() {
+  {{> snippets/init}}
+
+  val settings = settings {
+    searchableAttributes {
+      ordered("name")
+      unordered("description")
+    }
+    attributesForFaceting {
+      +"brand"
+      filterOnly("internalSku")
+      searchable("category")
+    }
+  }
+
+  client.{{#dynamicSnippet}}setSettings{{/dynamicSnippet}}
+}
