@@ -1,0 +1,17 @@
+{{> snippets/import}}
+import com.algolia.client.model.search.*
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+suspend fun searchWithDslFilters() {
+  {{> snippets/init}}
+
+  val searchParams = query("<YOUR_SEARCH_QUERY>") {
+    filters {
+      facet("brand", "Apple")
+      range("price", 0, 100)
+    }
+  }
+
+  client.{{#dynamicSnippet}}searchWithSearchParams{{/dynamicSnippet}}
+}

@@ -68,3 +68,16 @@ Now that we are certain the tmp index exist:
 #### 4. move tmp index
 
 Move the tmp index to the source index, call `waitTask` on the tmp index.
+
+## Kotlin DSL
+
+The Kotlin Search client ships an optional, experimental DSL. The DSL is not source compatible with the v2 client. The DSL covers Search only.
+
+- `client/src/commonMain/kotlin/com/algolia/client/dsl/**` is hand-written.
+- `dsl/generated/**` is generated.
+
+The generated half is one Search file only: `SearchDsl.kt`.
+
+The generator emits builders for field lists (`SearchParamsObject`, `IndexSettings`, and the other allow-listed Search models). Filter algebra, rules, and synonyms stay hand-written.
+
+Do not emit a DSL for Insights, Analytics, or Recommend.
