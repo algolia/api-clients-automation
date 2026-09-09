@@ -1,5 +1,4 @@
 DataPartV5:
-  additionalProperties: true
   description: AI SDK v5 transient data part whose type is prefixed with data-.
   properties:
     type:
