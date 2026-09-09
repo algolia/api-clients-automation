@@ -6,7 +6,7 @@
 - [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
 - [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
-- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
 - [808f5ebcea](https://github.com/algolia/api-clients-automation/commit/808f5ebcea) fix(ruby): keep millisecond precision when converting timeouts to seconds ([#6946](https://github.com/algolia/api-clients-automation/pull/6946)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
 
 ## [3.44.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.43.0...3.44.0)

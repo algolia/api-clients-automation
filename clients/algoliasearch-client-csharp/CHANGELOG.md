@@ -5,7 +5,7 @@
 - [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
 - [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
 - [5672474ec5](https://github.com/algolia/api-clients-automation/commit/5672474ec5) fix(specs): remove plan restriction from Analytics API description ([#6955](https://github.com/algolia/api-clients-automation/pull/6955)) by [@kai687](https://github.com/kai687/)
-- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
 - [797f33137d](https://github.com/algolia/api-clients-automation/commit/797f33137d) fix(csharp): restore ReadTimeout enforcement dropped in 7.37.0 ([#6949](https://github.com/algolia/api-clients-automation/pull/6949)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
 
 ## [7.48.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.47.0...7.48.0)
