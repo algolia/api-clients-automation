@@ -98,6 +98,7 @@ export const patterns = [
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/BuildConfig.kt',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/**',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
+  'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/dsl/generated/**',
 
   '!tests/output/kotlin/src/commonTest/kotlin/com/algolia/utils/TestHelpers.kt',
 
