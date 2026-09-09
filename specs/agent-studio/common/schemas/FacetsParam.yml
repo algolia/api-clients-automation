@@ -1,17 +1,18 @@
 FacetsParam:
+  description: A facets parameter that is always hidden from the LLM.
   properties:
     exposed:
-      type: boolean
       const: false
-      title: exposed
       default: false
+      title: exposed
+      type: boolean
     default:
       oneOf:
-        - items:
-            type: string
-          type: array
-        - type: 'null'
+      - items:
+          type: string
+        type: array
+      - type: 'null'
+      default: null
       title: default
-  type: object
   title: facetsParam
-  description: A facets parameter that is always hidden from the LLM.
+  type: object

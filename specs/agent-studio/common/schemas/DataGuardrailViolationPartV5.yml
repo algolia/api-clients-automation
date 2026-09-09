@@ -1,0 +1,21 @@
+DataGuardrailViolationPartV5:
+  description: |-
+    A persisted ``data-guardrail-violation`` part echoed back by an AI SDK v5 client.
+
+    The v5 stream emits this part on a blocked input turn (``v5/stream.py:_guardrail_violation``)
+    *without* ``transient: true`` - unlike the usage data parts, which set it - so v5 clients persist
+    it on the assistant message and echo it on the next request. Parsing it lets the stateless
+    completions path recover the blocked verdict (``Message.guardrail``) that DB-backed history
+    carries natively: the activation switch for sticky block replay on the completions path.
+  properties:
+    type:
+      const: data-guardrail-violation
+      default: data-guardrail-violation
+      title: type
+      type: string
+    data:
+      $ref: GuardrailViolationDataV5.yml#/GuardrailViolationDataV5
+  required:
+  - data
+  title: dataGuardrailViolationPartV5
+  type: object

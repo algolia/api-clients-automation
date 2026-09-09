@@ -1,9 +1,9 @@
 post:
   tags:
-    - Feedback
+  - Feedback
   operationId: createFeedback
   x-acl:
-    - search
+  - search
   summary: Create Feedback
   description: Create new feedback entry.
   requestBody:
@@ -11,17 +11,44 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/FeedbackCreationRequest.yml#/FeedbackCreationRequest'
+          $ref: ../../common/schemas/FeedbackCreationRequest.yml#/FeedbackCreationRequest
   responses:
     '201':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/FeedbackResponse.yml#/FeedbackResponse'
+            $ref: ../../common/schemas/FeedbackResponse.yml#/FeedbackResponse
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+patch:
+  tags:
+  - Feedback
+  operationId: updateFeedback
+  x-acl:
+  - search
+  summary: Update Feedback
+  description: Update an existing feedback entry.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../common/schemas/FeedbackUpdateRequest.yml#/FeedbackUpdateRequest
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/FeedbackResponse.yml#/FeedbackResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

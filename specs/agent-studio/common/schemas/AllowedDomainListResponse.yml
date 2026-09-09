@@ -2,11 +2,11 @@ AllowedDomainListResponse:
   properties:
     domains:
       items:
-        $ref: 'AllowedDomainResponse.yml#/AllowedDomainResponse'
+        $ref: AllowedDomainResponse.yml#/AllowedDomainResponse
       type: array
       title: domains
   type: object
   required:
-    - domains
+  - domains
   title: allowedDomainListResponse
   description: List of allowed domains for an application.

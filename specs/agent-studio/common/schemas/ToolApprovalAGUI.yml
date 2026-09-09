@@ -1,0 +1,17 @@
+ToolApprovalAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    needsApproval:
+      title: needsapproval
+      type: boolean
+    approved:
+      type: boolean
+      default: null
+      title: approved
+  required:
+  - id
+  - needsApproval
+  title: toolApprovalAGUI
+  type: object

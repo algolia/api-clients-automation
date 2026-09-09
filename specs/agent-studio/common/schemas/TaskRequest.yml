@@ -1,0 +1,32 @@
+TaskRequest:
+  properties:
+    task:
+      type: string
+      maxLength: 64
+      minLength: 3
+      title: task
+      description: ID of the configured task to run.
+      examples:
+      - algolia_on_page_suggestions
+    kind:
+      $ref: TaskKind.yml#/TaskKind
+    input:
+      title: input
+      description: Arbitrary JSON input passed to the task as data.
+      examples:
+      - pageType: pdp
+        title: acmePhone128Gb
+    configuration:
+      $ref: AgentTestConfiguration.yml#/AgentTestConfiguration
+  additionalProperties: false
+  type: object
+  required:
+  - input
+  title: taskRequest
+  description: |-
+    Strict request body with a task selector, `input`, and dashboard-only `configuration`.
+
+    Unknown top-level fields are rejected so clients cannot pass trusted
+    configuration fields (prompts, schemas, providers, models, generation
+    settings) at runtime. `configuration` is only accepted for `agentId=test`
+    dashboard requests and is rejected for real agents.

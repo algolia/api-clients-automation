@@ -1,0 +1,17 @@
+ToolConfigAgentTestConfiguration:
+  oneOf:
+  - $ref: ClientSideToolConfig.yml#/ClientSideToolConfig
+  - $ref: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+  - $ref: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+  - $ref: AlgoliaDisplayResultsToolConfig.yml#/AlgoliaDisplayResultsToolConfig
+  - $ref: McpServerToolConfig.yml#/McpServerToolConfig
+  - $ref: UnknownToolConfig.yml#/UnknownToolConfig
+  discriminator:
+    mapping:
+      algolia_display_results: AlgoliaDisplayResultsToolConfig.yml#/AlgoliaDisplayResultsToolConfig
+      algolia_recommend: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+      algolia_search_index: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+      client_side: ClientSideToolConfig.yml#/ClientSideToolConfig
+      mcp_tools: McpServerToolConfig.yml#/McpServerToolConfig
+      unknown: UnknownToolConfig.yml#/UnknownToolConfig
+    propertyName: type

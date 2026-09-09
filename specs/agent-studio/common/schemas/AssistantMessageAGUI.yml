@@ -1,0 +1,47 @@
+AssistantMessageAGUI:
+  description: |-
+    An official AG-UI assistant message or a TanStack ``UIMessage`` extension.
+
+    Standard AG-UI represents text through ``content`` and tool calls through ``toolCalls``.
+    TanStack sends those fields alongside its authoritative ``parts`` array. A populated ``parts``
+    array takes precedence during conversion, preventing the redundant fields from duplicating
+    history. Unknown vendor fields are intentionally ignored, matching the other AG-UI message
+    variants; TanStack, for example, attaches its own ``metadata`` object.
+  properties:
+    id:
+      title: id
+      type: string
+    role:
+      const: assistant
+      default: assistant
+      title: role
+      type: string
+    content:
+      type: string
+      default: null
+      title: content
+    name:
+      type: string
+      default: null
+      title: name
+    toolCalls:
+      $ref: ToolCallsUnion.yml#/ToolCallsUnion
+    encryptedContent:
+      type: string
+      default: null
+      title: encryptedcontent
+    parts:
+      items:
+        $ref: MessagePartAssistantMessageAGUI.yml#/MessagePartAssistantMessageAGUI
+      type: array
+      default: null
+      title: parts
+    createdAt:
+      type: string
+      default: null
+      title: createdat
+  required:
+  - role
+  - id
+  title: assistantMessageAGUI
+  type: object

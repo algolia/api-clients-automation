@@ -1,0 +1,25 @@
+DataPartV5:
+  additionalProperties: true
+  description: |-
+    AI SDK v5 transient data part (``type`` prefixed with ``data-``).
+
+    We emit these on the streamed assistant response (e.g. ``data-suggestions`` from
+    `v5/stream.py:_suggestions_data`, plus ``data-tool-approval``, ``data-*-usage``, etc.).
+    The client echoes the whole assistant message back as history on the next turn, so the
+    inbound schema must tolerate them or the entire request 422s. They carry UI payload only
+    (not model context) and are dropped on conversion to internal messages.
+  properties:
+    type:
+      title: type
+      type: string
+    data:
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: 'null'
+      default: null
+      title: data
+  required:
+  - type
+  title: dataPartV5
+  type: object

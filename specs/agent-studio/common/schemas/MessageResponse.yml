@@ -7,10 +7,10 @@ MessageResponse:
       type: string
       title: conversationid
     role:
-      $ref: 'MessageRole.yml#/MessageRole'
+      $ref: MessageRole.yml#/MessageRole
     parts:
       items:
-        $ref: 'MessagePart.yml#/MessagePart'
+        $ref: MessagePart.yml#/MessagePart
       type: array
       title: parts
     createdAt:
@@ -21,33 +21,65 @@ MessageResponse:
       title: updatedat
     model:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: model
     inputTokens:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: inputtokens
     outputTokens:
       oneOf:
-        - type: integer
-        - type: 'null'
+      - type: integer
+      - type: 'null'
       title: outputtokens
+    reasoningTokens:
+      oneOf:
+      - type: integer
+      - type: 'null'
+      title: reasoningtokens
+    inputTokenDetails:
+      oneOf:
+      - additionalProperties:
+          type: integer
+        type: object
+      - type: 'null'
+      title: inputtokendetails
+    outputTokenDetails:
+      oneOf:
+      - additionalProperties:
+          type: integer
+        type: object
+      - type: 'null'
+      title: outputtokendetails
+    isCacheHit:
+      oneOf:
+      - type: boolean
+      - type: 'null'
+      title: iscachehit
     turnContext:
       oneOf:
-        - additionalProperties:
-            type: string
-          type: object
-        - type: 'null'
+      - additionalProperties: true
+        type: object
+      - type: 'null'
       title: turncontext
+    events:
+      items:
+        $ref: MessageEvent.yml#/MessageEvent
+      type: array
+      title: events
+    guardrail:
+      oneOf:
+      - $ref: GuardrailOutcome.yml#/GuardrailOutcome
+      - type: 'null'
   type: object
   required:
-    - id
-    - conversationId
-    - role
-    - parts
-    - createdAt
-    - updatedAt
+  - id
+  - conversationId
+  - role
+  - parts
+  - createdAt
+  - updatedAt
   title: messageResponse
   description: Response model for a message.

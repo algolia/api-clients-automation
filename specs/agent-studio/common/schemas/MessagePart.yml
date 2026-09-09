@@ -1,12 +1,12 @@
 MessagePart:
   oneOf:
-    - $ref: 'TextPart.yml#/TextPart'
-    - $ref: 'ToolCallPart.yml#/ToolCallPart'
-    - $ref: 'ToolResultPart.yml#/ToolResultPart'
-    - $ref: 'StartPart.yml#/StartPart'
-    - $ref: 'StartStepPart.yml#/StartStepPart'
-    - $ref: 'ReasoningPart.yml#/ReasoningPart'
-    - $ref: 'ToolApprovalRequestPart.yml#/ToolApprovalRequestPart'
+  - $ref: TextPart.yml#/TextPart
+  - $ref: ToolCallPart.yml#/ToolCallPart
+  - $ref: ToolResultPart.yml#/ToolResultPart
+  - $ref: StartPart.yml#/StartPart
+  - $ref: StartStepPart.yml#/StartStepPart
+  - $ref: ReasoningPart.yml#/ReasoningPart
+  - $ref: ToolApprovalRequestPart.yml#/ToolApprovalRequestPart
   discriminator:
     propertyName: type
     mapping:

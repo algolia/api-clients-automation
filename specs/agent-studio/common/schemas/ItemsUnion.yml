@@ -1,0 +1,13 @@
+ItemsUnion:
+  oneOf:
+  - $ref: UserMessageAGUI.yml#/UserMessageAGUI
+  - $ref: AssistantMessageAGUI.yml#/AssistantMessageAGUI
+  - $ref: ToolMessageAGUI.yml#/ToolMessageAGUI
+  - $ref: ReasoningMessageAGUI.yml#/ReasoningMessageAGUI
+  discriminator:
+    mapping:
+      assistant: AssistantMessageAGUI.yml#/AssistantMessageAGUI
+      reasoning: ReasoningMessageAGUI.yml#/ReasoningMessageAGUI
+      tool: ToolMessageAGUI.yml#/ToolMessageAGUI
+      user: UserMessageAGUI.yml#/UserMessageAGUI
+    propertyName: role

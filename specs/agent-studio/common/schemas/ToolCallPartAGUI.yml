@@ -1,0 +1,34 @@
+ToolCallPartAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    type:
+      const: tool-call
+      default: tool-call
+      title: type
+      type: string
+    name:
+      title: name
+      type: string
+    arguments:
+      title: arguments
+      type: string
+    state:
+      title: state
+      type: string
+    output:
+      type: object
+      additionalProperties: true
+      default: null
+      title: output
+    approval:
+      $ref: ToolApprovalAGUI.yml#/ToolApprovalAGUI
+  required:
+  - type
+  - id
+  - name
+  - arguments
+  - state
+  title: toolCallPartAGUI
+  type: object

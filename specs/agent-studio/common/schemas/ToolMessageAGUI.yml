@@ -1,0 +1,31 @@
+ToolMessageAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    role:
+      const: tool
+      default: tool
+      title: role
+      type: string
+    content:
+      title: content
+      type: string
+    toolCallId:
+      title: toolcallid
+      type: string
+    error:
+      type: string
+      default: null
+      title: error
+    encryptedValue:
+      type: string
+      default: null
+      title: encryptedvalue
+  required:
+  - role
+  - id
+  - content
+  - toolCallId
+  title: toolMessageAGUI
+  type: object
