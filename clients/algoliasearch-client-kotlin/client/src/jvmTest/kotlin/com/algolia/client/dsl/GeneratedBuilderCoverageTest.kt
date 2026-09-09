@@ -2,16 +2,8 @@
 
 package com.algolia.client.dsl
 
-import com.algolia.client.dsl.generated.BrowseParamsObjectBuilder
-import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
-import com.algolia.client.dsl.generated.DeleteByParamsBuilder
-import com.algolia.client.dsl.generated.IndexSettingsBuilder
 import com.algolia.client.dsl.generated.SearchParamsObjectBuilder
-import com.algolia.client.model.search.BrowseParamsObject
-import com.algolia.client.model.search.ConsequenceParams
-import com.algolia.client.model.search.DeleteByParams
-import com.algolia.client.model.search.IndexSettings
-import com.algolia.client.model.search.SearchParamsObject
+import java.io.File
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
 import kotlin.test.Test
@@ -19,7 +11,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Drift guard between generated DSL builders and their allow-listed model constructors.
+ * Drift guard between generated DSL builders and their model constructors.
  *
  * Do not assert that an empty builder serializes to `{}`. Client Json omits default nulls
  * (`encodeDefaults` is off), so a builder that forgot a new spec field also serializes to `{}`.
@@ -29,7 +21,8 @@ import kotlin.test.assertTrue
  * field fails compilation because `build()` still passes every builder `var` into the model
  * constructor.
  *
- * Regenerating `SearchDsl.kt` updates the builder; this test needs no edit.
+ * Regenerating `SearchDsl.kt` updates the builder set; this test discovers every `*Builder` in
+ * `com.algolia.client.dsl.generated`.
  *
  * Placed under `jvmTest` because constructor and `var` lookup needs JVM [Class] reflection.
  * `kotlin.reflect.full` (`memberProperties` / `primaryConstructor`) is not on the test classpath.
@@ -37,28 +30,32 @@ import kotlin.test.assertTrue
 internal class GeneratedBuilderCoverageTest {
 
   @Test
-  fun searchParamsObjectBuilderMatchesConstructor() {
-    assertBuilderVarsMatchConstructor(SearchParamsObjectBuilder::class, SearchParamsObject::class)
+  fun allGeneratedBuildersMatchConstructors() {
+    val builders = generatedBuilderClasses()
+    assertTrue(builders.isNotEmpty(), "expected generated builders on the classpath")
+    for (builder in builders) {
+      val modelName = builder.simpleName.removeSuffix("Builder")
+      val model = Class.forName("com.algolia.client.model.search.$modelName").kotlin
+      assertBuilderVarsMatchConstructor(builder.kotlin, model)
+    }
   }
 
-  @Test
-  fun indexSettingsBuilderMatchesConstructor() {
-    assertBuilderVarsMatchConstructor(IndexSettingsBuilder::class, IndexSettings::class)
-  }
-
-  @Test
-  fun browseParamsObjectBuilderMatchesConstructor() {
-    assertBuilderVarsMatchConstructor(BrowseParamsObjectBuilder::class, BrowseParamsObject::class)
-  }
-
-  @Test
-  fun deleteByParamsBuilderMatchesConstructor() {
-    assertBuilderVarsMatchConstructor(DeleteByParamsBuilder::class, DeleteByParams::class)
-  }
-
-  @Test
-  fun consequenceParamsBuilderMatchesConstructor() {
-    assertBuilderVarsMatchConstructor(ConsequenceParamsBuilder::class, ConsequenceParams::class)
+  private fun generatedBuilderClasses(): List<Class<*>> {
+    val root =
+      File(SearchParamsObjectBuilder::class.java.protectionDomain.codeSource.location.toURI())
+    val prefix = "com/algolia/client/dsl/generated/"
+    return root
+      .walkTopDown()
+      .filter { file ->
+        file.isFile && file.name.endsWith("Builder.class") && file.path.contains(prefix)
+      }
+      .map { file ->
+        val qualified =
+          file.relativeTo(root).path.removeSuffix(".class").replace(File.separatorChar, '.')
+        Class.forName(qualified)
+      }
+      .sortedBy { it.simpleName }
+      .toList()
   }
 
   private fun assertBuilderVarsMatchConstructor(builder: KClass<*>, model: KClass<*>) {

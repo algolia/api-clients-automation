@@ -3,9 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
-import com.algolia.client.dsl.rule.filters
-import com.algolia.client.dsl.rule.query
-import com.algolia.client.dsl.rule.rule
+import com.algolia.client.dsl.rule.*
 import com.algolia.client.dsl.synonym.altCorrection1
 import com.algolia.client.dsl.synonym.altCorrection2
 import com.algolia.client.dsl.synonym.oneWaySynonym

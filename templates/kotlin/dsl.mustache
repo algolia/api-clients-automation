@@ -11,12 +11,12 @@ import kotlinx.serialization.json.*
 @AlgoliaExperimentalDsl
 public class {{classname}}Builder {
 {{#vars}}
-  public var {{{name}}}: {{> data_class_field_type}}{{#required}}{{#isNullable}}? = null{{/isNullable}}{{/required}}{{^required}}? = null{{/required}}
+  public var {{{name}}}: {{> data_class_field_type}}? = null
 {{/vars}}
 
   internal fun build(): {{classname}} = {{classname}}(
 {{#vars}}
-    {{{name}}} = {{{name}}},
+    {{{name}}} = {{#required}}{{^isNullable}}requireNotNull({{{name}}}) { "{{classname}}.{{{name}}} is required" }{{/isNullable}}{{#isNullable}}{{{name}}}{{/isNullable}}{{/required}}{{^required}}{{{name}}}{{/required}},
 {{/vars}}
   )
 }
