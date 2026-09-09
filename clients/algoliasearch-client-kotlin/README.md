@@ -49,6 +49,56 @@ Alternatively, you can use [algoliasearch-client-kotlin-bom](/client-bom).
 
 For full documentation, visit the **[Algolia Kotlin API Client](https://www.algolia.com/doc/libraries/sdk/install#kotlin)**.
 
+## Optional Kotlin DSL
+
+The client includes an optional Kotlin DSL for search parameters and index settings. The DSL is optional, experimental on the first 3.x minor (`@OptIn(AlgoliaExperimentalDsl::class)`), and is not source compatible with version 2. Data-class constructors stay supported.
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val params = query {
+  query = "shoes"
+  filters { facet("brand", "Apple") }
+}
+```
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val indexSettings = settings {
+  searchableAttributes {
+    ordered("name")
+    unordered("description")
+  }
+}
+```
+
+### Migrating from version 2
+
+Map version 2 types to version 3 types:
+
+- `Query` → `SearchParamsObject` via `query { }`
+- `Settings` → `IndexSettings` via `settings { }`
+- `Attribute` → `String`
+- `initIndex` is gone. Pass the index name to the client method.
+- `index.search { }` → `client.searchSingleIndex(indexName) { }`
+
+`SearchClient.search` is multi-query. Use `searchSingleIndex` for a single index.
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val response = client.searchSingleIndex("products") {
+  query = "shoes"
+  filters { facet("brand", "Apple") }
+}
+```
+
+See the [Kotlin upgrade guide](https://www.algolia.com/doc/libraries/sdk/upgrade/kotlin).
+
 ## ❓ Troubleshooting
 
 Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://support.algolia.com/hc/sections/15061037630609-API-Client-FAQs) where you will find answers for the most common issues and gotchas with the client.
