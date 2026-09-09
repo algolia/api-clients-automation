@@ -6,27 +6,25 @@ import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.dsl.filter.FilterDsl
 import com.algolia.client.dsl.filter.filters as buildFilters
+import com.algolia.client.dsl.generated.ConditionBuilder
+import com.algolia.client.dsl.generated.ConsequenceBuilder
 import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
-import com.algolia.client.model.search.Anchoring
+import com.algolia.client.dsl.generated.RuleBuilder
 import com.algolia.client.model.search.Condition
 import com.algolia.client.model.search.Consequence
 import com.algolia.client.model.search.ConsequenceHide
-import com.algolia.client.model.search.ConsequenceParams
 import com.algolia.client.model.search.ConsequenceQuery
 import com.algolia.client.model.search.ConsequenceRedirect
 import com.algolia.client.model.search.Promote
 import com.algolia.client.model.search.PromoteObjectID
 import com.algolia.client.model.search.PromoteObjectIDs
 import com.algolia.client.model.search.Rule
-import com.algolia.client.model.search.TimeRange
-import kotlinx.serialization.json.JsonObject
 
 /**
- * Constructs a [Rule] from the DSL block.
+ * Constructs a [Rule] from the generated [RuleBuilder].
  *
- * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. Last write wins: a later
- * assignment or `condition { }` / `consequence { }` / `conditions { }` call replaces an earlier
- * value for the same field. An omitted [consequence] becomes an empty [Consequence].
+ * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. An omitted [consequence]
+ * becomes an empty [Consequence]. Last write wins on each builder property.
  *
  * ```
  * val built =
@@ -46,145 +44,52 @@ import kotlinx.serialization.json.JsonObject
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun rule(block: RuleDsl.() -> Unit): Rule = RuleDsl().apply(block).build()
+public fun rule(block: RuleBuilder.() -> Unit): Rule =
+  RuleBuilder().apply(block).apply { if (consequence == null) consequence = Consequence() }.build()
 
 /**
  * Constructs a [Rule] with [objectID] already set.
  *
- * The [block] may overwrite [RuleDsl.objectID]. Last write wins.
+ * The [block] may overwrite [RuleBuilder.objectID]. Last write wins.
  *
  * ```
  * val built = rule("promo-iphone") { consequence { hide("object-9") } }
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun rule(objectID: String, block: RuleDsl.() -> Unit = {}): Rule =
-  RuleDsl()
-    .apply {
-      this.objectID = objectID
-      block()
-    }
-    .build()
-
-/** Builds a [Rule] with [condition] and [consequence] blocks. */
-@AlgoliaDsl
-@AlgoliaExperimentalDsl
-public class RuleDsl {
-  /** Unique identifier of the rule. Required. */
-  public var objectID: String? = null
-
-  /** Description of the rule's purpose. */
-  public var description: String? = null
-
-  /** Whether the rule is active. */
-  public var enabled: Boolean? = null
-
-  /** Rule scope. */
-  public var scope: String? = null
-
-  /** Tags attached to the rule. */
-  public var tags: List<String>? = null
-
-  /** Single condition that triggers the rule. Last write wins versus [condition]. */
-  public var condition: Condition? = null
-
-  /** Conditions that trigger the rule. Last write wins versus [conditions]. */
-  public var conditions: List<Condition>? = null
-
-  /** Effect of the rule. Last write wins versus [consequence]. */
-  public var consequence: Consequence? = null
-
-  /** Time periods when the rule is active. */
-  public var validity: List<TimeRange>? = null
-
-  /**
-   * Sets [condition] from a [ConditionDsl] block.
-   *
-   * Last write wins: this replaces any earlier [condition] value.
-   */
-  public fun condition(block: ConditionDsl.() -> Unit) {
-    condition = ConditionDsl().apply(block).build()
-  }
-
-  /**
-   * Sets [conditions] from a [ConditionsDsl] block.
-   *
-   * Last write wins: this replaces any earlier [conditions] value.
-   */
-  public fun conditions(block: ConditionsDsl.() -> Unit) {
-    conditions = ConditionsDsl().apply(block).build()
-  }
-
-  /**
-   * Sets [consequence] from a [ConsequenceDsl] block.
-   *
-   * Last write wins: this replaces any earlier [consequence] value.
-   */
-  public fun consequence(block: ConsequenceDsl.() -> Unit) {
-    consequence = ConsequenceDsl().apply(block).build()
-  }
-
-  internal fun build(): Rule {
-    val id = objectID
-    require(!id.isNullOrEmpty()) { "rule { } requires objectID" }
-    return Rule(
-      objectID = id,
-      consequence = consequence ?: Consequence(),
-      conditions = conditions,
-      description = description,
-      enabled = enabled,
-      validity = validity,
-      tags = tags,
-      scope = scope,
-      condition = condition,
-    )
-  }
+public fun rule(objectID: String, block: RuleBuilder.() -> Unit = {}): Rule = rule {
+  this.objectID = objectID
+  block()
 }
 
-/** Builds a [Condition] that triggers a [Rule]. */
-@AlgoliaDsl
+/**
+ * Sets [RuleBuilder.condition] from a [ConditionBuilder] block.
+ *
+ * Last write wins: this replaces any earlier [RuleBuilder.condition] value.
+ */
 @AlgoliaExperimentalDsl
-public class ConditionDsl {
-  /**
-   * Query pattern that triggers the rule. A literal string, or `{facet:ATTRIBUTE}` from
-   * [facetPattern].
-   */
-  public var pattern: String? = null
+public fun RuleBuilder.condition(block: ConditionBuilder.() -> Unit) {
+  condition = ConditionBuilder().apply(block).build()
+}
 
-  /** Which part of the query [pattern] must match. */
-  public var anchoring: Anchoring? = null
+/**
+ * Sets [RuleBuilder.conditions] from a [ConditionsDsl] block.
+ *
+ * Last write wins: this replaces any earlier [RuleBuilder.conditions] value.
+ */
+@AlgoliaExperimentalDsl
+public fun RuleBuilder.conditions(block: ConditionsDsl.() -> Unit) {
+  conditions = ConditionsDsl().apply(block).build()
+}
 
-  /** Whether the pattern should match plurals, synonyms, and typos. */
-  public var alternatives: Boolean? = null
-
-  /** Extra restriction that must match `ruleContexts`. */
-  public var context: String? = null
-
-  /** Filters that trigger the rule, as a SQL string. Last write wins versus [filters]. */
-  public var filters: String? = null
-
-  /** Sets [pattern] to `{facet:ATTRIBUTE}` for [attribute]. */
-  public fun facetPattern(attribute: String) {
-    pattern = "{facet:$attribute}"
-  }
-
-  /**
-   * Sets [filters] from a typed filter block as a SQL string.
-   *
-   * Last write wins: this replaces any earlier [filters] value.
-   */
-  public fun filters(block: FilterDsl.() -> Unit) {
-    filters = buildFilters(block).asSql()
-  }
-
-  internal fun build(): Condition =
-    Condition(
-      pattern = pattern,
-      anchoring = anchoring,
-      alternatives = alternatives,
-      context = context,
-      filters = filters,
-    )
+/**
+ * Sets [RuleBuilder.consequence] from a [ConsequenceBuilder] block.
+ *
+ * Last write wins: this replaces any earlier [RuleBuilder.consequence] value.
+ */
+@AlgoliaExperimentalDsl
+public fun RuleBuilder.consequence(block: ConsequenceBuilder.() -> Unit) {
+  consequence = ConsequenceBuilder().apply(block).build()
 }
 
 /** Builds a [List] of [Condition] values. */
@@ -194,8 +99,8 @@ public class ConditionsDsl {
   private val values: MutableList<Condition> = mutableListOf()
 
   /** Adds a [Condition] from [block]. */
-  public fun condition(block: ConditionDsl.() -> Unit) {
-    values += ConditionDsl().apply(block).build()
+  public fun condition(block: ConditionBuilder.() -> Unit) {
+    values += ConditionBuilder().apply(block).build()
   }
 
   /** Adds [this] condition. */
@@ -206,75 +111,58 @@ public class ConditionsDsl {
   internal fun build(): List<Condition> = values.toList()
 }
 
-/** Builds a [Consequence] for a [Rule]. */
-@AlgoliaDsl
+/** Sets [ConditionBuilder.pattern] to `{facet:ATTRIBUTE}` for [attribute]. */
 @AlgoliaExperimentalDsl
-public class ConsequenceDsl {
-  /**
-   * Query parameters applied by the rule. Last write wins versus [params].
-   *
-   * Assign a ready [ConsequenceParams], or build one with [params].
-   */
-  public var params: ConsequenceParams? = null
+public fun ConditionBuilder.facetPattern(attribute: String) {
+  pattern = "{facet:$attribute}"
+}
 
-  /** Promoted records. [promote] appends. Assigning this property replaces the list. */
-  public var promote: List<Promote>? = null
+/**
+ * Sets [ConditionBuilder.filters] from a typed filter block as a SQL string.
+ *
+ * Last write wins: this replaces any earlier `filters` value.
+ */
+@AlgoliaExperimentalDsl
+public fun ConditionBuilder.filters(block: FilterDsl.() -> Unit) {
+  filters = buildFilters(block).asSql()
+}
 
-  /** Whether promoted records must also match active filters. */
-  public var filterPromotes: Boolean? = null
+/**
+ * Sets [ConsequenceBuilder.params] from the generated [ConsequenceParamsBuilder].
+ *
+ * Last write wins: this replaces any earlier [ConsequenceBuilder.params] value.
+ */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.params(block: ConsequenceParamsBuilder.() -> Unit) {
+  params = ConsequenceParamsBuilder().apply(block).build()
+}
 
-  /** Hidden records. [hide] appends. Assigning this property replaces the list. */
-  public var hide: List<ConsequenceHide>? = null
+/** Appends a single-record promotion at [position]. */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.promote(objectID: String, position: Int) {
+  promote = (promote ?: emptyList()) + Promote.of(PromoteObjectID(objectID, position))
+}
 
-  /** Redirect to a virtual replica. Last write wins versus [redirect]. */
-  public var redirect: ConsequenceRedirect? = null
+/** Appends a group promotion of [objectIDs] at [position]. */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.promote(objectIDs: List<String>, position: Int) {
+  promote = (promote ?: emptyList()) + Promote.of(PromoteObjectIDs(objectIDs, position))
+}
 
-  /** Custom data appended to the response `userData` array. */
-  public var userData: JsonObject? = null
+/** Appends a hidden record. */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.hide(objectID: String) {
+  hide = (hide ?: emptyList()) + ConsequenceHide(objectID)
+}
 
-  /**
-   * Sets [params] from the generated [ConsequenceParamsBuilder].
-   *
-   * Last write wins: this replaces any earlier [params] value. Use [filters] and the other filter
-   * helpers on the builder for typed filter blocks.
-   */
-  public fun params(block: ConsequenceParamsBuilder.() -> Unit) {
-    params = ConsequenceParamsBuilder().apply(block).build()
-  }
-
-  /** Appends a single-record promotion at [position]. */
-  public fun promote(objectID: String, position: Int) {
-    promote = (promote ?: emptyList()) + Promote.of(PromoteObjectID(objectID, position))
-  }
-
-  /** Appends a group promotion of [objectIDs] at [position]. */
-  public fun promote(objectIDs: List<String>, position: Int) {
-    promote = (promote ?: emptyList()) + Promote.of(PromoteObjectIDs(objectIDs, position))
-  }
-
-  /** Appends a hidden record. */
-  public fun hide(objectID: String) {
-    hide = (hide ?: emptyList()) + ConsequenceHide(objectID)
-  }
-
-  /**
-   * Sets [redirect] to [indexName].
-   *
-   * Last write wins: this replaces any earlier [redirect] value.
-   */
-  public fun redirect(indexName: String) {
-    redirect = ConsequenceRedirect(indexName)
-  }
-
-  internal fun build(): Consequence =
-    Consequence(
-      params = params,
-      promote = promote,
-      filterPromotes = filterPromotes,
-      hide = hide,
-      redirect = redirect,
-      userData = userData,
-    )
+/**
+ * Sets [ConsequenceBuilder.redirect] to [indexName].
+ *
+ * Last write wins: this replaces any earlier [ConsequenceBuilder.redirect] value.
+ */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.redirect(indexName: String) {
+  redirect = ConsequenceRedirect(indexName)
 }
 
 /**
