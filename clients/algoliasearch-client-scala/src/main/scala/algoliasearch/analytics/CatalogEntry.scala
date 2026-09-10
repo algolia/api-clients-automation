@@ -37,7 +37,7 @@ package algoliasearch.analytics
   * @param roots
   *   Root stages the field depends on. Two fields are combinable in one query only when their roots intersect.
   * @param requires
-  *   Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
+  *   Public ACL identifiers required to read the field, for example `revenueAnalyticsEnabled`.
   */
 case class CatalogEntry(
     kind: String,
