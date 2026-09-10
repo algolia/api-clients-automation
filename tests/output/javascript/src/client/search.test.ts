@@ -27,7 +27,7 @@ describe('accountCopyIndex', () => {
     });
 
     {
-      const result = await client.accountCopyIndex({
+      await client.accountCopyIndex({
         sourceIndexName: 'cts_e2e_account_copy_index_source_javascript',
         destinationAppID: 'test-app-id-destination',
         destinationApiKey: 'test-api-key-destination',
