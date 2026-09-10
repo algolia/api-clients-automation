@@ -12,6 +12,7 @@ final class AddABTestsRequest {
   /// Returns a new [AddABTestsRequest] instance.
   const AddABTestsRequest({
     required this.name,
+    this.hypothesis,
     required this.variants,
     required this.metrics,
     this.configuration,
@@ -21,6 +22,10 @@ final class AddABTestsRequest {
   /// A/B test name.
   @JsonKey(name: r'name')
   final String name;
+
+  /// Expected outcome of the A/B test.
+  @JsonKey(name: r'hypothesis')
+  final String? hypothesis;
 
   /// A/B test variants.
   /// One of types:
@@ -45,6 +50,7 @@ final class AddABTestsRequest {
       identical(this, other) ||
       other is AddABTestsRequest &&
           other.name == name &&
+          other.hypothesis == hypothesis &&
           other.variants == variants &&
           other.metrics == metrics &&
           other.configuration == configuration &&
@@ -53,6 +59,7 @@ final class AddABTestsRequest {
   @override
   int get hashCode =>
       name.hashCode +
+      hypothesis.hashCode +
       variants.hashCode +
       metrics.hashCode +
       configuration.hashCode +

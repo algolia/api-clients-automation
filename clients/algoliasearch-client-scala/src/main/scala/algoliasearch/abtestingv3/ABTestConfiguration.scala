@@ -23,7 +23,9 @@
   */
 package algoliasearch.abtestingv3
 
+import algoliasearch.abtestingv3.AnalysisMethod._
 import algoliasearch.abtestingv3.ErrorCorrectionType._
+import algoliasearch.abtestingv3.PrimaryMetric._
 
 /** A/B test configuration.
   *
@@ -33,5 +35,7 @@ import algoliasearch.abtestingv3.ErrorCorrectionType._
 case class ABTestConfiguration(
     minimumDetectableEffect: Option[MinimumDetectableEffect] = scala.None,
     filters: Option[Seq[MetricsFilter]] = scala.None,
-    errorCorrection: Option[ErrorCorrectionType] = scala.None
+    errorCorrection: Option[ErrorCorrectionType] = scala.None,
+    method: Option[AnalysisMethod] = scala.None,
+    primaryMetric: Option[PrimaryMetric] = scala.None
 )

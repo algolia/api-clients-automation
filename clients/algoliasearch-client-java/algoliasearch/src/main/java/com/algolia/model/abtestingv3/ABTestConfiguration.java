@@ -21,6 +21,12 @@ public class ABTestConfiguration {
   @JsonProperty("errorCorrection")
   private ErrorCorrectionType errorCorrection;
 
+  @JsonProperty("method")
+  private AnalysisMethod method;
+
+  @JsonProperty("primaryMetric")
+  private PrimaryMetric primaryMetric;
+
   public ABTestConfiguration setMinimumDetectableEffect(MinimumDetectableEffect minimumDetectableEffect) {
     this.minimumDetectableEffect = minimumDetectableEffect;
     return this;
@@ -62,6 +68,28 @@ public class ABTestConfiguration {
     return errorCorrection;
   }
 
+  public ABTestConfiguration setMethod(AnalysisMethod method) {
+    this.method = method;
+    return this;
+  }
+
+  /** Get method */
+  @javax.annotation.Nullable
+  public AnalysisMethod getMethod() {
+    return method;
+  }
+
+  public ABTestConfiguration setPrimaryMetric(PrimaryMetric primaryMetric) {
+    this.primaryMetric = primaryMetric;
+    return this;
+  }
+
+  /** Get primaryMetric */
+  @javax.annotation.Nullable
+  public PrimaryMetric getPrimaryMetric() {
+    return primaryMetric;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -74,13 +102,15 @@ public class ABTestConfiguration {
     return (
       Objects.equals(this.minimumDetectableEffect, abTestConfiguration.minimumDetectableEffect) &&
       Objects.equals(this.filters, abTestConfiguration.filters) &&
-      Objects.equals(this.errorCorrection, abTestConfiguration.errorCorrection)
+      Objects.equals(this.errorCorrection, abTestConfiguration.errorCorrection) &&
+      Objects.equals(this.method, abTestConfiguration.method) &&
+      Objects.equals(this.primaryMetric, abTestConfiguration.primaryMetric)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(minimumDetectableEffect, filters, errorCorrection);
+    return Objects.hash(minimumDetectableEffect, filters, errorCorrection, method, primaryMetric);
   }
 
   @Override
@@ -90,6 +120,8 @@ public class ABTestConfiguration {
     sb.append("    minimumDetectableEffect: ").append(toIndentedString(minimumDetectableEffect)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("    errorCorrection: ").append(toIndentedString(errorCorrection)).append("\n");
+    sb.append("    method: ").append(toIndentedString(method)).append("\n");
+    sb.append("    primaryMetric: ").append(toIndentedString(primaryMetric)).append("\n");
     sb.append("}");
     return sb.toString();
   }

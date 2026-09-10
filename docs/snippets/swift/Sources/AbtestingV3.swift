@@ -37,6 +37,20 @@ final class AbtestingV3ClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the applyVariantSettings method.
+    ///
+    /// applyVariantSettings
+    func snippetForApplyVariantSettings() async throws {
+        // >SEPARATOR applyVariantSettings default
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.applyVariantSettings(id: 42, variantId: 2)
+        // >LOG
+        // SEPARATOR<
+    }
+
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
@@ -470,6 +484,22 @@ final class AbtestingV3ClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getABTestSettings method.
+    ///
+    /// getABTestSettings
+    func snippetForGetABTestSettings() async throws {
+        // >SEPARATOR getABTestSettings default
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getABTestSettings(id: 42)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the getTimeseries method.
     ///
     /// getTimeseries
@@ -521,6 +551,38 @@ final class AbtestingV3ClientSnippet {
         // >LOG
         // print the response
         print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveVariantSettings method.
+    ///
+    /// saveVariantSettings
+    func snippetForSaveVariantSettings() async throws {
+        // >SEPARATOR saveVariantSettings saveVariantSettings
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.saveVariantSettings(
+            id: 42,
+            variantId: 2,
+            saveSettingsRequest: SaveSettingsRequest(saveFeaturesSettings: true)
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveVariantSettings method.
+    ///
+    /// save settings with an empty options object
+    func snippetForSaveVariantSettings1() async throws {
+        // >SEPARATOR saveVariantSettings save settings with an empty options object
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.saveVariantSettings(id: 42, variantId: 2, saveSettingsRequest: SaveSettingsRequest())
+        // >LOG
         // SEPARATOR<
     }
 
