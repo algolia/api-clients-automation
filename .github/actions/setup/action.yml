@@ -19,7 +19,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -60,14 +60,15 @@ runs:
     # Dart
     - name: Install dart
       if: ${{ inputs.language == 'dart' }}
-      uses: dart-lang/setup-dart@65eb853c7ba17dde3be364c3d2858773e7144260 # v1.7.2
+      uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
       with:
         sdk: ${{ inputs.version }}
+        problem-matcher: 'false'
 
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
       shell: bash
-      run: dart pub global activate melos 8.6.0
+      run: dart pub global activate melos
 
     # Golang
     - name: Install golang
@@ -132,7 +133,7 @@ runs:
     - name: Install poetry
       if: ${{ inputs.language == 'python' }}
       shell: bash
-      run: pipx install poetry==2.4.2
+      run: pipx install poetry==2
 
     - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       if: ${{ inputs.language == 'python' }}
@@ -166,9 +167,7 @@ runs:
     # Scala
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
-      uses: sbt/setup-sbt@8feba82adc7f01ddcf8165b86f778bdb5b82cebc # v1.5.7
-      with:
-        sbt-runner-version: 2.0.6
+      uses: sbt/setup-sbt@c7d2d6258b4bd0d3ec5129e6b3453199d3c79729 # v1.5.8
 
     # Swift deps
     - name: Install swift
@@ -193,8 +192,8 @@ runs:
       id: swiftformat-version
       shell: bash
       run: |
-        echo "SWIFTFORMAT_VERSION=0.62.1" >> $GITHUB_OUTPUT
-        echo "SWIFTFORMAT_SHA=2226e9d89bf05a604cc985bab3dccb44ff7c8ee3" >> $GITHUB_OUTPUT
+        echo "SWIFTFORMAT_VERSION=0.63.0" >> $GITHUB_OUTPUT
+        echo "SWIFTFORMAT_SHA=0256422f1a5e967c68dc923f1905c0a155dca188" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}

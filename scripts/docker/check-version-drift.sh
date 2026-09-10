@@ -119,7 +119,8 @@ check() {
   fi
 }
 
-# exact x.y.z pins only; skip a pair when action.yml still has a floating install
+# the checksummed downloads must point at the same release in both files, otherwise one
+# side's checksum silently covers a different artifact than the other
 check_shared_pin() {
   local name=$1
   local regex=$2
@@ -159,14 +160,11 @@ check Dockerfile.swift swift .swift-version
 check_digest Dockerfile.base composer
 check_digest Dockerfile.swift ghcr.io/nicklockwood/swiftformat
 
-check_shared_pin melos 'dart pub global activate melos ([0-9]+\.[0-9]+\.[0-9]+)'
-check_shared_pin poetry 'pipx install poetry==([0-9]+\.[0-9]+\.[0-9]+)'
 check_shared_pin golangci-lint 'golangci-lint/v([0-9]+\.[0-9]+\.[0-9]+)/install\.sh'
 check_shared_pin google-java-format 'google-java-format/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/'
 check_shared_pin rubyfmt 'rubyfmt/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/' scripts/docker/Dockerfile.ruby
 # the ARG that used to keep these two in one renovate manager is gone, and the docker tag and
 # the CI source build now resolve from different datasources, so compare them explicitly
-check_shared_pin sbt 'sbt-runner-version: ([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.base 'sdk install sbt ([0-9]+\.[0-9]+\.[0-9]+)'
 check_shared_pin swiftformat 'SWIFTFORMAT_VERSION=([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.swift 'swiftformat:([0-9]+\.[0-9]+\.[0-9]+)@'
 
 exit $fail

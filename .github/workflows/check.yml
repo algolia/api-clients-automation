@@ -76,6 +76,20 @@ jobs:
         shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
+      - name: Compute the docker image matrix
+        id: docker-matrix
+        shell: bash
+        env:
+          BASE_CHANGED: ${{ steps.diff.outputs.DOCKER_BASE_CHANGED }}
+          RUBY_CHANGED: ${{ steps.diff.outputs.DOCKER_RUBY_CHANGED }}
+          SWIFT_CHANGED: ${{ steps.diff.outputs.DOCKER_SWIFT_CHANGED }}
+        run: |
+          images=()
+          if [[ "${BASE_CHANGED:-0}" -gt 0 ]]; then images+=(base); fi
+          if [[ "${RUBY_CHANGED:-0}" -gt 0 ]]; then images+=(ruby); fi
+          if [[ "${SWIFT_CHANGED:-0}" -gt 0 ]]; then images+=(swift); fi
+          echo "DOCKER_IMAGES=$(printf '%s\n' "${images[@]+"${images[@]}"}" | jq -Rsc 'split("\n") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
+
       - name: Compute the client codegen matrix
         id: gen-matrix
         shell: bash
@@ -126,6 +140,8 @@ jobs:
       RUN_WEBSITE: ${{ steps.diff.outputs.WEBSITE_CHANGED > 0 }}
 
       RUN_DOCKER: ${{ steps.diff.outputs.DOCKER_CHANGED > 0 }}
+
+      DOCKER_IMAGES: ${{ steps.docker-matrix.outputs.DOCKER_IMAGES }}
 
       SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
@@ -742,18 +758,19 @@ jobs:
 
   # yarn docker:setup is the only consumer of these images; a version bump that
   # leaves a stale checksum is invisible to the tag drift check and to every
-  # other CI job, so build them when scripts/docker/ changes
+  # other CI job, so build the ones whose own inputs changed. the `!= '[]'` guard
+  # matters: an empty matrix is an error rather than a skipped job
   docker_images:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     needs: setup
-    if: ${{ needs.setup.outputs.RUN_DOCKER == 'true' }}
+    if: ${{ needs.setup.outputs.DOCKER_IMAGES != '[]' }}
     permissions:
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        image: [base, ruby, swift]
+        image: ${{ fromJSON(needs.setup.outputs.DOCKER_IMAGES) }}
     name: docker ${{ matrix.image }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
