@@ -76,8 +76,8 @@ The Kotlin Search client ships an optional, experimental DSL. The DSL is not sou
 - `client/src/commonMain/kotlin/com/algolia/client/dsl/**` is hand-written.
 - `dsl/generated/**` is generated.
 
-The generated half is one Search file only: `SearchDsl.kt`.
+The generated half is one Kotlin file per Search object-model builder (`SearchParamsObjectBuilder.kt`, `RuleBuilder.kt`, and the rest).
 
-The generator emits builders for field lists (`SearchParamsObject`, `IndexSettings`, and the other allow-listed Search models). Filter algebra, rules, and synonyms stay hand-written.
+The generator emits a builder for every Search object model that survives ModelPruner. It skips enums, oneOf wrappers, and map parents. Filter algebra stays hand-written. Rules and synonyms use the generated builders.
 
 Do not emit a DSL for Insights, Analytics, or Recommend.

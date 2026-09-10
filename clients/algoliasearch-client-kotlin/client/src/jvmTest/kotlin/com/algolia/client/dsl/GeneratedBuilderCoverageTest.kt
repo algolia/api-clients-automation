@@ -21,8 +21,8 @@ import kotlin.test.assertTrue
  * field fails compilation because `build()` still passes every builder `var` into the model
  * constructor.
  *
- * Regenerating `SearchDsl.kt` updates the builder set; this test discovers every `*Builder` in
- * `com.algolia.client.dsl.generated`.
+ * Regenerating the per-model builder files updates the builder set; this test discovers every class
+ * named `SomethingBuilder` in `com.algolia.client.dsl.generated`.
  *
  * Placed under `jvmTest` because constructor and `var` lookup needs JVM [Class] reflection.
  * `kotlin.reflect.full` (`memberProperties` / `primaryConstructor`) is not on the test classpath.
