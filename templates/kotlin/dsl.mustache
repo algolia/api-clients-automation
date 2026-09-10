@@ -6,7 +6,6 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.model.search.*
 import kotlinx.serialization.json.*
 
-{{#dslModels}}
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
 public class {{classname}}Builder {
@@ -20,5 +19,3 @@ public class {{classname}}Builder {
 {{/vars}}
   )
 }
-
-{{/dslModels}}
