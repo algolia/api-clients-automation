@@ -21,6 +21,7 @@ public class RateLimitRetryTests
   [InlineData("abc", 1)]
   [InlineData("2", 2)]
   [InlineData(" 3 ", 3)]
+  [InlineData("007", 7)]
   public void ParseRetryAfter_UsesPositiveWholeSecondsOrFallsBackToOne(
     string header,
     int expectedSeconds
@@ -33,6 +34,17 @@ public class RateLimitRetryTests
     }
 
     Assert.Equal(TimeSpan.FromSeconds(expectedSeconds), RetryAfter.Parse(headers));
+  }
+
+  [Theory]
+  [InlineData("2147484")]
+  [InlineData("99999999999999999999999999")]
+  public void ParseRetryAfter_CapsAtTheLongestDelayTaskDelayAccepts(string header)
+  {
+    var headers = new Dictionary<string, string> { { "Retry-After", header } };
+    var wait = RetryAfter.Parse(headers);
+
+    Assert.Equal(TimeSpan.FromMilliseconds(int.MaxValue), wait);
   }
 
   [Fact]

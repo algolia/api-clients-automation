@@ -10,11 +10,13 @@ namespace Algolia.Search.Transport;
 internal static class RetryAfter
 {
   private static readonly TimeSpan DefaultWait = TimeSpan.FromSeconds(1);
+  private static readonly TimeSpan MaxDelay = TimeSpan.FromMilliseconds(int.MaxValue);
   private static readonly Regex WholeSeconds = new("^[0-9]+$", RegexOptions.Compiled);
 
   /// <summary>
   /// Honors Retry-After only as a positive whole number of seconds.
-  /// Missing, empty, 0, HTTP-date, and junk values wait 1 second.
+  /// Missing, empty, 0, HTTP-date, and junk values wait 1 second. Values beyond what
+  /// <see cref="System.Threading.Tasks.Task.Delay(TimeSpan)"/> accepts wait its maximum.
   /// </summary>
   public static TimeSpan Parse(IDictionary<string, string> headers)
   {
@@ -38,18 +40,17 @@ internal static class RetryAfter
       return DefaultWait;
     }
 
-    if (!long.TryParse(raw, out var seconds) || seconds <= 0)
+    raw = raw.TrimStart('0');
+    if (raw.Length == 0)
     {
       return DefaultWait;
     }
 
-    try
+    if (!long.TryParse(raw, out var seconds) || seconds > MaxDelay.TotalSeconds)
     {
-      return TimeSpan.FromSeconds(seconds);
+      return MaxDelay;
     }
-    catch (OverflowException)
-    {
-      return TimeSpan.MaxValue;
-    }
+
+    return TimeSpan.FromSeconds(seconds);
   }
 }
