@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
 FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
-FROM mcr.microsoft.com/dotnet/sdk:10.0.400@sha256:e1ffd2a92ae84c1291bc1b6887501f8af98e6331e7af6d4c8d37168c5e87a64c AS csharp-builder
-FROM golang:1.27.0-alpine@sha256:4c9fe60190a2a3350ddc51de80d0224b8a6698d12bdfc999fee45ea9d6c46dbc AS go-builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0.400@sha256:4beef5b8919dcaa2dc924233bd069257e883cc7a061e09088a97d152d6a48510 AS csharp-builder
+FROM golang:1.27.1-alpine@sha256:cf6fca6641884b8433441b2b0652976f975e1d0fdd26d177eaaf8596087f3125 AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
 FROM composer:2.10.2@sha256:d020706319701a44468968321dccd0fce6620190159a7a9ec195d78e6e971c71 AS composer-builder
-FROM php:8.5.9-trixie@sha256:0e17ef0527f296b85bfe4cfb5219b29cafc37224857ed73d28628ea142930ac8 AS builder
+FROM php:8.5.10-trixie@sha256:9ebdf4c28ab12c02085e171c31e22ac5f7bbb6a9f6927e3bc3dfe7ee23df51e0 AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
