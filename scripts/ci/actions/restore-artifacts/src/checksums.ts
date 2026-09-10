@@ -8,8 +8,9 @@ import * as core from '@actions/core';
 export function parseExpectedChecksums(lines: string[]): Map<string, string> {
   const checksums = new Map<string, string>();
   for (const line of lines) {
-    const [sha, name] = line.trim().split(/\s+/);
-    if (!sha || !name || !/^[0-9a-f]{64}$/.test(sha)) {
+    const fields = line.trim().split(/\s+/);
+    const [sha, name] = fields;
+    if (fields.length !== 2 || !sha || !name || !/^[0-9a-f]{64}$/.test(sha)) {
       throw new Error(
         `Malformed expected-checksums line '${line}', the producing job's checksum output is probably missing`,
       );

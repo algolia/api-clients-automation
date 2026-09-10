@@ -1,4 +1,4 @@
-import type { Artifact, DownloadArtifactOptions, DownloadArtifactResponse, FindOptions } from '@actions/artifact';
+import type { Artifact, DownloadArtifactResponse } from '@actions/artifact';
 import { DefaultArtifactClient } from '@actions/artifact';
 import * as core from '@actions/core';
 import { exec } from '@actions/exec';
@@ -7,18 +7,14 @@ import * as io from '@actions/io';
 import type { Verification } from './checksums.ts';
 import { parseExpectedChecksums, verifyChecksum, warnAboutUnverified } from './checksums.ts';
 
-async function download(
-  client: DefaultArtifactClient,
-  artifactID: number,
-  options?: DownloadArtifactOptions & FindOptions,
-): Promise<DownloadArtifactResponse> {
+async function download(client: DefaultArtifactClient, artifactID: number): Promise<DownloadArtifactResponse> {
   try {
-    return await client.downloadArtifact(artifactID, options);
+    return await client.downloadArtifact(artifactID);
   } catch {
     try {
-      return await client.downloadArtifact(artifactID, options);
+      return await client.downloadArtifact(artifactID);
     } catch {
-      return await client.downloadArtifact(artifactID, options);
+      return await client.downloadArtifact(artifactID);
     }
   }
 }

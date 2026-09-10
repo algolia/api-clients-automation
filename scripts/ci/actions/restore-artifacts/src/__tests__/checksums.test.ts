@@ -63,6 +63,12 @@ describe('parseExpectedChecksums', () => {
   it('fails closed on a truncated sha', () => {
     expect(() => parseExpectedChecksums([`${'a'.repeat(63)} specs`])).toThrow(/Malformed expected-checksums line/);
   });
+
+  it('fails closed on extra fields instead of dropping them', () => {
+    expect(() => parseExpectedChecksums([`${PAYLOAD_SHA} specs clients-javascript`])).toThrow(
+      /Malformed expected-checksums line/,
+    );
+  });
 });
 
 describe('sha256', () => {
