@@ -3,6 +3,7 @@ package transport
 import (
 	"context"
 	"fmt"
+	"math"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -15,6 +16,9 @@ const (
 	// when Configuration.MaxRateLimitRetries is nil.
 	DefaultMaxRateLimitRetries = 3
 	defaultRateLimitWait       = time.Second
+	// maxRateLimitWait is the longest wait a time.Duration can hold; larger
+	// Retry-After values would otherwise overflow and fire immediately.
+	maxRateLimitWait = time.Duration(math.MaxInt64)
 )
 
 var retryAfterDigits = regexp.MustCompile(`^\d+$`)
@@ -25,9 +29,18 @@ func parseRetryAfter(header http.Header) time.Duration {
 		return defaultRateLimitWait
 	}
 
-	seconds, err := strconv.Atoi(raw)
-	if err != nil || seconds <= 0 {
+	seconds, err := strconv.ParseInt(raw, 10, 64)
+	if err != nil {
+		// Digits only reach this point, so the value does not fit in an int64.
+		return maxRateLimitWait
+	}
+
+	if seconds <= 0 {
 		return defaultRateLimitWait
+	}
+
+	if seconds > int64(maxRateLimitWait/time.Second) {
+		return maxRateLimitWait
 	}
 
 	return time.Duration(seconds) * time.Second

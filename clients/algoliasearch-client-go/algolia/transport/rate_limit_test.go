@@ -26,6 +26,9 @@ func TestParseRetryAfter(t *testing.T) {
 		{name: "http-date", header: http.Header{"Retry-After": []string{"Wed, 21 Oct 2015 07:28:00 GMT"}}, want: time.Second},
 		{name: "case-insensitive", header: http.Header{"retry-after": []string{"3"}}, want: 3 * time.Second},
 		{name: "trimmed", header: http.Header{"Retry-After": []string{" 4 "}}, want: 4 * time.Second},
+		{name: "leading zeros", header: http.Header{"Retry-After": []string{"007"}}, want: 7 * time.Second},
+		{name: "too large for a Duration", header: http.Header{"Retry-After": []string{"10000000000"}}, want: maxRateLimitWait},
+		{name: "does not fit in int64", header: http.Header{"Retry-After": []string{"99999999999999999999"}}, want: maxRateLimitWait},
 	}
 
 	for _, tt := range tests {

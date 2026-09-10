@@ -64,6 +64,7 @@ HTTP 429 is not a host-failover case. The JavaScript, Python, and Go transporter
 
 - [429 wait/retry on the JavaScript transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-common/src/transporter/createTransporter.ts)
 - [429 wait/retry on the Python transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-python/algoliasearch/http/transporter.py)
+- [429 wait/retry on the Go transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-go/algolia/transport/transport.go)
 - [Host failover on the PHP client](https://github.com/algolia/api-clients-automation/tree/main/clients/algoliasearch-client-php/lib/RetryStrategy)
 
 ### Different client hosts
