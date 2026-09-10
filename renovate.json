@@ -291,32 +291,6 @@
       ],
       "depNameTemplate": "nicklockwood/SwiftFormat",
       "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "description": "Update melos",
-      "managerFilePatterns": [
-        "/Dockerfile/",
-        "/.github/actions/setup/action.yml/"
-      ],
-      "matchStrings": [
-        "dart pub global activate melos (?<currentValue>[0-9.]+)"
-      ],
-      "depNameTemplate": "melos",
-      "datasourceTemplate": "dart"
-    },
-    {
-      "customType": "regex",
-      "description": "Update poetry",
-      "managerFilePatterns": [
-        "/Dockerfile/",
-        "/.github/actions/setup/action.yml/"
-      ],
-      "matchStrings": [
-        "pipx install poetry==(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
-      ],
-      "depNameTemplate": "poetry",
-      "datasourceTemplate": "pypi"
     }
   ],
   "github-actions": {

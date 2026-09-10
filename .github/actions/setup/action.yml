@@ -68,7 +68,7 @@ runs:
     - name: Setup dart tools
       if: ${{ inputs.language == 'dart' }}
       shell: bash
-      run: dart pub global activate melos 8.6.0
+      run: dart pub global activate melos
 
     # Golang
     - name: Install golang
@@ -133,7 +133,7 @@ runs:
     - name: Install poetry
       if: ${{ inputs.language == 'python' }}
       shell: bash
-      run: pipx install poetry==2.4.2
+      run: pipx install poetry==2
 
     - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       if: ${{ inputs.language == 'python' }}
@@ -168,8 +168,6 @@ runs:
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
       uses: sbt/setup-sbt@c7d2d6258b4bd0d3ec5129e6b3453199d3c79729 # v1.5.8
-      with:
-        sbt-runner-version: 2.0.6
 
     # Swift deps
     - name: Install swift
