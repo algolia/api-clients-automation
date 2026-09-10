@@ -1,0 +1,49 @@
+post:
+  tags:
+    - abtest
+  operationId: saveVariantSettings
+  x-acl:
+    - analytics
+    - editSettings
+  summary: Capture a variant's settings and stop the A/B test
+  description: |
+    Captures the settings of the given variant and of the control, then stops the A/B test.
+
+    The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.
+
+    The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.
+
+    Settings can only be captured once per A/B test. A second request returns `409`.
+
+    `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+    - $ref: '../common/parameters.yml#/VariantID'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../common/schemas/ABTestSettings.yml#/SaveSettingsRequest'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+    '409':
+      $ref: '../../common/responses/Conflict.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'

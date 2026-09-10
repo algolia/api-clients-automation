@@ -99,6 +99,12 @@ paths:
     $ref: 'paths/estimate.yml'
   /3/abtests/{id}/timeseries:
     $ref: 'paths/timeseries.yml'
+  /3/abtests/{id}/settings:
+    $ref: 'paths/settings.yml'
+  /3/abtests/{id}/settings/{variantId}:
+    $ref: 'paths/variantSettings.yml'
+  /3/abtests/{id}/settings/{variantId}/apply:
+    $ref: 'paths/applyVariantSettings.yml'
 
   # ###############
   # ### Helpers ###
