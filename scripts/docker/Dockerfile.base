@@ -24,7 +24,7 @@ RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh https://raw.githubusercontent.co
   && nvm install \
   && npm install -g yarn
 
-# SDKMAN, the installer is vendored (get.sdkman.io serves a mutable script), it still downloads the sdkman-cli archive itself
+# SDKMAN, the installer is vendored (get.sdkman.io serves a mutable script) and verifies the sha256 of the archives it downloads
 ARG JAVA_VERSION
 COPY scripts/docker/sdkman-install.sh /tmp/sdkman-install.sh
 RUN bash /tmp/sdkman-install.sh && rm /tmp/sdkman-install.sh

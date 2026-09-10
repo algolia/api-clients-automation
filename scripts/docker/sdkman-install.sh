@@ -61,6 +61,28 @@ export SDKMAN_SERVICE="https://api.sdkman.io/2"
 export SDKMAN_VERSION="5.23.0"
 export SDKMAN_NATIVE_VERSION="0.7.34"
 
+# vendored addition: the broker redirects to the sdkman GitHub release assets, which are immutable per
+# version, so the archives are pinned here and verified after download. The cli zip is the same for
+# every platform, the native zip is per platform. Refresh with scripts/docker/update-pins.sh after a bump.
+export SDKMAN_CLI_SHA256="7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
+declare -A SDKMAN_NATIVE_SHA256=(
+	[linuxx64]="d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
+	[linuxarm64]="79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
+)
+
+function verify_sha256() {
+	local file=$1
+	local expected=$2
+	if [[ -z "$expected" ]]; then
+		echo "No pinned sha256 for the ${SDKMAN_PLATFORM} archive, add it to scripts/docker/sdkman-install.sh (scripts/docker/update-pins.sh prints it)"
+		exit 1
+	fi
+	if ! echo "${expected}  ${file}" | sha256sum -c - >/dev/null; then
+		echo "sha256 mismatch for ${file}, expected ${expected}"
+		exit 1
+	fi
+}
+
 if [ -z "$SDKMAN_DIR" ]; then
     SDKMAN_DIR="$HOME/.sdkman"
     SDKMAN_DIR_RAW='$HOME/.sdkman'
@@ -415,6 +437,7 @@ echo "Installing script cli archive..."
 sdkman_zip_file="${sdkman_tmp_folder}/sdkman-${SDKMAN_VERSION}.zip"
 echo "* Downloading..."
 curl --fail --location --progress-bar "${SDKMAN_SERVICE}/broker/download/sdkman/install/${SDKMAN_VERSION}/${SDKMAN_PLATFORM}" > "$sdkman_zip_file"
+verify_sha256 "$sdkman_zip_file" "$SDKMAN_CLI_SHA256"
 
 # check integrity
 echo "* Checking archive integrity..."
@@ -458,6 +481,7 @@ echo "Installing script cli archive..."
 sdkman_zip_file="${sdkman_tmp_folder}/sdkman-native-${SDKMAN_NATIVE_VERSION}.zip"
 echo "* Downloading..."
 curl --fail --location --progress-bar "${SDKMAN_SERVICE}/broker/download/native/install/${SDKMAN_NATIVE_VERSION}/${SDKMAN_PLATFORM}" > "$sdkman_zip_file"
+verify_sha256 "$sdkman_zip_file" "${SDKMAN_NATIVE_SHA256[$SDKMAN_PLATFORM]:-}"
 
 # check integrity
 echo "* Checking archive integrity..."

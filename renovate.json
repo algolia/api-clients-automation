@@ -349,7 +349,7 @@
     },
     {
       "customType": "regex",
-      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh",
+      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh, the archive checksum next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
         "/sdkman-install.sh/"
       ],
@@ -362,7 +362,7 @@
     },
     {
       "customType": "regex",
-      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh",
+      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh, the per platform archive checksums next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
         "/sdkman-install.sh/"
       ],

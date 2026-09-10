@@ -119,8 +119,8 @@ check() {
   fi
 }
 
-# the checksummed downloads must point at the same release in both files, otherwise one
-# side's checksum silently covers a different artifact than the other
+# a tool pinned in both the docker images and the setup action must point at the same release in
+# both files, otherwise CI and the local images silently run different versions of it
 check_shared_pin() {
   local name=$1
   local regex=$2

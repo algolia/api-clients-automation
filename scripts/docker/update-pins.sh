@@ -24,3 +24,20 @@ grep -rhoE 'https://[^" ]+\.(sh|jar|tar\.gz)' scripts/docker/Dockerfile.* .githu
   rm -f "$tmp"
   echo "${sum}  $url"
 done
+
+echo
+echo "== sdkman archive checksums (scripts/docker/sdkman-install.sh) =="
+# the broker redirects to the sdkman GitHub release assets; the cli zip is the same for every
+# platform, the native zip is per platform, so list the platforms the base image is built for
+sdkman_version=$(sed -nE 's/^export SDKMAN_VERSION="([0-9.]+)"/\1/p' scripts/docker/sdkman-install.sh)
+sdkman_native_version=$(sed -nE 's/^export SDKMAN_NATIVE_VERSION="([0-9.]+)"/\1/p' scripts/docker/sdkman-install.sh)
+for target in "sdkman/install/${sdkman_version}/linuxx64" "native/install/${sdkman_native_version}/linuxx64" "native/install/${sdkman_native_version}/linuxarm64"; do
+  tmp=$(mktemp)
+  if curl -sfL --retry 3 -o "$tmp" "https://api.sdkman.io/2/broker/download/${target}" && [[ -s "$tmp" ]]; then
+    sum=$(shasum -a 256 "$tmp" | awk '{print $1}')
+  else
+    sum="<unresolved>"
+  fi
+  rm -f "$tmp"
+  echo "${sum}  ${target}"
+done
