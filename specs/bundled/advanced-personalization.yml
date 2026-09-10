@@ -135,12 +135,10 @@ tags:
       User profiles contain the affinities each user has for the different
       facets in your index.
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization/concepts/user-profiles
+      url: https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization/concepts/user-profiles
       description: User profiles.
 externalDocs:
-  url: >-
-    https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization
+  url: https://www.algolia.com/doc/guides/personalization/ai-personalization/what-is-ai-personalization
   description: What is Advanced Personalization.
 paths:
   /{path}:
