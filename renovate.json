@@ -31,6 +31,48 @@
   ],
   "packageRules": [
     {
+      "description": "Keep the docker image digests in scripts/docker/ pinned and up to date",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "scripts/docker/**"
+      ],
+      "pinDigests": true
+    },
+    {
+      "description": "The language image versions are governed by the config/.*-version files, only keep their digests fresh",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "dart",
+        "mcr.microsoft.com/dotnet/sdk",
+        "golang",
+        "python",
+        "php",
+        "ruby",
+        "swift"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "enabled": false,
+      "matchFileNames": [
+        "scripts/docker/**"
+      ]
+    },
+    {
+      "description": "Update the swiftformat docker image and the CI source build together",
+      "groupName": "swiftformat",
+      "matchPackageNames": [
+        "nicklockwood/SwiftFormat",
+        "ghcr.io/nicklockwood/swiftformat"
+      ]
+    },
+    {
       "matchDepTypes": [
         "required_provider"
       ],
@@ -114,6 +156,19 @@
         "golangci-install\\.sh -b .+ v(?<currentValue>[0-9.]+)"
       ],
       "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update nvm, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/"
+      ],
+      "matchStrings": [
+        "nvm-sh/nvm/v(?<currentValue>[0-9.]+)/install\\.sh"
+      ],
+      "depNameTemplate": "nvm-sh/nvm",
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>.*)$"
     },
@@ -290,6 +345,32 @@
         "SWIFTFORMAT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "depNameTemplate": "nicklockwood/SwiftFormat",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh, the archive checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh, the per platform archive checksums next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_NATIVE_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliNativeVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli-native",
       "datasourceTemplate": "github-releases"
     }
   ],

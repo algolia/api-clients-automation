@@ -5,10 +5,14 @@ import { getLanguageFolder } from '../../config.ts';
 import type { Language } from '../../types.ts';
 import { getNbGitDiff } from '../utils.ts';
 
+// changes here affect every image, so they belong to all three per image lists
+const DOCKER_COMPOSE_DEPENDENCIES = ['docker-compose.yml', 'scripts/docker/setup.sh'];
+
 export const COMMON_DEPENDENCIES = {
   GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows'],
   SCRIPTS_CHANGED: [
     'scripts',
+    ':!scripts/docker',
     'eslint',
     'yarn.lock',
     '.eslintrc.cjs',
@@ -61,6 +65,33 @@ export const DEPENDENCIES = {
     { ...COMMON_DEPENDENCIES } as Record<string, string[]>,
   ),
   WEBSITE_CHANGED: ['website', 'scripts/website', 'package.json', 'netlify.toml'],
+  // kept out of COMMON_DEPENDENCIES so a docker pin bump does not rerun every client job.
+  // the config version files are here so a renovate language bump reaches the tag drift check;
+  // java is listed by its real path because config/.java-version is a symlink and its blob
+  // holds the target string, so a version change never shows up under the config/ path
+  DOCKER_CHANGED: [
+    'scripts/docker',
+    'docker-compose.yml',
+    '.nvmrc',
+    'config/.*-version',
+    'clients/algoliasearch-client-java/.java-version',
+  ],
+  // per image, so a change to one Dockerfile does not rebuild the other two. the three images
+  // are independent (none is built FROM another), and only the base one consumes java and node
+  DOCKER_BASE_CHANGED: [
+    ...DOCKER_COMPOSE_DEPENDENCIES,
+    'scripts/docker/Dockerfile.base',
+    'scripts/docker/sdkman-install.sh',
+    '.nvmrc',
+    'config/.csharp-version',
+    'config/.dart-version',
+    'config/.go-version',
+    'config/.php-version',
+    'config/.python-version',
+    'clients/algoliasearch-client-java/.java-version',
+  ],
+  DOCKER_RUBY_CHANGED: [...DOCKER_COMPOSE_DEPENDENCIES, 'scripts/docker/Dockerfile.ruby', 'config/.ruby-version'],
+  DOCKER_SWIFT_CHANGED: [...DOCKER_COMPOSE_DEPENDENCIES, 'scripts/docker/Dockerfile.swift', 'config/.swift-version'],
 };
 
 export function getVersionFileForLanguage(lang: Language): string {
