@@ -334,7 +334,7 @@ final class SearchClientClientTests: XCTestCase {
             apiKey: "test-api-key",
             hosts: [RetryableHost(url: URL(string: "http://" +
                     (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
-                    ":6697")!],
+                    ":6697")!)],
             maxRateLimitRetries: 0
         )
         let transporter = Transporter(configuration: configuration)

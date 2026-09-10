@@ -15,7 +15,7 @@ private final class RateLimitRequestBuilder: RequestBuilder {
     var statuses: [Int]
     var retryAfter: String?
     private(set) var urls: [URL] = []
-    var jsonBody: String = "{\"message\":\"ok\"}"
+    var jsonBody = "{\"message\":\"ok\"}"
 
     init() {
         self.statuses = []
@@ -47,8 +47,8 @@ private final class RateLimitRequestBuilder: RequestBuilder {
             throw AlgoliaError.requestError(GenericError(description: "unable to mock HTTPURLResponse"))
         }
 
-        if status == 429 {
-            let data = Data("{\"message\":\"Too many requests\"}".utf8)
+        if status >= 400 {
+            let data = Data("{\"message\":\"\(status == 429 ? "Too many requests" : "Internal Server Error")\"}".utf8)
             throw AlgoliaError.httpError(HTTPError(response: httpResponse, data: data)!)
         }
 
@@ -71,6 +71,27 @@ final class RateLimitRetryTests: XCTestCase {
             1_000_000_000
         )
         XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["retry-after": "3"]), 3_000_000_000)
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": " 4 "]), 4_000_000_000)
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "007"]), 7_000_000_000)
+    }
+
+    func testParseRetryAfterCapsAtTheLongestSupportedWait() {
+        let cap = RateLimitRetry.maxWaitNanoseconds
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "9223372037"]), cap)
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "99999999999999999999"]), cap)
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "999999999999999999999999"]), cap)
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "9223372036"]), 9_223_372_036_000_000_000)
+    }
+
+    func testServerErrorStillFailsOverToTheNextHost() async throws {
+        let builder = RateLimitRequestBuilder(statuses: [500, 200])
+        let client = try self.makeClient(builder: builder) { _ in
+            XCTFail("should not wait on 5xx")
+        }
+
+        _ = try await client.customGet(path: "1/test")
+
+        XCTAssertEqual(builder.urls.map(\.host), ["host-a.example", "host-b.example"])
     }
 
     func testWaitsRetryAfterOnSameHost() async throws {
