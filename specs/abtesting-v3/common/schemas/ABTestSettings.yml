@@ -77,5 +77,5 @@ SaveSettingsRequest:
   properties:
     saveFeaturesSettings:
       type: boolean
-      description: Whether to also capture feature-specific settings for the variant.
+      description: Whether to also capture the variant's index settings and feature-specific settings. This must be true for A/B tests whose variants use different indices so that the captured variant settings can later be applied.
       default: false
