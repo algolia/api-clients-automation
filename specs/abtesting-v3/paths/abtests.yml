@@ -17,6 +17,8 @@ post:
           properties:
             name:
               $ref: '../common/parameters.yml#/name'
+            hypothesis:
+              $ref: '../common/parameters.yml#/hypothesis'
             variants:
               type: array
               description: A/B test variants.
