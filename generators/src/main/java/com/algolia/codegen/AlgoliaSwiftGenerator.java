@@ -45,6 +45,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "aroundprecisionfromvalueinner",
     "aroundradius",
     "aroundradiusall",
+    "attributecriteriacomputedby",
     "automaticfacetfilter",
     "automaticfacetfilters",
     "banner",
