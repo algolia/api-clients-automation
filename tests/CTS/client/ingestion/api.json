@@ -1,7 +1,7 @@
 [
   {
     "testName": "can handle HTML error",
-    "skipLanguages": ["javascript", "python"],
+    "skipLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -32,7 +32,6 @@
             "php": "429: Too Many Requests",
             "ruby": "429: Too Many Requests",
             "scala": "<html><body>429 Too Many Requests</body></html>",
-            "swift": "HTTP error: Status code: 429 Message: No message",
             "dart": "429"
           }
         }
@@ -41,7 +40,7 @@
   },
   {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["javascript", "python"],
+    "onlyLanguages": ["javascript", "python", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -67,7 +66,8 @@
         "expected": {
           "error": {
             "javascript": "Too Many Requests",
-            "python": "Too Many Requests"
+            "python": "Too Many Requests",
+            "swift": "HTTP error: Status code: 429 Message: No message"
           }
         }
       }
