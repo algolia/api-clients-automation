@@ -1,0 +1,66 @@
+get:
+  tags:
+    - Indices
+  operationId: getSemanticSearchSettings
+  x-acl:
+    - settings
+  summary: Retrieve NeuralSearch semantic settings
+  description: Retrieves the NeuralSearch semantic settings for an index.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './semanticSearchSettings.yml#/SemanticSearchSettings'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../../../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
+
+put:
+  tags:
+    - Indices
+  operationId: setSemanticSearchSettings
+  x-acl:
+    - editSettings
+  summary: Update NeuralSearch semantic settings
+  description: |
+    Updates the NeuralSearch semantic settings for an index.
+    Changes take effect immediately. No reindexing is required unless you change `neuralExpression` or `vectorModelId`.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/IndexName'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: './semanticSearchSettings.yml#/SemanticSearchSettings'
+        example:
+          neuralSearchMode: active
+          eventSources:
+            - mx-products
+          neuralSearchPreset: custom
+          semanticBlendWeight: 0.5
+          dynamicThreshold:
+            enabled: true
+            aggression: 0.3
+            lowerLimit: 0.64
+            upperLimit: 0.85
+  responses:
+    '200':
+      $ref: '../../../common/responses/UpdatedAt.yml'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../../../common/responses/Unauthorized.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'
+    '500':
+      $ref: '../../../common/responses/InternalError.yml'
