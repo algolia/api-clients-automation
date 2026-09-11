@@ -29,10 +29,12 @@ package algoliasearch.composition
 
 import org.json4s._
 
-/** An object that contains the extra key-value pairs provided in the injectedItem definition.
+/** An object that contains the extra key-value pairs provided in the injectedItem definition. Only present on hits
+  * inserted by an injectedItem that defines metadata, either in its `metadata` field or sent by an external source.
   *
   * @param injectedItemKey
-  *   The key of the injectedItem that inserted this metadata.
+  *   The key of the injectedItem that inserted this metadata. Only present when the injectedItem's
+  *   `metadata.hits.addItemKey` is `true`.
   */
 case class HitMetadata(
     injectedItemKey /* _injectedItemKey */: Option[String] = scala.None,
