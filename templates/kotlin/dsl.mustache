@@ -3,6 +3,10 @@ package com.algolia.client.dsl.generated
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+{{#x-dsl-has-filter-helpers}}
+import com.algolia.client.dsl.filter.FilterDsl
+import com.algolia.client.dsl.filter.filters as buildFilters
+{{/x-dsl-has-filter-helpers}}
 import com.algolia.client.model.search.*
 import kotlinx.serialization.json.*
 
@@ -12,6 +16,9 @@ public class {{classname}}Builder {
 {{#vars}}
   public var {{{name}}}: {{> data_class_field_type}}? = null
 {{/vars}}
+{{#filterHelpers}}
+{{> dsl_filter_helper}}
+{{/filterHelpers}}
 
   internal fun build(): {{classname}} = {{classname}}(
 {{#vars}}

@@ -4,8 +4,6 @@ package com.algolia.client.dsl.rule
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.dsl.filter.FilterDsl
-import com.algolia.client.dsl.filter.filters as buildFilters
 import com.algolia.client.dsl.generated.ConditionBuilder
 import com.algolia.client.dsl.generated.ConsequenceBuilder
 import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
@@ -118,16 +116,6 @@ public fun ConditionBuilder.facetPattern(attribute: String) {
 }
 
 /**
- * Sets [ConditionBuilder.filters] from a typed filter block as a SQL string.
- *
- * Last write wins: this replaces any earlier `filters` value.
- */
-@AlgoliaExperimentalDsl
-public fun ConditionBuilder.filters(block: FilterDsl.() -> Unit) {
-  filters = buildFilters(block).asSql()
-}
-
-/**
  * Sets [ConsequenceBuilder.params] from the generated [ConsequenceParamsBuilder].
  *
  * Last write wins: this replaces any earlier [ConsequenceBuilder.params] value.
@@ -163,56 +151,6 @@ public fun ConsequenceBuilder.hide(objectID: String) {
 @AlgoliaExperimentalDsl
 public fun ConsequenceBuilder.redirect(indexName: String) {
   redirect = ConsequenceRedirect(indexName)
-}
-
-/**
- * Sets [ConsequenceParamsBuilder.filters] from a typed filter block as a SQL string.
- *
- * Last write wins: this replaces any earlier `filters` value in the same builder.
- */
-@AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.filters(block: FilterDsl.() -> Unit) {
-  filters = buildFilters(block).asSql()
-}
-
-/**
- * Sets [ConsequenceParamsBuilder.facetFilters] from a typed filter block as a legacy wrapper.
- *
- * Last write wins: this replaces any earlier `facetFilters` value in the same builder.
- */
-@AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.facetFilters(block: FilterDsl.() -> Unit) {
-  facetFilters = buildFilters(block).asFacetFilters()
-}
-
-/**
- * Sets [ConsequenceParamsBuilder.optionalFilters] from a typed filter block as a legacy wrapper.
- *
- * Last write wins: this replaces any earlier `optionalFilters` value in the same builder.
- */
-@AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.optionalFilters(block: FilterDsl.() -> Unit) {
-  optionalFilters = buildFilters(block).asOptionalFilters()
-}
-
-/**
- * Sets [ConsequenceParamsBuilder.numericFilters] from a typed filter block as a legacy wrapper.
- *
- * Last write wins: this replaces any earlier `numericFilters` value in the same builder.
- */
-@AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.numericFilters(block: FilterDsl.() -> Unit) {
-  numericFilters = buildFilters(block).asNumericFilters()
-}
-
-/**
- * Sets [ConsequenceParamsBuilder.tagFilters] from a typed filter block as a legacy wrapper.
- *
- * Last write wins: this replaces any earlier `tagFilters` value in the same builder.
- */
-@AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.tagFilters(block: FilterDsl.() -> Unit) {
-  tagFilters = buildFilters(block).asTagFilters()
 }
 
 /**
