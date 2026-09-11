@@ -1,5 +1,5 @@
 TypoToleranceUnion:
   oneOf:
-  - type: boolean
-  - $ref: TypoToleranceEnum.yml#/TypoToleranceEnum
-  - type: 'null'
+    - type: boolean
+    - $ref: 'TypoToleranceEnum.yml#/TypoToleranceEnum'
+    - type: 'null'

@@ -8,8 +8,8 @@ ExactOnSingleWordQuery:
     query word must have at least 3 characters and must not be a stop word.   Only
     exact matches will be highlighted,   partial and prefix matches won't.
   enum:
-  - attribute
-  - none
-  - word
+    - attribute
+    - none
+    - word
   title: exactOnSingleWordQuery
   type: string

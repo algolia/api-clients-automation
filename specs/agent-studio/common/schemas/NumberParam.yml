@@ -6,15 +6,15 @@ NumberParam:
       type: boolean
     default:
       oneOf:
-      - type: integer
-      - type: 'null'
+        - type: integer
+        - type: 'null'
       default: null
       title: default
     constraint:
       oneOf:
-      - $ref: NumberParamConstraint.yml#/NumberParamConstraint
-      - type: 'null'
+        - $ref: 'NumberParamConstraint.yml#/NumberParamConstraint'
+        - type: 'null'
   required:
-  - exposed
+    - exposed
   title: numberParam
   type: object

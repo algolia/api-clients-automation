@@ -5,7 +5,9 @@ package com.algolia.model.agentstudio;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,6 +19,9 @@ public class AgentCompletionAlgoliaParams {
 
   @JsonProperty("searchParameters")
   private Map<String, SearchParametersOverrides> searchParameters;
+
+  @JsonProperty("indices")
+  private List<String> indices;
 
   public AgentCompletionAlgoliaParams setMcpServers(Map<String, Map<String, Map<String, String>>> mcpServers) {
     this.mcpServers = mcpServers;
@@ -56,6 +61,33 @@ public class AgentCompletionAlgoliaParams {
     return searchParameters;
   }
 
+  public AgentCompletionAlgoliaParams setIndices(List<String> indices) {
+    this.indices = indices;
+    return this;
+  }
+
+  public AgentCompletionAlgoliaParams addIndices(String indicesItem) {
+    if (this.indices == null) {
+      this.indices = new ArrayList<>();
+    }
+    this.indices.add(indicesItem);
+    return this;
+  }
+
+  /**
+   * Per-request override for the Algolia Search tool's indices, honored only when the tool is
+   * configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in
+   * the agent's static `tool.indices` (preserving the operator's description and access-control
+   * fields) or — for index names the operator has not listed explicitly — synthesizes a minimal
+   * entry. Capped at 10 entries. Sending this field against an agent whose tool is in
+   * `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent
+   * configuration first. Defaults to `None`, which preserves the existing static behavior.
+   */
+  @javax.annotation.Nullable
+  public List<String> getIndices() {
+    return indices;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -67,13 +99,14 @@ public class AgentCompletionAlgoliaParams {
     AgentCompletionAlgoliaParams agentCompletionAlgoliaParams = (AgentCompletionAlgoliaParams) o;
     return (
       Objects.equals(this.mcpServers, agentCompletionAlgoliaParams.mcpServers) &&
-      Objects.equals(this.searchParameters, agentCompletionAlgoliaParams.searchParameters)
+      Objects.equals(this.searchParameters, agentCompletionAlgoliaParams.searchParameters) &&
+      Objects.equals(this.indices, agentCompletionAlgoliaParams.indices)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mcpServers, searchParameters);
+    return Objects.hash(mcpServers, searchParameters, indices);
   }
 
   @Override
@@ -82,6 +115,7 @@ public class AgentCompletionAlgoliaParams {
     sb.append("class AgentCompletionAlgoliaParams {\n");
     sb.append("    mcpServers: ").append(toIndentedString(mcpServers)).append("\n");
     sb.append("    searchParameters: ").append(toIndentedString(searchParameters)).append("\n");
+    sb.append("    indices: ").append(toIndentedString(indices)).append("\n");
     sb.append("}");
     return sb.toString();
   }

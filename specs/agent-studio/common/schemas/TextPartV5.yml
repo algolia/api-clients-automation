@@ -9,6 +9,6 @@ TextPartV5:
       title: text
       type: string
   required:
-  - text
+    - text
   title: textPartV5
   type: object

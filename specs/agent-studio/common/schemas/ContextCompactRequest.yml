@@ -9,7 +9,7 @@ ContextCompactRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: MessagesUnion.yml#/MessagesUnion
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     keepLastMessages:
       type: integer
       minimum: 0.0
@@ -33,9 +33,9 @@ ContextCompactRequest:
         summarizer default to a concise summary.
   type: object
   required:
-  - providerID
-  - model
-  - messages
+    - providerID
+    - model
+    - messages
   title: contextCompactRequest
   description: LLM-summarization request. The caller's provider runs the summary,
     so cost is theirs.

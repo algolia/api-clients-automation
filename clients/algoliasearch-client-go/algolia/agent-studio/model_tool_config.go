@@ -4,48 +4,154 @@ package agentStudio
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 // ToolConfig - struct for ToolConfig.
 type ToolConfig struct {
-	McpToolConfig *McpToolConfig
-	Bool          *bool
+	AlgoliaRecommendToolConfig *AlgoliaRecommendToolConfig
+	AlgoliaSearchToolConfig    *AlgoliaSearchToolConfig
+	ClientSideToolConfig       *ClientSideToolConfig
+	McpServerToolConfig        *McpServerToolConfig
+	UnknownToolConfig          *UnknownToolConfig
 }
 
-// McpToolConfigAsToolConfig is a convenience function that returns McpToolConfig wrapped in ToolConfig.
-func McpToolConfigAsToolConfig(v *McpToolConfig) *ToolConfig {
+// ClientSideToolConfigAsToolConfig is a convenience function that returns ClientSideToolConfig wrapped in ToolConfig.
+func ClientSideToolConfigAsToolConfig(v *ClientSideToolConfig) *ToolConfig {
 	return &ToolConfig{
-		McpToolConfig: v,
+		ClientSideToolConfig: v,
 	}
 }
 
-// boolAsToolConfig is a convenience function that returns bool wrapped in ToolConfig.
-func BoolAsToolConfig(v bool) *ToolConfig {
+// McpServerToolConfigAsToolConfig is a convenience function that returns McpServerToolConfig wrapped in ToolConfig.
+func McpServerToolConfigAsToolConfig(v *McpServerToolConfig) *ToolConfig {
 	return &ToolConfig{
-		Bool: &v,
+		McpServerToolConfig: v,
+	}
+}
+
+// AlgoliaSearchToolConfigAsToolConfig is a convenience function that returns AlgoliaSearchToolConfig wrapped in ToolConfig.
+func AlgoliaSearchToolConfigAsToolConfig(v *AlgoliaSearchToolConfig) *ToolConfig {
+	return &ToolConfig{
+		AlgoliaSearchToolConfig: v,
+	}
+}
+
+// AlgoliaRecommendToolConfigAsToolConfig is a convenience function that returns AlgoliaRecommendToolConfig wrapped in ToolConfig.
+func AlgoliaRecommendToolConfigAsToolConfig(v *AlgoliaRecommendToolConfig) *ToolConfig {
+	return &ToolConfig{
+		AlgoliaRecommendToolConfig: v,
+	}
+}
+
+// UnknownToolConfigAsToolConfig is a convenience function that returns UnknownToolConfig wrapped in ToolConfig.
+func UnknownToolConfigAsToolConfig(v UnknownToolConfig) *ToolConfig {
+	return &ToolConfig{
+		UnknownToolConfig: &v,
 	}
 }
 
 // Unmarshal JSON data into one or more of the pointers in the struct.
 func (dst *ToolConfig) UnmarshalJSON(data []byte) error {
-	var err error
-	// try to unmarshal data into McpToolConfig
-	err = json.Unmarshal(data, &dst.McpToolConfig)
-	if err != nil {
-		dst.McpToolConfig = nil
+	var (
+		err      error
+		jsonDict map[string]any
+	)
+
+	_ = json.Unmarshal(data, &jsonDict)
+	if typeValue, ok := jsonDict["type"]; ok {
+		switch typeValue {
+		case "algolia_recommend":
+			err = json.Unmarshal(data, &dst.AlgoliaRecommendToolConfig)
+			if err == nil {
+				return nil
+			}
+
+			dst.AlgoliaRecommendToolConfig = nil
+		case "algolia_search_index":
+			err = json.Unmarshal(data, &dst.AlgoliaSearchToolConfig)
+			if err == nil {
+				return nil
+			}
+
+			dst.AlgoliaSearchToolConfig = nil
+		case "client_side":
+			err = json.Unmarshal(data, &dst.ClientSideToolConfig)
+			if err == nil {
+				return nil
+			}
+
+			dst.ClientSideToolConfig = nil
+		case "mcp_tools":
+			err = json.Unmarshal(data, &dst.McpServerToolConfig)
+			if err == nil {
+				return nil
+			}
+
+			dst.McpServerToolConfig = nil
+		case "unknown":
+			err = json.Unmarshal(data, &dst.UnknownToolConfig)
+			if err == nil {
+				return nil
+			}
+
+			dst.UnknownToolConfig = nil
+		}
 	}
-	// try to unmarshal data into Bool
-	err = json.Unmarshal(data, &dst.Bool)
+
+	if utils.HasKey(jsonDict, "description") && utils.HasKey(jsonDict, "inputSchema") {
+		// try to unmarshal data into ClientSideToolConfig
+		err = json.Unmarshal(data, &dst.ClientSideToolConfig)
+		if err != nil {
+			dst.ClientSideToolConfig = nil
+		}
+	}
+
+	if utils.HasKey(jsonDict, "headers") && utils.HasKey(jsonDict, "url") {
+		// try to unmarshal data into McpServerToolConfig
+		err = json.Unmarshal(data, &dst.McpServerToolConfig)
+		if err != nil {
+			dst.McpServerToolConfig = nil
+		}
+	}
+
+	if utils.HasKey(jsonDict, "indices") {
+		// try to unmarshal data into AlgoliaSearchToolConfig
+		err = json.Unmarshal(data, &dst.AlgoliaSearchToolConfig)
+		if err != nil {
+			dst.AlgoliaSearchToolConfig = nil
+		}
+	}
+	// try to unmarshal data into AlgoliaRecommendToolConfig
+	err = json.Unmarshal(data, &dst.AlgoliaRecommendToolConfig)
 	if err != nil {
-		dst.Bool = nil
+		dst.AlgoliaRecommendToolConfig = nil
+	}
+	// try to unmarshal data into UnknownToolConfig
+	err = json.Unmarshal(data, &dst.UnknownToolConfig)
+	if err != nil {
+		dst.UnknownToolConfig = nil
 	}
 
 	// check if at least one type was successfully unmarshaled
-	if dst.McpToolConfig != nil {
+	if dst.AlgoliaRecommendToolConfig != nil {
 		return nil
 	}
 
-	if dst.Bool != nil {
+	if dst.AlgoliaSearchToolConfig != nil {
+		return nil
+	}
+
+	if dst.ClientSideToolConfig != nil {
+		return nil
+	}
+
+	if dst.McpServerToolConfig != nil {
+		return nil
+	}
+
+	if dst.UnknownToolConfig != nil {
 		return nil
 	}
 
@@ -54,19 +160,46 @@ func (dst *ToolConfig) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON.
 func (src ToolConfig) MarshalJSON() ([]byte, error) {
-	if src.McpToolConfig != nil {
-		serialized, err := json.Marshal(&src.McpToolConfig)
+	if src.AlgoliaRecommendToolConfig != nil {
+		serialized, err := json.Marshal(&src.AlgoliaRecommendToolConfig)
 		if err != nil {
-			return nil, fmt.Errorf("failed to unmarshal one of McpToolConfig of ToolConfig: %w", err)
+			return nil, fmt.Errorf("failed to unmarshal one of AlgoliaRecommendToolConfig of ToolConfig: %w", err)
 		}
 
 		return serialized, nil
 	}
 
-	if src.Bool != nil {
-		serialized, err := json.Marshal(&src.Bool)
+	if src.AlgoliaSearchToolConfig != nil {
+		serialized, err := json.Marshal(&src.AlgoliaSearchToolConfig)
 		if err != nil {
-			return nil, fmt.Errorf("failed to unmarshal one of Bool of ToolConfig: %w", err)
+			return nil, fmt.Errorf("failed to unmarshal one of AlgoliaSearchToolConfig of ToolConfig: %w", err)
+		}
+
+		return serialized, nil
+	}
+
+	if src.ClientSideToolConfig != nil {
+		serialized, err := json.Marshal(&src.ClientSideToolConfig)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of ClientSideToolConfig of ToolConfig: %w", err)
+		}
+
+		return serialized, nil
+	}
+
+	if src.McpServerToolConfig != nil {
+		serialized, err := json.Marshal(&src.McpServerToolConfig)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of McpServerToolConfig of ToolConfig: %w", err)
+		}
+
+		return serialized, nil
+	}
+
+	if src.UnknownToolConfig != nil {
+		serialized, err := json.Marshal(&src.UnknownToolConfig)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of UnknownToolConfig of ToolConfig: %w", err)
 		}
 
 		return serialized, nil
@@ -77,12 +210,24 @@ func (src ToolConfig) MarshalJSON() ([]byte, error) {
 
 // Get the actual instance.
 func (obj ToolConfig) GetActualInstance() any {
-	if obj.McpToolConfig != nil {
-		return *obj.McpToolConfig
+	if obj.AlgoliaRecommendToolConfig != nil {
+		return *obj.AlgoliaRecommendToolConfig
 	}
 
-	if obj.Bool != nil {
-		return *obj.Bool
+	if obj.AlgoliaSearchToolConfig != nil {
+		return *obj.AlgoliaSearchToolConfig
+	}
+
+	if obj.ClientSideToolConfig != nil {
+		return *obj.ClientSideToolConfig
+	}
+
+	if obj.McpServerToolConfig != nil {
+		return *obj.McpServerToolConfig
+	}
+
+	if obj.UnknownToolConfig != nil {
+		return *obj.UnknownToolConfig
 	}
 
 	// all schemas are nil

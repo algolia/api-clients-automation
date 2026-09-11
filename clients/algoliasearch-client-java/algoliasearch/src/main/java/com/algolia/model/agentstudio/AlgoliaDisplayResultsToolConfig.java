@@ -9,13 +9,16 @@ import java.util.Objects;
 
 /** Configuration for the algolia_display_results tool. */
 @JsonDeserialize(as = AlgoliaDisplayResultsToolConfig.class)
-public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
+public class AlgoliaDisplayResultsToolConfig implements ToolConfigAgentTestConfiguration {
 
   @JsonProperty("name")
   private String name;
 
   @JsonProperty("type")
   private String type;
+
+  @JsonProperty("isTerminal")
+  private Boolean isTerminal;
 
   @JsonProperty("minGroups")
   private Integer minGroups;
@@ -51,12 +54,27 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     return type;
   }
 
+  public AlgoliaDisplayResultsToolConfig setIsTerminal(Boolean isTerminal) {
+    this.isTerminal = isTerminal;
+    return this;
+  }
+
+  /**
+   * When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for
+   * chat experiences where the display payload IS the final response. Leave false to let the main
+   * LLM produce a concluding assistant message after the tool runs.
+   */
+  @javax.annotation.Nullable
+  public Boolean getIsTerminal() {
+    return isTerminal;
+  }
+
   public AlgoliaDisplayResultsToolConfig setMinGroups(Integer minGroups) {
     this.minGroups = minGroups;
     return this;
   }
 
-  /** Get minGroups minimum: 1 */
+  /** minimum number of result groups. minimum: 1 maximum: 6 */
   @javax.annotation.Nullable
   public Integer getMinGroups() {
     return minGroups;
@@ -67,7 +85,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     return this;
   }
 
-  /** Get maxGroups minimum: 1 */
+  /** maximum number of result groups. minimum: 1 maximum: 6 */
   @javax.annotation.Nullable
   public Integer getMaxGroups() {
     return maxGroups;
@@ -78,7 +96,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     return this;
   }
 
-  /** Get minResultsPerGroup minimum: 1 */
+  /** minimum hits per group. minimum: 1 maximum: 15 */
   @javax.annotation.Nullable
   public Integer getMinResultsPerGroup() {
     return minResultsPerGroup;
@@ -89,7 +107,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     return this;
   }
 
-  /** Get maxResultsPerGroup minimum: 1 */
+  /** maximum hits per group. minimum: 1 maximum: 15 */
   @javax.annotation.Nullable
   public Integer getMaxResultsPerGroup() {
     return maxResultsPerGroup;
@@ -107,6 +125,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     return (
       Objects.equals(this.name, algoliaDisplayResultsToolConfig.name) &&
       Objects.equals(this.type, algoliaDisplayResultsToolConfig.type) &&
+      Objects.equals(this.isTerminal, algoliaDisplayResultsToolConfig.isTerminal) &&
       Objects.equals(this.minGroups, algoliaDisplayResultsToolConfig.minGroups) &&
       Objects.equals(this.maxGroups, algoliaDisplayResultsToolConfig.maxGroups) &&
       Objects.equals(this.minResultsPerGroup, algoliaDisplayResultsToolConfig.minResultsPerGroup) &&
@@ -116,7 +135,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type, minGroups, maxGroups, minResultsPerGroup, maxResultsPerGroup);
+    return Objects.hash(name, type, isTerminal, minGroups, maxGroups, minResultsPerGroup, maxResultsPerGroup);
   }
 
   @Override
@@ -125,6 +144,7 @@ public class AlgoliaDisplayResultsToolConfig implements ToolConfigInput {
     sb.append("class AlgoliaDisplayResultsToolConfig {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    isTerminal: ").append(toIndentedString(isTerminal)).append("\n");
     sb.append("    minGroups: ").append(toIndentedString(minGroups)).append("\n");
     sb.append("    maxGroups: ").append(toIndentedString(maxGroups)).append("\n");
     sb.append("    minResultsPerGroup: ").append(toIndentedString(minResultsPerGroup)).append("\n");

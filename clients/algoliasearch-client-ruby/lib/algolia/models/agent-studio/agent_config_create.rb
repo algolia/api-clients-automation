@@ -54,7 +54,7 @@ module Algolia
           :system_prompt => :"String",
           :template_type => :"String",
           :config => :"Hash<String, Object>",
-          :tools => :"Array<ToolConfigInput>"
+          :tools => :"Array<ToolConfig>"
         }
       end
 

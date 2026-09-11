@@ -13,6 +13,7 @@ final class PaginatedConversationsResponse {
   const PaginatedConversationsResponse({
     required this.data,
     required this.pagination,
+    this.analyticsDegraded,
   });
 
   @JsonKey(name: r'data')
@@ -21,15 +22,20 @@ final class PaginatedConversationsResponse {
   @JsonKey(name: r'pagination')
   final PaginationMetadata pagination;
 
+  @JsonKey(name: r'analyticsDegraded')
+  final bool? analyticsDegraded;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is PaginatedConversationsResponse &&
           other.data == data &&
-          other.pagination == pagination;
+          other.pagination == pagination &&
+          other.analyticsDegraded == analyticsDegraded;
 
   @override
-  int get hashCode => data.hashCode + pagination.hashCode;
+  int get hashCode =>
+      data.hashCode + pagination.hashCode + analyticsDegraded.hashCode;
 
   factory PaginatedConversationsResponse.fromJson(Map<String, dynamic> json) =>
       _$PaginatedConversationsResponseFromJson(json);

@@ -20,7 +20,7 @@ public class ProviderAuthenticationResponse {
   private String providerName;
 
   @JsonProperty("input")
-  private ProviderInput input;
+  private InputUnion input;
 
   @JsonProperty("createdAt")
   private String createdAt;
@@ -64,14 +64,14 @@ public class ProviderAuthenticationResponse {
     return providerName;
   }
 
-  public ProviderAuthenticationResponse setInput(ProviderInput input) {
+  public ProviderAuthenticationResponse setInput(InputUnion input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nonnull
-  public ProviderInput getInput() {
+  public InputUnion getInput() {
     return input;
   }
 

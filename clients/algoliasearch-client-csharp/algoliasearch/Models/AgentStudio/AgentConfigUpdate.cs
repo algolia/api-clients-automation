@@ -69,7 +69,7 @@ public partial class AgentConfigUpdate
   /// Gets or Sets Tools
   /// </summary>
   [JsonPropertyName("tools")]
-  public List<ToolConfigInput> Tools { get; set; }
+  public List<ToolConfig> Tools { get; set; }
 
   /// <summary>
   /// Gets or Sets TemplateType

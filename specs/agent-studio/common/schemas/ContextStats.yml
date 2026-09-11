@@ -22,11 +22,11 @@ ContextStats:
       description: Net reduction in message count (before - after).
   type: object
   required:
-  - messagesBefore
-  - messagesAfter
-  - tokensBeforeEstimate
-  - tokensAfterEstimate
-  - messagesDropped
+    - messagesBefore
+    - messagesAfter
+    - tokensBeforeEstimate
+    - tokensAfterEstimate
+    - messagesDropped
   title: contextStats
   description: |-
     Before/after accounting for a context operation.

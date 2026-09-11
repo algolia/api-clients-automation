@@ -18,6 +18,9 @@ public class PaginatedConversationsResponse {
   @JsonProperty("pagination")
   private PaginationMetadata pagination;
 
+  @JsonProperty("analyticsDegraded")
+  private Boolean analyticsDegraded;
+
   public PaginatedConversationsResponse setData(List<ConversationBaseResponse> data) {
     this.data = data;
     return this;
@@ -45,6 +48,17 @@ public class PaginatedConversationsResponse {
     return pagination;
   }
 
+  public PaginatedConversationsResponse setAnalyticsDegraded(Boolean analyticsDegraded) {
+    this.analyticsDegraded = analyticsDegraded;
+    return this;
+  }
+
+  /** Get analyticsDegraded */
+  @javax.annotation.Nullable
+  public Boolean getAnalyticsDegraded() {
+    return analyticsDegraded;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -56,13 +70,14 @@ public class PaginatedConversationsResponse {
     PaginatedConversationsResponse paginatedConversationsResponse = (PaginatedConversationsResponse) o;
     return (
       Objects.equals(this.data, paginatedConversationsResponse.data) &&
-      Objects.equals(this.pagination, paginatedConversationsResponse.pagination)
+      Objects.equals(this.pagination, paginatedConversationsResponse.pagination) &&
+      Objects.equals(this.analyticsDegraded, paginatedConversationsResponse.analyticsDegraded)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data, pagination);
+    return Objects.hash(data, pagination, analyticsDegraded);
   }
 
   @Override
@@ -71,6 +86,7 @@ public class PaginatedConversationsResponse {
     sb.append("class PaginatedConversationsResponse {\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    pagination: ").append(toIndentedString(pagination)).append("\n");
+    sb.append("    analyticsDegraded: ").append(toIndentedString(analyticsDegraded)).append("\n");
     sb.append("}");
     return sb.toString();
   }

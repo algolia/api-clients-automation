@@ -28,7 +28,7 @@ class AgentTestConfiguration extends AbstractModel implements ModelInterface, \A
         'instructions' => 'string',
         'systemPrompt' => 'string',
         'config' => 'array<string,mixed>',
-        'tools' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ToolConfigInput[]',
+        'tools' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ToolConfigAgentTestConfiguration[]',
     ];
 
     /**
@@ -360,7 +360,7 @@ class AgentTestConfiguration extends AbstractModel implements ModelInterface, \A
     /**
      * Gets tools.
      *
-     * @return ToolConfigInput[]
+     * @return ToolConfigAgentTestConfiguration[]
      */
     public function getTools()
     {
@@ -370,7 +370,7 @@ class AgentTestConfiguration extends AbstractModel implements ModelInterface, \A
     /**
      * Sets tools.
      *
-     * @param ToolConfigInput[] $tools tools
+     * @param ToolConfigAgentTestConfiguration[] $tools tools
      *
      * @return self
      */

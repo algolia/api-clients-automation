@@ -20,8 +20,18 @@ ToolPartV5 _$ToolPartV5FromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(k, e as Object),
                   )),
+          rawInput: $checkedConvert(
+              'rawInput',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, e as Object),
+                  )),
           output: $checkedConvert(
               'output',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, e as Object),
+                  )),
+          outputMetadata: $checkedConvert(
+              'outputMetadata',
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(k, e as Object),
                   )),
@@ -54,7 +64,9 @@ Map<String, dynamic> _$ToolPartV5ToJson(ToolPartV5 instance) {
 
   writeNotNull('state', instance.state?.toJson());
   writeNotNull('input', instance.input);
+  writeNotNull('rawInput', instance.rawInput);
   writeNotNull('output', instance.output);
+  writeNotNull('outputMetadata', instance.outputMetadata);
   writeNotNull('errorText', instance.errorText);
   writeNotNull('providerOptions', instance.providerOptions);
   writeNotNull('requiresApproval', instance.requiresApproval);

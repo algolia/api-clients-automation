@@ -11,6 +11,7 @@ final class AlgoliaDisplayResultsToolConfig {
   const AlgoliaDisplayResultsToolConfig({
     this.name,
     required this.type,
+    this.isTerminal,
     this.minGroups,
     this.maxGroups,
     this.minResultsPerGroup,
@@ -23,19 +24,31 @@ final class AlgoliaDisplayResultsToolConfig {
   @JsonKey(name: r'type')
   final String type;
 
+  /// When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
+  @JsonKey(name: r'isTerminal')
+  final bool? isTerminal;
+
+  /// minimum number of result groups.
   // minimum: 1
+  // maximum: 6
   @JsonKey(name: r'minGroups')
   final int? minGroups;
 
+  /// maximum number of result groups.
   // minimum: 1
+  // maximum: 6
   @JsonKey(name: r'maxGroups')
   final int? maxGroups;
 
+  /// minimum hits per group.
   // minimum: 1
+  // maximum: 15
   @JsonKey(name: r'minResultsPerGroup')
   final int? minResultsPerGroup;
 
+  /// maximum hits per group.
   // minimum: 1
+  // maximum: 15
   @JsonKey(name: r'maxResultsPerGroup')
   final int? maxResultsPerGroup;
 
@@ -45,6 +58,7 @@ final class AlgoliaDisplayResultsToolConfig {
       other is AlgoliaDisplayResultsToolConfig &&
           other.name == name &&
           other.type == type &&
+          other.isTerminal == isTerminal &&
           other.minGroups == minGroups &&
           other.maxGroups == maxGroups &&
           other.minResultsPerGroup == minResultsPerGroup &&
@@ -54,6 +68,7 @@ final class AlgoliaDisplayResultsToolConfig {
   int get hashCode =>
       name.hashCode +
       type.hashCode +
+      isTerminal.hashCode +
       minGroups.hashCode +
       maxGroups.hashCode +
       minResultsPerGroup.hashCode +

@@ -9,6 +9,7 @@ enum ProviderName {
   googleGenai(r'google_genai'),
   deepseek(r'deepseek'),
   openaiCompatible(r'openai_compatible'),
+  xai(r'xai'),
   anthropic(r'anthropic');
 
   const ProviderName(this.raw);

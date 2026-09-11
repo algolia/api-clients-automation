@@ -13,7 +13,7 @@ import java.util.Objects;
  * changed at the Agent level.
  */
 @JsonDeserialize(as = OpenAICompatibleProviderInput.class)
-public class OpenAICompatibleProviderInput implements ProviderInputNullable, ProviderInput {
+public class OpenAICompatibleProviderInput implements InputUnion, InputUnionProviderAuthenticationPatch {
 
   @JsonProperty("apiKey")
   private String apiKey;

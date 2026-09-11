@@ -37,9 +37,9 @@ final class AgentTestConfiguration {
   final Map<String, Object> config;
 
   /// One of types:
+  /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaDisplayResultsToolConfig]
   /// - [AlgoliaSearchToolConfig]
-  /// - [AlgoliaRecommendToolConfigInput]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
   /// - [UnknownToolConfig]

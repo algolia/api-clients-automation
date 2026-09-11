@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /** McpServerToolConfig */
 @JsonDeserialize(as = McpServerToolConfig.class)
-public class McpServerToolConfig implements ToolConfigInput {
+public class McpServerToolConfig implements ToolConfigOutput, ToolConfig, ToolConfigAgentTestConfiguration {
 
   @JsonProperty("url")
   private String url;
@@ -32,7 +32,7 @@ public class McpServerToolConfig implements ToolConfigInput {
   private String id;
 
   @JsonProperty("allowedTools")
-  private Map<String, ToolConfig> allowedTools;
+  private Map<String, AllowedTool> allowedTools;
 
   public McpServerToolConfig setUrl(String url) {
     this.url = url;
@@ -105,12 +105,12 @@ public class McpServerToolConfig implements ToolConfigInput {
     return id;
   }
 
-  public McpServerToolConfig setAllowedTools(Map<String, ToolConfig> allowedTools) {
+  public McpServerToolConfig setAllowedTools(Map<String, AllowedTool> allowedTools) {
     this.allowedTools = allowedTools;
     return this;
   }
 
-  public McpServerToolConfig putAllowedTools(String key, ToolConfig allowedToolsItem) {
+  public McpServerToolConfig putAllowedTools(String key, AllowedTool allowedToolsItem) {
     if (this.allowedTools == null) {
       this.allowedTools = new HashMap<>();
     }
@@ -120,7 +120,7 @@ public class McpServerToolConfig implements ToolConfigInput {
 
   /** Get allowedTools */
   @javax.annotation.Nullable
-  public Map<String, ToolConfig> getAllowedTools() {
+  public Map<String, AllowedTool> getAllowedTools() {
     return allowedTools;
   }
 

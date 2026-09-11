@@ -41,8 +41,26 @@ public class MessageResponse {
   @JsonProperty("outputTokens")
   private Integer outputTokens;
 
+  @JsonProperty("reasoningTokens")
+  private Integer reasoningTokens;
+
+  @JsonProperty("inputTokenDetails")
+  private Map<String, Integer> inputTokenDetails;
+
+  @JsonProperty("outputTokenDetails")
+  private Map<String, Integer> outputTokenDetails;
+
+  @JsonProperty("isCacheHit")
+  private Boolean isCacheHit;
+
   @JsonProperty("turnContext")
-  private Map<String, String> turnContext;
+  private Map<String, Object> turnContext;
+
+  @JsonProperty("events")
+  private List<MessageEvent> events;
+
+  @JsonProperty("guardrail")
+  private GuardrailOutcome guardrail;
 
   public MessageResponse setId(String id) {
     this.id = id;
@@ -148,12 +166,72 @@ public class MessageResponse {
     return outputTokens;
   }
 
-  public MessageResponse setTurnContext(Map<String, String> turnContext) {
+  public MessageResponse setReasoningTokens(Integer reasoningTokens) {
+    this.reasoningTokens = reasoningTokens;
+    return this;
+  }
+
+  /** Get reasoningTokens */
+  @javax.annotation.Nullable
+  public Integer getReasoningTokens() {
+    return reasoningTokens;
+  }
+
+  public MessageResponse setInputTokenDetails(Map<String, Integer> inputTokenDetails) {
+    this.inputTokenDetails = inputTokenDetails;
+    return this;
+  }
+
+  public MessageResponse putInputTokenDetails(String key, Integer inputTokenDetailsItem) {
+    if (this.inputTokenDetails == null) {
+      this.inputTokenDetails = new HashMap<>();
+    }
+    this.inputTokenDetails.put(key, inputTokenDetailsItem);
+    return this;
+  }
+
+  /** Get inputTokenDetails */
+  @javax.annotation.Nullable
+  public Map<String, Integer> getInputTokenDetails() {
+    return inputTokenDetails;
+  }
+
+  public MessageResponse setOutputTokenDetails(Map<String, Integer> outputTokenDetails) {
+    this.outputTokenDetails = outputTokenDetails;
+    return this;
+  }
+
+  public MessageResponse putOutputTokenDetails(String key, Integer outputTokenDetailsItem) {
+    if (this.outputTokenDetails == null) {
+      this.outputTokenDetails = new HashMap<>();
+    }
+    this.outputTokenDetails.put(key, outputTokenDetailsItem);
+    return this;
+  }
+
+  /** Get outputTokenDetails */
+  @javax.annotation.Nullable
+  public Map<String, Integer> getOutputTokenDetails() {
+    return outputTokenDetails;
+  }
+
+  public MessageResponse setIsCacheHit(Boolean isCacheHit) {
+    this.isCacheHit = isCacheHit;
+    return this;
+  }
+
+  /** Get isCacheHit */
+  @javax.annotation.Nullable
+  public Boolean getIsCacheHit() {
+    return isCacheHit;
+  }
+
+  public MessageResponse setTurnContext(Map<String, Object> turnContext) {
     this.turnContext = turnContext;
     return this;
   }
 
-  public MessageResponse putTurnContext(String key, String turnContextItem) {
+  public MessageResponse putTurnContext(String key, Object turnContextItem) {
     if (this.turnContext == null) {
       this.turnContext = new HashMap<>();
     }
@@ -163,8 +241,38 @@ public class MessageResponse {
 
   /** Get turnContext */
   @javax.annotation.Nullable
-  public Map<String, String> getTurnContext() {
+  public Map<String, Object> getTurnContext() {
     return turnContext;
+  }
+
+  public MessageResponse setEvents(List<MessageEvent> events) {
+    this.events = events;
+    return this;
+  }
+
+  public MessageResponse addEvents(MessageEvent eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<>();
+    }
+    this.events.add(eventsItem);
+    return this;
+  }
+
+  /** Get events */
+  @javax.annotation.Nullable
+  public List<MessageEvent> getEvents() {
+    return events;
+  }
+
+  public MessageResponse setGuardrail(GuardrailOutcome guardrail) {
+    this.guardrail = guardrail;
+    return this;
+  }
+
+  /** Get guardrail */
+  @javax.annotation.Nullable
+  public GuardrailOutcome getGuardrail() {
+    return guardrail;
   }
 
   @Override
@@ -186,13 +294,36 @@ public class MessageResponse {
       Objects.equals(this.model, messageResponse.model) &&
       Objects.equals(this.inputTokens, messageResponse.inputTokens) &&
       Objects.equals(this.outputTokens, messageResponse.outputTokens) &&
-      Objects.equals(this.turnContext, messageResponse.turnContext)
+      Objects.equals(this.reasoningTokens, messageResponse.reasoningTokens) &&
+      Objects.equals(this.inputTokenDetails, messageResponse.inputTokenDetails) &&
+      Objects.equals(this.outputTokenDetails, messageResponse.outputTokenDetails) &&
+      Objects.equals(this.isCacheHit, messageResponse.isCacheHit) &&
+      Objects.equals(this.turnContext, messageResponse.turnContext) &&
+      Objects.equals(this.events, messageResponse.events) &&
+      Objects.equals(this.guardrail, messageResponse.guardrail)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, conversationId, role, parts, createdAt, updatedAt, model, inputTokens, outputTokens, turnContext);
+    return Objects.hash(
+      id,
+      conversationId,
+      role,
+      parts,
+      createdAt,
+      updatedAt,
+      model,
+      inputTokens,
+      outputTokens,
+      reasoningTokens,
+      inputTokenDetails,
+      outputTokenDetails,
+      isCacheHit,
+      turnContext,
+      events,
+      guardrail
+    );
   }
 
   @Override
@@ -208,7 +339,13 @@ public class MessageResponse {
     sb.append("    model: ").append(toIndentedString(model)).append("\n");
     sb.append("    inputTokens: ").append(toIndentedString(inputTokens)).append("\n");
     sb.append("    outputTokens: ").append(toIndentedString(outputTokens)).append("\n");
+    sb.append("    reasoningTokens: ").append(toIndentedString(reasoningTokens)).append("\n");
+    sb.append("    inputTokenDetails: ").append(toIndentedString(inputTokenDetails)).append("\n");
+    sb.append("    outputTokenDetails: ").append(toIndentedString(outputTokenDetails)).append("\n");
+    sb.append("    isCacheHit: ").append(toIndentedString(isCacheHit)).append("\n");
     sb.append("    turnContext: ").append(toIndentedString(turnContext)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
+    sb.append("    guardrail: ").append(toIndentedString(guardrail)).append("\n");
     sb.append("}");
     return sb.toString();
   }

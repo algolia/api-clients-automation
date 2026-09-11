@@ -5,14 +5,14 @@ XAIProviderInput:
       title: apikey
     baseUrl:
       oneOf:
-      - type: string
-        maxLength: 2083
-        minLength: 1
-      - type: 'null'
+        - type: string
+          maxLength: 2083
+          minLength: 1
+        - type: 'null'
       title: baseurl
   type: object
   required:
-  - apiKey
+    - apiKey
   title: xAIProviderInput
   description: |-
     xAI (Grok)-specific provider input.

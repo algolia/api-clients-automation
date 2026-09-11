@@ -47,6 +47,58 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  // Snippet for the compactContext method.
+  //
+  // compactContext with required parameters
+  void snippetForCompactContext() throws Exception {
+    // >SEPARATOR compactContext compactContext with required parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ContextResponse response = client.compactContext(
+      new ContextCompactRequest()
+        .setProviderID("c2905529-b933-4b69-87ec-75f9829d5f59")
+        .setModel("gpt-4o-mini")
+        .setMessages(MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?"))))
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the compactContext method.
+  //
+  // compactContext with all parameters
+  void snippetForCompactContext1() throws Exception {
+    // >SEPARATOR compactContext compactContext with all parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ContextResponse response = client.compactContext(
+      new ContextCompactRequest()
+        .setProviderID("c2905529-b933-4b69-87ec-75f9829d5f59")
+        .setModel("gpt-4o-mini")
+        .setMessages(
+          MessagesUnion.ofListOfMessageV4(
+            Arrays.asList(
+              new UserMessageV4().setRole("user").setContent("Hello, how are you?"),
+              new UserMessageV4().setRole("assistant").setContent("I am well.")
+            )
+          )
+        )
+        .setKeepLastMessages(2)
+        .setInstructions("keep every product reference")
+        .setTargetTokensEstimate(128)
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the createAgent method.
   //
   // createAgent with minimal parameters
@@ -91,7 +143,15 @@ class SnippetAgentStudioClient {
             }
           }
         )
-        .setTools(Arrays.asList(new AlgoliaDisplayResultsToolConfig().setType("start")))
+        .setTools(
+          Arrays.asList(
+            new ClientSideToolConfig()
+              .setType("client_side")
+              .setName("start")
+              .setDescription("Start a conversation")
+              .setInputSchema(new ClientToolsArgsSchema().setType("object"))
+          )
+        )
     );
     // >LOG
     // print the response
@@ -131,8 +191,65 @@ class SnippetAgentStudioClient {
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       CompatibilityMode.AI_SDK_4,
       new AgentCompletionRequest().setMessages(
-        MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+        MessagesUnionAgentCompletionRequest.ofListOfMessageV4(
+          Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?"))
+        )
       )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the createAgentTask method.
+  //
+  // createAgentTask with required parameters
+  void snippetForCreateAgentTask() throws Exception {
+    // >SEPARATOR createAgentTask createAgentTask with required parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskResponse response = client.createAgentTask(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest().setInput(
+        new HashMap() {
+          {
+            put("pageType", "pdp");
+            put("title", "acmePhone128Gb");
+          }
+        }
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the createAgentTask method.
+  //
+  // createAgentTask with all parameters
+  void snippetForCreateAgentTask1() throws Exception {
+    // >SEPARATOR createAgentTask createAgentTask with all parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskResponse response = client.createAgentTask(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest().setTask("algolia_on_page_suggestions").setKind(TaskKind.PROMPT_SUGGESTIONS).setInput(
+        new HashMap() {
+          {
+            put("pageType", "pdp");
+            put("title", "acmePhone128Gb");
+          }
+        }
+      ),
+      false,
+      false,
+      false
     );
     // >LOG
     // print the response
@@ -1170,7 +1287,11 @@ class SnippetAgentStudioClient {
       1,
       2,
       10,
-      null
+      true,
+      true,
+      false,
+      true,
+      "secure-user-token"
     );
     // >LOG
     // print the response
@@ -1432,6 +1553,55 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  // Snippet for the trimContext method.
+  //
+  // trimContext with required parameters
+  void snippetForTrimContext() throws Exception {
+    // >SEPARATOR trimContext trimContext with required parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ContextResponse response = client.trimContext(
+      new ContextTrimRequest().setMessages(
+        MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the trimContext method.
+  //
+  // trimContext with all parameters
+  void snippetForTrimContext1() throws Exception {
+    // >SEPARATOR trimContext trimContext with all parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ContextResponse response = client.trimContext(
+      new ContextTrimRequest()
+        .setMessages(
+          MessagesUnion.ofListOfMessageV4(
+            Arrays.asList(
+              new UserMessageV4().setRole("user").setContent("Hello, how are you?"),
+              new UserMessageV4().setRole("assistant").setContent("I am well.")
+            )
+          )
+        )
+        .setKeepLastMessages(1)
+        .setMaxTokensEstimate(256)
+        .setDropToolParts(true)
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the unpublishAgent method.
   //
   // unpublishAgent
@@ -1491,7 +1661,15 @@ class SnippetAgentStudioClient {
             }
           }
         )
-        .setTools(Arrays.asList(new AlgoliaDisplayResultsToolConfig().setType("start")))
+        .setTools(
+          Arrays.asList(
+            new ClientSideToolConfig()
+              .setType("client_side")
+              .setName("start")
+              .setDescription("Start a conversation")
+              .setInputSchema(new ClientToolsArgsSchema().setType("object"))
+          )
+        )
     );
     // >LOG
     // print the response
@@ -1509,6 +1687,47 @@ class SnippetAgentStudioClient {
 
     // Call the API
     ApplicationConfigResponse response = client.updateConfiguration(new ApplicationConfigPatch().setMaxRetentionDays(30));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the updateFeedback method.
+  //
+  // updateFeedback with required parameters
+  void snippetForUpdateFeedback() throws Exception {
+    // >SEPARATOR updateFeedback updateFeedback with required parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    FeedbackResponse response = client.updateFeedback(
+      new FeedbackUpdateRequest().setMessageId("msg-abc123").setAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15")
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the updateFeedback method.
+  //
+  // updateFeedback with all parameters
+  void snippetForUpdateFeedback1() throws Exception {
+    // >SEPARATOR updateFeedback updateFeedback with all parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    FeedbackResponse response = client.updateFeedback(
+      new FeedbackUpdateRequest()
+        .setMessageId("msg-abc123")
+        .setAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15")
+        .setVote(OneOfEnum.fromValue(0))
+        .setTags(Arrays.asList("unhelpful", "off-topic"))
+        .setNotes("The response did not address my question.")
+    );
     // >LOG
     // print the response
     System.out.println(response);

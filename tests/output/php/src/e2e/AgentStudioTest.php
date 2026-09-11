@@ -110,26 +110,6 @@ class AgentStudioTest extends TestCase
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
 
-    #[TestDox('listAgentConversations with all parameters')]
-    public function testListAgentConversations1(): void
-    {
-        $client = $this->getClient();
-        $resp = $client->listAgentConversations(
-            '76710f1b-8231-42e5-b0d1-f43aac618e15',
-            '2024-01-01',
-            '2024-12-31',
-            true,
-            1,
-            2,
-            10,
-            null,
-        );
-
-        $expected = json_decode('{"data":[],"pagination":{"page":2,"limit":10,"totalCount":0,"totalPages":0}}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-    }
-
     #[TestDox('e2e list agent conversations')]
     public function testListAgentConversations2(): void
     {

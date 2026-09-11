@@ -98,22 +98,6 @@ describe('listAgentAllowedDomains', () => {
 });
 
 describe('listAgentConversations', () => {
-  test('listAgentConversations with all parameters', async () => {
-    const resp = await client.listAgentConversations({
-      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      includeFeedback: true,
-      feedbackVote: 1,
-      page: 2,
-      limit: 10,
-    });
-
-    const expectedBody = { data: [], pagination: { page: 2, limit: 10, totalCount: 0, totalPages: 0 } };
-
-    expect(expectedBody).toEqual(union(expectedBody, resp));
-  });
-
   test('e2e list agent conversations', async () => {
     await client.listAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });
   });

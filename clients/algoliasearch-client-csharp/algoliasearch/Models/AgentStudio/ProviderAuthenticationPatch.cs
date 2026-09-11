@@ -31,7 +31,7 @@ public partial class ProviderAuthenticationPatch
   /// Gets or Sets Input
   /// </summary>
   [JsonPropertyName("input")]
-  public ProviderInputNullable Input { get; set; }
+  public InputUnionProviderAuthenticationPatch Input { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

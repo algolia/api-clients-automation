@@ -77,6 +77,64 @@ public class AgentStudioClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "compactContext with required parameters")]
+  public async Task CompactContextTest()
+  {
+    await client.CompactContextAsync(
+      new ContextCompactRequest
+      {
+        ProviderID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        Model = "gpt-4o-mini",
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/unstable/context/compact", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "compactContext with all parameters")]
+  public async Task CompactContextTest1()
+  {
+    await client.CompactContextAsync(
+      new ContextCompactRequest
+      {
+        ProviderID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        Model = "gpt-4o-mini",
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            new MessageV4(new UserMessageV4 { Role = "assistant", Content = "I am well." }),
+          }
+        ),
+        KeepLastMessages = 2,
+        Instructions = "keep every product reference",
+        TargetTokensEstimate = 128,
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/unstable/context/compact", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":2,\"instructions\":\"keep every product reference\",\"targetTokensEstimate\":128}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "createAgent with minimal parameters")]
   public async Task CreateAgentTest()
   {
@@ -112,9 +170,17 @@ public class AgentStudioClientRequestTests
           { "temperature", 0.7 },
           { "max_tokens", 1500 },
         },
-        Tools = new List<ToolConfigInput>
+        Tools = new List<ToolConfig>
         {
-          new ToolConfigInput(new AlgoliaDisplayResultsToolConfig { Type = "start" }),
+          new ToolConfig(
+            new ClientSideToolConfig
+            {
+              Type = "client_side",
+              Name = "start",
+              Description = "Start a conversation",
+              InputSchema = new ClientToolsArgsSchema { Type = "object" },
+            }
+          ),
         },
       }
     );
@@ -123,7 +189,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("/agent-studio/1/agents", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"start\"}]}",
+      "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -156,15 +222,17 @@ public class AgentStudioClientRequestTests
     await client.CreateAgentCompletionAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       Enum.Parse<CompatibilityMode>("AiSdk4"),
-      new AgentCompletionRequest
-      {
-        Messages = new MessagesUnion(
-          new List<MessageV4>
-          {
-            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
-          }
-        ),
-      }
+      new AgentCompletionRequestUnion(
+        new AgentCompletionRequest
+        {
+          Messages = new MessagesUnionAgentCompletionRequest(
+            new List<MessageV4>
+            {
+              new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            }
+          ),
+        }
+      )
     );
 
     var req = _echo.LastResponse;
@@ -180,6 +248,74 @@ public class AgentStudioClientRequestTests
     );
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"compatibilityMode\":\"ai-sdk-4\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "createAgentTask with required parameters")]
+  public async Task CreateAgentTaskTest()
+  {
+    await client.CreateAgentTaskAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest
+      {
+        Input = new Dictionary<string, object>
+        {
+          { "pageType", "pdp" },
+          { "title", "acmePhone128Gb" },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "createAgentTask with all parameters")]
+  public async Task CreateAgentTaskTest1()
+  {
+    await client.CreateAgentTaskAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest
+      {
+        Task = "algolia_on_page_suggestions",
+        Kind = Enum.Parse<TaskKind>("PromptSuggestions"),
+        Input = new Dictionary<string, object>
+        {
+          { "pageType", "pdp" },
+          { "title", "acmePhone128Gb" },
+        },
+      },
+      false,
+      false,
+      false
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"task\":\"algolia_on_page_suggestions\",\"kind\":\"prompt_suggestions\",\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"stream\":\"false\",\"cache\":\"false\",\"analytics\":\"false\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -247,7 +383,7 @@ public class AgentStudioClientRequestTests
       {
         Name = "My OpenAI Provider",
         ProviderName = Enum.Parse<ProviderName>("Openai"),
-        Input = new ProviderInput(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
+        Input = new InputUnion(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
       }
     );
 
@@ -269,7 +405,7 @@ public class AgentStudioClientRequestTests
       {
         Name = "My Azure Provider",
         ProviderName = Enum.Parse<ProviderName>("AzureOpenai"),
-        Input = new ProviderInput(
+        Input = new InputUnion(
           new AzureOpenAIProviderInput
           {
             ApiKey = "az-test-key-5678",
@@ -1245,7 +1381,11 @@ public class AgentStudioClientRequestTests
       1,
       2,
       10,
-      null
+      true,
+      true,
+      false,
+      true,
+      "secure-user-token"
     );
 
     var req = _echo.LastResponse;
@@ -1256,7 +1396,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\"}"
+      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -1267,6 +1407,16 @@ public class AgentStudioClientRequestTests
     {
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
+    }
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"x-algolia-secure-user-token\":\"secure-user-token\"}"
+    );
+    var actualHeaders = req.Headers;
+    foreach (var expectedHeader in expectedHeaders)
+    {
+      string actualHeaderValue;
+      actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+      Assert.Equal(expectedHeader.Value, actualHeaderValue);
     }
   }
 
@@ -1516,6 +1666,60 @@ public class AgentStudioClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
+  [Fact(DisplayName = "trimContext with required parameters")]
+  public async Task TrimContextTest()
+  {
+    await client.TrimContextAsync(
+      new ContextTrimRequest
+      {
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/unstable/context/trim", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "trimContext with all parameters")]
+  public async Task TrimContextTest1()
+  {
+    await client.TrimContextAsync(
+      new ContextTrimRequest
+      {
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            new MessageV4(new UserMessageV4 { Role = "assistant", Content = "I am well." }),
+          }
+        ),
+        KeepLastMessages = 1,
+        MaxTokensEstimate = 256,
+        DropToolParts = true,
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/unstable/context/trim", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":1,\"maxTokensEstimate\":256,\"dropToolParts\":true}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "unpublishAgent")]
   public async Task UnpublishAgentTest()
   {
@@ -1558,9 +1762,17 @@ public class AgentStudioClientRequestTests
         Model = "gpt-4o",
         Instructions = "Updated instructions.",
         Config = new Dictionary<string, object> { { "temperature", 0.5 } },
-        Tools = new List<ToolConfigInput>
+        Tools = new List<ToolConfig>
         {
-          new ToolConfigInput(new AlgoliaDisplayResultsToolConfig { Type = "start" }),
+          new ToolConfig(
+            new ClientSideToolConfig
+            {
+              Type = "client_side",
+              Name = "start",
+              Description = "Start a conversation",
+              InputSchema = new ClientToolsArgsSchema { Type = "object" },
+            }
+          ),
         },
       }
     );
@@ -1569,7 +1781,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"start\"}]}",
+      "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1585,6 +1797,51 @@ public class AgentStudioClientRequestTests
     Assert.Equal("PATCH", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"maxRetentionDays\":30}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "updateFeedback with required parameters")]
+  public async Task UpdateFeedbackTest()
+  {
+    await client.UpdateFeedbackAsync(
+      new FeedbackUpdateRequest
+      {
+        MessageId = "msg-abc123",
+        AgentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/feedback", req.Path);
+    Assert.Equal("PATCH", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "updateFeedback with all parameters")]
+  public async Task UpdateFeedbackTest1()
+  {
+    await client.UpdateFeedbackAsync(
+      new FeedbackUpdateRequest
+      {
+        MessageId = "msg-abc123",
+        AgentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        Vote = Enum.Parse<OneOfEnum>("0"),
+        Tags = new List<string> { "unhelpful", "off-topic" },
+        Notes = "The response did not address my question.",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/feedback", req.Path);
+    Assert.Equal("PATCH", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"vote\":0,\"tags\":[\"unhelpful\",\"off-topic\"],\"notes\":\"The response did not address my question.\"}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -1616,7 +1873,9 @@ public class AgentStudioClientRequestTests
       new ProviderAuthenticationPatch
       {
         Name = "Updated Provider",
-        Input = new ProviderInputNullable(new OpenAIProviderInput { ApiKey = "sk-new-key-5678" }),
+        Input = new InputUnionProviderAuthenticationPatch(
+          new OpenAIProviderInput { ApiKey = "sk-new-key-5678" }
+        ),
       }
     );
 

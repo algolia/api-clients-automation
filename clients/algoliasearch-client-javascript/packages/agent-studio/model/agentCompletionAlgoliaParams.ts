@@ -6,4 +6,9 @@ export type AgentCompletionAlgoliaParams = {
   mcpServers?: { [key: string]: { [key: string]: { [key: string]: string } } } | undefined;
 
   searchParameters?: { [key: string]: SearchParametersOverrides } | null | undefined;
+
+  /**
+   * Per-request override for the Algolia Search tool\'s indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in the agent\'s static `tool.indices` (preserving the operator\'s description and access-control fields) or — for index names the operator has not listed explicitly — synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool\'s `mode` in the agent configuration first. Defaults to `None`, which preserves the existing static behavior.
+   */
+  indices?: Array<string> | undefined;
 };

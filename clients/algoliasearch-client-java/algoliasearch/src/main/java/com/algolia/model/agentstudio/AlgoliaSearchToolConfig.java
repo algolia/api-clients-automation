@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /** AlgoliaSearchToolConfig */
 @JsonDeserialize(as = AlgoliaSearchToolConfig.class)
-public class AlgoliaSearchToolConfig implements ToolConfigInput {
+public class AlgoliaSearchToolConfig implements ToolConfigOutput, ToolConfig, ToolConfigAgentTestConfiguration {
 
   @JsonProperty("name")
   private String name;
@@ -21,6 +21,12 @@ public class AlgoliaSearchToolConfig implements ToolConfigInput {
 
   @JsonProperty("indices")
   private List<AlgoliaSearchToolIndexConfig> indices = new ArrayList<>();
+
+  @JsonProperty("mode")
+  private ModeEnum mode;
+
+  @JsonProperty("allowUnlistedIndices")
+  private Boolean allowUnlistedIndices;
 
   public AlgoliaSearchToolConfig setName(String name) {
     this.name = name;
@@ -60,6 +66,28 @@ public class AlgoliaSearchToolConfig implements ToolConfigInput {
     return indices;
   }
 
+  public AlgoliaSearchToolConfig setMode(ModeEnum mode) {
+    this.mode = mode;
+    return this;
+  }
+
+  /** Get mode */
+  @javax.annotation.Nullable
+  public ModeEnum getMode() {
+    return mode;
+  }
+
+  public AlgoliaSearchToolConfig setAllowUnlistedIndices(Boolean allowUnlistedIndices) {
+    this.allowUnlistedIndices = allowUnlistedIndices;
+    return this;
+  }
+
+  /** Get allowUnlistedIndices */
+  @javax.annotation.Nullable
+  public Boolean getAllowUnlistedIndices() {
+    return allowUnlistedIndices;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -72,13 +100,15 @@ public class AlgoliaSearchToolConfig implements ToolConfigInput {
     return (
       Objects.equals(this.name, algoliaSearchToolConfig.name) &&
       Objects.equals(this.type, algoliaSearchToolConfig.type) &&
-      Objects.equals(this.indices, algoliaSearchToolConfig.indices)
+      Objects.equals(this.indices, algoliaSearchToolConfig.indices) &&
+      Objects.equals(this.mode, algoliaSearchToolConfig.mode) &&
+      Objects.equals(this.allowUnlistedIndices, algoliaSearchToolConfig.allowUnlistedIndices)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type, indices);
+    return Objects.hash(name, type, indices, mode, allowUnlistedIndices);
   }
 
   @Override
@@ -88,6 +118,8 @@ public class AlgoliaSearchToolConfig implements ToolConfigInput {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    indices: ").append(toIndentedString(indices)).append("\n");
+    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
+    sb.append("    allowUnlistedIndices: ").append(toIndentedString(allowUnlistedIndices)).append("\n");
     sb.append("}");
     return sb.toString();
   }

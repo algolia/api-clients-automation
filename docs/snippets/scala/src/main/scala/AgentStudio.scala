@@ -65,6 +65,79 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the compactContext method.
+    *
+    * compactContext with required parameters
+    */
+  def snippetForAgentStudioClientCompactContext(): Unit = {
+    // >SEPARATOR compactContext compactContext with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.compactContext(
+        contextCompactRequest = ContextCompactRequest(
+          providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+          model = "gpt-4o-mini",
+          messages = MessagesUnion(
+            Seq(
+              UserMessageV4(
+                role = "user",
+                content = "Hello, how are you?"
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the compactContext method.
+    *
+    * compactContext with all parameters
+    */
+  def snippetForAgentStudioClientCompactContext1(): Unit = {
+    // >SEPARATOR compactContext compactContext with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.compactContext(
+        contextCompactRequest = ContextCompactRequest(
+          providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+          model = "gpt-4o-mini",
+          messages = MessagesUnion(
+            Seq(
+              UserMessageV4(
+                role = "user",
+                content = "Hello, how are you?"
+              ),
+              UserMessageV4(
+                role = "assistant",
+                content = "I am well."
+              )
+            )
+          ),
+          keepLastMessages = Some(2),
+          instructions = Some("keep every product reference"),
+          targetTokensEstimate = Some(128)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the createAgent method.
     *
     * createAgent with minimal parameters
@@ -111,8 +184,13 @@ class SnippetAgentStudioClient {
           config = Some(Map("sendUsage" -> true, "sendReasoning" -> true, "temperature" -> 0.7, "max_tokens" -> 1500)),
           tools = Some(
             Seq(
-              AlgoliaDisplayResultsToolConfig(
-                `type` = "start"
+              ClientSideToolConfig(
+                `type` = "client_side",
+                name = "start",
+                description = "Start a conversation",
+                inputSchema = ClientToolsArgsSchema(
+                  `type` = Some("object")
+                )
               )
             )
           )
@@ -167,7 +245,7 @@ class SnippetAgentStudioClient {
         compatibilityMode = CompatibilityMode.withName("ai-sdk-4"),
         agentCompletionRequest = AgentCompletionRequest(
           messages = Some(
-            MessagesUnion(
+            MessagesUnionAgentCompletionRequest(
               Seq(
                 UserMessageV4(
                   role = "user",
@@ -177,6 +255,61 @@ class SnippetAgentStudioClient {
             )
           )
         )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the createAgentTask method.
+    *
+    * createAgentTask with required parameters
+    */
+  def snippetForAgentStudioClientCreateAgentTask(): Unit = {
+    // >SEPARATOR createAgentTask createAgentTask with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.createAgentTask(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest = TaskRequest(
+          input = Map("pageType" -> "pdp", "title" -> "acmePhone128Gb")
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the createAgentTask method.
+    *
+    * createAgentTask with all parameters
+    */
+  def snippetForAgentStudioClientCreateAgentTask1(): Unit = {
+    // >SEPARATOR createAgentTask createAgentTask with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.createAgentTask(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest = TaskRequest(
+          task = Some("algolia_on_page_suggestions"),
+          kind = Some(TaskKind.withName("prompt_suggestions")),
+          input = Map("pageType" -> "pdp", "title" -> "acmePhone128Gb")
+        ),
+        stream = Some(false),
+        cache = Some(false),
+        analytics = Some(false)
       ),
       Duration(100, "sec")
     )
@@ -1453,7 +1586,11 @@ class SnippetAgentStudioClient {
         feedbackVote = Some(1),
         page = Some(2),
         limit = Some(10),
-        xAlgoliaSecureUserToken = None
+        includeImpactAnalytics = Some(true),
+        clicked = Some(true),
+        converted = Some(false),
+        hasAlgoliaSearch = Some(true),
+        xAlgoliaSecureUserToken = Some("secure-user-token")
       ),
       Duration(100, "sec")
     )
@@ -1812,6 +1949,75 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the trimContext method.
+    *
+    * trimContext with required parameters
+    */
+  def snippetForAgentStudioClientTrimContext(): Unit = {
+    // >SEPARATOR trimContext trimContext with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.trimContext(
+        contextTrimRequest = ContextTrimRequest(
+          messages = MessagesUnion(
+            Seq(
+              UserMessageV4(
+                role = "user",
+                content = "Hello, how are you?"
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the trimContext method.
+    *
+    * trimContext with all parameters
+    */
+  def snippetForAgentStudioClientTrimContext1(): Unit = {
+    // >SEPARATOR trimContext trimContext with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.trimContext(
+        contextTrimRequest = ContextTrimRequest(
+          messages = MessagesUnion(
+            Seq(
+              UserMessageV4(
+                role = "user",
+                content = "Hello, how are you?"
+              ),
+              UserMessageV4(
+                role = "assistant",
+                content = "I am well."
+              )
+            )
+          ),
+          keepLastMessages = Some(1),
+          maxTokensEstimate = Some(256),
+          dropToolParts = Some(true)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the unpublishAgent method.
     *
     * unpublishAgent
@@ -1881,8 +2087,13 @@ class SnippetAgentStudioClient {
           config = Some(Map("temperature" -> 0.5)),
           tools = Some(
             Seq(
-              AlgoliaDisplayResultsToolConfig(
-                `type` = "start"
+              ClientSideToolConfig(
+                `type` = "client_side",
+                name = "start",
+                description = "Start a conversation",
+                inputSchema = ClientToolsArgsSchema(
+                  `type` = Some("object")
+                )
               )
             )
           )
@@ -1910,6 +2121,59 @@ class SnippetAgentStudioClient {
       client.updateConfiguration(
         applicationConfigPatch = ApplicationConfigPatch(
           maxRetentionDays = Some(30)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the updateFeedback method.
+    *
+    * updateFeedback with required parameters
+    */
+  def snippetForAgentStudioClientUpdateFeedback(): Unit = {
+    // >SEPARATOR updateFeedback updateFeedback with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.updateFeedback(
+        feedbackUpdateRequest = FeedbackUpdateRequest(
+          messageId = "msg-abc123",
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the updateFeedback method.
+    *
+    * updateFeedback with all parameters
+    */
+  def snippetForAgentStudioClientUpdateFeedback1(): Unit = {
+    // >SEPARATOR updateFeedback updateFeedback with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.updateFeedback(
+        feedbackUpdateRequest = FeedbackUpdateRequest(
+          messageId = "msg-abc123",
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          vote = Some(OneOfEnum.withName("0")),
+          tags = Some(Seq("unhelpful", "off-topic")),
+          notes = Some("The response did not address my question.")
         )
       ),
       Duration(100, "sec")

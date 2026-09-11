@@ -24,7 +24,7 @@ module Algolia
       def self.types_mapping
         {
           :name => :"String",
-          :input => :"ProviderInputNullable"
+          :input => :"InputUnionProviderAuthenticationPatch"
         }
       end
 

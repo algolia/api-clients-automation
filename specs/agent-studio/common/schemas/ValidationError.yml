@@ -2,7 +2,7 @@ ValidationError:
   properties:
     loc:
       items:
-        $ref: LocationItemUnion.yml#/LocationItemUnion
+        $ref: 'LocationItemUnion.yml#/LocationItemUnion'
       type: array
       title: location
     msg:
@@ -13,7 +13,7 @@ ValidationError:
       title: errorType
   type: object
   required:
-  - loc
-  - msg
-  - type
+    - loc
+    - msg
+    - type
   title: validationError

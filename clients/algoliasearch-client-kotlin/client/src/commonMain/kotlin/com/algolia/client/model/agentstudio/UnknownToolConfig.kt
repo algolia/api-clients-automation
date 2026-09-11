@@ -22,7 +22,7 @@ public data class UnknownToolConfig(
   val name: String,
   val type: String,
   val additionalProperties: Map<String, JsonElement>? = null,
-) : ToolConfigInput {}
+) : ToolConfigOutput, ToolConfig, ToolConfigAgentTestConfiguration {}
 
 internal object UnknownToolConfigSerializer : KSerializer<UnknownToolConfig> {
 

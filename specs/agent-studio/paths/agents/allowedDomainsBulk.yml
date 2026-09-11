@@ -1,60 +1,60 @@
 post:
   tags:
-  - Allowed Domains
+    - Allowed Domains
   operationId: bulkCreateAllowedDomains
   x-acl:
-  - editSettings
+    - editSettings
   summary: Bulk Insert Allowed Domains
   description: Add multiple allowed domain patterns. Duplicates are skipped.
   parameters:
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: agentId
-    description: The agentId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: ../../common/schemas/AllowedDomainBulkInsert.yml#/AllowedDomainBulkInsert
+          $ref: '../../common/schemas/AllowedDomainBulkInsert.yml#/AllowedDomainBulkInsert'
   responses:
     '201':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/AllowedDomainListResponse.yml#/AllowedDomainListResponse
+            $ref: '../../common/schemas/AllowedDomainListResponse.yml#/AllowedDomainListResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-  - Allowed Domains
+    - Allowed Domains
   operationId: bulkDeleteAllowedDomains
   x-acl:
-  - editSettings
+    - editSettings
   summary: Bulk Delete Allowed Domains
   description: Delete allowed domains by id list.
   parameters:
-  - name: agentId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: agentId
-    description: The agentId.
+    - name: agentId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: agentId
+      description: The agentId.
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: ../../common/schemas/AllowedDomainBulkDelete.yml#/AllowedDomainBulkDelete
+          $ref: '../../common/schemas/AllowedDomainBulkDelete.yml#/AllowedDomainBulkDelete'
   responses:
     '204':
       description: Successful Response.
@@ -63,4 +63,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

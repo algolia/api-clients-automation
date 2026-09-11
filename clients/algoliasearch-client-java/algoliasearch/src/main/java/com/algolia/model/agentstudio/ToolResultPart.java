@@ -28,6 +28,18 @@ public class ToolResultPart implements MessagePart {
   @JsonProperty("providerOptions")
   private Map<String, Object> providerOptions;
 
+  @JsonProperty("mcpConfigId")
+  private String mcpConfigId;
+
+  @JsonProperty("mcpConfigName")
+  private String mcpConfigName;
+
+  @JsonProperty("isTerminal")
+  private Boolean isTerminal;
+
+  @JsonProperty("outputMetadata")
+  private Map<String, Object> outputMetadata;
+
   public ToolResultPart setType(String type) {
     this.type = type;
     return this;
@@ -91,6 +103,58 @@ public class ToolResultPart implements MessagePart {
     return providerOptions;
   }
 
+  public ToolResultPart setMcpConfigId(String mcpConfigId) {
+    this.mcpConfigId = mcpConfigId;
+    return this;
+  }
+
+  /** Get mcpConfigId */
+  @javax.annotation.Nullable
+  public String getMcpConfigId() {
+    return mcpConfigId;
+  }
+
+  public ToolResultPart setMcpConfigName(String mcpConfigName) {
+    this.mcpConfigName = mcpConfigName;
+    return this;
+  }
+
+  /** Get mcpConfigName */
+  @javax.annotation.Nullable
+  public String getMcpConfigName() {
+    return mcpConfigName;
+  }
+
+  public ToolResultPart setIsTerminal(Boolean isTerminal) {
+    this.isTerminal = isTerminal;
+    return this;
+  }
+
+  /** Get isTerminal */
+  @javax.annotation.Nullable
+  public Boolean getIsTerminal() {
+    return isTerminal;
+  }
+
+  public ToolResultPart setOutputMetadata(Map<String, Object> outputMetadata) {
+    this.outputMetadata = outputMetadata;
+    return this;
+  }
+
+  public ToolResultPart putOutputMetadata(String key, Object outputMetadataItem) {
+    if (this.outputMetadata == null) {
+      this.outputMetadata = new HashMap<>();
+    }
+    this.outputMetadata.put(key, outputMetadataItem);
+    return this;
+  }
+
+  /** Get outputMetadata */
+  @javax.annotation.Nullable
+  public Map<String, Object> getOutputMetadata() {
+    return outputMetadata;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,13 +169,17 @@ public class ToolResultPart implements MessagePart {
       Objects.equals(this.toolCallId, toolResultPart.toolCallId) &&
       Objects.equals(this.toolName, toolResultPart.toolName) &&
       Objects.equals(this.output, toolResultPart.output) &&
-      Objects.equals(this.providerOptions, toolResultPart.providerOptions)
+      Objects.equals(this.providerOptions, toolResultPart.providerOptions) &&
+      Objects.equals(this.mcpConfigId, toolResultPart.mcpConfigId) &&
+      Objects.equals(this.mcpConfigName, toolResultPart.mcpConfigName) &&
+      Objects.equals(this.isTerminal, toolResultPart.isTerminal) &&
+      Objects.equals(this.outputMetadata, toolResultPart.outputMetadata)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, toolCallId, toolName, output, providerOptions);
+    return Objects.hash(type, toolCallId, toolName, output, providerOptions, mcpConfigId, mcpConfigName, isTerminal, outputMetadata);
   }
 
   @Override
@@ -123,6 +191,10 @@ public class ToolResultPart implements MessagePart {
     sb.append("    toolName: ").append(toIndentedString(toolName)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
     sb.append("    providerOptions: ").append(toIndentedString(providerOptions)).append("\n");
+    sb.append("    mcpConfigId: ").append(toIndentedString(mcpConfigId)).append("\n");
+    sb.append("    mcpConfigName: ").append(toIndentedString(mcpConfigName)).append("\n");
+    sb.append("    isTerminal: ").append(toIndentedString(isTerminal)).append("\n");
+    sb.append("    outputMetadata: ").append(toIndentedString(outputMetadata)).append("\n");
     sb.append("}");
     return sb.toString();
   }

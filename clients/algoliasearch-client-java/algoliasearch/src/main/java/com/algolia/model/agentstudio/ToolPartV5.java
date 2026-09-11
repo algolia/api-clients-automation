@@ -25,8 +25,14 @@ public class ToolPartV5 implements AssistantPartV5 {
   @JsonProperty("input")
   private Map<String, Object> input;
 
+  @JsonProperty("rawInput")
+  private Map<String, Object> rawInput;
+
   @JsonProperty("output")
   private Map<String, Object> output;
+
+  @JsonProperty("outputMetadata")
+  private Map<String, Object> outputMetadata;
 
   @JsonProperty("errorText")
   private String errorText;
@@ -95,6 +101,25 @@ public class ToolPartV5 implements AssistantPartV5 {
     return input;
   }
 
+  public ToolPartV5 setRawInput(Map<String, Object> rawInput) {
+    this.rawInput = rawInput;
+    return this;
+  }
+
+  public ToolPartV5 putRawInput(String key, Object rawInputItem) {
+    if (this.rawInput == null) {
+      this.rawInput = new HashMap<>();
+    }
+    this.rawInput.put(key, rawInputItem);
+    return this;
+  }
+
+  /** Get rawInput */
+  @javax.annotation.Nullable
+  public Map<String, Object> getRawInput() {
+    return rawInput;
+  }
+
   public ToolPartV5 setOutput(Map<String, Object> output) {
     this.output = output;
     return this;
@@ -112,6 +137,25 @@ public class ToolPartV5 implements AssistantPartV5 {
   @javax.annotation.Nullable
   public Map<String, Object> getOutput() {
     return output;
+  }
+
+  public ToolPartV5 setOutputMetadata(Map<String, Object> outputMetadata) {
+    this.outputMetadata = outputMetadata;
+    return this;
+  }
+
+  public ToolPartV5 putOutputMetadata(String key, Object outputMetadataItem) {
+    if (this.outputMetadata == null) {
+      this.outputMetadata = new HashMap<>();
+    }
+    this.outputMetadata.put(key, outputMetadataItem);
+    return this;
+  }
+
+  /** Get outputMetadata */
+  @javax.annotation.Nullable
+  public Map<String, Object> getOutputMetadata() {
+    return outputMetadata;
   }
 
   public ToolPartV5 setErrorText(String errorText) {
@@ -191,7 +235,9 @@ public class ToolPartV5 implements AssistantPartV5 {
       Objects.equals(this.toolCallId, toolPartV5.toolCallId) &&
       Objects.equals(this.state, toolPartV5.state) &&
       Objects.equals(this.input, toolPartV5.input) &&
+      Objects.equals(this.rawInput, toolPartV5.rawInput) &&
       Objects.equals(this.output, toolPartV5.output) &&
+      Objects.equals(this.outputMetadata, toolPartV5.outputMetadata) &&
       Objects.equals(this.errorText, toolPartV5.errorText) &&
       Objects.equals(this.providerOptions, toolPartV5.providerOptions) &&
       Objects.equals(this.requiresApproval, toolPartV5.requiresApproval) &&
@@ -202,7 +248,20 @@ public class ToolPartV5 implements AssistantPartV5 {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, toolCallId, state, input, output, errorText, providerOptions, requiresApproval, description, argsHash);
+    return Objects.hash(
+      type,
+      toolCallId,
+      state,
+      input,
+      rawInput,
+      output,
+      outputMetadata,
+      errorText,
+      providerOptions,
+      requiresApproval,
+      description,
+      argsHash
+    );
   }
 
   @Override
@@ -213,7 +272,9 @@ public class ToolPartV5 implements AssistantPartV5 {
     sb.append("    toolCallId: ").append(toIndentedString(toolCallId)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
+    sb.append("    rawInput: ").append(toIndentedString(rawInput)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
+    sb.append("    outputMetadata: ").append(toIndentedString(outputMetadata)).append("\n");
     sb.append("    errorText: ").append(toIndentedString(errorText)).append("\n");
     sb.append("    providerOptions: ").append(toIndentedString(providerOptions)).append("\n");
     sb.append("    requiresApproval: ").append(toIndentedString(requiresApproval)).append("\n");

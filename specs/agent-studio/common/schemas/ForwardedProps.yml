@@ -1,7 +1,7 @@
 ForwardedProps:
   properties:
     algolia:
-      $ref: AgentCompletionAlgoliaParams.yml#/AgentCompletionAlgoliaParams
+      $ref: 'AgentCompletionAlgoliaParams.yml#/AgentCompletionAlgoliaParams'
     toolApprovals:
       additionalProperties:
         additionalProperties: true
@@ -10,6 +10,6 @@ ForwardedProps:
       default: null
       title: toolapprovals
     configuration:
-      $ref: AgentTestConfiguration.yml#/AgentTestConfiguration
+      $ref: 'AgentTestConfiguration.yml#/AgentTestConfiguration'
   title: forwardedProps
   type: object

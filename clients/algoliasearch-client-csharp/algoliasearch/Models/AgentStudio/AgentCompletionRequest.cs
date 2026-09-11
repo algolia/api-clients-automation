@@ -31,7 +31,7 @@ public partial class AgentCompletionRequest
   /// Gets or Sets Messages
   /// </summary>
   [JsonPropertyName("messages")]
-  public MessagesUnion Messages { get; set; }
+  public MessagesUnionAgentCompletionRequest Messages { get; set; }
 
   /// <summary>
   /// Optional conversation id.

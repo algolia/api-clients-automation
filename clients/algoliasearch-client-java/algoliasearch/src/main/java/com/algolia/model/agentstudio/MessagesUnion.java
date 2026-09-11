@@ -105,7 +105,7 @@ public interface MessagesUnion {
     /** Handle deserialization of the 'null' value. */
     @Override
     public MessagesUnion getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-      return null;
+      throw new JsonMappingException(ctxt.getParser(), "MessagesUnion cannot be null");
     }
   }
 }

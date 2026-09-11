@@ -27,4 +27,4 @@ public data class OpenAICompatibleProviderInput(
    * at agent level.
    */
   @SerialName(value = "defaultModel") val defaultModel: String,
-) : ProviderInputNullable, ProviderInput {}
+) : InputUnion, InputUnionProviderAuthenticationPatch {}

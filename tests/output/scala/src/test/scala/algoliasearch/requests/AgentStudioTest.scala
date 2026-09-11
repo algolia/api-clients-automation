@@ -71,6 +71,71 @@ class AgentStudioTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("compactContext with required parameters") {
+    val (client, echo) = testClient()
+    val future = client.compactContext(
+      contextCompactRequest = ContextCompactRequest(
+        providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        model = "gpt-4o-mini",
+        messages = MessagesUnion(
+          Seq(
+            UserMessageV4(
+              role = "user",
+              content = "Hello, how are you?"
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/unstable/context/compact")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("compactContext with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.compactContext(
+      contextCompactRequest = ContextCompactRequest(
+        providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        model = "gpt-4o-mini",
+        messages = MessagesUnion(
+          Seq(
+            UserMessageV4(
+              role = "user",
+              content = "Hello, how are you?"
+            ),
+            UserMessageV4(
+              role = "assistant",
+              content = "I am well."
+            )
+          )
+        ),
+        keepLastMessages = Some(2),
+        instructions = Some("keep every product reference"),
+        targetTokensEstimate = Some(128)
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/unstable/context/compact")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("createAgent with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.createAgent(
@@ -102,8 +167,13 @@ class AgentStudioTest extends AnyFunSuite {
         config = Some(Map("sendUsage" -> true, "sendReasoning" -> true, "temperature" -> 0.7, "max_tokens" -> 1500)),
         tools = Some(
           Seq(
-            AlgoliaDisplayResultsToolConfig(
-              `type` = "start"
+            ClientSideToolConfig(
+              `type` = "client_side",
+              name = "start",
+              description = "Start a conversation",
+              inputSchema = ClientToolsArgsSchema(
+                `type` = Some("object")
+              )
             )
           )
         )
@@ -116,7 +186,7 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.path == "/agent-studio/1/agents")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}"""
+      """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -148,7 +218,7 @@ class AgentStudioTest extends AnyFunSuite {
       compatibilityMode = CompatibilityMode.withName("ai-sdk-4"),
       agentCompletionRequest = AgentCompletionRequest(
         messages = Some(
-          MessagesUnion(
+          MessagesUnionAgentCompletionRequest(
             Seq(
               UserMessageV4(
                 role = "user",
@@ -169,6 +239,59 @@ class AgentStudioTest extends AnyFunSuite {
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery = parse("""{"compatibilityMode":"ai-sdk-4"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("createAgentTask with required parameters") {
+    val (client, echo) = testClient()
+    val future = client.createAgentTask(
+      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      taskRequest = TaskRequest(
+        input = Map("pageType" -> "pdp", "title" -> "acmePhone128Gb")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("createAgentTask with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.createAgentTask(
+      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      taskRequest = TaskRequest(
+        task = Some("algolia_on_page_suggestions"),
+        kind = Some(TaskKind.withName("prompt_suggestions")),
+        input = Map("pageType" -> "pdp", "title" -> "acmePhone128Gb")
+      ),
+      stream = Some(false),
+      cache = Some(false),
+      analytics = Some(false)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery =
+      parse("""{"stream":"false","cache":"false","analytics":"false"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -1229,7 +1352,11 @@ class AgentStudioTest extends AnyFunSuite {
       feedbackVote = Some(1),
       page = Some(2),
       limit = Some(10),
-      xAlgoliaSecureUserToken = None
+      includeImpactAnalytics = Some(true),
+      clicked = Some(true),
+      converted = Some(false),
+      hasAlgoliaSearch = Some(true),
+      xAlgoliaSecureUserToken = Some("secure-user-token")
     )
 
     Await.ready(future, Duration.Inf)
@@ -1239,13 +1366,20 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}"""
+      """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders =
+      parse("""{"x-algolia-secure-user-token":"secure-user-token"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
     }
   }
 
@@ -1507,6 +1641,65 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
+  test("trimContext with required parameters") {
+    val (client, echo) = testClient()
+    val future = client.trimContext(
+      contextTrimRequest = ContextTrimRequest(
+        messages = MessagesUnion(
+          Seq(
+            UserMessageV4(
+              role = "user",
+              content = "Hello, how are you?"
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/unstable/context/trim")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"messages":[{"role":"user","content":"Hello, how are you?"}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("trimContext with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.trimContext(
+      contextTrimRequest = ContextTrimRequest(
+        messages = MessagesUnion(
+          Seq(
+            UserMessageV4(
+              role = "user",
+              content = "Hello, how are you?"
+            ),
+            UserMessageV4(
+              role = "assistant",
+              content = "I am well."
+            )
+          )
+        ),
+        keepLastMessages = Some(1),
+        maxTokensEstimate = Some(256),
+        dropToolParts = Some(true)
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/unstable/context/trim")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("unpublishAgent") {
     val (client, echo) = testClient()
     val future = client.unpublishAgent(
@@ -1553,8 +1746,13 @@ class AgentStudioTest extends AnyFunSuite {
         config = Some(Map("temperature" -> 0.5)),
         tools = Some(
           Seq(
-            AlgoliaDisplayResultsToolConfig(
-              `type` = "start"
+            ClientSideToolConfig(
+              `type` = "client_side",
+              name = "start",
+              description = "Start a conversation",
+              inputSchema = ClientToolsArgsSchema(
+                `type` = Some("object")
+              )
             )
           )
         )
@@ -1567,7 +1765,7 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15")
     assert(res.method == "PATCH")
     val expectedBody = parse(
-      """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}"""
+      """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -1587,6 +1785,49 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.path == "/agent-studio/1/configuration")
     assert(res.method == "PATCH")
     val expectedBody = parse("""{"maxRetentionDays":30}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateFeedback with required parameters") {
+    val (client, echo) = testClient()
+    val future = client.updateFeedback(
+      feedbackUpdateRequest = FeedbackUpdateRequest(
+        messageId = "msg-abc123",
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/feedback")
+    assert(res.method == "PATCH")
+    val expectedBody = parse("""{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateFeedback with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.updateFeedback(
+      feedbackUpdateRequest = FeedbackUpdateRequest(
+        messageId = "msg-abc123",
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        vote = Some(OneOfEnum.withName("0")),
+        tags = Some(Seq("unhelpful", "off-topic")),
+        notes = Some("The response did not address my question.")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/feedback")
+    assert(res.method == "PATCH")
+    val expectedBody = parse(
+      """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

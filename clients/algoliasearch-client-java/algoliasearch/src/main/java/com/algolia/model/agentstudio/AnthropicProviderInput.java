@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Anthropic-specific provider input. */
 @JsonDeserialize(as = AnthropicProviderInput.class)
-public class AnthropicProviderInput implements ProviderInputNullable, ProviderInput {
+public class AnthropicProviderInput implements InputUnion, InputUnionProviderAuthenticationPatch {
 
   @JsonProperty("apiKey")
   private String apiKey;

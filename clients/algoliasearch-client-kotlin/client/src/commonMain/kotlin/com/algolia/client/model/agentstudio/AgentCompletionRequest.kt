@@ -19,7 +19,7 @@ import kotlinx.serialization.json.*
 @Serializable
 public data class AgentCompletionRequest(
   @SerialName(value = "configuration") val configuration: AgentTestConfiguration? = null,
-  @SerialName(value = "messages") val messages: MessagesUnion? = null,
+  @SerialName(value = "messages") val messages: MessagesUnionAgentCompletionRequest? = null,
 
   /** Optional conversation id. */
   @SerialName(value = "id") val id: String? = null,
@@ -27,4 +27,4 @@ public data class AgentCompletionRequest(
 
   /** Approval decisions for pending tool calls keyed by toolCallId. */
   @SerialName(value = "toolApprovals") val toolApprovals: JsonObject? = null,
-) {}
+) : AgentCompletionRequestUnion {}

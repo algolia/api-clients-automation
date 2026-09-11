@@ -27,7 +27,7 @@ class AgentConfigUpdate extends AbstractModel implements ModelInterface, \ArrayA
         'instructions' => 'string',
         'systemPrompt' => 'string',
         'config' => 'array<string,mixed>',
-        'tools' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ToolConfigInput[]',
+        'tools' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ToolConfig[]',
         'templateType' => 'string',
     ];
 
@@ -386,7 +386,7 @@ class AgentConfigUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Gets tools.
      *
-     * @return null|ToolConfigInput[]
+     * @return null|ToolConfig[]
      */
     public function getTools()
     {
@@ -396,7 +396,7 @@ class AgentConfigUpdate extends AbstractModel implements ModelInterface, \ArrayA
     /**
      * Sets tools.
      *
-     * @param null|ToolConfigInput[] $tools tools
+     * @param null|ToolConfig[] $tools tools
      *
      * @return self
      */

@@ -26,12 +26,12 @@ AgentTestConfiguration:
       type: object
     tools:
       items:
-        $ref: ToolConfigAgentTestConfiguration.yml#/ToolConfigAgentTestConfiguration
+        $ref: 'ToolConfigAgentTestConfiguration.yml#/ToolConfigAgentTestConfiguration'
       title: tools
       type: array
   required:
-  - instructions
-  - config
-  - tools
+    - instructions
+    - config
+    - tools
   title: agentTestConfiguration
   type: object

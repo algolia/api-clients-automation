@@ -39,7 +39,7 @@ public class AgentConfigCreate {
   private Map<String, Object> config;
 
   @JsonProperty("tools")
-  private List<ToolConfigInput> tools;
+  private List<ToolConfig> tools;
 
   public AgentConfigCreate setName(String name) {
     this.name = name;
@@ -146,12 +146,12 @@ public class AgentConfigCreate {
     return config;
   }
 
-  public AgentConfigCreate setTools(List<ToolConfigInput> tools) {
+  public AgentConfigCreate setTools(List<ToolConfig> tools) {
     this.tools = tools;
     return this;
   }
 
-  public AgentConfigCreate addTools(ToolConfigInput toolsItem) {
+  public AgentConfigCreate addTools(ToolConfig toolsItem) {
     if (this.tools == null) {
       this.tools = new ArrayList<>();
     }
@@ -161,7 +161,7 @@ public class AgentConfigCreate {
 
   /** Get tools */
   @javax.annotation.Nullable
-  public List<ToolConfigInput> getTools() {
+  public List<ToolConfig> getTools() {
     return tools;
   }
 

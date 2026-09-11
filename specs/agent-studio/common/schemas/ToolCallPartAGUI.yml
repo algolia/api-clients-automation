@@ -23,12 +23,12 @@ ToolCallPartAGUI:
       default: null
       title: output
     approval:
-      $ref: ToolApprovalAGUI.yml#/ToolApprovalAGUI
+      $ref: 'ToolApprovalAGUI.yml#/ToolApprovalAGUI'
   required:
-  - type
-  - id
-  - name
-  - arguments
-  - state
+    - type
+    - id
+    - name
+    - arguments
+    - state
   title: toolCallPartAGUI
   type: object

@@ -21,7 +21,7 @@ public struct AgentConfigCreate: Codable, JSONEncodable {
     public var systemPrompt: String?
     public var templateType: String?
     public var config: [String: AnyCodable]?
-    public var tools: [ToolConfigInput]?
+    public var tools: [ToolConfig]?
 
     public init(
         name: String,
@@ -32,7 +32,7 @@ public struct AgentConfigCreate: Codable, JSONEncodable {
         systemPrompt: String? = nil,
         templateType: String? = nil,
         config: [String: AnyCodable]? = nil,
-        tools: [ToolConfigInput]? = nil
+        tools: [ToolConfig]? = nil
     ) {
         self.name = name
         self.description = description

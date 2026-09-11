@@ -13,6 +13,7 @@ final class ToolCallPart {
     required this.toolCallId,
     required this.toolName,
     required this.args,
+    this.rawArgs,
     this.requiresApproval,
     this.providerOptions,
   });
@@ -29,6 +30,9 @@ final class ToolCallPart {
   @JsonKey(name: r'args')
   final Object? args;
 
+  @JsonKey(name: r'rawArgs')
+  final Map<String, Object>? rawArgs;
+
   @JsonKey(name: r'requiresApproval')
   final bool? requiresApproval;
 
@@ -43,6 +47,7 @@ final class ToolCallPart {
           other.toolCallId == toolCallId &&
           other.toolName == toolName &&
           other.args == args &&
+          other.rawArgs == rawArgs &&
           other.requiresApproval == requiresApproval &&
           other.providerOptions == providerOptions;
 
@@ -52,6 +57,7 @@ final class ToolCallPart {
       toolCallId.hashCode +
       toolName.hashCode +
       (args == null ? 0 : args.hashCode) +
+      (rawArgs == null ? 0 : rawArgs.hashCode) +
       (requiresApproval == null ? 0 : requiresApproval.hashCode) +
       (providerOptions == null ? 0 : providerOptions.hashCode);
 

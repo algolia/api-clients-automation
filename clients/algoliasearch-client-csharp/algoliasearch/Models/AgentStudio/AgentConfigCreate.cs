@@ -87,7 +87,7 @@ public partial class AgentConfigCreate
   /// Gets or Sets Tools
   /// </summary>
   [JsonPropertyName("tools")]
-  public List<ToolConfigInput> Tools { get; set; }
+  public List<ToolConfig> Tools { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

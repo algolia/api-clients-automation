@@ -4,7 +4,6 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_agent_studio/src/deserialize.dart';
 import 'package:algolia_client_agent_studio/src/version.dart';
 
-import 'package:algolia_client_agent_studio/src/model/agent_completion_request.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_config_create.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_config_update.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_with_version_response.dart';
@@ -16,9 +15,13 @@ import 'package:algolia_client_agent_studio/src/model/allowed_domain_response.da
 import 'package:algolia_client_agent_studio/src/model/application_config_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/application_config_response.dart';
 import 'package:algolia_client_agent_studio/src/model/compatibility_mode.dart';
+import 'package:algolia_client_agent_studio/src/model/context_compact_request.dart';
+import 'package:algolia_client_agent_studio/src/model/context_response.dart';
+import 'package:algolia_client_agent_studio/src/model/context_trim_request.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_full_response.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_creation_request.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_response.dart';
+import 'package:algolia_client_agent_studio/src/model/feedback_update_request.dart';
 import 'package:algolia_client_agent_studio/src/model/paginated_agents_response.dart';
 import 'package:algolia_client_agent_studio/src/model/paginated_conversations_response.dart';
 import 'package:algolia_client_agent_studio/src/model/paginated_provider_authentications_response.dart';
@@ -29,6 +32,8 @@ import 'package:algolia_client_agent_studio/src/model/provider_authentication_re
 import 'package:algolia_client_agent_studio/src/model/secret_key_create.dart';
 import 'package:algolia_client_agent_studio/src/model/secret_key_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/secret_key_response.dart';
+import 'package:algolia_client_agent_studio/src/model/task_request.dart';
+import 'package:algolia_client_agent_studio/src/model/task_response.dart';
 import 'package:algolia_client_agent_studio/src/model/user_data_response.dart';
 
 final class AgentStudioClient implements ApiClient {
@@ -145,6 +150,34 @@ final class AgentStudioClient implements ApiClient {
     );
   }
 
+  /// Summarize the older part of a conversation into a single user message via the caller's LLM.  Everything except the trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the kept tail verbatim. The caller's provider runs the summary, so cost is theirs by construction.  A conversation too large for the summarizer's context window is split into chunks that each fit, summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.  Two optional controls shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.  The `compaction` block reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+  ///
+  /// Required API Key ACLs:
+  ///   - search
+  ///
+  /// Parameters:
+  /// * [contextCompactRequest]
+  /// * [requestOptions] additional request configuration.
+  Future<ContextResponse> compactContext({
+    required ContextCompactRequest contextCompactRequest,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/agent-studio/1/unstable/context/compact',
+      body: contextCompactRequest.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<ContextResponse, ContextResponse>(
+      response,
+      'ContextResponse',
+      growable: true,
+    );
+  }
+
   /// Create a new agent.
   ///
   /// Required API Key ACLs:
@@ -216,7 +249,7 @@ final class AgentStudioClient implements ApiClient {
   /// Parameters:
   /// * [agentId] The agentId.
   /// * [compatibilityMode] Compatibility mode for the completion API.
-  /// * [agentCompletionRequest]
+  /// * [agentCompletionRequest]  - one of types: [AgentCompletionRequest], [AguiCompletionRequest],
   /// * [stream] Whether to stream the response or not.
   /// * [cache] Use cached responses if available.
   /// * [memory] Set to false to disable memory (enabled by default).
@@ -226,7 +259,7 @@ final class AgentStudioClient implements ApiClient {
   Future<Map<String, Object>> createAgentCompletion({
     required String agentId,
     required CompatibilityMode compatibilityMode,
-    required AgentCompletionRequest agentCompletionRequest,
+    required dynamic agentCompletionRequest,
     bool? stream,
     bool? cache,
     bool? memory,
@@ -253,7 +286,7 @@ final class AgentStudioClient implements ApiClient {
         if (memory != null) 'memory': memory,
         if (analytics != null) 'analytics': analytics,
       },
-      body: agentCompletionRequest.toJson(),
+      body: agentCompletionRequest?.toJson(),
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -262,6 +295,52 @@ final class AgentStudioClient implements ApiClient {
     return deserialize<Map<String, Object>, Object>(
       response,
       'Map<String, Object>',
+      growable: true,
+    );
+  }
+
+  /// Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+  ///
+  /// Required API Key ACLs:
+  ///   - search
+  ///
+  /// Parameters:
+  /// * [agentId] The agentId.
+  /// * [taskRequest]
+  /// * [stream] Whether to stream the response or not.
+  /// * [cache] Use cached responses if available.
+  /// * [analytics] Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted.
+  /// * [requestOptions] additional request configuration.
+  Future<TaskResponse> createAgentTask({
+    required String agentId,
+    required TaskRequest taskRequest,
+    bool? stream,
+    bool? cache,
+    bool? analytics,
+    RequestOptions? requestOptions,
+  }) async {
+    if (agentId.isEmpty) {
+      throw ArgumentError(
+          'Parameter `agentId` is required when calling `createAgentTask`.');
+    }
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/agent-studio/1/agents/{agentId}/tasks'.replaceAll(
+          '{' r'agentId' '}', Uri.encodeComponent(agentId.toString())),
+      queryParams: {
+        if (stream != null) 'stream': stream,
+        if (cache != null) 'cache': cache,
+        if (analytics != null) 'analytics': analytics,
+      },
+      body: taskRequest.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<TaskResponse, TaskResponse>(
+      response,
+      'TaskResponse',
       growable: true,
     );
   }
@@ -856,12 +935,16 @@ final class AgentStudioClient implements ApiClient {
   /// * [conversationId] The conversationId.
   /// * [agentId] The agentId.
   /// * [includeFeedback] Include feedback for the conversation.
+  /// * [includeMessageEvents] Include Insights events attributed to each assistant message.
+  /// * [includeImpactAnalytics] Include outcome signals (hasView, hasClick, hasConversion) for the conversation.
   /// * [xAlgoliaSecureUserToken] The X-Algolia-Secure-User-Token.
   /// * [requestOptions] additional request configuration.
   Future<ConversationFullResponse> getConversation({
     required String conversationId,
     required String agentId,
     bool? includeFeedback,
+    bool? includeMessageEvents,
+    bool? includeImpactAnalytics,
     String? xAlgoliaSecureUserToken,
     RequestOptions? requestOptions,
   }) async {
@@ -886,6 +969,10 @@ final class AgentStudioClient implements ApiClient {
       },
       queryParams: {
         if (includeFeedback != null) 'includeFeedback': includeFeedback,
+        if (includeMessageEvents != null)
+          'includeMessageEvents': includeMessageEvents,
+        if (includeImpactAnalytics != null)
+          'includeImpactAnalytics': includeImpactAnalytics,
       },
     );
     final response = await _retryStrategy.execute(
@@ -996,7 +1083,7 @@ final class AgentStudioClient implements ApiClient {
     );
   }
 
-  /// Invalidate cached completions for this agent. Filter with `before` (exclusive).
+  /// Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
   ///
   /// Required API Key ACLs:
   ///   - editSettings
@@ -1073,6 +1160,10 @@ final class AgentStudioClient implements ApiClient {
   /// * [feedbackVote] Filter by feedback value (requires includeFeedback=true).
   /// * [page] Page number.
   /// * [limit] Items per page.
+  /// * [includeImpactAnalytics] Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+  /// * [clicked] Filter by conversations with at least one item click.
+  /// * [converted] Filter by conversations with at least one conversion.
+  /// * [hasAlgoliaSearch] Filter by conversations where the search tool was used.
   /// * [xAlgoliaSecureUserToken] The X-Algolia-Secure-User-Token.
   /// * [requestOptions] additional request configuration.
   Future<PaginatedConversationsResponse> listAgentConversations({
@@ -1083,6 +1174,10 @@ final class AgentStudioClient implements ApiClient {
     int? feedbackVote,
     int? page,
     int? limit,
+    bool? includeImpactAnalytics,
+    bool? clicked,
+    bool? converted,
+    bool? hasAlgoliaSearch,
     String? xAlgoliaSecureUserToken,
     RequestOptions? requestOptions,
   }) async {
@@ -1105,6 +1200,11 @@ final class AgentStudioClient implements ApiClient {
         if (feedbackVote != null) 'feedbackVote': feedbackVote,
         if (page != null) 'page': page,
         if (limit != null) 'limit': limit,
+        if (includeImpactAnalytics != null)
+          'includeImpactAnalytics': includeImpactAnalytics,
+        if (clicked != null) 'clicked': clicked,
+        if (converted != null) 'converted': converted,
+        if (hasAlgoliaSearch != null) 'hasAlgoliaSearch': hasAlgoliaSearch,
       },
     );
     final response = await _retryStrategy.execute(
@@ -1312,6 +1412,34 @@ final class AgentStudioClient implements ApiClient {
     );
   }
 
+  /// Deterministically trim a conversation payload (no LLM calls).  Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed messages plus before/after stats.  With no constraints set, the messages are returned unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+  ///
+  /// Required API Key ACLs:
+  ///   - search
+  ///
+  /// Parameters:
+  /// * [contextTrimRequest]
+  /// * [requestOptions] additional request configuration.
+  Future<ContextResponse> trimContext({
+    required ContextTrimRequest contextTrimRequest,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/agent-studio/1/unstable/context/trim',
+      body: contextTrimRequest.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<ContextResponse, ContextResponse>(
+      response,
+      'ContextResponse',
+      growable: true,
+    );
+  }
+
   /// Unpublish the specified agent.
   ///
   /// Required API Key ACLs:
@@ -1403,6 +1531,34 @@ final class AgentStudioClient implements ApiClient {
     return deserialize<ApplicationConfigResponse, ApplicationConfigResponse>(
       response,
       'ApplicationConfigResponse',
+      growable: true,
+    );
+  }
+
+  /// Update an existing feedback entry.
+  ///
+  /// Required API Key ACLs:
+  ///   - search
+  ///
+  /// Parameters:
+  /// * [feedbackUpdateRequest]
+  /// * [requestOptions] additional request configuration.
+  Future<FeedbackResponse> updateFeedback({
+    required FeedbackUpdateRequest feedbackUpdateRequest,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.patch,
+      path: r'/agent-studio/1/feedback',
+      body: feedbackUpdateRequest.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<FeedbackResponse, FeedbackResponse>(
+      response,
+      'FeedbackResponse',
       growable: true,
     );
   }

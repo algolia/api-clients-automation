@@ -17,31 +17,71 @@ import kotlinx.serialization.json.*
  * ToolConfig
  *
  * Implementations:
- * - [Boolean] - *[ToolConfig.of]*
- * - [McpToolConfig]
+ * - [AlgoliaRecommendToolConfig]
+ * - [AlgoliaSearchToolConfig]
+ * - [ClientSideToolConfig]
+ * - [McpServerToolConfig]
+ * - [UnknownToolConfig]
  */
 @Serializable(ToolConfigSerializer::class)
 public sealed interface ToolConfig {
   @Serializable
   @JvmInline
-  public value class McpToolConfigValue(public val value: McpToolConfig) : ToolConfig
+  public value class ClientSideToolConfigValue(public val value: ClientSideToolConfig) : ToolConfig
 
-  @Serializable @JvmInline public value class BooleanValue(public val value: Boolean) : ToolConfig
+  @Serializable
+  @JvmInline
+  public value class McpServerToolConfigValue(public val value: McpServerToolConfig) : ToolConfig
+
+  @Serializable
+  @JvmInline
+  public value class AlgoliaSearchToolConfigValue(public val value: AlgoliaSearchToolConfig) :
+    ToolConfig
+
+  @Serializable
+  @JvmInline
+  public value class AlgoliaRecommendToolConfigValue(public val value: AlgoliaRecommendToolConfig) :
+    ToolConfig
+
+  @Serializable
+  @JvmInline
+  public value class UnknownToolConfigValue(public val value: UnknownToolConfig) : ToolConfig
 
   public companion object {
 
-    public fun of(value: McpToolConfig): ToolConfig = McpToolConfigValue(value)
+    public fun of(value: ClientSideToolConfig): ToolConfig = ClientSideToolConfigValue(value)
 
-    public fun of(value: Boolean): ToolConfig = BooleanValue(value)
+    public fun of(value: McpServerToolConfig): ToolConfig = McpServerToolConfigValue(value)
+
+    public fun of(value: AlgoliaSearchToolConfig): ToolConfig = AlgoliaSearchToolConfigValue(value)
+
+    public fun of(value: AlgoliaRecommendToolConfig): ToolConfig =
+      AlgoliaRecommendToolConfigValue(value)
+
+    public fun of(value: UnknownToolConfig): ToolConfig = UnknownToolConfigValue(value)
   }
 }
 
 internal class ToolConfigSerializer :
   JsonContentPolymorphicSerializer<ToolConfig>(ToolConfig::class) {
   override fun selectDeserializer(element: JsonElement): DeserializationStrategy<ToolConfig> {
+    when (element.jsonObject["type"]?.jsonPrimitive?.contentOrNull) {
+      "algolia_recommend" -> return AlgoliaRecommendToolConfig.serializer()
+      "algolia_search_index" -> return AlgoliaSearchToolConfig.serializer()
+      "client_side" -> return ClientSideToolConfig.serializer()
+      "mcp_tools" -> return McpServerToolConfig.serializer()
+      "unknown" -> return UnknownToolConfig.serializer()
+    }
     return when {
-      element is JsonObject -> McpToolConfig.serializer()
-      element.isBoolean -> ToolConfig.BooleanValue.serializer()
+      element is JsonObject &&
+        element.containsKey("description") &&
+        element.containsKey("inputSchema") -> ClientSideToolConfig.serializer()
+      element is JsonObject && element.containsKey("headers") && element.containsKey("url") ->
+        McpServerToolConfig.serializer()
+      element is JsonObject && element.containsKey("indices") ->
+        AlgoliaSearchToolConfig.serializer()
+      element is JsonObject -> AlgoliaRecommendToolConfig.serializer()
+      element is JsonObject -> UnknownToolConfig.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

@@ -6,8 +6,10 @@ import 'package:algolia_client_agent_studio/src/model/agent_config_update.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_status.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_test_configuration.dart';
 import 'package:algolia_client_agent_studio/src/model/agent_with_version_response.dart';
+import 'package:algolia_client_agent_studio/src/model/agui_completion_request.dart';
+import 'package:algolia_client_agent_studio/src/model/agui_resume.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_display_results_tool_config.dart';
-import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_config_input.dart';
+import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_index_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_search_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_search_tool_index_config.dart';
@@ -20,16 +22,25 @@ import 'package:algolia_client_agent_studio/src/model/alternatives_as_exact.dart
 import 'package:algolia_client_agent_studio/src/model/anthropic_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/application_config_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/application_config_response.dart';
+import 'package:algolia_client_agent_studio/src/model/assistant_message_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/assistant_message_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/assistant_message_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/azure_open_ai_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/base_provider_input.dart';
+import 'package:algolia_client_agent_studio/src/model/boolean_param.dart';
 import 'package:algolia_client_agent_studio/src/model/client_side_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/client_tools_args_schema.dart';
+import 'package:algolia_client_agent_studio/src/model/compaction_stats.dart';
 import 'package:algolia_client_agent_studio/src/model/compatibility_mode.dart';
+import 'package:algolia_client_agent_studio/src/model/context_compact_request.dart';
+import 'package:algolia_client_agent_studio/src/model/context_response.dart';
+import 'package:algolia_client_agent_studio/src/model/context_stats.dart';
+import 'package:algolia_client_agent_studio/src/model/context_trim_request.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_base_response.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_full_response.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_metadata.dart';
+import 'package:algolia_client_agent_studio/src/model/data_guardrail_violation_part_v5.dart';
+import 'package:algolia_client_agent_studio/src/model/data_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/episode.dart';
 import 'package:algolia_client_agent_studio/src/model/error_base.dart';
 import 'package:algolia_client_agent_studio/src/model/exact_on_single_word_query.dart';
@@ -37,16 +48,25 @@ import 'package:algolia_client_agent_studio/src/model/facets.dart';
 import 'package:algolia_client_agent_studio/src/model/facets_param.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_creation_request.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_response.dart';
+import 'package:algolia_client_agent_studio/src/model/feedback_update_request.dart';
+import 'package:algolia_client_agent_studio/src/model/forwarded_props.dart';
+import 'package:algolia_client_agent_studio/src/model/function_call_agui.dart';
+import 'package:algolia_client_agent_studio/src/model/guardrail_outcome.dart';
+import 'package:algolia_client_agent_studio/src/model/guardrail_violation_data_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/http_validation_error.dart';
+import 'package:algolia_client_agent_studio/src/model/impact_analytics.dart';
 import 'package:algolia_client_agent_studio/src/model/index_search_parameters.dart';
 import 'package:algolia_client_agent_studio/src/model/mcp_server_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/mcp_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/memory_record.dart';
 import 'package:algolia_client_agent_studio/src/model/memory_type.dart';
+import 'package:algolia_client_agent_studio/src/model/message_event.dart';
 import 'package:algolia_client_agent_studio/src/model/message_response.dart';
 import 'package:algolia_client_agent_studio/src/model/message_role.dart';
+import 'package:algolia_client_agent_studio/src/model/mode_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/number_param.dart';
 import 'package:algolia_client_agent_studio/src/model/number_param_constraint.dart';
+import 'package:algolia_client_agent_studio/src/model/one_of_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/open_ai_compatible_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/open_ai_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/paginated_agents_response.dart';
@@ -59,7 +79,9 @@ import 'package:algolia_client_agent_studio/src/model/provider_authentication_pa
 import 'package:algolia_client_agent_studio/src/model/provider_authentication_response.dart';
 import 'package:algolia_client_agent_studio/src/model/provider_name.dart';
 import 'package:algolia_client_agent_studio/src/model/query_type.dart';
+import 'package:algolia_client_agent_studio/src/model/reasoning_message_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/reasoning_part.dart';
+import 'package:algolia_client_agent_studio/src/model/reasoning_part_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/reasoning_part_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/reasoning_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/remove_words_if_no_results.dart';
@@ -70,19 +92,29 @@ import 'package:algolia_client_agent_studio/src/model/secret_key_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/secret_key_response.dart';
 import 'package:algolia_client_agent_studio/src/model/start_part.dart';
 import 'package:algolia_client_agent_studio/src/model/start_step_part.dart';
+import 'package:algolia_client_agent_studio/src/model/status_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/step_start_part_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/step_start_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/string_array_param.dart';
 import 'package:algolia_client_agent_studio/src/model/string_array_param_constraint.dart';
 import 'package:algolia_client_agent_studio/src/model/supported_language.dart';
+import 'package:algolia_client_agent_studio/src/model/task_kind.dart';
+import 'package:algolia_client_agent_studio/src/model/task_request.dart';
+import 'package:algolia_client_agent_studio/src/model/task_response.dart';
 import 'package:algolia_client_agent_studio/src/model/text_param.dart';
 import 'package:algolia_client_agent_studio/src/model/text_part.dart';
+import 'package:algolia_client_agent_studio/src/model/text_part_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/text_part_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/text_part_v5.dart';
+import 'package:algolia_client_agent_studio/src/model/tool_approval_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_approval_request_part.dart';
+import 'package:algolia_client_agent_studio/src/model/tool_call_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_call_part.dart';
+import 'package:algolia_client_agent_studio/src/model/tool_call_part_agui.dart';
+import 'package:algolia_client_agent_studio/src/model/tool_call_result_part_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_invocation_part_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_invocation_v4.dart';
+import 'package:algolia_client_agent_studio/src/model/tool_message_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_result_output.dart';
 import 'package:algolia_client_agent_studio/src/model/tool_result_output_type.dart';
@@ -91,11 +123,14 @@ import 'package:algolia_client_agent_studio/src/model/tool_state.dart';
 import 'package:algolia_client_agent_studio/src/model/typo_tolerance_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/unknown_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/user_data_response.dart';
+import 'package:algolia_client_agent_studio/src/model/user_message_agui.dart';
+import 'package:algolia_client_agent_studio/src/model/user_message_metadata_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/user_message_metadata_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/user_message_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/user_message_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/validation_error.dart';
 import 'package:algolia_client_agent_studio/src/model/vote_enum.dart';
+import 'package:algolia_client_agent_studio/src/model/xai_provider_input.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -138,12 +173,17 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentWithVersionResponse':
       return AgentWithVersionResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AguiCompletionRequest':
+      return AguiCompletionRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AguiResume':
+      return AguiResume.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'AlgoliaDisplayResultsToolConfig':
       return AlgoliaDisplayResultsToolConfig.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'AlgoliaRecommendToolConfigInput':
-      return AlgoliaRecommendToolConfigInput.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'AlgoliaRecommendToolConfig':
+      return AlgoliaRecommendToolConfig.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AlgoliaRecommendToolIndexConfig':
       return AlgoliaRecommendToolIndexConfig.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -179,6 +219,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ApplicationConfigResponse':
       return ApplicationConfigResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AssistantMessageAGUI':
+      return AssistantMessageAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AssistantMessageV4':
       return AssistantMessageV4.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -191,14 +234,30 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BaseProviderInput':
       return BaseProviderInput.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BooleanParam':
+      return BooleanParam.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ClientSideToolConfig':
       return ClientSideToolConfig.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ClientToolsArgsSchema':
       return ClientToolsArgsSchema.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'CompactionStats':
+      return CompactionStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'CompatibilityMode':
       return CompatibilityMode.fromJson(value) as ReturnType;
+    case 'ContextCompactRequest':
+      return ContextCompactRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ContextResponse':
+      return ContextResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ContextStats':
+      return ContextStats.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ContextTrimRequest':
+      return ContextTrimRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ConversationBaseResponse':
       return ConversationBaseResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -208,6 +267,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ConversationMetadata':
       return ConversationMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'DataGuardrailViolationPartV5':
+      return DataGuardrailViolationPartV5.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'DataPartV5':
+      return DataPartV5.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Episode':
       return Episode.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ErrorBase':
@@ -224,8 +288,26 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FeedbackResponse':
       return FeedbackResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'FeedbackUpdateRequest':
+      return FeedbackUpdateRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ForwardedProps':
+      return ForwardedProps.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'FunctionCallAGUI':
+      return FunctionCallAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'GuardrailOutcome':
+      return GuardrailOutcome.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'GuardrailViolationDataV5':
+      return GuardrailViolationDataV5.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'HTTPValidationError':
       return HTTPValidationError.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ImpactAnalytics':
+      return ImpactAnalytics.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'IndexSearchParameters':
       return IndexSearchParameters.fromJson(value as Map<String, dynamic>)
@@ -240,16 +322,22 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return MemoryRecord.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MemoryType':
       return MemoryType.fromJson(value) as ReturnType;
+    case 'MessageEvent':
+      return MessageEvent.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MessageResponse':
       return MessageResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'MessageRole':
       return MessageRole.fromJson(value) as ReturnType;
+    case 'ModeEnum':
+      return ModeEnum.fromJson(value) as ReturnType;
     case 'NumberParam':
       return NumberParam.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'NumberParamConstraint':
       return NumberParamConstraint.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'OneOfEnum':
+      return OneOfEnum.fromJson(value) as ReturnType;
     case 'OpenAICompatibleProviderInput':
       return OpenAICompatibleProviderInput.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -284,8 +372,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ProviderName.fromJson(value) as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
+    case 'ReasoningMessageAGUI':
+      return ReasoningMessageAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ReasoningPart':
       return ReasoningPart.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ReasoningPartAGUI':
+      return ReasoningPartAGUI.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ReasoningPartV4':
       return ReasoningPartV4.fromJson(value as Map<String, dynamic>)
@@ -315,6 +409,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'StartStepPart':
       return StartStepPart.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'StatusEnum':
+      return StatusEnum.fromJson(value) as ReturnType;
     case 'StepStartPartV4':
       return StepStartPartV4.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -329,24 +425,46 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SupportedLanguage':
       return SupportedLanguage.fromJson(value) as ReturnType;
+    case 'TaskKind':
+      return TaskKind.fromJson(value) as ReturnType;
+    case 'TaskRequest':
+      return TaskRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'TaskResponse':
+      return TaskResponse.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TextParam':
       return TextParam.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TextPart':
       return TextPart.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'TextPartAGUI':
+      return TextPartAGUI.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TextPartV4':
       return TextPartV4.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TextPartV5':
       return TextPartV5.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ToolApprovalAGUI':
+      return ToolApprovalAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ToolApprovalRequestPart':
       return ToolApprovalRequestPart.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ToolCallAGUI':
+      return ToolCallAGUI.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ToolCallPart':
       return ToolCallPart.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ToolCallPartAGUI':
+      return ToolCallPartAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ToolCallResultPartAGUI':
+      return ToolCallResultPartAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ToolInvocationPartV4':
       return ToolInvocationPartV4.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ToolInvocationV4':
       return ToolInvocationV4.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ToolMessageAGUI':
+      return ToolMessageAGUI.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ToolPartV5':
       return ToolPartV5.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -368,6 +486,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UserDataResponse':
       return UserDataResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UserMessageAGUI':
+      return UserMessageAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'UserMessageMetadataAGUI':
+      return UserMessageMetadataAGUI.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'UserMessageMetadataV5':
       return UserMessageMetadataV5.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -382,6 +506,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'VoteEnum':
       return VoteEnum.fromJson(value) as ReturnType;
+    case 'XAIProviderInput':
+      return XAIProviderInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     default:
       RegExpMatch? match;
 

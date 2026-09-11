@@ -1,7 +1,7 @@
 ContextTrimRequest:
   properties:
     messages:
-      $ref: MessagesUnion.yml#/MessagesUnion
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     keepLastMessages:
       type: integer
       minimum: 0.0
@@ -22,6 +22,6 @@ ContextTrimRequest:
       default: false
   type: object
   required:
-  - messages
+    - messages
   title: contextTrimRequest
   description: Deterministic trim request (no LLM calls).

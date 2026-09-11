@@ -10,8 +10,8 @@ import (
 
 // AgentCompletionRequest Request model for creating a completion for an assistant.
 type AgentCompletionRequest struct {
-	Configuration *AgentTestConfiguration       `json:"configuration,omitempty"`
-	Messages      utils.Nullable[MessagesUnion] `json:"messages,omitempty"`
+	Configuration *AgentTestConfiguration                             `json:"configuration,omitempty"`
+	Messages      utils.Nullable[MessagesUnionAgentCompletionRequest] `json:"messages,omitempty"`
 	// Optional conversation id.
 	Id      *string                       `json:"id,omitempty"`
 	Algolia *AgentCompletionAlgoliaParams `json:"algolia,omitempty"`
@@ -27,7 +27,7 @@ func WithAgentCompletionRequestConfiguration(val AgentTestConfiguration) AgentCo
 	}
 }
 
-func WithAgentCompletionRequestMessages(val utils.Nullable[MessagesUnion]) AgentCompletionRequestOption {
+func WithAgentCompletionRequestMessages(val utils.Nullable[MessagesUnionAgentCompletionRequest]) AgentCompletionRequestOption {
 	return func(f *AgentCompletionRequest) {
 		f.Messages = val
 	}
@@ -107,9 +107,9 @@ func (o *AgentCompletionRequest) SetConfiguration(v *AgentTestConfiguration) *Ag
 }
 
 // GetMessages returns the Messages field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AgentCompletionRequest) GetMessages() MessagesUnion {
+func (o *AgentCompletionRequest) GetMessages() MessagesUnionAgentCompletionRequest {
 	if o == nil || o.Messages.Get() == nil {
-		var ret MessagesUnion
+		var ret MessagesUnionAgentCompletionRequest
 
 		return ret
 	}
@@ -120,7 +120,7 @@ func (o *AgentCompletionRequest) GetMessages() MessagesUnion {
 // GetMessagesOk returns a tuple with the Messages field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned.
-func (o *AgentCompletionRequest) GetMessagesOk() (*MessagesUnion, bool) {
+func (o *AgentCompletionRequest) GetMessagesOk() (*MessagesUnionAgentCompletionRequest, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -137,8 +137,8 @@ func (o *AgentCompletionRequest) HasMessages() bool {
 	return false
 }
 
-// SetMessages gets a reference to the given utils.Nullable[MessagesUnion] and assigns it to the Messages field.
-func (o *AgentCompletionRequest) SetMessages(v *MessagesUnion) *AgentCompletionRequest {
+// SetMessages gets a reference to the given utils.Nullable[MessagesUnionAgentCompletionRequest] and assigns it to the Messages field.
+func (o *AgentCompletionRequest) SetMessages(v *MessagesUnionAgentCompletionRequest) *AgentCompletionRequest {
 	o.Messages.Set(v)
 
 	return o

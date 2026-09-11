@@ -24,6 +24,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     protected static $modelTypes = [
         'name' => 'string',
         'type' => 'string',
+        'isTerminal' => 'bool',
         'minGroups' => 'int',
         'maxGroups' => 'int',
         'minResultsPerGroup' => 'int',
@@ -38,6 +39,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     protected static $modelFormats = [
         'name' => null,
         'type' => null,
+        'isTerminal' => null,
         'minGroups' => null,
         'maxGroups' => null,
         'minResultsPerGroup' => null,
@@ -53,6 +55,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     protected static $attributeMap = [
         'name' => 'name',
         'type' => 'type',
+        'isTerminal' => 'isTerminal',
         'minGroups' => 'minGroups',
         'maxGroups' => 'maxGroups',
         'minResultsPerGroup' => 'minResultsPerGroup',
@@ -67,6 +70,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     protected static $setters = [
         'name' => 'setName',
         'type' => 'setType',
+        'isTerminal' => 'setIsTerminal',
         'minGroups' => 'setMinGroups',
         'maxGroups' => 'setMaxGroups',
         'minResultsPerGroup' => 'setMinResultsPerGroup',
@@ -81,6 +85,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     protected static $getters = [
         'name' => 'getName',
         'type' => 'getType',
+        'isTerminal' => 'getIsTerminal',
         'minGroups' => 'getMinGroups',
         'maxGroups' => 'getMaxGroups',
         'minResultsPerGroup' => 'getMinResultsPerGroup',
@@ -106,6 +111,9 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
         }
         if (isset($data['type'])) {
             $this->container['type'] = $data['type'];
+        }
+        if (isset($data['isTerminal'])) {
+            $this->container['isTerminal'] = $data['isTerminal'];
         }
         if (isset($data['minGroups'])) {
             $this->container['minGroups'] = $data['minGroups'];
@@ -248,6 +256,30 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     }
 
     /**
+     * Gets isTerminal.
+     *
+     * @return null|bool
+     */
+    public function getIsTerminal()
+    {
+        return $this->container['isTerminal'] ?? null;
+    }
+
+    /**
+     * Sets isTerminal.
+     *
+     * @param null|bool $isTerminal When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
+     *
+     * @return self
+     */
+    public function setIsTerminal($isTerminal)
+    {
+        $this->container['isTerminal'] = $isTerminal;
+
+        return $this;
+    }
+
+    /**
      * Gets minGroups.
      *
      * @return null|int
@@ -260,7 +292,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     /**
      * Sets minGroups.
      *
-     * @param null|int $minGroups minGroups
+     * @param null|int $minGroups minimum number of result groups
      *
      * @return self
      */
@@ -284,7 +316,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     /**
      * Sets maxGroups.
      *
-     * @param null|int $maxGroups maxGroups
+     * @param null|int $maxGroups maximum number of result groups
      *
      * @return self
      */
@@ -308,7 +340,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     /**
      * Sets minResultsPerGroup.
      *
-     * @param null|int $minResultsPerGroup minResultsPerGroup
+     * @param null|int $minResultsPerGroup minimum hits per group
      *
      * @return self
      */
@@ -332,7 +364,7 @@ class AlgoliaDisplayResultsToolConfig extends AbstractModel implements ModelInte
     /**
      * Sets maxResultsPerGroup.
      *
-     * @param null|int $maxResultsPerGroup maxResultsPerGroup
+     * @param null|int $maxResultsPerGroup maximum hits per group
      *
      * @return self
      */

@@ -20,7 +20,7 @@ public struct AgentConfigUpdate: Codable, JSONEncodable {
     /// Corresponds to the 'System prompt' field in the dashboard.
     public var systemPrompt: String?
     public var config: [String: AnyCodable]?
-    public var tools: [ToolConfigInput]?
+    public var tools: [ToolConfig]?
     public var templateType: String?
 
     public init(
@@ -31,7 +31,7 @@ public struct AgentConfigUpdate: Codable, JSONEncodable {
         instructions: String? = nil,
         systemPrompt: String? = nil,
         config: [String: AnyCodable]? = nil,
-        tools: [ToolConfigInput]? = nil,
+        tools: [ToolConfig]? = nil,
         templateType: String? = nil
     ) {
         self.name = name

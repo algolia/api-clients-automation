@@ -10,6 +10,8 @@ import (
 type AgentCompletionAlgoliaParams struct {
 	McpServers       *map[string]map[string]map[string]string `json:"mcpServers,omitempty"`
 	SearchParameters map[string]SearchParametersOverrides     `json:"searchParameters,omitempty"`
+	// Per-request override for the Algolia Search tool's indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in the agent's static `tool.indices` (preserving the operator's description and access-control fields) or — for index names the operator has not listed explicitly — synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent configuration first. Defaults to `None`, which preserves the existing static behavior.
+	Indices []string `json:"indices,omitempty"`
 }
 
 type AgentCompletionAlgoliaParamsOption func(f *AgentCompletionAlgoliaParams)
@@ -23,6 +25,12 @@ func WithAgentCompletionAlgoliaParamsMcpServers(val map[string]map[string]map[st
 func WithAgentCompletionAlgoliaParamsSearchParameters(val map[string]SearchParametersOverrides) AgentCompletionAlgoliaParamsOption {
 	return func(f *AgentCompletionAlgoliaParams) {
 		f.SearchParameters = val
+	}
+}
+
+func WithAgentCompletionAlgoliaParamsIndices(val []string) AgentCompletionAlgoliaParamsOption {
+	return func(f *AgentCompletionAlgoliaParams) {
+		f.Indices = val
 	}
 }
 
@@ -119,6 +127,43 @@ func (o *AgentCompletionAlgoliaParams) SetSearchParameters(v map[string]SearchPa
 	return o
 }
 
+// GetIndices returns the Indices field value if set, zero value otherwise.
+func (o *AgentCompletionAlgoliaParams) GetIndices() []string {
+	if o == nil || o.Indices == nil {
+		var ret []string
+
+		return ret
+	}
+
+	return o.Indices
+}
+
+// GetIndicesOk returns a tuple with the Indices field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AgentCompletionAlgoliaParams) GetIndicesOk() ([]string, bool) {
+	if o == nil || o.Indices == nil {
+		return nil, false
+	}
+
+	return o.Indices, true
+}
+
+// HasIndices returns a boolean if a field has been set.
+func (o *AgentCompletionAlgoliaParams) HasIndices() bool {
+	if o != nil && o.Indices != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIndices gets a reference to the given []string and assigns it to the Indices field.
+func (o *AgentCompletionAlgoliaParams) SetIndices(v []string) *AgentCompletionAlgoliaParams {
+	o.Indices = v
+
+	return o
+}
+
 func (o AgentCompletionAlgoliaParams) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if o.McpServers != nil {
@@ -127,6 +172,10 @@ func (o AgentCompletionAlgoliaParams) MarshalJSON() ([]byte, error) {
 
 	if o.SearchParameters != nil {
 		toSerialize["searchParameters"] = o.SearchParameters
+	}
+
+	if o.Indices != nil {
+		toSerialize["indices"] = o.Indices
 	}
 
 	serialized, err := json.Marshal(toSerialize)
@@ -141,6 +190,7 @@ func (o AgentCompletionAlgoliaParams) String() string {
 	out := ""
 	out += fmt.Sprintf("  mcpServers=%v\n", o.McpServers)
 	out += fmt.Sprintf("  searchParameters=%v\n", o.SearchParameters)
+	out += fmt.Sprintf("  indices=%v\n", o.Indices)
 
 	return fmt.Sprintf("AgentCompletionAlgoliaParams {\n%s}", out)
 }

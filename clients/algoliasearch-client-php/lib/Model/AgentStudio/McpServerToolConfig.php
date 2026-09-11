@@ -26,7 +26,7 @@ class McpServerToolConfig extends AbstractModel implements ModelInterface, \Arra
         'name' => 'string',
         'type' => 'string',
         'id' => 'string',
-        'allowedTools' => 'array<string,\Algolia\AlgoliaSearch\Model\AgentStudio\ToolConfig>',
+        'allowedTools' => 'array<string,\Algolia\AlgoliaSearch\Model\AgentStudio\AllowedTool>',
     ];
 
     /**
@@ -361,7 +361,7 @@ class McpServerToolConfig extends AbstractModel implements ModelInterface, \Arra
     /**
      * Gets allowedTools.
      *
-     * @return null|array<string,ToolConfig>
+     * @return null|array<string,AllowedTool>
      */
     public function getAllowedTools()
     {
@@ -371,7 +371,7 @@ class McpServerToolConfig extends AbstractModel implements ModelInterface, \Arra
     /**
      * Sets allowedTools.
      *
-     * @param null|array<string,ToolConfig> $allowedTools allowedTools
+     * @param null|array<string,AllowedTool> $allowedTools allowedTools
      *
      * @return self
      */

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** McpToolConfig */
 @JsonDeserialize(as = McpToolConfig.class)
-public class McpToolConfig implements ToolConfig {
+public class McpToolConfig implements AllowedTool {
 
   @JsonProperty("requiresApproval")
   private Boolean requiresApproval;

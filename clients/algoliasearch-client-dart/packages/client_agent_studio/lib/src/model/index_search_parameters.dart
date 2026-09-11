@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_agent_studio/src/model/text_param.dart';
 import 'package:algolia_client_agent_studio/src/model/facets_param.dart';
+import 'package:algolia_client_agent_studio/src/model/boolean_param.dart';
 import 'package:algolia_client_agent_studio/src/model/string_array_param.dart';
 import 'package:algolia_client_agent_studio/src/model/number_param.dart';
 
@@ -18,6 +19,7 @@ final class IndexSearchParameters {
     this.page,
     this.attributesToRetrieve,
     this.responseFields,
+    this.distinct,
     this.facets,
     this.custom,
   });
@@ -37,6 +39,9 @@ final class IndexSearchParameters {
   @JsonKey(name: r'responseFields')
   final StringArrayParam? responseFields;
 
+  @JsonKey(name: r'distinct')
+  final BooleanParam? distinct;
+
   @JsonKey(name: r'facets')
   final FacetsParam? facets;
 
@@ -52,6 +57,7 @@ final class IndexSearchParameters {
           other.page == page &&
           other.attributesToRetrieve == attributesToRetrieve &&
           other.responseFields == responseFields &&
+          other.distinct == distinct &&
           other.facets == facets &&
           other.custom == custom;
 
@@ -62,6 +68,7 @@ final class IndexSearchParameters {
       page.hashCode +
       attributesToRetrieve.hashCode +
       responseFields.hashCode +
+      (distinct == null ? 0 : distinct.hashCode) +
       (facets == null ? 0 : facets.hashCode) +
       (custom == null ? 0 : custom.hashCode);
 

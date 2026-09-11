@@ -1,6 +1,6 @@
 TaskKind:
   type: string
   enum:
-  - prompt_suggestions
+    - prompt_suggestions
   title: taskKind
   description: Supported task behaviors used for default task resolution.

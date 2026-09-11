@@ -23,9 +23,9 @@ ToolMessageAGUI:
       default: null
       title: encryptedvalue
   required:
-  - role
-  - id
-  - content
-  - toolCallId
+    - role
+    - id
+    - content
+    - toolCallId
   title: toolMessageAGUI
   type: object

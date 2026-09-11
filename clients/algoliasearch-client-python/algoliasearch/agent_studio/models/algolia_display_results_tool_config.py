@@ -21,6 +21,7 @@ else:
 _ALIASES = {
     "name": "name",
     "type": "type",
+    "is_terminal": "isTerminal",
     "min_groups": "minGroups",
     "max_groups": "maxGroups",
     "min_results_per_group": "minResultsPerGroup",
@@ -39,10 +40,16 @@ class AlgoliaDisplayResultsToolConfig(BaseModel):
 
     name: Optional[str] = None
     type: str
+    is_terminal: Optional[bool] = None
+    """ When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs. """
     min_groups: Optional[int] = None
+    """ minimum number of result groups. """
     max_groups: Optional[int] = None
+    """ maximum number of result groups. """
     min_results_per_group: Optional[int] = None
+    """ minimum hits per group. """
     max_results_per_group: Optional[int] = None
+    """ maximum hits per group. """
 
     model_config = ConfigDict(
         strict=False,

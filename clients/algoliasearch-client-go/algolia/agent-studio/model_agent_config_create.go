@@ -15,10 +15,10 @@ type AgentConfigCreate struct {
 	// The agent prompt: defines the agent's role, tone, and goals. Guides how it answers using the provided context. Corresponds to the 'Agent prompt' field in the dashboard.
 	Instructions string `json:"instructions"`
 	// The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the 'System prompt' field in the dashboard.
-	SystemPrompt *string           `json:"systemPrompt,omitempty"`
-	TemplateType *string           `json:"templateType,omitempty"`
-	Config       map[string]any    `json:"config,omitempty"`
-	Tools        []ToolConfigInput `json:"tools,omitempty"`
+	SystemPrompt *string        `json:"systemPrompt,omitempty"`
+	TemplateType *string        `json:"templateType,omitempty"`
+	Config       map[string]any `json:"config,omitempty"`
+	Tools        []ToolConfig   `json:"tools,omitempty"`
 }
 
 type AgentConfigCreateOption func(f *AgentConfigCreate)
@@ -59,7 +59,7 @@ func WithAgentConfigCreateConfig(val map[string]any) AgentConfigCreateOption {
 	}
 }
 
-func WithAgentConfigCreateTools(val []ToolConfigInput) AgentConfigCreateOption {
+func WithAgentConfigCreateTools(val []ToolConfig) AgentConfigCreateOption {
 	return func(f *AgentConfigCreate) {
 		f.Tools = val
 	}
@@ -365,9 +365,9 @@ func (o *AgentConfigCreate) SetConfig(v map[string]any) *AgentConfigCreate {
 }
 
 // GetTools returns the Tools field value if set, zero value otherwise.
-func (o *AgentConfigCreate) GetTools() []ToolConfigInput {
+func (o *AgentConfigCreate) GetTools() []ToolConfig {
 	if o == nil || o.Tools == nil {
-		var ret []ToolConfigInput
+		var ret []ToolConfig
 
 		return ret
 	}
@@ -377,7 +377,7 @@ func (o *AgentConfigCreate) GetTools() []ToolConfigInput {
 
 // GetToolsOk returns a tuple with the Tools field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AgentConfigCreate) GetToolsOk() ([]ToolConfigInput, bool) {
+func (o *AgentConfigCreate) GetToolsOk() ([]ToolConfig, bool) {
 	if o == nil || o.Tools == nil {
 		return nil, false
 	}
@@ -394,8 +394,8 @@ func (o *AgentConfigCreate) HasTools() bool {
 	return false
 }
 
-// SetTools gets a reference to the given []ToolConfigInput and assigns it to the Tools field.
-func (o *AgentConfigCreate) SetTools(v []ToolConfigInput) *AgentConfigCreate {
+// SetTools gets a reference to the given []ToolConfig and assigns it to the Tools field.
+func (o *AgentConfigCreate) SetTools(v []ToolConfig) *AgentConfigCreate {
 	o.Tools = v
 
 	return o

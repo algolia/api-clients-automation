@@ -10,7 +10,7 @@ public struct ProviderAuthenticationResponse: Codable, JSONEncodable {
     public var id: String
     public var name: String
     public var providerName: String
-    public var input: ProviderInput
+    public var input: InputUnion
     public var createdAt: String
     public var updatedAt: String
     public var lastUsedAt: String?
@@ -19,7 +19,7 @@ public struct ProviderAuthenticationResponse: Codable, JSONEncodable {
         id: String,
         name: String,
         providerName: String,
-        input: ProviderInput,
+        input: InputUnion,
         createdAt: String,
         updatedAt: String,
         lastUsedAt: String? = nil

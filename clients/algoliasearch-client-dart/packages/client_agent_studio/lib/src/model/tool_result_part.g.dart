@@ -22,6 +22,14 @@ ToolResultPart _$ToolResultPartFromJson(Map<String, dynamic> json) =>
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(k, e as Object),
                   )),
+          mcpConfigId: $checkedConvert('mcpConfigId', (v) => v as String?),
+          mcpConfigName: $checkedConvert('mcpConfigName', (v) => v as String?),
+          isTerminal: $checkedConvert('isTerminal', (v) => v as bool?),
+          outputMetadata: $checkedConvert(
+              'outputMetadata',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, e as Object),
+                  )),
         );
         return val;
       },
@@ -42,5 +50,9 @@ Map<String, dynamic> _$ToolResultPartToJson(ToolResultPart instance) {
   }
 
   writeNotNull('providerOptions', instance.providerOptions);
+  writeNotNull('mcpConfigId', instance.mcpConfigId);
+  writeNotNull('mcpConfigName', instance.mcpConfigName);
+  writeNotNull('isTerminal', instance.isTerminal);
+  writeNotNull('outputMetadata', instance.outputMetadata);
   return val;
 }

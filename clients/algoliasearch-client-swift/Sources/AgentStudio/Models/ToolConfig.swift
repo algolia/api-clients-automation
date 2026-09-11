@@ -7,25 +7,62 @@ import Foundation
 #endif
 
 public enum ToolConfig: Codable, JSONEncodable, AbstractEncodable {
-    case mcpToolConfig(McpToolConfig)
-    case bool(Bool)
+    case clientSideToolConfig(ClientSideToolConfig)
+    case mcpServerToolConfig(McpServerToolConfig)
+    case algoliaSearchToolConfig(AlgoliaSearchToolConfig)
+    case algoliaRecommendToolConfig(AlgoliaRecommendToolConfig)
+    case unknownToolConfig(UnknownToolConfig)
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case let .mcpToolConfig(value):
+        case let .clientSideToolConfig(value):
             try container.encode(value)
-        case let .bool(value):
+        case let .mcpServerToolConfig(value):
+            try container.encode(value)
+        case let .algoliaSearchToolConfig(value):
+            try container.encode(value)
+        case let .algoliaRecommendToolConfig(value):
+            try container.encode(value)
+        case let .unknownToolConfig(value):
             try container.encode(value)
         }
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(McpToolConfig.self) {
-            self = .mcpToolConfig(value)
-        } else if let value = try? container.decode(Bool.self) {
-            self = .bool(value)
+        if let jsonObject = try? container.decode([String: AnyCodable].self),
+           let discriminatorValue = jsonObject["type"]?.value as? String {
+            switch discriminatorValue {
+            case "algolia_recommend":
+                self = try .algoliaRecommendToolConfig(container.decode(AlgoliaRecommendToolConfig.self))
+                return
+            case "algolia_search_index":
+                self = try .algoliaSearchToolConfig(container.decode(AlgoliaSearchToolConfig.self))
+                return
+            case "client_side":
+                self = try .clientSideToolConfig(container.decode(ClientSideToolConfig.self))
+                return
+            case "mcp_tools":
+                self = try .mcpServerToolConfig(container.decode(McpServerToolConfig.self))
+                return
+            case "unknown":
+                self = try .unknownToolConfig(container.decode(UnknownToolConfig.self))
+                return
+            default:
+                break
+            }
+        }
+        if let value = try? container.decode(ClientSideToolConfig.self) {
+            self = .clientSideToolConfig(value)
+        } else if let value = try? container.decode(McpServerToolConfig.self) {
+            self = .mcpServerToolConfig(value)
+        } else if let value = try? container.decode(AlgoliaSearchToolConfig.self) {
+            self = .algoliaSearchToolConfig(value)
+        } else if let value = try? container.decode(AlgoliaRecommendToolConfig.self) {
+            self = .algoliaRecommendToolConfig(value)
+        } else if let value = try? container.decode(UnknownToolConfig.self) {
+            self = .unknownToolConfig(value)
         } else {
             throw DecodingError.typeMismatch(
                 Self.Type.self,
@@ -36,10 +73,16 @@ public enum ToolConfig: Codable, JSONEncodable, AbstractEncodable {
 
     public func GetActualInstance() -> Encodable {
         switch self {
-        case let .mcpToolConfig(value):
-            value as McpToolConfig
-        case let .bool(value):
-            value as Bool
+        case let .clientSideToolConfig(value):
+            value as ClientSideToolConfig
+        case let .mcpServerToolConfig(value):
+            value as McpServerToolConfig
+        case let .algoliaSearchToolConfig(value):
+            value as AlgoliaSearchToolConfig
+        case let .algoliaRecommendToolConfig(value):
+            value as AlgoliaRecommendToolConfig
+        case let .unknownToolConfig(value):
+            value as UnknownToolConfig
         }
     }
 }

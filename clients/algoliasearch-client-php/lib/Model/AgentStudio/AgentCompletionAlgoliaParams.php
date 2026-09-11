@@ -22,6 +22,7 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     protected static $modelTypes = [
         'mcpServers' => 'array<string,array<string,array<string,string>>>',
         'searchParameters' => 'array<string,\Algolia\AlgoliaSearch\Model\AgentStudio\SearchParametersOverrides>',
+        'indices' => 'string[]',
     ];
 
     /**
@@ -32,6 +33,7 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     protected static $modelFormats = [
         'mcpServers' => null,
         'searchParameters' => null,
+        'indices' => null,
     ];
 
     /**
@@ -43,6 +45,7 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     protected static $attributeMap = [
         'mcpServers' => 'mcpServers',
         'searchParameters' => 'searchParameters',
+        'indices' => 'indices',
     ];
 
     /**
@@ -53,6 +56,7 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     protected static $setters = [
         'mcpServers' => 'setMcpServers',
         'searchParameters' => 'setSearchParameters',
+        'indices' => 'setIndices',
     ];
 
     /**
@@ -63,6 +67,7 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     protected static $getters = [
         'mcpServers' => 'getMcpServers',
         'searchParameters' => 'getSearchParameters',
+        'indices' => 'getIndices',
     ];
 
     /**
@@ -84,6 +89,9 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
         }
         if (isset($data['searchParameters'])) {
             $this->container['searchParameters'] = $data['searchParameters'];
+        }
+        if (isset($data['indices'])) {
+            $this->container['indices'] = $data['indices'];
         }
     }
 
@@ -203,6 +211,30 @@ class AgentCompletionAlgoliaParams extends AbstractModel implements ModelInterfa
     public function setSearchParameters($searchParameters)
     {
         $this->container['searchParameters'] = $searchParameters;
+
+        return $this;
+    }
+
+    /**
+     * Gets indices.
+     *
+     * @return null|string[]
+     */
+    public function getIndices()
+    {
+        return $this->container['indices'] ?? null;
+    }
+
+    /**
+     * Sets indices.
+     *
+     * @param null|string[] $indices Per-request override for the Algolia Search tool's indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in the agent's static `tool.indices` (preserving the operator's description and access-control fields) or — for index names the operator has not listed explicitly — synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent configuration first. Defaults to `None`, which preserves the existing static behavior.
+     *
+     * @return self
+     */
+    public function setIndices($indices)
+    {
+        $this->container['indices'] = $indices;
 
         return $this;
     }

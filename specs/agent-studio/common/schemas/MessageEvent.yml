@@ -8,12 +8,12 @@ MessageEvent:
       title: eventname
     objectId:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: objectid
   type: object
   required:
-  - eventType
-  - eventName
+    - eventType
+    - eventName
   title: messageEvent
   description: An Insights event attributed to an assistant message.

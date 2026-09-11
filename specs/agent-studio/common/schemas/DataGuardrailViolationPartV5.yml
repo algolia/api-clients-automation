@@ -14,8 +14,8 @@ DataGuardrailViolationPartV5:
       title: type
       type: string
     data:
-      $ref: GuardrailViolationDataV5.yml#/GuardrailViolationDataV5
+      $ref: 'GuardrailViolationDataV5.yml#/GuardrailViolationDataV5'
   required:
-  - data
+    - data
   title: dataGuardrailViolationPartV5
   type: object

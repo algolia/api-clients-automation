@@ -17,6 +17,7 @@ final class ToolApprovalRequestPart {
     this.providerOptions,
     this.argsHash,
     this.appId,
+    this.conversationId,
   });
 
   @JsonKey(name: r'type')
@@ -43,6 +44,9 @@ final class ToolApprovalRequestPart {
   @JsonKey(name: r'appId')
   final String? appId;
 
+  @JsonKey(name: r'conversationId')
+  final String? conversationId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -54,7 +58,8 @@ final class ToolApprovalRequestPart {
           other.description == description &&
           other.providerOptions == providerOptions &&
           other.argsHash == argsHash &&
-          other.appId == appId;
+          other.appId == appId &&
+          other.conversationId == conversationId;
 
   @override
   int get hashCode =>
@@ -65,7 +70,8 @@ final class ToolApprovalRequestPart {
       (description == null ? 0 : description.hashCode) +
       (providerOptions == null ? 0 : providerOptions.hashCode) +
       (argsHash == null ? 0 : argsHash.hashCode) +
-      (appId == null ? 0 : appId.hashCode);
+      (appId == null ? 0 : appId.hashCode) +
+      (conversationId == null ? 0 : conversationId.hashCode);
 
   factory ToolApprovalRequestPart.fromJson(Map<String, dynamic> json) =>
       _$ToolApprovalRequestPartFromJson(json);

@@ -22,10 +22,10 @@ public partial class ToolConfig : AbstractSchema
 {
   /// <summary>
   /// Initializes a new instance of the ToolConfig class
-  /// with a McpToolConfig
+  /// with a ClientSideToolConfig
   /// </summary>
-  /// <param name="actualInstance">An instance of McpToolConfig.</param>
-  public ToolConfig(McpToolConfig actualInstance)
+  /// <param name="actualInstance">An instance of ClientSideToolConfig.</param>
+  public ToolConfig(ClientSideToolConfig actualInstance)
   {
     ActualInstance =
       actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
@@ -33,12 +33,46 @@ public partial class ToolConfig : AbstractSchema
 
   /// <summary>
   /// Initializes a new instance of the ToolConfig class
-  /// with a bool
+  /// with a McpServerToolConfig
   /// </summary>
-  /// <param name="actualInstance">An instance of bool.</param>
-  public ToolConfig(bool actualInstance)
+  /// <param name="actualInstance">An instance of McpServerToolConfig.</param>
+  public ToolConfig(McpServerToolConfig actualInstance)
   {
-    ActualInstance = actualInstance;
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the ToolConfig class
+  /// with a AlgoliaSearchToolConfig
+  /// </summary>
+  /// <param name="actualInstance">An instance of AlgoliaSearchToolConfig.</param>
+  public ToolConfig(AlgoliaSearchToolConfig actualInstance)
+  {
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the ToolConfig class
+  /// with a AlgoliaRecommendToolConfig
+  /// </summary>
+  /// <param name="actualInstance">An instance of AlgoliaRecommendToolConfig.</param>
+  public ToolConfig(AlgoliaRecommendToolConfig actualInstance)
+  {
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the ToolConfig class
+  /// with a UnknownToolConfig
+  /// </summary>
+  /// <param name="actualInstance">An instance of UnknownToolConfig.</param>
+  public ToolConfig(UnknownToolConfig actualInstance)
+  {
+    ActualInstance =
+      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -47,41 +81,98 @@ public partial class ToolConfig : AbstractSchema
   public sealed override object ActualInstance { get; set; }
 
   /// <summary>
-  /// Get the actual instance of `McpToolConfig`. If the actual instance is not `McpToolConfig`,
+  /// Get the actual instance of `ClientSideToolConfig`. If the actual instance is not `ClientSideToolConfig`,
   /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>An instance of McpToolConfig</returns>
-  public McpToolConfig AsMcpToolConfig()
+  /// <returns>An instance of ClientSideToolConfig</returns>
+  public ClientSideToolConfig AsClientSideToolConfig()
   {
-    return (McpToolConfig)ActualInstance;
+    return (ClientSideToolConfig)ActualInstance;
   }
 
   /// <summary>
-  /// Get the actual instance of `bool`. If the actual instance is not `bool`,
+  /// Get the actual instance of `McpServerToolConfig`. If the actual instance is not `McpServerToolConfig`,
   /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>An instance of bool</returns>
-  public bool AsBool()
+  /// <returns>An instance of McpServerToolConfig</returns>
+  public McpServerToolConfig AsMcpServerToolConfig()
   {
-    return (bool)ActualInstance;
+    return (McpServerToolConfig)ActualInstance;
   }
 
   /// <summary>
-  /// Check if the actual instance is of `McpToolConfig` type.
+  /// Get the actual instance of `AlgoliaSearchToolConfig`. If the actual instance is not `AlgoliaSearchToolConfig`,
+  /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>Whether or not the instance is the type</returns>
-  public bool IsMcpToolConfig()
+  /// <returns>An instance of AlgoliaSearchToolConfig</returns>
+  public AlgoliaSearchToolConfig AsAlgoliaSearchToolConfig()
   {
-    return ActualInstance.GetType() == typeof(McpToolConfig);
+    return (AlgoliaSearchToolConfig)ActualInstance;
   }
 
   /// <summary>
-  /// Check if the actual instance is of `bool` type.
+  /// Get the actual instance of `AlgoliaRecommendToolConfig`. If the actual instance is not `AlgoliaRecommendToolConfig`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of AlgoliaRecommendToolConfig</returns>
+  public AlgoliaRecommendToolConfig AsAlgoliaRecommendToolConfig()
+  {
+    return (AlgoliaRecommendToolConfig)ActualInstance;
+  }
+
+  /// <summary>
+  /// Get the actual instance of `UnknownToolConfig`. If the actual instance is not `UnknownToolConfig`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of UnknownToolConfig</returns>
+  public UnknownToolConfig AsUnknownToolConfig()
+  {
+    return (UnknownToolConfig)ActualInstance;
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `ClientSideToolConfig` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
-  public bool IsBool()
+  public bool IsClientSideToolConfig()
   {
-    return ActualInstance.GetType() == typeof(bool);
+    return ActualInstance.GetType() == typeof(ClientSideToolConfig);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `McpServerToolConfig` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsMcpServerToolConfig()
+  {
+    return ActualInstance.GetType() == typeof(McpServerToolConfig);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `AlgoliaSearchToolConfig` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsAlgoliaSearchToolConfig()
+  {
+    return ActualInstance.GetType() == typeof(AlgoliaSearchToolConfig);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `AlgoliaRecommendToolConfig` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsAlgoliaRecommendToolConfig()
+  {
+    return ActualInstance.GetType() == typeof(AlgoliaRecommendToolConfig);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `UnknownToolConfig` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsUnknownToolConfig()
+  {
+    return ActualInstance.GetType() == typeof(UnknownToolConfig);
   }
 
   /// <summary>
@@ -167,30 +258,114 @@ public class ToolConfigJsonConverter : JsonConverter<ToolConfig>
   {
     var jsonDocument = JsonDocument.ParseValue(ref reader);
     var root = jsonDocument.RootElement;
-    if (root.ValueKind == JsonValueKind.Object)
+    if (root.TryGetProperty("type", out JsonElement discriminatorElement))
+    {
+      string discriminatorValue = discriminatorElement.GetString();
+      if (discriminatorValue == "algolia_recommend")
+      {
+        return new ToolConfig(
+          jsonDocument.Deserialize<AlgoliaRecommendToolConfig>(JsonConfig.Options)
+        );
+      }
+      if (discriminatorValue == "algolia_search_index")
+      {
+        return new ToolConfig(
+          jsonDocument.Deserialize<AlgoliaSearchToolConfig>(JsonConfig.Options)
+        );
+      }
+      if (discriminatorValue == "client_side")
+      {
+        return new ToolConfig(jsonDocument.Deserialize<ClientSideToolConfig>(JsonConfig.Options));
+      }
+      if (discriminatorValue == "mcp_tools")
+      {
+        return new ToolConfig(jsonDocument.Deserialize<McpServerToolConfig>(JsonConfig.Options));
+      }
+      if (discriminatorValue == "unknown")
+      {
+        return new ToolConfig(jsonDocument.Deserialize<UnknownToolConfig>(JsonConfig.Options));
+      }
+    }
+    if (
+      root.ValueKind == JsonValueKind.Object
+      && root.TryGetProperty("description", out _)
+      && root.TryGetProperty("inputSchema", out _)
+    )
     {
       try
       {
-        return new ToolConfig(jsonDocument.Deserialize<McpToolConfig>(JsonConfig.Options));
+        return new ToolConfig(jsonDocument.Deserialize<ClientSideToolConfig>(JsonConfig.Options));
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
-          $"Failed to deserialize into McpToolConfig: {exception}"
+          $"Failed to deserialize into ClientSideToolConfig: {exception}"
         );
       }
     }
-    if (root.ValueKind == JsonValueKind.True || root.ValueKind == JsonValueKind.False)
+    if (
+      root.ValueKind == JsonValueKind.Object
+      && root.TryGetProperty("headers", out _)
+      && root.TryGetProperty("url", out _)
+    )
     {
       try
       {
-        return new ToolConfig(jsonDocument.Deserialize<bool>(JsonConfig.Options));
+        return new ToolConfig(jsonDocument.Deserialize<McpServerToolConfig>(JsonConfig.Options));
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
-        System.Diagnostics.Debug.WriteLine($"Failed to deserialize into bool: {exception}");
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into McpServerToolConfig: {exception}"
+        );
+      }
+    }
+    if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("indices", out _))
+    {
+      try
+      {
+        return new ToolConfig(
+          jsonDocument.Deserialize<AlgoliaSearchToolConfig>(JsonConfig.Options)
+        );
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into AlgoliaSearchToolConfig: {exception}"
+        );
+      }
+    }
+    if (root.ValueKind == JsonValueKind.Object)
+    {
+      try
+      {
+        return new ToolConfig(
+          jsonDocument.Deserialize<AlgoliaRecommendToolConfig>(JsonConfig.Options)
+        );
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into AlgoliaRecommendToolConfig: {exception}"
+        );
+      }
+    }
+    if (root.ValueKind == JsonValueKind.Object)
+    {
+      try
+      {
+        return new ToolConfig(jsonDocument.Deserialize<UnknownToolConfig>(JsonConfig.Options));
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into UnknownToolConfig: {exception}"
+        );
       }
     }
     throw new InvalidDataException(

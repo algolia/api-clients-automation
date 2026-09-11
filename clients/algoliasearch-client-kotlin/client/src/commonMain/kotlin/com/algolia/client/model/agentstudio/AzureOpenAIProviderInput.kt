@@ -23,4 +23,4 @@ public data class AzureOpenAIProviderInput(
   /** Azure model deployment name is required. */
   @SerialName(value = "azureDeployment") val azureDeployment: String,
   @SerialName(value = "apiVersion") val apiVersion: String? = null,
-) : ProviderInputNullable, ProviderInput {}
+) : InputUnion, InputUnionProviderAuthenticationPatch {}

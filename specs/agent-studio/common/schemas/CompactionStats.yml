@@ -20,28 +20,28 @@ CompactionStats:
       default: 0
     summarizerPromptTokens:
       oneOf:
-      - type: integer
-      - type: 'null'
+        - type: integer
+        - type: 'null'
       title: summarizerprompttokens
       description: Provider-reported input tokens summed across every summarizer call.
         Null when the provider reported no usage metadata.
     summarizerCompletionTokens:
       oneOf:
-      - type: integer
-      - type: 'null'
+        - type: integer
+        - type: 'null'
       title: summarizercompletiontokens
       description: Provider-reported output tokens summed across every summarizer
         call. Null when the provider reported no usage metadata.
     targetTokensEstimate:
       oneOf:
-      - type: integer
-      - type: 'null'
+        - type: integer
+        - type: 'null'
       title: targettokensestimate
       description: The requested output budget, echoed back when `targetTokensEstimate`
         was set.
   type: object
   required:
-  - compacted
+    - compacted
   title: compactionStats
   description: |-
     Compaction-specific telemetry, returned only by ``/context/compact``.

@@ -13,7 +13,7 @@ type ProviderAuthenticationResponse struct {
 	Id           string                 `json:"id"`
 	Name         string                 `json:"name"`
 	ProviderName string                 `json:"providerName"`
-	Input        ProviderInput          `json:"input"`
+	Input        InputUnion             `json:"input"`
 	CreatedAt    string                 `json:"createdAt"`
 	UpdatedAt    string                 `json:"updatedAt"`
 	LastUsedAt   utils.Nullable[string] `json:"lastUsedAt,omitempty"`
@@ -35,7 +35,7 @@ func NewProviderAuthenticationResponse(
 	id string,
 	name string,
 	providerName string,
-	input ProviderInput,
+	input InputUnion,
 	createdAt string,
 	updatedAt string,
 	opts ...ProviderAuthenticationResponseOption,
@@ -145,9 +145,9 @@ func (o *ProviderAuthenticationResponse) SetProviderName(v string) *ProviderAuth
 }
 
 // GetInput returns the Input field value.
-func (o *ProviderAuthenticationResponse) GetInput() ProviderInput {
+func (o *ProviderAuthenticationResponse) GetInput() InputUnion {
 	if o == nil {
-		var ret ProviderInput
+		var ret InputUnion
 
 		return ret
 	}
@@ -157,7 +157,7 @@ func (o *ProviderAuthenticationResponse) GetInput() ProviderInput {
 
 // GetInputOk returns a tuple with the Input field value
 // and a boolean to check if the value has been set.
-func (o *ProviderAuthenticationResponse) GetInputOk() (*ProviderInput, bool) {
+func (o *ProviderAuthenticationResponse) GetInputOk() (*InputUnion, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -166,7 +166,7 @@ func (o *ProviderAuthenticationResponse) GetInputOk() (*ProviderInput, bool) {
 }
 
 // SetInput sets field value.
-func (o *ProviderAuthenticationResponse) SetInput(v *ProviderInput) *ProviderAuthenticationResponse {
+func (o *ProviderAuthenticationResponse) SetInput(v *InputUnion) *ProviderAuthenticationResponse {
 	o.Input = *v
 
 	return o

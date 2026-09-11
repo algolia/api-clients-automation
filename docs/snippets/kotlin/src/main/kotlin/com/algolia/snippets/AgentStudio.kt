@@ -54,6 +54,66 @@ class SnippetAgentStudioClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCompactContext() {
+    // >SEPARATOR compactContext compactContext with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.compactContext(
+        contextCompactRequest =
+          ContextCompactRequest(
+            providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model = "gpt-4o-mini",
+            messages =
+              MessagesUnion.ofListOfMessageV4(
+                listOf(UserMessageV4(role = "user", content = "Hello, how are you?"))
+              ),
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCompactContext1() {
+    // >SEPARATOR compactContext compactContext with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.compactContext(
+        contextCompactRequest =
+          ContextCompactRequest(
+            providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model = "gpt-4o-mini",
+            messages =
+              MessagesUnion.ofListOfMessageV4(
+                listOf(
+                  UserMessageV4(role = "user", content = "Hello, how are you?"),
+                  UserMessageV4(role = "assistant", content = "I am well."),
+                )
+              ),
+            keepLastMessages = 2,
+            instructions = "keep every product reference",
+            targetTokensEstimate = 128,
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateAgent() {
     // >SEPARATOR createAgent createAgent with minimal parameters
     // Initialize the client
@@ -96,7 +156,15 @@ class SnippetAgentStudioClient {
                 put("temperature", JsonPrimitive(0.7))
                 put("max_tokens", JsonPrimitive(1500))
               },
-            tools = listOf(AlgoliaDisplayResultsToolConfig(type = "start")),
+            tools =
+              listOf(
+                ClientSideToolConfig(
+                  type = "client_side",
+                  name = "start",
+                  description = "Start a conversation",
+                  inputSchema = ClientToolsArgsSchema(type = "object"),
+                )
+              ),
           )
       )
 
@@ -141,10 +209,69 @@ class SnippetAgentStudioClient {
         agentCompletionRequest =
           AgentCompletionRequest(
             messages =
-              MessagesUnion.ofListOfMessageV4(
+              MessagesUnionAgentCompletionRequest.ofListOfMessageV4(
                 listOf(UserMessageV4(role = "user", content = "Hello, how are you?"))
               )
           ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateAgentTask() {
+    // >SEPARATOR createAgentTask createAgentTask with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.createAgentTask(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest =
+          TaskRequest(
+            input =
+              buildJsonObject {
+                put("pageType", JsonPrimitive("pdp"))
+                put("title", JsonPrimitive("acmePhone128Gb"))
+              }
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForCreateAgentTask1() {
+    // >SEPARATOR createAgentTask createAgentTask with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.createAgentTask(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest =
+          TaskRequest(
+            task = "algolia_on_page_suggestions",
+            kind = TaskKind.entries.first { it.value == "prompt_suggestions" },
+            input =
+              buildJsonObject {
+                put("pageType", JsonPrimitive("pdp"))
+                put("title", JsonPrimitive("acmePhone128Gb"))
+              },
+          ),
+        stream = false,
+        cache = false,
+        analytics = false,
       )
 
     // >LOG
@@ -1143,6 +1270,11 @@ class SnippetAgentStudioClient {
         feedbackVote = 1,
         page = 2,
         limit = 10,
+        includeImpactAnalytics = true,
+        clicked = true,
+        converted = false,
+        hasAlgoliaSearch = true,
+        xAlgoliaSecureUserToken = "secure-user-token",
       )
 
     // >LOG
@@ -1408,6 +1540,62 @@ class SnippetAgentStudioClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForTrimContext() {
+    // >SEPARATOR trimContext trimContext with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.trimContext(
+        contextTrimRequest =
+          ContextTrimRequest(
+            messages =
+              MessagesUnion.ofListOfMessageV4(
+                listOf(UserMessageV4(role = "user", content = "Hello, how are you?"))
+              )
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForTrimContext1() {
+    // >SEPARATOR trimContext trimContext with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.trimContext(
+        contextTrimRequest =
+          ContextTrimRequest(
+            messages =
+              MessagesUnion.ofListOfMessageV4(
+                listOf(
+                  UserMessageV4(role = "user", content = "Hello, how are you?"),
+                  UserMessageV4(role = "assistant", content = "I am well."),
+                )
+              ),
+            keepLastMessages = 1,
+            maxTokensEstimate = 256,
+            dropToolParts = true,
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForUnpublishAgent() {
     // >SEPARATOR unpublishAgent default
     // Initialize the client
@@ -1461,7 +1649,15 @@ class SnippetAgentStudioClient {
             model = "gpt-4o",
             instructions = "Updated instructions.",
             config = buildJsonObject { put("temperature", JsonPrimitive(0.5)) },
-            tools = listOf(AlgoliaDisplayResultsToolConfig(type = "start")),
+            tools =
+              listOf(
+                ClientSideToolConfig(
+                  type = "client_side",
+                  name = "start",
+                  description = "Start a conversation",
+                  inputSchema = ClientToolsArgsSchema(type = "object"),
+                )
+              ),
           ),
       )
 
@@ -1482,6 +1678,55 @@ class SnippetAgentStudioClient {
     var response =
       client.updateConfiguration(
         applicationConfigPatch = ApplicationConfigPatch(maxRetentionDays = 30)
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForUpdateFeedback() {
+    // >SEPARATOR updateFeedback updateFeedback with required parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.updateFeedback(
+        feedbackUpdateRequest =
+          FeedbackUpdateRequest(
+            messageId = "msg-abc123",
+            agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForUpdateFeedback1() {
+    // >SEPARATOR updateFeedback updateFeedback with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.updateFeedback(
+        feedbackUpdateRequest =
+          FeedbackUpdateRequest(
+            messageId = "msg-abc123",
+            agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            vote = OneOfEnum.entries.first { it.value == "0" },
+            tags = listOf("unhelpful", "off-topic"),
+            notes = "The response did not address my question.",
+          )
       )
 
     // >LOG

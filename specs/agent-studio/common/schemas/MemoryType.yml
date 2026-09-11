@@ -1,8 +1,8 @@
 MemoryType:
   type: string
   enum:
-  - semantic
-  - episodic
+    - semantic
+    - episodic
   title: memoryType
   description: |-
     Memory types implemented so far.

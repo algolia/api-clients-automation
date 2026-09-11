@@ -9,7 +9,7 @@ UserMessageAGUI:
       title: role
       type: string
     parts:
-      $ref: PartsUnion.yml#/PartsUnion
+      $ref: 'PartsUnion.yml#/PartsUnion'
     createdAt:
       type: string
       default: null
@@ -18,10 +18,10 @@ UserMessageAGUI:
       title: content
       type: string
     metadata:
-      $ref: UserMessageMetadataAGUI.yml#/UserMessageMetadataAGUI
+      $ref: 'UserMessageMetadataAGUI.yml#/UserMessageMetadataAGUI'
   required:
-  - role
-  - id
-  - content
+    - role
+    - id
+    - content
   title: userMessageAGUI
   type: object

@@ -8,11 +8,28 @@ export type AlgoliaDisplayResultsToolConfig = {
 
   type: string;
 
+  /**
+   * When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
+   */
+  isTerminal?: boolean | undefined;
+
+  /**
+   * minimum number of result groups.
+   */
   minGroups?: number | undefined;
 
+  /**
+   * maximum number of result groups.
+   */
   maxGroups?: number | undefined;
 
+  /**
+   * minimum hits per group.
+   */
   minResultsPerGroup?: number | undefined;
 
+  /**
+   * maximum hits per group.
+   */
   maxResultsPerGroup?: number | undefined;
 };

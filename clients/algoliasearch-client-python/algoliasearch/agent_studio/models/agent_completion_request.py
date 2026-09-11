@@ -24,7 +24,9 @@ from algoliasearch.agent_studio.models.agent_completion_algolia_params import (
 from algoliasearch.agent_studio.models.agent_test_configuration import (
     AgentTestConfiguration,
 )
-from algoliasearch.agent_studio.models.messages_union import MessagesUnion
+from algoliasearch.agent_studio.models.messages_union_agent_completion_request import (
+    MessagesUnionAgentCompletionRequest,
+)
 
 _ALIASES = {
     "configuration": "configuration",
@@ -45,7 +47,7 @@ class AgentCompletionRequest(BaseModel):
     """
 
     configuration: Optional[AgentTestConfiguration] = None
-    messages: Optional[MessagesUnion] = None
+    messages: Optional[MessagesUnionAgentCompletionRequest] = None
     id: Optional[str] = None
     """ Optional conversation id. """
     algolia: Optional[AgentCompletionAlgoliaParams] = None
@@ -93,7 +95,7 @@ class AgentCompletionRequest(BaseModel):
             else None
         )
         obj["messages"] = (
-            MessagesUnion.from_dict(obj["messages"])
+            MessagesUnionAgentCompletionRequest.from_dict(obj["messages"])
             if obj.get("messages") is not None
             else None
         )

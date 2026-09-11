@@ -257,38 +257,6 @@ func TestAgentStudioE2E_ListAgentAllowedDomains(t *testing.T) {
 
 func TestAgentStudioE2E_ListAgentConversations(t *testing.T) {
 	t.Parallel()
-	t.Run("listAgentConversations with all parameters", func(t *testing.T) {
-		t.Parallel()
-
-		client := createE2EAgentStudioClient(t)
-		res, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15",
-		).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10))
-		require.NoError(t, err)
-
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"data":[],"pagination":{"page":2,"limit":10,"totalCount":0,"totalPages":0}}`
-
-		var expectedBody any
-
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(t, expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jsonassert.New(t).Assertf(string(unionBodyRaw), "%s", expectedBodyRaw)
-	})
 	t.Run("e2e list agent conversations", func(t *testing.T) {
 		t.Parallel()
 

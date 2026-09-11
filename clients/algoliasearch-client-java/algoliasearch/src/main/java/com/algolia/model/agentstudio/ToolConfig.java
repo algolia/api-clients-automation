@@ -14,29 +14,29 @@ import java.util.logging.Logger;
 /** ToolConfig */
 @JsonDeserialize(using = ToolConfig.Deserializer.class)
 public interface ToolConfig {
-  // ToolConfig as Boolean wrapper.
-  static ToolConfig of(Boolean value) {
-    return new BooleanWrapper(value);
+  // ToolConfig as UnknownToolConfig wrapper.
+  static ToolConfig of(UnknownToolConfig value) {
+    return new UnknownToolConfigWrapper(value);
   }
 
-  // ToolConfig as Boolean wrapper.
-  @JsonSerialize(using = BooleanWrapper.Serializer.class)
-  class BooleanWrapper implements ToolConfig {
+  // ToolConfig as UnknownToolConfig wrapper.
+  @JsonSerialize(using = UnknownToolConfigWrapper.Serializer.class)
+  class UnknownToolConfigWrapper implements ToolConfig {
 
-    private final Boolean value;
+    private final UnknownToolConfig value;
 
-    BooleanWrapper(Boolean value) {
+    UnknownToolConfigWrapper(UnknownToolConfig value) {
       this.value = value;
     }
 
-    public Boolean getValue() {
+    public UnknownToolConfig getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<BooleanWrapper> {
+    static class Serializer extends JsonSerializer<UnknownToolConfigWrapper> {
 
       @Override
-      public void serialize(BooleanWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(UnknownToolConfigWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -49,23 +49,83 @@ public interface ToolConfig {
     @Override
     public ToolConfig deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize McpToolConfig
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(McpToolConfig.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf McpToolConfig (error: " + e.getMessage() + ") (type: McpToolConfig)");
+      JsonNode discriminatorNode = tree.get("type");
+      if (discriminatorNode != null && discriminatorNode.isTextual()) {
+        String discriminatorValue = discriminatorNode.asText();
+        if ("algolia_recommend".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(AlgoliaRecommendToolConfig.class);
+          }
+        }
+        if ("algolia_search_index".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(AlgoliaSearchToolConfig.class);
+          }
+        }
+        if ("client_side".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(ClientSideToolConfig.class);
+          }
+        }
+        if ("mcp_tools".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(McpServerToolConfig.class);
+          }
+        }
+        if ("unknown".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(UnknownToolConfig.class);
+          }
         }
       }
-      // deserialize Boolean
-      if (tree.isBoolean()) {
+      // deserialize ClientSideToolConfig
+      if (tree.isObject() && tree.has("description") && tree.has("inputSchema")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          Boolean value = parser.readValueAs(Boolean.class);
-          return new ToolConfig.BooleanWrapper(value);
+          return parser.readValueAs(ClientSideToolConfig.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf Boolean (error: " + e.getMessage() + ") (type: Boolean)");
+          LOGGER.finest("Failed to deserialize oneOf ClientSideToolConfig (error: " + e.getMessage() + ") (type: ClientSideToolConfig)");
+        }
+      }
+      // deserialize McpServerToolConfig
+      if (tree.isObject() && tree.has("headers") && tree.has("url")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(McpServerToolConfig.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf McpServerToolConfig (error: " + e.getMessage() + ") (type: McpServerToolConfig)");
+        }
+      }
+      // deserialize AlgoliaSearchToolConfig
+      if (tree.isObject() && tree.has("indices")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AlgoliaSearchToolConfig.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AlgoliaSearchToolConfig (error: " + e.getMessage() + ") (type: AlgoliaSearchToolConfig)"
+          );
+        }
+      }
+      // deserialize AlgoliaRecommendToolConfig
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AlgoliaRecommendToolConfig.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AlgoliaRecommendToolConfig (error: " + e.getMessage() + ") (type: AlgoliaRecommendToolConfig)"
+          );
+        }
+      }
+      // deserialize UnknownToolConfig
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          UnknownToolConfig value = parser.readValueAs(UnknownToolConfig.class);
+          return new ToolConfig.UnknownToolConfigWrapper(value);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf UnknownToolConfig (error: " + e.getMessage() + ") (type: UnknownToolConfig)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

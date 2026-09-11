@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Azure OpenAI-specific provider input. */
 @JsonDeserialize(as = AzureOpenAIProviderInput.class)
-public class AzureOpenAIProviderInput implements ProviderInputNullable, ProviderInput {
+public class AzureOpenAIProviderInput implements InputUnion, InputUnionProviderAuthenticationPatch {
 
   @JsonProperty("apiKey")
   private String apiKey;

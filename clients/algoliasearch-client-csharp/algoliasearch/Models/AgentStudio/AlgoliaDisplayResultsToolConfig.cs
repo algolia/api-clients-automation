@@ -44,26 +44,37 @@ public partial class AlgoliaDisplayResultsToolConfig
   public string Type { get; set; }
 
   /// <summary>
-  /// Gets or Sets MinGroups
+  /// When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
   /// </summary>
+  /// <value>When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.</value>
+  [JsonPropertyName("isTerminal")]
+  public bool? IsTerminal { get; set; }
+
+  /// <summary>
+  /// minimum number of result groups.
+  /// </summary>
+  /// <value>minimum number of result groups.</value>
   [JsonPropertyName("minGroups")]
   public int? MinGroups { get; set; }
 
   /// <summary>
-  /// Gets or Sets MaxGroups
+  /// maximum number of result groups.
   /// </summary>
+  /// <value>maximum number of result groups.</value>
   [JsonPropertyName("maxGroups")]
   public int? MaxGroups { get; set; }
 
   /// <summary>
-  /// Gets or Sets MinResultsPerGroup
+  /// minimum hits per group.
   /// </summary>
+  /// <value>minimum hits per group.</value>
   [JsonPropertyName("minResultsPerGroup")]
   public int? MinResultsPerGroup { get; set; }
 
   /// <summary>
-  /// Gets or Sets MaxResultsPerGroup
+  /// maximum hits per group.
   /// </summary>
+  /// <value>maximum hits per group.</value>
   [JsonPropertyName("maxResultsPerGroup")]
   public int? MaxResultsPerGroup { get; set; }
 
@@ -77,6 +88,7 @@ public partial class AlgoliaDisplayResultsToolConfig
     sb.Append("class AlgoliaDisplayResultsToolConfig {\n");
     sb.Append("  Name: ").Append(Name).Append("\n");
     sb.Append("  Type: ").Append(Type).Append("\n");
+    sb.Append("  IsTerminal: ").Append(IsTerminal).Append("\n");
     sb.Append("  MinGroups: ").Append(MinGroups).Append("\n");
     sb.Append("  MaxGroups: ").Append(MaxGroups).Append("\n");
     sb.Append("  MinResultsPerGroup: ").Append(MinResultsPerGroup).Append("\n");
@@ -108,6 +120,7 @@ public partial class AlgoliaDisplayResultsToolConfig
 
     return (Name == input.Name || (Name != null && Name.Equals(input.Name)))
       && (Type == input.Type || (Type != null && Type.Equals(input.Type)))
+      && (IsTerminal == input.IsTerminal || IsTerminal.Equals(input.IsTerminal))
       && (MinGroups == input.MinGroups || MinGroups.Equals(input.MinGroups))
       && (MaxGroups == input.MaxGroups || MaxGroups.Equals(input.MaxGroups))
       && (
@@ -137,6 +150,7 @@ public partial class AlgoliaDisplayResultsToolConfig
       {
         hashCode = (hashCode * 59) + Type.GetHashCode();
       }
+      hashCode = (hashCode * 59) + IsTerminal.GetHashCode();
       hashCode = (hashCode * 59) + MinGroups.GetHashCode();
       hashCode = (hashCode * 59) + MaxGroups.GetHashCode();
       hashCode = (hashCode * 59) + MinResultsPerGroup.GetHashCode();

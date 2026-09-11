@@ -35,7 +35,7 @@ public partial class ProviderAuthenticationResponse
     string id,
     string name,
     string providerName,
-    ProviderInput input,
+    InputUnion input,
     string createdAt,
     string updatedAt
   )
@@ -70,7 +70,7 @@ public partial class ProviderAuthenticationResponse
   /// Gets or Sets Input
   /// </summary>
   [JsonPropertyName("input")]
-  public ProviderInput Input { get; set; }
+  public InputUnion Input { get; set; }
 
   /// <summary>
   /// Gets or Sets CreatedAt

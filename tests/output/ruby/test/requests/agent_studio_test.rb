@@ -45,6 +45,56 @@ class TestAgentStudioClient < Test::Unit::TestCase
     )
   end
 
+  # compactContext with required parameters
+  def test_compact_context
+    req = @client.compact_context_with_http_info(
+      Algolia::AgentStudio::ContextCompactRequest.new(
+        provider_id: "c2905529-b933-4b69-87ec-75f9829d5f59",
+        model: "gpt-4o-mini",
+        messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/unstable/context/compact", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # compactContext with all parameters
+  def test_compact_context1
+    req = @client.compact_context_with_http_info(
+      Algolia::AgentStudio::ContextCompactRequest.new(
+        provider_id: "c2905529-b933-4b69-87ec-75f9829d5f59",
+        model: "gpt-4o-mini",
+        messages: [
+          Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?"),
+          Algolia::AgentStudio::UserMessageV4.new(role: "assistant", content: "I am well.")
+        ],
+        keep_last_messages: 2,
+        instructions: "keep every product reference",
+        target_tokens_estimate: 128
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/unstable/context/compact", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":2,\"instructions\":\"keep every product reference\",\"targetTokensEstimate\":128}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # createAgent with minimal parameters
   def test_create_agent
     req = @client.create_agent_with_http_info(
@@ -71,7 +121,14 @@ class TestAgentStudioClient < Test::Unit::TestCase
         model: "gpt-4",
         instructions: "You are a helpful assistant.",
         config: {sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500},
-        tools: [Algolia::AgentStudio::AlgoliaDisplayResultsToolConfig.new(type: "start")]
+        tools: [
+          Algolia::AgentStudio::ClientSideToolConfig.new(
+            type: "client_side",
+            name: "start",
+            description: "Start a conversation",
+            input_schema: Algolia::AgentStudio::ClientToolsArgsSchema.new(type: "object")
+          )
+        ]
       )
     )
 
@@ -81,7 +138,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"start\"}]}"
+        "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -117,6 +174,46 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # createAgentTask with required parameters
+  def test_create_agent_task
+    req = @client.create_agent_task_with_http_info(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      Algolia::AgentStudio::TaskRequest.new(input: {pageType: "pdp", title: "acmePhone128Gb"})
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}"), JSON.parse(req.body))
+  end
+
+  # createAgentTask with all parameters
+  def test_create_agent_task1
+    req = @client.create_agent_task_with_http_info(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      Algolia::AgentStudio::TaskRequest.new(
+        task: "algolia_on_page_suggestions",
+        kind: "prompt_suggestions",
+        input: {pageType: "pdp", title: "acmePhone128Gb"}
+      ),
+      false,
+      false,
+      false
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.path)
+    assert_equal({:"stream" => "false", :"cache" => "false", :"analytics" => "false"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"task\":\"algolia_on_page_suggestions\",\"kind\":\"prompt_suggestions\",\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}"
+      ),
       JSON.parse(req.body)
     )
   end
@@ -888,7 +985,11 @@ class TestAgentStudioClient < Test::Unit::TestCase
       1,
       2,
       10,
-      nil
+      true,
+      true,
+      false,
+      true,
+      "secure-user-token"
     )
 
     assert_equal(:get, req.method)
@@ -900,11 +1001,18 @@ class TestAgentStudioClient < Test::Unit::TestCase
         :"includeFeedback" => "true",
         :"feedbackVote" => "1",
         :"page" => "2",
-        :"limit" => "10"
+        :"limit" => "10",
+        :"includeImpactAnalytics" => "true",
+        :"clicked" => "true",
+        :"converted" => "false",
+        :"hasAlgoliaSearch" => "true"
       }.to_a,
       req.query_params.to_a
     )
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(
+      ({:"x-algolia-secure-user-token" => "secure-user-token"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
 
     assert(req.body.nil?, "body is not nil")
   end
@@ -1090,6 +1198,50 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
+  # trimContext with required parameters
+  def test_trim_context
+    req = @client.trim_context_with_http_info(
+      Algolia::AgentStudio::ContextTrimRequest.new(
+        messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/unstable/context/trim", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # trimContext with all parameters
+  def test_trim_context1
+    req = @client.trim_context_with_http_info(
+      Algolia::AgentStudio::ContextTrimRequest.new(
+        messages: [
+          Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?"),
+          Algolia::AgentStudio::UserMessageV4.new(role: "assistant", content: "I am well.")
+        ],
+        keep_last_messages: 1,
+        max_tokens_estimate: 256,
+        drop_tool_parts: true
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/unstable/context/trim", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":1,\"maxTokensEstimate\":256,\"dropToolParts\":true}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # unpublishAgent
   def test_unpublish_agent
     req = @client.unpublish_agent_with_http_info("76710f1b-8231-42e5-b0d1-f43aac618e15")
@@ -1125,7 +1277,14 @@ class TestAgentStudioClient < Test::Unit::TestCase
         model: "gpt-4o",
         instructions: "Updated instructions.",
         config: {temperature: 0.5},
-        tools: [Algolia::AgentStudio::AlgoliaDisplayResultsToolConfig.new(type: "start")]
+        tools: [
+          Algolia::AgentStudio::ClientSideToolConfig.new(
+            type: "client_side",
+            name: "start",
+            description: "Start a conversation",
+            input_schema: Algolia::AgentStudio::ClientToolsArgsSchema.new(type: "object")
+          )
+        ]
       )
     )
 
@@ -1135,7 +1294,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"start\"}]}"
+        "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}"
       ),
       JSON.parse(req.body)
     )
@@ -1152,6 +1311,49 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"maxRetentionDays\":30}"), JSON.parse(req.body))
+  end
+
+  # updateFeedback with required parameters
+  def test_update_feedback
+    req = @client.update_feedback_with_http_info(
+      Algolia::AgentStudio::FeedbackUpdateRequest.new(
+        message_id: "msg-abc123",
+        agent_id: "76710f1b-8231-42e5-b0d1-f43aac618e15"
+      )
+    )
+
+    assert_equal(:patch, req.method)
+    assert_equal("/agent-studio/1/feedback", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse("{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\"}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # updateFeedback with all parameters
+  def test_update_feedback1
+    req = @client.update_feedback_with_http_info(
+      Algolia::AgentStudio::FeedbackUpdateRequest.new(
+        message_id: "msg-abc123",
+        agent_id: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        vote: 0,
+        tags: ["unhelpful", "off-topic"],
+        notes: "The response did not address my question."
+      )
+    )
+
+    assert_equal(:patch, req.method)
+    assert_equal("/agent-studio/1/feedback", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"vote\":0,\"tags\":[\"unhelpful\",\"off-topic\"],\"notes\":\"The response did not address my question.\"}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
   # updateProvider

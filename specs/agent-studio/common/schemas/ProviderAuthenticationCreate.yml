@@ -6,13 +6,13 @@ ProviderAuthenticationCreate:
       minLength: 1
       title: name
     providerName:
-      $ref: ProviderName.yml#/ProviderName
+      $ref: 'ProviderName.yml#/ProviderName'
     input:
-      $ref: InputUnion.yml#/InputUnion
+      $ref: 'InputUnion.yml#/InputUnion'
   additionalProperties: false
   type: object
   required:
-  - name
-  - providerName
-  - input
+    - name
+    - providerName
+    - input
   title: providerAuthenticationCreate

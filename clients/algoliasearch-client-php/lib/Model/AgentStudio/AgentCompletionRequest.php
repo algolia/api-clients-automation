@@ -23,7 +23,7 @@ class AgentCompletionRequest extends AbstractModel implements ModelInterface, \A
      */
     protected static $modelTypes = [
         'configuration' => '\Algolia\AlgoliaSearch\Model\AgentStudio\AgentTestConfiguration',
-        'messages' => '\Algolia\AlgoliaSearch\Model\AgentStudio\MessagesUnion',
+        'messages' => '\Algolia\AlgoliaSearch\Model\AgentStudio\MessagesUnionAgentCompletionRequest',
         'id' => 'string',
         'algolia' => '\Algolia\AlgoliaSearch\Model\AgentStudio\AgentCompletionAlgoliaParams',
         'toolApprovals' => 'object',
@@ -212,7 +212,7 @@ class AgentCompletionRequest extends AbstractModel implements ModelInterface, \A
     /**
      * Gets messages.
      *
-     * @return null|MessagesUnion
+     * @return null|MessagesUnionAgentCompletionRequest
      */
     public function getMessages()
     {
@@ -222,7 +222,7 @@ class AgentCompletionRequest extends AbstractModel implements ModelInterface, \A
     /**
      * Sets messages.
      *
-     * @param null|MessagesUnion $messages messages
+     * @param null|MessagesUnionAgentCompletionRequest $messages messages
      *
      * @return self
      */

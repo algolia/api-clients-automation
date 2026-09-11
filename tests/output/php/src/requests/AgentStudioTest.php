@@ -77,6 +77,61 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('compactContext with required parameters')]
+    public function testCompactContext(): void
+    {
+        $client = $this->getClient();
+        $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/compact',
+                'method' => 'POST',
+                'body' => json_decode('{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('compactContext with all parameters')]
+    public function testCompactContext1(): void
+    {
+        $client = $this->getClient();
+        $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+
+                    ['role' => 'assistant',
+                        'content' => 'I am well.',
+                    ],
+                ],
+                'keepLastMessages' => 2,
+                'instructions' => 'keep every product reference',
+                'targetTokensEstimate' => 128,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/compact',
+                'method' => 'POST',
+                'body' => json_decode('{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createAgent with minimal parameters')]
     public function testCreateAgent(): void
     {
@@ -112,7 +167,11 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                     'max_tokens' => 1500,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -122,7 +181,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents',
                 'method' => 'POST',
-                'body' => json_decode('{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}'),
+                'body' => json_decode('{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}'),
             ],
         ]);
     }
@@ -167,6 +226,54 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"}]}'),
                 'queryParameters' => json_decode('{"compatibilityMode":"ai-sdk-4"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('createAgentTask with required parameters')]
+    public function testCreateAgentTask(): void
+    {
+        $client = $this->getClient();
+        $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['input' => ['pageType' => 'pdp',
+                'title' => 'acmePhone128Gb',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('createAgentTask with all parameters')]
+    public function testCreateAgentTask1(): void
+    {
+        $client = $this->getClient();
+        $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['task' => 'algolia_on_page_suggestions',
+                'kind' => 'prompt_suggestions',
+                'input' => ['pageType' => 'pdp',
+                    'title' => 'acmePhone128Gb',
+                ],
+            ],
+            false,
+            false,
+            false,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}'),
+                'queryParameters' => json_decode('{"stream":"false","cache":"false","analytics":"false"}', true),
             ],
         ]);
     }
@@ -1221,7 +1328,11 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             1,
             2,
             10,
-            null,
+            true,
+            true,
+            false,
+            true,
+            'secure-user-token',
         );
 
         $this->assertRequests([
@@ -1229,7 +1340,8 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}', true),
+                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}', true),
+                'headers' => json_decode('{"x-algolia-secure-user-token":"secure-user-token"}', true),
             ],
         ]);
     }
@@ -1493,6 +1605,57 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('trimContext with required parameters')]
+    public function testTrimContext(): void
+    {
+        $client = $this->getClient();
+        $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/trim',
+                'method' => 'POST',
+                'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('trimContext with all parameters')]
+    public function testTrimContext1(): void
+    {
+        $client = $this->getClient();
+        $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+
+                ['role' => 'assistant',
+                    'content' => 'I am well.',
+                ],
+            ],
+                'keepLastMessages' => 1,
+                'maxTokensEstimate' => 256,
+                'dropToolParts' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/trim',
+                'method' => 'POST',
+                'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}'),
+            ],
+        ]);
+    }
+
     #[TestDox('unpublishAgent')]
     public function testUnpublishAgent(): void
     {
@@ -1543,7 +1706,11 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'config' => ['temperature' => 0.5,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -1553,7 +1720,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15',
                 'method' => 'PATCH',
-                'body' => json_decode('{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}'),
+                'body' => json_decode('{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}'),
             ],
         ]);
     }
@@ -1572,6 +1739,51 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/configuration',
                 'method' => 'PATCH',
                 'body' => json_decode('{"maxRetentionDays":30}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateFeedback with required parameters')]
+    public function testUpdateFeedback(): void
+    {
+        $client = $this->getClient();
+        $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/feedback',
+                'method' => 'PATCH',
+                'body' => json_decode('{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateFeedback with all parameters')]
+    public function testUpdateFeedback1(): void
+    {
+        $client = $this->getClient();
+        $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+                'vote' => 0,
+                'tags' => [
+                    'unhelpful',
+
+                    'off-topic',
+                ],
+                'notes' => 'The response did not address my question.',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/feedback',
+                'method' => 'PATCH',
+                'body' => json_decode('{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}'),
             ],
         ]);
     }

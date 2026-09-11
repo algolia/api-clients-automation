@@ -63,6 +63,63 @@ class TestAgentStudioClient:
             """{"domainIds":["a1b2c3d4-5678-90ab-cdef-123456789abc","b2c3d4e5-6789-01ab-cdef-234567890abc"]}"""
         )
 
+    async def test_compact_context_(self):
+        """
+        compactContext with required parameters
+        """
+        _req = await self._client.compact_context_with_http_info(
+            context_compact_request={
+                "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/compact"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    async def test_compact_context_1(self):
+        """
+        compactContext with all parameters
+        """
+        _req = await self._client.compact_context_with_http_info(
+            context_compact_request={
+                "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "I am well.",
+                    },
+                ],
+                "keepLastMessages": 2,
+                "instructions": "keep every product reference",
+                "targetTokensEstimate": 128,
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/compact"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}"""
+        )
+
     async def test_create_agent_(self):
         """
         createAgent with minimal parameters
@@ -101,7 +158,12 @@ class TestAgentStudioClient:
                 },
                 "tools": [
                     {
-                        "type": "start",
+                        "type": "client_side",
+                        "name": "start",
+                        "description": "Start a conversation",
+                        "inputSchema": {
+                            "type": "object",
+                        },
                     },
                 ],
             },
@@ -112,7 +174,7 @@ class TestAgentStudioClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}"""
+            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
         )
 
     async def test_create_agent_allowed_domain_(self):
@@ -271,7 +333,12 @@ class TestAgentStudioClient:
                     },
                     "tools": [
                         {
-                            "type": "start",
+                            "type": "client_side",
+                            "name": "start",
+                            "description": "Start a conversation",
+                            "inputSchema": {
+                                "type": "object",
+                            },
                         },
                     ],
                 },
@@ -292,7 +359,7 @@ class TestAgentStudioClient:
         )
         assert dict(_req["headers"]).items() >= {}.items()
         assert loads(_req["data"]) == loads(
-            """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}"""
+            """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}}"""
         )
 
     async def test_create_agent_completion_4(self):
@@ -328,6 +395,64 @@ class TestAgentStudioClient:
         assert dict(_req["headers"]).items() >= {}.items()
         assert loads(_req["data"]) == loads(
             """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    async def test_create_agent_task_(self):
+        """
+        createAgentTask with required parameters
+        """
+        _req = await self._client.create_agent_task_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            task_request={
+                "input": {
+                    "pageType": "pdp",
+                    "title": "acmePhone128Gb",
+                },
+            },
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}"""
+        )
+
+    async def test_create_agent_task_1(self):
+        """
+        createAgentTask with all parameters
+        """
+        _req = await self._client.create_agent_task_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            task_request={
+                "task": "algolia_on_page_suggestions",
+                "kind": "prompt_suggestions",
+                "input": {
+                    "pageType": "pdp",
+                    "title": "acmePhone128Gb",
+                },
+            },
+            stream=False,
+            cache=False,
+            analytics=False,
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks"
+        )
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"stream": "false", "cache": "false", "analytics": "false"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}"""
         )
 
     async def test_create_feedback_(self):
@@ -1330,7 +1455,11 @@ class TestAgentStudioClient:
             feedback_vote=1,
             page=2,
             limit=10,
-            x_algolia_secure_user_token=None,
+            include_impact_analytics=True,
+            clicked=True,
+            converted=False,
+            has_algolia_search=True,
+            x_algolia_secure_user_token="secure-user-token",
         )
 
         assert (
@@ -1347,9 +1476,16 @@ class TestAgentStudioClient:
                 "feedbackVote": "1",
                 "page": "2",
                 "limit": "10",
+                "includeImpactAnalytics": "true",
+                "clicked": "true",
+                "converted": "false",
+                "hasAlgoliaSearch": "true",
             }.items()
         )
-        assert _req.headers.items() >= {}.items()
+        assert (
+            _req.headers.items()
+            >= {"x-algolia-secure-user-token": "secure-user-token"}.items()
+        )
         assert _req.data is None
 
     async def test_list_agent_conversations_2(self):
@@ -1578,6 +1714,59 @@ class TestAgentStudioClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
+    async def test_trim_context_(self):
+        """
+        trimContext with required parameters
+        """
+        _req = await self._client.trim_context_with_http_info(
+            context_trim_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/trim"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    async def test_trim_context_1(self):
+        """
+        trimContext with all parameters
+        """
+        _req = await self._client.trim_context_with_http_info(
+            context_trim_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "I am well.",
+                    },
+                ],
+                "keepLastMessages": 1,
+                "maxTokensEstimate": 256,
+                "dropToolParts": True,
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/trim"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}"""
+        )
+
     async def test_unpublish_agent_(self):
         """
         unpublishAgent
@@ -1630,7 +1819,12 @@ class TestAgentStudioClient:
                 },
                 "tools": [
                     {
-                        "type": "start",
+                        "type": "client_side",
+                        "name": "start",
+                        "description": "Start a conversation",
+                        "inputSchema": {
+                            "type": "object",
+                        },
                     },
                 ],
             },
@@ -1643,7 +1837,7 @@ class TestAgentStudioClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}"""
+            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
         )
 
     async def test_update_configuration_(self):
@@ -1661,6 +1855,50 @@ class TestAgentStudioClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxRetentionDays":30}""")
+
+    async def test_update_feedback_(self):
+        """
+        updateFeedback with required parameters
+        """
+        _req = await self._client.update_feedback_with_http_info(
+            feedback_update_request={
+                "messageId": "msg-abc123",
+                "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/feedback"
+        assert _req.verb == "PATCH"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}"""
+        )
+
+    async def test_update_feedback_1(self):
+        """
+        updateFeedback with all parameters
+        """
+        _req = await self._client.update_feedback_with_http_info(
+            feedback_update_request={
+                "messageId": "msg-abc123",
+                "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+                "vote": 0,
+                "tags": [
+                    "unhelpful",
+                    "off-topic",
+                ],
+                "notes": "The response did not address my question.",
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/feedback"
+        assert _req.verb == "PATCH"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}"""
+        )
 
     async def test_update_provider_(self):
         """
@@ -1789,6 +2027,63 @@ class TestAgentStudioClientSync:
             """{"domainIds":["a1b2c3d4-5678-90ab-cdef-123456789abc","b2c3d4e5-6789-01ab-cdef-234567890abc"]}"""
         )
 
+    def test_compact_context_(self):
+        """
+        compactContext with required parameters
+        """
+        _req = self._client.compact_context_with_http_info(
+            context_compact_request={
+                "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/compact"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    def test_compact_context_1(self):
+        """
+        compactContext with all parameters
+        """
+        _req = self._client.compact_context_with_http_info(
+            context_compact_request={
+                "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "I am well.",
+                    },
+                ],
+                "keepLastMessages": 2,
+                "instructions": "keep every product reference",
+                "targetTokensEstimate": 128,
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/compact"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}"""
+        )
+
     def test_create_agent_(self):
         """
         createAgent with minimal parameters
@@ -1827,7 +2122,12 @@ class TestAgentStudioClientSync:
                 },
                 "tools": [
                     {
-                        "type": "start",
+                        "type": "client_side",
+                        "name": "start",
+                        "description": "Start a conversation",
+                        "inputSchema": {
+                            "type": "object",
+                        },
                     },
                 ],
             },
@@ -1838,7 +2138,7 @@ class TestAgentStudioClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}"""
+            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
         )
 
     def test_create_agent_allowed_domain_(self):
@@ -1997,7 +2297,12 @@ class TestAgentStudioClientSync:
                     },
                     "tools": [
                         {
-                            "type": "start",
+                            "type": "client_side",
+                            "name": "start",
+                            "description": "Start a conversation",
+                            "inputSchema": {
+                                "type": "object",
+                            },
                         },
                     ],
                 },
@@ -2018,7 +2323,7 @@ class TestAgentStudioClientSync:
         )
         assert dict(_req["headers"]).items() >= {}.items()
         assert loads(_req["data"]) == loads(
-            """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}"""
+            """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}}"""
         )
 
     def test_create_agent_completion_4(self):
@@ -2054,6 +2359,64 @@ class TestAgentStudioClientSync:
         assert dict(_req["headers"]).items() >= {}.items()
         assert loads(_req["data"]) == loads(
             """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    def test_create_agent_task_(self):
+        """
+        createAgentTask with required parameters
+        """
+        _req = self._client.create_agent_task_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            task_request={
+                "input": {
+                    "pageType": "pdp",
+                    "title": "acmePhone128Gb",
+                },
+            },
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}"""
+        )
+
+    def test_create_agent_task_1(self):
+        """
+        createAgentTask with all parameters
+        """
+        _req = self._client.create_agent_task_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            task_request={
+                "task": "algolia_on_page_suggestions",
+                "kind": "prompt_suggestions",
+                "input": {
+                    "pageType": "pdp",
+                    "title": "acmePhone128Gb",
+                },
+            },
+            stream=False,
+            cache=False,
+            analytics=False,
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks"
+        )
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {"stream": "false", "cache": "false", "analytics": "false"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}"""
         )
 
     def test_create_feedback_(self):
@@ -3056,7 +3419,11 @@ class TestAgentStudioClientSync:
             feedback_vote=1,
             page=2,
             limit=10,
-            x_algolia_secure_user_token=None,
+            include_impact_analytics=True,
+            clicked=True,
+            converted=False,
+            has_algolia_search=True,
+            x_algolia_secure_user_token="secure-user-token",
         )
 
         assert (
@@ -3073,9 +3440,16 @@ class TestAgentStudioClientSync:
                 "feedbackVote": "1",
                 "page": "2",
                 "limit": "10",
+                "includeImpactAnalytics": "true",
+                "clicked": "true",
+                "converted": "false",
+                "hasAlgoliaSearch": "true",
             }.items()
         )
-        assert _req.headers.items() >= {}.items()
+        assert (
+            _req.headers.items()
+            >= {"x-algolia-secure-user-token": "secure-user-token"}.items()
+        )
         assert _req.data is None
 
     def test_list_agent_conversations_2(self):
@@ -3304,6 +3678,59 @@ class TestAgentStudioClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
+    def test_trim_context_(self):
+        """
+        trimContext with required parameters
+        """
+        _req = self._client.trim_context_with_http_info(
+            context_trim_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/trim"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    def test_trim_context_1(self):
+        """
+        trimContext with all parameters
+        """
+        _req = self._client.trim_context_with_http_info(
+            context_trim_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "I am well.",
+                    },
+                ],
+                "keepLastMessages": 1,
+                "maxTokensEstimate": 256,
+                "dropToolParts": True,
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/unstable/context/trim"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}"""
+        )
+
     def test_unpublish_agent_(self):
         """
         unpublishAgent
@@ -3356,7 +3783,12 @@ class TestAgentStudioClientSync:
                 },
                 "tools": [
                     {
-                        "type": "start",
+                        "type": "client_side",
+                        "name": "start",
+                        "description": "Start a conversation",
+                        "inputSchema": {
+                            "type": "object",
+                        },
                     },
                 ],
             },
@@ -3369,7 +3801,7 @@ class TestAgentStudioClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}"""
+            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}"""
         )
 
     def test_update_configuration_(self):
@@ -3387,6 +3819,50 @@ class TestAgentStudioClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"maxRetentionDays":30}""")
+
+    def test_update_feedback_(self):
+        """
+        updateFeedback with required parameters
+        """
+        _req = self._client.update_feedback_with_http_info(
+            feedback_update_request={
+                "messageId": "msg-abc123",
+                "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/feedback"
+        assert _req.verb == "PATCH"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}"""
+        )
+
+    def test_update_feedback_1(self):
+        """
+        updateFeedback with all parameters
+        """
+        _req = self._client.update_feedback_with_http_info(
+            feedback_update_request={
+                "messageId": "msg-abc123",
+                "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+                "vote": 0,
+                "tags": [
+                    "unhelpful",
+                    "off-topic",
+                ],
+                "notes": "The response did not address my question.",
+            },
+        )
+
+        assert _req.path == "/agent-studio/1/feedback"
+        assert _req.verb == "PATCH"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}"""
+        )
 
     def test_update_provider_(self):
         """

@@ -14,7 +14,7 @@ public class ProviderAuthenticationPatch {
   private String name;
 
   @JsonProperty("input")
-  private ProviderInputNullable input;
+  private InputUnionProviderAuthenticationPatch input;
 
   public ProviderAuthenticationPatch setName(String name) {
     this.name = name;
@@ -27,14 +27,14 @@ public class ProviderAuthenticationPatch {
     return name;
   }
 
-  public ProviderAuthenticationPatch setInput(ProviderInputNullable input) {
+  public ProviderAuthenticationPatch setInput(InputUnionProviderAuthenticationPatch input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nullable
-  public ProviderInputNullable getInput() {
+  public InputUnionProviderAuthenticationPatch getInput() {
     return input;
   }
 

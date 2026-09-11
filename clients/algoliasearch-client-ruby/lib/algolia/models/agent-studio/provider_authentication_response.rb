@@ -41,7 +41,7 @@ module Algolia
           :id => :"String",
           :name => :"String",
           :provider_name => :"String",
-          :input => :"ProviderInput",
+          :input => :"InputUnion",
           :created_at => :"String",
           :updated_at => :"String",
           :last_used_at => :"String"

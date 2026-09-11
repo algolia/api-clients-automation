@@ -3,7 +3,7 @@
   */
 package algoliasearch.api
 
-import algoliasearch.agentstudio.AgentCompletionRequest
+import algoliasearch.agentstudio.AgentCompletionRequestUnion
 import algoliasearch.agentstudio.AgentConfigCreate
 import algoliasearch.agentstudio.AgentConfigUpdate
 import algoliasearch.agentstudio.AgentWithVersionResponse
@@ -15,10 +15,14 @@ import algoliasearch.agentstudio.AllowedDomainResponse
 import algoliasearch.agentstudio.ApplicationConfigPatch
 import algoliasearch.agentstudio.ApplicationConfigResponse
 import algoliasearch.agentstudio.CompatibilityMode._
+import algoliasearch.agentstudio.ContextCompactRequest
+import algoliasearch.agentstudio.ContextResponse
+import algoliasearch.agentstudio.ContextTrimRequest
 import algoliasearch.agentstudio.ConversationFullResponse
 import algoliasearch.agentstudio.ErrorBase
 import algoliasearch.agentstudio.FeedbackCreationRequest
 import algoliasearch.agentstudio.FeedbackResponse
+import algoliasearch.agentstudio.FeedbackUpdateRequest
 import algoliasearch.agentstudio.HTTPValidationError
 import algoliasearch.agentstudio.PaginatedAgentsResponse
 import algoliasearch.agentstudio.PaginatedConversationsResponse
@@ -30,6 +34,8 @@ import algoliasearch.agentstudio.ProviderAuthenticationResponse
 import algoliasearch.agentstudio.SecretKeyCreate
 import algoliasearch.agentstudio.SecretKeyPatch
 import algoliasearch.agentstudio.SecretKeyResponse
+import algoliasearch.agentstudio.TaskRequest
+import algoliasearch.agentstudio.TaskResponse
 import algoliasearch.agentstudio.UserDataResponse
 import algoliasearch.agentstudio._
 import algoliasearch.ApiClient
@@ -232,6 +238,59 @@ class AgentStudioClient(
       .build()
   }
 
+  /** Summarize the older part of a conversation into a single user message via the caller's LLM. Everything except the
+    * trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the
+    * kept tail verbatim. The caller's provider runs the summary, so cost is theirs by construction. A conversation too
+    * large for the summarizer's context window is split into chunks that each fit, summarized concurrently, then merged
+    * in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be
+    * summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response
+    * is a `400`, not a `500`. Two optional controls shape the output. `instructions` adds caller guidance inside the
+    * server-owned prompt frame, so it steers the summary without the model echoing the wording back.
+    * `targetTokensEstimate` sets a desired summary size, translated into word-count guidance. The `compaction` block
+    * reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the
+    * kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def compactContext(contextCompactRequest: ContextCompactRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[ContextResponse] = Future {
+    execute[ContextResponse](compactContextHttpRequest(contextCompactRequest = contextCompactRequest), requestOptions)
+  }
+
+  /** Variant of `compactContext` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def compactContextWithHTTPInfo(
+      contextCompactRequest: ContextCompactRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ContextResponse]] = Future {
+    executeWithHttpInfo[ContextResponse](
+      compactContextHttpRequest(contextCompactRequest = contextCompactRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `compactContext` and `compactContextWithHTTPInfo`.
+    */
+  private def compactContextHttpRequest(contextCompactRequest: ContextCompactRequest): HttpRequest = {
+    requireNotNull(
+      contextCompactRequest,
+      "Parameter `contextCompactRequest` is required when calling `compactContext`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/agent-studio/1/unstable/context/compact")
+      .withBody(contextCompactRequest)
+      .build()
+  }
+
   /** Create a new agent.
     *
     * Required API Key ACLs:
@@ -359,7 +418,7 @@ class AgentStudioClient(
   def createAgentCompletion(
       agentId: String,
       compatibilityMode: CompatibilityMode,
-      agentCompletionRequest: AgentCompletionRequest,
+      agentCompletionRequest: AgentCompletionRequestUnion,
       stream: Option[Boolean] = None,
       cache: Option[Boolean] = None,
       memory: Option[Boolean] = None,
@@ -407,7 +466,7 @@ class AgentStudioClient(
   def createAgentCompletionWithHTTPInfo(
       agentId: String,
       compatibilityMode: CompatibilityMode,
-      agentCompletionRequest: AgentCompletionRequest,
+      agentCompletionRequest: AgentCompletionRequestUnion,
       stream: Option[Boolean] = None,
       cache: Option[Boolean] = None,
       memory: Option[Boolean] = None,
@@ -436,7 +495,7 @@ class AgentStudioClient(
   private def createAgentCompletionHttpRequest(
       agentId: String,
       compatibilityMode: CompatibilityMode,
-      agentCompletionRequest: AgentCompletionRequest,
+      agentCompletionRequest: AgentCompletionRequestUnion,
       stream: Option[Boolean] = None,
       cache: Option[Boolean] = None,
       memory: Option[Boolean] = None,
@@ -461,6 +520,102 @@ class AgentStudioClient(
       .withQueryParameter("stream", stream)
       .withQueryParameter("cache", cache)
       .withQueryParameter("memory", memory)
+      .withQueryParameter("analytics", analytics)
+      .build()
+  }
+
+  /** Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``, returns the raw
+    * partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param agentId
+    *   The agentId.
+    * @param stream
+    *   Whether to stream the response or not.
+    * @param cache
+    *   Use cached responses if available.
+    * @param analytics
+    *   Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics
+    *   event; operational metrics and traces are always emitted.
+    */
+  def createAgentTask(
+      agentId: String,
+      taskRequest: TaskRequest,
+      stream: Option[Boolean] = None,
+      cache: Option[Boolean] = None,
+      analytics: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TaskResponse] = Future {
+    execute[TaskResponse](
+      createAgentTaskHttpRequest(
+        agentId = agentId,
+        taskRequest = taskRequest,
+        stream = stream,
+        cache = cache,
+        analytics = analytics
+      ),
+      requestOptions
+    )
+  }
+
+  /** Variant of `createAgentTask` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    *
+    * @param agentId
+    *   The agentId.
+    * @param stream
+    *   Whether to stream the response or not.
+    * @param cache
+    *   Use cached responses if available.
+    * @param analytics
+    *   Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics
+    *   event; operational metrics and traces are always emitted.
+    */
+  def createAgentTaskWithHTTPInfo(
+      agentId: String,
+      taskRequest: TaskRequest,
+      stream: Option[Boolean] = None,
+      cache: Option[Boolean] = None,
+      analytics: Option[Boolean] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[TaskResponse]] = Future {
+    executeWithHttpInfo[TaskResponse](
+      createAgentTaskHttpRequest(
+        agentId = agentId,
+        taskRequest = taskRequest,
+        stream = stream,
+        cache = cache,
+        analytics = analytics
+      ),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `createAgentTask` and `createAgentTaskWithHTTPInfo`.
+    */
+  private def createAgentTaskHttpRequest(
+      agentId: String,
+      taskRequest: TaskRequest,
+      stream: Option[Boolean] = None,
+      cache: Option[Boolean] = None,
+      analytics: Option[Boolean] = None
+  ): HttpRequest = {
+    requireNotNull(agentId, "Parameter `agentId` is required when calling `createAgentTask`.")
+    requireNotEmpty(agentId, "Parameter `agentId` is required when calling `createAgentTask`.")
+    requireNotNull(taskRequest, "Parameter `taskRequest` is required when calling `createAgentTask`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/agent-studio/1/agents/${escape(agentId)}/tasks")
+      .withBody(taskRequest)
+      .withQueryParameter("stream", stream)
+      .withQueryParameter("cache", cache)
       .withQueryParameter("analytics", analytics)
       .build()
   }
@@ -1342,6 +1497,10 @@ class AgentStudioClient(
     *   The agentId.
     * @param includeFeedback
     *   Include feedback for the conversation.
+    * @param includeMessageEvents
+    *   Include Insights events attributed to each assistant message.
+    * @param includeImpactAnalytics
+    *   Include outcome signals (hasView, hasClick, hasConversion) for the conversation.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
     */
@@ -1349,6 +1508,8 @@ class AgentStudioClient(
       conversationId: String,
       agentId: String,
       includeFeedback: Option[Boolean] = None,
+      includeMessageEvents: Option[Boolean] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ConversationFullResponse] = Future {
@@ -1357,6 +1518,8 @@ class AgentStudioClient(
         conversationId = conversationId,
         agentId = agentId,
         includeFeedback = includeFeedback,
+        includeMessageEvents = includeMessageEvents,
+        includeImpactAnalytics = includeImpactAnalytics,
         xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
       ),
       requestOptions
@@ -1375,6 +1538,10 @@ class AgentStudioClient(
     *   The agentId.
     * @param includeFeedback
     *   Include feedback for the conversation.
+    * @param includeMessageEvents
+    *   Include Insights events attributed to each assistant message.
+    * @param includeImpactAnalytics
+    *   Include outcome signals (hasView, hasClick, hasConversion) for the conversation.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
     */
@@ -1382,6 +1549,8 @@ class AgentStudioClient(
       conversationId: String,
       agentId: String,
       includeFeedback: Option[Boolean] = None,
+      includeMessageEvents: Option[Boolean] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ConversationFullResponse]] = Future {
@@ -1390,6 +1559,8 @@ class AgentStudioClient(
         conversationId = conversationId,
         agentId = agentId,
         includeFeedback = includeFeedback,
+        includeMessageEvents = includeMessageEvents,
+        includeImpactAnalytics = includeImpactAnalytics,
         xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
       ),
       requestOptions
@@ -1402,6 +1573,8 @@ class AgentStudioClient(
       conversationId: String,
       agentId: String,
       includeFeedback: Option[Boolean] = None,
+      includeMessageEvents: Option[Boolean] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None
   ): HttpRequest = {
     requireNotNull(conversationId, "Parameter `conversationId` is required when calling `getConversation`.")
@@ -1415,6 +1588,8 @@ class AgentStudioClient(
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations/${escape(conversationId)}")
       .withHeader("X-Algolia-Secure-User-Token", xAlgoliaSecureUserToken)
       .withQueryParameter("includeFeedback", includeFeedback)
+      .withQueryParameter("includeMessageEvents", includeMessageEvents)
+      .withQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
       .build()
   }
 
@@ -1544,7 +1719,7 @@ class AgentStudioClient(
       .build()
   }
 
-  /** Invalidate cached completions for this agent. Filter with `before` (exclusive).
+  /** Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -1661,6 +1836,14 @@ class AgentStudioClient(
     *   Page number.
     * @param limit
     *   Items per page.
+    * @param includeImpactAnalytics
+    *   Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+    * @param clicked
+    *   Filter by conversations with at least one item click.
+    * @param converted
+    *   Filter by conversations with at least one conversion.
+    * @param hasAlgoliaSearch
+    *   Filter by conversations where the search tool was used.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
     */
@@ -1672,6 +1855,10 @@ class AgentStudioClient(
       feedbackVote: Option[Int] = None,
       page: Option[Int] = None,
       limit: Option[Int] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
+      clicked: Option[Boolean] = None,
+      converted: Option[Boolean] = None,
+      hasAlgoliaSearch: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PaginatedConversationsResponse] = Future {
@@ -1684,6 +1871,10 @@ class AgentStudioClient(
         feedbackVote = feedbackVote,
         page = page,
         limit = limit,
+        includeImpactAnalytics = includeImpactAnalytics,
+        clicked = clicked,
+        converted = converted,
+        hasAlgoliaSearch = hasAlgoliaSearch,
         xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
       ),
       requestOptions
@@ -1710,6 +1901,14 @@ class AgentStudioClient(
     *   Page number.
     * @param limit
     *   Items per page.
+    * @param includeImpactAnalytics
+    *   Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+    * @param clicked
+    *   Filter by conversations with at least one item click.
+    * @param converted
+    *   Filter by conversations with at least one conversion.
+    * @param hasAlgoliaSearch
+    *   Filter by conversations where the search tool was used.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
     */
@@ -1721,6 +1920,10 @@ class AgentStudioClient(
       feedbackVote: Option[Int] = None,
       page: Option[Int] = None,
       limit: Option[Int] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
+      clicked: Option[Boolean] = None,
+      converted: Option[Boolean] = None,
+      hasAlgoliaSearch: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedConversationsResponse]] = Future {
@@ -1733,6 +1936,10 @@ class AgentStudioClient(
         feedbackVote = feedbackVote,
         page = page,
         limit = limit,
+        includeImpactAnalytics = includeImpactAnalytics,
+        clicked = clicked,
+        converted = converted,
+        hasAlgoliaSearch = hasAlgoliaSearch,
         xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
       ),
       requestOptions
@@ -1750,6 +1957,10 @@ class AgentStudioClient(
       feedbackVote: Option[Int] = None,
       page: Option[Int] = None,
       limit: Option[Int] = None,
+      includeImpactAnalytics: Option[Boolean] = None,
+      clicked: Option[Boolean] = None,
+      converted: Option[Boolean] = None,
+      hasAlgoliaSearch: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None
   ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.")
@@ -1766,6 +1977,10 @@ class AgentStudioClient(
       .withQueryParameter("feedbackVote", feedbackVote)
       .withQueryParameter("page", page)
       .withQueryParameter("limit", limit)
+      .withQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
+      .withQueryParameter("clicked", clicked)
+      .withQueryParameter("converted", converted)
+      .withQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
       .build()
   }
 
@@ -2060,6 +2275,49 @@ class AgentStudioClient(
       .build()
   }
 
+  /** Deterministically trim a conversation payload (no LLM calls). Keep the last N messages and/or fit a heuristic
+    * token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is
+    * applied). Returns the trimmed messages plus before/after stats. With no constraints set, the messages are returned
+    * unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no
+    * mutation).
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def trimContext(contextTrimRequest: ContextTrimRequest, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[ContextResponse] = Future {
+    execute[ContextResponse](trimContextHttpRequest(contextTrimRequest = contextTrimRequest), requestOptions)
+  }
+
+  /** Variant of `trimContext` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def trimContextWithHTTPInfo(contextTrimRequest: ContextTrimRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ContextResponse]] = Future {
+    executeWithHttpInfo[ContextResponse](
+      trimContextHttpRequest(contextTrimRequest = contextTrimRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `trimContext` and `trimContextWithHTTPInfo`.
+    */
+  private def trimContextHttpRequest(contextTrimRequest: ContextTrimRequest): HttpRequest = {
+    requireNotNull(contextTrimRequest, "Parameter `contextTrimRequest` is required when calling `trimContext`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/agent-studio/1/unstable/context/trim")
+      .withBody(contextTrimRequest)
+      .build()
+  }
+
   /** Unpublish the specified agent.
     *
     * Required API Key ACLs:
@@ -2199,6 +2457,49 @@ class AgentStudioClient(
       .withMethod("PATCH")
       .withPath(s"/agent-studio/1/configuration")
       .withBody(applicationConfigPatch)
+      .build()
+  }
+
+  /** Update an existing feedback entry.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def updateFeedback(feedbackUpdateRequest: FeedbackUpdateRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[FeedbackResponse] = Future {
+    execute[FeedbackResponse](updateFeedbackHttpRequest(feedbackUpdateRequest = feedbackUpdateRequest), requestOptions)
+  }
+
+  /** Variant of `updateFeedback` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * Required API Key ACLs:
+    *   - search
+    */
+  def updateFeedbackWithHTTPInfo(
+      feedbackUpdateRequest: FeedbackUpdateRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[FeedbackResponse]] = Future {
+    executeWithHttpInfo[FeedbackResponse](
+      updateFeedbackHttpRequest(feedbackUpdateRequest = feedbackUpdateRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `updateFeedback` and `updateFeedbackWithHTTPInfo`.
+    */
+  private def updateFeedbackHttpRequest(feedbackUpdateRequest: FeedbackUpdateRequest): HttpRequest = {
+    requireNotNull(
+      feedbackUpdateRequest,
+      "Parameter `feedbackUpdateRequest` is required when calling `updateFeedback`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("PATCH")
+      .withPath(s"/agent-studio/1/feedback")
+      .withBody(feedbackUpdateRequest)
       .build()
   }
 

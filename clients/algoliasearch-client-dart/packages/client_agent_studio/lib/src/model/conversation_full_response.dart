@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_agent_studio/src/model/message_response.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_metadata.dart';
+import 'package:algolia_client_agent_studio/src/model/impact_analytics.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_response.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -26,7 +27,9 @@ final class ConversationFullResponse {
     this.totalTokens,
     this.conversationMetadata,
     this.feedback,
+    this.impactAnalytics,
     required this.messages,
+    this.analyticsDegraded,
   });
 
   @JsonKey(name: r'id')
@@ -71,8 +74,14 @@ final class ConversationFullResponse {
   @JsonKey(name: r'feedback')
   final List<FeedbackResponse>? feedback;
 
+  @JsonKey(name: r'impactAnalytics')
+  final ImpactAnalytics? impactAnalytics;
+
   @JsonKey(name: r'messages')
   final List<MessageResponse> messages;
+
+  @JsonKey(name: r'analyticsDegraded')
+  final bool? analyticsDegraded;
 
   @override
   bool operator ==(Object other) =>
@@ -92,7 +101,9 @@ final class ConversationFullResponse {
           other.totalTokens == totalTokens &&
           other.conversationMetadata == conversationMetadata &&
           other.feedback == feedback &&
-          other.messages == messages;
+          other.impactAnalytics == impactAnalytics &&
+          other.messages == messages &&
+          other.analyticsDegraded == analyticsDegraded;
 
   @override
   int get hashCode =>
@@ -110,7 +121,9 @@ final class ConversationFullResponse {
       totalTokens.hashCode +
       (conversationMetadata == null ? 0 : conversationMetadata.hashCode) +
       (feedback == null ? 0 : feedback.hashCode) +
-      messages.hashCode;
+      (impactAnalytics == null ? 0 : impactAnalytics.hashCode) +
+      messages.hashCode +
+      analyticsDegraded.hashCode;
 
   factory ConversationFullResponse.fromJson(Map<String, dynamic> json) =>
       _$ConversationFullResponseFromJson(json);

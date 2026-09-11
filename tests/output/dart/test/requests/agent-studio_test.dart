@@ -60,6 +60,73 @@ void main() {
     ),
   );
 
+  // compactContext
+  test(
+    'compactContext with required parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.compactContext(
+        contextCompactRequest: ContextCompactRequest(
+          providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+          model: "gpt-4o-mini",
+          messages: [
+            UserMessageV4(
+              role: "user",
+              content: "Hello, how are you?",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/unstable/context/compact');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}""");
+      },
+    ),
+  );
+
+  // compactContext
+  test(
+    'compactContext with all parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.compactContext(
+        contextCompactRequest: ContextCompactRequest(
+          providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+          model: "gpt-4o-mini",
+          messages: [
+            UserMessageV4(
+              role: "user",
+              content: "Hello, how are you?",
+            ),
+            UserMessageV4(
+              role: "assistant",
+              content: "I am well.",
+            ),
+          ],
+          keepLastMessages: 2,
+          instructions: "keep every product reference",
+          targetTokensEstimate: 128,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/unstable/context/compact');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}""");
+      },
+    ),
+  );
+
   // createAgent
   test(
     'createAgent with minimal parameters',
@@ -107,8 +174,13 @@ void main() {
             'max_tokens': 1500,
           },
           tools: [
-            AlgoliaDisplayResultsToolConfig(
-              type: "start",
+            ClientSideToolConfig(
+              type: "client_side",
+              name: "start",
+              description: "Start a conversation",
+              inputSchema: ClientToolsArgsSchema(
+                type: "object",
+              ),
             ),
           ],
         ),
@@ -117,7 +189,7 @@ void main() {
         expectPath(request.path, '/agent-studio/1/agents');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}""");
+            """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}""");
       },
     ),
   );
@@ -175,6 +247,69 @@ void main() {
             request.queryParameters, """{"compatibilityMode":"ai-sdk-4"}""");
         expectBody(request.body,
             """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""");
+      },
+    ),
+  );
+
+  // createAgentTask
+  test(
+    'createAgentTask with required parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.createAgentTask(
+        agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest: TaskRequest(
+          input: {
+            'pageType': "pdp",
+            'title': "acmePhone128Gb",
+          },
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}""");
+      },
+    ),
+  );
+
+  // createAgentTask
+  test(
+    'createAgentTask with all parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.createAgentTask(
+        agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        taskRequest: TaskRequest(
+          task: "algolia_on_page_suggestions",
+          kind: TaskKind.fromJson("prompt_suggestions"),
+          input: {
+            'pageType': "pdp",
+            'title': "acmePhone128Gb",
+          },
+        ),
+        stream: false,
+        cache: false,
+        analytics: false,
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks');
+        expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"stream":"false","cache":"false","analytics":"false"}""");
+        expectBody(request.body,
+            """{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}""");
       },
     ),
   );
@@ -1471,14 +1606,20 @@ void main() {
         feedbackVote: 1,
         page: 2,
         limit: 10,
-        xAlgoliaSecureUserToken: empty(),
+        includeImpactAnalytics: true,
+        clicked: true,
+        converted: false,
+        hasAlgoliaSearch: true,
+        xAlgoliaSecureUserToken: "secure-user-token",
       ),
       intercept: (request) {
         expectPath(request.path,
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations');
         expect(request.method, 'get');
+        expectHeaders(request.headers,
+            """{"x-algolia-secure-user-token":"secure-user-token"}""");
         expectParams(request.queryParameters,
-            """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}""");
+            """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}""");
         expect(request.body, null);
       },
     ),
@@ -1793,6 +1934,69 @@ void main() {
     ),
   );
 
+  // trimContext
+  test(
+    'trimContext with required parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.trimContext(
+        contextTrimRequest: ContextTrimRequest(
+          messages: [
+            UserMessageV4(
+              role: "user",
+              content: "Hello, how are you?",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/unstable/context/trim');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""");
+      },
+    ),
+  );
+
+  // trimContext
+  test(
+    'trimContext with all parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.trimContext(
+        contextTrimRequest: ContextTrimRequest(
+          messages: [
+            UserMessageV4(
+              role: "user",
+              content: "Hello, how are you?",
+            ),
+            UserMessageV4(
+              role: "assistant",
+              content: "I am well.",
+            ),
+          ],
+          keepLastMessages: 1,
+          maxTokensEstimate: 256,
+          dropToolParts: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/unstable/context/trim');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}""");
+      },
+    ),
+  );
+
   // unpublishAgent
   test(
     'unpublishAgent',
@@ -1859,8 +2063,13 @@ void main() {
             'temperature': 0.5,
           },
           tools: [
-            AlgoliaDisplayResultsToolConfig(
-              type: "start",
+            ClientSideToolConfig(
+              type: "client_side",
+              name: "start",
+              description: "Start a conversation",
+              inputSchema: ClientToolsArgsSchema(
+                type: "object",
+              ),
             ),
           ],
         ),
@@ -1870,7 +2079,7 @@ void main() {
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15');
         expect(request.method, 'patch');
         expectBody(request.body,
-            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}""");
+            """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}""");
       },
     ),
   );
@@ -1893,6 +2102,60 @@ void main() {
         expectPath(request.path, '/agent-studio/1/configuration');
         expect(request.method, 'patch');
         expectBody(request.body, """{"maxRetentionDays":30}""");
+      },
+    ),
+  );
+
+  // updateFeedback
+  test(
+    'updateFeedback with required parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.updateFeedback(
+        feedbackUpdateRequest: FeedbackUpdateRequest(
+          messageId: "msg-abc123",
+          agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/feedback');
+        expect(request.method, 'patch');
+        expectBody(request.body,
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}""");
+      },
+    ),
+  );
+
+  // updateFeedback
+  test(
+    'updateFeedback with all parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.updateFeedback(
+        feedbackUpdateRequest: FeedbackUpdateRequest(
+          messageId: "msg-abc123",
+          agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          vote: OneOfEnum.fromJson(0),
+          tags: [
+            "unhelpful",
+            "off-topic",
+          ],
+          notes: "The response did not address my question.",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/agent-studio/1/feedback');
+        expect(request.method, 'patch');
+        expectBody(request.body,
+            """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}""");
       },
     ),
   );

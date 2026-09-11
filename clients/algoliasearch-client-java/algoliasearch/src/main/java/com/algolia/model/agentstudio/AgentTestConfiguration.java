@@ -33,7 +33,7 @@ public class AgentTestConfiguration {
   private Map<String, Object> config = new HashMap<>();
 
   @JsonProperty("tools")
-  private List<ToolConfigInput> tools = new ArrayList<>();
+  private List<ToolConfigAgentTestConfiguration> tools = new ArrayList<>();
 
   public AgentTestConfiguration setId(String id) {
     this.id = id;
@@ -106,19 +106,19 @@ public class AgentTestConfiguration {
     return config;
   }
 
-  public AgentTestConfiguration setTools(List<ToolConfigInput> tools) {
+  public AgentTestConfiguration setTools(List<ToolConfigAgentTestConfiguration> tools) {
     this.tools = tools;
     return this;
   }
 
-  public AgentTestConfiguration addTools(ToolConfigInput toolsItem) {
+  public AgentTestConfiguration addTools(ToolConfigAgentTestConfiguration toolsItem) {
     this.tools.add(toolsItem);
     return this;
   }
 
   /** Get tools */
   @javax.annotation.Nonnull
-  public List<ToolConfigInput> getTools() {
+  public List<ToolConfigAgentTestConfiguration> getTools() {
     return tools;
   }
 

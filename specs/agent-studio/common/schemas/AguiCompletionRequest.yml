@@ -20,16 +20,16 @@ AguiCompletionRequest:
       title: parentrunid
     messages:
       items:
-        $ref: ItemsUnion.yml#/ItemsUnion
+        $ref: 'ItemsUnion.yml#/ItemsUnion'
       title: messages
       type: array
     forwardedProps:
-      $ref: ForwardedProps.yml#/ForwardedProps
+      $ref: 'ForwardedProps.yml#/ForwardedProps'
     resume:
-      $ref: ResumeUnion.yml#/ResumeUnion
+      $ref: 'ResumeUnion.yml#/ResumeUnion'
   required:
-  - threadId
-  - runId
-  - messages
+    - threadId
+    - runId
+    - messages
   title: aguiCompletionRequest
   type: object

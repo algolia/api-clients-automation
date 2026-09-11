@@ -18,7 +18,7 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.agent_studio.models.tool_config_input import ToolConfigInput
+from algoliasearch.agent_studio.models.tool_config import ToolConfig
 
 _ALIASES = {
     "name": "name",
@@ -52,7 +52,7 @@ class AgentConfigCreate(BaseModel):
     """ The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the 'System prompt' field in the dashboard. """
     template_type: Optional[str] = None
     config: Optional[Dict[str, object]] = None
-    tools: Optional[List[ToolConfigInput]] = None
+    tools: Optional[List[ToolConfig]] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -90,7 +90,7 @@ class AgentConfigCreate(BaseModel):
             return cls.model_validate(obj)
 
         obj["tools"] = (
-            [ToolConfigInput.from_dict(_item) for _item in obj["tools"]]
+            [ToolConfig.from_dict(_item) for _item in obj["tools"]]
             if obj.get("tools") is not None
             else None
         )

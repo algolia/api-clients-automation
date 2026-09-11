@@ -18,8 +18,8 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.agent_studio.models.provider_input_nullable import (
-    ProviderInputNullable,
+from algoliasearch.agent_studio.models.input_union_provider_authentication_patch import (
+    InputUnionProviderAuthenticationPatch,
 )
 
 _ALIASES = {
@@ -38,7 +38,7 @@ class ProviderAuthenticationPatch(BaseModel):
     """
 
     name: Optional[str] = None
-    input: Optional[ProviderInputNullable] = None
+    input: Optional[InputUnionProviderAuthenticationPatch] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -76,7 +76,7 @@ class ProviderAuthenticationPatch(BaseModel):
             return cls.model_validate(obj)
 
         obj["input"] = (
-            ProviderInputNullable.from_dict(obj["input"])
+            InputUnionProviderAuthenticationPatch.from_dict(obj["input"])
             if obj.get("input") is not None
             else None
         )

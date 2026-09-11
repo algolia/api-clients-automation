@@ -16,7 +16,7 @@ AlgoliaRecommendToolConfig:
     allowedConfigs:
       default: []
       items:
-        $ref: AlgoliaRecommendToolIndexConfig.yml#/AlgoliaRecommendToolIndexConfig
+        $ref: 'AlgoliaRecommendToolIndexConfig.yml#/AlgoliaRecommendToolIndexConfig'
       title: allowedconfigs
       type: array
     predefinedRecommendParameters:
@@ -24,7 +24,7 @@ AlgoliaRecommendToolConfig:
       title: predefinedrecommendparameters
       type: object
   required:
-  - type
-  - name
+    - type
+    - name
   title: algoliaRecommendToolConfig
   type: object

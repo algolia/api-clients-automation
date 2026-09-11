@@ -7,7 +7,7 @@ FunctionCallAGUI:
       title: arguments
       type: string
   required:
-  - name
-  - arguments
+    - name
+    - arguments
   title: functionCallAGUI
   type: object

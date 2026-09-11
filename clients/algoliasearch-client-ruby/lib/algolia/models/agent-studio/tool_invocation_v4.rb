@@ -64,7 +64,15 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :result,
+            :step,
+            :state,
+            :provider_options,
+            :requires_approval,
+            :description,
+            :args_hash
+          ]
         )
       end
 

@@ -11,7 +11,7 @@ AgentCompletionAlgoliaParams:
       default: null
       title: mcpservers
     searchParameters:
-      $ref: SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable
+      $ref: 'SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable'
     indices:
       items:
         maxLength: 100
@@ -31,8 +31,9 @@ AgentCompletionAlgoliaParams:
         configuration first. Defaults to `None`, which preserves the existing static
         behavior.
       examples:
-      - - docs_v9
-        - docs_v10
+        -
+          - docs_v9
+          - docs_v10
       title: indices
   title: agentCompletionAlgoliaParams
   type: object

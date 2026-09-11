@@ -7,14 +7,14 @@ AguiResume:
       title: interruptid
       type: string
     status:
-      $ref: StatusEnum.yml#/StatusEnum
+      $ref: 'StatusEnum.yml#/StatusEnum'
     payload:
       type: object
       additionalProperties: true
       default: null
       title: payload
   required:
-  - interruptId
-  - status
+    - interruptId
+    - status
   title: aguiResume
   type: object

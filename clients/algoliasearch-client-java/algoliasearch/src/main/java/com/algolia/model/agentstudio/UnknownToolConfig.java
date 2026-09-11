@@ -14,7 +14,7 @@ import java.util.Objects;
  * valid.
  */
 @JsonDeserialize(as = UnknownToolConfig.class)
-public class UnknownToolConfig implements ToolConfigInput {
+public class UnknownToolConfig implements ToolConfigOutput, ToolConfig, ToolConfigAgentTestConfiguration {
 
   @JsonProperty("name")
   private String name;

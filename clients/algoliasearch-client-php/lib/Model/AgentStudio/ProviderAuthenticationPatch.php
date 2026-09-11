@@ -21,7 +21,7 @@ class ProviderAuthenticationPatch extends AbstractModel implements ModelInterfac
      */
     protected static $modelTypes = [
         'name' => 'string',
-        'input' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ProviderInputNullable',
+        'input' => '\Algolia\AlgoliaSearch\Model\AgentStudio\InputUnionProviderAuthenticationPatch',
     ];
 
     /**
@@ -186,7 +186,7 @@ class ProviderAuthenticationPatch extends AbstractModel implements ModelInterfac
     /**
      * Gets input.
      *
-     * @return null|ProviderInputNullable
+     * @return null|InputUnionProviderAuthenticationPatch
      */
     public function getInput()
     {
@@ -196,7 +196,7 @@ class ProviderAuthenticationPatch extends AbstractModel implements ModelInterfac
     /**
      * Sets input.
      *
-     * @param null|ProviderInputNullable $input input
+     * @param null|InputUnionProviderAuthenticationPatch $input input
      *
      * @return self
      */

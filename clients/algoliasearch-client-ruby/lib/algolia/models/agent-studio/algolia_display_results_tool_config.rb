@@ -13,12 +13,19 @@ module Algolia
 
       attr_accessor :type
 
+      # When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
+      attr_accessor :is_terminal
+
+      # minimum number of result groups.
       attr_accessor :min_groups
 
+      # maximum number of result groups.
       attr_accessor :max_groups
 
+      # minimum hits per group.
       attr_accessor :min_results_per_group
 
+      # maximum hits per group.
       attr_accessor :max_results_per_group
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -26,6 +33,7 @@ module Algolia
         {
           :name => :name,
           :type => :type,
+          :is_terminal => :isTerminal,
           :min_groups => :minGroups,
           :max_groups => :maxGroups,
           :min_results_per_group => :minResultsPerGroup,
@@ -38,6 +46,7 @@ module Algolia
         {
           :name => :"String",
           :type => :"String",
+          :is_terminal => :"Boolean",
           :min_groups => :"Integer",
           :max_groups => :"Integer",
           :min_results_per_group => :"Integer",
@@ -85,6 +94,10 @@ module Algolia
           self.type = nil
         end
 
+        if attributes.key?(:is_terminal)
+          self.is_terminal = attributes[:is_terminal]
+        end
+
         if attributes.key?(:min_groups)
           self.min_groups = attributes[:min_groups]
         end
@@ -109,6 +122,7 @@ module Algolia
         self.class == other.class &&
           name == other.name &&
           type == other.type &&
+          is_terminal == other.is_terminal &&
           min_groups == other.min_groups &&
           max_groups == other.max_groups &&
           min_results_per_group == other.min_results_per_group &&
@@ -124,7 +138,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, type, min_groups, max_groups, min_results_per_group, max_results_per_group].hash
+        [name, type, is_terminal, min_groups, max_groups, min_results_per_group, max_results_per_group].hash
       end
 
       # Builds the object from hash

@@ -10,17 +10,17 @@ export type ToolInvocationV4 = {
 
   args?: { [key: string]: any } | undefined;
 
-  result?: { [key: string]: any } | undefined;
+  result?: { [key: string]: any } | null | undefined;
 
-  step?: number | undefined;
+  step?: number | null | undefined;
 
-  state?: string | undefined;
+  state?: string | null | undefined;
 
-  providerOptions?: { [key: string]: any } | undefined;
+  providerOptions?: { [key: string]: any } | null | undefined;
 
-  requiresApproval?: boolean | undefined;
+  requiresApproval?: boolean | null | undefined;
 
-  description?: string | undefined;
+  description?: string | null | undefined;
 
-  argsHash?: string | undefined;
+  argsHash?: string | null | undefined;
 };

@@ -77,6 +77,85 @@ class AgentStudioTest {
     )
   }
 
+  // compactContext
+
+  @Test
+  fun `compactContext with required parameters`() = runTest {
+    client.runTest(
+      call = {
+        compactContext(
+          contextCompactRequest =
+            ContextCompactRequest(
+              providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+              model = "gpt-4o-mini",
+              messages =
+                MessagesUnion.ofListOfMessageV4(
+                  listOf(
+                    UserMessageV4(
+                      role = "user",
+                      content = "Hello, how are you?",
+                    )
+                  )
+                ),
+            )
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/unstable/context/compact".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `compactContext with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        compactContext(
+          contextCompactRequest =
+            ContextCompactRequest(
+              providerID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+              model = "gpt-4o-mini",
+              messages =
+                MessagesUnion.ofListOfMessageV4(
+                  listOf(
+                    UserMessageV4(
+                      role = "user",
+                      content = "Hello, how are you?",
+                    ),
+                    UserMessageV4(
+                      role = "assistant",
+                      content = "I am well.",
+                    ),
+                  )
+                ),
+              keepLastMessages = 2,
+              instructions = "keep every product reference",
+              targetTokensEstimate = 128,
+            )
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/unstable/context/compact".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // createAgent
 
   @Test
@@ -133,7 +212,15 @@ class AgentStudioTest {
                     JsonPrimitive(1500),
                   )
                 },
-              tools = listOf(AlgoliaDisplayResultsToolConfig(type = "start")),
+              tools =
+                listOf(
+                  ClientSideToolConfig(
+                    type = "client_side",
+                    name = "start",
+                    description = "Start a conversation",
+                    inputSchema = ClientToolsArgsSchema(type = "object"),
+                  )
+                ),
             )
         )
       },
@@ -141,7 +228,7 @@ class AgentStudioTest {
         assertEquals("/agent-studio/1/agents".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}""",
+          """{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}""",
           it.body,
         )
       },
@@ -183,7 +270,7 @@ class AgentStudioTest {
           agentCompletionRequest =
             AgentCompletionRequest(
               messages =
-                MessagesUnion.ofListOfMessageV4(
+                MessagesUnionAgentCompletionRequest.ofListOfMessageV4(
                   listOf(
                     UserMessageV4(
                       role = "user",
@@ -204,6 +291,86 @@ class AgentStudioTest {
         assertQueryParams("""{"compatibilityMode":"ai-sdk-4"}""", it.url.encodedParameters)
         assertJsonBody(
           """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  // createAgentTask
+
+  @Test
+  fun `createAgentTask with required parameters`() = runTest {
+    client.runTest(
+      call = {
+        createAgentTask(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          taskRequest =
+            TaskRequest(
+              input =
+                buildJsonObject {
+                  put(
+                    "pageType",
+                    JsonPrimitive("pdp"),
+                  )
+                  put(
+                    "title",
+                    JsonPrimitive("acmePhone128Gb"),
+                  )
+                }
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `createAgentTask with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        createAgentTask(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          taskRequest =
+            TaskRequest(
+              task = "algolia_on_page_suggestions",
+              kind = TaskKind.entries.first { it.value == "prompt_suggestions" },
+              input =
+                buildJsonObject {
+                  put(
+                    "pageType",
+                    JsonPrimitive("pdp"),
+                  )
+                  put(
+                    "title",
+                    JsonPrimitive("acmePhone128Gb"),
+                  )
+                },
+            ),
+          stream = false,
+          cache = false,
+          analytics = false,
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams(
+          """{"stream":"false","cache":"false","analytics":"false"}""",
+          it.url.encodedParameters,
+        )
+        assertJsonBody(
+          """{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}""",
           it.body,
         )
       },
@@ -1408,6 +1575,11 @@ class AgentStudioTest {
           feedbackVote = 1,
           page = 2,
           limit = 10,
+          includeImpactAnalytics = true,
+          clicked = true,
+          converted = false,
+          hasAlgoliaSearch = true,
+          xAlgoliaSecureUserToken = "secure-user-token",
         )
       },
       intercept = {
@@ -1417,8 +1589,9 @@ class AgentStudioTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("GET"), it.method)
+        assertContainsAll("""{"x-algolia-secure-user-token":"secure-user-token"}""", it.headers)
         assertQueryParams(
-          """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}""",
+          """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
@@ -1689,6 +1862,75 @@ class AgentStudioTest {
     )
   }
 
+  // trimContext
+
+  @Test
+  fun `trimContext with required parameters`() = runTest {
+    client.runTest(
+      call = {
+        trimContext(
+          contextTrimRequest =
+            ContextTrimRequest(
+              messages =
+                MessagesUnion.ofListOfMessageV4(
+                  listOf(
+                    UserMessageV4(
+                      role = "user",
+                      content = "Hello, how are you?",
+                    )
+                  )
+                )
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/agent-studio/1/unstable/context/trim".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `trimContext with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        trimContext(
+          contextTrimRequest =
+            ContextTrimRequest(
+              messages =
+                MessagesUnion.ofListOfMessageV4(
+                  listOf(
+                    UserMessageV4(
+                      role = "user",
+                      content = "Hello, how are you?",
+                    ),
+                    UserMessageV4(
+                      role = "assistant",
+                      content = "I am well.",
+                    ),
+                  )
+                ),
+              keepLastMessages = 1,
+              maxTokensEstimate = 256,
+              dropToolParts = true,
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/agent-studio/1/unstable/context/trim".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // unpublishAgent
 
   @Test
@@ -1750,7 +1992,15 @@ class AgentStudioTest {
                     JsonPrimitive(0.5),
                   )
                 },
-              tools = listOf(AlgoliaDisplayResultsToolConfig(type = "start")),
+              tools =
+                listOf(
+                  ClientSideToolConfig(
+                    type = "client_side",
+                    name = "start",
+                    description = "Start a conversation",
+                    inputSchema = ClientToolsArgsSchema(type = "object"),
+                  )
+                ),
             ),
         )
       },
@@ -1761,7 +2011,7 @@ class AgentStudioTest {
         )
         assertEquals(HttpMethod.parse("PATCH"), it.method)
         assertJsonBody(
-          """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}""",
+          """{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}""",
           it.body,
         )
       },
@@ -1780,6 +2030,57 @@ class AgentStudioTest {
         assertEquals("/agent-studio/1/configuration".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PATCH"), it.method)
         assertJsonBody("""{"maxRetentionDays":30}""", it.body)
+      },
+    )
+  }
+
+  // updateFeedback
+
+  @Test
+  fun `updateFeedback with required parameters`() = runTest {
+    client.runTest(
+      call = {
+        updateFeedback(
+          feedbackUpdateRequest =
+            FeedbackUpdateRequest(
+              messageId = "msg-abc123",
+              agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/agent-studio/1/feedback".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PATCH"), it.method)
+        assertJsonBody(
+          """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `updateFeedback with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        updateFeedback(
+          feedbackUpdateRequest =
+            FeedbackUpdateRequest(
+              messageId = "msg-abc123",
+              agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+              vote = OneOfEnum.entries.first { it.value == "0" },
+              tags = listOf("unhelpful", "off-topic"),
+              notes = "The response did not address my question.",
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/agent-studio/1/feedback".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PATCH"), it.method)
+        assertJsonBody(
+          """{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}""",
+          it.body,
+        )
       },
     )
   }

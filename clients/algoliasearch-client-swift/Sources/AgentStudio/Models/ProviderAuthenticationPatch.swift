@@ -8,9 +8,9 @@ import Foundation
 
 public struct ProviderAuthenticationPatch: Codable, JSONEncodable {
     public var name: String?
-    public var input: ProviderInputNullable?
+    public var input: InputUnionProviderAuthenticationPatch?
 
-    public init(name: String? = nil, input: ProviderInputNullable? = nil) {
+    public init(name: String? = nil, input: InputUnionProviderAuthenticationPatch? = nil) {
         self.name = name
         self.input = input
     }

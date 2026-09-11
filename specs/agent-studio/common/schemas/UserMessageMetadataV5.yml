@@ -15,9 +15,9 @@ UserMessageMetadataV5:
   properties:
     turnContext:
       oneOf:
-      - additionalProperties: true
-        type: object
-      - type: 'null'
+        - additionalProperties: true
+          type: object
+        - type: 'null'
       default: null
       title: turncontext
   title: userMessageMetadataV5

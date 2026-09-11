@@ -33,6 +33,7 @@ final class ProviderAuthenticationResponse {
   /// - [BaseProviderInput]
   /// - [OpenAIProviderInput]
   /// - [OpenAICompatibleProviderInput]
+  /// - [XAIProviderInput]
   @JsonKey(name: r'input')
   final dynamic input;
 

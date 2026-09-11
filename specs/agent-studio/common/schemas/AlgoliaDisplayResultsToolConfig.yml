@@ -50,4 +50,4 @@ AlgoliaDisplayResultsToolConfig:
   title: algoliaDisplayResultsToolConfig
   type: object
   required:
-  - type
+    - type

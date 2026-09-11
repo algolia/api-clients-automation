@@ -9,7 +9,7 @@ import Foundation
 /// Request model for creating a completion for an assistant.
 public struct AgentCompletionRequest: Codable, JSONEncodable {
     public var configuration: AgentTestConfiguration?
-    public var messages: MessagesUnion?
+    public var messages: MessagesUnionAgentCompletionRequest?
     /// Optional conversation id.
     public var id: String?
     public var algolia: AgentCompletionAlgoliaParams?
@@ -18,7 +18,7 @@ public struct AgentCompletionRequest: Codable, JSONEncodable {
 
     public init(
         configuration: AgentTestConfiguration? = nil,
-        messages: MessagesUnion? = nil,
+        messages: MessagesUnionAgentCompletionRequest? = nil,
         id: String? = nil,
         algolia: AgentCompletionAlgoliaParams? = nil,
         toolApprovals: AnyCodable? = nil

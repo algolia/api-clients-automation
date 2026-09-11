@@ -12,17 +12,17 @@ GuardrailViolationDataV5:
       type: string
     guardrailType:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: guardrailtype
     fallbackResponse:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: fallbackresponse
   required:
-  - category
+    - category
   title: guardrailViolationDataV5
   type: object

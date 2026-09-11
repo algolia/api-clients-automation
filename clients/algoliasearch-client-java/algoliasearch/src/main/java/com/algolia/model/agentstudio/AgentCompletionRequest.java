@@ -8,13 +8,14 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Request model for creating a completion for an assistant. */
-public class AgentCompletionRequest {
+@JsonDeserialize(as = AgentCompletionRequest.class)
+public class AgentCompletionRequest implements AgentCompletionRequestUnion {
 
   @JsonProperty("configuration")
   private AgentTestConfiguration configuration;
 
   @JsonProperty("messages")
-  private MessagesUnion messages;
+  private MessagesUnionAgentCompletionRequest messages;
 
   @JsonProperty("id")
   private String id;
@@ -36,14 +37,14 @@ public class AgentCompletionRequest {
     return configuration;
   }
 
-  public AgentCompletionRequest setMessages(MessagesUnion messages) {
+  public AgentCompletionRequest setMessages(MessagesUnionAgentCompletionRequest messages) {
     this.messages = messages;
     return this;
   }
 
   /** Get messages */
   @javax.annotation.Nullable
-  public MessagesUnion getMessages() {
+  public MessagesUnionAgentCompletionRequest getMessages() {
     return messages;
   }
 

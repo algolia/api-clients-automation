@@ -21,8 +21,19 @@ public interface AssistantPartV5 {
     @Override
     public AssistantPartV5 deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize DataGuardrailViolationPartV5
+      if (tree.isObject() && tree.has("data")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(DataGuardrailViolationPartV5.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf DataGuardrailViolationPartV5 (error: " + e.getMessage() + ") (type: DataGuardrailViolationPartV5)"
+          );
+        }
+      }
       // deserialize ToolPartV5
-      if (tree.isObject() && tree.has("toolCallId") && tree.has("type")) {
+      if (tree.isObject() && tree.has("toolCallId")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
           return parser.readValueAs(ToolPartV5.class);
         } catch (Exception e) {
@@ -55,6 +66,15 @@ public interface AssistantPartV5 {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf ReasoningPartV5 (error: " + e.getMessage() + ") (type: ReasoningPartV5)");
+        }
+      }
+      // deserialize DataPartV5
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(DataPartV5.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf DataPartV5 (error: " + e.getMessage() + ") (type: DataPartV5)");
         }
       }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));

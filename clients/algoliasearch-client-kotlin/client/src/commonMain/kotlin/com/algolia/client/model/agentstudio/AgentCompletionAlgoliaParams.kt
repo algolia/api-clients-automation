@@ -12,6 +12,14 @@ import kotlinx.serialization.json.*
  *
  * @param mcpServers
  * @param searchParameters
+ * @param indices Per-request override for the Algolia Search tool's indices, honored only when the
+ *   tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each
+ *   name in the agent's static `tool.indices` (preserving the operator's description and
+ *   access-control fields) or — for index names the operator has not listed explicitly —
+ *   synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose
+ *   tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode`
+ *   in the agent configuration first. Defaults to `None`, which preserves the existing static
+ *   behavior.
  */
 @Serializable
 public data class AgentCompletionAlgoliaParams(
@@ -19,4 +27,15 @@ public data class AgentCompletionAlgoliaParams(
   val mcpServers: Map<kotlin.String, Map<kotlin.String, Map<kotlin.String, String>>>? = null,
   @SerialName(value = "searchParameters")
   val searchParameters: Map<kotlin.String, SearchParametersOverrides>? = null,
+
+  /**
+   * Per-request override for the Algolia Search tool's indices, honored only when the tool is
+   * configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in
+   * the agent's static `tool.indices` (preserving the operator's description and access-control
+   * fields) or — for index names the operator has not listed explicitly — synthesizes a minimal
+   * entry. Capped at 10 entries. Sending this field against an agent whose tool is in
+   * `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent
+   * configuration first. Defaults to `None`, which preserves the existing static behavior.
+   */
+  @SerialName(value = "indices") val indices: List<String>? = null,
 ) {}

@@ -8,12 +8,18 @@ import (
 
 // AlgoliaDisplayResultsToolConfig Configuration for the algolia_display_results tool.
 type AlgoliaDisplayResultsToolConfig struct {
-	Name               *string `json:"name,omitempty"`
-	Type               string  `json:"type"`
-	MinGroups          *int32  `json:"minGroups,omitempty"`
-	MaxGroups          *int32  `json:"maxGroups,omitempty"`
-	MinResultsPerGroup *int32  `json:"minResultsPerGroup,omitempty"`
-	MaxResultsPerGroup *int32  `json:"maxResultsPerGroup,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Type string  `json:"type"`
+	// When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.
+	IsTerminal *bool `json:"isTerminal,omitempty"`
+	// minimum number of result groups.
+	MinGroups *int32 `json:"minGroups,omitempty"`
+	// maximum number of result groups.
+	MaxGroups *int32 `json:"maxGroups,omitempty"`
+	// minimum hits per group.
+	MinResultsPerGroup *int32 `json:"minResultsPerGroup,omitempty"`
+	// maximum hits per group.
+	MaxResultsPerGroup *int32 `json:"maxResultsPerGroup,omitempty"`
 }
 
 type AlgoliaDisplayResultsToolConfigOption func(f *AlgoliaDisplayResultsToolConfig)
@@ -21,6 +27,12 @@ type AlgoliaDisplayResultsToolConfigOption func(f *AlgoliaDisplayResultsToolConf
 func WithAlgoliaDisplayResultsToolConfigName(val string) AlgoliaDisplayResultsToolConfigOption {
 	return func(f *AlgoliaDisplayResultsToolConfig) {
 		f.Name = &val
+	}
+}
+
+func WithAlgoliaDisplayResultsToolConfigIsTerminal(val bool) AlgoliaDisplayResultsToolConfigOption {
+	return func(f *AlgoliaDisplayResultsToolConfig) {
+		f.IsTerminal = &val
 	}
 }
 
@@ -129,6 +141,43 @@ func (o *AlgoliaDisplayResultsToolConfig) GetTypeOk() (*string, bool) {
 // SetType sets field value.
 func (o *AlgoliaDisplayResultsToolConfig) SetType(v string) *AlgoliaDisplayResultsToolConfig {
 	o.Type = v
+
+	return o
+}
+
+// GetIsTerminal returns the IsTerminal field value if set, zero value otherwise.
+func (o *AlgoliaDisplayResultsToolConfig) GetIsTerminal() bool {
+	if o == nil || o.IsTerminal == nil {
+		var ret bool
+
+		return ret
+	}
+
+	return *o.IsTerminal
+}
+
+// GetIsTerminalOk returns a tuple with the IsTerminal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AlgoliaDisplayResultsToolConfig) GetIsTerminalOk() (*bool, bool) {
+	if o == nil || o.IsTerminal == nil {
+		return nil, false
+	}
+
+	return o.IsTerminal, true
+}
+
+// HasIsTerminal returns a boolean if a field has been set.
+func (o *AlgoliaDisplayResultsToolConfig) HasIsTerminal() bool {
+	if o != nil && o.IsTerminal != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIsTerminal gets a reference to the given bool and assigns it to the IsTerminal field.
+func (o *AlgoliaDisplayResultsToolConfig) SetIsTerminal(v bool) *AlgoliaDisplayResultsToolConfig {
+	o.IsTerminal = &v
 
 	return o
 }
@@ -288,6 +337,10 @@ func (o AlgoliaDisplayResultsToolConfig) MarshalJSON() ([]byte, error) {
 	}
 
 	toSerialize["type"] = o.Type
+	if o.IsTerminal != nil {
+		toSerialize["isTerminal"] = o.IsTerminal
+	}
+
 	if o.MinGroups != nil {
 		toSerialize["minGroups"] = o.MinGroups
 	}
@@ -316,6 +369,7 @@ func (o AlgoliaDisplayResultsToolConfig) String() string {
 	out := ""
 	out += fmt.Sprintf("  name=%v\n", o.Name)
 	out += fmt.Sprintf("  type=%v\n", o.Type)
+	out += fmt.Sprintf("  isTerminal=%v\n", o.IsTerminal)
 	out += fmt.Sprintf("  minGroups=%v\n", o.MinGroups)
 	out += fmt.Sprintf("  maxGroups=%v\n", o.MaxGroups)
 	out += fmt.Sprintf("  minResultsPerGroup=%v\n", o.MinResultsPerGroup)

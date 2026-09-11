@@ -18,7 +18,17 @@ else:
     from typing_extensions import Self
 
 
-from algoliasearch.agent_studio.models.mcp_tool_config import McpToolConfig
+from algoliasearch.agent_studio.models.algolia_recommend_tool_config import (
+    AlgoliaRecommendToolConfig,
+)
+from algoliasearch.agent_studio.models.algolia_search_tool_config import (
+    AlgoliaSearchToolConfig,
+)
+from algoliasearch.agent_studio.models.client_side_tool_config import (
+    ClientSideToolConfig,
+)
+from algoliasearch.agent_studio.models.mcp_server_tool_config import McpServerToolConfig
+from algoliasearch.agent_studio.models.unknown_tool_config import UnknownToolConfig
 
 
 class ToolConfig(BaseModel):
@@ -26,12 +36,31 @@ class ToolConfig(BaseModel):
     ToolConfig
     """
 
-    oneof_schema_1_validator: Optional[McpToolConfig] = Field(default=None)
+    oneof_schema_1_validator: Optional[ClientSideToolConfig] = Field(default=None)
 
-    oneof_schema_2_validator: Optional[bool] = Field(default=None)
+    oneof_schema_2_validator: Optional[AlgoliaSearchToolConfig] = Field(default=None)
 
-    actual_instance: Union[McpToolConfig, bool, None] = None
-    one_of_schemas: Set[str] = {"McpToolConfig", "bool"}
+    oneof_schema_3_validator: Optional[AlgoliaRecommendToolConfig] = Field(default=None)
+
+    oneof_schema_4_validator: Optional[McpServerToolConfig] = Field(default=None)
+
+    oneof_schema_5_validator: Optional[UnknownToolConfig] = Field(default=None)
+
+    actual_instance: Union[
+        AlgoliaRecommendToolConfig,
+        AlgoliaSearchToolConfig,
+        ClientSideToolConfig,
+        McpServerToolConfig,
+        UnknownToolConfig,
+        None,
+    ] = None
+    one_of_schemas: Set[str] = {
+        "AlgoliaRecommendToolConfig",
+        "AlgoliaSearchToolConfig",
+        "ClientSideToolConfig",
+        "McpServerToolConfig",
+        "UnknownToolConfig",
+    }
 
     def __init__(self, *args, **kwargs) -> None:
         if args:
@@ -48,7 +77,17 @@ class ToolConfig(BaseModel):
             super().__init__(**kwargs)
 
     @model_serializer
-    def unwrap_actual_instance(self) -> Union[McpToolConfig, bool, Self, None]:
+    def unwrap_actual_instance(
+        self,
+    ) -> Union[
+        AlgoliaRecommendToolConfig,
+        AlgoliaSearchToolConfig,
+        ClientSideToolConfig,
+        McpServerToolConfig,
+        UnknownToolConfig,
+        Self,
+        None,
+    ]:
         """
         Unwraps the `actual_instance` when calling the `to_json` method.
         """
@@ -65,22 +104,57 @@ class ToolConfig(BaseModel):
         instance = cls.model_construct()
         error_messages = []
 
+        _json_dict = loads(json_str)
+        _discriminator_value = _json_dict.get("type")
+        if _discriminator_value == "algolia_recommend":
+            instance.actual_instance = AlgoliaRecommendToolConfig.from_json(json_str)
+            return instance
+        if _discriminator_value == "algolia_search_index":
+            instance.actual_instance = AlgoliaSearchToolConfig.from_json(json_str)
+            return instance
+        if _discriminator_value == "client_side":
+            instance.actual_instance = ClientSideToolConfig.from_json(json_str)
+            return instance
+        if _discriminator_value == "mcp_tools":
+            instance.actual_instance = McpServerToolConfig.from_json(json_str)
+            return instance
+        if _discriminator_value == "unknown":
+            instance.actual_instance = UnknownToolConfig.from_json(json_str)
+            return instance
+
         try:
-            instance.actual_instance = McpToolConfig.from_json(json_str)
+            instance.actual_instance = ClientSideToolConfig.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         try:
-            instance.oneof_schema_2_validator = loads(json_str)
-            instance.actual_instance = instance.oneof_schema_2_validator
+            instance.actual_instance = AlgoliaSearchToolConfig.from_json(json_str)
+
+            return instance
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        try:
+            instance.actual_instance = AlgoliaRecommendToolConfig.from_json(json_str)
+
+            return instance
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        try:
+            instance.actual_instance = McpServerToolConfig.from_json(json_str)
+
+            return instance
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        try:
+            instance.actual_instance = UnknownToolConfig.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into ToolConfig with oneOf schemas: McpToolConfig, bool. Details: "
+            "No match found when deserializing the JSON string into ToolConfig with oneOf schemas: AlgoliaRecommendToolConfig, AlgoliaSearchToolConfig, ClientSideToolConfig, McpServerToolConfig, UnknownToolConfig. Details: "
             + ", ".join(error_messages)
         )
 
@@ -96,7 +170,18 @@ class ToolConfig(BaseModel):
         else:
             return dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], McpToolConfig, bool]]:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            AlgoliaRecommendToolConfig,
+            AlgoliaSearchToolConfig,
+            ClientSideToolConfig,
+            McpServerToolConfig,
+            UnknownToolConfig,
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

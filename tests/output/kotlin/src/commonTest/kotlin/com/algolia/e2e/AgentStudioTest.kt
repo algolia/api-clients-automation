@@ -135,29 +135,6 @@ class AgentStudioTest {
   }
 
   @Test
-  fun `listAgentConversations with all parameters1`() = runTest {
-    client.runTest(
-      call = {
-        listAgentConversations(
-          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-          startDate = "2024-01-01",
-          endDate = "2024-12-31",
-          includeFeedback = true,
-          feedbackVote = 1,
-          page = 2,
-          limit = 10,
-        )
-      },
-      response = {
-        lenientJsonAssert(
-          "{\"data\":[],\"pagination\":{\"page\":2,\"limit\":10,\"totalCount\":0,\"totalPages\":0}}",
-          Json.encodeToString(it),
-        )
-      },
-    )
-  }
-
-  @Test
   fun `e2e list agent conversations2`() = runTest {
     client.runTest(
       call = {

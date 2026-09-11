@@ -5,9 +5,9 @@ TypoToleranceEnum:
     Return matches with the two lowest numbers of typos.   With `strict`, the Typo
     ranking criterion is applied first in the `ranking` setting.'
   enum:
-  - min
-  - strict
-  - 'true'
-  - 'false'
+    - min
+    - strict
+    - 'true'
+    - 'false'
   title: typoToleranceEnum
   type: string

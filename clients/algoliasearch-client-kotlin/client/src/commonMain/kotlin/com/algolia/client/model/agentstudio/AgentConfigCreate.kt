@@ -48,5 +48,5 @@ public data class AgentConfigCreate(
   @SerialName(value = "systemPrompt") val systemPrompt: String? = null,
   @SerialName(value = "templateType") val templateType: String? = null,
   @SerialName(value = "config") val config: JsonObject? = null,
-  @SerialName(value = "tools") val tools: List<ToolConfigInput>? = null,
+  @SerialName(value = "tools") val tools: List<ToolConfig>? = null,
 ) {}

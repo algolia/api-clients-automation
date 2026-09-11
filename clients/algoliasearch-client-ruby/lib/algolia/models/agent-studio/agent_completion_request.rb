@@ -36,7 +36,7 @@ module Algolia
       def self.types_mapping
         {
           :configuration => :"AgentTestConfiguration",
-          :messages => :"MessagesUnion",
+          :messages => :"MessagesUnionAgentCompletionRequest",
           :id => :"String",
           :algolia => :"AgentCompletionAlgoliaParams",
           :tool_approvals => :"Object"

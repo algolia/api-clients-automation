@@ -12,11 +12,15 @@ module Algolia
 
       attr_accessor :search_parameters
 
+      # Per-request override for the Algolia Search tool's indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in the agent's static `tool.indices` (preserving the operator's description and access-control fields) or — for index names the operator has not listed explicitly — synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent configuration first. Defaults to `None`, which preserves the existing static behavior.
+      attr_accessor :indices
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :mcp_servers => :mcpServers,
-          :search_parameters => :searchParameters
+          :search_parameters => :searchParameters,
+          :indices => :indices
         }
       end
 
@@ -24,7 +28,8 @@ module Algolia
       def self.types_mapping
         {
           :mcp_servers => :"Hash<String, Hash<String, Hash<String, String>>>",
-          :search_parameters => :"Hash<String, SearchParametersOverrides>"
+          :search_parameters => :"Hash<String, SearchParametersOverrides>",
+          :indices => :"Array<String>"
         }
       end
 
@@ -71,6 +76,12 @@ module Algolia
             self.search_parameters = value
           end
         end
+
+        if attributes.key?(:indices)
+          if (value = attributes[:indices]).is_a?(Array)
+            self.indices = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -79,7 +90,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           mcp_servers == other.mcp_servers &&
-          search_parameters == other.search_parameters
+          search_parameters == other.search_parameters &&
+          indices == other.indices
       end
 
       # @see the `==` method
@@ -91,7 +103,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [mcp_servers, search_parameters].hash
+        [mcp_servers, search_parameters, indices].hash
       end
 
       # Builds the object from hash

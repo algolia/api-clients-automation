@@ -170,44 +170,6 @@ class TestAgentStudioClientE2E:
             == _expected_body
         )
 
-    async def test_list_agent_conversations_1(self):
-        """
-        listAgentConversations with all parameters
-        """
-        raw_resp = await AgentStudioClient(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations_with_http_info(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-            start_date="2024-01-01",
-            end_date="2024-12-31",
-            include_feedback=True,
-            feedback_vote=1,
-            page=2,
-            limit=10,
-            x_algolia_secure_user_token=None,
-        )
-        assert raw_resp.status_code == 200
-
-        resp = await AgentStudioClient(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-            start_date="2024-01-01",
-            end_date="2024-12-31",
-            include_feedback=True,
-            feedback_vote=1,
-            page=2,
-            limit=10,
-            x_algolia_secure_user_token=None,
-        )
-        _expected_body = loads(
-            """{"data":[],"pagination":{"page":2,"limit":10,"totalCount":0,"totalPages":0}}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
-
     async def test_list_agent_conversations_2(self):
         """
         e2e list agent conversations
@@ -480,44 +442,6 @@ class TestAgentStudioClientSyncE2E:
         )
         _expected_body = loads(
             """{"domains":[{"id":"6e8a0441-9a41-477c-a1d6-679a461e0990","domain":"cts-e2e.algolia.com"}]}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
-
-    def test_list_agent_conversations_1(self):
-        """
-        listAgentConversations with all parameters
-        """
-        raw_resp = AgentStudioClientSync(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations_with_http_info(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-            start_date="2024-01-01",
-            end_date="2024-12-31",
-            include_feedback=True,
-            feedback_vote=1,
-            page=2,
-            limit=10,
-            x_algolia_secure_user_token=None,
-        )
-        assert raw_resp.status_code == 200
-
-        resp = AgentStudioClientSync(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-            start_date="2024-01-01",
-            end_date="2024-12-31",
-            include_feedback=True,
-            feedback_vote=1,
-            page=2,
-            limit=10,
-            x_algolia_secure_user_token=None,
-        )
-        _expected_body = loads(
-            """{"data":[],"pagination":{"page":2,"limit":10,"totalCount":0,"totalPages":0}}"""
         )
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))

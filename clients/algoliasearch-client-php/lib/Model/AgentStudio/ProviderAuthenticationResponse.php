@@ -23,7 +23,7 @@ class ProviderAuthenticationResponse extends AbstractModel implements ModelInter
         'id' => 'string',
         'name' => 'string',
         'providerName' => 'string',
-        'input' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ProviderInput',
+        'input' => '\Algolia\AlgoliaSearch\Model\AgentStudio\InputUnion',
         'createdAt' => 'string',
         'updatedAt' => 'string',
         'lastUsedAt' => 'string',
@@ -295,7 +295,7 @@ class ProviderAuthenticationResponse extends AbstractModel implements ModelInter
     /**
      * Gets input.
      *
-     * @return ProviderInput
+     * @return InputUnion
      */
     public function getInput()
     {
@@ -305,7 +305,7 @@ class ProviderAuthenticationResponse extends AbstractModel implements ModelInter
     /**
      * Sets input.
      *
-     * @param ProviderInput $input input
+     * @param InputUnion $input input
      *
      * @return self
      */

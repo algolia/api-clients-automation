@@ -21,10 +21,12 @@ final class AssistantMessageV5 {
   final String role;
 
   /// One of types:
+  /// - [DataGuardrailViolationPartV5]
   /// - [ToolPartV5]
   /// - [TextPartV5]
   /// - [ReasoningPartV5]
   /// - [StepStartPartV5]
+  /// - [DataPartV5]
   @JsonKey(name: r'parts')
   final Iterable<dynamic>? parts;
 
@@ -37,7 +39,8 @@ final class AssistantMessageV5 {
           other.parts == parts;
 
   @override
-  int get hashCode => id.hashCode + role.hashCode + parts.hashCode;
+  int get hashCode =>
+      (id == null ? 0 : id.hashCode) + role.hashCode + parts.hashCode;
 
   factory AssistantMessageV5.fromJson(Map<String, dynamic> json) =>
       _$AssistantMessageV5FromJson(json);

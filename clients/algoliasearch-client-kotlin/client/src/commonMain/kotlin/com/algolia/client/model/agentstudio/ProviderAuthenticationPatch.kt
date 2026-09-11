@@ -16,5 +16,5 @@ import kotlinx.serialization.json.*
 @Serializable
 public data class ProviderAuthenticationPatch(
   @SerialName(value = "name") val name: String? = null,
-  @SerialName(value = "input") val input: ProviderInputNullable? = null,
+  @SerialName(value = "input") val input: InputUnionProviderAuthenticationPatch? = null,
 ) {}

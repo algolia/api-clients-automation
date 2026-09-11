@@ -20,8 +20,20 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      * @var string[]
      */
     protected static $modelTypes = [
-        'requiresApproval' => 'bool',
-        'alias' => 'string',
+        'name' => 'string',
+        'type' => 'string',
+        'description' => 'string',
+        'inputSchema' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ClientToolsArgsSchema',
+        'indices' => '\Algolia\AlgoliaSearch\Model\AgentStudio\AlgoliaSearchToolIndexConfig[]',
+        'mode' => '\Algolia\AlgoliaSearch\Model\AgentStudio\ModeEnum',
+        'allowUnlistedIndices' => 'bool',
+        'allowedConfigs' => '\Algolia\AlgoliaSearch\Model\AgentStudio\AlgoliaRecommendToolIndexConfig[]',
+        'predefinedRecommendParameters' => 'array<string,mixed>',
+        'url' => 'string',
+        'transport' => 'string',
+        'headers' => 'array<string,string>',
+        'id' => 'string',
+        'allowedTools' => 'array<string,\Algolia\AlgoliaSearch\Model\AgentStudio\AllowedTool>',
     ];
 
     /**
@@ -30,8 +42,20 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      * @var string[]
      */
     protected static $modelFormats = [
-        'requiresApproval' => null,
-        'alias' => null,
+        'name' => null,
+        'type' => null,
+        'description' => null,
+        'inputSchema' => null,
+        'indices' => null,
+        'mode' => null,
+        'allowUnlistedIndices' => null,
+        'allowedConfigs' => null,
+        'predefinedRecommendParameters' => null,
+        'url' => null,
+        'transport' => null,
+        'headers' => null,
+        'id' => null,
+        'allowedTools' => null,
     ];
 
     /**
@@ -41,8 +65,20 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      * @var string[]
      */
     protected static $attributeMap = [
-        'requiresApproval' => 'requiresApproval',
-        'alias' => 'alias',
+        'name' => 'name',
+        'type' => 'type',
+        'description' => 'description',
+        'inputSchema' => 'inputSchema',
+        'indices' => 'indices',
+        'mode' => 'mode',
+        'allowUnlistedIndices' => 'allowUnlistedIndices',
+        'allowedConfigs' => 'allowedConfigs',
+        'predefinedRecommendParameters' => 'predefinedRecommendParameters',
+        'url' => 'url',
+        'transport' => 'transport',
+        'headers' => 'headers',
+        'id' => 'id',
+        'allowedTools' => 'allowedTools',
     ];
 
     /**
@@ -51,8 +87,20 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      * @var string[]
      */
     protected static $setters = [
-        'requiresApproval' => 'setRequiresApproval',
-        'alias' => 'setAlias',
+        'name' => 'setName',
+        'type' => 'setType',
+        'description' => 'setDescription',
+        'inputSchema' => 'setInputSchema',
+        'indices' => 'setIndices',
+        'mode' => 'setMode',
+        'allowUnlistedIndices' => 'setAllowUnlistedIndices',
+        'allowedConfigs' => 'setAllowedConfigs',
+        'predefinedRecommendParameters' => 'setPredefinedRecommendParameters',
+        'url' => 'setUrl',
+        'transport' => 'setTransport',
+        'headers' => 'setHeaders',
+        'id' => 'setId',
+        'allowedTools' => 'setAllowedTools',
     ];
 
     /**
@@ -61,8 +109,20 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      * @var string[]
      */
     protected static $getters = [
-        'requiresApproval' => 'getRequiresApproval',
-        'alias' => 'getAlias',
+        'name' => 'getName',
+        'type' => 'getType',
+        'description' => 'getDescription',
+        'inputSchema' => 'getInputSchema',
+        'indices' => 'getIndices',
+        'mode' => 'getMode',
+        'allowUnlistedIndices' => 'getAllowUnlistedIndices',
+        'allowedConfigs' => 'getAllowedConfigs',
+        'predefinedRecommendParameters' => 'getPredefinedRecommendParameters',
+        'url' => 'getUrl',
+        'transport' => 'getTransport',
+        'headers' => 'getHeaders',
+        'id' => 'getId',
+        'allowedTools' => 'getAllowedTools',
     ];
 
     /**
@@ -79,11 +139,47 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     public function __construct(?array $data = null)
     {
-        if (isset($data['requiresApproval'])) {
-            $this->container['requiresApproval'] = $data['requiresApproval'];
+        if (isset($data['name'])) {
+            $this->container['name'] = $data['name'];
         }
-        if (isset($data['alias'])) {
-            $this->container['alias'] = $data['alias'];
+        if (isset($data['type'])) {
+            $this->container['type'] = $data['type'];
+        }
+        if (isset($data['description'])) {
+            $this->container['description'] = $data['description'];
+        }
+        if (isset($data['inputSchema'])) {
+            $this->container['inputSchema'] = $data['inputSchema'];
+        }
+        if (isset($data['indices'])) {
+            $this->container['indices'] = $data['indices'];
+        }
+        if (isset($data['mode'])) {
+            $this->container['mode'] = $data['mode'];
+        }
+        if (isset($data['allowUnlistedIndices'])) {
+            $this->container['allowUnlistedIndices'] = $data['allowUnlistedIndices'];
+        }
+        if (isset($data['allowedConfigs'])) {
+            $this->container['allowedConfigs'] = $data['allowedConfigs'];
+        }
+        if (isset($data['predefinedRecommendParameters'])) {
+            $this->container['predefinedRecommendParameters'] = $data['predefinedRecommendParameters'];
+        }
+        if (isset($data['url'])) {
+            $this->container['url'] = $data['url'];
+        }
+        if (isset($data['transport'])) {
+            $this->container['transport'] = $data['transport'];
+        }
+        if (isset($data['headers'])) {
+            $this->container['headers'] = $data['headers'];
+        }
+        if (isset($data['id'])) {
+            $this->container['id'] = $data['id'];
+        }
+        if (isset($data['allowedTools'])) {
+            $this->container['allowedTools'] = $data['allowedTools'];
         }
     }
 
@@ -145,7 +241,31 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
      */
     public function listInvalidProperties()
     {
-        return [];
+        $invalidProperties = [];
+
+        if (!isset($this->container['name']) || null === $this->container['name']) {
+            $invalidProperties[] = "'name' can't be null";
+        }
+        if (!isset($this->container['type']) || null === $this->container['type']) {
+            $invalidProperties[] = "'type' can't be null";
+        }
+        if (!isset($this->container['description']) || null === $this->container['description']) {
+            $invalidProperties[] = "'description' can't be null";
+        }
+        if (!isset($this->container['inputSchema']) || null === $this->container['inputSchema']) {
+            $invalidProperties[] = "'inputSchema' can't be null";
+        }
+        if (!isset($this->container['indices']) || null === $this->container['indices']) {
+            $invalidProperties[] = "'indices' can't be null";
+        }
+        if (!isset($this->container['url']) || null === $this->container['url']) {
+            $invalidProperties[] = "'url' can't be null";
+        }
+        if (!isset($this->container['headers']) || null === $this->container['headers']) {
+            $invalidProperties[] = "'headers' can't be null";
+        }
+
+        return $invalidProperties;
     }
 
     /**
@@ -160,49 +280,337 @@ class ToolConfig extends AbstractModel implements ModelInterface, \ArrayAccess, 
     }
 
     /**
-     * Gets requiresApproval.
+     * Gets name.
      *
-     * @return null|bool
+     * @return string
      */
-    public function getRequiresApproval()
+    public function getName()
     {
-        return $this->container['requiresApproval'] ?? null;
+        return $this->container['name'] ?? null;
     }
 
     /**
-     * Sets requiresApproval.
+     * Sets name.
      *
-     * @param null|bool $requiresApproval requiresApproval
+     * @param string $name name
      *
      * @return self
      */
-    public function setRequiresApproval($requiresApproval)
+    public function setName($name)
     {
-        $this->container['requiresApproval'] = $requiresApproval;
+        $this->container['name'] = $name;
 
         return $this;
     }
 
     /**
-     * Gets alias.
+     * Gets type.
      *
-     * @return null|string
+     * @return string
      */
-    public function getAlias()
+    public function getType()
     {
-        return $this->container['alias'] ?? null;
+        return $this->container['type'] ?? null;
     }
 
     /**
-     * Sets alias.
+     * Sets type.
      *
-     * @param null|string $alias alias
+     * @param string $type type
      *
      * @return self
      */
-    public function setAlias($alias)
+    public function setType($type)
     {
-        $this->container['alias'] = $alias;
+        $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->container['description'] ?? null;
+    }
+
+    /**
+     * Sets description.
+     *
+     * @param string $description description
+     *
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->container['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Gets inputSchema.
+     *
+     * @return ClientToolsArgsSchema
+     */
+    public function getInputSchema()
+    {
+        return $this->container['inputSchema'] ?? null;
+    }
+
+    /**
+     * Sets inputSchema.
+     *
+     * @param ClientToolsArgsSchema $inputSchema inputSchema
+     *
+     * @return self
+     */
+    public function setInputSchema($inputSchema)
+    {
+        $this->container['inputSchema'] = $inputSchema;
+
+        return $this;
+    }
+
+    /**
+     * Gets indices.
+     *
+     * @return AlgoliaSearchToolIndexConfig[]
+     */
+    public function getIndices()
+    {
+        return $this->container['indices'] ?? null;
+    }
+
+    /**
+     * Sets indices.
+     *
+     * @param AlgoliaSearchToolIndexConfig[] $indices indices
+     *
+     * @return self
+     */
+    public function setIndices($indices)
+    {
+        $this->container['indices'] = $indices;
+
+        return $this;
+    }
+
+    /**
+     * Gets mode.
+     *
+     * @return null|ModeEnum
+     */
+    public function getMode()
+    {
+        return $this->container['mode'] ?? null;
+    }
+
+    /**
+     * Sets mode.
+     *
+     * @param null|ModeEnum $mode mode
+     *
+     * @return self
+     */
+    public function setMode($mode)
+    {
+        $this->container['mode'] = $mode;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowUnlistedIndices.
+     *
+     * @return null|bool
+     */
+    public function getAllowUnlistedIndices()
+    {
+        return $this->container['allowUnlistedIndices'] ?? null;
+    }
+
+    /**
+     * Sets allowUnlistedIndices.
+     *
+     * @param null|bool $allowUnlistedIndices allowUnlistedIndices
+     *
+     * @return self
+     */
+    public function setAllowUnlistedIndices($allowUnlistedIndices)
+    {
+        $this->container['allowUnlistedIndices'] = $allowUnlistedIndices;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowedConfigs.
+     *
+     * @return null|AlgoliaRecommendToolIndexConfig[]
+     */
+    public function getAllowedConfigs()
+    {
+        return $this->container['allowedConfigs'] ?? null;
+    }
+
+    /**
+     * Sets allowedConfigs.
+     *
+     * @param null|AlgoliaRecommendToolIndexConfig[] $allowedConfigs allowedConfigs
+     *
+     * @return self
+     */
+    public function setAllowedConfigs($allowedConfigs)
+    {
+        $this->container['allowedConfigs'] = $allowedConfigs;
+
+        return $this;
+    }
+
+    /**
+     * Gets predefinedRecommendParameters.
+     *
+     * @return null|array<string,mixed>
+     */
+    public function getPredefinedRecommendParameters()
+    {
+        return $this->container['predefinedRecommendParameters'] ?? null;
+    }
+
+    /**
+     * Sets predefinedRecommendParameters.
+     *
+     * @param null|array<string,mixed> $predefinedRecommendParameters predefinedRecommendParameters
+     *
+     * @return self
+     */
+    public function setPredefinedRecommendParameters($predefinedRecommendParameters)
+    {
+        $this->container['predefinedRecommendParameters'] = $predefinedRecommendParameters;
+
+        return $this;
+    }
+
+    /**
+     * Gets url.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->container['url'] ?? null;
+    }
+
+    /**
+     * Sets url.
+     *
+     * @param string $url url
+     *
+     * @return self
+     */
+    public function setUrl($url)
+    {
+        $this->container['url'] = $url;
+
+        return $this;
+    }
+
+    /**
+     * Gets transport.
+     *
+     * @return null|string
+     */
+    public function getTransport()
+    {
+        return $this->container['transport'] ?? null;
+    }
+
+    /**
+     * Sets transport.
+     *
+     * @param null|string $transport transport
+     *
+     * @return self
+     */
+    public function setTransport($transport)
+    {
+        $this->container['transport'] = $transport;
+
+        return $this;
+    }
+
+    /**
+     * Gets headers.
+     *
+     * @return array<string,string>
+     */
+    public function getHeaders()
+    {
+        return $this->container['headers'] ?? null;
+    }
+
+    /**
+     * Sets headers.
+     *
+     * @param array<string,string> $headers headers
+     *
+     * @return self
+     */
+    public function setHeaders($headers)
+    {
+        $this->container['headers'] = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Gets id.
+     *
+     * @return null|string
+     */
+    public function getId()
+    {
+        return $this->container['id'] ?? null;
+    }
+
+    /**
+     * Sets id.
+     *
+     * @param null|string $id stable unique identifier for this MCP tool
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowedTools.
+     *
+     * @return null|array<string,AllowedTool>
+     */
+    public function getAllowedTools()
+    {
+        return $this->container['allowedTools'] ?? null;
+    }
+
+    /**
+     * Sets allowedTools.
+     *
+     * @param null|array<string,AllowedTool> $allowedTools allowedTools
+     *
+     * @return self
+     */
+    public function setAllowedTools($allowedTools)
+    {
+        $this->container['allowedTools'] = $allowedTools;
 
         return $this;
     }

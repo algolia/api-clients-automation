@@ -1,5 +1,5 @@
 ModeEnum:
   type: string
   enum:
-  - static
-  - dynamic
+    - static
+    - dynamic

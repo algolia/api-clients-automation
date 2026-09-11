@@ -1,8 +1,8 @@
 ReRankingApplyFilterUnion:
   oneOf:
-  - type: string
-  - items:
-      type: object
-      additionalProperties: true
-    type: array
-  - type: 'null'
+    - type: string
+    - items:
+        type: object
+        additionalProperties: true
+      type: array
+    - type: 'null'

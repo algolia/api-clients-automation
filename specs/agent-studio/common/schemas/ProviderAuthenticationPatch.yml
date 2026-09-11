@@ -2,13 +2,13 @@ ProviderAuthenticationPatch:
   properties:
     name:
       oneOf:
-      - type: string
-        maxLength: 128
-        minLength: 1
-      - type: 'null'
+        - type: string
+          maxLength: 128
+          minLength: 1
+        - type: 'null'
       title: name
     input:
-      $ref: InputUnionProviderAuthenticationPatch.yml#/InputUnionProviderAuthenticationPatch
+      $ref: 'InputUnionProviderAuthenticationPatch.yml#/InputUnionProviderAuthenticationPatch'
   additionalProperties: false
   type: object
   title: providerPatch

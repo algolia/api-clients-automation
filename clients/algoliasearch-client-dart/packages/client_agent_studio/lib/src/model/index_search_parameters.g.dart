@@ -38,6 +38,11 @@ IndexSearchParameters _$IndexSearchParametersFromJson(
               (v) => v == null
                   ? null
                   : StringArrayParam.fromJson(v as Map<String, dynamic>)),
+          distinct: $checkedConvert(
+              'distinct',
+              (v) => v == null
+                  ? null
+                  : BooleanParam.fromJson(v as Map<String, dynamic>)),
           facets: $checkedConvert(
               'facets',
               (v) => v == null
@@ -68,6 +73,7 @@ Map<String, dynamic> _$IndexSearchParametersToJson(
   writeNotNull('page', instance.page?.toJson());
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve?.toJson());
   writeNotNull('responseFields', instance.responseFields?.toJson());
+  writeNotNull('distinct', instance.distinct?.toJson());
   writeNotNull('facets', instance.facets?.toJson());
   writeNotNull('custom', instance.custom);
   return val;

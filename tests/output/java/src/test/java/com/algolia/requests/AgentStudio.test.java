@@ -83,6 +83,68 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
+  @DisplayName("compactContext with required parameters")
+  void compactContextTest() {
+    assertDoesNotThrow(() -> {
+      client.compactContext(
+        new ContextCompactRequest()
+          .setProviderID("c2905529-b933-4b69-87ec-75f9829d5f59")
+          .setModel("gpt-4o-mini")
+          .setMessages(
+            MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/unstable/context/compact", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello," +
+          " how are you?\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("compactContext with all parameters")
+  void compactContextTest1() {
+    assertDoesNotThrow(() -> {
+      client.compactContext(
+        new ContextCompactRequest()
+          .setProviderID("c2905529-b933-4b69-87ec-75f9829d5f59")
+          .setModel("gpt-4o-mini")
+          .setMessages(
+            MessagesUnion.ofListOfMessageV4(
+              Arrays.asList(
+                new UserMessageV4().setRole("user").setContent("Hello, how are you?"),
+                new UserMessageV4().setRole("assistant").setContent("I am well.")
+              )
+            )
+          )
+          .setKeepLastMessages(2)
+          .setInstructions("keep every product reference")
+          .setTargetTokensEstimate(128)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/unstable/context/compact", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello," +
+          " how are you?\"},{\"role\":\"assistant\",\"content\":\"I am" +
+          " well.\"}],\"keepLastMessages\":2,\"instructions\":\"keep every product" +
+          " reference\",\"targetTokensEstimate\":128}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("createAgent with minimal parameters")
   void createAgentTest() {
     assertDoesNotThrow(() -> {
@@ -121,7 +183,15 @@ class AgentStudioClientRequestsTests {
               }
             }
           )
-          .setTools(Arrays.asList(new AlgoliaDisplayResultsToolConfig().setType("start")))
+          .setTools(
+            Arrays.asList(
+              new ClientSideToolConfig()
+                .setType("client_side")
+                .setName("start")
+                .setDescription("Start a conversation")
+                .setInputSchema(new ClientToolsArgsSchema().setType("object"))
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -132,7 +202,8 @@ class AgentStudioClientRequestsTests {
         "{\"name\":\"test-agent\",\"description\":\"A test agent for" +
           " CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You" +
           " are a helpful" +
-          " assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"start\"}]}",
+          " assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start" +
+          " a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -162,7 +233,9 @@ class AgentStudioClientRequestsTests {
         "76710f1b-8231-42e5-b0d1-f43aac618e15",
         CompatibilityMode.AI_SDK_4,
         new AgentCompletionRequest().setMessages(
-          MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+          MessagesUnionAgentCompletionRequest.ofListOfMessageV4(
+            Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?"))
+          )
         )
       );
     });
@@ -176,6 +249,76 @@ class AgentStudioClientRequestsTests {
     try {
       Map<String, String> expectedQuery = json.readValue(
         "{\"compatibilityMode\":\"ai-sdk-4\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("createAgentTask with required parameters")
+  void createAgentTaskTest() {
+    assertDoesNotThrow(() -> {
+      client.createAgentTask(
+        "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        new TaskRequest().setInput(
+          new HashMap() {
+            {
+              put("pageType", "pdp");
+              put("title", "acmePhone128Gb");
+            }
+          }
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("createAgentTask with all parameters")
+  void createAgentTaskTest1() {
+    assertDoesNotThrow(() -> {
+      client.createAgentTask(
+        "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        new TaskRequest().setTask("algolia_on_page_suggestions").setKind(TaskKind.PROMPT_SUGGESTIONS).setInput(
+          new HashMap() {
+            {
+              put("pageType", "pdp");
+              put("title", "acmePhone128Gb");
+            }
+          }
+        ),
+        false,
+        false,
+        false
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"task\":\"algolia_on_page_suggestions\",\"kind\":\"prompt_suggestions\",\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"stream\":\"false\",\"cache\":\"false\",\"analytics\":\"false\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1332,7 +1475,20 @@ class AgentStudioClientRequestsTests {
   @DisplayName("listAgentConversations with all parameters")
   void listAgentConversationsTest1() {
     assertDoesNotThrow(() -> {
-      client.listAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31", true, 1, 2, 10, null);
+      client.listAgentConversations(
+        "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        "2024-01-01",
+        "2024-12-31",
+        true,
+        1,
+        2,
+        10,
+        true,
+        true,
+        false,
+        true,
+        "secure-user-token"
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", req.path);
@@ -1341,7 +1497,7 @@ class AgentStudioClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\"}",
+        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1352,6 +1508,20 @@ class AgentStudioClientRequestsTests {
       }
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
+    }
+
+    try {
+      Map<String, String> expectedHeaders = json.readValue(
+        "{\"x-algolia-secure-user-token\":\"secure-user-token\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, String> actualHeaders = req.headers;
+
+      for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse headers json");
     }
   }
 
@@ -1626,6 +1796,57 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
+  @DisplayName("trimContext with required parameters")
+  void trimContextTest() {
+    assertDoesNotThrow(() -> {
+      client.trimContext(
+        new ContextTrimRequest().setMessages(
+          MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/unstable/context/trim", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("trimContext with all parameters")
+  void trimContextTest1() {
+    assertDoesNotThrow(() -> {
+      client.trimContext(
+        new ContextTrimRequest()
+          .setMessages(
+            MessagesUnion.ofListOfMessageV4(
+              Arrays.asList(
+                new UserMessageV4().setRole("user").setContent("Hello, how are you?"),
+                new UserMessageV4().setRole("assistant").setContent("I am well.")
+              )
+            )
+          )
+          .setKeepLastMessages(1)
+          .setMaxTokensEstimate(256)
+          .setDropToolParts(true)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/unstable/context/trim", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are" +
+          " you?\"},{\"role\":\"assistant\",\"content\":\"I am" +
+          " well.\"}],\"keepLastMessages\":1,\"maxTokensEstimate\":256,\"dropToolParts\":true}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("unpublishAgent")
   void unpublishAgentTest() {
     assertDoesNotThrow(() -> {
@@ -1668,7 +1889,15 @@ class AgentStudioClientRequestsTests {
               }
             }
           )
-          .setTools(Arrays.asList(new AlgoliaDisplayResultsToolConfig().setType("start")))
+          .setTools(
+            Arrays.asList(
+              new ClientSideToolConfig()
+                .setType("client_side")
+                .setName("start")
+                .setDescription("Start a conversation")
+                .setInputSchema(new ClientToolsArgsSchema().setType("object"))
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1678,7 +1907,8 @@ class AgentStudioClientRequestsTests {
       JSONAssert.assertEquals(
         "{\"name\":\"updated-agent\",\"description\":\"Updated" +
           " description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated" +
-          " instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"start\"}]}",
+          " instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start" +
+          " a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1695,6 +1925,50 @@ class AgentStudioClientRequestsTests {
     assertEquals("/agent-studio/1/configuration", req.path);
     assertEquals("PATCH", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"maxRetentionDays\":30}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("updateFeedback with required parameters")
+  void updateFeedbackTest() {
+    assertDoesNotThrow(() -> {
+      client.updateFeedback(new FeedbackUpdateRequest().setMessageId("msg-abc123").setAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/feedback", req.path);
+    assertEquals("PATCH", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("updateFeedback with all parameters")
+  void updateFeedbackTest1() {
+    assertDoesNotThrow(() -> {
+      client.updateFeedback(
+        new FeedbackUpdateRequest()
+          .setMessageId("msg-abc123")
+          .setAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15")
+          .setVote(OneOfEnum.fromValue(0))
+          .setTags(Arrays.asList("unhelpful", "off-topic"))
+          .setNotes("The response did not address my question.")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/feedback", req.path);
+    assertEquals("PATCH", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"vote\":0,\"tags\":[\"unhelpful\",\"off-topic\"],\"notes\":\"The" +
+          " response did not address my question.\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
   }
 
   @Test

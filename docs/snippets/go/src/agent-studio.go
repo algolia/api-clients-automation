@@ -68,6 +68,80 @@ func SnippetForBulkDeleteAllowedDomainsOfAgentStudio() {
 	// SEPARATOR<
 }
 
+func SnippetForCompactContextOfAgentStudio() {
+	/*
+	   Snippet for the compactContext method.
+
+	   compactContext with required parameters
+	*/
+
+	// >SEPARATOR compactContext compactContext with required parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CompactContext(client.NewApiCompactContextRequest(
+		agentStudio.NewEmptyContextCompactRequest().
+			SetProviderID("c2905529-b933-4b69-87ec-75f9829d5f59").
+			SetModel("gpt-4o-mini").
+			SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))})),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForCompactContextOfAgentStudio1() {
+	/*
+	   Snippet for the compactContext method.
+
+	   compactContext with all parameters
+	*/
+
+	// >SEPARATOR compactContext compactContext with all parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.CompactContext(client.NewApiCompactContextRequest(
+		agentStudio.NewEmptyContextCompactRequest().
+			SetProviderID("c2905529-b933-4b69-87ec-75f9829d5f59").
+			SetModel("gpt-4o-mini").
+			SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?")), *agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("assistant").SetContent("I am well."))})).
+			SetKeepLastMessages(2).
+			SetInstructions("keep every product reference").
+			SetTargetTokensEstimate(128),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForCreateAgentOfAgentStudio() {
 	/*
 	   Snippet for the createAgent method.
@@ -123,8 +197,9 @@ func SnippetForCreateAgentOfAgentStudio1() {
 			SetInstructions("You are a helpful assistant.").
 			SetConfig(map[string]any{"sendUsage": true, "sendReasoning": true, "temperature": 0.7, "max_tokens": 1500}).
 			SetTools(
-				[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-					agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+				[]agentStudio.ToolConfig{*agentStudio.ClientSideToolConfigAsToolConfig(
+					agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+						agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -184,10 +259,13 @@ func SnippetForCreateAgentCompletionOfAgentStudio() {
 
 	// Use the streaming variant to iterate over events
 	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-4"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-4"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -231,10 +309,13 @@ func SnippetForCreateAgentCompletionOfAgentStudio1() {
 
 	// Use the streaming variant to iterate over events
 	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -278,11 +359,14 @@ func SnippetForCreateAgentCompletionOfAgentStudio2() {
 
 	// Use the streaming variant to iterate over events
 	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(
-			[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
-				agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
-					[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")).WithStream(false).WithCache(false).WithMemory(false))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
+					agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
+						[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")),
+	).WithStream(false).WithCache(false).WithMemory(false))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -326,16 +410,20 @@ func SnippetForCreateAgentCompletionOfAgentStudio3() {
 
 	// Use the streaming variant to iterate over events
 	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
-			agentStudio.NewEmptyAgentTestConfiguration().
-				SetInstructions("Test instructions override").
-				SetConfig(map[string]any{"temperature": 0.2}).
-				SetTools(
-					[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-						agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
+				agentStudio.NewEmptyAgentTestConfiguration().
+					SetInstructions("Test instructions override").
+					SetConfig(map[string]any{"temperature": 0.2}).
+					SetTools(
+						[]agentStudio.ToolConfigAgentTestConfiguration{*agentStudio.ClientSideToolConfigAsToolConfigAgentTestConfiguration(
+							agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+								agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
+			),
 		),
 	))
 	if err != nil {
@@ -381,10 +469,13 @@ func SnippetForCreateAgentCompletionOfAgentStudio4() {
 
 	// Use the raw streaming variant to access the unparsed server-sent events
 	decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-5"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -398,6 +489,100 @@ func SnippetForCreateAgentCompletionOfAgentStudio4() {
 	}
 
 	err = decoder.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentTaskOfAgentStudio() {
+	/*
+	   Snippet for the createAgentTask method.
+
+	   createAgentTask with required parameters
+	*/
+
+	// >SEPARATOR createAgentTask createAgentTask with required parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentTaskStream(client.NewApiCreateAgentTaskRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.NewEmptyTaskRequest().SetInput(map[string]any{"pageType": "pdp", "title": "acmePhone128Gb"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentTaskOfAgentStudio1() {
+	/*
+	   Snippet for the createAgentTask method.
+
+	   createAgentTask with all parameters
+	*/
+
+	// >SEPARATOR createAgentTask createAgentTask with all parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentTaskStream(client.NewApiCreateAgentTaskRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.NewEmptyTaskRequest().
+			SetTask("algolia_on_page_suggestions").
+			SetKind(agentStudio.TaskKind("prompt_suggestions")).
+			SetInput(map[string]any{"pageType": "pdp", "title": "acmePhone128Gb"}),
+	).WithStream(false).WithCache(false).WithAnalytics(false))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -494,7 +679,7 @@ func SnippetForCreateProviderOfAgentStudio() {
 		agentStudio.NewEmptyProviderAuthenticationCreate().
 			SetName("My OpenAI Provider").
 			SetProviderName(agentStudio.ProviderName("openai")).
-			SetInput(agentStudio.OpenAIProviderInputAsProviderInput(
+			SetInput(agentStudio.OpenAIProviderInputAsInputUnion(
 				agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-test-key-1234"))),
 	))
 	if err != nil {
@@ -528,7 +713,7 @@ func SnippetForCreateProviderOfAgentStudio1() {
 		agentStudio.NewEmptyProviderAuthenticationCreate().
 			SetName("My Azure Provider").
 			SetProviderName(agentStudio.ProviderName("azure_openai")).
-			SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(
+			SetInput(agentStudio.AzureOpenAIProviderInputAsInputUnion(
 				agentStudio.NewEmptyAzureOpenAIProviderInput().
 					SetApiKey("az-test-key-5678").
 					SetAzureEndpoint("https://my-resource.openai.azure.com").
@@ -1952,7 +2137,7 @@ func SnippetForListAgentConversationsOfAgentStudio1() {
 	// Call the API
 	response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(
 		"76710f1b-8231-42e5-b0d1-f43aac618e15",
-	).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10))
+	).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2417,6 +2602,71 @@ func SnippetForSetClientApiKeyOfAgentStudio() {
 	// SEPARATOR<
 }
 
+func SnippetForTrimContextOfAgentStudio() {
+	/*
+	   Snippet for the trimContext method.
+
+	   trimContext with required parameters
+	*/
+
+	// >SEPARATOR trimContext trimContext with required parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.TrimContext(client.NewApiTrimContextRequest(
+
+		agentStudio.NewEmptyContextTrimRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForTrimContextOfAgentStudio1() {
+	/*
+	   Snippet for the trimContext method.
+
+	   trimContext with all parameters
+	*/
+
+	// >SEPARATOR trimContext trimContext with all parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.TrimContext(client.NewApiTrimContextRequest(
+
+		agentStudio.NewEmptyContextTrimRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+			[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?")), *agentStudio.UserMessageV4AsMessageV4(
+				agentStudio.NewEmptyUserMessageV4().SetRole("assistant").SetContent("I am well."))})).SetKeepLastMessages(1).SetMaxTokensEstimate(256).SetDropToolParts(true)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForUnpublishAgentOfAgentStudio() {
 	/*
 	   Snippet for the unpublishAgent method.
@@ -2502,8 +2752,9 @@ func SnippetForUpdateAgentOfAgentStudio1() {
 			SetInstructions("Updated instructions.").
 			SetConfig(map[string]any{"temperature": 0.5}).
 			SetTools(
-				[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-					agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+				[]agentStudio.ToolConfig{*agentStudio.ClientSideToolConfigAsToolConfig(
+					agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+						agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
 	))
 	if err != nil {
 		// handle the eventual error
@@ -2535,6 +2786,72 @@ func SnippetForUpdateConfigurationOfAgentStudio() {
 	response, err := client.UpdateConfiguration(client.NewApiUpdateConfigurationRequest(
 
 		agentStudio.NewEmptyApplicationConfigPatch().SetMaxRetentionDays(30)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForUpdateFeedbackOfAgentStudio() {
+	/*
+	   Snippet for the updateFeedback method.
+
+	   updateFeedback with required parameters
+	*/
+
+	// >SEPARATOR updateFeedback updateFeedback with required parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.UpdateFeedback(client.NewApiUpdateFeedbackRequest(
+
+		agentStudio.NewEmptyFeedbackUpdateRequest().SetMessageId("msg-abc123").SetAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForUpdateFeedbackOfAgentStudio1() {
+	/*
+	   Snippet for the updateFeedback method.
+
+	   updateFeedback with all parameters
+	*/
+
+	// >SEPARATOR updateFeedback updateFeedback with all parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.UpdateFeedback(client.NewApiUpdateFeedbackRequest(
+		agentStudio.NewEmptyFeedbackUpdateRequest().
+			SetMessageId("msg-abc123").
+			SetAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15").
+			SetVote(agentStudio.OneOfEnum(0)).
+			SetTags(
+				[]string{"unhelpful", "off-topic"}).
+			SetNotes("The response did not address my question."),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2594,8 +2911,11 @@ func SnippetForUpdateProviderOfAgentStudio1() {
 	// Call the API
 	response, err := client.UpdateProvider(client.NewApiUpdateProviderRequest(
 		"c2905529-b933-4b69-87ec-75f9829d5f59",
-		agentStudio.NewEmptyProviderAuthenticationPatch().SetName("Updated Provider").SetInput(agentStudio.OpenAIProviderInputAsProviderInputNullable(
-			agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-new-key-5678")))))
+		agentStudio.NewEmptyProviderAuthenticationPatch().
+			SetName("Updated Provider").
+			SetInput(agentStudio.OpenAIProviderInputAsInputUnionProviderAuthenticationPatch(
+				agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-new-key-5678"))),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

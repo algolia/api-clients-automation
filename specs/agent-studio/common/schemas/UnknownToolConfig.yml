@@ -14,7 +14,7 @@ UnknownToolConfig:
       title: type
       type: string
   required:
-  - type
-  - name
+    - type
+    - name
   title: unknownToolConfig
   type: object

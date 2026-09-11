@@ -2,7 +2,7 @@
 
 import type { AgentCompletionAlgoliaParams } from './agentCompletionAlgoliaParams';
 import type { AgentTestConfiguration } from './agentTestConfiguration';
-import type { MessagesUnion } from './messagesUnion';
+import type { MessagesUnionAgentCompletionRequest } from './messagesUnionAgentCompletionRequest';
 
 /**
  * Request model for creating a completion for an assistant.
@@ -10,7 +10,7 @@ import type { MessagesUnion } from './messagesUnion';
 export type AgentCompletionRequest = {
   configuration?: AgentTestConfiguration | undefined;
 
-  messages?: MessagesUnion | null | undefined;
+  messages?: MessagesUnionAgentCompletionRequest | null | undefined;
 
   /**
    * Optional conversation id.

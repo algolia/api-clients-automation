@@ -21,14 +21,26 @@ PaginatedConversationsResponse _$PaginatedConversationsResponseFromJson(
                   .toList()),
           pagination: $checkedConvert('pagination',
               (v) => PaginationMetadata.fromJson(v as Map<String, dynamic>)),
+          analyticsDegraded:
+              $checkedConvert('analyticsDegraded', (v) => v as bool?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$PaginatedConversationsResponseToJson(
-        PaginatedConversationsResponse instance) =>
-    <String, dynamic>{
-      'data': instance.data.map((e) => e.toJson()).toList(),
-      'pagination': instance.pagination.toJson(),
-    };
+    PaginatedConversationsResponse instance) {
+  final val = <String, dynamic>{
+    'data': instance.data.map((e) => e.toJson()).toList(),
+    'pagination': instance.pagination.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('analyticsDegraded', instance.analyticsDegraded);
+  return val;
+}

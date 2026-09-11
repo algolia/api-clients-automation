@@ -10,14 +10,23 @@ import Foundation
 public struct AlgoliaDisplayResultsToolConfig: Codable, JSONEncodable {
     public var name: String?
     public var type: String
+    /// When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences
+    /// where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant
+    /// message after the tool runs.
+    public var isTerminal: Bool?
+    /// minimum number of result groups.
     public var minGroups: Int?
+    /// maximum number of result groups.
     public var maxGroups: Int?
+    /// minimum hits per group.
     public var minResultsPerGroup: Int?
+    /// maximum hits per group.
     public var maxResultsPerGroup: Int?
 
     public init(
         name: String? = nil,
         type: String,
+        isTerminal: Bool? = nil,
         minGroups: Int? = nil,
         maxGroups: Int? = nil,
         minResultsPerGroup: Int? = nil,
@@ -25,6 +34,7 @@ public struct AlgoliaDisplayResultsToolConfig: Codable, JSONEncodable {
     ) {
         self.name = name
         self.type = type
+        self.isTerminal = isTerminal
         self.minGroups = minGroups
         self.maxGroups = maxGroups
         self.minResultsPerGroup = minResultsPerGroup
@@ -34,6 +44,7 @@ public struct AlgoliaDisplayResultsToolConfig: Codable, JSONEncodable {
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case type
+        case isTerminal
         case minGroups
         case maxGroups
         case minResultsPerGroup
@@ -46,6 +57,7 @@ public struct AlgoliaDisplayResultsToolConfig: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.name, forKey: .name)
         try container.encode(self.type, forKey: .type)
+        try container.encodeIfPresent(self.isTerminal, forKey: .isTerminal)
         try container.encodeIfPresent(self.minGroups, forKey: .minGroups)
         try container.encodeIfPresent(self.maxGroups, forKey: .maxGroups)
         try container.encodeIfPresent(self.minResultsPerGroup, forKey: .minResultsPerGroup)
@@ -59,6 +71,7 @@ extension AlgoliaDisplayResultsToolConfig: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.name?.hashValue)
         hasher.combine(self.type.hashValue)
+        hasher.combine(self.isTerminal?.hashValue)
         hasher.combine(self.minGroups?.hashValue)
         hasher.combine(self.maxGroups?.hashValue)
         hasher.combine(self.minResultsPerGroup?.hashValue)

@@ -25,14 +25,14 @@ AssistantMessageAGUI:
       default: null
       title: name
     toolCalls:
-      $ref: ToolCallsUnion.yml#/ToolCallsUnion
+      $ref: 'ToolCallsUnion.yml#/ToolCallsUnion'
     encryptedContent:
       type: string
       default: null
       title: encryptedcontent
     parts:
       items:
-        $ref: MessagePartAssistantMessageAGUI.yml#/MessagePartAssistantMessageAGUI
+        $ref: 'MessagePartAssistantMessageAGUI.yml#/MessagePartAssistantMessageAGUI'
       type: array
       default: null
       title: parts
@@ -41,7 +41,7 @@ AssistantMessageAGUI:
       default: null
       title: createdat
   required:
-  - role
-  - id
+    - role
+    - id
   title: assistantMessageAGUI
   type: object

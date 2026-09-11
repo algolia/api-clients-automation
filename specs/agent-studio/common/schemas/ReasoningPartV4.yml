@@ -9,6 +9,6 @@ ReasoningPartV4:
       title: reasoning
       type: string
   required:
-  - reasoning
+    - reasoning
   title: reasoningPartV4
   type: object

@@ -14,10 +14,10 @@ ImpactAnalytics:
       title: hasalgoliasearch
   type: object
   required:
-  - hasView
-  - hasClick
-  - hasConversion
-  - hasAlgoliaSearch
+    - hasView
+    - hasClick
+    - hasConversion
+    - hasAlgoliaSearch
   title: impactAnalytics
   description: |-
     Outcome signals from the BQ SSOT dataset.

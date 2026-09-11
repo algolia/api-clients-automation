@@ -81,6 +81,79 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// compactContext with required parameters
+    func testCompactContextTest() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.compactContextWithHTTPInfo(contextCompactRequest: ContextCompactRequest(
+            providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model: "gpt-4o-mini",
+            messages: MessagesUnion.arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                role: "user",
+                content: "Hello, how are you?"
+            ))])
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/unstable/context/compact")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// compactContext with all parameters
+    func testCompactContextTest1() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.compactContextWithHTTPInfo(contextCompactRequest: ContextCompactRequest(
+            providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model: "gpt-4o-mini",
+            messages: MessagesUnion.arrayOfMessageV4([
+                MessageV4.userMessageV4(UserMessageV4(role: "user", content: "Hello, how are you?")),
+                MessageV4.userMessageV4(UserMessageV4(role: "assistant", content: "I am well.")),
+            ]),
+            keepLastMessages: 2,
+            instructions: "keep every product reference",
+            targetTokensEstimate: 128
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"providerID\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4o-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":2,\"instructions\":\"keep every product reference\",\"targetTokensEstimate\":128}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/unstable/context/compact")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// createAgent with minimal parameters
     func testCreateAgentTest() async throws {
         let configuration = try AgentStudioClientConfiguration(
@@ -128,7 +201,12 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             model: "gpt-4",
             instructions: "You are a helpful assistant.",
             config: ["sendUsage": true, "sendReasoning": true, "temperature": 0.7, "max_tokens": 1500],
-            tools: [ToolConfigInput.algoliaDisplayResultsToolConfig(AlgoliaDisplayResultsToolConfig(type: "start"))]
+            tools: [ToolConfig.clientSideToolConfig(ClientSideToolConfig(
+                name: "start",
+                type: "client_side",
+                description: "Start a conversation",
+                inputSchema: ClientToolsArgsSchema(type: "object")
+            ))]
         ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -136,7 +214,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"start\"}]}"
+        let expectedBodyData = "{\"name\":\"test-agent\",\"description\":\"A test agent for CTS\",\"providerId\":\"c2905529-b933-4b69-87ec-75f9829d5f59\",\"model\":\"gpt-4\",\"instructions\":\"You are a helpful assistant.\",\"config\":{\"sendUsage\":true,\"sendReasoning\":true,\"temperature\":0.7,\"max_tokens\":1500},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -190,11 +268,12 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let response = try await client.createAgentCompletionWithHTTPInfo(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             compatibilityMode: CompatibilityMode.aiSdk4,
-            agentCompletionRequest: AgentCompletionRequest(messages: MessagesUnion
-                .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
-                    role: "user",
-                    content: "Hello, how are you?"
-                ))]))
+            agentCompletionRequest: AgentCompletionRequestUnion
+                .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnionAgentCompletionRequest
+                        .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                            role: "user",
+                            content: "Hello, how are you?"
+                        ))])))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -212,6 +291,81 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"compatibilityMode\":\"ai-sdk-4\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// createAgentTask with required parameters
+    func testCreateAgentTaskTest() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createAgentTaskWithHTTPInfo(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            taskRequest: TaskRequest(input: ["pageType": AnyCodable("pdp"), "title": AnyCodable("acmePhone128Gb")])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// createAgentTask with all parameters
+    func testCreateAgentTaskTest1() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createAgentTaskWithHTTPInfo(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            taskRequest: TaskRequest(
+                task: "algolia_on_page_suggestions",
+                kind: TaskKind.promptSuggestions,
+                input: ["pageType": AnyCodable("pdp"), "title": AnyCodable("acmePhone128Gb")]
+            ),
+            stream: false,
+            cache: false,
+            analytics: false
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"task\":\"algolia_on_page_suggestions\",\"kind\":\"prompt_suggestions\",\"input\":{\"pageType\":\"pdp\",\"title\":\"acmePhone128Gb\"}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"stream\":\"false\",\"cache\":\"false\",\"analytics\":\"false\"}"
+            .data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -299,7 +453,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             .createProviderWithHTTPInfo(providerAuthenticationCreate: ProviderAuthenticationCreate(
                 name: "My OpenAI Provider",
                 providerName: ProviderName.openai,
-                input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
+                input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -332,7 +486,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             .createProviderWithHTTPInfo(providerAuthenticationCreate: ProviderAuthenticationCreate(
                 name: "My Azure Provider",
                 providerName: ProviderName.azureOpenai,
-                input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(
+                input: InputUnion.azureOpenAIProviderInput(AzureOpenAIProviderInput(
                     apiKey: "az-test-key-5678",
                     azureEndpoint: "https://my-resource.openai.azure.com",
                     azureDeployment: "gpt-4o"
@@ -1751,7 +1905,11 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             feedbackVote: 1,
             page: 2,
             limit: 10,
-            xAlgoliaSecureUserToken: nil
+            includeImpactAnalytics: true,
+            clicked: true,
+            converted: false,
+            hasAlgoliaSearch: true,
+            xAlgoliaSecureUserToken: "secure-user-token"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1762,7 +1920,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters = try XCTUnwrap(
-            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\"}"
+            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}"
                 .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
@@ -1771,6 +1929,15 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-secure-user-token\":\"secure-user-token\"}"
+            .data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
+
+        let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+        for header in expectedHeadersMap {
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
+        }
     }
 
     /// e2e list agent conversations
@@ -2136,6 +2303,75 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// trimContext with required parameters
+    func testTrimContextTest() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .trimContextWithHTTPInfo(contextTrimRequest: ContextTrimRequest(messages: MessagesUnion
+                    .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                        role: "user",
+                        content: "Hello, how are you?"
+                    ))])))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/unstable/context/trim")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// trimContext with all parameters
+    func testTrimContextTest1() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.trimContextWithHTTPInfo(contextTrimRequest: ContextTrimRequest(
+            messages: MessagesUnion.arrayOfMessageV4([
+                MessageV4.userMessageV4(UserMessageV4(role: "user", content: "Hello, how are you?")),
+                MessageV4.userMessageV4(UserMessageV4(role: "assistant", content: "I am well.")),
+            ]),
+            keepLastMessages: 1,
+            maxTokensEstimate: 256,
+            dropToolParts: true
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"},{\"role\":\"assistant\",\"content\":\"I am well.\"}],\"keepLastMessages\":1,\"maxTokensEstimate\":256,\"dropToolParts\":true}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/unstable/context/trim")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// unpublishAgent
     func testUnpublishAgentTest() async throws {
         let configuration = try AgentStudioClientConfiguration(
@@ -2207,7 +2443,12 @@ final class AgentStudioClientRequestsTests: XCTestCase {
                 model: "gpt-4o",
                 instructions: "Updated instructions.",
                 config: ["temperature": 0.5],
-                tools: [ToolConfigInput.algoliaDisplayResultsToolConfig(AlgoliaDisplayResultsToolConfig(type: "start"))]
+                tools: [ToolConfig.clientSideToolConfig(ClientSideToolConfig(
+                    name: "start",
+                    type: "client_side",
+                    description: "Start a conversation",
+                    inputSchema: ClientToolsArgsSchema(type: "object")
+                ))]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2216,7 +2457,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"start\"}]}"
+        let expectedBodyData = "{\"name\":\"updated-agent\",\"description\":\"Updated description\",\"providerId\":\"new-provider-id\",\"model\":\"gpt-4o\",\"instructions\":\"Updated instructions.\",\"config\":{\"temperature\":0.5},\"tools\":[{\"type\":\"client_side\",\"name\":\"start\",\"description\":\"Start a conversation\",\"inputSchema\":{\"type\":\"object\"}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -2251,6 +2492,71 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/agent-studio/1/configuration")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.patch)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// updateFeedback with required parameters
+    func testUpdateFeedbackTest() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.updateFeedbackWithHTTPInfo(feedbackUpdateRequest: FeedbackUpdateRequest(
+            messageId: "msg-abc123",
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/feedback")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.patch)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// updateFeedback with all parameters
+    func testUpdateFeedbackTest1() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.updateFeedbackWithHTTPInfo(feedbackUpdateRequest: FeedbackUpdateRequest(
+            messageId: "msg-abc123",
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            vote: XCTUnwrap(OneOfEnum(rawValue: 0)),
+            tags: ["unhelpful", "off-topic"],
+            notes: "The response did not address my question."
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"messageId\":\"msg-abc123\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"vote\":0,\"tags\":[\"unhelpful\",\"off-topic\"],\"notes\":\"The response did not address my question.\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/feedback")
         XCTAssertEqual(echoResponse.method, HTTPMethod.patch)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -2299,7 +2605,8 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             providerId: "c2905529-b933-4b69-87ec-75f9829d5f59",
             providerAuthenticationPatch: ProviderAuthenticationPatch(
                 name: "Updated Provider",
-                input: ProviderInputNullable.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-new-key-5678"))
+                input: InputUnionProviderAuthenticationPatch
+                    .openAIProviderInput(OpenAIProviderInput(apiKey: "sk-new-key-5678"))
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)

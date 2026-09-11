@@ -7,23 +7,23 @@ StringArrayParam:
       type: boolean
     default:
       oneOf:
-      - items:
-          type: string
-        type: array
-      - type: 'null'
+        - items:
+            type: string
+          type: array
+        - type: 'null'
       default: null
       title: default
     constraint:
       oneOf:
-      - $ref: StringArrayParamConstraint.yml#/StringArrayParamConstraint
-      - type: 'null'
+        - $ref: 'StringArrayParamConstraint.yml#/StringArrayParamConstraint'
+        - type: 'null'
     merge:
       oneOf:
-      - type: boolean
-      - type: 'null'
+        - type: boolean
+        - type: 'null'
       default: null
       title: merge
   required:
-  - exposed
+    - exposed
   title: stringArrayParam
   type: object

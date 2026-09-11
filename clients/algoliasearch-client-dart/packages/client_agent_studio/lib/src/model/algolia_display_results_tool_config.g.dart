@@ -15,6 +15,7 @@ AlgoliaDisplayResultsToolConfig _$AlgoliaDisplayResultsToolConfigFromJson(
         final val = AlgoliaDisplayResultsToolConfig(
           name: $checkedConvert('name', (v) => v as String?),
           type: $checkedConvert('type', (v) => v as String),
+          isTerminal: $checkedConvert('isTerminal', (v) => v as bool?),
           minGroups: $checkedConvert('minGroups', (v) => (v as num?)?.toInt()),
           maxGroups: $checkedConvert('maxGroups', (v) => (v as num?)?.toInt()),
           minResultsPerGroup: $checkedConvert(
@@ -38,6 +39,7 @@ Map<String, dynamic> _$AlgoliaDisplayResultsToolConfigToJson(
 
   writeNotNull('name', instance.name);
   val['type'] = instance.type;
+  writeNotNull('isTerminal', instance.isTerminal);
   writeNotNull('minGroups', instance.minGroups);
   writeNotNull('maxGroups', instance.maxGroups);
   writeNotNull('minResultsPerGroup', instance.minResultsPerGroup);

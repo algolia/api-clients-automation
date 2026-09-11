@@ -10,8 +10,8 @@ import (
 
 // ProviderAuthenticationPatch struct for ProviderAuthenticationPatch.
 type ProviderAuthenticationPatch struct {
-	Name  utils.Nullable[string]                `json:"name,omitempty"`
-	Input utils.Nullable[ProviderInputNullable] `json:"input,omitempty"`
+	Name  utils.Nullable[string]                                `json:"name,omitempty"`
+	Input utils.Nullable[InputUnionProviderAuthenticationPatch] `json:"input,omitempty"`
 }
 
 type ProviderAuthenticationPatchOption func(f *ProviderAuthenticationPatch)
@@ -22,7 +22,7 @@ func WithProviderAuthenticationPatchName(val utils.Nullable[string]) ProviderAut
 	}
 }
 
-func WithProviderAuthenticationPatchInput(val utils.Nullable[ProviderInputNullable]) ProviderAuthenticationPatchOption {
+func WithProviderAuthenticationPatchInput(val utils.Nullable[InputUnionProviderAuthenticationPatch]) ProviderAuthenticationPatchOption {
 	return func(f *ProviderAuthenticationPatch) {
 		f.Input = val
 	}
@@ -95,9 +95,9 @@ func (o *ProviderAuthenticationPatch) UnsetName() {
 }
 
 // GetInput returns the Input field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ProviderAuthenticationPatch) GetInput() ProviderInputNullable {
+func (o *ProviderAuthenticationPatch) GetInput() InputUnionProviderAuthenticationPatch {
 	if o == nil || o.Input.Get() == nil {
-		var ret ProviderInputNullable
+		var ret InputUnionProviderAuthenticationPatch
 
 		return ret
 	}
@@ -108,7 +108,7 @@ func (o *ProviderAuthenticationPatch) GetInput() ProviderInputNullable {
 // GetInputOk returns a tuple with the Input field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned.
-func (o *ProviderAuthenticationPatch) GetInputOk() (*ProviderInputNullable, bool) {
+func (o *ProviderAuthenticationPatch) GetInputOk() (*InputUnionProviderAuthenticationPatch, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -125,8 +125,8 @@ func (o *ProviderAuthenticationPatch) HasInput() bool {
 	return false
 }
 
-// SetInput gets a reference to the given utils.Nullable[ProviderInputNullable] and assigns it to the Input field.
-func (o *ProviderAuthenticationPatch) SetInput(v *ProviderInputNullable) *ProviderAuthenticationPatch {
+// SetInput gets a reference to the given utils.Nullable[InputUnionProviderAuthenticationPatch] and assigns it to the Input field.
+func (o *ProviderAuthenticationPatch) SetInput(v *InputUnionProviderAuthenticationPatch) *ProviderAuthenticationPatch {
 	o.Input.Set(v)
 
 	return o

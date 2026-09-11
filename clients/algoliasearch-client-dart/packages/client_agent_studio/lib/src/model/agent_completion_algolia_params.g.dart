@@ -31,6 +31,8 @@ AgentCompletionAlgoliaParams _$AgentCompletionAlgoliaParamsFromJson(
                         SearchParametersOverrides.fromJson(
                             e as Map<String, dynamic>)),
                   )),
+          indices: $checkedConvert('indices',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -49,5 +51,6 @@ Map<String, dynamic> _$AgentCompletionAlgoliaParamsToJson(
   writeNotNull('mcpServers', instance.mcpServers);
   writeNotNull('searchParameters',
       instance.searchParameters?.map((k, e) => MapEntry(k, e.toJson())));
+  writeNotNull('indices', instance.indices);
   return val;
 }

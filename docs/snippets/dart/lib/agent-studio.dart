@@ -52,6 +52,69 @@ void snippetForbulkDeleteAllowedDomains() async {
   // SEPARATOR<
 }
 
+// Snippet for the compactContext method.
+//
+// compactContext with required parameters
+void snippetForcompactContext() async {
+  // >SEPARATOR compactContext compactContext with required parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.compactContext(
+    contextCompactRequest: ContextCompactRequest(
+      providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+      model: "gpt-4o-mini",
+      messages: [
+        UserMessageV4(
+          role: "user",
+          content: "Hello, how are you?",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the compactContext method.
+//
+// compactContext with all parameters
+void snippetForcompactContext1() async {
+  // >SEPARATOR compactContext compactContext with all parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.compactContext(
+    contextCompactRequest: ContextCompactRequest(
+      providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+      model: "gpt-4o-mini",
+      messages: [
+        UserMessageV4(
+          role: "user",
+          content: "Hello, how are you?",
+        ),
+        UserMessageV4(
+          role: "assistant",
+          content: "I am well.",
+        ),
+      ],
+      keepLastMessages: 2,
+      instructions: "keep every product reference",
+      targetTokensEstimate: 128,
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createAgent method.
 //
 // createAgent with minimal parameters
@@ -98,8 +161,13 @@ void snippetForcreateAgent1() async {
         'max_tokens': 1500,
       },
       tools: [
-        AlgoliaDisplayResultsToolConfig(
-          type: "start",
+        ClientSideToolConfig(
+          type: "client_side",
+          name: "start",
+          description: "Start a conversation",
+          inputSchema: ClientToolsArgsSchema(
+            type: "object",
+          ),
         ),
       ],
     ),
@@ -153,6 +221,61 @@ void snippetForcreateAgentCompletion() async {
         ),
       ],
     ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createAgentTask method.
+//
+// createAgentTask with required parameters
+void snippetForcreateAgentTask() async {
+  // >SEPARATOR createAgentTask createAgentTask with required parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.createAgentTask(
+    agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    taskRequest: TaskRequest(
+      input: {
+        'pageType': "pdp",
+        'title': "acmePhone128Gb",
+      },
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createAgentTask method.
+//
+// createAgentTask with all parameters
+void snippetForcreateAgentTask1() async {
+  // >SEPARATOR createAgentTask createAgentTask with all parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.createAgentTask(
+    agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    taskRequest: TaskRequest(
+      task: "algolia_on_page_suggestions",
+      kind: TaskKind.fromJson("prompt_suggestions"),
+      input: {
+        'pageType': "pdp",
+        'title': "acmePhone128Gb",
+      },
+    ),
+    stream: false,
+    cache: false,
+    analytics: false,
   );
   // >LOG
   // print the response
@@ -1328,7 +1451,11 @@ void snippetForlistAgentConversations1() async {
     feedbackVote: 1,
     page: 2,
     limit: 10,
-    xAlgoliaSecureUserToken: null,
+    includeImpactAnalytics: true,
+    clicked: true,
+    converted: false,
+    hasAlgoliaSearch: true,
+    xAlgoliaSecureUserToken: "secure-user-token",
   );
   // >LOG
   // print the response
@@ -1636,6 +1763,65 @@ void snippetForsetClientApiKey() async {
   // SEPARATOR<
 }
 
+// Snippet for the trimContext method.
+//
+// trimContext with required parameters
+void snippetFortrimContext() async {
+  // >SEPARATOR trimContext trimContext with required parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.trimContext(
+    contextTrimRequest: ContextTrimRequest(
+      messages: [
+        UserMessageV4(
+          role: "user",
+          content: "Hello, how are you?",
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the trimContext method.
+//
+// trimContext with all parameters
+void snippetFortrimContext1() async {
+  // >SEPARATOR trimContext trimContext with all parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.trimContext(
+    contextTrimRequest: ContextTrimRequest(
+      messages: [
+        UserMessageV4(
+          role: "user",
+          content: "Hello, how are you?",
+        ),
+        UserMessageV4(
+          role: "assistant",
+          content: "I am well.",
+        ),
+      ],
+      keepLastMessages: 1,
+      maxTokensEstimate: 256,
+      dropToolParts: true,
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the unpublishAgent method.
 //
 // unpublishAgent
@@ -1699,8 +1885,13 @@ void snippetForupdateAgent1() async {
         'temperature': 0.5,
       },
       tools: [
-        AlgoliaDisplayResultsToolConfig(
-          type: "start",
+        ClientSideToolConfig(
+          type: "client_side",
+          name: "start",
+          description: "Start a conversation",
+          inputSchema: ClientToolsArgsSchema(
+            type: "object",
+          ),
         ),
       ],
     ),
@@ -1724,6 +1915,56 @@ void snippetForupdateConfiguration() async {
   final response = await client.updateConfiguration(
     applicationConfigPatch: ApplicationConfigPatch(
       maxRetentionDays: 30,
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateFeedback method.
+//
+// updateFeedback with required parameters
+void snippetForupdateFeedback() async {
+  // >SEPARATOR updateFeedback updateFeedback with required parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.updateFeedback(
+    feedbackUpdateRequest: FeedbackUpdateRequest(
+      messageId: "msg-abc123",
+      agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateFeedback method.
+//
+// updateFeedback with all parameters
+void snippetForupdateFeedback1() async {
+  // >SEPARATOR updateFeedback updateFeedback with all parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.updateFeedback(
+    feedbackUpdateRequest: FeedbackUpdateRequest(
+      messageId: "msg-abc123",
+      agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      vote: OneOfEnum.fromJson(0),
+      tags: [
+        "unhelpful",
+        "off-topic",
+      ],
+      notes: "The response did not address my question.",
     ),
   );
   // >LOG

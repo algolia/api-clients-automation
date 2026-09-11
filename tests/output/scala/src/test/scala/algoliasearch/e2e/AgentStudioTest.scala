@@ -187,36 +187,6 @@ class AgentStudioTest extends AnyFunSuite {
     }
   }
 
-  test("listAgentConversations with all parameters1") {
-    val client = testClient()
-    val future = client.listAgentConversations(
-      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-      startDate = Some("2024-01-01"),
-      endDate = Some("2024-12-31"),
-      includeFeedback = Some(true),
-      feedbackVote = Some(1),
-      page = Some(2),
-      limit = Some(10),
-      xAlgoliaSecureUserToken = None
-    )
-
-    val response = Await.result(future, Duration.Inf)
-    val expected = parse("""{"data":[],"pagination":{"page":2,"limit":10,"totalCount":0,"totalPages":0}}""")
-    val extracted = Extraction.decompose(response)
-    val diffRes = expected.diff(extracted)
-    if (diffRes.deleted != JNothing) {
-      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
-    }
-    if (diffRes.changed != JNothing) {
-      println(
-        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
-      )
-    }
-    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
-      fail("there is a difference between received and expected")
-    }
-  }
-
   test("e2e list agent conversations2") {
     val client = testClient()
     val future = client.listAgentConversations(

@@ -36,7 +36,7 @@ public class AgentConfigUpdate {
   private Map<String, Object> config;
 
   @JsonProperty("tools")
-  private List<ToolConfigInput> tools;
+  private List<ToolConfig> tools;
 
   @JsonProperty("templateType")
   private String templateType;
@@ -135,12 +135,12 @@ public class AgentConfigUpdate {
     return config;
   }
 
-  public AgentConfigUpdate setTools(List<ToolConfigInput> tools) {
+  public AgentConfigUpdate setTools(List<ToolConfig> tools) {
     this.tools = tools;
     return this;
   }
 
-  public AgentConfigUpdate addTools(ToolConfigInput toolsItem) {
+  public AgentConfigUpdate addTools(ToolConfig toolsItem) {
     if (this.tools == null) {
       this.tools = new ArrayList<>();
     }
@@ -150,7 +150,7 @@ public class AgentConfigUpdate {
 
   /** Get tools */
   @javax.annotation.Nullable
-  public List<ToolConfigInput> getTools() {
+  public List<ToolConfig> getTools() {
     return tools;
   }
 

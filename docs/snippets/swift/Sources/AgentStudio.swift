@@ -46,6 +46,55 @@ final class AgentStudioClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the compactContext method.
+    ///
+    /// compactContext with required parameters
+    func snippetForCompactContext() async throws {
+        // >SEPARATOR compactContext compactContext with required parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.compactContext(contextCompactRequest: ContextCompactRequest(
+            providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model: "gpt-4o-mini",
+            messages: MessagesUnion.arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                role: "user",
+                content: "Hello, how are you?"
+            ))])
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the compactContext method.
+    ///
+    /// compactContext with all parameters
+    func snippetForCompactContext1() async throws {
+        // >SEPARATOR compactContext compactContext with all parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.compactContext(contextCompactRequest: ContextCompactRequest(
+            providerID: "c2905529-b933-4b69-87ec-75f9829d5f59",
+            model: "gpt-4o-mini",
+            messages: MessagesUnion.arrayOfMessageV4([
+                MessageV4.userMessageV4(UserMessageV4(role: "user", content: "Hello, how are you?")),
+                MessageV4.userMessageV4(UserMessageV4(role: "assistant", content: "I am well.")),
+            ]),
+            keepLastMessages: 2,
+            instructions: "keep every product reference",
+            targetTokensEstimate: 128
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the createAgent method.
     ///
     /// createAgent with minimal parameters
@@ -81,7 +130,12 @@ final class AgentStudioClientSnippet {
             model: "gpt-4",
             instructions: "You are a helpful assistant.",
             config: ["sendUsage": true, "sendReasoning": true, "temperature": 0.7, "max_tokens": 1500],
-            tools: [ToolConfigInput.algoliaDisplayResultsToolConfig(AlgoliaDisplayResultsToolConfig(type: "start"))]
+            tools: [ToolConfig.clientSideToolConfig(ClientSideToolConfig(
+                name: "start",
+                type: "client_side",
+                description: "Start a conversation",
+                inputSchema: ClientToolsArgsSchema(type: "object")
+            ))]
         ))
         // >LOG
         // print the response
@@ -120,11 +174,57 @@ final class AgentStudioClientSnippet {
         let response = try await client.createAgentCompletion(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             compatibilityMode: CompatibilityMode.aiSdk4,
-            agentCompletionRequest: AgentCompletionRequest(messages: MessagesUnion
-                .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
-                    role: "user",
-                    content: "Hello, how are you?"
-                ))]))
+            agentCompletionRequest: AgentCompletionRequestUnion
+                .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnionAgentCompletionRequest
+                        .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                            role: "user",
+                            content: "Hello, how are you?"
+                        ))])))
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the createAgentTask method.
+    ///
+    /// createAgentTask with required parameters
+    func snippetForCreateAgentTask() async throws {
+        // >SEPARATOR createAgentTask createAgentTask with required parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.createAgentTask(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            taskRequest: TaskRequest(input: ["pageType": AnyCodable("pdp"), "title": AnyCodable("acmePhone128Gb")])
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the createAgentTask method.
+    ///
+    /// createAgentTask with all parameters
+    func snippetForCreateAgentTask1() async throws {
+        // >SEPARATOR createAgentTask createAgentTask with all parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.createAgentTask(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            taskRequest: TaskRequest(
+                task: "algolia_on_page_suggestions",
+                kind: TaskKind.promptSuggestions,
+                input: ["pageType": AnyCodable("pdp"), "title": AnyCodable("acmePhone128Gb")]
+            ),
+            stream: false,
+            cache: false,
+            analytics: false
         )
         // >LOG
         // print the response
@@ -186,7 +286,7 @@ final class AgentStudioClientSnippet {
         let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(
             name: "My OpenAI Provider",
             providerName: ProviderName.openai,
-            input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
+            input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
         ))
         // >LOG
         // print the response
@@ -206,7 +306,7 @@ final class AgentStudioClientSnippet {
         let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(
             name: "My Azure Provider",
             providerName: ProviderName.azureOpenai,
-            input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(
+            input: InputUnion.azureOpenAIProviderInput(AzureOpenAIProviderInput(
                 apiKey: "az-test-key-5678",
                 azureEndpoint: "https://my-resource.openai.azure.com",
                 azureDeployment: "gpt-4o"
@@ -1091,7 +1191,11 @@ final class AgentStudioClientSnippet {
             feedbackVote: 1,
             page: 2,
             limit: 10,
-            xAlgoliaSecureUserToken: nil
+            includeImpactAnalytics: true,
+            clicked: true,
+            converted: false,
+            hasAlgoliaSearch: true,
+            xAlgoliaSecureUserToken: "secure-user-token"
         )
         // >LOG
         // print the response
@@ -1357,6 +1461,51 @@ final class AgentStudioClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the trimContext method.
+    ///
+    /// trimContext with required parameters
+    func snippetForTrimContext() async throws {
+        // >SEPARATOR trimContext trimContext with required parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client
+            .trimContext(contextTrimRequest: ContextTrimRequest(messages: MessagesUnion
+                    .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                        role: "user",
+                        content: "Hello, how are you?"
+                    ))])))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the trimContext method.
+    ///
+    /// trimContext with all parameters
+    func snippetForTrimContext1() async throws {
+        // >SEPARATOR trimContext trimContext with all parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.trimContext(contextTrimRequest: ContextTrimRequest(
+            messages: MessagesUnion.arrayOfMessageV4([
+                MessageV4.userMessageV4(UserMessageV4(role: "user", content: "Hello, how are you?")),
+                MessageV4.userMessageV4(UserMessageV4(role: "assistant", content: "I am well.")),
+            ]),
+            keepLastMessages: 1,
+            maxTokensEstimate: 256,
+            dropToolParts: true
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the unpublishAgent method.
     ///
     /// unpublishAgent
@@ -1410,7 +1559,12 @@ final class AgentStudioClientSnippet {
                 model: "gpt-4o",
                 instructions: "Updated instructions.",
                 config: ["temperature": 0.5],
-                tools: [ToolConfigInput.algoliaDisplayResultsToolConfig(AlgoliaDisplayResultsToolConfig(type: "start"))]
+                tools: [ToolConfig.clientSideToolConfig(ClientSideToolConfig(
+                    name: "start",
+                    type: "client_side",
+                    description: "Start a conversation",
+                    inputSchema: ClientToolsArgsSchema(type: "object")
+                ))]
             )
         )
         // >LOG
@@ -1430,6 +1584,47 @@ final class AgentStudioClientSnippet {
         // Call the API
         let response = try await client
             .updateConfiguration(applicationConfigPatch: ApplicationConfigPatch(maxRetentionDays: 30))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the updateFeedback method.
+    ///
+    /// updateFeedback with required parameters
+    func snippetForUpdateFeedback() async throws {
+        // >SEPARATOR updateFeedback updateFeedback with required parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.updateFeedback(feedbackUpdateRequest: FeedbackUpdateRequest(
+            messageId: "msg-abc123",
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the updateFeedback method.
+    ///
+    /// updateFeedback with all parameters
+    func snippetForUpdateFeedback1() async throws {
+        // >SEPARATOR updateFeedback updateFeedback with all parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.updateFeedback(feedbackUpdateRequest: FeedbackUpdateRequest(
+            messageId: "msg-abc123",
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            vote: OneOfEnum(rawValue: 0)!,
+            tags: ["unhelpful", "off-topic"],
+            notes: "The response did not address my question."
+        ))
         // >LOG
         // print the response
         print(response)
@@ -1468,7 +1663,8 @@ final class AgentStudioClientSnippet {
             providerId: "c2905529-b933-4b69-87ec-75f9829d5f59",
             providerAuthenticationPatch: ProviderAuthenticationPatch(
                 name: "Updated Provider",
-                input: ProviderInputNullable.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-new-key-5678"))
+                input: InputUnionProviderAuthenticationPatch
+                    .openAIProviderInput(OpenAIProviderInput(apiKey: "sk-new-key-5678"))
             )
         )
         // >LOG

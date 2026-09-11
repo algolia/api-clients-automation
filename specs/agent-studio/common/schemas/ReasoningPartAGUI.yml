@@ -13,7 +13,7 @@ ReasoningPartAGUI:
       default: null
       title: stepid
   required:
-  - type
-  - content
+    - type
+    - content
   title: reasoningPartAGUI
   type: object

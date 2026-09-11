@@ -12,17 +12,35 @@ import kotlinx.serialization.json.*
  *
  * @param type
  * @param name
- * @param minGroups
- * @param maxGroups
- * @param minResultsPerGroup
- * @param maxResultsPerGroup
+ * @param isTerminal When true, a successful tool invocation ends the agent graph (no further LLM
+ *   turn). Use for chat experiences where the display payload IS the final response. Leave false to
+ *   let the main LLM produce a concluding assistant message after the tool runs.
+ * @param minGroups minimum number of result groups.
+ * @param maxGroups maximum number of result groups.
+ * @param minResultsPerGroup minimum hits per group.
+ * @param maxResultsPerGroup maximum hits per group.
  */
 @Serializable
 public data class AlgoliaDisplayResultsToolConfig(
   @SerialName(value = "type") val type: String,
   @SerialName(value = "name") val name: String? = null,
+
+  /**
+   * When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for
+   * chat experiences where the display payload IS the final response. Leave false to let the main
+   * LLM produce a concluding assistant message after the tool runs.
+   */
+  @SerialName(value = "isTerminal") val isTerminal: Boolean? = null,
+
+  /** minimum number of result groups. */
   @SerialName(value = "minGroups") val minGroups: Int? = null,
+
+  /** maximum number of result groups. */
   @SerialName(value = "maxGroups") val maxGroups: Int? = null,
+
+  /** minimum hits per group. */
   @SerialName(value = "minResultsPerGroup") val minResultsPerGroup: Int? = null,
+
+  /** maximum hits per group. */
   @SerialName(value = "maxResultsPerGroup") val maxResultsPerGroup: Int? = null,
-) : ToolConfigInput {}
+) : ToolConfigAgentTestConfiguration {}

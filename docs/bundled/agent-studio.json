@@ -2,8 +2,8 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Agent Studio API",
-    "description": "The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.\n\nUse it to create, configure, publish, and update agents, then generate chat completions grounded in live data from your Algolia indices. You can manage LLM providers, Agent Studio tools, conversations, feedback, secret keys, user data, caching, and application settings for your AI experiences.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\n\nFor more information, see [Algolia's ecosystem](https://www.algolia.com/doc/libraries).\n\n## Base URL\n\nBase URL for the Agent Studio API:\n\n- `https://{APPLICATION_ID}.algolia.net/agent-studio`\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nThe Agent Studio API returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Agent Studio API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
-    "version": "0.1.0"
+    "description": "The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.\n\nUse it to create, configure, publish, and update agents, then generate chat completions grounded in live data from your Algolia indices. You can manage LLM providers, Agent Studio tools, conversations, feedback, secret keys, user data, caching, and application settings for your AI experiences.\n\n## Client libraries\n\nUse Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.\nThe official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla).\n\nFor more information, see [Algolia's ecosystem](https://www.algolia.com/doc/libraries).\n\n## Base URLs\n\nBase URLs for the Agent Studio API:\n\n- `https://{APPLICATION_ID}.algolia.net`\n- `https://{APPLICATION_ID}-dsn.algolia.net`.\n  If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),\n  this ensures that requests are sent to servers closest to users.\n\nBoth URLs provide high availability by distributing requests with load balancing.\n\nAll Agent Studio paths are prefixed with `/agent-studio`.\n\n**All requests must use HTTPS.**\n\n## Retry strategy\n\nTo guarantee high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:\n\n- `https://{APPLICATION_ID}-1.algolianet.com`\n- `https://{APPLICATION_ID}-2.algolianet.com`\n- `https://{APPLICATION_ID}-3.algolianet.com`\n\nThese URLs use a different DNS provider than the primary URLs.\nRandomize this list to ensure an even load across the three servers.\n\nAll Algolia API clients implement this retry strategy.\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nThe Agent Studio API rate-limits requests.\nResponses include `X-RateLimit-Limit` and `X-RateLimit-Remaining` headers with the current limit.\nWhen you exceed the limit, the API returns a `429` status with a `Retry-After` header.\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Parameters\n\nParameters are passed as query parameters for GET and DELETE requests,\nand in the request body for POST and PUT requests.\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe Agent Studio API returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Agent Studio API is version 1, indicated by the `/1/` in each endpoint's URL.\n",
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -41,6 +41,10 @@
       "description": "Manage Agent Studio related application configurations."
     },
     {
+      "name": "Context",
+      "description": "Compact or trim conversation context before sending it to completions."
+    },
+    {
       "name": "Conversations",
       "description": "View, export, and delete conversation history."
     },
@@ -49,16 +53,16 @@
       "description": "Capture user feedback on agent responses."
     },
     {
-      "name": "Internal",
-      "description": "Endpoints that are needed for internal or integration logic."
-    },
-    {
       "name": "Providers",
       "description": "Manage your LLM providers."
     },
     {
       "name": "Secret Keys",
       "description": "Manage secret keys used to authenticate requests."
+    },
+    {
+      "name": "Tasks",
+      "description": "Run configured agent tasks."
     },
     {
       "name": "User Data",
@@ -652,7 +656,7 @@
           "editSettings"
         ],
         "summary": "Invalidate Agent Cache",
-        "description": "Invalidate cached completions for this agent. Filter with `before` (exclusive).",
+        "description": "Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).",
         "parameters": [
           {
             "name": "agentId",
@@ -703,7 +707,6 @@
     "/1/agents/{agentId}/completions": {
       "post": {
         "tags": [
-          "Completions",
           "Completions"
         ],
         "operationId": "createAgentCompletion",
@@ -711,6 +714,7 @@
           "search"
         ],
         "x-streaming": true,
+        "x-codegen-request-body-name": "agentCompletionRequest",
         "summary": "Create Completion",
         "description": "Create a completion for the specified agent.\n\nThis endpoint handles two types of requests:\n1. Normal completion request: User message -> Agent response\n2. Tool approval response: User approval -> Execute tool -> Agent response\n\nTool Approval Flow (for MCP tools with requiresApproval: true):\n- Request 1: User sends message -> Agent requests tool call -> Return approval request\n- Request 2: User approves -> Execute tool -> Agent continues with result.",
         "parameters": [
@@ -810,7 +814,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AgentCompletionRequest"
+                "$ref": "#/components/schemas/AgentCompletionRequestUnion"
               }
             }
           }
@@ -962,6 +966,79 @@
               "title": "limit"
             },
             "description": "Items per page."
+          },
+          {
+            "name": "includeImpactAnalytics",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include impact analytics (hasView, hasClick, hasConversion) per conversation.",
+              "default": false,
+              "title": "includeimpactanalytics"
+            },
+            "description": "Include impact analytics (hasView, hasClick, hasConversion) per conversation."
+          },
+          {
+            "name": "clicked",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by conversations with at least one item click.",
+              "title": "clicked"
+            },
+            "description": "Filter by conversations with at least one item click."
+          },
+          {
+            "name": "converted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by conversations with at least one conversion.",
+              "title": "converted"
+            },
+            "description": "Filter by conversations with at least one conversion."
+          },
+          {
+            "name": "hasAlgoliaSearch",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by conversations where the search tool was used.",
+              "title": "hasalgoliasearch"
+            },
+            "description": "Filter by conversations where the search tool was used."
           },
           {
             "name": "X-Algolia-Secure-User-Token",
@@ -1209,6 +1286,30 @@
             "description": "Include feedback for the conversation."
           },
           {
+            "name": "includeMessageEvents",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Include Insights events attributed to each assistant message.",
+              "default": false,
+              "title": "includemessageevents"
+            },
+            "description": "Include Insights events attributed to each assistant message."
+          },
+          {
+            "name": "includeImpactAnalytics",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Include outcome signals (hasView, hasClick, hasConversion) for the conversation.",
+              "default": false,
+              "title": "includeimpactanalytics"
+            },
+            "description": "Include outcome signals (hasView, hasClick, hasConversion) for the conversation."
+          },
+          {
             "name": "X-Algolia-Secure-User-Token",
             "in": "header",
             "required": false,
@@ -1328,6 +1429,99 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AgentWithVersionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/agents/{agentId}/tasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "operationId": "createAgentTask",
+        "x-acl": [
+          "search"
+        ],
+        "x-streaming": true,
+        "summary": "Run Task",
+        "description": "Run a configured task and return the generated object as ``{ output }``.\n\nWith ``?stream=true``, returns the raw partial JSON text stream expected by\nAI SDK v5 ``useObject``. The streamed JSON is the task output itself.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AgentIdUnion"
+            },
+            "description": "The agentId."
+          },
+          {
+            "name": "stream",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Whether to stream the response or not.",
+              "default": false,
+              "title": "stream"
+            },
+            "description": "Whether to stream the response or not."
+          },
+          {
+            "name": "cache",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Use cached responses if available.",
+              "default": true,
+              "title": "cache"
+            },
+            "description": "Use cached responses if available."
+          },
+          {
+            "name": "analytics",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted.",
+              "default": true,
+              "title": "analytics"
+            },
+            "description": "Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
                 }
               }
             }
@@ -1493,6 +1687,49 @@
         },
         "responses": {
           "201": {
+            "description": "Successful Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Feedback"
+        ],
+        "operationId": "updateFeedback",
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Update Feedback",
+        "description": "Update an existing feedback entry.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
             "description": "Successful Response.",
             "content": {
               "application/json": {
@@ -2100,6 +2337,96 @@
         }
       }
     },
+    "/1/unstable/context/compact": {
+      "post": {
+        "tags": [
+          "Context"
+        ],
+        "operationId": "compactContext",
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Compact Context",
+        "description": "Summarize the older part of a conversation into a single user message via the caller's LLM.\n\nEverything except the trailing `keepLastMessages` messages is summarized; the summary is\nreturned as a user-role message followed by the kept tail verbatim. The caller's provider runs\nthe summary, so cost is theirs by construction.\n\nA conversation too large for the summarizer's context window is split into chunks that each fit,\nsummarized concurrently, then merged in a reduce pass - so payload size alone does not fail the\nrequest. When the conversation still cannot be summarized (it needs more chunks than the server\nallows, or the chunk summaries will not converge), the response is a `400`, not a `500`.\n\nTwo optional controls shape the output. `instructions` adds caller guidance inside the\nserver-owned prompt frame, so it steers the summary without the model echoing the wording back.\n`targetTokensEstimate` sets a desired summary size, translated into word-count guidance.\n\nThe `compaction` block reports what happened: `compacted` is `false` when the payload passed\nthrough untouched (nothing older than the kept tail), alongside chunk/pass counts and the\nsummarizer's own token usage.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContextCompactRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/1/unstable/context/trim": {
+      "post": {
+        "tags": [
+          "Context"
+        ],
+        "operationId": "trimContext",
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Trim Context",
+        "description": "Deterministically trim a conversation payload (no LLM calls).\n\nKeep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts\nfrom what is kept (tool parts are stripped before the budget is applied). Returns the trimmed\nmessages plus before/after stats.\n\nWith no constraints set, the messages are returned unchanged and only the stats are computed -\na deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContextTrimRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/1/user-data/{userToken}": {
       "get": {
         "tags": [
@@ -2408,127 +2735,81 @@
           "published"
         ]
       },
-      "AlgoliaDisplayResultsToolConfig": {
-        "properties": {
-          "name": {
-            "type": "string",
-            "const": "algolia_display_results",
-            "title": "name",
-            "default": "algolia_display_results"
-          },
-          "type": {
-            "type": "string",
-            "const": "algolia_display_results",
-            "title": "type",
-            "default": "algolia_display_results"
-          },
-          "minGroups": {
-            "type": "integer",
-            "minimum": 1,
-            "title": "mingroups",
-            "default": 1
-          },
-          "maxGroups": {
-            "type": "integer",
-            "minimum": 1,
-            "title": "maxgroups",
-            "default": 3
-          },
-          "minResultsPerGroup": {
-            "type": "integer",
-            "minimum": 1,
-            "title": "minresultspergroup",
-            "default": 3
-          },
-          "maxResultsPerGroup": {
-            "type": "integer",
-            "minimum": 1,
-            "title": "maxresultspergroup",
-            "default": 6
-          }
-        },
-        "type": "object",
-        "title": "algoliaDisplayResultsToolConfig",
-        "description": "Configuration for the algolia_display_results tool.",
-        "required": [
-          "type"
-        ]
-      },
       "AlgoliaRecommendToolIndexConfig": {
         "properties": {
           "index": {
-            "type": "string",
             "maxLength": 100,
             "minLength": 1,
-            "title": "index"
+            "title": "index",
+            "type": "string"
           },
           "modelName": {
-            "type": "string",
             "maxLength": 100,
             "minLength": 1,
-            "title": "modelname"
+            "title": "modelname",
+            "type": "string"
           },
           "description": {
-            "type": "string",
+            "default": "",
             "title": "description",
-            "default": ""
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "index",
           "modelName"
         ],
-        "title": "algoliaRecommendToolIndexConfig"
+        "title": "algoliaRecommendToolIndexConfig",
+        "type": "object"
       },
-      "AlgoliaRecommendToolConfig-Input": {
+      "AlgoliaRecommendToolConfig": {
+        "description": "Configuration for the Algolia Recommend tool.\nAllows specifying recommend models and related parameters.",
         "properties": {
           "name": {
-            "type": "string",
             "maxLength": 32,
             "minLength": 3,
-            "title": "name"
+            "title": "name",
+            "type": "string"
           },
           "type": {
-            "type": "string",
             "const": "algolia_recommend",
+            "default": "algolia_recommend",
             "title": "type",
-            "default": "algolia_recommend"
+            "type": "string"
           },
           "allowedConfigs": {
+            "default": [],
             "items": {
               "$ref": "#/components/schemas/AlgoliaRecommendToolIndexConfig"
             },
-            "type": "array",
             "title": "allowedconfigs",
-            "default": []
+            "type": "array"
           },
           "predefinedRecommendParameters": {
             "additionalProperties": true,
-            "type": "object",
-            "title": "predefinedrecommendparameters"
+            "title": "predefinedrecommendparameters",
+            "type": "object"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "name"
         ],
         "title": "algoliaRecommendToolConfig",
-        "description": "Configuration for the Algolia Recommend tool.\nAllows specifying recommend models and related parameters."
+        "type": "object"
       },
       "QueryType": {
-        "type": "string",
+        "description": "Determines if and how query words are interpreted as prefixes.  By default, only the last query word is treated as a prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words as prefixes. This might lead to counterintuitive results and makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).",
         "enum": [
           "prefixLast",
           "prefixAll",
           "prefixNone"
         ],
         "title": "queryType",
-        "description": "Determines if and how query words are interpreted as prefixes.  By default, only the last query word is treated as a prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words as prefixes. This might lead to counterintuitive results and makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching)."
+        "type": "string"
       },
       "SupportedLanguage": {
-        "type": "string",
+        "description": "ISO code for a supported language.",
         "enum": [
           "af",
           "ar",
@@ -2600,7 +2881,7 @@
           "zh"
         ],
         "title": "supportedLanguage",
-        "description": "ISO code for a supported language."
+        "type": "string"
       },
       "QueryLanguagesUnion": {
         "oneOf": [
@@ -2616,13 +2897,13 @@
         ]
       },
       "AdvancedSyntaxFeatures": {
-        "type": "string",
+        "description": "AdvancedSyntaxFeatures.",
         "enum": [
           "exactPhrase",
           "excludeWords"
         ],
         "title": "advancedSyntaxFeatures",
-        "description": "AdvancedSyntaxFeatures."
+        "type": "string"
       },
       "AdvancedSyntaxFeaturesUnion": {
         "oneOf": [
@@ -2638,7 +2919,7 @@
         ]
       },
       "AlternativesAsExact": {
-        "type": "string",
+        "description": "AlternativesAsExact.",
         "enum": [
           "ignorePlurals",
           "singleWordSynonym",
@@ -2646,7 +2927,7 @@
           "ignoreConjugations"
         ],
         "title": "alternativesAsExact",
-        "description": "AlternativesAsExact."
+        "type": "string"
       },
       "AlternativesAsExactUnion": {
         "oneOf": [
@@ -2662,7 +2943,7 @@
         ]
       },
       "TypoToleranceEnum": {
-        "type": "string",
+        "description": "- `min`. Return matches with the lowest number of typos.   For example, if you have matches without typos, only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). - `strict`. Return matches with the two lowest numbers of typos.   With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.",
         "enum": [
           "min",
           "strict",
@@ -2670,7 +2951,7 @@
           "false"
         ],
         "title": "typoToleranceEnum",
-        "description": "- `min`. Return matches with the lowest number of typos.   For example, if you have matches without typos, only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). - `strict`. Return matches with the two lowest numbers of typos.   With `strict`, the Typo ranking criterion is applied first in the `ranking` setting."
+        "type": "string"
       },
       "TypoToleranceUnion": {
         "oneOf": [
@@ -2699,6 +2980,8 @@
         ]
       },
       "Facets": {
+        "additionalProperties": true,
+        "description": "Order of facet names.",
         "properties": {
           "order": {
             "oneOf": [
@@ -2712,13 +2995,12 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "order"
           }
         },
-        "additionalProperties": true,
-        "type": "object",
         "title": "facets",
-        "description": "Order of facet names."
+        "type": "object"
       },
       "FacetsUnion": {
         "oneOf": [
@@ -2901,7 +3183,7 @@
         ]
       },
       "RemoveWordsIfNoResults": {
-        "type": "string",
+        "description": "Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty search results.  - `none`.   No words are removed when a query doesn't return results.  - `lastWords`.   Treat the last (then second to last, then third to last) word as optional,   until there are results or at most 5 words have been removed.  - `firstWords`.   Treat the first (then second, then third) word as optional,   until there are results or at most 5 words have been removed.  - `allOptional`.   Treat all words as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).",
         "enum": [
           "none",
           "lastWords",
@@ -2909,7 +3191,7 @@
           "allOptional"
         ],
         "title": "removeWordsIfNoResults",
-        "description": "Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty search results.  - `none`.   No words are removed when a query doesn't return results.  - `lastWords`.   Treat the last (then second to last, then third to last) word as optional,   until there are results or at most 5 words have been removed.  - `firstWords`.   Treat the first (then second, then third) word as optional,   until there are results or at most 5 words have been removed.  - `allOptional`.   Treat all words as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results)."
+        "type": "string"
       },
       "OptionalWordsUnion": {
         "oneOf": [
@@ -2944,14 +3226,14 @@
         ]
       },
       "ExactOnSingleWordQuery": {
-        "type": "string",
+        "description": "Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.  - `attribute`.   The Exact ranking criterion is 1 if the query word and attribute value are the same.   For example, a search for \"road\" will match the value \"road\", but not \"road trip\".  - `none`.   The Exact ranking criterion is ignored on single-word searches.  - `word`.   The Exact ranking criterion is 1 if the query word is found in the attribute value.   The query word must have at least 3 characters and must not be a stop word.   Only exact matches will be highlighted,   partial and prefix matches won't.",
         "enum": [
           "attribute",
           "none",
           "word"
         ],
         "title": "exactOnSingleWordQuery",
-        "description": "Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.  - `attribute`.   The Exact ranking criterion is 1 if the query word and attribute value are the same.   For example, a search for \"road\" will match the value \"road\", but not \"road trip\".  - `none`.   The Exact ranking criterion is ignored on single-word searches.  - `word`.   The Exact ranking criterion is 1 if the query word is found in the attribute value.   The query word must have at least 3 characters and must not be a stop word.   Only exact matches will be highlighted,   partial and prefix matches won't."
+        "type": "string"
       },
       "NaturalLanguagesUnion": {
         "oneOf": [
@@ -2967,6 +3249,7 @@
         ]
       },
       "SearchParameters": {
+        "description": "Algolia Search API parameters that can be predefined for the search tool.\nReference: https://www.algolia.com/doc/api-reference/search-api-parameters/\n\nThe parameters that seemed irrelevant for the search tool have been commented out.\nUses types from algoliasearch.search.models for better type safety.",
         "properties": {
           "queryType": {
             "oneOf": [
@@ -2987,6 +3270,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "similarquery"
           },
           "queryLanguages": {
@@ -3001,6 +3285,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "advancedsyntax"
           },
           "advancedSyntaxFeatures": {
@@ -3018,6 +3303,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "decompoundquery"
           },
           "typoTolerance": {
@@ -3032,6 +3318,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "allowtyposonnumerictokens"
           },
           "minWordSizeFor1Typo": {
@@ -3043,6 +3330,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "minwordsizefor1Typo"
           },
           "minWordSizeFor2Typos": {
@@ -3054,6 +3342,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "minwordsizefor2Typos"
           },
           "disableTypoToleranceOnAttributes": {
@@ -3068,6 +3357,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "disabletypotoleranceonattributes"
           },
           "filters": {
@@ -3079,6 +3369,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "filters"
           },
           "facetFilters": {
@@ -3103,6 +3394,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "maxvaluesperfacet"
           },
           "maxFacetHits": {
@@ -3114,6 +3406,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "maxfacethits"
           },
           "facetingAfterDistinct": {
@@ -3125,6 +3418,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "facetingafterdistinct"
           },
           "sortFacetValuesBy": {
@@ -3136,6 +3430,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "sortfacetvaluesby"
           },
           "numericFilters": {
@@ -3153,6 +3448,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "sumorfiltersscores"
           },
           "aroundLatLng": {
@@ -3164,6 +3460,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "aroundlatlng"
           },
           "aroundLatLngViaIp": {
@@ -3175,6 +3472,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "aroundlatlngviaip"
           },
           "aroundRadius": {
@@ -3192,6 +3490,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "minimumaroundradius"
           },
           "insideBoundingBox": {
@@ -3212,6 +3511,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "attributestoretrieve"
           },
           "attributesToSnippet": {
@@ -3226,6 +3526,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "attributestosnippet"
           },
           "snippetEllipsisText": {
@@ -3237,6 +3538,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "snippetellipsistext"
           },
           "restrictHighlightAndSnippetArrays": {
@@ -3248,6 +3550,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "restricthighlightandsnippetarrays"
           },
           "page": {
@@ -3259,6 +3562,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "page"
           },
           "offset": {
@@ -3270,6 +3574,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "offset"
           },
           "hitsPerPage": {
@@ -3281,6 +3586,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "hitsperpage"
           },
           "length": {
@@ -3292,6 +3598,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "length"
           },
           "getRankingInfo": {
@@ -3303,6 +3610,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "getrankinginfo"
           },
           "relevancyStrictness": {
@@ -3314,6 +3622,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "relevancystrictness"
           },
           "minProximity": {
@@ -3325,6 +3634,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "minproximity"
           },
           "attributeCriteriaComputedByMinProximity": {
@@ -3336,6 +3646,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "attributecriteriacomputedbyminproximity"
           },
           "distinct": {
@@ -3350,6 +3661,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "enablerules"
           },
           "enablePersonalization": {
@@ -3361,6 +3673,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "enablepersonalization"
           },
           "personalizationImpact": {
@@ -3372,6 +3685,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "personalizationimpact"
           },
           "enableAbTest": {
@@ -3383,6 +3697,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "enableabtest"
           },
           "enableReRanking": {
@@ -3394,6 +3709,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "enablereranking"
           },
           "reRankingApplyFilter": {
@@ -3411,6 +3727,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "rulecontexts"
           },
           "removeStopWords": {
@@ -3444,6 +3761,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "synonyms"
           },
           "replaceSynonymsInHighlight": {
@@ -3455,6 +3773,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "replacesynonymsinhighlight"
           },
           "analytics": {
@@ -3466,6 +3785,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "analytics"
           },
           "analyticsTags": {
@@ -3480,6 +3800,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "analyticstags"
           },
           "clickAnalytics": {
@@ -3491,6 +3812,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "clickanalytics"
           },
           "userToken": {
@@ -3502,6 +3824,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "usertoken"
           },
           "restrictSearchableAttributes": {
@@ -3516,6 +3839,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "restrictsearchableattributes"
           },
           "disableExactOnAttributes": {
@@ -3530,6 +3854,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "disableexactonattributes"
           },
           "exactOnSingleWordQuery": {
@@ -3554,6 +3879,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "percentilecomputation"
           },
           "explain": {
@@ -3568,18 +3894,19 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "explain"
           }
         },
-        "type": "object",
         "title": "searchParameters",
-        "description": "Algolia Search API parameters that can be predefined for the search tool.\nReference: https://www.algolia.com/doc/api-reference/search-api-parameters/\n\nThe parameters that seemed irrelevant for the search tool have been commented out.\nUses types from algoliasearch.search.models for better type safety."
+        "type": "object"
       },
       "TextParam": {
+        "description": "A text search parameter with exposure control.",
         "properties": {
           "exposed": {
-            "type": "boolean",
-            "title": "exposed"
+            "title": "exposed",
+            "type": "boolean"
           },
           "default": {
             "oneOf": [
@@ -3590,17 +3917,18 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "default"
           }
         },
-        "type": "object",
         "required": [
           "exposed"
         ],
         "title": "textParam",
-        "description": "A text search parameter with exposure control."
+        "type": "object"
       },
       "NumberParamConstraint": {
+        "description": "Constraints for a number parameter.",
         "properties": {
           "min": {
             "oneOf": [
@@ -3611,6 +3939,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "min"
           },
           "max": {
@@ -3622,18 +3951,19 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "max"
           }
         },
-        "type": "object",
         "title": "numberParamConstraint",
-        "description": "Constraints for a number parameter."
+        "type": "object"
       },
       "NumberParam": {
+        "description": "A number search parameter with exposure control and optional constraints.",
         "properties": {
           "exposed": {
-            "type": "boolean",
-            "title": "exposed"
+            "title": "exposed",
+            "type": "boolean"
           },
           "default": {
             "oneOf": [
@@ -3644,6 +3974,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "default"
           },
           "constraint": {
@@ -3657,14 +3988,14 @@
             ]
           }
         },
-        "type": "object",
         "required": [
           "exposed"
         ],
         "title": "numberParam",
-        "description": "A number search parameter with exposure control and optional constraints."
+        "type": "object"
       },
       "StringArrayParamConstraint": {
+        "description": "Constraints for a string array parameter.",
         "properties": {
           "values": {
             "oneOf": [
@@ -3678,18 +4009,19 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "values"
           }
         },
-        "type": "object",
         "title": "stringArrayParamConstraint",
-        "description": "Constraints for a string array parameter."
+        "type": "object"
       },
       "StringArrayParam": {
+        "description": "A string array search parameter with exposure control, constraints, and merge behavior.",
         "properties": {
           "exposed": {
-            "type": "boolean",
-            "title": "exposed"
+            "title": "exposed",
+            "type": "boolean"
           },
           "default": {
             "oneOf": [
@@ -3703,6 +4035,7 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "default"
           },
           "constraint": {
@@ -3724,23 +4057,50 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "merge"
           }
         },
-        "type": "object",
         "required": [
           "exposed"
         ],
         "title": "stringArrayParam",
-        "description": "A string array search parameter with exposure control, constraints, and merge behavior."
+        "type": "object"
       },
-      "FacetsParam": {
+      "BooleanParam": {
+        "description": "A boolean search parameter with exposure control.",
         "properties": {
           "exposed": {
-            "type": "boolean",
-            "const": false,
             "title": "exposed",
-            "default": false
+            "type": "boolean"
+          },
+          "default": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "default"
+          }
+        },
+        "required": [
+          "exposed"
+        ],
+        "title": "booleanParam",
+        "type": "object"
+      },
+      "FacetsParam": {
+        "description": "A facets parameter that is always hidden from the LLM.",
+        "properties": {
+          "exposed": {
+            "const": false,
+            "default": false,
+            "title": "exposed",
+            "type": "boolean"
           },
           "default": {
             "oneOf": [
@@ -3754,14 +4114,15 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "default"
           }
         },
-        "type": "object",
         "title": "facetsParam",
-        "description": "A facets parameter that is always hidden from the LLM."
+        "type": "object"
       },
       "IndexSearchParameters": {
+        "description": "Structured search parameters configuration for an Algolia index.\n\nEach parameter controls whether it is exposed to the LLM, its default value,\noptional constraints, and merge behavior.",
         "properties": {
           "query": {
             "oneOf": [
@@ -3785,6 +4146,16 @@
           "responseFields": {
             "$ref": "#/components/schemas/StringArrayParam"
           },
+          "distinct": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BooleanParam"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "facets": {
             "oneOf": [
               {
@@ -3805,31 +4176,31 @@
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "custom"
           }
         },
-        "type": "object",
         "title": "indexSearchParameters",
-        "description": "Structured search parameters configuration for an Algolia index.\n\nEach parameter controls whether it is exposed to the LLM, its default value,\noptional constraints, and merge behavior."
+        "type": "object"
       },
       "AlgoliaSearchToolIndexConfig": {
         "properties": {
           "index": {
-            "type": "string",
             "maxLength": 100,
             "minLength": 1,
-            "title": "index"
+            "title": "index",
+            "type": "string"
           },
           "description": {
-            "type": "string",
             "maxLength": 3000,
             "minLength": 1,
-            "title": "description"
+            "title": "description",
+            "type": "string"
           },
           "enhancedDescription": {
-            "type": "string",
+            "default": "",
             "title": "enhanceddescription",
-            "default": ""
+            "type": "string"
           },
           "searchParameters": {
             "oneOf": [
@@ -3852,99 +4223,114 @@
             ]
           }
         },
-        "type": "object",
         "required": [
           "index",
           "description"
         ],
-        "title": "algoliaSearchToolIndexConfig"
+        "title": "algoliaSearchToolIndexConfig",
+        "type": "object"
+      },
+      "ModeEnum": {
+        "type": "string",
+        "enum": [
+          "static",
+          "dynamic"
+        ]
       },
       "AlgoliaSearchToolConfig": {
         "properties": {
           "name": {
-            "type": "string",
             "maxLength": 32,
             "minLength": 3,
-            "title": "name"
+            "title": "name",
+            "type": "string"
           },
           "type": {
-            "type": "string",
             "const": "algolia_search_index",
+            "default": "algolia_search_index",
             "title": "type",
-            "default": "algolia_search_index"
+            "type": "string"
           },
           "indices": {
             "items": {
               "$ref": "#/components/schemas/AlgoliaSearchToolIndexConfig"
             },
-            "type": "array",
-            "title": "indices"
+            "title": "indices",
+            "type": "array"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/ModeEnum"
+          },
+          "allowUnlistedIndices": {
+            "default": false,
+            "title": "allowunlistedindices",
+            "type": "boolean"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "name",
           "indices"
         ],
-        "title": "algoliaSearchToolConfig"
+        "title": "algoliaSearchToolConfig",
+        "type": "object"
       },
       "ClientToolsArgsSchema": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "object",
+            "default": "object",
             "title": "type",
-            "default": "object"
+            "type": "string"
           },
           "properties": {
-            "additionalProperties": true,
             "type": "object",
+            "additionalProperties": true,
             "title": "properties"
           },
           "required": {
             "items": {
               "type": "string"
             },
-            "type": "array",
-            "title": "required"
+            "title": "required",
+            "type": "array"
           }
         },
-        "type": "object",
-        "title": "clientToolsArgsSchema"
+        "title": "clientToolsArgsSchema",
+        "type": "object"
       },
       "ClientSideToolConfig": {
         "properties": {
           "name": {
-            "type": "string",
             "maxLength": 32,
             "minLength": 3,
-            "title": "name"
+            "title": "name",
+            "type": "string"
           },
           "type": {
-            "type": "string",
             "const": "client_side",
+            "default": "client_side",
             "title": "type",
-            "default": "client_side"
+            "type": "string"
           },
           "description": {
-            "type": "string",
             "maxLength": 200,
             "minLength": 1,
-            "title": "description"
+            "title": "description",
+            "type": "string"
           },
           "inputSchema": {
             "$ref": "#/components/schemas/ClientToolsArgsSchema"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "name",
           "description",
           "inputSchema"
         ],
-        "title": "clientSideToolConfig"
+        "title": "clientSideToolConfig",
+        "type": "object"
       },
       "McpToolConfig": {
         "properties": {
@@ -3957,27 +4343,28 @@
                 "type": "null"
               }
             ],
-            "title": "requiresapproval",
-            "default": false
+            "default": false,
+            "title": "requiresapproval"
           },
           "alias": {
             "oneOf": [
               {
-                "type": "string",
                 "maxLength": 32,
-                "minLength": 3
+                "minLength": 3,
+                "type": "string"
               },
               {
                 "type": "null"
               }
             ],
+            "default": null,
             "title": "alias"
           }
         },
-        "type": "object",
-        "title": "mcpToolConfig"
+        "title": "mcpToolConfig",
+        "type": "object"
       },
-      "ToolConfig": {
+      "AllowedTool": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/McpToolConfig"
@@ -3991,7 +4378,7 @@
         "oneOf": [
           {
             "additionalProperties": {
-              "$ref": "#/components/schemas/ToolConfig"
+              "$ref": "#/components/schemas/AllowedTool"
             },
             "type": "object"
           },
@@ -4003,35 +4390,35 @@
       "McpServerToolConfig": {
         "properties": {
           "url": {
-            "type": "string",
             "maxLength": 512,
             "minLength": 1,
-            "title": "url"
+            "title": "url",
+            "type": "string"
           },
           "transport": {
-            "type": "string",
             "const": "streamable_http",
+            "default": "streamable_http",
             "title": "transport",
-            "default": "streamable_http"
+            "type": "string"
           },
           "headers": {
             "additionalProperties": {
               "type": "string"
             },
-            "type": "object",
-            "title": "headers"
+            "title": "headers",
+            "type": "object"
           },
           "name": {
-            "type": "string",
             "maxLength": 32,
             "minLength": 3,
-            "title": "name"
+            "title": "name",
+            "type": "string"
           },
           "type": {
-            "type": "string",
             "const": "mcp_tools",
+            "default": "mcp_tools",
             "title": "type",
-            "default": "mcp_tools"
+            "type": "string"
           },
           "id": {
             "oneOf": [
@@ -4042,47 +4429,48 @@
                 "type": "null"
               }
             ],
-            "title": "id",
-            "description": "Stable unique identifier for this MCP tool."
+            "default": null,
+            "description": "Stable unique identifier for this MCP tool.",
+            "title": "id"
           },
           "allowedTools": {
             "$ref": "#/components/schemas/AllowedToolsUnion"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "url",
           "headers",
           "name"
         ],
-        "title": "mcpServerToolConfig"
+        "title": "mcpServerToolConfig",
+        "type": "object"
       },
       "UnknownToolConfig": {
+        "additionalProperties": true,
+        "description": "Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays valid.",
         "properties": {
           "name": {
-            "type": "string",
             "maxLength": 32,
             "minLength": 3,
-            "title": "name"
+            "title": "name",
+            "type": "string"
           },
           "type": {
-            "type": "string",
             "const": "unknown",
+            "default": "unknown",
             "title": "type",
-            "default": "unknown"
+            "type": "string"
           }
         },
-        "additionalProperties": true,
-        "type": "object",
         "required": [
           "type",
           "name"
         ],
         "title": "unknownToolConfig",
-        "description": "Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays valid."
+        "type": "object"
       },
-      "ToolConfigInput": {
+      "ToolConfigOutput": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/ClientSideToolConfig"
@@ -4091,10 +4479,7 @@
             "$ref": "#/components/schemas/AlgoliaSearchToolConfig"
           },
           {
-            "$ref": "#/components/schemas/AlgoliaRecommendToolConfig-Input"
-          },
-          {
-            "$ref": "#/components/schemas/AlgoliaDisplayResultsToolConfig"
+            "$ref": "#/components/schemas/AlgoliaRecommendToolConfig"
           },
           {
             "$ref": "#/components/schemas/McpServerToolConfig"
@@ -4106,8 +4491,7 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "algolia_display_results": "#/components/schemas/AlgoliaDisplayResultsToolConfig",
-            "algolia_recommend": "#/components/schemas/AlgoliaRecommendToolConfig-Input",
+            "algolia_recommend": "#/components/schemas/AlgoliaRecommendToolConfig",
             "algolia_search_index": "#/components/schemas/AlgoliaSearchToolConfig",
             "client_side": "#/components/schemas/ClientSideToolConfig",
             "mcp_tools": "#/components/schemas/McpServerToolConfig",
@@ -4183,7 +4567,7 @@
           },
           "tools": {
             "items": {
-              "$ref": "#/components/schemas/ToolConfigInput"
+              "$ref": "#/components/schemas/ToolConfigOutput"
             },
             "type": "array",
             "title": "tools"
@@ -4315,13 +4699,6 @@
           "type": {
             "type": "string",
             "title": "errorType"
-          },
-          "input": {
-            "title": "input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "context"
           }
         },
         "type": "object",
@@ -4344,6 +4721,35 @@
         },
         "type": "object",
         "title": "hTTPValidationError"
+      },
+      "ToolConfig": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ClientSideToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaSearchToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaRecommendToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/McpServerToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/UnknownToolConfig"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "algolia_recommend": "#/components/schemas/AlgoliaRecommendToolConfig",
+            "algolia_search_index": "#/components/schemas/AlgoliaSearchToolConfig",
+            "client_side": "#/components/schemas/ClientSideToolConfig",
+            "mcp_tools": "#/components/schemas/McpServerToolConfig",
+            "unknown": "#/components/schemas/UnknownToolConfig"
+          }
+        }
       },
       "AgentConfigCreate": {
         "properties": {
@@ -4393,7 +4799,7 @@
           },
           "tools": {
             "items": {
-              "$ref": "#/components/schemas/ToolConfigInput"
+              "$ref": "#/components/schemas/ToolConfig"
             },
             "type": "array",
             "title": "tools"
@@ -4492,7 +4898,7 @@
             "oneOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/ToolConfigInput"
+                  "$ref": "#/components/schemas/ToolConfig"
                 },
                 "type": "array"
               },
@@ -4639,176 +5045,330 @@
         "type": "string",
         "enum": [
           "ai-sdk-4",
-          "ai-sdk-5"
+          "ai-sdk-5",
+          "ag-ui"
         ],
         "title": "compatibilityMode",
         "description": "Support Compatibility modes for the completion API."
       },
+      "AlgoliaDisplayResultsToolConfig": {
+        "description": "Configuration for the algolia_display_results tool.",
+        "properties": {
+          "name": {
+            "const": "algolia_display_results",
+            "default": "algolia_display_results",
+            "title": "name",
+            "type": "string"
+          },
+          "type": {
+            "const": "algolia_display_results",
+            "default": "algolia_display_results",
+            "title": "type",
+            "type": "string"
+          },
+          "isTerminal": {
+            "default": false,
+            "description": "When true, a successful tool invocation ends the agent graph (no further LLM turn). Use for chat experiences where the display payload IS the final response. Leave false to let the main LLM produce a concluding assistant message after the tool runs.",
+            "title": "isterminal",
+            "type": "boolean"
+          },
+          "minGroups": {
+            "default": 1,
+            "description": "minimum number of result groups.",
+            "maximum": 6,
+            "minimum": 1,
+            "title": "mingroups",
+            "type": "integer"
+          },
+          "maxGroups": {
+            "default": 3,
+            "description": "maximum number of result groups.",
+            "maximum": 6,
+            "minimum": 1,
+            "title": "maxgroups",
+            "type": "integer"
+          },
+          "minResultsPerGroup": {
+            "default": 3,
+            "description": "minimum hits per group.",
+            "maximum": 15,
+            "minimum": 1,
+            "title": "minresultspergroup",
+            "type": "integer"
+          },
+          "maxResultsPerGroup": {
+            "default": 6,
+            "description": "maximum hits per group.",
+            "maximum": 15,
+            "minimum": 1,
+            "title": "maxresultspergroup",
+            "type": "integer"
+          }
+        },
+        "title": "algoliaDisplayResultsToolConfig",
+        "type": "object",
+        "required": [
+          "type"
+        ]
+      },
+      "ToolConfigAgentTestConfiguration": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ClientSideToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaSearchToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaRecommendToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaDisplayResultsToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/McpServerToolConfig"
+          },
+          {
+            "$ref": "#/components/schemas/UnknownToolConfig"
+          }
+        ],
+        "discriminator": {
+          "mapping": {
+            "algolia_display_results": "#/components/schemas/AlgoliaDisplayResultsToolConfig",
+            "algolia_recommend": "#/components/schemas/AlgoliaRecommendToolConfig",
+            "algolia_search_index": "#/components/schemas/AlgoliaSearchToolConfig",
+            "client_side": "#/components/schemas/ClientSideToolConfig",
+            "mcp_tools": "#/components/schemas/McpServerToolConfig",
+            "unknown": "#/components/schemas/UnknownToolConfig"
+          },
+          "propertyName": "type"
+        }
+      },
       "AgentTestConfiguration": {
+        "description": "Dynamic configuration for testing agents.",
         "properties": {
           "id": {
             "type": "string",
+            "default": null,
             "title": "id"
           },
           "providerId": {
             "type": "string",
+            "default": null,
             "title": "providerid"
           },
           "model": {
             "type": "string",
+            "default": null,
             "title": "model"
           },
           "instructions": {
-            "type": "string",
-            "title": "instructions"
+            "title": "instructions",
+            "type": "string"
           },
           "systemPrompt": {
             "type": "string",
+            "default": null,
             "title": "systemprompt"
           },
           "config": {
             "additionalProperties": true,
-            "type": "object",
-            "title": "config"
+            "title": "config",
+            "type": "object"
           },
           "tools": {
             "items": {
-              "$ref": "#/components/schemas/ToolConfigInput"
+              "$ref": "#/components/schemas/ToolConfigAgentTestConfiguration"
             },
-            "type": "array",
-            "title": "tools"
+            "title": "tools",
+            "type": "array"
           }
         },
-        "type": "object",
         "required": [
           "instructions",
           "config",
           "tools"
         ],
         "title": "agentTestConfiguration",
-        "description": "Dynamic configuration for testing agents."
+        "type": "object"
       },
       "StepStartPartV4": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "step-start",
+            "default": "step-start",
             "title": "type",
-            "default": "step-start"
+            "type": "string"
           }
         },
-        "type": "object",
-        "title": "stepStartPartV4"
+        "title": "stepStartPartV4",
+        "type": "object"
       },
       "ReasoningPartV4": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "reasoning",
+            "default": "reasoning",
             "title": "type",
-            "default": "reasoning"
+            "type": "string"
           },
           "reasoning": {
-            "type": "string",
-            "title": "reasoning"
+            "title": "reasoning",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "reasoning"
         ],
-        "title": "reasoningPartV4"
+        "title": "reasoningPartV4",
+        "type": "object"
       },
       "TextPartV4": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "text",
+            "default": "text",
             "title": "type",
-            "default": "text"
+            "type": "string"
           },
           "text": {
-            "type": "string",
-            "title": "text"
+            "title": "text",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "text"
         ],
-        "title": "textPartV4"
+        "title": "textPartV4",
+        "type": "object"
       },
       "ToolInvocationV4": {
+        "description": "Model for tool invocation in a Message.",
         "properties": {
           "toolCallId": {
-            "type": "string",
-            "title": "toolcallid"
+            "title": "toolcallid",
+            "type": "string"
           },
           "toolName": {
-            "type": "string",
-            "title": "toolname"
+            "title": "toolname",
+            "type": "string"
           },
           "args": {
             "additionalProperties": true,
-            "type": "object",
-            "title": "args"
+            "title": "args",
+            "type": "object"
           },
           "result": {
-            "type": "object",
-            "additionalProperties": true,
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "result"
           },
           "step": {
-            "type": "integer",
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "step"
           },
           "state": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "state"
           },
           "providerOptions": {
-            "additionalProperties": true,
-            "type": "object",
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "provideroptions"
           },
           "requiresApproval": {
-            "type": "boolean",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "requiresapproval"
           },
           "description": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "description"
           },
           "argsHash": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "argshash"
           }
         },
-        "type": "object",
         "required": [
           "toolCallId",
           "toolName"
         ],
         "title": "toolInvocationV4",
-        "description": "Model for tool invocation in a Message."
+        "type": "object"
       },
       "ToolInvocationPartV4": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "tool-invocation",
+            "default": "tool-invocation",
             "title": "type",
-            "default": "tool-invocation"
+            "type": "string"
           },
           "toolInvocation": {
             "$ref": "#/components/schemas/ToolInvocationV4"
           }
         },
-        "type": "object",
         "required": [
           "toolInvocation"
         ],
-        "title": "toolInvocationPartV4"
+        "title": "toolInvocationPartV4",
+        "type": "object"
       },
       "AssistantPartV4": {
         "oneOf": [
@@ -4842,75 +5402,99 @@
       "AssistantMessageV4": {
         "properties": {
           "id": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "id"
           },
           "role": {
-            "type": "string",
             "const": "assistant",
+            "default": "assistant",
             "title": "role",
-            "default": "assistant"
+            "type": "string"
           },
           "content": {
-            "type": "string",
-            "title": "content"
+            "title": "content",
+            "type": "string"
           },
           "parts": {
             "items": {
               "$ref": "#/components/schemas/AssistantPartV4"
             },
-            "type": "array",
-            "title": "parts"
+            "title": "parts",
+            "type": "array"
           },
           "toolInvocations": {
             "$ref": "#/components/schemas/ToolInvocationsUnion"
           }
         },
-        "type": "object",
         "required": [
           "role",
           "content"
         ],
-        "title": "assistantMessageV4"
+        "title": "assistantMessageV4",
+        "type": "object"
       },
       "UserMessageV4": {
         "properties": {
           "id": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "id"
           },
           "role": {
-            "type": "string",
             "const": "user",
+            "default": "user",
             "title": "role",
-            "default": "user"
+            "type": "string"
           },
           "content": {
-            "type": "string",
-            "title": "content"
+            "title": "content",
+            "type": "string"
           },
           "parts": {
             "items": {
               "$ref": "#/components/schemas/TextPartV4"
             },
-            "type": "array",
-            "title": "parts"
+            "title": "parts",
+            "type": "array"
           },
           "annotations": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "type": "array",
+            "oneOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "annotations"
           }
         },
-        "type": "object",
         "required": [
           "role",
           "content"
         ],
-        "title": "userMessageV4"
+        "title": "userMessageV4",
+        "type": "object"
       },
       "MessageV4": {
         "oneOf": [
@@ -4922,62 +5506,139 @@
           }
         ],
         "discriminator": {
-          "propertyName": "role",
           "mapping": {
             "assistant": "#/components/schemas/AssistantMessageV4",
             "user": "#/components/schemas/UserMessageV4"
-          }
+          },
+          "propertyName": "role"
         }
       },
       "StepStartPartV5": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "step-start",
+            "default": "step-start",
             "title": "type",
-            "default": "step-start"
+            "type": "string"
           }
         },
-        "type": "object",
-        "title": "stepStartPartV5"
+        "title": "stepStartPartV5",
+        "type": "object"
       },
       "TextPartV5": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "text",
+            "default": "text",
             "title": "type",
-            "default": "text"
+            "type": "string"
           },
           "text": {
-            "type": "string",
-            "title": "text"
+            "title": "text",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "text"
         ],
-        "title": "textPartV5"
+        "title": "textPartV5",
+        "type": "object"
       },
       "ReasoningPartV5": {
         "properties": {
           "type": {
-            "type": "string",
             "const": "reasoning",
+            "default": "reasoning",
             "title": "type",
-            "default": "reasoning"
+            "type": "string"
           },
           "text": {
-            "type": "string",
-            "title": "text"
+            "title": "text",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "text"
         ],
-        "title": "reasoningPartV5"
+        "title": "reasoningPartV5",
+        "type": "object"
+      },
+      "GuardrailViolationDataV5": {
+        "additionalProperties": true,
+        "description": "Payload of a persisted ``data-guardrail-violation`` part.\n\nMirrors the outbound shape emitted by ``v5/stream.py:_guardrail_violation`` (category,\nguardrailType, fallbackResponse). Unknown keys are tolerated so a newer client that carries\nextra violation detail still round-trips without a 422.",
+        "properties": {
+          "category": {
+            "title": "category",
+            "type": "string"
+          },
+          "guardrailType": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "guardrailtype"
+          },
+          "fallbackResponse": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "fallbackresponse"
+          }
+        },
+        "required": [
+          "category"
+        ],
+        "title": "guardrailViolationDataV5",
+        "type": "object"
+      },
+      "DataGuardrailViolationPartV5": {
+        "description": "A persisted ``data-guardrail-violation`` part echoed back by an AI SDK v5 client.\n\nThe v5 stream emits this part on a blocked input turn (``v5/stream.py:_guardrail_violation``)\n*without* ``transient: true`` - unlike the usage data parts, which set it - so v5 clients persist\nit on the assistant message and echo it on the next request. Parsing it lets the stateless\ncompletions path recover the blocked verdict (``Message.guardrail``) that DB-backed history\ncarries natively: the activation switch for sticky block replay on the completions path.",
+        "properties": {
+          "type": {
+            "const": "data-guardrail-violation",
+            "default": "data-guardrail-violation",
+            "title": "type",
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GuardrailViolationDataV5"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "dataGuardrailViolationPartV5",
+        "type": "object"
+      },
+      "DataPartV5": {
+        "description": "AI SDK v5 transient data part whose type is prefixed with data-.",
+        "properties": {
+          "type": {
+            "title": "type",
+            "type": "string"
+          },
+          "data": {
+            "additionalProperties": true,
+            "title": "data",
+            "type": "object"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "dataPartV5",
+        "type": "object"
       },
       "ToolState": {
         "type": "string",
@@ -4989,57 +5650,139 @@
         ]
       },
       "ToolPartV5": {
+        "description": "Model for tool invocation in a Message.",
         "properties": {
           "type": {
-            "type": "string",
-            "title": "type"
+            "title": "type",
+            "type": "string"
           },
           "toolCallId": {
-            "type": "string",
-            "title": "toolcallid"
+            "title": "toolcallid",
+            "type": "string"
           },
           "state": {
             "$ref": "#/components/schemas/ToolState"
           },
           "input": {
-            "additionalProperties": true,
-            "type": "object",
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "input"
           },
+          "rawInput": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "rawinput"
+          },
           "output": {
-            "type": "object",
-            "additionalProperties": true,
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "output"
           },
+          "outputMetadata": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "outputmetadata"
+          },
           "errorText": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "errortext"
           },
           "providerOptions": {
-            "additionalProperties": true,
-            "type": "object",
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "provideroptions"
           },
           "requiresApproval": {
-            "type": "boolean",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "requiresapproval"
           },
           "description": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "description"
           },
           "argsHash": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "argshash"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "toolCallId"
         ],
         "title": "toolPartV5",
-        "description": "Model for tool invocation in a Message."
+        "type": "object"
       },
       "AssistantPartV5": {
         "oneOf": [
@@ -5053,6 +5796,12 @@
             "$ref": "#/components/schemas/ReasoningPartV5"
           },
           {
+            "$ref": "#/components/schemas/DataGuardrailViolationPartV5"
+          },
+          {
+            "$ref": "#/components/schemas/DataPartV5"
+          },
+          {
             "$ref": "#/components/schemas/ToolPartV5"
           }
         ]
@@ -5060,67 +5809,98 @@
       "AssistantMessageV5": {
         "properties": {
           "id": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "id"
           },
           "role": {
-            "type": "string",
             "const": "assistant",
+            "default": "assistant",
             "title": "role",
-            "default": "assistant"
+            "type": "string"
           },
           "parts": {
             "items": {
               "$ref": "#/components/schemas/AssistantPartV5"
             },
-            "type": "array",
-            "title": "parts"
+            "title": "parts",
+            "type": "array"
           }
         },
-        "type": "object",
         "title": "assistantMessageV5",
+        "type": "object",
         "required": [
           "role"
         ]
       },
       "UserMessageMetadataV5": {
+        "additionalProperties": true,
+        "description": "Client-supplied metadata on a v5 user message.\n\n`turn_context` is namespaced so other callers can use `metadata` for unrelated\npurposes without collision. Unknown keys are preserved and ignored by this pipeline.\n\n`turn_context` accepts any JSON object (arbitrarily nested values, no size caps).\nIt is deliberately typed `dict[str, Any]` (not `TurnContext`): the metadata is\nparsed eagerly with the request body, but the serializability check must be\ndeferred to `extract_turn_context_v5` so the kill-switch\n(`TURN_CONTEXT_ENABLED=false`) can silently drop payloads instead of 422-ing.\nSee `test_unserializable_metadata_does_not_raise_at_model_construction`.",
         "properties": {
           "turnContext": {
-            "additionalProperties": true,
-            "type": "object",
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "turncontext"
           }
         },
-        "additionalProperties": true,
-        "type": "object",
         "title": "userMessageMetadataV5",
-        "description": "Client-supplied metadata on a v5 user message.\n\n`turn_context` is namespaced so other callers can use `metadata` for unrelated\npurposes without collision. Unknown keys are preserved and ignored by this pipeline.\n\nNote: `turn_context` is deliberately typed `dict[str, Any]` (not `TurnContext`).\nThe metadata is parsed eagerly with the request body, but cap/charset validation\nmust be deferred to `extract_turn_context_v5` so the kill-switch\n(`TURN_CONTEXT_ENABLED=false`) can silently drop payloads instead of 422-ing.\nSee `test_invalid_metadata_does_not_raise_at_model_construction`."
+        "type": "object"
       },
       "UserMessageV5": {
         "properties": {
           "id": {
-            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
             "title": "id"
           },
           "role": {
-            "type": "string",
             "const": "user",
+            "default": "user",
             "title": "role",
-            "default": "user"
+            "type": "string"
           },
           "parts": {
             "items": {
               "$ref": "#/components/schemas/TextPartV5"
             },
-            "type": "array",
-            "title": "parts"
+            "title": "parts",
+            "type": "array"
           },
           "metadata": {
-            "$ref": "#/components/schemas/UserMessageMetadataV5"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserMessageMetadataV5"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
-        "type": "object",
         "title": "userMessageV5",
+        "type": "object",
         "required": [
           "role"
         ]
@@ -5135,14 +5915,14 @@
           }
         ],
         "discriminator": {
-          "propertyName": "role",
           "mapping": {
             "assistant": "#/components/schemas/AssistantMessageV5",
             "user": "#/components/schemas/UserMessageV5"
-          }
+          },
+          "propertyName": "role"
         }
       },
-      "MessagesUnion": {
+      "MessagesUnionAgentCompletionRequest": {
         "oneOf": [
           {
             "items": {
@@ -5162,9 +5942,12 @@
         ]
       },
       "SearchParametersOverrides": {
+        "additionalProperties": false,
+        "description": "Algolia Search API parameters that can be predefined for the search tool.\nReference: https://www.algolia.com/doc/api-reference/search-api-parameters/\n\nA subset of SearchParameters of specific params we allow for runtime override.",
         "properties": {
           "filters": {
             "type": "string",
+            "default": null,
             "title": "filters"
           },
           "attributesToRetrieve": {
@@ -5172,6 +5955,7 @@
               "type": "string"
             },
             "type": "array",
+            "default": null,
             "title": "attributestoretrieve"
           },
           "restrictSearchableAttributes": {
@@ -5179,6 +5963,7 @@
               "type": "string"
             },
             "type": "array",
+            "default": null,
             "title": "restrictsearchableattributes"
           },
           "distinct": {
@@ -5186,24 +5971,25 @@
           },
           "userToken": {
             "type": "string",
+            "default": null,
             "title": "usertoken"
           },
           "enablePersonalization": {
             "type": "boolean",
+            "default": null,
             "title": "enablepersonalization"
           },
           "personalizationImpact": {
             "type": "integer",
+            "default": null,
             "title": "personalizationimpact"
           },
           "optionalFilters": {
             "$ref": "#/components/schemas/OptionalFiltersUnion"
           }
         },
-        "additionalProperties": false,
-        "type": "object",
         "title": "searchParametersOverrides",
-        "description": "Algolia Search API parameters that can be predefined for the search tool.\nReference: https://www.algolia.com/doc/api-reference/search-api-parameters/\n\nA subset of SearchParameters of specific params we allow for runtime override."
+        "type": "object"
       },
       "SearchParametersOverridesMapNullable": {
         "oneOf": [
@@ -5231,28 +6017,50 @@
               "type": "object"
             },
             "type": "object",
+            "default": null,
             "title": "mcpservers"
           },
           "searchParameters": {
             "$ref": "#/components/schemas/SearchParametersOverridesMapNullable"
+          },
+          "indices": {
+            "items": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9_\\-.]+$",
+              "type": "string"
+            },
+            "maxItems": 10,
+            "type": "array",
+            "default": null,
+            "description": "Per-request override for the Algolia Search tool's indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the resolver looks up each name in the agent's static `tool.indices` (preserving the operator's description and access-control fields) or — for index names the operator has not listed explicitly — synthesizes a minimal entry. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — flip the tool's `mode` in the agent configuration first. Defaults to `None`, which preserves the existing static behavior.",
+            "examples": [
+              [
+                "docs_v9",
+                "docs_v10"
+              ]
+            ],
+            "title": "indices"
           }
         },
-        "type": "object",
-        "title": "agentCompletionAlgoliaParams"
+        "title": "agentCompletionAlgoliaParams",
+        "type": "object"
       },
       "AgentCompletionRequest": {
+        "description": "Request model for creating a completion for an assistant.",
         "properties": {
           "configuration": {
             "$ref": "#/components/schemas/AgentTestConfiguration"
           },
           "messages": {
-            "$ref": "#/components/schemas/MessagesUnion"
+            "$ref": "#/components/schemas/MessagesUnionAgentCompletionRequest"
           },
           "id": {
-            "type": "string",
             "maxLength": 128,
-            "title": "id",
-            "description": "Optional conversation id."
+            "type": "string",
+            "default": null,
+            "description": "Optional conversation id.",
+            "title": "id"
           },
           "algolia": {
             "$ref": "#/components/schemas/AgentCompletionAlgoliaParams"
@@ -5263,9 +6071,569 @@
             "description": "Approval decisions for pending tool calls keyed by toolCallId."
           }
         },
-        "type": "object",
         "title": "agentCompletionRequest",
-        "description": "Request model for creating a completion for an assistant."
+        "type": "object"
+      },
+      "FunctionCallAGUI": {
+        "properties": {
+          "name": {
+            "title": "name",
+            "type": "string"
+          },
+          "arguments": {
+            "title": "arguments",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "title": "functionCallAGUI",
+        "type": "object"
+      },
+      "ToolCallAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "type": {
+            "const": "function",
+            "default": "function",
+            "title": "type",
+            "type": "string"
+          },
+          "function": {
+            "$ref": "#/components/schemas/FunctionCallAGUI"
+          },
+          "encryptedValue": {
+            "type": "string",
+            "default": null,
+            "title": "encryptedvalue"
+          }
+        },
+        "required": [
+          "id",
+          "function"
+        ],
+        "title": "toolCallAGUI",
+        "type": "object"
+      },
+      "ToolCallsUnion": {
+        "oneOf": [
+          {
+            "items": {
+              "$ref": "#/components/schemas/ToolCallAGUI"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "TextPartAGUI": {
+        "properties": {
+          "type": {
+            "const": "text",
+            "default": "text",
+            "title": "type",
+            "type": "string"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "content"
+        ],
+        "title": "textPartAGUI",
+        "type": "object"
+      },
+      "ReasoningPartAGUI": {
+        "properties": {
+          "type": {
+            "const": "thinking",
+            "default": "thinking",
+            "title": "type",
+            "type": "string"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          },
+          "stepId": {
+            "type": "string",
+            "default": null,
+            "title": "stepid"
+          }
+        },
+        "required": [
+          "type",
+          "content"
+        ],
+        "title": "reasoningPartAGUI",
+        "type": "object"
+      },
+      "ToolApprovalAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "needsApproval": {
+            "title": "needsapproval",
+            "type": "boolean"
+          },
+          "approved": {
+            "type": "boolean",
+            "default": null,
+            "title": "approved"
+          }
+        },
+        "required": [
+          "id",
+          "needsApproval"
+        ],
+        "title": "toolApprovalAGUI",
+        "type": "object"
+      },
+      "ToolCallPartAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "type": {
+            "const": "tool-call",
+            "default": "tool-call",
+            "title": "type",
+            "type": "string"
+          },
+          "name": {
+            "title": "name",
+            "type": "string"
+          },
+          "arguments": {
+            "title": "arguments",
+            "type": "string"
+          },
+          "state": {
+            "title": "state",
+            "type": "string"
+          },
+          "output": {
+            "type": "object",
+            "additionalProperties": true,
+            "default": null,
+            "title": "output"
+          },
+          "approval": {
+            "$ref": "#/components/schemas/ToolApprovalAGUI"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "name",
+          "arguments",
+          "state"
+        ],
+        "title": "toolCallPartAGUI",
+        "type": "object"
+      },
+      "ToolCallResultPartAGUI": {
+        "properties": {
+          "toolCallId": {
+            "title": "toolcallid",
+            "type": "string"
+          },
+          "state": {
+            "title": "state",
+            "type": "string"
+          },
+          "type": {
+            "const": "tool-result",
+            "default": "tool-result",
+            "title": "type",
+            "type": "string"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          },
+          "error": {
+            "type": "string",
+            "default": null,
+            "title": "error"
+          }
+        },
+        "required": [
+          "type",
+          "toolCallId",
+          "state",
+          "content"
+        ],
+        "title": "toolCallResultPartAGUI",
+        "type": "object"
+      },
+      "MessagePartAssistantMessageAGUI": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/TextPartAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/ReasoningPartAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/ToolCallPartAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/ToolCallResultPartAGUI"
+          }
+        ],
+        "discriminator": {
+          "mapping": {
+            "text": "#/components/schemas/TextPartAGUI",
+            "thinking": "#/components/schemas/ReasoningPartAGUI",
+            "tool-call": "#/components/schemas/ToolCallPartAGUI",
+            "tool-result": "#/components/schemas/ToolCallResultPartAGUI"
+          },
+          "propertyName": "type"
+        }
+      },
+      "AssistantMessageAGUI": {
+        "description": "An official AG-UI assistant message or a TanStack ``UIMessage`` extension.\n\nStandard AG-UI represents text through ``content`` and tool calls through ``toolCalls``.\nTanStack sends those fields alongside its authoritative ``parts`` array. A populated ``parts``\narray takes precedence during conversion, preventing the redundant fields from duplicating\nhistory. Unknown vendor fields are intentionally ignored, matching the other AG-UI message\nvariants; TanStack, for example, attaches its own ``metadata`` object.",
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "role": {
+            "const": "assistant",
+            "default": "assistant",
+            "title": "role",
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "default": null,
+            "title": "content"
+          },
+          "name": {
+            "type": "string",
+            "default": null,
+            "title": "name"
+          },
+          "toolCalls": {
+            "$ref": "#/components/schemas/ToolCallsUnion"
+          },
+          "encryptedContent": {
+            "type": "string",
+            "default": null,
+            "title": "encryptedcontent"
+          },
+          "parts": {
+            "items": {
+              "$ref": "#/components/schemas/MessagePartAssistantMessageAGUI"
+            },
+            "type": "array",
+            "default": null,
+            "title": "parts"
+          },
+          "createdAt": {
+            "type": "string",
+            "default": null,
+            "title": "createdat"
+          }
+        },
+        "required": [
+          "role",
+          "id"
+        ],
+        "title": "assistantMessageAGUI",
+        "type": "object"
+      },
+      "ReasoningMessageAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "role": {
+            "const": "reasoning",
+            "default": "reasoning",
+            "title": "role",
+            "type": "string"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          },
+          "encryptedValue": {
+            "type": "string",
+            "default": null,
+            "title": "encryptedvalue"
+          }
+        },
+        "required": [
+          "role",
+          "id",
+          "content"
+        ],
+        "title": "reasoningMessageAGUI",
+        "type": "object"
+      },
+      "ToolMessageAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "role": {
+            "const": "tool",
+            "default": "tool",
+            "title": "role",
+            "type": "string"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          },
+          "toolCallId": {
+            "title": "toolcallid",
+            "type": "string"
+          },
+          "error": {
+            "type": "string",
+            "default": null,
+            "title": "error"
+          },
+          "encryptedValue": {
+            "type": "string",
+            "default": null,
+            "title": "encryptedvalue"
+          }
+        },
+        "required": [
+          "role",
+          "id",
+          "content",
+          "toolCallId"
+        ],
+        "title": "toolMessageAGUI",
+        "type": "object"
+      },
+      "PartsUnion": {
+        "oneOf": [
+          {
+            "items": {
+              "$ref": "#/components/schemas/TextPartAGUI"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "UserMessageMetadataAGUI": {
+        "properties": {
+          "turnContext": {
+            "additionalProperties": true,
+            "type": "object",
+            "default": null,
+            "title": "turncontext"
+          }
+        },
+        "title": "userMessageMetadataAGUI",
+        "type": "object"
+      },
+      "UserMessageAGUI": {
+        "properties": {
+          "id": {
+            "title": "id",
+            "type": "string"
+          },
+          "role": {
+            "const": "user",
+            "default": "user",
+            "title": "role",
+            "type": "string"
+          },
+          "parts": {
+            "$ref": "#/components/schemas/PartsUnion"
+          },
+          "createdAt": {
+            "type": "string",
+            "default": null,
+            "title": "createdat"
+          },
+          "content": {
+            "title": "content",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/UserMessageMetadataAGUI"
+          }
+        },
+        "required": [
+          "role",
+          "id",
+          "content"
+        ],
+        "title": "userMessageAGUI",
+        "type": "object"
+      },
+      "ItemsUnion": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/UserMessageAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/AssistantMessageAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/ToolMessageAGUI"
+          },
+          {
+            "$ref": "#/components/schemas/ReasoningMessageAGUI"
+          }
+        ],
+        "discriminator": {
+          "mapping": {
+            "assistant": "#/components/schemas/AssistantMessageAGUI",
+            "reasoning": "#/components/schemas/ReasoningMessageAGUI",
+            "tool": "#/components/schemas/ToolMessageAGUI",
+            "user": "#/components/schemas/UserMessageAGUI"
+          },
+          "propertyName": "role"
+        }
+      },
+      "ForwardedProps": {
+        "properties": {
+          "algolia": {
+            "$ref": "#/components/schemas/AgentCompletionAlgoliaParams"
+          },
+          "toolApprovals": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "default": null,
+            "title": "toolapprovals"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/AgentTestConfiguration"
+          }
+        },
+        "title": "forwardedProps",
+        "type": "object"
+      },
+      "StatusEnum": {
+        "type": "string",
+        "enum": [
+          "resolved",
+          "cancelled"
+        ]
+      },
+      "AguiResume": {
+        "description": "A response to an interrupt emitted by a preceding AG-UI run.",
+        "properties": {
+          "interruptId": {
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "interruptid",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusEnum"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "default": null,
+            "title": "payload"
+          }
+        },
+        "required": [
+          "interruptId",
+          "status"
+        ],
+        "title": "aguiResume",
+        "type": "object"
+      },
+      "ResumeUnion": {
+        "oneOf": [
+          {
+            "items": {
+              "$ref": "#/components/schemas/AguiResume"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "AguiCompletionRequest": {
+        "properties": {
+          "threadId": {
+            "description": "Conversation (thread) id.",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "threadid",
+            "type": "string"
+          },
+          "runId": {
+            "description": "Identifier for the current AG-UI run.",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "runid",
+            "type": "string"
+          },
+          "parentRunId": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string",
+            "default": null,
+            "title": "parentrunid"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/ItemsUnion"
+            },
+            "title": "messages",
+            "type": "array"
+          },
+          "forwardedProps": {
+            "$ref": "#/components/schemas/ForwardedProps"
+          },
+          "resume": {
+            "$ref": "#/components/schemas/ResumeUnion"
+          }
+        },
+        "required": [
+          "threadId",
+          "runId",
+          "messages"
+        ],
+        "title": "aguiCompletionRequest",
+        "type": "object"
+      },
+      "AgentCompletionRequestUnion": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/AgentCompletionRequest"
+          },
+          {
+            "$ref": "#/components/schemas/AguiCompletionRequest"
+          }
+        ]
       },
       "ConversationMetadata": {
         "properties": {
@@ -5366,6 +6734,35 @@
           }
         ]
       },
+      "ImpactAnalytics": {
+        "properties": {
+          "hasView": {
+            "type": "boolean",
+            "title": "hasview"
+          },
+          "hasClick": {
+            "type": "boolean",
+            "title": "hasclick"
+          },
+          "hasConversion": {
+            "type": "boolean",
+            "title": "hasconversion"
+          },
+          "hasAlgoliaSearch": {
+            "type": "boolean",
+            "title": "hasalgoliasearch"
+          }
+        },
+        "type": "object",
+        "required": [
+          "hasView",
+          "hasClick",
+          "hasConversion",
+          "hasAlgoliaSearch"
+        ],
+        "title": "impactAnalytics",
+        "description": "Outcome signals from the BQ SSOT dataset.\n\nPresent (non-null) only when includeImpactAnalytics=true and BQ is reachable.\nnull means data is unavailable (BQ path skipped or failed) -- NOT that there are zero outcomes.\nCallers should render null as a data-load error rather than as zero-value badges."
+      },
       "ConversationBaseResponse": {
         "properties": {
           "id": {
@@ -5454,6 +6851,16 @@
           },
           "feedback": {
             "$ref": "#/components/schemas/FeedbackUnion"
+          },
+          "impactAnalytics": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ImpactAnalytics"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -5477,6 +6884,11 @@
           },
           "pagination": {
             "$ref": "#/components/schemas/PaginationMetadata"
+          },
+          "analyticsDegraded": {
+            "type": "boolean",
+            "title": "analyticsdegraded",
+            "default": false
           }
         },
         "type": "object",
@@ -5628,6 +7040,17 @@
               }
             ],
             "title": "appid"
+          },
+          "conversationId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "conversationid"
           }
         },
         "type": "object",
@@ -5657,6 +7080,18 @@
           },
           "args": {
             "title": "args"
+          },
+          "rawArgs": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "rawargs"
           },
           "requiresApproval": {
             "oneOf": [
@@ -5749,6 +7184,51 @@
               }
             ],
             "title": "provideroptions"
+          },
+          "mcpConfigId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "mcpconfigid"
+          },
+          "mcpConfigName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "mcpconfigname"
+          },
+          "isTerminal": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "isterminal"
+          },
+          "outputMetadata": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "outputmetadata"
           }
         },
         "type": "object",
@@ -5796,6 +7276,77 @@
             "tool-result": "#/components/schemas/ToolResultPart"
           }
         }
+      },
+      "MessageEvent": {
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "title": "eventtype"
+          },
+          "eventName": {
+            "type": "string",
+            "title": "eventname"
+          },
+          "objectId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "objectid"
+          }
+        },
+        "type": "object",
+        "required": [
+          "eventType",
+          "eventName"
+        ],
+        "title": "messageEvent",
+        "description": "An Insights event attributed to an assistant message."
+      },
+      "OneOfEnum": {
+        "type": "integer",
+        "enum": [
+          0,
+          1
+        ],
+        "x-enum-varnames": [
+          "downvote",
+          "upvote"
+        ]
+      },
+      "GuardrailOutcome": {
+        "properties": {
+          "blocked": {
+            "type": "boolean",
+            "title": "blocked"
+          },
+          "category": {
+            "type": "string",
+            "title": "category"
+          },
+          "guardrailType": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OneOfEnum"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "guardrailtype"
+          }
+        },
+        "type": "object",
+        "required": [
+          "blocked",
+          "category"
+        ],
+        "title": "guardrailOutcome",
+        "description": "Minimal record of a guardrail decision, persisted on a blocked assistant message.\n\nPopulated only when a guardrail blocks a turn (the persisted parts are then just the\nfallback text); ``None`` on ordinary messages. Lets a blocked turn be identified and\nattributed from conversation data alone, so callers no longer have to cross-reference\ninternal analytics to tell a block apart from a short reply. Deliberately minimal:\nfurther detail (e.g. severity) can be added later without a schema change, since the\nmodel is persisted in a JSON column."
       },
       "MessageResponse": {
         "properties": {
@@ -5858,11 +7409,22 @@
             ],
             "title": "outputtokens"
           },
-          "turnContext": {
+          "reasoningTokens": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "reasoningtokens"
+          },
+          "inputTokenDetails": {
             "oneOf": [
               {
                 "additionalProperties": {
-                  "type": "string"
+                  "type": "integer"
                 },
                 "type": "object"
               },
@@ -5870,7 +7432,61 @@
                 "type": "null"
               }
             ],
+            "title": "inputtokendetails"
+          },
+          "outputTokenDetails": {
+            "oneOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "outputtokendetails"
+          },
+          "isCacheHit": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "iscachehit"
+          },
+          "turnContext": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "turncontext"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/MessageEvent"
+            },
+            "type": "array",
+            "title": "events"
+          },
+          "guardrail": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GuardrailOutcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -5974,12 +7590,27 @@
           "feedback": {
             "$ref": "#/components/schemas/FeedbackUnion"
           },
+          "impactAnalytics": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ImpactAnalytics"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "messages": {
             "items": {
               "$ref": "#/components/schemas/MessageResponse"
             },
             "type": "array",
             "title": "messages"
+          },
+          "analyticsDegraded": {
+            "type": "boolean",
+            "title": "analyticsdegraded",
+            "default": false
           }
         },
         "type": "object",
@@ -5992,6 +7623,68 @@
         ],
         "title": "conversationFullResponse",
         "description": "Response model for a conversation with all its messages."
+      },
+      "TaskKind": {
+        "type": "string",
+        "enum": [
+          "prompt_suggestions"
+        ],
+        "title": "taskKind",
+        "description": "Supported task behaviors used for default task resolution."
+      },
+      "TaskRequest": {
+        "properties": {
+          "task": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 3,
+            "title": "task",
+            "description": "ID of the configured task to run.",
+            "examples": [
+              "algolia_on_page_suggestions"
+            ]
+          },
+          "kind": {
+            "$ref": "#/components/schemas/TaskKind"
+          },
+          "input": {
+            "title": "input",
+            "description": "Arbitrary JSON input passed to the task as data.",
+            "type": "object",
+            "additionalProperties": true,
+            "examples": [
+              {
+                "pageType": "pdp",
+                "title": "acmePhone128Gb"
+              }
+            ]
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/AgentTestConfiguration"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "title": "taskRequest",
+        "description": "Strict request body with a task selector, `input`, and dashboard-only `configuration`.\n\nUnknown top-level fields are rejected so clients cannot pass trusted\nconfiguration fields (prompts, schemas, providers, models, generation\nsettings) at runtime. `configuration` is only accepted for `agentId=test`\ndashboard requests and is rejected for real agents."
+      },
+      "TaskResponse": {
+        "properties": {
+          "output": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "output"
+          }
+        },
+        "type": "object",
+        "required": [
+          "output"
+        ],
+        "title": "taskResponse",
+        "description": "Response body for a completed task run."
       },
       "ApplicationConfigResponse": {
         "properties": {
@@ -6072,6 +7765,64 @@
         ],
         "title": "feedbackCreationRequest",
         "description": "Request model for creating a feedback entry."
+      },
+      "FeedbackUpdateRequest": {
+        "properties": {
+          "messageId": {
+            "type": "string",
+            "title": "messageid"
+          },
+          "agentId": {
+            "type": "string",
+            "title": "agentid"
+          },
+          "vote": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OneOfEnum"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "vote"
+          },
+          "tags": {
+            "oneOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "type": "array",
+                "maxItems": 10
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "tags"
+          },
+          "notes": {
+            "oneOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "messageId",
+          "agentId"
+        ],
+        "title": "feedbackUpdateRequest",
+        "description": "Request model for updating an existing feedback entry."
       },
       "OpenAIProviderInput": {
         "properties": {
@@ -6209,7 +7960,34 @@
         "title": "anthropicProviderInput",
         "description": "Anthropic-specific provider input."
       },
-      "ProviderInput": {
+      "XAIProviderInput": {
+        "properties": {
+          "apiKey": {
+            "type": "string",
+            "title": "apikey"
+          },
+          "baseUrl": {
+            "oneOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "baseurl"
+          }
+        },
+        "type": "object",
+        "required": [
+          "apiKey"
+        ],
+        "title": "xAIProviderInput",
+        "description": "xAI (Grok)-specific provider input.\n\napi_key only, with an optional base_url override (defaults to https://api.x.ai/v1 at\ncompletion time). Mirrors AnthropicProviderInput: an honored base_url is SSRF-guarded here so\na bad/internal endpoint fails at setup, not at completion."
+      },
+      "InputUnion": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/OpenAIProviderInput"
@@ -6225,6 +8003,9 @@
           },
           {
             "$ref": "#/components/schemas/AnthropicProviderInput"
+          },
+          {
+            "$ref": "#/components/schemas/XAIProviderInput"
           }
         ]
       },
@@ -6243,7 +8024,7 @@
             "title": "providername"
           },
           "input": {
-            "$ref": "#/components/schemas/ProviderInput"
+            "$ref": "#/components/schemas/InputUnion"
           },
           "createdAt": {
             "type": "string",
@@ -6304,6 +8085,7 @@
           "google_genai",
           "deepseek",
           "openai_compatible",
+          "xai",
           "anthropic"
         ],
         "title": "providerName"
@@ -6320,7 +8102,7 @@
             "$ref": "#/components/schemas/ProviderName"
           },
           "input": {
-            "$ref": "#/components/schemas/ProviderInput"
+            "$ref": "#/components/schemas/InputUnion"
           }
         },
         "additionalProperties": false,
@@ -6332,7 +8114,7 @@
         ],
         "title": "providerAuthenticationCreate"
       },
-      "ProviderInputNullable": {
+      "InputUnionProviderAuthenticationPatch": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/OpenAIProviderInput"
@@ -6348,6 +8130,9 @@
           },
           {
             "$ref": "#/components/schemas/AnthropicProviderInput"
+          },
+          {
+            "$ref": "#/components/schemas/XAIProviderInput"
           },
           {
             "type": "null"
@@ -6370,7 +8155,7 @@
             "title": "name"
           },
           "input": {
-            "$ref": "#/components/schemas/ProviderInputNullable"
+            "$ref": "#/components/schemas/InputUnionProviderAuthenticationPatch"
           }
         },
         "additionalProperties": false,
@@ -6515,6 +8300,226 @@
         "type": "object",
         "title": "secretKeyPatch",
         "description": "Secret key patch payload."
+      },
+      "MessagesUnion": {
+        "oneOf": [
+          {
+            "items": {
+              "$ref": "#/components/schemas/MessageV4"
+            },
+            "type": "array"
+          },
+          {
+            "items": {
+              "$ref": "#/components/schemas/MessageV5"
+            },
+            "type": "array"
+          }
+        ]
+      },
+      "ContextCompactRequest": {
+        "properties": {
+          "providerID": {
+            "type": "string",
+            "title": "providerid",
+            "description": "Provider UUID for LLM credentials."
+          },
+          "model": {
+            "type": "string",
+            "title": "model",
+            "description": "Model name (e.g., gpt-4o-mini)."
+          },
+          "messages": {
+            "$ref": "#/components/schemas/MessagesUnion"
+          },
+          "keepLastMessages": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "keeplastmessages",
+            "description": "Number of trailing messages kept verbatim; everything older is summarized.",
+            "default": 4
+          },
+          "instructions": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "instructions",
+            "description": "Extra guidance for the summarizer (e.g. 'keep every product reference'). Appended inside the server-owned prompt frame, so it steers the summary without the model echoing your wording back into it."
+          },
+          "targetTokensEstimate": {
+            "type": "integer",
+            "minimum": 64,
+            "title": "targettokensestimate",
+            "description": "Desired size of the final summary, in tokens. Translated into word-count guidance for the summarizer (best-effort, not a hard cap). Omit to let the summarizer default to a concise summary."
+          }
+        },
+        "type": "object",
+        "required": [
+          "providerID",
+          "model",
+          "messages"
+        ],
+        "title": "contextCompactRequest",
+        "description": "LLM-summarization request. The caller's provider runs the summary, so cost is theirs."
+      },
+      "ContextStats": {
+        "properties": {
+          "messagesBefore": {
+            "type": "integer",
+            "title": "messagesbefore",
+            "description": "Message count before the operation."
+          },
+          "messagesAfter": {
+            "type": "integer",
+            "title": "messagesafter",
+            "description": "Message count after the operation."
+          },
+          "tokensBeforeEstimate": {
+            "type": "integer",
+            "title": "tokensbeforeestimate",
+            "description": "Estimated token count before the operation."
+          },
+          "tokensAfterEstimate": {
+            "type": "integer",
+            "title": "tokensafterestimate",
+            "description": "Estimated token count after the operation."
+          },
+          "messagesDropped": {
+            "type": "integer",
+            "title": "messagesdropped",
+            "description": "Net reduction in message count (before - after)."
+          }
+        },
+        "type": "object",
+        "required": [
+          "messagesBefore",
+          "messagesAfter",
+          "tokensBeforeEstimate",
+          "tokensAfterEstimate",
+          "messagesDropped"
+        ],
+        "title": "contextStats",
+        "description": "Before/after accounting for a context operation.\n\n``tokens*Estimate`` fields are heuristic (tiktoken BPE over the serialized messages), not an\nauthoritative provider count. ``messages_dropped`` is the net reduction in message count\n(``messages_before - messages_after``); for compaction the summarized tail is replaced by a\nsingle summary message, so this reflects the net change rather than a raw delete count."
+      },
+      "CompactionStats": {
+        "properties": {
+          "compacted": {
+            "type": "boolean",
+            "title": "compacted",
+            "description": "Whether a summary was actually produced. False means the payload passed through untouched (nothing older than the kept tail, or no summarizable text)."
+          },
+          "chunksProcessed": {
+            "type": "integer",
+            "title": "chunksprocessed",
+            "description": "Number of transcript chunks summarized in the map phase. 0 on passthrough, 1 when the transcript fit in a single summarizer call.",
+            "default": 0
+          },
+          "passes": {
+            "type": "integer",
+            "title": "passes",
+            "description": "Number of summarizer rounds. 1 for a direct summary; 2+ when chunk summaries had to be merged (map-reduce).",
+            "default": 0
+          },
+          "summarizerPromptTokens": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "summarizerprompttokens",
+            "description": "Provider-reported input tokens summed across every summarizer call. Null when the provider reported no usage metadata."
+          },
+          "summarizerCompletionTokens": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "summarizercompletiontokens",
+            "description": "Provider-reported output tokens summed across every summarizer call. Null when the provider reported no usage metadata."
+          },
+          "targetTokensEstimate": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "targettokensestimate",
+            "description": "The requested output budget, echoed back when `targetTokensEstimate` was set."
+          }
+        },
+        "type": "object",
+        "required": [
+          "compacted"
+        ],
+        "title": "compactionStats",
+        "description": "Compaction-specific telemetry, returned only by ``/context/compact``.\n\nKept separate from :class:`ContextStats` so the deterministic ``/context/trim`` contract stays\nfree of LLM-shaped fields. ``compacted`` makes the short-conversation passthrough detectable:\nwithout it a caller cannot tell a no-op from a summary that happened to be short."
+      },
+      "ContextResponse": {
+        "properties": {
+          "messages": {
+            "$ref": "#/components/schemas/MessagesUnion"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/ContextStats"
+          },
+          "compaction": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CompactionStats"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "messages",
+          "stats"
+        ],
+        "title": "contextResponse",
+        "description": "Result of a context operation, ready to feed to ``/completions``."
+      },
+      "ContextTrimRequest": {
+        "properties": {
+          "messages": {
+            "$ref": "#/components/schemas/MessagesUnion"
+          },
+          "keepLastMessages": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "keeplastmessages",
+            "description": "Keep only the last N messages, dropping older ones. Applied before the token budget."
+          },
+          "maxTokensEstimate": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "maxtokensestimate",
+            "description": "Drop oldest messages until the estimated token total fits this budget (heuristic)."
+          },
+          "dropToolParts": {
+            "type": "boolean",
+            "title": "droptoolparts",
+            "description": "Strip tool-invocation/result parts from the messages that are kept. Applied before the token budget, so the budget counts only surviving content.",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "messages"
+        ],
+        "title": "contextTrimRequest",
+        "description": "Deterministic trim request (no LLM calls)."
       },
       "MemoryType": {
         "type": "string",
@@ -6781,7 +8786,6 @@
       }
     }
   },
-  "x-beta": true,
   "x-timeouts": {
     "browser": {
       "connect": 25000,

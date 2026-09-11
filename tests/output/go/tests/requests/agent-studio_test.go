@@ -70,6 +70,52 @@ func TestAgentStudio_BulkDeleteAllowedDomains(t *testing.T) {
 	})
 }
 
+func TestAgentStudio_CompactContext(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAgentStudioClient(t)
+	_ = echo
+
+	t.Run("compactContext with required parameters", func(t *testing.T) {
+		_, err := client.CompactContext(client.NewApiCompactContextRequest(
+			agentStudio.NewEmptyContextCompactRequest().
+				SetProviderID("c2905529-b933-4b69-87ec-75f9829d5f59").
+				SetModel("gpt-4o-mini").
+				SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))})),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/unstable/context/compact", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}`)
+	})
+	t.Run("compactContext with all parameters", func(t *testing.T) {
+		_, err := client.CompactContext(client.NewApiCompactContextRequest(
+			agentStudio.NewEmptyContextCompactRequest().
+				SetProviderID("c2905529-b933-4b69-87ec-75f9829d5f59").
+				SetModel("gpt-4o-mini").
+				SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?")), *agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("assistant").SetContent("I am well."))})).
+				SetKeepLastMessages(2).
+				SetInstructions("keep every product reference").
+				SetTargetTokensEstimate(128),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/unstable/context/compact", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}`)
+	})
+}
+
 func TestAgentStudio_CreateAgent(t *testing.T) {
 	t.Parallel()
 
@@ -97,8 +143,9 @@ func TestAgentStudio_CreateAgent(t *testing.T) {
 				SetInstructions("You are a helpful assistant.").
 				SetConfig(map[string]any{"sendUsage": true, "sendReasoning": true, "temperature": 0.7, "max_tokens": 1500}).
 				SetTools(
-					[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-						agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+					[]agentStudio.ToolConfig{*agentStudio.ClientSideToolConfigAsToolConfig(
+						agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+							agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
 		))
 		require.NoError(t, err)
 
@@ -106,7 +153,7 @@ func TestAgentStudio_CreateAgent(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}`)
+			Assertf(*echo.Body, "%s", `{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}`)
 	})
 }
 
@@ -137,10 +184,13 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 
 	t.Run("createAgentCompletion with v4 messages", func(t *testing.T) {
 		_, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-4"),
-			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-4"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+		))
 		require.NoError(t, err)
 
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", echo.Path)
@@ -158,10 +208,13 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 	})
 	t.Run("createAgentCompletion streaming with simple messages", func(t *testing.T) {
 		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+		))
 		require.NoError(t, err)
 
 		defer func() { _ = decoder.Close() }()
@@ -195,11 +248,14 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 	})
 	t.Run("createAgentCompletion streaming with v5 messages and all query params", func(t *testing.T) {
 		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(
-				[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
-					agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
-						[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")).WithStream(false).WithCache(false).WithMemory(false))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnionAgentCompletionRequest(
+					[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
+						agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
+							[]agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("What is Algolia?")}))})).SetId("test-conversation-id")),
+		).WithStream(false).WithCache(false).WithMemory(false))
 		require.NoError(t, err)
 
 		defer func() { _ = decoder.Close() }()
@@ -234,16 +290,20 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 	})
 	t.Run("createAgentCompletion streaming with test configuration", func(t *testing.T) {
 		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
-				agentStudio.NewEmptyAgentTestConfiguration().
-					SetInstructions("Test instructions override").
-					SetConfig(map[string]any{"temperature": 0.2}).
-					SetTools(
-						[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-							agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello"))})).SetConfiguration(
+					agentStudio.NewEmptyAgentTestConfiguration().
+						SetInstructions("Test instructions override").
+						SetConfig(map[string]any{"temperature": 0.2}).
+						SetTools(
+							[]agentStudio.ToolConfigAgentTestConfiguration{*agentStudio.ClientSideToolConfigAsToolConfigAgentTestConfiguration(
+								agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+									agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
+				),
 			),
 		))
 		require.NoError(t, err)
@@ -268,7 +328,7 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"start"}]}}`)
+			Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}}`)
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"compatibilityMode":"ai-sdk-5"}`), &queryParams))
@@ -280,10 +340,13 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 	})
 	t.Run("createAgentCompletion streaming raw events", func(t *testing.T) {
 		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15", agentStudio.CompatibilityMode("ai-sdk-5"),
-			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
-				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
-					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-5"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnionAgentCompletionRequest(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+		))
 		require.NoError(t, err)
 
 		defer func() { _ = decoder.Close() }()
@@ -309,6 +372,49 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"compatibilityMode":"ai-sdk-5"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAgentStudio_CreateAgentTask(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAgentStudioClient(t)
+	_ = echo
+
+	t.Run("createAgentTask with required parameters", func(t *testing.T) {
+		_, err := client.CreateAgentTask(client.NewApiCreateAgentTaskRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.NewEmptyTaskRequest().SetInput(map[string]any{"pageType": "pdp", "title": "acmePhone128Gb"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}`)
+	})
+	t.Run("createAgentTask with all parameters", func(t *testing.T) {
+		_, err := client.CreateAgentTask(client.NewApiCreateAgentTaskRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.NewEmptyTaskRequest().
+				SetTask("algolia_on_page_suggestions").
+				SetKind(agentStudio.TaskKind("prompt_suggestions")).
+				SetInput(map[string]any{"pageType": "pdp", "title": "acmePhone128Gb"}),
+		).WithStream(false).WithCache(false).WithAnalytics(false))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"stream":"false","cache":"false","analytics":"false"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 
 		for k, v := range queryParams {
@@ -368,7 +474,7 @@ func TestAgentStudio_CreateProvider(t *testing.T) {
 			agentStudio.NewEmptyProviderAuthenticationCreate().
 				SetName("My OpenAI Provider").
 				SetProviderName(agentStudio.ProviderName("openai")).
-				SetInput(agentStudio.OpenAIProviderInputAsProviderInput(
+				SetInput(agentStudio.OpenAIProviderInputAsInputUnion(
 					agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-test-key-1234"))),
 		))
 		require.NoError(t, err)
@@ -383,7 +489,7 @@ func TestAgentStudio_CreateProvider(t *testing.T) {
 			agentStudio.NewEmptyProviderAuthenticationCreate().
 				SetName("My Azure Provider").
 				SetProviderName(agentStudio.ProviderName("azure_openai")).
-				SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(
+				SetInput(agentStudio.AzureOpenAIProviderInputAsInputUnion(
 					agentStudio.NewEmptyAzureOpenAIProviderInput().
 						SetApiKey("az-test-key-5678").
 						SetAzureEndpoint("https://my-resource.openai.azure.com").
@@ -1250,7 +1356,7 @@ func TestAgentStudio_ListAgentConversations(t *testing.T) {
 	t.Run("listAgentConversations with all parameters", func(t *testing.T) {
 		_, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(
 			"76710f1b-8231-42e5-b0d1-f43aac618e15",
-		).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10))
+		).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", echo.Path)
@@ -1258,11 +1364,20 @@ func TestAgentStudio_ListAgentConversations(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-secure-user-token":"secure-user-token"}`), &headers))
+
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+
 		queryParams := map[string]string{}
 		require.NoError(
 			t,
 			json.Unmarshal(
-				[]byte(`{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}`),
+				[]byte(
+					`{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}`,
+				),
 				&queryParams,
 			),
 		)
@@ -1509,6 +1624,42 @@ func TestAgentStudio_PublishAgent(t *testing.T) {
 	})
 }
 
+func TestAgentStudio_TrimContext(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAgentStudioClient(t)
+	_ = echo
+
+	t.Run("trimContext with required parameters", func(t *testing.T) {
+		_, err := client.TrimContext(client.NewApiTrimContextRequest(
+
+			agentStudio.NewEmptyContextTrimRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/unstable/context/trim", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello, how are you?"}]}`)
+	})
+	t.Run("trimContext with all parameters", func(t *testing.T) {
+		_, err := client.TrimContext(client.NewApiTrimContextRequest(
+
+			agentStudio.NewEmptyContextTrimRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?")), *agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("assistant").SetContent("I am well."))})).SetKeepLastMessages(1).SetMaxTokensEstimate(256).SetDropToolParts(true)))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/unstable/context/trim", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}`)
+	})
+}
+
 func TestAgentStudio_UnpublishAgent(t *testing.T) {
 	t.Parallel()
 
@@ -1555,8 +1706,9 @@ func TestAgentStudio_UpdateAgent(t *testing.T) {
 				SetInstructions("Updated instructions.").
 				SetConfig(map[string]any{"temperature": 0.5}).
 				SetTools(
-					[]agentStudio.ToolConfigInput{*agentStudio.AlgoliaDisplayResultsToolConfigAsToolConfigInput(
-						agentStudio.NewEmptyAlgoliaDisplayResultsToolConfig().SetType("start"))}),
+					[]agentStudio.ToolConfig{*agentStudio.ClientSideToolConfigAsToolConfig(
+						agentStudio.NewEmptyClientSideToolConfig().SetType("client_side").SetName("start").SetDescription("Start a conversation").SetInputSchema(
+							agentStudio.NewEmptyClientToolsArgsSchema().SetType("object")))}),
 		))
 		require.NoError(t, err)
 
@@ -1564,7 +1716,7 @@ func TestAgentStudio_UpdateAgent(t *testing.T) {
 		require.Equal(t, "PATCH", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}`)
+			Assertf(*echo.Body, "%s", `{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}`)
 	})
 }
 
@@ -1584,6 +1736,43 @@ func TestAgentStudio_UpdateConfiguration(t *testing.T) {
 		require.Equal(t, "PATCH", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"maxRetentionDays":30}`)
+	})
+}
+
+func TestAgentStudio_UpdateFeedback(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAgentStudioClient(t)
+	_ = echo
+
+	t.Run("updateFeedback with required parameters", func(t *testing.T) {
+		_, err := client.UpdateFeedback(client.NewApiUpdateFeedbackRequest(
+
+			agentStudio.NewEmptyFeedbackUpdateRequest().SetMessageId("msg-abc123").SetAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/feedback", echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}`)
+	})
+	t.Run("updateFeedback with all parameters", func(t *testing.T) {
+		_, err := client.UpdateFeedback(client.NewApiUpdateFeedbackRequest(
+			agentStudio.NewEmptyFeedbackUpdateRequest().
+				SetMessageId("msg-abc123").
+				SetAgentId("76710f1b-8231-42e5-b0d1-f43aac618e15").
+				SetVote(agentStudio.OneOfEnum(0)).
+				SetTags(
+					[]string{"unhelpful", "off-topic"}).
+				SetNotes("The response did not address my question."),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/feedback", echo.Path)
+		require.Equal(t, "PATCH", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}`)
 	})
 }
 
@@ -1609,7 +1798,7 @@ func TestAgentStudio_UpdateProvider(t *testing.T) {
 			"c2905529-b933-4b69-87ec-75f9829d5f59",
 			agentStudio.NewEmptyProviderAuthenticationPatch().
 				SetName("Updated Provider").
-				SetInput(agentStudio.OpenAIProviderInputAsProviderInputNullable(
+				SetInput(agentStudio.OpenAIProviderInputAsInputUnionProviderAuthenticationPatch(
 					agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-new-key-5678"))),
 		))
 		require.NoError(t, err)

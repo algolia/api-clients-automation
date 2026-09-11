@@ -9,7 +9,7 @@ TextPartAGUI:
       title: content
       type: string
   required:
-  - type
-  - content
+    - type
+    - content
   title: textPartAGUI
   type: object

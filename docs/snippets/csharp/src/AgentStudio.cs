@@ -65,6 +65,76 @@ public class SnippetAgentStudioClient
   }
 
   /// <summary>
+  /// Snippet for the CompactContext method.
+  ///
+  /// compactContext with required parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientCompactContext()
+  {
+    // >SEPARATOR compactContext compactContext with required parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CompactContextAsync(
+      new ContextCompactRequest
+      {
+        ProviderID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        Model = "gpt-4o-mini",
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CompactContext method.
+  ///
+  /// compactContext with all parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientCompactContext1()
+  {
+    // >SEPARATOR compactContext compactContext with all parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CompactContextAsync(
+      new ContextCompactRequest
+      {
+        ProviderID = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        Model = "gpt-4o-mini",
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            new MessageV4(new UserMessageV4 { Role = "assistant", Content = "I am well." }),
+          }
+        ),
+        KeepLastMessages = 2,
+        Instructions = "keep every product reference",
+        TargetTokensEstimate = 128,
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the CreateAgent method.
   ///
   /// createAgent with minimal parameters
@@ -116,9 +186,17 @@ public class SnippetAgentStudioClient
           { "temperature", 0.7 },
           { "max_tokens", 1500 },
         },
-        Tools = new List<ToolConfigInput>
+        Tools = new List<ToolConfig>
         {
-          new ToolConfigInput(new AlgoliaDisplayResultsToolConfig { Type = "start" }),
+          new ToolConfig(
+            new ClientSideToolConfig
+            {
+              Type = "client_side",
+              Name = "start",
+              Description = "Start a conversation",
+              InputSchema = new ClientToolsArgsSchema { Type = "object" },
+            }
+          ),
         },
       }
     );
@@ -169,15 +247,84 @@ public class SnippetAgentStudioClient
     var response = await client.CreateAgentCompletionAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       Enum.Parse<CompatibilityMode>("AiSdk4"),
-      new AgentCompletionRequest
+      new AgentCompletionRequestUnion(
+        new AgentCompletionRequest
+        {
+          Messages = new MessagesUnionAgentCompletionRequest(
+            new List<MessageV4>
+            {
+              new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            }
+          ),
+        }
+      )
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CreateAgentTask method.
+  ///
+  /// createAgentTask with required parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientCreateAgentTask()
+  {
+    // >SEPARATOR createAgentTask createAgentTask with required parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CreateAgentTaskAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest
       {
-        Messages = new MessagesUnion(
-          new List<MessageV4>
-          {
-            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
-          }
-        ),
+        Input = new Dictionary<string, object>
+        {
+          { "pageType", "pdp" },
+          { "title", "acmePhone128Gb" },
+        },
       }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the CreateAgentTask method.
+  ///
+  /// createAgentTask with all parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientCreateAgentTask1()
+  {
+    // >SEPARATOR createAgentTask createAgentTask with all parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CreateAgentTaskAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      new TaskRequest
+      {
+        Task = "algolia_on_page_suggestions",
+        Kind = Enum.Parse<TaskKind>("PromptSuggestions"),
+        Input = new Dictionary<string, object>
+        {
+          { "pageType", "pdp" },
+          { "title", "acmePhone128Gb" },
+        },
+      },
+      false,
+      false,
+      false
     );
     // >LOG
     // print the response
@@ -262,7 +409,7 @@ public class SnippetAgentStudioClient
       {
         Name = "My OpenAI Provider",
         ProviderName = Enum.Parse<ProviderName>("Openai"),
-        Input = new ProviderInput(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
+        Input = new InputUnion(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
       }
     );
     // >LOG
@@ -290,7 +437,7 @@ public class SnippetAgentStudioClient
       {
         Name = "My Azure Provider",
         ProviderName = Enum.Parse<ProviderName>("AzureOpenai"),
-        Input = new ProviderInput(
+        Input = new InputUnion(
           new AzureOpenAIProviderInput
           {
             ApiKey = "az-test-key-5678",
@@ -1432,7 +1579,11 @@ public class SnippetAgentStudioClient
       1,
       2,
       10,
-      null
+      true,
+      true,
+      false,
+      true,
+      "secure-user-token"
     );
     // >LOG
     // print the response
@@ -1775,6 +1926,72 @@ public class SnippetAgentStudioClient
   }
 
   /// <summary>
+  /// Snippet for the TrimContext method.
+  ///
+  /// trimContext with required parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientTrimContext()
+  {
+    // >SEPARATOR trimContext trimContext with required parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.TrimContextAsync(
+      new ContextTrimRequest
+      {
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the TrimContext method.
+  ///
+  /// trimContext with all parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientTrimContext1()
+  {
+    // >SEPARATOR trimContext trimContext with all parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.TrimContextAsync(
+      new ContextTrimRequest
+      {
+        Messages = new MessagesUnion(
+          new List<MessageV4>
+          {
+            new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            new MessageV4(new UserMessageV4 { Role = "assistant", Content = "I am well." }),
+          }
+        ),
+        KeepLastMessages = 1,
+        MaxTokensEstimate = 256,
+        DropToolParts = true,
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the UnpublishAgent method.
   ///
   /// unpublishAgent
@@ -1843,9 +2060,17 @@ public class SnippetAgentStudioClient
         Model = "gpt-4o",
         Instructions = "Updated instructions.",
         Config = new Dictionary<string, object> { { "temperature", 0.5 } },
-        Tools = new List<ToolConfigInput>
+        Tools = new List<ToolConfig>
         {
-          new ToolConfigInput(new AlgoliaDisplayResultsToolConfig { Type = "start" }),
+          new ToolConfig(
+            new ClientSideToolConfig
+            {
+              Type = "client_side",
+              Name = "start",
+              Description = "Start a conversation",
+              InputSchema = new ClientToolsArgsSchema { Type = "object" },
+            }
+          ),
         },
       }
     );
@@ -1871,6 +2096,63 @@ public class SnippetAgentStudioClient
     // Call the API
     var response = await client.UpdateConfigurationAsync(
       new ApplicationConfigPatch { MaxRetentionDays = 30 }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the UpdateFeedback method.
+  ///
+  /// updateFeedback with required parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientUpdateFeedback()
+  {
+    // >SEPARATOR updateFeedback updateFeedback with required parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.UpdateFeedbackAsync(
+      new FeedbackUpdateRequest
+      {
+        MessageId = "msg-abc123",
+        AgentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the UpdateFeedback method.
+  ///
+  /// updateFeedback with all parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientUpdateFeedback1()
+  {
+    // >SEPARATOR updateFeedback updateFeedback with all parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.UpdateFeedbackAsync(
+      new FeedbackUpdateRequest
+      {
+        MessageId = "msg-abc123",
+        AgentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        Vote = Enum.Parse<OneOfEnum>("0"),
+        Tags = new List<string> { "unhelpful", "off-topic" },
+        Notes = "The response did not address my question.",
+      }
     );
     // >LOG
     // print the response
@@ -1921,7 +2203,9 @@ public class SnippetAgentStudioClient
       new ProviderAuthenticationPatch
       {
         Name = "Updated Provider",
-        Input = new ProviderInputNullable(new OpenAIProviderInput { ApiKey = "sk-new-key-5678" }),
+        Input = new InputUnionProviderAuthenticationPatch(
+          new OpenAIProviderInput { ApiKey = "sk-new-key-5678" }
+        ),
       }
     );
     // >LOG

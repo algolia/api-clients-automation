@@ -25,7 +25,9 @@ _ALIASES = {
     "tool_call_id": "toolCallId",
     "state": "state",
     "input": "input",
+    "raw_input": "rawInput",
     "output": "output",
+    "output_metadata": "outputMetadata",
     "error_text": "errorText",
     "provider_options": "providerOptions",
     "requires_approval": "requiresApproval",
@@ -47,7 +49,9 @@ class ToolPartV5(BaseModel):
     tool_call_id: str
     state: Optional[ToolState] = None
     input: Optional[Dict[str, object]] = None
+    raw_input: Optional[Dict[str, object]] = None
     output: Optional[Dict[str, object]] = None
+    output_metadata: Optional[Dict[str, object]] = None
     error_text: Optional[str] = None
     provider_options: Optional[Dict[str, object]] = None
     requires_approval: Optional[bool] = None

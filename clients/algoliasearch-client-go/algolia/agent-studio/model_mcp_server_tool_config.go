@@ -17,7 +17,7 @@ type McpServerToolConfig struct {
 	Type      string            `json:"type"`
 	// Stable unique identifier for this MCP tool.
 	Id           utils.Nullable[string] `json:"id,omitempty"`
-	AllowedTools map[string]ToolConfig  `json:"allowedTools,omitempty"`
+	AllowedTools map[string]AllowedTool `json:"allowedTools,omitempty"`
 }
 
 type McpServerToolConfigOption func(f *McpServerToolConfig)
@@ -34,7 +34,7 @@ func WithMcpServerToolConfigId(val utils.Nullable[string]) McpServerToolConfigOp
 	}
 }
 
-func WithMcpServerToolConfigAllowedTools(val map[string]ToolConfig) McpServerToolConfigOption {
+func WithMcpServerToolConfigAllowedTools(val map[string]AllowedTool) McpServerToolConfigOption {
 	return func(f *McpServerToolConfig) {
 		f.AllowedTools = val
 	}
@@ -267,9 +267,9 @@ func (o *McpServerToolConfig) UnsetId() {
 }
 
 // GetAllowedTools returns the AllowedTools field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *McpServerToolConfig) GetAllowedTools() map[string]ToolConfig {
+func (o *McpServerToolConfig) GetAllowedTools() map[string]AllowedTool {
 	if o == nil {
-		var ret map[string]ToolConfig
+		var ret map[string]AllowedTool
 
 		return ret
 	}
@@ -280,7 +280,7 @@ func (o *McpServerToolConfig) GetAllowedTools() map[string]ToolConfig {
 // GetAllowedToolsOk returns a tuple with the AllowedTools field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned.
-func (o *McpServerToolConfig) GetAllowedToolsOk() (map[string]ToolConfig, bool) {
+func (o *McpServerToolConfig) GetAllowedToolsOk() (map[string]AllowedTool, bool) {
 	if o == nil || o.AllowedTools == nil {
 		return nil, false
 	}
@@ -297,8 +297,8 @@ func (o *McpServerToolConfig) HasAllowedTools() bool {
 	return false
 }
 
-// SetAllowedTools gets a reference to the given map[string]ToolConfig and assigns it to the AllowedTools field.
-func (o *McpServerToolConfig) SetAllowedTools(v map[string]ToolConfig) *McpServerToolConfig {
+// SetAllowedTools gets a reference to the given map[string]AllowedTool and assigns it to the AllowedTools field.
+func (o *McpServerToolConfig) SetAllowedTools(v map[string]AllowedTool) *McpServerToolConfig {
 	o.AllowedTools = v
 
 	return o

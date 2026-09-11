@@ -14,7 +14,9 @@ final class ToolPartV5 {
     required this.toolCallId,
     this.state,
     this.input,
+    this.rawInput,
     this.output,
+    this.outputMetadata,
     this.errorText,
     this.providerOptions,
     this.requiresApproval,
@@ -34,8 +36,14 @@ final class ToolPartV5 {
   @JsonKey(name: r'input')
   final Map<String, Object>? input;
 
+  @JsonKey(name: r'rawInput')
+  final Map<String, Object>? rawInput;
+
   @JsonKey(name: r'output')
   final Map<String, Object>? output;
+
+  @JsonKey(name: r'outputMetadata')
+  final Map<String, Object>? outputMetadata;
 
   @JsonKey(name: r'errorText')
   final String? errorText;
@@ -60,7 +68,9 @@ final class ToolPartV5 {
           other.toolCallId == toolCallId &&
           other.state == state &&
           other.input == input &&
+          other.rawInput == rawInput &&
           other.output == output &&
+          other.outputMetadata == outputMetadata &&
           other.errorText == errorText &&
           other.providerOptions == providerOptions &&
           other.requiresApproval == requiresApproval &&
@@ -72,13 +82,15 @@ final class ToolPartV5 {
       type.hashCode +
       toolCallId.hashCode +
       state.hashCode +
-      input.hashCode +
-      output.hashCode +
-      errorText.hashCode +
-      providerOptions.hashCode +
-      requiresApproval.hashCode +
-      description.hashCode +
-      argsHash.hashCode;
+      (input == null ? 0 : input.hashCode) +
+      (rawInput == null ? 0 : rawInput.hashCode) +
+      (output == null ? 0 : output.hashCode) +
+      (outputMetadata == null ? 0 : outputMetadata.hashCode) +
+      (errorText == null ? 0 : errorText.hashCode) +
+      (providerOptions == null ? 0 : providerOptions.hashCode) +
+      (requiresApproval == null ? 0 : requiresApproval.hashCode) +
+      (description == null ? 0 : description.hashCode) +
+      (argsHash == null ? 0 : argsHash.hashCode);
 
   factory ToolPartV5.fromJson(Map<String, dynamic> json) =>
       _$ToolPartV5FromJson(json);
