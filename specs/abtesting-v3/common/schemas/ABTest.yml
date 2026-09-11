@@ -88,10 +88,17 @@ ABTestConfiguration:
       $ref: '#/MetricsFilters'
     errorCorrection:
       $ref: '#/ErrorCorrectionType'
+    method:
+      $ref: '#/AnalysisMethod'
+    primaryMetric:
+      $ref: '#/PrimaryMetric'
 
 MinimumDetectableEffect:
   type: object
-  description: Configuration for the smallest difference between test variants you want to detect.
+  description: |
+    Configuration for the smallest difference between test variants you want to detect.
+    Applies only to Frequentist tests, where it powers the fixed-horizon sample-size estimate.
+    Requests with `method: bayesian` that include `minimumDetectableEffect` are rejected.
   properties:
     size:
       type: number
@@ -116,6 +123,17 @@ EffectMetric:
     - conversionRate
     - purchaseRate
     - noResultsRate
+
+PrimaryMetric:
+  type: string
+  description: Metric that determines the A/B test's end-test recommendation.
+  example: conversion_rate
+  enum:
+    - add_to_cart_rate
+    - click_through_rate
+    - conversion_rate
+    - purchase_rate
+    - no_results_rate
 
 MetricsFilter:
   type: object
@@ -154,3 +172,12 @@ ErrorCorrectionType:
   enum:
     - bonferroni
     - benjamini-hochberg
+
+AnalysisMethod:
+  type: string
+  description: |
+    A/B test statistical analysis method.
+    When omitted, the test is treated as `frequentist`. The server doesn't write a default value back to the configuration.
+  enum:
+    - bayesian
+    - frequentist
