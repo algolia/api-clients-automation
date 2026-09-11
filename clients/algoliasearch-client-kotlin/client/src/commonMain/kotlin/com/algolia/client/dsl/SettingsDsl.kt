@@ -81,12 +81,28 @@ public fun IndexSettingsBuilder.ranking(block: RankingDsl.() -> Unit) {
   ranking = RankingDsl().apply(block).build()
 }
 
+/**
+ * Shared accumulator for the settings DSL classes that build a `List<String>`.
+ *
+ * Public only because its subclasses are public. It exposes no public member: subclasses add
+ * through [add] and the DSL entry points read through [build].
+ */
+@AlgoliaExperimentalDsl
+public sealed class StringListDsl {
+  private val values: MutableList<String> = mutableListOf()
+
+  /** Appends one already-encoded value. */
+  protected fun add(value: String) {
+    values += value
+  }
+
+  internal fun build(): List<String> = values.toList()
+}
+
 /** Builds searchable-attribute strings for [IndexSettings.searchableAttributes]. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class SearchableAttributesDsl {
-  private val values: MutableList<String> = mutableListOf()
-
+public class SearchableAttributesDsl : StringListDsl() {
   /**
    * Adds an ordered searchable attribute, or several attributes that share the same priority.
    *
@@ -94,125 +110,111 @@ public class SearchableAttributesDsl {
    * v2 `SearchableAttribute.Default`.
    */
   public fun ordered(attribute: String, vararg more: String) {
-    values += if (more.isEmpty()) attribute else listOf(attribute, *more).joinToString()
+    add(if (more.isEmpty()) attribute else listOf(attribute, *more).joinToString(separator = ", "))
   }
 
   /** Adds an unordered searchable attribute as `unordered(attribute)`. */
   public fun unordered(attribute: String) {
-    values += "unordered($attribute)"
+    add("unordered($attribute)")
   }
 
   /** Adds [this] as an ordered searchable attribute. Matches v2 `+"name"`. */
   public operator fun String.unaryPlus() {
     ordered(this)
   }
-
-  internal fun build(): List<String> = values.toList()
 }
 
 /** Builds attribute-for-faceting strings for [IndexSettings.attributesForFaceting]. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class AttributesForFacetingDsl {
-  private val values: MutableList<String> = mutableListOf()
-
+public class AttributesForFacetingDsl : StringListDsl() {
   /** Adds a facet attribute with no modifier. */
   public fun attribute(attribute: String) {
-    values += attribute
+    add(attribute)
   }
 
   /** Adds a filter-only attribute as `filterOnly(attribute)`. */
   public fun filterOnly(attribute: String) {
-    values += "filterOnly($attribute)"
+    add("filterOnly($attribute)")
   }
 
   /** Adds a searchable facet attribute as `searchable(attribute)`. */
   public fun searchable(attribute: String) {
-    values += "searchable($attribute)"
+    add("searchable($attribute)")
   }
 
   /** Adds [this] as a facet attribute with no modifier. Matches v2 `+"brand"`. */
   public operator fun String.unaryPlus() {
     attribute(this)
   }
-
-  internal fun build(): List<String> = values.toList()
 }
 
 /** Builds custom-ranking strings for [IndexSettings.customRanking]. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class CustomRankingDsl {
-  private val values: MutableList<String> = mutableListOf()
-
+public class CustomRankingDsl : StringListDsl() {
   /** Adds an ascending custom-ranking criterion as `asc(attribute)`. */
   public fun asc(attribute: String) {
-    values += "asc($attribute)"
+    add("asc($attribute)")
   }
 
   /** Adds a descending custom-ranking criterion as `desc(attribute)`. */
   public fun desc(attribute: String) {
-    values += "desc($attribute)"
+    add("desc($attribute)")
   }
-
-  internal fun build(): List<String> = values.toList()
 }
 
 /** Builds ranking-formula strings for [IndexSettings.ranking]. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class RankingDsl {
-  private val values: MutableList<String> = mutableListOf()
-
+public class RankingDsl : StringListDsl() {
   /** Adds the `typo` ranking criterion. */
   public fun typo() {
-    values += "typo"
+    add("typo")
   }
 
   /** Adds the `geo` ranking criterion. */
   public fun geo() {
-    values += "geo"
+    add("geo")
   }
 
   /** Adds the `words` ranking criterion. */
   public fun words() {
-    values += "words"
+    add("words")
   }
 
   /** Adds the `filters` ranking criterion. */
   public fun filters() {
-    values += "filters"
+    add("filters")
   }
 
   /** Adds the `proximity` ranking criterion. */
   public fun proximity() {
-    values += "proximity"
+    add("proximity")
   }
 
   /** Adds the `attribute` ranking criterion. */
   public fun attribute() {
-    values += "attribute"
+    add("attribute")
   }
 
   /** Adds the `exact` ranking criterion. */
   public fun exact() {
-    values += "exact"
+    add("exact")
   }
 
   /** Adds the `custom` ranking criterion. */
   public fun custom() {
-    values += "custom"
+    add("custom")
   }
 
   /** Adds an ascending sort criterion as `asc(attribute)`. */
   public fun asc(attribute: String) {
-    values += "asc($attribute)"
+    add("asc($attribute)")
   }
 
   /** Adds a descending sort criterion as `desc(attribute)`. */
   public fun desc(attribute: String) {
-    values += "desc($attribute)"
+    add("desc($attribute)")
   }
-
-  internal fun build(): List<String> = values.toList()
 }

@@ -153,6 +153,31 @@ internal class DslSerializationTest {
   }
 
   @Test
+  fun settingsOrderedVarargJoinsWithCommaSpace() {
+    val dsl = settings { searchableAttributes { ordered("title", "name") } }
+    assertJsonEquals(IndexSettings(searchableAttributes = listOf("title, name")), dsl)
+  }
+
+  @Test
+  fun settingsDslClassesShareTheStringListBase() {
+    val dsl = settings {
+      searchableAttributes { +"name" }
+      attributesForFaceting { +"brand" }
+      customRanking { asc("price") }
+      ranking { desc("rating") }
+    }
+    assertJsonEquals(
+      IndexSettings(
+        searchableAttributes = listOf("name"),
+        attributesForFaceting = listOf("brand"),
+        customRanking = listOf("asc(price)"),
+        ranking = listOf("desc(rating)"),
+      ),
+      dsl,
+    )
+  }
+
+  @Test
   fun queryLegacyFilterHelpersMatchExpectedJson() {
     val dsl = query {
       facetFilters { facet("brand", "Apple") }
