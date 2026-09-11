@@ -13,7 +13,7 @@ final class InjectedItemHitsMetadata {
     this.extra,
   });
 
-  /// When true, the `_injectedItemKey` field is set in the `_extra` object of each affected hit.
+  /// When true, each affected hit's `_extra` object includes an `_injectedItemKey` field identifying the injectedItem that inserted it. Defaults to false, meaning hits don't include `_injectedItemKey`. To identify injected hits without this flag, define your own key-value pairs in `extra`.
   @JsonKey(name: r'addItemKey')
   final bool? addItemKey;
 
