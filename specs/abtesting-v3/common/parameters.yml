@@ -163,3 +163,13 @@ direction:
     - asc
     - desc
   example: desc
+
+VariantID:
+  in: path
+  name: variantId
+  description: One-based index of the A/B test variant. The control is variant 1.
+  required: true
+  schema:
+    type: integer
+    minimum: 1
+    example: 2

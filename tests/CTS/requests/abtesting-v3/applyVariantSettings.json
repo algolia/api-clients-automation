@@ -1,0 +1,13 @@
+[
+  {
+    "testName": "applyVariantSettings",
+    "parameters": {
+      "id": 42,
+      "variantId": 2
+    },
+    "request": {
+      "path": "/3/abtests/42/settings/2/apply",
+      "method": "POST"
+    }
+  }
+]
