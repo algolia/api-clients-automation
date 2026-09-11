@@ -1,0 +1,10 @@
+
+  /**
+   * Sets [{{classname}}Builder.{{{name}}}] from a typed filter block.
+   *
+   * Last write wins: this replaces any earlier `{{{name}}}` value in this builder. An empty filter
+   * block yields `null`, so the field stays omitted.
+   */
+  public fun {{{name}}}(block: FilterDsl.() -> Unit) {
+    this.{{{name}}} = buildFilters(block).{{{converter}}}()
+  }

@@ -253,9 +253,56 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       Map<String, Object> dslModel = new LinkedHashMap<>();
       dslModel.put("classname", model.classname);
       dslModel.put("vars", model.vars);
+      List<Map<String, Object>> filterHelpers = filterHelpersFor(model);
+      if (!filterHelpers.isEmpty()) {
+        dslModel.put("filterHelpers", filterHelpers);
+        dslModel.put("x-dsl-has-filter-helpers", true);
+      }
       dslModels.add(dslModel);
     }
     writeSearchDslBuilders(dslModels);
+  }
+
+  private static final Set<String> DSL_FILTER_HELPER_MODELS = Set.of(
+    "SearchParamsObject",
+    "BrowseParamsObject",
+    "DeleteByParams",
+    "ConsequenceParams",
+    "Condition"
+  );
+
+  private record DslFilterVar(String type, String converter) {}
+
+  private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
+    "filters",
+    new DslFilterVar("String", "asSql"),
+    "facetFilters",
+    new DslFilterVar("FacetFilters", "asFacetFilters"),
+    "optionalFilters",
+    new DslFilterVar("OptionalFilters", "asOptionalFilters"),
+    "numericFilters",
+    new DslFilterVar("NumericFilters", "asNumericFilters"),
+    "tagFilters",
+    new DslFilterVar("TagFilters", "asTagFilters")
+  );
+
+  private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {
+    List<Map<String, Object>> helpers = new ArrayList<>();
+    if (!DSL_FILTER_HELPER_MODELS.contains(model.classname)) {
+      return helpers;
+    }
+    for (CodegenProperty var : model.vars) {
+      DslFilterVar expected = DSL_FILTER_VARS.get(var.name);
+      if (expected == null || !expected.type().equals(var.datatypeWithEnum)) {
+        continue;
+      }
+      var.vendorExtensions.put("x-dsl-filter-converter", expected.converter());
+      Map<String, Object> helper = new LinkedHashMap<>();
+      helper.put("name", var.name);
+      helper.put("converter", expected.converter());
+      helpers.add(helper);
+    }
+    return helpers;
   }
 
   /**
