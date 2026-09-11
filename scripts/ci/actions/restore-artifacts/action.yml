@@ -9,6 +9,11 @@ inputs:
     required: false
     description: |
       List of languages to restore (use the pipe character to put each language on its own line)
+  expected-checksums:
+    required: false
+    description: |
+      One `<sha256> <artifact name>` pair per line, coming from the producing job's outputs.
+      Artifacts listed here are verified after download, artifacts without a line are restored unverified.
 runs:
   using: 'node20'
   main: './builddir/index.cjs'
