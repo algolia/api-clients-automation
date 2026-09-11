@@ -1,0 +1,11 @@
+TaskResponse:
+  properties:
+    output:
+      additionalProperties: true
+      type: object
+      title: output
+  type: object
+  required:
+  - output
+  title: taskResponse
+  description: Response body for a completed task run.

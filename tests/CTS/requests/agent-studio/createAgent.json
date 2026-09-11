@@ -29,7 +29,10 @@
         "max_tokens": 1500
       },
       "tools": [{
-        "type": "start"
+        "type": "client_side",
+        "name": "start",
+        "description": "Start a conversation",
+        "inputSchema": { "type": "object" }
       }]
     },
     "request": {
@@ -47,7 +50,12 @@
           "temperature": 0.7,
           "max_tokens": 1500
         },
-        "tools": [{ "type": "start" }]
+        "tools": [{
+          "type": "client_side",
+          "name": "start",
+          "description": "Start a conversation",
+          "inputSchema": { "type": "object" }
+        }]
       }
     }
   }

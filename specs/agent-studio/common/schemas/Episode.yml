@@ -34,10 +34,10 @@ Episode:
         for learnings. Format: ''For [context], use [param:value] because [reason]''.'
   type: object
   required:
-    - observation
-    - thoughts
-    - action
-    - result
+  - observation
+  - thoughts
+  - action
+  - result
   title: episode
   description: |-
     Episodic memory schema following LangMem's OTAR pattern:

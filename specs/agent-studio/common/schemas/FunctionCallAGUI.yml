@@ -1,0 +1,13 @@
+FunctionCallAGUI:
+  properties:
+    name:
+      title: name
+      type: string
+    arguments:
+      title: arguments
+      type: string
+  required:
+  - name
+  - arguments
+  title: functionCallAGUI
+  type: object

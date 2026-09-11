@@ -1,0 +1,22 @@
+XAIProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    baseUrl:
+      oneOf:
+      - type: string
+        maxLength: 2083
+        minLength: 1
+      - type: 'null'
+      title: baseurl
+  type: object
+  required:
+  - apiKey
+  title: xAIProviderInput
+  description: |-
+    xAI (Grok)-specific provider input.
+
+    api_key only, with an optional base_url override (defaults to https://api.x.ai/v1 at
+    completion time). Mirrors AnthropicProviderInput: an honored base_url is SSRF-guarded here so
+    a bad/internal endpoint fails at setup, not at completion.

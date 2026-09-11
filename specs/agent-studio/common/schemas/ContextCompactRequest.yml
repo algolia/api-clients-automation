@@ -1,0 +1,41 @@
+ContextCompactRequest:
+  properties:
+    providerID:
+      type: string
+      title: providerid
+      description: Provider UUID for LLM credentials.
+    model:
+      type: string
+      title: model
+      description: Model name (e.g., gpt-4o-mini).
+    messages:
+      $ref: MessagesUnion.yml#/MessagesUnion
+    keepLastMessages:
+      type: integer
+      minimum: 0.0
+      title: keeplastmessages
+      description: Number of trailing messages kept verbatim; everything older is
+        summarized.
+      default: 4
+    instructions:
+      type: string
+      maxLength: 2000
+      title: instructions
+      description: Extra guidance for the summarizer (e.g. 'keep every product reference').
+        Appended inside the server-owned prompt frame, so it steers the summary without
+        the model echoing your wording back into it.
+    targetTokensEstimate:
+      type: integer
+      minimum: 64.0
+      title: targettokensestimate
+      description: Desired size of the final summary, in tokens. Translated into word-count
+        guidance for the summarizer (best-effort, not a hard cap). Omit to let the
+        summarizer default to a concise summary.
+  type: object
+  required:
+  - providerID
+  - model
+  - messages
+  title: contextCompactRequest
+  description: LLM-summarization request. The caller's provider runs the summary,
+    so cost is theirs.

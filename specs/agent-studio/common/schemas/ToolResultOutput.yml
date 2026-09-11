@@ -1,11 +1,11 @@
 ToolResultOutput:
   properties:
     type:
-      $ref: 'ToolResultOutputType.yml#/ToolResultOutputType'
+      $ref: ToolResultOutputType.yml#/ToolResultOutputType
     value:
       title: value
   type: object
   required:
-    - type
-    - value
+  - type
+  - value
   title: toolResultOutput

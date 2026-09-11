@@ -1,0 +1,27 @@
+UserMessageAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    role:
+      const: user
+      default: user
+      title: role
+      type: string
+    parts:
+      $ref: PartsUnion.yml#/PartsUnion
+    createdAt:
+      type: string
+      default: null
+      title: createdat
+    content:
+      title: content
+      type: string
+    metadata:
+      $ref: UserMessageMetadataAGUI.yml#/UserMessageMetadataAGUI
+  required:
+  - role
+  - id
+  - content
+  title: userMessageAGUI
+  type: object

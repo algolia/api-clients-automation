@@ -1,7 +1,7 @@
 OptionalFiltersUnion:
   oneOf:
-    - type: string
-    - type: array
-      items:
-        $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
-    - type: 'null'
+  - type: string
+  - type: array
+    items:
+      $ref: OptionalFiltersUnion.yml#/OptionalFiltersUnion
+  - type: 'null'

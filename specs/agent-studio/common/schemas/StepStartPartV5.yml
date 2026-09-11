@@ -1,9 +1,9 @@
 StepStartPartV5:
   properties:
     type:
-      type: string
       const: step-start
-      title: type
       default: step-start
-  type: object
+      title: type
+      type: string
   title: stepStartPartV5
+  type: object

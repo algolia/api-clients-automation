@@ -1,21 +1,26 @@
 UserMessageV5:
   properties:
     id:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: id
     role:
-      type: string
       const: user
-      title: role
       default: user
+      title: role
+      type: string
     parts:
       items:
-        $ref: 'TextPartV5.yml#/TextPartV5'
-      type: array
+        $ref: TextPartV5.yml#/TextPartV5
       title: parts
+      type: array
     metadata:
-      $ref: 'UserMessageMetadataV5.yml#/UserMessageMetadataV5'
-  type: object
+      oneOf:
+      - $ref: UserMessageMetadataV5.yml#/UserMessageMetadataV5
+      - type: 'null'
   title: userMessageV5
+  type: object
   required:
-    - role
+  - role

@@ -1,0 +1,9 @@
+UserMessageMetadataAGUI:
+  properties:
+    turnContext:
+      additionalProperties: true
+      type: object
+      default: null
+      title: turncontext
+  title: userMessageMetadataAGUI
+  type: object

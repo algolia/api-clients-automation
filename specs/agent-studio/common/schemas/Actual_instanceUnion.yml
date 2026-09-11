@@ -1,0 +1,7 @@
+Actual_instanceUnion:
+  oneOf:
+  - items:
+      $ref: FacetFiltersUnion.yml#/FacetFiltersUnion
+    type: array
+  - type: string
+  - type: 'null'

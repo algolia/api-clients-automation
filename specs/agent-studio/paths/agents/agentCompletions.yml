@@ -1,11 +1,11 @@
 post:
   tags:
     - Completions
-    - Completions
   operationId: createAgentCompletion
   x-acl:
     - search
   x-streaming: true
+  x-codegen-request-body-name: agentCompletionRequest
   summary: Create Completion
   description: |-
     Create a completion for the specified agent.
@@ -86,7 +86,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../common/schemas/AgentCompletionRequest.yml#/AgentCompletionRequest'
+          $ref: '../../common/schemas/AgentCompletionRequestUnion.yml#/AgentCompletionRequestUnion'
   responses:
     '200':
       description: Successful Response.

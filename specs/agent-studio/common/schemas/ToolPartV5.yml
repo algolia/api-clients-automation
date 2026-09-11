@@ -1,40 +1,75 @@
 ToolPartV5:
+  description: Model for tool invocation in a Message.
   properties:
     type:
-      type: string
       title: type
+      type: string
     toolCallId:
-      type: string
       title: toolcallid
-    state:
-      $ref: 'ToolState.yml#/ToolState'
-    input:
-      additionalProperties: true
-      type: object
-      title: input
-    output:
-      type: object
-      additionalProperties: true
-      title: output
-    errorText:
       type: string
+    state:
+      $ref: ToolState.yml#/ToolState
+    input:
+      oneOf:
+      - additionalProperties: true
+        type: object
+      - type: 'null'
+      default: null
+      title: input
+    rawInput:
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: 'null'
+      default: null
+      title: rawinput
+    output:
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: 'null'
+      default: null
+      title: output
+    outputMetadata:
+      oneOf:
+      - additionalProperties: true
+        type: object
+      - type: 'null'
+      default: null
+      title: outputmetadata
+    errorText:
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: errortext
     providerOptions:
-      additionalProperties: true
-      type: object
+      oneOf:
+      - additionalProperties: true
+        type: object
+      - type: 'null'
+      default: null
       title: provideroptions
     requiresApproval:
-      type: boolean
+      oneOf:
+      - type: boolean
+      - type: 'null'
+      default: null
       title: requiresapproval
     description:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: description
     argsHash:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: argshash
-  type: object
   required:
-    - type
-    - toolCallId
+  - type
+  - toolCallId
   title: toolPartV5
-  description: Model for tool invocation in a Message.
+  type: object
