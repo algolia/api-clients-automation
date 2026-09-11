@@ -151,6 +151,113 @@ internal class RuleSynonymDslTest {
     assertJsonEquals(ctor, dsl)
   }
 
+  @Test
+  fun conditionFiltersHelperMatchesConstructor() {
+    val dsl = rule("x") { condition { filters { facet("brand", "Apple") } } }
+    val ctor =
+      Rule(
+        objectID = "x",
+        condition = Condition(filters = "brand:Apple"),
+        consequence = Consequence(),
+      )
+    assertJsonEquals(ctor, dsl)
+  }
+
+  @Test
+  fun consequenceParamsLegacyFilterHelpersMatchExpectedJson() {
+    val dsl =
+      rule("x") {
+        consequence {
+          params {
+            facetFilters { facet("brand", "Apple") }
+            numericFilters { range("price", 0 until 10) }
+            tagFilters { tag("featured") }
+            optionalFilters { facet("category", "Book") }
+          }
+        }
+      }
+    val expected =
+      json.parseToJsonElement(
+        """
+        {
+          "objectID": "x",
+          "consequence": {
+            "params": {
+              "facetFilters": [["\"brand\":\"Apple\""]],
+              "numericFilters": [["\"price\":0 TO 9"]],
+              "tagFilters": [["\"featured\""]],
+              "optionalFilters": [["\"category\":\"Book\""]]
+            }
+          }
+        }
+        """
+          .trimIndent()
+      )
+    val actual = json.encodeToJsonElement(dsl)
+    assertIs<JsonObject>(actual)
+    assertEquals(expected.jsonObject, actual.jsonObject)
+  }
+
+  @Test
+  fun synonymFactoriesLeaveOtherVariantFieldsUnset() {
+    assertEquals(
+      setOf("objectID", "type", "synonyms"),
+      json
+        .encodeToJsonElement(
+          synonym("syn-1") {
+            +"car"
+            +"auto"
+            +"vehicle"
+          }
+        )
+        .jsonObject
+        .keys
+        .toSet(),
+    )
+    assertEquals(
+      setOf("objectID", "type", "input", "synonyms"),
+      json
+        .encodeToJsonElement(
+          oneWaySynonym("syn-2", input = "tablet") {
+            +"ipad"
+            +"galaxy tab"
+          }
+        )
+        .jsonObject
+        .keys
+        .toSet(),
+    )
+    assertEquals(
+      setOf("objectID", "type", "word", "corrections"),
+      json
+        .encodeToJsonElement(altCorrection1("syn-3", word = "trousers") { +"pants" })
+        .jsonObject
+        .keys
+        .toSet(),
+    )
+    assertEquals(
+      setOf("objectID", "type", "word", "corrections"),
+      json
+        .encodeToJsonElement(altCorrection2("syn-4", word = "trousers") { +"pants" })
+        .jsonObject
+        .keys
+        .toSet(),
+    )
+    assertEquals(
+      setOf("objectID", "type", "placeholder", "replacements"),
+      json
+        .encodeToJsonElement(
+          placeholder("syn-5", placeholder = "<Street>") {
+            +"street"
+            +"st"
+          }
+        )
+        .jsonObject
+        .keys
+        .toSet(),
+    )
+  }
+
   private inline fun <reified T> assertJsonEquals(constructor: T, dsl: T) {
     val constructorJson = json.encodeToJsonElement(constructor)
     val dslJson = json.encodeToJsonElement(dsl)

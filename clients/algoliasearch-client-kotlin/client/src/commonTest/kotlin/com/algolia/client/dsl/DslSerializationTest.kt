@@ -3,6 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
+import com.algolia.client.dsl.filter.NumericOperator
 import com.algolia.client.model.search.BrowseParamsObject
 import com.algolia.client.model.search.DeleteByParams
 import com.algolia.client.model.search.IndexSettings
@@ -149,6 +150,77 @@ internal class DslSerializationTest {
       searchableAttributes { ordered("name") }
     }
     assertJsonEquals(IndexSettings(searchableAttributes = listOf("name")), dsl)
+  }
+
+  @Test
+  fun queryLegacyFilterHelpersMatchExpectedJson() {
+    val dsl = query {
+      facetFilters { facet("brand", "Apple") }
+      optionalFilters { facet("category", "Book") }
+      numericFilters { comparison("price", NumericOperator.Equals, 15) }
+      tagFilters { tag("featured") }
+    }
+    assertEncodedJson(
+      dsl,
+      """
+      {
+        "facetFilters": [["\"brand\":\"Apple\""]],
+        "optionalFilters": [["\"category\":\"Book\""]],
+        "numericFilters": [["\"price\" = 15"]],
+        "tagFilters": [["\"featured\""]]
+      }
+      """,
+    )
+  }
+
+  @Test
+  fun browseLegacyFilterHelpersMatchExpectedJson() {
+    val dsl = browse {
+      facetFilters { facet("brand", "Apple") }
+      optionalFilters { facet("category", "Book") }
+      numericFilters { comparison("price", NumericOperator.Equals, 15) }
+      tagFilters { tag("featured") }
+    }
+    assertEncodedJson(
+      dsl,
+      """
+      {
+        "facetFilters": [["\"brand\":\"Apple\""]],
+        "optionalFilters": [["\"category\":\"Book\""]],
+        "numericFilters": [["\"price\" = 15"]],
+        "tagFilters": [["\"featured\""]]
+      }
+      """,
+    )
+  }
+
+  @Test
+  fun deleteByLegacyFilterHelpersMatchExpectedJson() {
+    val dsl = deleteBy {
+      facetFilters { facet("brand", "Apple") }
+      numericFilters { comparison("price", NumericOperator.Equals, 15) }
+      tagFilters { tag("featured") }
+    }
+    assertEncodedJson(
+      dsl,
+      """
+      {
+        "facetFilters": [["\"brand\":\"Apple\""]],
+        "numericFilters": [["\"price\" = 15"]],
+        "tagFilters": [["\"featured\""]]
+      }
+      """,
+    )
+  }
+
+  @Test
+  fun emptyFilterBlockLeavesFieldUnset() {
+    assertEncodedJson(query { filters {} }, "{}")
+    assertEncodedJson(query { facetFilters {} }, "{}")
+  }
+
+  private inline fun <reified T> assertEncodedJson(dsl: T, expectedJson: String) {
+    assertEquals(json.parseToJsonElement(expectedJson), json.encodeToJsonElement(dsl))
   }
 
   private inline fun <reified T> assertJsonEquals(constructor: T, dsl: T) {

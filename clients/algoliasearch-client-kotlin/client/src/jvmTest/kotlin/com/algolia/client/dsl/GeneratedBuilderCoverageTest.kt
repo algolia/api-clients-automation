@@ -40,6 +40,63 @@ internal class GeneratedBuilderCoverageTest {
     }
   }
 
+  /**
+   * Drift guard for generated filter helpers.
+   *
+   * The generator must emit exactly twenty public `Function1` members (`filters`, `facetFilters`,
+   * `optionalFilters`, `numericFilters`, `tagFilters`) on the five allowlisted builders. A leak
+   * onto SearchForHitsBuilder, SearchForFacetsBuilder, SecuredApiKeyRestrictionsBuilder,
+   * RankingInfoBuilder, or AutoFilteringResultBuilder fails here. A helper the generator silently
+   * stops emitting also fails here.
+   */
+  @Test
+  fun filterHelpersOnlyOnAllowlistedBuilders() {
+    val actual =
+      generatedBuilderClasses()
+        .flatMap { builder ->
+          filterHelperMethodNames(builder).map { name -> builder.simpleName to name }
+        }
+        .toSet()
+    val expected =
+      setOf(
+        "SearchParamsObjectBuilder" to "filters",
+        "SearchParamsObjectBuilder" to "facetFilters",
+        "SearchParamsObjectBuilder" to "optionalFilters",
+        "SearchParamsObjectBuilder" to "numericFilters",
+        "SearchParamsObjectBuilder" to "tagFilters",
+        "BrowseParamsObjectBuilder" to "filters",
+        "BrowseParamsObjectBuilder" to "facetFilters",
+        "BrowseParamsObjectBuilder" to "optionalFilters",
+        "BrowseParamsObjectBuilder" to "numericFilters",
+        "BrowseParamsObjectBuilder" to "tagFilters",
+        "ConsequenceParamsBuilder" to "filters",
+        "ConsequenceParamsBuilder" to "facetFilters",
+        "ConsequenceParamsBuilder" to "optionalFilters",
+        "ConsequenceParamsBuilder" to "numericFilters",
+        "ConsequenceParamsBuilder" to "tagFilters",
+        "DeleteByParamsBuilder" to "filters",
+        "DeleteByParamsBuilder" to "facetFilters",
+        "DeleteByParamsBuilder" to "numericFilters",
+        "DeleteByParamsBuilder" to "tagFilters",
+        "ConditionBuilder" to "filters",
+      )
+    assertEquals(
+      expected,
+      actual,
+      buildString {
+        append("generated filter helpers must match the allowlisted builder surface.")
+        val missing = expected - actual
+        val unexpected = actual - expected
+        if (missing.isNotEmpty()) {
+          append(" missing=$missing.")
+        }
+        if (unexpected.isNotEmpty()) {
+          append(" unexpected=$unexpected.")
+        }
+      },
+    )
+  }
+
   private fun generatedBuilderClasses(): List<Class<*>> {
     val root =
       File(SearchParamsObjectBuilder::class.java.protectionDomain.codeSource.location.toURI())
@@ -56,6 +113,25 @@ internal class GeneratedBuilderCoverageTest {
       }
       .sortedBy { it.simpleName }
       .toList()
+  }
+
+  /**
+   * Public one-argument `Function1` members named after a filter field. Synthetic/bridge methods
+   * and property accessors (`getFilters` / `setFilters`) are excluded by name and parameter shape.
+   */
+  private fun filterHelperMethodNames(builder: Class<*>): Set<String> {
+    val helperNames =
+      setOf("filters", "facetFilters", "optionalFilters", "numericFilters", "tagFilters")
+    return builder.declaredMethods
+      .filter { method ->
+        !method.isSynthetic &&
+          Modifier.isPublic(method.modifiers) &&
+          method.name in helperNames &&
+          method.parameterCount == 1 &&
+          method.parameterTypes[0].name == "kotlin.jvm.functions.Function1"
+      }
+      .map { it.name }
+      .toSet()
   }
 
   private fun assertBuilderVarsMatchConstructor(builder: KClass<*>, model: KClass<*>) {
