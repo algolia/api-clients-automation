@@ -58,7 +58,7 @@ public object FilterLegacyConverter {
    */
   @AlgoliaExperimentalDsl
   public fun facet(root: FilterGroup): FacetFilters? =
-    wrapFacet(toLegacyRows(root, FilterFamily.Facet))
+    wrapLegacy(toLegacyRows(root, FilterFamily.Facet), FacetFilters::of, FacetFilters::of)
 
   /**
    * Legacy [OptionalFilters] for [Filter.Facet] leaves in [root].
@@ -67,7 +67,7 @@ public object FilterLegacyConverter {
    */
   @AlgoliaExperimentalDsl
   public fun optional(root: FilterGroup): OptionalFilters? =
-    wrapOptional(toLegacyRows(root, FilterFamily.Facet))
+    wrapLegacy(toLegacyRows(root, FilterFamily.Facet), OptionalFilters::of, OptionalFilters::of)
 
   /**
    * Legacy [NumericFilters] for [Filter.Comparison] and [Filter.Range] leaves in [root].
@@ -78,7 +78,7 @@ public object FilterLegacyConverter {
    */
   @AlgoliaExperimentalDsl
   public fun numeric(root: FilterGroup): NumericFilters? =
-    wrapNumeric(toLegacyRows(root, FilterFamily.Numeric))
+    wrapLegacy(toLegacyRows(root, FilterFamily.Numeric), NumericFilters::of, NumericFilters::of)
 
   /**
    * Legacy [TagFilters] for [Filter.Tag] leaves in [root].
@@ -88,7 +88,8 @@ public object FilterLegacyConverter {
    * the nested-list format cannot encode. Returns `null` when no Tag leaf remains.
    */
   @AlgoliaExperimentalDsl
-  public fun tag(root: FilterGroup): TagFilters? = wrapTag(toLegacyRows(root, FilterFamily.Tag))
+  public fun tag(root: FilterGroup): TagFilters? =
+    wrapLegacy(toLegacyRows(root, FilterFamily.Tag), TagFilters::of, TagFilters::of)
 }
 
 private enum class FilterFamily {
@@ -226,30 +227,17 @@ private fun String.escapeQuotation(): String = replace("\"", "\\\"")
 
 private fun String.escape(): String = "\"${escapeQuotation()}\""
 
-private fun wrapFacet(rows: List<List<String>>): FacetFilters? {
+/**
+ * Wraps legacy rows with a generated oneOf factory pair. [ofString] builds a leaf, [ofList] builds
+ * an inner `OR` row and the outer `AND` list. Rows that hold no literal are dropped; an empty
+ * result is `null`.
+ */
+private fun <T> wrapLegacy(
+  rows: List<List<String>>,
+  ofString: (String) -> T,
+  ofList: (List<T>) -> T,
+): T? {
   val compact = rows.filter { it.isNotEmpty() }
   if (compact.isEmpty()) return null
-  return FacetFilters.of(compact.map { row -> FacetFilters.of(row.map { FacetFilters.of(it) }) })
-}
-
-private fun wrapOptional(rows: List<List<String>>): OptionalFilters? {
-  val compact = rows.filter { it.isNotEmpty() }
-  if (compact.isEmpty()) return null
-  return OptionalFilters.of(
-    compact.map { row -> OptionalFilters.of(row.map { OptionalFilters.of(it) }) }
-  )
-}
-
-private fun wrapNumeric(rows: List<List<String>>): NumericFilters? {
-  val compact = rows.filter { it.isNotEmpty() }
-  if (compact.isEmpty()) return null
-  return NumericFilters.of(
-    compact.map { row -> NumericFilters.of(row.map { NumericFilters.of(it) }) }
-  )
-}
-
-private fun wrapTag(rows: List<List<String>>): TagFilters? {
-  val compact = rows.filter { it.isNotEmpty() }
-  if (compact.isEmpty()) return null
-  return TagFilters.of(compact.map { row -> TagFilters.of(row.map { TagFilters.of(it) }) })
+  return ofList(compact.map { row -> ofList(row.map(ofString)) })
 }
