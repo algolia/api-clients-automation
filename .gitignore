@@ -59,5 +59,8 @@ swiftformat
 
 foo
 
+# Local planning artifacts. Tracked skills stay under .agents/skills/.
+.agents/plans/
+
 # reports saved by the api-clients-review skill
 .agents/reviews/

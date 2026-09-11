@@ -2,10 +2,17 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -223,6 +230,152 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return models;
   }
 
+  private void collectSearchDslModels(OperationsMap operations, List<ModelMap> allModels) {
+    if (!"search".equals(additionalProperties.get("client"))) {
+      return;
+    }
+
+    Set<String> orphans = new HashSet<>(ModelPruner.getOrphanModelNames(this, operations, allModels));
+    List<CodegenModel> objectModels = new ArrayList<>();
+    for (ModelMap modelMap : allModels) {
+      CodegenModel model = modelMap.getModel();
+      if (orphans.contains(toModelName(model.name))) {
+        continue;
+      }
+      if (isSearchDslObjectModel(model)) {
+        objectModels.add(model);
+      }
+    }
+    objectModels.sort(Comparator.comparing(model -> model.classname));
+
+    List<Map<String, Object>> dslModels = new ArrayList<>();
+    for (CodegenModel model : objectModels) {
+      Map<String, Object> dslModel = new LinkedHashMap<>();
+      dslModel.put("classname", model.classname);
+      dslModel.put("vars", model.vars);
+      List<Map<String, Object>> filterHelpers = filterHelpersFor(model);
+      if (!filterHelpers.isEmpty()) {
+        dslModel.put("filterHelpers", filterHelpers);
+        dslModel.put("x-dsl-has-filter-helpers", true);
+      }
+      dslModels.add(dslModel);
+    }
+    writeSearchDslBuilders(dslModels);
+  }
+
+  private static final Set<String> DSL_FILTER_HELPER_MODELS = Set.of(
+    "SearchParamsObject",
+    "BrowseParamsObject",
+    "DeleteByParams",
+    "ConsequenceParams",
+    "Condition"
+  );
+
+  private record DslFilterVar(String type, String converter) {}
+
+  private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
+    "filters",
+    new DslFilterVar("String", "asSql"),
+    "facetFilters",
+    new DslFilterVar("FacetFilters", "asFacetFilters"),
+    "optionalFilters",
+    new DslFilterVar("OptionalFilters", "asOptionalFilters"),
+    "numericFilters",
+    new DslFilterVar("NumericFilters", "asNumericFilters"),
+    "tagFilters",
+    new DslFilterVar("TagFilters", "asTagFilters")
+  );
+
+  private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {
+    List<Map<String, Object>> helpers = new ArrayList<>();
+    if (!DSL_FILTER_HELPER_MODELS.contains(model.classname)) {
+      return helpers;
+    }
+    for (CodegenProperty var : model.vars) {
+      DslFilterVar expected = DSL_FILTER_VARS.get(var.name);
+      if (expected == null || !expected.type().equals(var.datatypeWithEnum)) {
+        continue;
+      }
+      var.vendorExtensions.put("x-dsl-filter-converter", expected.converter());
+      Map<String, Object> helper = new LinkedHashMap<>();
+      helper.put("name", var.name);
+      helper.put("converter", expected.converter());
+      helpers.add(helper);
+    }
+    return helpers;
+  }
+
+  /**
+   * One builder per file. A single SearchDsl.kt with every object model OOMs the Kotlin Native
+   * compiler on the macOS CI job ({@code compileKotlinIosArm64}).
+   */
+  private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
+    String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
+    File outDir = new File(getOutputDir(), dslFolder);
+    try {
+      Files.createDirectories(outDir.toPath());
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot create DSL builder directory " + outDir, e);
+    }
+    File[] stale = outDir.listFiles((dir, name) -> name.endsWith(".kt"));
+    if (stale != null) {
+      for (File file : stale) {
+        if (!file.delete()) {
+          throw new RuntimeException("Cannot delete stale DSL builder " + file);
+        }
+      }
+    }
+
+    Template template = compileDslTemplate();
+    for (Map<String, Object> dslModel : dslModels) {
+      Map<String, Object> data = new HashMap<>(additionalProperties);
+      data.putAll(dslModel);
+      String classname = (String) dslModel.get("classname");
+      File out = new File(outDir, classname + "Builder.kt");
+      StringWriter rendered = new StringWriter();
+      template.execute(data, rendered);
+      try {
+        Files.writeString(out.toPath(), rendered.toString(), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        throw new RuntimeException("Cannot write DSL builder " + out, e);
+      }
+    }
+  }
+
+  private Template compileDslTemplate() {
+    File root = new File(templateDir());
+    Mustache.Compiler compiler = Mustache.compiler()
+      .defaultValue("")
+      .withLoader(name -> {
+        String fileName = name.endsWith(".mustache") ? name : name + ".mustache";
+        File partial = new File(root, fileName);
+        return new InputStreamReader(Files.newInputStream(partial.toPath()), StandardCharsets.UTF_8);
+      });
+    File dsl = new File(root, "dsl.mustache");
+    try (Reader reader = new InputStreamReader(Files.newInputStream(dsl.toPath()), StandardCharsets.UTF_8)) {
+      return compiler.compile(reader);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot compile dsl.mustache from " + dsl, e);
+    }
+  }
+
+  /**
+   * Object models get a builder. OneOf wrappers (FacetFilters, SearchParams) and enums do not: they
+   * have no constructor fields to assign.
+   */
+  private static boolean isSearchDslObjectModel(CodegenModel model) {
+    if (model.isEnum) {
+      return false;
+    }
+    if (Boolean.TRUE.equals(model.vendorExtensions.get("x-is-one-of"))) {
+      return false;
+    }
+    if (Boolean.TRUE.equals(model.vendorExtensions.get("x-map-parent"))) {
+      return false;
+    }
+    return model.vars != null && !model.vars.isEmpty();
+  }
+
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
   private static final String JSON_OBJECT = "JsonObject";
 
@@ -273,6 +426,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> models) {
     OperationsMap operations = super.postProcessOperationsWithModels(objs, models);
     ModelPruner.removeOrphanModelFiles(this, operations, models);
+    collectSearchDslModels(operations, models);
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;

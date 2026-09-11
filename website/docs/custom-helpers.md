@@ -68,3 +68,16 @@ Now that we are certain the tmp index exist:
 #### 4. move tmp index
 
 Move the tmp index to the source index, call `waitTask` on the tmp index.
+
+## Kotlin DSL
+
+The Kotlin Search client ships an optional, experimental DSL. The DSL is not source compatible with the v2 client. The DSL covers Search only.
+
+- `client/src/commonMain/kotlin/com/algolia/client/dsl/**` is hand-written.
+- `dsl/generated/**` is generated.
+
+The generated half is one Kotlin file per Search object-model builder (`SearchParamsObjectBuilder.kt`, `RuleBuilder.kt`, and the rest).
+
+The generator emits a builder for every Search object model that survives ModelPruner. It skips enums, oneOf wrappers, and map parents. Filter algebra stays hand-written: `FilterDsl`, `FilterGroup`, and both converters (`asSql`, `as*Filters`). The per-field filter setters (`filters { }`, `facetFilters { }`, `optionalFilters { }`, `numericFilters { }`, `tagFilters { }`) are generated as member functions. The generator emits them from `templates/kotlin/dsl_filter_helper.mustache`. It places them on five allowlisted builders: `SearchParamsObjectBuilder`, `BrowseParamsObjectBuilder`, `ConsequenceParamsBuilder`, `DeleteByParamsBuilder`, and `ConditionBuilder`. `DeleteByParamsBuilder` has no `optionalFilters`. `ConditionBuilder` has `filters` only. `AlgoliaKotlinGenerator.collectSearchDslModels` gates emission with a classname allowlist plus an exact var-name-and-type match. Do not re-add these setters as hand-written extensions. Rules and synonyms use the generated builders.
+
+Do not emit a DSL for Insights, Analytics, or Recommend.
