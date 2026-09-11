@@ -144,54 +144,77 @@ internal class HttpTransport : IDisposable
     // locals so concurrent requests on one client cannot mix their values.
     string lastCorrelationId = null;
     string errorMessage = null;
+    var rateLimitRetriesLeft = Math.Max(0, _algoliaConfig.MaxRateLimitRetries);
 
     foreach (var host in tryableHosts)
     {
       attemptNumber++;
-      request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress, _logger);
-      request.Uri = BuildUri(
-        host,
-        uri,
-        requestOptions?.CustomPathParameters,
-        requestOptions?.PathParameters,
-        requestOptions?.QueryParameters
-      );
-      var requestTimeout = GetTimeOut(callType, requestOptions);
-      var baseConnectTimeout =
-        requestOptions?.ConnectTimeout ?? _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout;
-      var connectTimeout = TimeSpan.FromTicks(baseConnectTimeout.Ticks * (host.RetryCount + 1));
-
-      if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
+      var moveToNextHost = false;
+      while (!moveToNextHost)
       {
-        request.Body = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
-      }
-
-      if (_logger.IsEnabled(LogLevel.Trace))
-      {
-        _logger.LogTrace(
-          "Sending request: {Method} {Uri}",
-          request.Method,
-          SanitizeUrl(request.Uri)
+        request.Body = CreateRequestContent(requestOptions?.Data, request.CanCompress, _logger);
+        request.Uri = BuildUri(
+          host,
+          uri,
+          requestOptions?.CustomPathParameters,
+          requestOptions?.PathParameters,
+          requestOptions?.QueryParameters
         );
-        _logger.LogTrace("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
-        _logger.LogTrace("Connect timeout: {ConnectTimeout} (s)", connectTimeout.TotalSeconds);
-        foreach (var header in FilterHeaders(request.Headers))
+        var requestTimeout = GetTimeOut(callType, requestOptions);
+        var baseConnectTimeout =
+          requestOptions?.ConnectTimeout ?? _algoliaConfig.ConnectTimeout ?? Defaults.ConnectTimeout;
+        var connectTimeout = TimeSpan.FromTicks(baseConnectTimeout.Ticks * (host.RetryCount + 1));
+
+        if (request.Body == null && (method == HttpMethod.Post || method == HttpMethod.Put))
         {
-          _logger.LogTrace("Header: {HeaderName}: {HeaderValue}", header.Key, header.Value);
+          request.Body = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
         }
-      }
 
-      var requestStopwatch = Stopwatch.StartNew();
-      var response = await _httpClient
-        .SendRequestAsync(request, requestTimeout, connectTimeout, ct)
-        .ConfigureAwait(false);
-      requestStopwatch.Stop();
+        if (_logger.IsEnabled(LogLevel.Trace))
+        {
+          _logger.LogTrace(
+            "Sending request: {Method} {Uri}",
+            request.Method,
+            SanitizeUrl(request.Uri)
+          );
+          _logger.LogTrace("Request timeout: {RequestTimeout} (s)", requestTimeout.TotalSeconds);
+          _logger.LogTrace("Connect timeout: {ConnectTimeout} (s)", connectTimeout.TotalSeconds);
+          foreach (var header in FilterHeaders(request.Headers))
+          {
+            _logger.LogTrace("Header: {HeaderName}: {HeaderValue}", header.Key, header.Value);
+          }
+        }
 
-      errorMessage = response.Error;
-      lastCorrelationId = GetCorrelationId(response) ?? lastCorrelationId;
+        var requestStopwatch = Stopwatch.StartNew();
+        var response = await _httpClient
+          .SendRequestAsync(request, requestTimeout, connectTimeout, ct)
+          .ConfigureAwait(false);
+        requestStopwatch.Stop();
 
-      switch (_retryStrategy.Decide(host, response))
-      {
+        errorMessage = response.Error;
+        lastCorrelationId = GetCorrelationId(response) ?? lastCorrelationId;
+
+        if (response.HttpStatusCode == 429 && rateLimitRetriesLeft > 0)
+        {
+          rateLimitRetriesLeft--;
+          var wait = RetryAfter.Parse(response.ResponseHeaders);
+          if (_logger.IsEnabled(LogLevel.Information))
+          {
+            _logger.LogInformation(
+              "Waiting {WaitMs}ms after HTTP 429 ({RetriesLeft} retries left) on {Host}",
+              wait.TotalMilliseconds,
+              rateLimitRetriesLeft,
+              host.Url
+            );
+          }
+
+          var delay = _algoliaConfig.RateLimitDelayAsync ?? Task.Delay;
+          await delay(wait, ct).ConfigureAwait(false);
+          continue;
+        }
+
+        switch (_retryStrategy.Decide(host, response))
+        {
         case RetryOutcomeType.Success:
           if (_logger.IsEnabled(LogLevel.Information))
           {
@@ -289,7 +312,8 @@ internal class HttpTransport : IDisposable
             );
           }
 
-          continue;
+          moveToNextHost = true;
+          break;
         case RetryOutcomeType.Failure:
           if (_logger.IsEnabled(LogLevel.Error))
           {
@@ -307,6 +331,7 @@ internal class HttpTransport : IDisposable
           );
         default:
           throw new ArgumentOutOfRangeException();
+        }
       }
     }
 
