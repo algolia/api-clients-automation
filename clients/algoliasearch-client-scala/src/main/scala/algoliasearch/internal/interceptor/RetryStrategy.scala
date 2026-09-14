@@ -17,13 +17,17 @@ import java.net.SocketTimeoutException
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.blocking
 
 /** Interceptor that retries requests on failure.
   *
   * @param hosts
   *   list of hosts
+  * @param maxRateLimitRetries
+  *   how many times to wait and retry on the same host after HTTP 429
   */
-private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends Interceptor {
+private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost], maxRateLimitRetries: Int = 3)
+    extends Interceptor {
 
   override def intercept(chain: Interceptor.Chain): Response = {
     val request = chain.request()
@@ -32,10 +36,19 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
       if (useReadTransporter != null || request.method() == "GET") CallType.Read
       else CallType.Write
     val errors = new ListBuffer[Throwable]()
+    var rateLimitRetriesLeft = maxRateLimitRetries
 
     for (currentHost <- callableHosts(callType)) {
       try {
-        return processRequest(chain, request, currentHost)
+        var response = processRequest(chain, request, currentHost)
+        while (isRateLimited(response) && rateLimitRetriesLeft > 0) {
+          rateLimitRetriesLeft -= 1
+          val waitMillis = RetryStrategy.rateLimitWaitMillis(response)
+          response.close()
+          waitForRateLimit(waitMillis)
+          response = processRequest(chain, request, currentHost)
+        }
+        return handleResponse(currentHost, response)
       } catch {
         case exception: Exception =>
           errors += exception
@@ -65,9 +78,16 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
       chain.connectTimeoutMillis() * (host.getRetryCount + 1),
       TimeUnit.MILLISECONDS
     )
-    val response = chain.proceed(newRequest)
-    handleResponse(host, response)
+    chain.proceed(newRequest)
   }
+
+  private def waitForRateLimit(waitMillis: Long): Unit =
+    try blocking(Thread.sleep(waitMillis))
+    catch {
+      case exception: InterruptedException =>
+        Thread.currentThread().interrupt()
+        throw AlgoliaClientException(cause = exception)
+    }
 
   private def handleResponse(
       host: StatefulHost,
@@ -104,6 +124,9 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
     (statusCode < 200 || statusCode >= 300) && (statusCode < 400 || statusCode >= 500)
   }
 
+  private def isRateLimited(response: Response): Boolean =
+    response.code() == RetryStrategy.RateLimitStatusCode
+
   private def callableHosts(callType: CallType): List[StatefulHost] =
     this.synchronized {
       resetExpiredHosts()
@@ -135,8 +158,9 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost]) extends In
       case _: SocketTimeoutException => currentHost.hasTimedOut()
       case _: AlgoliaRequestException | _: IOException =>
         currentHost.hasFailed()
-      case e: AlgoliaApiException => throw e
-      case _                      => throw AlgoliaClientException(cause = exception)
+      case e: AlgoliaApiException    => throw e
+      case e: AlgoliaClientException => throw e
+      case _                         => throw AlgoliaClientException(cause = exception)
     }
   }
 }
@@ -145,4 +169,20 @@ object RetryStrategy {
 
   /** The default expiration threshold for a host. */
   val expirationThreshold: Duration = Duration.ofMinutes(5)
+
+  private val RateLimitStatusCode = 429
+  private val DefaultRateLimitWaitMillis = 1000L
+
+  private def rateLimitWaitMillis(response: Response): Long =
+    Option(response.header("Retry-After")).map(_.trim).filter(_.matches("\\d+")) match {
+      case None => DefaultRateLimitWaitMillis
+      case Some(seconds) =>
+        seconds.toLongOption match {
+          case Some(value) if value > 0 =>
+            try Math.multiplyExact(value, 1000L)
+            catch { case _: ArithmeticException => Long.MaxValue }
+          case Some(_) => DefaultRateLimitWaitMillis
+          case None    => Long.MaxValue
+        }
+    }
 }

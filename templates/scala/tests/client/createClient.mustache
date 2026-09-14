@@ -15,6 +15,7 @@ val transformationOptions = TransformationOptions(region = "{{{transformationReg
           .builder()
           .withHosts(List({{#customHosts}}Host(if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
           {{#gzipEncoding}}.withCompressionType(CompressionType.Gzip){{/gzipEncoding}}
+          {{#hasMaxRateLimitRetries}}.withMaxRateLimitRetries({{maxRateLimitRetries}}){{/hasMaxRateLimitRetries}}
           .build()
       )
 {{/hasTransformationRegion}}{{^hasTransformationRegion}}val client = {{client}}(
@@ -25,6 +26,7 @@ val transformationOptions = TransformationOptions(region = "{{{transformationReg
           .builder()
           .withHosts(List({{#customHosts}}Host(if (System.getenv("CI") == "true") "localhost" else "host.docker.internal", Set(CallType.Read, CallType.Write), "http", Option({{port}})){{^-last}},{{/-last}}{{/customHosts}}))
           {{#gzipEncoding}}.withCompressionType(CompressionType.Gzip){{/gzipEncoding}}
+          {{#hasMaxRateLimitRetries}}.withMaxRateLimitRetries({{maxRateLimitRetries}}){{/hasMaxRateLimitRetries}}
           .build()
       )
 {{/hasTransformationRegion}}
