@@ -97,6 +97,10 @@ func (t *Transport) Request(ctx context.Context, req *http.Request, k call.Kind,
 
 hostLoop:
 	for _, h := range t.retryStrategy.GetTryableHosts(k) {
+		// the timeouts only depend on the host, so they are resolved once per host; the
+		// per-attempt context below is what has to be recreated on every 429 retry
+		ctxTimeout, connectTimeout := t.resolveTimeouts(k, c, h)
+
 		for {
 			// Handle per-request timeout by using a context with timeout.
 			// Note that because we are in a loop, the cancel() callback cannot be
@@ -115,8 +119,6 @@ hostLoop:
 			}
 
 			sent = true
-
-			ctxTimeout, connectTimeout := t.resolveTimeouts(k, c, h)
 
 			perRequestCtx, cancel := context.WithTimeout(ctx, ctxTimeout)
 			req = req.WithContext(perRequestCtx)
