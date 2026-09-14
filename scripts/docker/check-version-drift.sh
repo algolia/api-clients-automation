@@ -2,8 +2,10 @@
 # always fails when a pinned FROM line is missing its digest, or when a shared tool pin in the
 # docker images diverges from the CI setup action.
 # With DRIFT_CHECK_TAGS=1 it also fails when a pinned FROM tag diverges from its
-# config/.*-version file, and with DRIFT_CHECK_LIVE=1 when a pinned digest is not what the tag
-# currently resolves to. Both extras run only in the docker jobs.
+# config/.*-version file. With DRIFT_CHECK_LIVE=1 it resolves every pinned ref against its
+# registry: a tag that does not exist fails, a digest that no longer matches the tag only warns,
+# because upstream rebuilds under an unchanged tag and the renovate pinDigests rule is what
+# refreshes the pin, not the PR that happens to be open. Both extras run only in the docker jobs.
 set -euo pipefail
 
 get_from() {
@@ -23,12 +25,13 @@ tag_of() {
 }
 
 # live digest resolution hits the registries, so it only runs where docker changes are being
-# validated (DRIFT_CHECK_LIVE=1 in the docker_images job); an upstream re-push or a registry
-# rate limit must not fail unrelated CI runs
+# validated (DRIFT_CHECK_LIVE=1 in the docker_digests job); a registry rate limit must not fail
+# unrelated CI runs
 check_live=${DRIFT_CHECK_LIVE:-0}
 # tag-vs-config comparison only runs where a docker change is being validated
-# (DRIFT_CHECK_TAGS=1): a renovate bump of config/.*-version legitimately lands before the
-# Dockerfile tag is refreshed, and that must not fail the setup job every other job needs
+# (DRIFT_CHECK_TAGS=1): renovate groups a config/.*-version bump with the matching Dockerfile
+# tag, but the image can publish after the upstream release, so the group PR may briefly carry
+# only the config half, and that must not fail the setup job every other job needs
 check_tags=${DRIFT_CHECK_TAGS:-0}
 if [[ "$check_live" == "1" ]] && ! command -v docker >/dev/null 2>&1; then
   echo "DRIFT_CHECK_LIVE=1 requires docker" >&2
@@ -71,10 +74,14 @@ check_digest() {
     fail=1
     return
   fi
+  warn_if_stale "$1" "$ref" "$pinned" "$live"
+}
+
+# upstream rebuilt the tag since it was pinned; not this PR's doing, renovate refreshes the digest
+warn_if_stale() {
+  local file=$1 ref=$2 pinned=$3 live=$4
   if [[ "$live" != "$pinned" ]]; then
-    echo "$1: $ref resolves to $live but the Dockerfile pins $pinned"
-    echo "  -> run scripts/docker/update-pins.sh and paste the new digest"
-    fail=1
+    echo "::warning file=scripts/docker/$file::$ref resolves to $live but the Dockerfile pins $pinned, renovate will refresh it (or run scripts/docker/update-pins.sh)"
   fi
 }
 
@@ -112,15 +119,11 @@ check() {
     fail=1
     return
   fi
-  if [[ "$live" != "$pinned" ]]; then
-    echo "$1: $ref resolves to $live but the Dockerfile pins $pinned"
-    echo "  -> run scripts/docker/update-pins.sh and paste the new digest"
-    fail=1
-  fi
+  warn_if_stale "$1" "$ref" "$pinned" "$live"
 }
 
-# the checksummed downloads must point at the same release in both files, otherwise one
-# side's checksum silently covers a different artifact than the other
+# a tool pinned in both the docker images and the setup action must point at the same release in
+# both files, otherwise CI and the local images silently run different versions of it
 check_shared_pin() {
   local name=$1
   local regex=$2
