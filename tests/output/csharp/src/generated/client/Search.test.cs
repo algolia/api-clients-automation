@@ -496,8 +496,40 @@ public class SearchClientTests
     );
   }
 
-  [Fact(DisplayName = "returns 429 after maxRateLimitRetries is used up")]
+  [Fact(DisplayName = "retries 429 with a 1s wait when Retry-After is invalid")]
   public async Task ApiTest15()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/rate-limit/invalid-header/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok rate limit retry\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "returns 429 after maxRateLimitRetries is used up")]
+  public async Task ApiTest16()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
@@ -530,7 +562,7 @@ public class SearchClientTests
   }
 
   [Fact(DisplayName = "fails on the first 429 when maxRateLimitRetries is 0")]
-  public async Task ApiTest16()
+  public async Task ApiTest17()
   {
     SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
     {
