@@ -23,10 +23,28 @@ import io.ktor.util.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.errors.*
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
+
+internal const val RATE_LIMIT_STATUS_CODE: Int = 429
+
+internal val DEFAULT_RATE_LIMIT_WAIT: Duration = 1.seconds
+
+private val WHOLE_SECONDS = Regex("\\d+")
+
+/** `Retry-After` as a wait; only a positive whole number of seconds is honored, else 1 second. */
+internal fun retryAfterWait(headers: Headers): Duration {
+  val retryAfter = headers[HttpHeaders.RetryAfter]?.trim().orEmpty()
+  if (!retryAfter.matches(WHOLE_SECONDS)) return DEFAULT_RATE_LIMIT_WAIT
+  val seconds = retryAfter.toLongOrNull() ?: return Duration.INFINITE
+  return if (seconds > 0) seconds.seconds else DEFAULT_RATE_LIMIT_WAIT
+}
 
 /** Default implementation of [Requester] using Ktor's [HttpClient]. */
 public class KtorRequester(
@@ -36,6 +54,7 @@ public class KtorRequester(
   private val writeTimeout: Duration,
   hosts: List<Host>,
   internal val sendsRequestId: Boolean = false,
+  private val maxRateLimitRetries: Int = 3,
 ) : Requester, kotlin.AutoCloseable {
 
   private val hostStatusExpirationDelayMS: Long = 1000L * 60L * 5L
@@ -91,6 +110,7 @@ public class KtorRequester(
     val errors by lazy(LazyThreadSafetyMode.NONE) { mutableListOf<Throwable>() }
     val requestBuilder = httpRequestBuilderOf(requestConfig, requestOptions)
     var lastCorrelationId: String? = null
+    var rateLimitRetriesLeft = maxRateLimitRetries
 
     for (host in hosts) {
       requestBuilder.url.protocol = URLProtocol.createOrDefault(host.protocol)
@@ -99,20 +119,37 @@ public class KtorRequester(
         requestBuilder.url.port = host.port!!
       }
       requestBuilder.setTimeout(requestOptions, callType, host)
-      try {
-        val response = httpClient.request(requestBuilder)
-        val result = handleResponse(response)
-        mutex.withLock { host.reset() }
-        return result
-      } catch (exception: Throwable) {
-        if (exception is ResponseException) {
-          lastCorrelationId = exception.response.headers[HEADER_CORRELATION_ID] ?: lastCorrelationId
+      while (true) {
+        try {
+          val response = httpClient.request(requestBuilder)
+          val result = handleResponse(response)
+          mutex.withLock { host.reset() }
+          return result
+        } catch (exception: Throwable) {
+          if (exception is ResponseException) {
+            lastCorrelationId =
+              exception.response.headers[HEADER_CORRELATION_ID] ?: lastCorrelationId
+          }
+          if (
+            exception is ClientRequestException &&
+              exception.response.status.value == RATE_LIMIT_STATUS_CODE &&
+              rateLimitRetriesLeft > 0
+          ) {
+            rateLimitRetriesLeft--
+            wait(retryAfterWait(exception.response.headers))
+            continue
+          }
+          host.onError(exception)
+          errors += exception.asClientException()
+          break
         }
-        host.onError(exception)
-        errors += exception.asClientException()
       }
     }
     throw AlgoliaRetryException(errors, lastCorrelationId)
+  }
+
+  private suspend fun wait(duration: Duration) {
+    withContext(Dispatchers.Default) { delay(duration) }
   }
 
   private fun HttpResponse.hasEmptyBody(): Boolean = status.value == 204 || contentLength() == 0L
