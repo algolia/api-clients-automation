@@ -254,6 +254,78 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('retries 429 on the same host using Retry-After')]
+    public function test13api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6698']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/retry-after/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('retries 429 with a 1s wait when Retry-After is missing')]
+    public function test14api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/missing-header/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('retries 429 with a 1s wait when Retry-After is invalid')]
+    public function test15api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/invalid-header/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('returns 429 after maxRateLimitRetries is used up')]
+    public function test16api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/rate-limit/exhausted/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Too many requests'), $e->getMessage());
+        }
+    }
+
+    #[TestDox('fails on the first 429 when maxRateLimitRetries is 0')]
+    public function test17api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697'])->setMaxRateLimitRetries(0));
+
+        try {
+            $res = $client->customGet(
+                '1/test/rate-limit/zero-retries/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Too many requests'), $e->getMessage());
+        }
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
