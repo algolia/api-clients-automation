@@ -27,8 +27,9 @@ tag_of() {
 # rate limit must not fail unrelated CI runs
 check_live=${DRIFT_CHECK_LIVE:-0}
 # tag-vs-config comparison only runs where a docker change is being validated
-# (DRIFT_CHECK_TAGS=1): a renovate bump of config/.*-version legitimately lands before the
-# Dockerfile tag is refreshed, and that must not fail the setup job every other job needs
+# (DRIFT_CHECK_TAGS=1): renovate groups a config/.*-version bump with the matching Dockerfile
+# tag, but the image can publish after the upstream release, so the group PR may briefly carry
+# only the config half, and that must not fail the setup job every other job needs
 check_tags=${DRIFT_CHECK_TAGS:-0}
 if [[ "$check_live" == "1" ]] && ! command -v docker >/dev/null 2>&1; then
   echo "DRIFT_CHECK_LIVE=1 requires docker" >&2
