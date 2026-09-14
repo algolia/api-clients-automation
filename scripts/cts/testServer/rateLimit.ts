@@ -10,6 +10,8 @@ type LangState = {
   retryAfterTimestamps: number[];
   missingHeaderCalls: number;
   missingHeaderTimestamps: number[];
+  invalidHeaderCalls: number;
+  invalidHeaderTimestamps: number[];
   exhaustedCalls: number;
   zeroRetriesCalls: number;
 };
@@ -24,6 +26,8 @@ function langState(lang: string): LangState {
       retryAfterTimestamps: [],
       missingHeaderCalls: 0,
       missingHeaderTimestamps: [],
+      invalidHeaderCalls: 0,
+      invalidHeaderTimestamps: [],
       exhaustedCalls: 0,
       zeroRetriesCalls: 0,
     };
@@ -40,7 +44,7 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
 }
 
 // Languages that implement 429 wait-and-retry.
-const RATE_LIMIT_LANGUAGES = ['javascript', 'python', 'go'];
+const RATE_LIMIT_LANGUAGES = ['go', 'javascript', 'php', 'python'];
 
 // Languages whose client CTS suite runs once per mode (python: async + sync, see withSyncTests in TestsClient.java).
 const DOUBLE_RUN_LANGUAGES = ['python'];
@@ -67,6 +71,9 @@ export function assertValidRateLimitRetries(runs: Record<string, number>): void 
 
     expect(langState.missingHeaderCalls, `${lang} missing-header calls`).to.equal(2 * runCount);
     assertDelay(langState.missingHeaderTimestamps, 1000);
+
+    expect(langState.invalidHeaderCalls, `${lang} invalid-header calls`).to.equal(2 * runCount);
+    assertDelay(langState.invalidHeaderTimestamps, 1000);
 
     expect(langState.exhaustedCalls, `${lang} exhausted calls`).to.equal(4 * runCount);
     expect(langState.zeroRetriesCalls, `${lang} zero-retries calls`).to.equal(1 * runCount);
@@ -100,6 +107,20 @@ function addRoutes(app: express.Express): void {
     current.missingHeaderTimestamps.push(Date.now());
 
     if (current.missingHeaderCalls % 2 === 1) {
+      res.status(429).json({ message: 'Too many requests' });
+      return;
+    }
+
+    res.status(200).json({ message: 'ok rate limit retry' });
+  });
+
+  app.get('/1/test/rate-limit/invalid-header/:lang', (req, res) => {
+    const current = langState(req.params.lang);
+    current.invalidHeaderCalls++;
+    current.invalidHeaderTimestamps.push(Date.now());
+
+    if (current.invalidHeaderCalls % 2 === 1) {
+      res.setHeader('Retry-After', '0');
       res.status(429).json({ message: 'Too many requests' });
       return;
     }
