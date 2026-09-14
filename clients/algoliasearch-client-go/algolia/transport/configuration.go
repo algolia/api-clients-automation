@@ -30,7 +30,7 @@ type Configuration struct {
 
 	// MaxRateLimitRetries limits how many times a 429 is waited out on the
 	// same host. nil means DefaultMaxRateLimitRetries (3); a non-nil 0 fails
-	// on the first 429, matching today's fail-fast behavior.
+	// on the first 429.
 	MaxRateLimitRetries *int
 }
 
