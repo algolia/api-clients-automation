@@ -540,7 +540,7 @@
         },
         "expected": {
           "error": {
-            "csharp": "{\"message\":\"Too many requests\"}",
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests"
@@ -575,7 +575,7 @@
         },
         "expected": {
           "error": {
-            "csharp": "{\"message\":\"Too many requests\"}",
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests"
