@@ -152,11 +152,11 @@ open class Transporter {
                 } catch let cancellationError as CancellationError {
                     throw cancellationError
                 } catch {
-                    if RateLimitRetry.isRateLimited(error), rateLimitRetriesLeft > 0 {
+                    if let httpError = RateLimitRetry.httpError(from: error),
+                       RateLimitRetry.isRateLimited(httpError),
+                       rateLimitRetriesLeft > 0 {
                         rateLimitRetriesLeft -= 1
-                        let wait = RateLimitRetry.waitNanoseconds(
-                            from: Self.headers(from: error)
-                        )
+                        let wait = RateLimitRetry.waitNanoseconds(from: httpError.headers)
                         try await self.sleep(wait)
                         continue
                     }
@@ -177,13 +177,5 @@ open class Transporter {
             intermediateErrors: intermediateErrors,
             exposeIntermediateErrors: self.exposeIntermediateErrors
         )
-    }
-
-    private static func headers(from error: Error) -> [String: String]? {
-        guard case let .httpError(httpError) as AlgoliaError = error else {
-            return nil
-        }
-
-        return httpError.headers
     }
 }

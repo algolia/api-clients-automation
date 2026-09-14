@@ -13,10 +13,11 @@ import XCTest
 
 private final class RateLimitRequestBuilder: RequestBuilder {
     var statuses: [Int]
-    var retryAfter: String?
+    let retryAfter: String?
     private(set) var urls: [URL] = []
-    var jsonBody = "{\"message\":\"ok\"}"
+    let jsonBody = "{\"message\":\"ok\"}"
 
+    /// required by the RequestBuilder protocol; the tests use init(statuses:retryAfter:)
     init() {
         self.statuses = []
         self.retryAfter = nil

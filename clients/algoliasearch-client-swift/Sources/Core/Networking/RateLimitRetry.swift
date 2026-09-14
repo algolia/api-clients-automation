@@ -38,11 +38,24 @@ public enum RateLimitRetry {
         return overflow ? self.maxWaitNanoseconds : min(nanos, self.maxWaitNanoseconds)
     }
 
-    static func isRateLimited(_ error: Error) -> Bool {
+    /// The `HTTPError` carried by an `AlgoliaError.httpError`, or nil for any other error.
+    static func httpError(from error: Error) -> HTTPError? {
         guard case let .httpError(httpError) as AlgoliaError = error else {
+            return nil
+        }
+
+        return httpError
+    }
+
+    static func isRateLimited(_ httpError: HTTPError) -> Bool {
+        httpError.statusCode == HTTPStatusСode.tooManyRequests
+    }
+
+    static func isRateLimited(_ error: Error) -> Bool {
+        guard let httpError = self.httpError(from: error) else {
             return false
         }
 
-        return httpError.statusCode == HTTPStatusСode.tooManyRequests
+        return self.isRateLimited(httpError)
     }
 }
