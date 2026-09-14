@@ -256,7 +256,7 @@ namespace Algolia.Search.Clients;
         if (transformationOptions.ReadTimeout.HasValue) ingestionConfig.ReadTimeout = transformationOptions.ReadTimeout;
         if (transformationOptions.WriteTimeout.HasValue) ingestionConfig.WriteTimeout = transformationOptions.WriteTimeout;
         if (transformationOptions.Compression.HasValue) ingestionConfig.Compression = transformationOptions.Compression.Value;
-        ingestionConfig.MaxRateLimitRetries = transformationOptions.MaxRateLimitRetries ?? _transport._algoliaConfig.MaxRateLimitRetries;
+        if (transformationOptions.MaxRateLimitRetries.HasValue) ingestionConfig.MaxRateLimitRetries = transformationOptions.MaxRateLimitRetries.Value;
         if (transformationOptions.DefaultHeaders != null)
         {
           foreach (var kvp in transformationOptions.DefaultHeaders)

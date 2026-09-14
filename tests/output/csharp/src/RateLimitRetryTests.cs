@@ -104,6 +104,38 @@ public class RateLimitRetryTests
   }
 
   [Fact]
+  public async Task RateLimitBudget_IsSharedAcrossHosts()
+  {
+    // host 1: 429 (budget 3 -> 2), then 500 fails over; host 2: 429, 429 (-> 0), 429 must not get a fresh budget
+    var delays = new List<TimeSpan>();
+    var hosts = new List<string>();
+    var client = CreateClient(
+      responses: new[]
+      {
+        RateLimited("1"),
+        ServerError(),
+        RateLimited("1"),
+        RateLimited("1"),
+        RateLimited("1"),
+        Success(),
+      },
+      onDelay: delay => delays.Add(delay),
+      onRequest: request => hosts.Add(request.Uri.Host)
+    );
+
+    var exception = await Assert.ThrowsAsync<AlgoliaApiException>(() =>
+      client.CustomGetAsync("1/test/retry")
+    );
+
+    Assert.Equal(429, exception.HttpErrorCode);
+    Assert.Equal(
+      new[] { "test-host-1", "test-host-1", "test-host-2", "test-host-2", "test-host-2" },
+      hosts
+    );
+    Assert.Equal(3, delays.Count);
+  }
+
+  [Fact]
   public async Task RateLimitedRequest_ZeroRetries_FailsOnFirst429()
   {
     var delays = new List<TimeSpan>();
