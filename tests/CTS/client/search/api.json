@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["javascript", "python"],
+    "onlyLanguages": ["csharp", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["javascript", "python"],
+    "onlyLanguages": ["csharp", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -484,8 +484,40 @@
     ]
   },
   {
+    "testName": "retries 429 with a 1s wait when Retry-After is invalid",
+    "onlyLanguages": ["csharp", "javascript", "php", "python"],
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "port": 6697
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/rate-limit/invalid-header/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "message": "ok rate limit retry"
+          }
+        }
+      }
+    ]
+  },
+  {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["javascript", "python"],
+    "onlyLanguages": ["csharp", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -508,7 +540,9 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
+            "php": "Too many requests",
             "python": "Too many requests"
           }
         }
@@ -517,7 +551,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["javascript", "python"],
+    "onlyLanguages": ["csharp", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -541,7 +575,9 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
+            "php": "Too many requests",
             "python": "Too many requests"
           }
         }
