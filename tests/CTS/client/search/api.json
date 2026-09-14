@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["go", "javascript", "php", "python"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["go", "javascript", "php", "python"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is invalid",
-    "onlyLanguages": ["go", "javascript", "php", "python"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -517,7 +517,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["go", "javascript", "php", "python"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -540,6 +540,7 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "go": "API error [429] Too many requests",
             "javascript": "Too many requests",
             "php": "Too many requests",
@@ -551,7 +552,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["go", "javascript", "php", "python"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -575,6 +576,7 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
             "go": "API error [429] Too many requests",
             "javascript": "Too many requests",
             "php": "Too many requests",
