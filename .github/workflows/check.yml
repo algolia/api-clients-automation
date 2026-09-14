@@ -163,6 +163,8 @@ jobs:
     needs: setup
     permissions:
       contents: read
+    outputs:
+      SPECS_SHA: ${{ steps.specs-zip.outputs.SPECS_SHA }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -174,12 +176,18 @@ jobs:
       - name: Building specs
         run: yarn cli build specs -s
 
+      - name: Zip artifact before storing
+        id: specs-zip
+        run: |
+          zip -r -y specs-bundle.zip ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          echo "SPECS_SHA=$(shasum -a 256 specs-bundle.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
       - name: Store bundled specs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: specs
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          path: specs-bundle.zip
 
   client_gen_javascript:
     timeout-minutes: 15
@@ -201,6 +209,8 @@ jobs:
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
     permissions:
       contents: read
+    outputs:
+      JS_SHA: ${{ steps.js-zip.outputs.JS_SHA }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -209,6 +219,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Remove generated clients
         if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
@@ -293,7 +304,10 @@ jobs:
         run: yarn cli build guides javascript
 
       - name: Zip artifact before storing
-        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+        id: js-zip
+        run: |
+          zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+          echo "JS_SHA=$(shasum -a 256 clients-javascript.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Store javascript clients
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -327,6 +341,19 @@ jobs:
       contents: read
     outputs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
+      # one key per language, set only by the isMainVersion leg that uploads that language's zip.
+      # The other legs leave it empty and empty outputs do not overwrite a set one, the same way
+      # hasBreakingChanges above reaches codegen from the java leg alone
+      SHA_csharp: ${{ steps.client-zip.outputs.SHA_csharp }}
+      SHA_dart: ${{ steps.client-zip.outputs.SHA_dart }}
+      SHA_go: ${{ steps.client-zip.outputs.SHA_go }}
+      SHA_java: ${{ steps.client-zip.outputs.SHA_java }}
+      SHA_kotlin: ${{ steps.client-zip.outputs.SHA_kotlin }}
+      SHA_php: ${{ steps.client-zip.outputs.SHA_php }}
+      SHA_python: ${{ steps.client-zip.outputs.SHA_python }}
+      SHA_ruby: ${{ steps.client-zip.outputs.SHA_ruby }}
+      SHA_scala: ${{ steps.client-zip.outputs.SHA_scala }}
+      SHA_swift: ${{ steps.client-zip.outputs.SHA_swift }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -335,6 +362,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -419,6 +447,11 @@ jobs:
         if: ${{ matrix.client.isMainVersion }}
         run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.guidesToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/.build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
 
+      - name: Checksum the ${{ matrix.client.language }} zip
+        id: client-zip
+        if: ${{ matrix.client.isMainVersion }}
+        run: echo "SHA_${{ matrix.client.language }}=$(shasum -a 256 clients-${{ matrix.client.language }}.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -460,6 +493,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -513,6 +547,7 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -536,6 +571,7 @@ jobs:
     timeout-minutes: 15
     needs:
       - setup
+      - specs
       - client_gen
       - client_gen_javascript
     if: |
@@ -569,6 +605,22 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
+          # every zip codegen restores into the checkout it pushes is verified against the sha256 its
+          # producing job exported. A language filtered out of the matrix has an empty SHA and no line;
+          # a line whose artifact is missing fails the restore instead of leaving the stale tree in place
+          expected-checksums: |
+            ${{ needs.specs.outputs.SPECS_SHA }} specs
+            ${{ needs.client_gen_javascript.result == 'success' && format('{0} clients-javascript', needs.client_gen_javascript.outputs.JS_SHA) || '' }}
+            ${{ needs.client_gen.outputs.SHA_csharp != '' && format('{0} clients-csharp', needs.client_gen.outputs.SHA_csharp) || '' }}
+            ${{ needs.client_gen.outputs.SHA_dart != '' && format('{0} clients-dart', needs.client_gen.outputs.SHA_dart) || '' }}
+            ${{ needs.client_gen.outputs.SHA_go != '' && format('{0} clients-go', needs.client_gen.outputs.SHA_go) || '' }}
+            ${{ needs.client_gen.outputs.SHA_java != '' && format('{0} clients-java', needs.client_gen.outputs.SHA_java) || '' }}
+            ${{ needs.client_gen.outputs.SHA_kotlin != '' && format('{0} clients-kotlin', needs.client_gen.outputs.SHA_kotlin) || '' }}
+            ${{ needs.client_gen.outputs.SHA_php != '' && format('{0} clients-php', needs.client_gen.outputs.SHA_php) || '' }}
+            ${{ needs.client_gen.outputs.SHA_python != '' && format('{0} clients-python', needs.client_gen.outputs.SHA_python) || '' }}
+            ${{ needs.client_gen.outputs.SHA_ruby != '' && format('{0} clients-ruby', needs.client_gen.outputs.SHA_ruby) || '' }}
+            ${{ needs.client_gen.outputs.SHA_scala != '' && format('{0} clients-scala', needs.client_gen.outputs.SHA_scala) || '' }}
+            ${{ needs.client_gen.outputs.SHA_swift != '' && format('{0} clients-swift', needs.client_gen.outputs.SHA_swift) || '' }}
 
       - name: Setup
         uses: ./.github/actions/setup
