@@ -40,13 +40,18 @@ internal static class RetryAfter
       return DefaultWait;
     }
 
-    raw = raw.TrimStart('0');
-    if (raw.Length == 0)
+    if (!long.TryParse(raw, out var seconds))
+    {
+      // digits only reach this point, so the value does not fit in a long
+      return MaxDelay;
+    }
+
+    if (seconds <= 0)
     {
       return DefaultWait;
     }
 
-    if (!long.TryParse(raw, out var seconds) || seconds > MaxDelay.TotalSeconds)
+    if (seconds > MaxDelay.TotalSeconds)
     {
       return MaxDelay;
     }

@@ -35,6 +35,12 @@ public class TransformationOptions
   /// <summary>Override the default headers.</summary>
   public Dictionary<string, string> DefaultHeaders { get; set; }
 
+  /// <summary>
+  /// Override how many times a 429 is waited out on the same host for the ingestion transporter.
+  /// Defaults to the parent client's <see cref="AlgoliaConfig.MaxRateLimitRetries"/>.
+  /// </summary>
+  public int? MaxRateLimitRetries { get; set; }
+
   /// <param name="region">The ingestion region ("eu" or "us"). Required.</param>
   /// <exception cref="ArgumentException">Thrown when region is null or whitespace.</exception>
   public TransformationOptions(string region)

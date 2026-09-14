@@ -59,7 +59,7 @@ public class RateLimitRetryTests
   {
     var delays = new List<TimeSpan>();
     var hosts = new List<string>();
-    var (client, _) = CreateClient(
+    var client = CreateClient(
       responses: new[] { RateLimited("2"), Success() },
       onDelay: delay => delays.Add(delay),
       onRequest: request => hosts.Add(request.Uri.Host)
@@ -75,7 +75,7 @@ public class RateLimitRetryTests
   public async Task RateLimitedRequest_WithoutRetryAfter_WaitsOneSecond()
   {
     var delays = new List<TimeSpan>();
-    var (client, _) = CreateClient(
+    var client = CreateClient(
       responses: new[] { RateLimited(null), Success() },
       onDelay: delay => delays.Add(delay)
     );
@@ -89,19 +89,13 @@ public class RateLimitRetryTests
   public async Task RateLimitedRequest_ExhaustsRetriesThenThrows()
   {
     var hosts = new List<string>();
-    var (client, _) = CreateClient(
-      responses: new[]
-      {
-        RateLimited("1"),
-        RateLimited("1"),
-        RateLimited("1"),
-        RateLimited("1"),
-      },
+    var client = CreateClient(
+      responses: new[] { RateLimited("1"), RateLimited("1"), RateLimited("1"), RateLimited("1") },
       onRequest: request => hosts.Add(request.Uri.Host)
     );
 
-    var exception = await Assert.ThrowsAsync<AlgoliaApiException>(
-      () => client.CustomGetAsync("1/test/retry")
+    var exception = await Assert.ThrowsAsync<AlgoliaApiException>(() =>
+      client.CustomGetAsync("1/test/retry")
     );
 
     Assert.Equal(429, exception.HttpErrorCode);
@@ -114,15 +108,15 @@ public class RateLimitRetryTests
   {
     var delays = new List<TimeSpan>();
     var hosts = new List<string>();
-    var (client, _) = CreateClient(
+    var client = CreateClient(
       responses: new[] { RateLimited("2") },
       maxRateLimitRetries: 0,
       onDelay: delay => delays.Add(delay),
       onRequest: request => hosts.Add(request.Uri.Host)
     );
 
-    var exception = await Assert.ThrowsAsync<AlgoliaApiException>(
-      () => client.CustomGetAsync("1/test/retry")
+    var exception = await Assert.ThrowsAsync<AlgoliaApiException>(() =>
+      client.CustomGetAsync("1/test/retry")
     );
 
     Assert.Equal(429, exception.HttpErrorCode);
@@ -134,7 +128,7 @@ public class RateLimitRetryTests
   public async Task ServerError_StillFailsOverToTheNextHost()
   {
     var hosts = new List<string>();
-    var (client, _) = CreateClient(
+    var client = CreateClient(
       responses: new[] { ServerError(), Success() },
       onRequest: request => hosts.Add(request.Uri.Host)
     );
@@ -144,7 +138,7 @@ public class RateLimitRetryTests
     Assert.Equal(new[] { "test-host-1", "test-host-2" }, hosts);
   }
 
-  private static (SearchClient Client, Mock<IHttpRequester> Mock) CreateClient(
+  private static SearchClient CreateClient(
     AlgoliaHttpResponse[] responses,
     int maxRateLimitRetries = 3,
     Action<TimeSpan> onDelay = null,
@@ -190,14 +184,15 @@ public class RateLimitRetryTests
         },
       },
       MaxRateLimitRetries = maxRateLimitRetries,
-      RateLimitDelayAsync = (delay, _) =>
-      {
-        onDelay?.Invoke(delay);
-        return Task.CompletedTask;
-      },
     };
 
-    return (new SearchClient(config, mock.Object), mock);
+    var client = new SearchClient(config, mock.Object);
+    client._transport.RateLimitDelayAsync = (delay, _) =>
+    {
+      onDelay?.Invoke(delay);
+      return Task.CompletedTask;
+    };
+    return client;
   }
 
   private static AlgoliaHttpResponse RateLimited(string retryAfter)
@@ -219,11 +214,7 @@ public class RateLimitRetryTests
   }
 
   private static AlgoliaHttpResponse Success() =>
-    new()
-    {
-      HttpStatusCode = 200,
-      Body = new MemoryStream(Encoding.UTF8.GetBytes("{}")),
-    };
+    new() { HttpStatusCode = 200, Body = new MemoryStream(Encoding.UTF8.GetBytes("{}")) };
 
   private static AlgoliaHttpResponse ServerError() =>
     new()
