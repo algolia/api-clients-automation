@@ -30,10 +30,11 @@ export async function sha256(filePath: string): Promise<string> {
   });
 }
 
-// the expected checksums plus the names restored without one, threaded through the restores so
-// nothing accumulates in module state
+// the expected checksums, the names verified against them and the names restored without one,
+// threaded through the restores so nothing accumulates in module state
 export type Verification = {
   checksums: Map<string, string>;
+  verified: Set<string>;
   unverified: string[];
 };
 
@@ -52,7 +53,17 @@ export async function verifyChecksum(
   if (actual !== expected) {
     throw new Error(`Checksum mismatch for the '${artifactName}' artifact: expected ${expected}, got ${actual}`);
   }
+  verification.verified.add(artifactName);
   core.info(`Checksum verified for the '${artifactName}' artifact`);
+}
+
+// an expected artifact that never showed up would otherwise leave the checkout's stale copy in
+// place without a word, so a checksum line that was never consumed fails the restore
+export function assertAllExpectedVerified(verification: Verification): void {
+  const missing = [...verification.checksums.keys()].filter((name) => !verification.verified.has(name));
+  if (missing.length > 0) {
+    throw new Error(`Expected checksums for artifact(s) that were never restored: ${missing.join(', ')}`);
+  }
 }
 
 // one annotation per run, not per artifact: the unverified set is a known residual and there are

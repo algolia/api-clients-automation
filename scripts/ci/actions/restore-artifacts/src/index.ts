@@ -5,7 +5,7 @@ import { exec } from '@actions/exec';
 import * as io from '@actions/io';
 
 import type { Verification } from './checksums.ts';
-import { parseExpectedChecksums, verifyChecksum, warnAboutUnverified } from './checksums.ts';
+import { assertAllExpectedVerified, parseExpectedChecksums, verifyChecksum, warnAboutUnverified } from './checksums.ts';
 
 async function download(client: DefaultArtifactClient, artifactID: number): Promise<DownloadArtifactResponse> {
   try {
@@ -75,6 +75,7 @@ async function run(): Promise<void> {
     const actionType = core.getInput('type');
     const verification: Verification = {
       checksums: parseExpectedChecksums(core.getMultilineInput('expected-checksums')),
+      verified: new Set(),
       unverified: [],
     };
     if (actionType === 'specs') {
@@ -91,6 +92,7 @@ async function run(): Promise<void> {
     } else {
       throw new Error(`Unknown type: ${actionType}`);
     }
+    assertAllExpectedVerified(verification);
     warnAboutUnverified(verification.unverified);
   } catch (error) {
     if (error instanceof Error) {

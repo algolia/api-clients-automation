@@ -7,7 +7,13 @@ import * as core from '@actions/core';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { Verification } from '../checksums.ts';
-import { parseExpectedChecksums, sha256, verifyChecksum, warnAboutUnverified } from '../checksums.ts';
+import {
+  assertAllExpectedVerified,
+  parseExpectedChecksums,
+  sha256,
+  verifyChecksum,
+  warnAboutUnverified,
+} from '../checksums.ts';
 
 vi.mock('@actions/core', () => {
   return {
@@ -31,7 +37,7 @@ beforeAll(async () => {
 let verification: Verification;
 
 beforeEach(() => {
-  verification = { checksums: new Map(), unverified: [] };
+  verification = { checksums: new Map(), verified: new Set(), unverified: [] };
   vi.clearAllMocks();
 });
 
@@ -86,6 +92,7 @@ describe('verifyChecksum', () => {
       /Checksum mismatch for the 'specs' artifact/,
     );
     expect(verification.unverified).toEqual([]);
+    expect([...verification.verified]).toEqual(['specs']);
   });
 
   it('fails closed when the file is missing but a checksum is expected', async () => {
@@ -102,6 +109,34 @@ describe('verifyChecksum', () => {
     );
     expect(core.warning).not.toHaveBeenCalled();
     expect(verification.unverified).toEqual(['clients-go']);
+  });
+});
+
+describe('assertAllExpectedVerified', () => {
+  it('passes when every expected artifact was verified', async () => {
+    verification.checksums.set('specs', PAYLOAD_SHA);
+    await verifyChecksum(verification, 'specs', tmpFile);
+    expect(() => assertAllExpectedVerified(verification)).not.toThrow();
+  });
+
+  it('passes when nothing was expected', () => {
+    expect(() => assertAllExpectedVerified(verification)).not.toThrow();
+  });
+
+  it('fails closed on an expected artifact that was never restored', async () => {
+    verification.checksums.set('specs', PAYLOAD_SHA);
+    verification.checksums.set('clients-javascript', 'a'.repeat(64));
+    verification.checksums.set('clients-go', 'b'.repeat(64));
+    await verifyChecksum(verification, 'specs', tmpFile);
+    expect(() => assertAllExpectedVerified(verification)).toThrow(
+      'Expected checksums for artifact(s) that were never restored: clients-javascript, clients-go',
+    );
+  });
+
+  it('does not count an unverified restore as consumed', async () => {
+    verification.checksums.set('clients-go', 'b'.repeat(64));
+    await verifyChecksum(verification, 'clients-php', 'does-not-exist.zip');
+    expect(() => assertAllExpectedVerified(verification)).toThrow(/clients-go/);
   });
 });
 
