@@ -8,6 +8,7 @@ get:
   description: Retrieves the details for an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
+    - $ref: '../common/parameters.yml#/Methods'
   responses:
     '200':
       description: OK
@@ -30,6 +31,8 @@ get:
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
 
 delete:
   tags:

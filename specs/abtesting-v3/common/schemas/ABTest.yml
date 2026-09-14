@@ -95,10 +95,7 @@ ABTestConfiguration:
 
 MinimumDetectableEffect:
   type: object
-  description: |
-    Configuration for the smallest difference between test variants you want to detect.
-    Applies only to Frequentist tests, where it powers the fixed-horizon sample-size estimate.
-    Requests with `method: bayesian` that include `minimumDetectableEffect` are rejected.
+  description: Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.
   properties:
     size:
       type: number
@@ -126,14 +123,17 @@ EffectMetric:
 
 PrimaryMetric:
   type: string
-  description: Metric that determines the A/B test's end-test recommendation.
+  description: |
+    Primary metric for Bayesian analysis. Required when `method` is `bayesian`.
+    If the request includes a non-empty `metrics` list, this metric must be in that list.
+    Revenue per search requires access to revenue analytics.
   example: conversion_rate
   enum:
     - add_to_cart_rate
     - click_through_rate
     - conversion_rate
     - purchase_rate
-    - no_results_rate
+    - revenue_per_search
 
 MetricsFilter:
   type: object
