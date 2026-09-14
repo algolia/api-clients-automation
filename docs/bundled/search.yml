@@ -212,8 +212,7 @@ tags:
 
       Dictionaries are application-wide.
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp
+      url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp
       description: Natural languages.
   - name: Indices
     description: >
@@ -225,8 +224,7 @@ tags:
       They're optimal data structures for fast search and are made up of records
       and settings.
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices
+      url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices
       description: Manage your indices.
   - name: Records
     description: >
@@ -243,8 +241,7 @@ tags:
       When adding or updating many records, check the [indexing rate
       limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data
+      url: https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data
       description: Prepare your records.
   - name: Rules
     description: >
@@ -270,8 +267,7 @@ tags:
 
       Synonyms are terms that the search engine should consider equal.
     externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms
+      url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms
       description: Synonyms.
   - name: Vaults
     description: >-
@@ -3201,8 +3197,7 @@ paths:
         unlink it from its primary index before you can delete it.
           For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas).
       externalDocs:
-        url: >-
-          https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
+        url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
         description: Delete indices.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -4362,8 +4357,7 @@ paths:
         This operation is subject to [indexing rate
         limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
       externalDocs:
-        url: >-
-          https://support.algolia.com/hc/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query
+        url: https://support.algolia.com/hc/articles/16385098766353-Should-I-use-the-deleteBy-method-for-deleting-records-that-match-a-query
         description: Should I use the deleteBy method for deleting records.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -14983,8 +14977,7 @@ paths:
         number of custom entries.
       summary: List available languages
       externalDocs:
-        url: >-
-          https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages
+        url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages
         description: Supported languages.
       responses:
         '200':
