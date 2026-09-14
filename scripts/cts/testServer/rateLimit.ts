@@ -44,7 +44,7 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
 }
 
 // Languages that implement 429 wait-and-retry.
-const RATE_LIMIT_LANGUAGES = ['javascript', 'php', 'python', 'swift'];
+const RATE_LIMIT_LANGUAGES = ['csharp', 'javascript', 'php', 'python', 'swift'];
 
 // Languages whose client CTS suite runs once per mode (python: async + sync, see withSyncTests in TestsClient.java).
 const DOUBLE_RUN_LANGUAGES = ['python'];
