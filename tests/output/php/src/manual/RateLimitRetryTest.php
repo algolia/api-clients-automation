@@ -39,6 +39,7 @@ class RateLimitRetryTest extends TestCase
             'whole seconds' => [['Retry-After' => '2'], 2],
             'lowercase header name' => [['retry-after' => '5'], 5],
             'no upper bound' => [['Retry-After' => '86400'], 86400],
+            'above the sleep() limit' => [['Retry-After' => '4294967296'], 4294967295],
             'missing header' => [[], 1],
             'empty value' => [['Retry-After' => ''], 1],
             'zero' => [['Retry-After' => '0'], 1],

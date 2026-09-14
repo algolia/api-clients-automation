@@ -30,6 +30,8 @@ final class ApiWrapper implements ApiWrapperInterface
 
     private const DEFAULT_RATE_LIMIT_WAIT_SECONDS = 1;
 
+    private const MAX_RATE_LIMIT_WAIT_SECONDS = 4294967295;
+
     /**
      * @var HttpClientInterface
      */
@@ -416,14 +418,15 @@ final class ApiWrapper implements ApiWrapperInterface
 
     /**
      * `Retry-After` as a wait in whole seconds. Only a positive whole number of seconds is honored;
-     * a missing, empty, zero, negative, non-numeric or HTTP-date value waits 1 second.
+     * a missing, empty, zero, negative, non-numeric or HTTP-date value waits 1 second. A value above
+     * what `sleep()` accepts waits its maximum.
      */
     private function rateLimitWaitSeconds(ResponseInterface $response): int
     {
         $retryAfter = trim($response->getHeaderLine('Retry-After'));
 
         if (preg_match('/^\d+$/', $retryAfter) && (int) $retryAfter > 0) {
-            return (int) $retryAfter;
+            return min((int) $retryAfter, self::MAX_RATE_LIMIT_WAIT_SECONDS);
         }
 
         return self::DEFAULT_RATE_LIMIT_WAIT_SECONDS;
