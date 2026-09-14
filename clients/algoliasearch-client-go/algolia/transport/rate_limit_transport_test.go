@@ -205,6 +205,68 @@ func TestRequestExhaustsMaxRateLimitRetries(t *testing.T) {
 	}
 }
 
+func TestRequestRateLimitBudgetIsSharedAcrossHosts(t *testing.T) {
+	t.Parallel()
+
+	// first host: 429 (budget 3 -> 2), then 500 fails over; second host: 429, 429 (-> 0), then a
+	// 429 that must surface because the budget is per request, not per host
+	var firstCalls, secondCalls, waits atomic.Int32
+
+	first := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		if firstCalls.Add(1) == 1 {
+			w.Header().Set("Retry-After", "1")
+			w.WriteHeader(http.StatusTooManyRequests)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+		_, _ = w.Write([]byte(`{"message":"error"}`))
+	}))
+	defer first.Close()
+
+	second := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		if secondCalls.Add(1) <= 3 {
+			w.Header().Set("Retry-After", "1")
+			w.WriteHeader(http.StatusTooManyRequests)
+			_, _ = w.Write([]byte(`{"message":"Too many requests"}`))
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"ok"}`))
+	}))
+	defer second.Close()
+
+	firstHost, _ := url.Parse(first.URL)
+	secondHost, _ := url.Parse(second.URL)
+	tr := New(Configuration{
+		Hosts: []StatefulHost{
+			NewStatefulHost(firstHost.Scheme, firstHost.Host, func(call.Kind) bool { return true }),
+			NewStatefulHost(secondHost.Scheme, secondHost.Host, func(call.Kind) bool { return true }),
+		},
+	})
+	tr.sleep = func(context.Context, time.Duration) error {
+		waits.Add(1)
+		return nil
+	}
+
+	res, _, err := tr.Request(context.Background(), newGetRequest(t, "/1/test"), call.Read, RequestConfiguration{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusTooManyRequests {
+		t.Fatalf("status = %d, want 429 once the shared budget is spent", res.StatusCode)
+	}
+
+	if firstCalls.Load() != 2 || secondCalls.Load() != 3 {
+		t.Fatalf("calls = %d/%d, want 2/3", firstCalls.Load(), secondCalls.Load())
+	}
+
+	if waits.Load() != 3 {
+		t.Fatalf("waits = %d, want 3", waits.Load())
+	}
+}
+
 func TestRequestStillFailsOverOn5xx(t *testing.T) {
 	t.Parallel()
 

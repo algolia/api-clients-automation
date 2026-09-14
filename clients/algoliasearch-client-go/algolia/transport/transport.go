@@ -129,6 +129,14 @@ hostLoop:
 				code = res.StatusCode
 			}
 
+			// captured before the 429 branch, like the Python transporter, so a rate-limited
+			// attempt that carried a Correlation-ID is not lost when the budget runs out
+			if res != nil {
+				if correlationID := res.Header.Get("Correlation-ID"); correlationID != "" {
+					lastCorrelationID = correlationID
+				}
+			}
+
 			// Context error only returns a non-nil error upon context
 			// cancellation, which is a signal we interpret as an early return.
 			// Indeed, we do not want to retry on other hosts if the context is
@@ -176,12 +184,6 @@ hostLoop:
 
 				return res, body, err
 			default:
-				if res != nil {
-					if correlationID := res.Header.Get("Correlation-ID"); correlationID != "" {
-						lastCorrelationID = correlationID
-					}
-				}
-
 				if err != nil {
 					intermediateNetworkErrors = append(intermediateNetworkErrors, err)
 				} else if res != nil {

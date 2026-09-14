@@ -202,9 +202,8 @@ func (c *APIClient) SetTransformationOptions(opts TransformationOptions) error {
   if opts.DefaultHeader != nil {
     ingestionConfig.DefaultHeader = opts.DefaultHeader
   }
-  ingestionConfig.MaxRateLimitRetries = opts.MaxRateLimitRetries
-  if ingestionConfig.MaxRateLimitRetries == nil {
-    ingestionConfig.MaxRateLimitRetries = c.cfg.MaxRateLimitRetries
+  if opts.MaxRateLimitRetries != nil {
+    ingestionConfig.MaxRateLimitRetries = opts.MaxRateLimitRetries
   }
   ingestionClient, err := ingestion.NewClientWithConfig(ingestionConfig)
   if err != nil {

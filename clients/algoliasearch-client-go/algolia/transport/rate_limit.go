@@ -24,7 +24,8 @@ const (
 var retryAfterDigits = regexp.MustCompile(`^\d+$`)
 
 func parseRetryAfter(header http.Header) time.Duration {
-	raw := strings.TrimSpace(headerValue(header, "Retry-After"))
+	// http.Header.Get canonicalises the key and tolerates a nil map, so no manual lookup is needed
+	raw := strings.TrimSpace(header.Get("Retry-After"))
 	if !retryAfterDigits.MatchString(raw) {
 		return defaultRateLimitWait
 	}
@@ -44,24 +45,6 @@ func parseRetryAfter(header http.Header) time.Duration {
 	}
 
 	return time.Duration(seconds) * time.Second
-}
-
-func headerValue(header http.Header, name string) string {
-	if header == nil {
-		return ""
-	}
-
-	if v := header.Get(name); v != "" {
-		return v
-	}
-
-	for key, values := range header {
-		if strings.EqualFold(key, name) && len(values) > 0 {
-			return values[0]
-		}
-	}
-
-	return ""
 }
 
 func isRateLimited(code int) bool {
