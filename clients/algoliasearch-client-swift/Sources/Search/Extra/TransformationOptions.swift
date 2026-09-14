@@ -36,7 +36,7 @@ public struct TransformationOptions {
     /// Additional headers merged into every request.
     public var defaultHeaders: [String: String]?
 
-    /// Override how many times a 429 is waited out on the same host.
+    /// Override how many times a 429 is waited out on the same host (Ingestion default: 3).
     public var maxRateLimitRetries: Int?
 
     /// - parameter region: The Algolia region for the Ingestion API (`Region.us` or `Region.eu`). Required.

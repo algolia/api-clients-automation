@@ -136,6 +136,27 @@ final class RateLimitRetryTests: XCTestCase {
         XCTAssertEqual(builder.urls.count, 1)
     }
 
+    func testRateLimitBudgetIsSharedAcrossHosts() async throws {
+        // host-a: 429 (budget 3 -> 2), then 500 fails over; host-b: 429, 429 (-> 0), 429 must not get a fresh budget
+        let builder = RateLimitRequestBuilder(statuses: [429, 500, 429, 429, 429, 200], retryAfter: "1")
+        var waits: [UInt64] = []
+        let client = try self.makeClient(builder: builder) { nanos in
+            waits.append(nanos)
+        }
+
+        do {
+            _ = try await client.customGet(path: "1/test")
+            XCTFail("expected 429 once the shared budget is spent")
+        } catch {
+            XCTAssertTrue(RateLimitRetry.isRateLimited(error))
+        }
+        XCTAssertEqual(
+            builder.urls.map(\.host),
+            ["host-a.example", "host-a.example", "host-b.example", "host-b.example", "host-b.example"]
+        )
+        XCTAssertEqual(waits, [1_000_000_000, 1_000_000_000, 1_000_000_000])
+    }
+
     func testExhaustsMaxRateLimitRetries() async throws {
         let builder = RateLimitRequestBuilder(statuses: [429, 429, 429, 429], retryAfter: "1")
         let client = try self.makeClient(builder: builder, extraHost: false) { _ in }

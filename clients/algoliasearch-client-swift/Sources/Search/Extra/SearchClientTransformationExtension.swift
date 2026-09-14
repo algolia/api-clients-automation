@@ -40,7 +40,7 @@ public extension SearchClient {
             defaultHeaders: options.defaultHeaders,
             hosts: options.hosts,
             compression: options.compression ?? .none,
-            maxRateLimitRetries: options.maxRateLimitRetries ?? self.configuration.maxRateLimitRetries
+            maxRateLimitRetries: options.maxRateLimitRetries ?? RateLimitRetry.defaultMaxRetries
         )
         let ingestionClient = IngestionClient(configuration: ingestionConfig)
         self._ingestionClient = ingestionClient
