@@ -7,6 +7,22 @@ ID:
   schema:
     $ref: '#/abTestID'
 
+Methods:
+  in: query
+  name: methods
+  description: |
+    Statistical analysis results to include, as a comma-separated list.
+    When omitted, each test uses its configured method, or `frequentist` if no method is configured.
+    Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results.
+    Duplicate values aren't allowed.
+  style: form
+  explode: false
+  schema:
+    type: array
+    minItems: 1
+    items:
+      $ref: 'schemas/ABTest.yml#/AnalysisMethod'
+
 # misc
 index:
   type: string
