@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["javascript", "php", "python"],
+    "onlyLanguages": ["java", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["javascript", "php", "python"],
+    "onlyLanguages": ["java", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is invalid",
-    "onlyLanguages": ["javascript", "php", "python"],
+    "onlyLanguages": ["java", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -517,7 +517,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["javascript", "php", "python"],
+    "onlyLanguages": ["java", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -540,6 +540,7 @@
         },
         "expected": {
           "error": {
+            "java": "Status Code: 429 - {\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests"
@@ -550,7 +551,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["javascript", "php", "python"],
+    "onlyLanguages": ["java", "javascript", "php", "python"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -574,6 +575,7 @@
         },
         "expected": {
           "error": {
+            "java": "Status Code: 429 - {\\\"message\\\":\\\"Too many requests\\\"}",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests"
