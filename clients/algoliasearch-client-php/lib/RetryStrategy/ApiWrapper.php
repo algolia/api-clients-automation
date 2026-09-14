@@ -28,7 +28,7 @@ final class ApiWrapper implements ApiWrapperInterface
 {
     private const COMPRESSION_THRESHOLD = 750;
 
-    private const DEFAULT_RATE_LIMIT_WAIT_MICROSECONDS = 1000000;
+    private const DEFAULT_RATE_LIMIT_WAIT_SECONDS = 1;
 
     /**
      * @var HttpClientInterface
@@ -217,11 +217,11 @@ final class ApiWrapper implements ApiWrapperInterface
 
                 while (429 === $response->getStatusCode() && $rateLimitRetriesLeft > 0) {
                     --$rateLimitRetriesLeft;
-                    $waitMicroseconds = $this->rateLimitWaitMicroseconds($response);
+                    $waitSeconds = $this->rateLimitWaitSeconds($response);
 
-                    $this->log(LogLevel::INFO, 'Retryable failure: '.$method.' '.$sanitizedUrl.' - 429, waiting '.round($waitMicroseconds / 1000).'ms ('.$rateLimitRetriesLeft.' rate limit retries left)', $logParams);
+                    $this->log(LogLevel::INFO, 'Retryable failure: '.$method.' '.$sanitizedUrl.' - 429, waiting '.($waitSeconds * 1000).'ms ('.$rateLimitRetriesLeft.' rate limit retries left)', $logParams);
 
-                    usleep($waitMicroseconds);
+                    sleep($waitSeconds);
 
                     $startTime = microtime(true);
 
@@ -415,18 +415,18 @@ final class ApiWrapper implements ApiWrapperInterface
     }
 
     /**
-     * `Retry-After` as a wait in microseconds. Only a positive whole number of seconds is honored;
+     * `Retry-After` as a wait in whole seconds. Only a positive whole number of seconds is honored;
      * a missing, empty, zero, negative, non-numeric or HTTP-date value waits 1 second.
      */
-    private function rateLimitWaitMicroseconds(ResponseInterface $response): int
+    private function rateLimitWaitSeconds(ResponseInterface $response): int
     {
         $retryAfter = trim($response->getHeaderLine('Retry-After'));
 
         if (preg_match('/^\d+$/', $retryAfter) && (int) $retryAfter > 0) {
-            return ((int) $retryAfter) * 1000000;
+            return (int) $retryAfter;
         }
 
-        return self::DEFAULT_RATE_LIMIT_WAIT_MICROSECONDS;
+        return self::DEFAULT_RATE_LIMIT_WAIT_SECONDS;
     }
 
     private function filterHeaders(array $headers): array

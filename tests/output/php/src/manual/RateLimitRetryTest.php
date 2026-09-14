@@ -36,19 +36,19 @@ class RateLimitRetryTest extends TestCase
     public function testRetryAfterIsHonoredOnlyAsPositiveWholeSeconds(): void
     {
         $cases = [
-            'whole seconds' => [['Retry-After' => '2'], 2000000],
-            'lowercase header name' => [['retry-after' => '5'], 5000000],
-            'no upper bound' => [['Retry-After' => '86400'], 86400000000],
-            'missing header' => [[], 1000000],
-            'empty value' => [['Retry-After' => ''], 1000000],
-            'zero' => [['Retry-After' => '0'], 1000000],
-            'negative' => [['Retry-After' => '-5'], 1000000],
-            'fractional' => [['Retry-After' => '1.5'], 1000000],
-            'trailing junk' => [['Retry-After' => '120abc'], 1000000],
-            'http date' => [['Retry-After' => 'Wed, 21 Oct 2015 07:28:00 GMT'], 1000000],
+            'whole seconds' => [['Retry-After' => '2'], 2],
+            'lowercase header name' => [['retry-after' => '5'], 5],
+            'no upper bound' => [['Retry-After' => '86400'], 86400],
+            'missing header' => [[], 1],
+            'empty value' => [['Retry-After' => ''], 1],
+            'zero' => [['Retry-After' => '0'], 1],
+            'negative' => [['Retry-After' => '-5'], 1],
+            'fractional' => [['Retry-After' => '1.5'], 1],
+            'trailing junk' => [['Retry-After' => '120abc'], 1],
+            'http date' => [['Retry-After' => 'Wed, 21 Oct 2015 07:28:00 GMT'], 1],
         ];
 
-        $parse = new \ReflectionMethod(ApiWrapper::class, 'rateLimitWaitMicroseconds');
+        $parse = new \ReflectionMethod(ApiWrapper::class, 'rateLimitWaitSeconds');
         $apiWrapper = $this->apiWrapper($this->recorder(function () {
             return new Response(200, [], '{}');
         }));
