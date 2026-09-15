@@ -109,8 +109,8 @@ class DioRequester implements Requester {
       return HttpResponse(
         statusCode,
         response.data,
-        // Only error responses need headers (Correlation-ID); success stays
-        // allocation-free.
+        // Only error responses need headers (Correlation-ID, and Retry-After on
+        // a 429); success stays allocation-free.
         headers: statusCode != null && statusCode ~/ 100 != 2
             ? response.headers.map.map(
                 (key, values) => MapEntry(key, values.join(',')),
