@@ -30,6 +30,22 @@ export async function snippetForAddABTests(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the applyVariantSettings method.
+//
+// applyVariantSettings
+export async function snippetForApplyVariantSettings(): Promise<void> {
+  // >SEPARATOR applyVariantSettings default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.applyVariantSettings({ id: 42, variantId: 2 });
+
+  // >LOG
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
@@ -473,6 +489,24 @@ export async function snippetForGetABTest(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getABTestSettings method.
+//
+// getABTestSettings
+export async function snippetForGetABTestSettings(): Promise<void> {
+  // >SEPARATOR getABTestSettings default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getABTestSettings({ id: 42 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getTimeseries method.
 //
 // getTimeseries
@@ -530,6 +564,38 @@ export async function snippetForListABTests1(): Promise<void> {
   // >LOG
   // print the response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// saveVariantSettings
+export async function snippetForSaveVariantSettings(): Promise<void> {
+  // >SEPARATOR saveVariantSettings saveVariantSettings
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: { saveFeaturesSettings: true } });
+
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// save settings with an empty options object
+export async function snippetForSaveVariantSettings1(): Promise<void> {
+  // >SEPARATOR saveVariantSettings save settings with an empty options object
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: {} });
+
+  // >LOG
   // SEPARATOR<
 }
 

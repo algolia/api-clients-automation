@@ -46,6 +46,29 @@ public class SnippetAbtestingV3Client
   }
 
   /// <summary>
+  /// Snippet for the ApplyVariantSettings method.
+  ///
+  /// applyVariantSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientApplyVariantSettings()
+  {
+    // >SEPARATOR applyVariantSettings default
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.ApplyVariantSettingsAsync(42, 2);
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
@@ -669,6 +692,31 @@ public class SnippetAbtestingV3Client
   }
 
   /// <summary>
+  /// Snippet for the GetABTestSettings method.
+  ///
+  /// getABTestSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetABTestSettings()
+  {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetABTestSettingsAsync(42);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetTimeseries method.
   ///
   /// getTimeseries
@@ -746,6 +794,56 @@ public class SnippetAbtestingV3Client
     // >LOG
     // print the response
     Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveVariantSettings method.
+  ///
+  /// saveVariantSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientSaveVariantSettings()
+  {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.SaveVariantSettingsAsync(
+      42,
+      2,
+      new SaveSettingsRequest { SaveFeaturesSettings = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveVariantSettings method.
+  ///
+  /// save settings with an empty options object
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientSaveVariantSettings1()
+  {
+    // >SEPARATOR saveVariantSettings save settings with an empty options object
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.SaveVariantSettingsAsync(42, 2, new SaveSettingsRequest { });
+    // >LOG
     // SEPARATOR<
   }
 
