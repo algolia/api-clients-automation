@@ -418,7 +418,15 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "swift"],
+    "onlyLanguages": [
+      "csharp",
+      "go",
+      "javascript",
+      "php",
+      "python",
+      "ruby",
+      "swift"
+    ],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +461,15 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "swift"],
+    "onlyLanguages": [
+      "csharp",
+      "go",
+      "javascript",
+      "php",
+      "python",
+      "ruby",
+      "swift"
+    ],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +501,15 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is invalid",
-    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "swift"],
+    "onlyLanguages": [
+      "csharp",
+      "go",
+      "javascript",
+      "php",
+      "python",
+      "ruby",
+      "swift"
+    ],
     "autoCreateClient": false,
     "steps": [
       {
@@ -517,7 +541,15 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "swift"],
+    "onlyLanguages": [
+      "csharp",
+      "go",
+      "javascript",
+      "php",
+      "python",
+      "ruby",
+      "swift"
+    ],
     "autoCreateClient": false,
     "steps": [
       {
@@ -545,6 +577,7 @@
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests",
+            "ruby": "429: Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
@@ -553,7 +586,15 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "swift"],
+    "onlyLanguages": [
+      "csharp",
+      "go",
+      "javascript",
+      "php",
+      "python",
+      "ruby",
+      "swift"
+    ],
     "autoCreateClient": false,
     "steps": [
       {
@@ -582,6 +623,7 @@
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests",
+            "ruby": "429: Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
