@@ -37,10 +37,12 @@ final class ScriptedRequester implements Requester {
   }
 
   @override
-  Duration? get connectTimeout => null;
+  Duration? connectTimeout;
 
   @override
-  void setConnectTimeout(Duration connectTimeout) {}
+  void setConnectTimeout(Duration connectTimeout) {
+    this.connectTimeout = connectTimeout;
+  }
 
   @override
   void setClientApiKey(String apiKey) {}
@@ -229,6 +231,36 @@ void main() {
       expect(requester.calls, ['a', 'a', 'a', 'a']);
       expect(waits, List.filled(3, const Duration(seconds: 2)));
       expect(retryStrategy.hosts.single.isUp, isTrue);
+    });
+
+    test('restores the connect timeout before waiting on a 429', () async {
+      final requester = ScriptedRequester({
+        'a': [
+          rateLimited(headers: {'retry-after': '2'}),
+          ok
+        ],
+      });
+      requester.setConnectTimeout(const Duration(seconds: 2));
+      final seenWhileWaiting = <Duration?>[];
+      final retryStrategy = RetryStrategy(
+        requester: requester,
+        readTimeout: const Duration(seconds: 5),
+        writeTimeout: const Duration(seconds: 30),
+        hosts: [Host(url: 'a')],
+        sleep: (_) async {
+          seenWhileWaiting.add(requester.connectTimeout);
+        },
+      );
+
+      await retryStrategy.execute(
+        request: getRequest,
+        options: const RequestOptions(connectTimeout: Duration(seconds: 9)),
+      );
+
+      // The per-call override must not leak to concurrent requests for the
+      // length of the wait, so it is restored before sleep runs.
+      expect(seenWhileWaiting, [const Duration(seconds: 2)]);
+      expect(requester.connectTimeout, const Duration(seconds: 2));
     });
 
     test('still fails over to the next host on a 5xx', () async {

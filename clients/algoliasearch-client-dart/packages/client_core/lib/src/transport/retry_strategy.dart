@@ -149,6 +149,10 @@ final class RetryStrategy {
         if (options?.connectTimeout != null) {
           requester.setConnectTimeout(options!.connectTimeout!);
         }
+        // Set by the 429 branch; the wait happens after the finally below has
+        // restored the requester's connect timeout, so a concurrent request on
+        // the same client does not pick up this call's override meanwhile.
+        Duration? rateLimitWait;
         try {
           final response = await requester.perform(httpRequest);
           final statusCode = response.statusCode;
@@ -180,16 +184,19 @@ final class RetryStrategy {
             // request later dies on the other hosts. The host is not marked
             // down and its connect-timeout multiplier does not move.
             errors.add(e);
-            await sleep(parseRetryAfter(e.headers));
-            continue;
+            rateLimitWait = parseRetryAfter(e.headers);
+          } else {
+            if (e.statusCode ~/ 100 == 4) rethrow;
+            host.failed();
+            errors.add(e);
+            break;
           }
-          if (e.statusCode ~/ 100 == 4) rethrow;
-          host.failed();
-          errors.add(e);
-          break;
         } finally {
           requester.setConnectTimeout(requesterConnectTimeout);
         }
+        // Only a waited-out 429 reaches this point; every other outcome has
+        // returned, rethrown or broken out to the next host above.
+        await sleep(rateLimitWait);
       }
     }
     throw UnreachableHostsException(errors);
