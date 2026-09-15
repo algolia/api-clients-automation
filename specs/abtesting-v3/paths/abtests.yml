@@ -61,6 +61,8 @@ post:
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
 
 get:
   tags:
@@ -106,6 +108,7 @@ get:
       example: desc
       schema:
         $ref: '../common/parameters.yml#/direction'
+    - $ref: '../common/parameters.yml#/Methods'
   responses:
     '200':
       description: OK
@@ -145,3 +148,5 @@ get:
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
