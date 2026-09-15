@@ -219,6 +219,7 @@ func TestRequestRateLimitBudgetIsSharedAcrossHosts(t *testing.T) {
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
+
 		_, _ = w.Write([]byte(`{"message":"error"}`))
 	}))
 	defer first.Close()
@@ -228,8 +229,10 @@ func TestRequestRateLimitBudgetIsSharedAcrossHosts(t *testing.T) {
 			w.Header().Set("Retry-After", "1")
 			w.WriteHeader(http.StatusTooManyRequests)
 			_, _ = w.Write([]byte(`{"message":"Too many requests"}`))
+
 			return
 		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"message":"ok"}`))
 	}))
@@ -245,6 +248,7 @@ func TestRequestRateLimitBudgetIsSharedAcrossHosts(t *testing.T) {
 	})
 	tr.sleep = func(context.Context, time.Duration) error {
 		waits.Add(1)
+
 		return nil
 	}
 
