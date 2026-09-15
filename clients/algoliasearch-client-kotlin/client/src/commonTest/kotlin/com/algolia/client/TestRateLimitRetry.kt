@@ -47,6 +47,13 @@ class TestRateLimitRetry {
       headers = headersOf(HttpHeaders.ContentType, "application/json"),
     )
 
+  private fun MockRequestHandleScope.serverError() =
+    respond(
+      content = """{"message":"Internal Server Error"}""",
+      status = HttpStatusCode.InternalServerError,
+      headers = headersOf(HttpHeaders.ContentType, "application/json"),
+    )
+
   private fun retryAfterOf(value: String?): Headers =
     if (value == null) Headers.Empty else headersOf(HttpHeaders.RetryAfter, value)
 
@@ -104,6 +111,23 @@ class TestRateLimitRetry {
       assertEquals(429, exception.httpErrorCode)
       assertEquals(4, engine.requestHistory.size)
       assertTrue(engine.requestHistory.all { it.url.host == "first.host" })
+    }
+  }
+
+  @Test
+  fun sharesTheBudgetAcrossHosts() = runTest {
+    val statuses = ArrayDeque(listOf(429, 500, 429, 429, 429))
+    val engine = MockEngine {
+      if (statuses.removeFirst() == 500) serverError() else rateLimited(retryAfter = "1")
+    }
+    clientOf(engine, ClientOptions(engine = engine, hosts = hosts)).use { client ->
+      val exception = assertFailsWith<AlgoliaApiException> { client.customGet(path = "1/test") }
+
+      assertEquals(429, exception.httpErrorCode)
+      assertEquals(
+        listOf("first.host", "first.host", "second.host", "second.host", "second.host"),
+        engine.requestHistory.map { it.url.host },
+      )
     }
   }
 
