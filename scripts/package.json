@@ -30,7 +30,7 @@
     "@types/express": "5.0.6",
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
-    "@types/node": "24.13.3",
+    "@types/node": "24.13.4",
     "@types/semver": "7.8.0",
     "@types/spinnies": "0.5.3",
     "algoliasearch": "5.59.0",
