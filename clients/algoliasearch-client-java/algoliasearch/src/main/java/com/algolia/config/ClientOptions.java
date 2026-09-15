@@ -97,7 +97,10 @@ public final class ClientOptions implements ClientConfig {
     return compressionType;
   }
 
-  /** How many times to wait and retry on the same host after HTTP 429. Default 3; 0 fails on the first 429. */
+  /**
+   * How many times to wait and retry on the same host after HTTP 429. Default 3; 0 fails on the
+   * first 429.
+   */
   public int getMaxRateLimitRetries() {
     return maxRateLimitRetries;
   }
