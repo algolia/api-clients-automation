@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["javascript", "php", "python", "scala"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["javascript", "php", "python", "scala"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is invalid",
-    "onlyLanguages": ["javascript", "php", "python", "scala"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -517,7 +517,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["javascript", "php", "python", "scala"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -540,10 +540,13 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
+            "go": "API error [429] Too many requests",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests",
-            "scala": "Too many requests"
+            "scala": "Too many requests",
+            "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
       }
@@ -551,7 +554,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["javascript", "php", "python", "scala"],
+    "onlyLanguages": ["csharp", "go", "javascript", "php", "python", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -575,10 +578,13 @@
         },
         "expected": {
           "error": {
+            "csharp": "{\\\"message\\\":\\\"Too many requests\\\"}",
+            "go": "API error [429] Too many requests",
             "javascript": "Too many requests",
             "php": "Too many requests",
             "python": "Too many requests",
-            "scala": "Too many requests"
+            "scala": "Too many requests",
+            "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
       }
