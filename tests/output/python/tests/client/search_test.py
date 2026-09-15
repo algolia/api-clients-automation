@@ -443,6 +443,35 @@ class TestSearchClient:
 
     async def test_api_15(self):
         """
+        retries 429 with a 1s wait when Retry-After is invalid
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        _req = await _client.custom_get(
+            path="1/test/rate-limit/invalid-header/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    async def test_api_16(self):
+        """
         returns 429 after maxRateLimitRetries is used up
         """
 
@@ -467,7 +496,7 @@ class TestSearchClient:
         except (ValueError, Exception) as e:
             assert str(e) == "Too many requests"
 
-    async def test_api_16(self):
+    async def test_api_17(self):
         """
         fails on the first 429 when maxRateLimitRetries is 0
         """
@@ -2558,6 +2587,35 @@ class TestSearchClientSync:
 
     def test_api_15(self):
         """
+        retries 429 with a 1s wait when Retry-After is invalid
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6697,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        _req = _client.custom_get(
+            path="1/test/rate-limit/invalid-header/python",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads("""{"message":"ok rate limit retry"}""")
+
+    def test_api_16(self):
+        """
         returns 429 after maxRateLimitRetries is used up
         """
 
@@ -2582,7 +2640,7 @@ class TestSearchClientSync:
         except (ValueError, Exception) as e:
             assert str(e) == "Too many requests"
 
-    def test_api_16(self):
+    def test_api_17(self):
         """
         fails on the first 429 when maxRateLimitRetries is 0
         """
