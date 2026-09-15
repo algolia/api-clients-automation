@@ -29,6 +29,11 @@ MetricResult _$MetricResultFromJson(Map<String, dynamic> json) =>
           criticalValue:
               $checkedConvert('criticalValue', (v) => (v as num?)?.toDouble()),
           significant: $checkedConvert('significant', (v) => v as bool?),
+          bayesian: $checkedConvert(
+              'bayesian',
+              (v) => v == null
+                  ? null
+                  : BayesianMetricResult.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -54,5 +59,6 @@ Map<String, dynamic> _$MetricResultToJson(MetricResult instance) {
   writeNotNull('metadata', instance.metadata?.toJson());
   writeNotNull('criticalValue', instance.criticalValue);
   writeNotNull('significant', instance.significant);
+  writeNotNull('bayesian', instance.bayesian?.toJson());
   return val;
 }

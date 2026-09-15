@@ -97,6 +97,94 @@ public interface IAbtestingV3Client
   );
 
   /// <summary>
+  /// Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of  </returns>
+  Task ApplyVariantSettingsAsync(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns> </returns>
+  void ApplyVariantSettings(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of  </returns>
+  Task<AlgoliaHttpResponse> ApplyVariantSettingsWithHTTPInfoAsync(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns> </returns>
+  AlgoliaHttpResponse ApplyVariantSettingsWithHTTPInfo(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
   /// This method lets you send requests to the Algolia REST API.
   /// </summary>
   /// <param name="path">Path of the endpoint, for example `1/newFeature`.</param>
@@ -559,6 +647,7 @@ public interface IAbtestingV3Client
   /// Required API Key ACLs:
   ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -567,6 +656,7 @@ public interface IAbtestingV3Client
   /// <returns>Task of ABTest</returns>
   Task<ABTest> GetABTestAsync(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -578,6 +668,7 @@ public interface IAbtestingV3Client
   /// Required API Key ACLs:
   ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -586,6 +677,7 @@ public interface IAbtestingV3Client
   /// <returns>ABTest</returns>
   ABTest GetABTest(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -597,6 +689,7 @@ public interface IAbtestingV3Client
   /// Required API Key ACLs:
   ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -605,6 +698,7 @@ public interface IAbtestingV3Client
   /// <returns>Task of ABTest</returns>
   Task<AlgoliaHttpResponse> GetABTestWithHTTPInfoAsync(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -616,6 +710,7 @@ public interface IAbtestingV3Client
   /// Required API Key ACLs:
   ///   - analytics
   /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -623,6 +718,83 @@ public interface IAbtestingV3Client
   /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
   /// <returns>ABTest</returns>
   AlgoliaHttpResponse GetABTestWithHTTPInfo(
+    int id,
+    List<AnalysisMethod> methods = default,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of ABTestSettingsResponse</returns>
+  Task<ABTestSettingsResponse> GetABTestSettingsAsync(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>ABTestSettingsResponse</returns>
+  ABTestSettingsResponse GetABTestSettings(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of ABTestSettingsResponse</returns>
+  Task<AlgoliaHttpResponse> GetABTestSettingsWithHTTPInfoAsync(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>ABTestSettingsResponse</returns>
+  AlgoliaHttpResponse GetABTestSettingsWithHTTPInfo(
     int id,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
@@ -638,6 +810,7 @@ public interface IAbtestingV3Client
   /// <param name="startDate">Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="endDate">End date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="metric">List of metrics to retrieve. If not specified, all metrics are returned. (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -649,6 +822,7 @@ public interface IAbtestingV3Client
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -663,6 +837,7 @@ public interface IAbtestingV3Client
   /// <param name="startDate">Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="endDate">End date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="metric">List of metrics to retrieve. If not specified, all metrics are returned. (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -674,6 +849,7 @@ public interface IAbtestingV3Client
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -688,6 +864,7 @@ public interface IAbtestingV3Client
   /// <param name="startDate">Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="endDate">End date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="metric">List of metrics to retrieve. If not specified, all metrics are returned. (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -699,6 +876,7 @@ public interface IAbtestingV3Client
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -713,6 +891,7 @@ public interface IAbtestingV3Client
   /// <param name="startDate">Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="endDate">End date of the period to analyze, in `YYYY-MM-DD` format. (optional)</param>
   /// <param name="metric">List of metrics to retrieve. If not specified, all metrics are returned. (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -724,6 +903,7 @@ public interface IAbtestingV3Client
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -739,6 +919,7 @@ public interface IAbtestingV3Client
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
   /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
   /// <param name="direction">Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.  (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -751,6 +932,7 @@ public interface IAbtestingV3Client
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -766,6 +948,7 @@ public interface IAbtestingV3Client
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
   /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
   /// <param name="direction">Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.  (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -778,6 +961,7 @@ public interface IAbtestingV3Client
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -793,6 +977,7 @@ public interface IAbtestingV3Client
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
   /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
   /// <param name="direction">Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.  (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -805,6 +990,7 @@ public interface IAbtestingV3Client
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -820,6 +1006,7 @@ public interface IAbtestingV3Client
   /// <param name="indexPrefix">Index name prefix. Only A/B tests for indices starting with this string are included in the response. (optional)</param>
   /// <param name="indexSuffix">Index name suffix. Only A/B tests for indices ending with this string are included in the response. (optional)</param>
   /// <param name="direction">Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.  (optional)</param>
+  /// <param name="methods">Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.  (optional)</param>
   /// <param name="options">Add extra http header or query parameters to Algolia.</param>
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
@@ -832,6 +1019,103 @@ public interface IAbtestingV3Client
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="saveSettingsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of  </returns>
+  Task SaveVariantSettingsAsync(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="saveSettingsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns> </returns>
+  void SaveVariantSettings(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="saveSettingsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns>Task of  </returns>
+  Task<AlgoliaHttpResponse> SaveVariantSettingsWithHTTPInfoAsync(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  );
+
+  /// <summary>
+  /// Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.  (Synchronous version)
+  /// </summary>
+  ///
+  /// Required API Key ACLs:
+  ///   - analytics
+  ///   - editSettings
+  /// <param name="id">Unique A/B test identifier.</param>
+  /// <param name="variantId">One-based index of the A/B test variant. The control is variant 1.</param>
+  /// <param name="saveSettingsRequest"></param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  /// <exception cref="ArgumentException">Thrown when arguments are not correct</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaApiException">Thrown when the API call was rejected by Algolia</exception>
+  /// <exception cref="Algolia.Search.Exceptions.AlgoliaUnreachableHostException">Thrown when the client failed to call the endpoint</exception>
+  /// <returns> </returns>
+  AlgoliaHttpResponse SaveVariantSettingsWithHTTPInfo(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   );
@@ -1085,6 +1369,72 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
   ) =>
     AsyncHelper.RunSync(() =>
       AddABTestsWithHTTPInfoAsync(addABTestsRequest, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
+  public async Task ApplyVariantSettingsAsync(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+    requestOptions.PathParameters.Add("variantId", QueryStringHelper.ParameterToString(variantId));
+
+    await _transport
+      .ExecuteRequestAsync(
+        new HttpMethod("POST"),
+        "/3/abtests/{id}/settings/{variantId}/apply",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public void ApplyVariantSettings(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() => ApplyVariantSettingsAsync(id, variantId, options, cancellationToken));
+
+  /// <inheritdoc />
+  public async Task<AlgoliaHttpResponse> ApplyVariantSettingsWithHTTPInfoAsync(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+    requestOptions.PathParameters.Add("variantId", QueryStringHelper.ParameterToString(variantId));
+
+    return await _transport
+      .ExecuteRequestAsync<AlgoliaHttpResponse>(
+        new HttpMethod("POST"),
+        "/3/abtests/{id}/settings/{variantId}/apply",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public AlgoliaHttpResponse ApplyVariantSettingsWithHTTPInfo(
+    int id,
+    int variantId,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      ApplyVariantSettingsWithHTTPInfoAsync(id, variantId, options, cancellationToken)
     );
 
   /// <inheritdoc />
@@ -1522,6 +1872,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
   /// <inheritdoc />
   public async Task<ABTest> GetABTestAsync(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1530,6 +1881,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
 
     requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
 
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<ABTest>(
         new HttpMethod("GET"),
@@ -1543,13 +1895,15 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
   /// <inheritdoc />
   public ABTest GetABTest(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  ) => AsyncHelper.RunSync(() => GetABTestAsync(id, options, cancellationToken));
+  ) => AsyncHelper.RunSync(() => GetABTestAsync(id, methods, options, cancellationToken));
 
   /// <inheritdoc />
   public async Task<AlgoliaHttpResponse> GetABTestWithHTTPInfoAsync(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1558,6 +1912,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
 
     requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
 
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<AlgoliaHttpResponse>(
         new HttpMethod("GET"),
@@ -1571,9 +1926,68 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
   /// <inheritdoc />
   public AlgoliaHttpResponse GetABTestWithHTTPInfo(
     int id,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
-  ) => AsyncHelper.RunSync(() => GetABTestWithHTTPInfoAsync(id, options, cancellationToken));
+  ) =>
+    AsyncHelper.RunSync(() => GetABTestWithHTTPInfoAsync(id, methods, options, cancellationToken));
+
+  /// <inheritdoc />
+  public async Task<ABTestSettingsResponse> GetABTestSettingsAsync(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+
+    return await _transport
+      .ExecuteRequestAsync<ABTestSettingsResponse>(
+        new HttpMethod("GET"),
+        "/3/abtests/{id}/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public ABTestSettingsResponse GetABTestSettings(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) => AsyncHelper.RunSync(() => GetABTestSettingsAsync(id, options, cancellationToken));
+
+  /// <inheritdoc />
+  public async Task<AlgoliaHttpResponse> GetABTestSettingsWithHTTPInfoAsync(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+
+    return await _transport
+      .ExecuteRequestAsync<AlgoliaHttpResponse>(
+        new HttpMethod("GET"),
+        "/3/abtests/{id}/settings",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public AlgoliaHttpResponse GetABTestSettingsWithHTTPInfo(
+    int id,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() => GetABTestSettingsWithHTTPInfoAsync(id, options, cancellationToken));
 
   /// <inheritdoc />
   public async Task<Timeseries> GetTimeseriesAsync(
@@ -1581,6 +1995,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1592,6 +2007,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     requestOptions.AddQueryParameter("startDate", startDate);
     requestOptions.AddQueryParameter("endDate", endDate);
     requestOptions.AddQueryParameter("metric", metric);
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<Timeseries>(
         new HttpMethod("GET"),
@@ -1608,11 +2024,12 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   ) =>
     AsyncHelper.RunSync(() =>
-      GetTimeseriesAsync(id, startDate, endDate, metric, options, cancellationToken)
+      GetTimeseriesAsync(id, startDate, endDate, metric, methods, options, cancellationToken)
     );
 
   /// <inheritdoc />
@@ -1621,6 +2038,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1632,6 +2050,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     requestOptions.AddQueryParameter("startDate", startDate);
     requestOptions.AddQueryParameter("endDate", endDate);
     requestOptions.AddQueryParameter("metric", metric);
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<AlgoliaHttpResponse>(
         new HttpMethod("GET"),
@@ -1648,11 +2067,20 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string startDate = default,
     string endDate = default,
     List<MetricName> metric = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   ) =>
     AsyncHelper.RunSync(() =>
-      GetTimeseriesWithHTTPInfoAsync(id, startDate, endDate, metric, options, cancellationToken)
+      GetTimeseriesWithHTTPInfoAsync(
+        id,
+        startDate,
+        endDate,
+        metric,
+        methods,
+        options,
+        cancellationToken
+      )
     );
 
   /// <inheritdoc />
@@ -1662,6 +2090,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1673,6 +2102,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     requestOptions.AddQueryParameter("indexPrefix", indexPrefix);
     requestOptions.AddQueryParameter("indexSuffix", indexSuffix);
     requestOptions.AddQueryParameter("direction", direction);
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<ListABTestsResponse>(
         new HttpMethod("GET"),
@@ -1690,6 +2120,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   ) =>
@@ -1700,6 +2131,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
         indexPrefix,
         indexSuffix,
         direction,
+        methods,
         options,
         cancellationToken
       )
@@ -1712,6 +2144,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   )
@@ -1723,6 +2156,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     requestOptions.AddQueryParameter("indexPrefix", indexPrefix);
     requestOptions.AddQueryParameter("indexSuffix", indexSuffix);
     requestOptions.AddQueryParameter("direction", direction);
+    requestOptions.AddQueryParameter("methods", methods);
     return await _transport
       .ExecuteRequestAsync<AlgoliaHttpResponse>(
         new HttpMethod("GET"),
@@ -1740,6 +2174,7 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
     string indexPrefix = default,
     string indexSuffix = default,
     Direction? direction = default,
+    List<AnalysisMethod> methods = default,
     RequestOptions options = null,
     CancellationToken cancellationToken = default
   ) =>
@@ -1750,6 +2185,97 @@ public partial class AbtestingV3Client : IAbtestingV3Client, IDisposable
         indexPrefix,
         indexSuffix,
         direction,
+        methods,
+        options,
+        cancellationToken
+      )
+    );
+
+  /// <inheritdoc />
+  public async Task SaveVariantSettingsAsync(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (saveSettingsRequest == null)
+      throw new ArgumentException(
+        "Parameter `saveSettingsRequest` is required when calling `SaveVariantSettings`."
+      );
+
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+    requestOptions.PathParameters.Add("variantId", QueryStringHelper.ParameterToString(variantId));
+
+    requestOptions.Data = saveSettingsRequest;
+    await _transport
+      .ExecuteRequestAsync(
+        new HttpMethod("POST"),
+        "/3/abtests/{id}/settings/{variantId}",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public void SaveVariantSettings(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      SaveVariantSettingsAsync(id, variantId, saveSettingsRequest, options, cancellationToken)
+    );
+
+  /// <inheritdoc />
+  public async Task<AlgoliaHttpResponse> SaveVariantSettingsWithHTTPInfoAsync(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  )
+  {
+    if (saveSettingsRequest == null)
+      throw new ArgumentException(
+        "Parameter `saveSettingsRequest` is required when calling `SaveVariantSettings`."
+      );
+
+    var requestOptions = new InternalRequestOptions(options);
+
+    requestOptions.PathParameters.Add("id", QueryStringHelper.ParameterToString(id));
+    requestOptions.PathParameters.Add("variantId", QueryStringHelper.ParameterToString(variantId));
+
+    requestOptions.Data = saveSettingsRequest;
+    return await _transport
+      .ExecuteRequestAsync<AlgoliaHttpResponse>(
+        new HttpMethod("POST"),
+        "/3/abtests/{id}/settings/{variantId}",
+        requestOptions,
+        cancellationToken
+      )
+      .ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public AlgoliaHttpResponse SaveVariantSettingsWithHTTPInfo(
+    int id,
+    int variantId,
+    SaveSettingsRequest saveSettingsRequest,
+    RequestOptions options = null,
+    CancellationToken cancellationToken = default
+  ) =>
+    AsyncHelper.RunSync(() =>
+      SaveVariantSettingsWithHTTPInfoAsync(
+        id,
+        variantId,
+        saveSettingsRequest,
         options,
         cancellationToken
       )

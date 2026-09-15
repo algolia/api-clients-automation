@@ -38,6 +38,16 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     )
   end
 
+  # applyVariantSettings
+  def test_apply_variant_settings
+    req = @client.apply_variant_settings_with_http_info(42, 2)
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/abtests/42/settings/2/apply", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
   # allow del method for a custom path with minimal parameters
   def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
@@ -361,6 +371,30 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getABTest with both inference methods
+  def test_get_ab_test1
+    req = @client.get_ab_test_with_http_info(42, ["frequentist", "bayesian"])
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42", req.path)
+    assert_equal({:"methods" => "frequentist%2Cbayesian"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getABTestSettings
+  def test_get_ab_test_settings
+    req = @client.get_ab_test_settings_with_http_info(42)
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42/settings", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getTimeseries
   def test_get_timeseries
     req = @client.get_timeseries_with_http_info(42)
@@ -368,6 +402,26 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/3/abtests/42/timeseries", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getTimeseries with Bayesian revenue per search
+  def test_get_timeseries1
+    req = @client.get_timeseries_with_http_info(42, "1999-09-19", "2001-01-01", ["revenue_per_search"], ["bayesian"])
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42/timeseries", req.path)
+    assert_equal(
+      {
+        :"startDate" => "1999-09-19",
+        :"endDate" => "2001-01-01",
+        :"metric" => "revenue_per_search",
+        :"methods" => "bayesian"
+      }.to_a,
+      req.query_params.to_a
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -387,7 +441,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
   # listABTests with parameters
   def test_list_ab_tests1
-    req = @client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t", "asc")
+    req = @client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t", "asc", ["frequentist", "bayesian"])
 
     assert_equal(:get, req.method)
     assert_equal("/3/abtests", req.path)
@@ -397,13 +451,40 @@ class TestAbtestingV3Client < Test::Unit::TestCase
         :"limit" => "21",
         :"indexPrefix" => "cts_e2e%20ab",
         :"indexSuffix" => "t",
-        :"direction" => "asc"
+        :"direction" => "asc",
+        :"methods" => "frequentist%2Cbayesian"
       }.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
+  end
+
+  # saveVariantSettings
+  def test_save_variant_settings
+    req = @client.save_variant_settings_with_http_info(
+      42,
+      2,
+      Algolia::AbtestingV3::SaveSettingsRequest.new(save_features_settings: true)
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/abtests/42/settings/2", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{\"saveFeaturesSettings\":true}"), JSON.parse(req.body))
+  end
+
+  # save settings with an empty options object
+  def test_save_variant_settings1
+    req = @client.save_variant_settings_with_http_info(42, 2, Algolia::AbtestingV3::SaveSettingsRequest.new)
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/abtests/42/settings/2", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
   end
 
   # stopABTest

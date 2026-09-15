@@ -34,6 +34,8 @@ class MetricName(str, Enum):
 
     NO_RESULT_COUNT = "no_result_count"
 
+    TRACKED_NO_RESULT_COUNT = "tracked_no_result_count"
+
     ADD_TO_CART_COUNT = "add_to_cart_count"
 
     PURCHASE_COUNT = "purchase_count"
@@ -53,6 +55,10 @@ class MetricName(str, Enum):
     AVERAGE_CLICK_POSITION = "average_click_position"
 
     REVENUE = "revenue"
+
+    REVENUE_PER_SEARCH = "revenue_per_search"
+
+    AVERAGE_ORDER_VALUE = "average_order_value"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

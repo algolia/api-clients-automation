@@ -27,10 +27,13 @@ import org.json4s._
 
 object JsonSupport {
   private def enumSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
+    new AnalysisMethodSerializer() :+
     new DirectionSerializer() :+
     new EffectMetricSerializer() :+
     new ErrorCorrectionTypeSerializer() :+
+    new EvidenceStatusSerializer() :+
     new MetricNameSerializer() :+
+    new PrimaryMetricSerializer() :+
     new StatusSerializer()
 
   private def oneOfsSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+

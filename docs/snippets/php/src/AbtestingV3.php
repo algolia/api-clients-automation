@@ -49,6 +49,27 @@ class SnippetAbtestingV3Client
     }
 
     /**
+     * Snippet for the ApplyVariantSettings method.
+     *
+     * applyVariantSettings
+     */
+    public function snippetForApplyVariantSettings(): void
+    {
+        // >SEPARATOR applyVariantSettings default
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $client->applyVariantSettings(
+            42,
+            2,
+        );
+
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomDelete method.
      *
      * allow del method for a custom path with minimal parameters
@@ -609,12 +630,61 @@ class SnippetAbtestingV3Client
      */
     public function snippetForGetABTest(): void
     {
-        // >SEPARATOR getABTest default
+        // >SEPARATOR getABTest getABTest
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getABTest(
+            42,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetABTest method.
+     *
+     * getABTest with both inference methods
+     */
+    public function snippetForGetABTest1(): void
+    {
+        // >SEPARATOR getABTest getABTest with both inference methods
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getABTest(
+            42,
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetABTestSettings method.
+     *
+     * getABTestSettings
+     */
+    public function snippetForGetABTestSettings(): void
+    {
+        // >SEPARATOR getABTestSettings default
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getABTestSettings(
             42,
         );
 
@@ -631,13 +701,43 @@ class SnippetAbtestingV3Client
      */
     public function snippetForGetTimeseries(): void
     {
-        // >SEPARATOR getTimeseries default
+        // >SEPARATOR getTimeseries getTimeseries
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTimeseries(
             42,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTimeseries method.
+     *
+     * getTimeseries with Bayesian revenue per search
+     */
+    public function snippetForGetTimeseries1(): void
+    {
+        // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
         );
 
         // >LOG
@@ -684,11 +784,61 @@ class SnippetAbtestingV3Client
             'cts_e2e ab',
             't',
             'asc',
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         // >LOG
         // print the response
         var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveVariantSettings method.
+     *
+     * saveVariantSettings
+     */
+    public function snippetForSaveVariantSettings(): void
+    {
+        // >SEPARATOR saveVariantSettings saveVariantSettings
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $client->saveVariantSettings(
+            42,
+            2,
+            ['saveFeaturesSettings' => true,
+            ],
+        );
+
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SaveVariantSettings method.
+     *
+     * save settings with an empty options object
+     */
+    public function snippetForSaveVariantSettings1(): void
+    {
+        // >SEPARATOR saveVariantSettings save settings with an empty options object
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $client->saveVariantSettings(
+            42,
+            2,
+            [],
+        );
+
+        // >LOG
         // SEPARATOR<
     }
 

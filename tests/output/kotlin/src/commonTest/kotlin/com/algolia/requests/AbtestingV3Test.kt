@@ -58,6 +58,25 @@ class AbtestingV3Test {
     )
   }
 
+  // applyVariantSettings
+
+  @Test
+  fun `applyVariantSettings`() = runTest {
+    client.runTest(
+      call = {
+        applyVariantSettings(
+          id = 42,
+          variantId = 2,
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2/apply".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertEmptyBody(it.body)
+      },
+    )
+  }
+
   // customDelete
 
   @Test
@@ -618,6 +637,44 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `getABTest with both inference methods1`() = runTest {
+    client.runTest(
+      call = {
+        getABTest(
+          id = 42,
+          methods =
+            listOf(
+              AnalysisMethod.entries.first { it.value == "frequentist" },
+              AnalysisMethod.entries.first { it.value == "bayesian" },
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"methods":"frequentist%2Cbayesian"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getABTestSettings
+
+  @Test
+  fun `getABTestSettings`() = runTest {
+    client.runTest(
+      call = {
+        getABTestSettings(id = 42)
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getTimeseries
 
   @Test
@@ -629,6 +686,30 @@ class AbtestingV3Test {
       intercept = {
         assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `getTimeseries with Bayesian revenue per search1`() = runTest {
+    client.runTest(
+      call = {
+        getTimeseries(
+          id = 42,
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          metric = listOf(MetricName.entries.first { it.value == "revenue_per_search" }),
+          methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams(
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""",
+          it.url.encodedParameters,
+        )
         assertNoBody(it.body)
       },
     )
@@ -660,16 +741,59 @@ class AbtestingV3Test {
           indexPrefix = "cts_e2e ab",
           indexSuffix = "t",
           direction = Direction.entries.first { it.value == "asc" },
+          methods =
+            listOf(
+              AnalysisMethod.entries.first { it.value == "frequentist" },
+              AnalysisMethod.entries.first { it.value == "bayesian" },
+            ),
         )
       },
       intercept = {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
-          """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}""",
+          """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
+      },
+    )
+  }
+
+  // saveVariantSettings
+
+  @Test
+  fun `saveVariantSettings`() = runTest {
+    client.runTest(
+      call = {
+        saveVariantSettings(
+          id = 42,
+          variantId = 2,
+          saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"saveFeaturesSettings":true}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `save settings with an empty options object1`() = runTest {
+    client.runTest(
+      call = {
+        saveVariantSettings(
+          id = 42,
+          variantId = 2,
+          saveSettingsRequest = SaveSettingsRequest(),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/settings/2".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
       },
     )
   }
