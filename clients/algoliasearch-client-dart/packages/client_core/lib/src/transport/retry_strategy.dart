@@ -4,6 +4,7 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
 import 'package:algolia_client_core/src/transport/rate_limit.dart';
 import 'package:algolia_client_core/src/transport/retryable_host.dart';
+import 'package:meta/meta.dart';
 
 /// Component to run http requests with retry logic.
 final class RetryStrategy {
@@ -30,7 +31,9 @@ final class RetryStrategy {
   /// [ClientOptions.maxRateLimitRetries].
   final int maxRateLimitRetries;
 
-  /// Waits between same-host 429 retries; tests inject a recorder here.
+  /// Waits between same-host 429 retries. Not part of the supported API:
+  /// tests inject a recorder here so they do not wait wall-clock.
+  @visibleForTesting
   final Future<void> Function(Duration) sleep;
 
   /// Provides access to hosts for testing purposes.
