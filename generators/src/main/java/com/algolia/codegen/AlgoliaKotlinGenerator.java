@@ -257,6 +257,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       if (!filterHelpers.isEmpty()) {
         dslModel.put("filterHelpers", filterHelpers);
         dslModel.put("x-dsl-has-filter-helpers", true);
+        dslModel.put("filterHelperImports", filterHelperImportsFor(filterHelpers));
       }
       dslModels.add(dslModel);
     }
@@ -271,19 +272,19 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     "Condition"
   );
 
-  private record DslFilterVar(String type, String converter) {}
+  private record DslFilterVar(String type, String converter, String receiver, String entry, String builder) {}
 
   private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
     "filters",
-    new DslFilterVar("String", "asSql"),
+    new DslFilterVar("String", "asSql", "FilterDsl", "filters", "buildFilters"),
     "facetFilters",
-    new DslFilterVar("FacetFilters", "asFacetFilters"),
+    new DslFilterVar("FacetFilters", "asFacetFilters", "FacetFilterDsl", "facetFilters", "buildFacetFilters"),
     "optionalFilters",
-    new DslFilterVar("OptionalFilters", "asOptionalFilters"),
+    new DslFilterVar("OptionalFilters", "asOptionalFilters", "FacetFilterDsl", "facetFilters", "buildFacetFilters"),
     "numericFilters",
-    new DslFilterVar("NumericFilters", "asNumericFilters"),
+    new DslFilterVar("NumericFilters", "asNumericFilters", "NumericFilterDsl", "numericFilters", "buildNumericFilters"),
     "tagFilters",
-    new DslFilterVar("TagFilters", "asTagFilters")
+    new DslFilterVar("TagFilters", "asTagFilters", "TagFilterDsl", "tagFilters", "buildTagFilters")
   );
 
   private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {
@@ -300,9 +301,24 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       Map<String, Object> helper = new LinkedHashMap<>();
       helper.put("name", var.name);
       helper.put("converter", expected.converter());
+      helper.put("receiver", expected.receiver());
+      helper.put("builder", expected.builder());
+      helper.put("entry", expected.entry());
       helpers.add(helper);
     }
     return helpers;
+  }
+
+  private static List<String> filterHelperImportsFor(List<Map<String, Object>> helpers) {
+    Set<String> imports = new TreeSet<>();
+    for (Map<String, Object> helper : helpers) {
+      String receiver = (String) helper.get("receiver");
+      String entry = (String) helper.get("entry");
+      String builder = (String) helper.get("builder");
+      imports.add("com.algolia.client.dsl.filter." + receiver);
+      imports.add("com.algolia.client.dsl.filter." + entry + " as " + builder);
+    }
+    return new ArrayList<>(imports);
   }
 
   /**
