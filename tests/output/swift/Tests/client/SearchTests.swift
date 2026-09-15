@@ -306,8 +306,25 @@ final class SearchClientClientTests: XCTestCase {
         XTCJSONEquals(received: response, expected: "{\"message\":\"ok rate limit retry\"}")
     }
 
-    /// returns 429 after maxRateLimitRetries is used up
+    /// retries 429 with a 1s wait when Retry-After is invalid
     func testApiTest15() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6697")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.customGet(path: "1/test/rate-limit/invalid-header/swift")
+
+        XTCJSONEquals(received: response, expected: "{\"message\":\"ok rate limit retry\"}")
+    }
+
+    /// returns 429 after maxRateLimitRetries is used up
+    func testApiTest16() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
@@ -328,7 +345,7 @@ final class SearchClientClientTests: XCTestCase {
     }
 
     /// fails on the first 429 when maxRateLimitRetries is 0
-    func testApiTest16() async throws {
+    func testApiTest17() async throws {
         let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
