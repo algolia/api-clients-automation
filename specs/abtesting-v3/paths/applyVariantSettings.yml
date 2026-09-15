@@ -1,0 +1,41 @@
+post:
+  tags:
+    - abtest
+  operationId: applyVariantSettings
+  x-acl:
+    - analytics
+    - editSettings
+  summary: Apply a variant's captured settings to the control index
+  description: |
+    Applies the captured settings of the given variant to the control index.
+
+    The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).
+
+    Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.
+
+    Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.
+
+    The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+  parameters:
+    - $ref: '../common/parameters.yml#/ID'
+    - $ref: '../common/parameters.yml#/VariantID'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/responses/rateLimit.yml#/x-ratelimit-reset'
+    '400':
+      $ref: '../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../common/responses/IndexNotFound.yml'
+    '422':
+      $ref: '../../common/responses/UnprocessableEntity.yml'
