@@ -179,6 +179,9 @@ object RetryStrategy {
   private val RateLimitStatusCode = 429
   private val DefaultRateLimitWaitMillis = 1000L
 
+  /** `Retry-After` as milliseconds. A positive whole number of seconds is honored, anything else waits 1 second, and a
+    * value too large to represent waits `Long.MaxValue` milliseconds.
+    */
   private def rateLimitWaitMillis(response: Response): Long =
     Option(response.header("Retry-After")).map(_.trim).filter(_.matches("\\d+")) match {
       case None => DefaultRateLimitWaitMillis
