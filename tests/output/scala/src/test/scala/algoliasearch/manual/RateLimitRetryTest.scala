@@ -2,7 +2,7 @@ package algoliasearch.manual
 
 import algoliasearch.api.SearchClient
 import algoliasearch.config.{CallType, ClientOptions, Host, TransformationOptions}
-import algoliasearch.exception.AlgoliaApiException
+import algoliasearch.exception.{AlgoliaApiException, AlgoliaRetryException}
 import algoliasearch.internal.interceptor.RetryStrategy
 
 import okhttp3.Interceptor.Chain
@@ -44,6 +44,7 @@ class RateLimitRetryTest extends AnyFunSuite {
   private val hostTwo = "host-two.test"
   private val tooManyRequestsJson = """{"message":"Too many requests"}"""
   private val tooManyRequestsHtml = "<html><body>429 Too Many Requests</body></html>"
+  private val serverErrorJson = """{"message":"server error"}"""
   private val okJson = """{"message":"ok rate limit retry"}"""
 
   private def stubResponse(
@@ -166,6 +167,48 @@ class RateLimitRetryTest extends AnyFunSuite {
       assert(error.getMessage == "Too many requests")
       assert(stub.attemptCount == 4)
       assert(stub.attemptedHosts == List.fill(4)(hostOne))
+    } finally {
+      client.close()
+    }
+  }
+
+  test("the maxRateLimitRetries budget is shared across hosts") {
+    val stub = new RateLimitStubInterceptor((attempt, request) =>
+      if (attempt == 1) stubResponse(request, 500, serverErrorJson)
+      else rateLimited(request, Map("Retry-After" -> "1"))
+    )
+    val client = clientWith(stub)
+
+    try {
+      val error = intercept[AlgoliaApiException] {
+        Await.result(client.customGet[JObject]("1/test"), Duration.Inf)
+      }
+
+      assert(error.httpErrorCode == 429)
+      assert(stub.attemptedHosts == List(hostOne, hostOne, hostTwo, hostTwo, hostTwo))
+    } finally {
+      client.close()
+    }
+  }
+
+  test("a waited-out 429 stays visible when every host then fails") {
+    val stub = new RateLimitStubInterceptor((attempt, request) =>
+      if (attempt == 0) rateLimited(request, Map("Retry-After" -> "1", "Correlation-ID" -> "RateLimitCid"))
+      else stubResponse(request, 500, serverErrorJson)
+    )
+    val client = clientWith(stub)
+
+    try {
+      val error = intercept[AlgoliaRetryException] {
+        Await.result(client.customGet[JObject]("1/test"), Duration.Inf)
+      }
+
+      assert(stub.attemptedHosts == List(hostOne, hostOne, hostTwo))
+      assert(error.correlationId.contains("RateLimitCid"))
+      val waitedOut = error.exceptions.head.asInstanceOf[AlgoliaApiException]
+      assert(waitedOut.httpErrorCode == 429)
+      assert(waitedOut.message == tooManyRequestsJson)
+      assert(waitedOut.correlationId.contains("RateLimitCid"))
     } finally {
       client.close()
     }

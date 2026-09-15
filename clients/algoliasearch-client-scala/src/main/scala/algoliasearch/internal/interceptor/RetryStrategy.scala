@@ -44,6 +44,7 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost], maxRateLim
         while (isRateLimited(response) && rateLimitRetriesLeft > 0) {
           rateLimitRetriesLeft -= 1
           val waitMillis = RetryStrategy.rateLimitWaitMillis(response)
+          errors += rateLimitError(response)
           response.close()
           waitForRateLimit(waitMillis)
           response = processRequest(chain, request, currentHost)
@@ -99,9 +100,7 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost], maxRateLim
     }
 
     try {
-      val message =
-        if (response.body() != null) response.body().string()
-        else response.message()
+      val message = errorMessage(response)
       val correlationId = Option(response.header(CorrelationIdHeader))
       if (isRetryable(response)) {
         throw AlgoliaRequestException(
@@ -126,6 +125,13 @@ private[algoliasearch] class RetryStrategy(hosts: List[StatefulHost], maxRateLim
 
   private def isRateLimited(response: Response): Boolean =
     response.code() == RetryStrategy.RateLimitStatusCode
+
+  private def rateLimitError(response: Response): AlgoliaApiException =
+    AlgoliaApiException(message = errorMessage(response), httpErrorCode = response.code())
+      .withCorrelationId(Option(response.header(CorrelationIdHeader)))
+
+  private def errorMessage(response: Response): String =
+    if (response.body() != null) response.body().string() else response.message()
 
   private def callableHosts(callType: CallType): List[StatefulHost] =
     this.synchronized {
