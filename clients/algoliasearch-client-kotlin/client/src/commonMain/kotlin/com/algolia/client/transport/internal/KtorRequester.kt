@@ -61,6 +61,11 @@ public class KtorRequester(
   private val mutex: Mutex = Mutex()
   private val retryableHosts = hosts.map { RetryableHost(it) }
 
+  /** Wait between same-host 429 retries. */
+  internal var rateLimitWait: suspend (Duration) -> Unit = { duration ->
+    withContext(Dispatchers.Default) { delay(duration) }
+  }
+
   public override fun setClientApiKey(apiKey: String) {
     headers {
       if (contains(HEADER_APIKEY)) {
@@ -136,7 +141,7 @@ public class KtorRequester(
               rateLimitRetriesLeft > 0
           ) {
             rateLimitRetriesLeft--
-            wait(retryAfterWait(exception.response.headers))
+            rateLimitWait(retryAfterWait(exception.response.headers))
             continue
           }
           host.onError(exception)
@@ -146,10 +151,6 @@ public class KtorRequester(
       }
     }
     throw AlgoliaRetryException(errors, lastCorrelationId)
-  }
-
-  private suspend fun wait(duration: Duration) {
-    withContext(Dispatchers.Default) { delay(duration) }
   }
 
   private fun HttpResponse.hasEmptyBody(): Boolean = status.value == 204 || contentLength() == 0L

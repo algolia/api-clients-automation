@@ -1,11 +1,13 @@
 package com.algolia.client
 
+import com.algolia.client.api.ApiClient
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.Host
 import com.algolia.client.configuration.TransformationOptions
 import com.algolia.client.exception.AlgoliaApiException
 import com.algolia.client.transport.internal.DEFAULT_RATE_LIMIT_WAIT
+import com.algolia.client.transport.internal.KtorRequester
 import com.algolia.client.transport.internal.retryAfterWait
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
@@ -22,8 +24,22 @@ class TestRateLimitRetry {
 
   private val hosts = listOf(Host("first.host"), Host("second.host"))
 
-  private fun clientOf(engine: MockEngine, options: ClientOptions): SearchClient =
-    SearchClient(appId = "appId", apiKey = "apiKey", options = options)
+  private fun optionsOf(engine: MockEngine, maxRateLimitRetries: Int? = null): ClientOptions =
+    if (maxRateLimitRetries == null) ClientOptions(engine = engine, hosts = hosts)
+    else ClientOptions(engine = engine, hosts = hosts, maxRateLimitRetries = maxRateLimitRetries)
+
+  private fun clientOf(engine: MockEngine, maxRateLimitRetries: Int? = null): SearchClient =
+    SearchClient(
+      appId = "appId",
+      apiKey = "apiKey",
+      options = optionsOf(engine, maxRateLimitRetries),
+    )
+
+  private fun ApiClient.recordedWaits(): List<Duration> {
+    val waits = mutableListOf<Duration>()
+    (requester as KtorRequester).rateLimitWait = { waits += it }
+    return waits
+  }
 
   private fun MockRequestHandleScope.rateLimited(
     retryAfter: String? = null,
@@ -87,7 +103,7 @@ class TestRateLimitRetry {
   fun waitsThenRetriesTheSameHost() = runTest {
     var calls = 0
     val engine = MockEngine { if (++calls == 1) rateLimited(retryAfter = "2") else ok() }
-    clientOf(engine, ClientOptions(engine = engine, hosts = hosts)).use { client ->
+    clientOf(engine).use { client ->
       val start = TimeSource.Monotonic.markNow()
       val response = client.customGet(path = "1/test")
       val elapsed = start.elapsedNow()
@@ -105,10 +121,12 @@ class TestRateLimitRetry {
   @Test
   fun surfacesTheRateLimitOnceTheBudgetIsSpent() = runTest {
     val engine = MockEngine { rateLimited(retryAfter = "1") }
-    clientOf(engine, ClientOptions(engine = engine, hosts = hosts)).use { client ->
+    clientOf(engine).use { client ->
+      val waits = client.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { client.customGet(path = "1/test") }
 
       assertEquals(429, exception.httpErrorCode)
+      assertEquals(listOf(1.seconds, 1.seconds, 1.seconds), waits)
       assertEquals(4, engine.requestHistory.size)
       assertTrue(engine.requestHistory.all { it.url.host == "first.host" })
     }
@@ -120,10 +138,12 @@ class TestRateLimitRetry {
     val engine = MockEngine {
       if (statuses.removeFirst() == 500) serverError() else rateLimited(retryAfter = "1")
     }
-    clientOf(engine, ClientOptions(engine = engine, hosts = hosts)).use { client ->
+    clientOf(engine).use { client ->
+      val waits = client.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { client.customGet(path = "1/test") }
 
       assertEquals(429, exception.httpErrorCode)
+      assertEquals(listOf(1.seconds, 1.seconds, 1.seconds), waits)
       assertEquals(
         listOf("first.host", "first.host", "second.host", "second.host", "second.host"),
         engine.requestHistory.map { it.url.host },
@@ -135,12 +155,13 @@ class TestRateLimitRetry {
   fun surfacesAnHtmlRateLimitOnceTheBudgetIsSpent() = runTest {
     val html = "<html><body>429 Too Many Requests</body></html>"
     val engine = MockEngine { rateLimited(contentType = "text/html", body = html) }
-    clientOf(engine, ClientOptions(engine = engine, hosts = hosts, maxRateLimitRetries = 1)).use {
-      client ->
+    clientOf(engine, maxRateLimitRetries = 1).use { client ->
+      val waits = client.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { client.customGet(path = "1/test") }
 
       assertEquals(429, exception.httpErrorCode)
       assertTrue(exception.message!!.contains(html), exception.message!!)
+      assertEquals(listOf(DEFAULT_RATE_LIMIT_WAIT), waits)
       assertEquals(2, engine.requestHistory.size)
     }
   }
@@ -148,15 +169,13 @@ class TestRateLimitRetry {
   @Test
   fun failsOnTheFirstRateLimitWhenRetriesAreDisabled() = runTest {
     val engine = MockEngine { rateLimited(retryAfter = "30") }
-    clientOf(engine, ClientOptions(engine = engine, hosts = hosts, maxRateLimitRetries = 0)).use {
-      client ->
-      val start = TimeSource.Monotonic.markNow()
+    clientOf(engine, maxRateLimitRetries = 0).use { client ->
+      val waits = client.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { client.customGet(path = "1/test") }
-      val elapsed = start.elapsedNow()
 
       assertEquals(429, exception.httpErrorCode)
       assertEquals(1, engine.requestHistory.size)
-      assertTrue(elapsed < 5.seconds, "waited $elapsed, expected no wait")
+      assertTrue(waits.isEmpty(), "waited $waits, expected no wait")
     }
   }
 
@@ -172,14 +191,16 @@ class TestRateLimitRetry {
     val transformationOptions =
       TransformationOptions(
         region = "us",
-        clientOptions = ClientOptions(engine = engine, hosts = hosts, maxRateLimitRetries = 0),
+        clientOptions = optionsOf(engine, maxRateLimitRetries = 0),
       )
     SearchClient.withTransformation("appId", "apiKey", transformationOptions).use { client ->
       val ingestion = assertNotNull(client.ingestionTransporter)
+      val waits = ingestion.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { ingestion.customGet(path = "1/test") }
 
       assertEquals(429, exception.httpErrorCode)
       assertEquals(1, engine.requestHistory.size)
+      assertTrue(waits.isEmpty(), "waited $waits, expected no wait")
     }
   }
 
@@ -187,15 +208,14 @@ class TestRateLimitRetry {
   fun ingestionTransporterKeepsTheDefaultBudget() = runTest {
     val engine = MockEngine { rateLimited(retryAfter = "1") }
     val transformationOptions =
-      TransformationOptions(
-        region = "us",
-        clientOptions = ClientOptions(engine = engine, hosts = hosts),
-      )
+      TransformationOptions(region = "us", clientOptions = optionsOf(engine))
     SearchClient.withTransformation("appId", "apiKey", transformationOptions).use { client ->
       val ingestion = assertNotNull(client.ingestionTransporter)
+      val waits = ingestion.recordedWaits()
       val exception = assertFailsWith<AlgoliaApiException> { ingestion.customGet(path = "1/test") }
 
       assertEquals(429, exception.httpErrorCode)
+      assertEquals(listOf(1.seconds, 1.seconds, 1.seconds), waits)
       assertEquals(4, engine.requestHistory.size)
     }
   }
