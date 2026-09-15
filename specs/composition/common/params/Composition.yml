@@ -7,7 +7,7 @@ facets:
   items:
     type: string
   description: |
-    Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+    Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.
     To retrieve all facets, use the wildcard character `*`.
     To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier.
     For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
@@ -36,7 +36,7 @@ ruleContexts:
   items:
     type: string
   description: |
-    Assigns a rule context to the run query
+    Assigns a rule context to the run query.
     [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
   default: []
   example: [mobile]
