@@ -76,6 +76,7 @@ public final class RetryStrategy implements Interceptor {
         while (isRateLimited(response) && rateLimitRetriesLeft > 0) {
           rateLimitRetriesLeft--;
           long waitMillis = rateLimitWaitMillis(response.header("Retry-After"));
+          errors.add(new AlgoliaApiException(response.message(), response.code(), response.header("Correlation-ID")));
           response.close();
           sleep(waitMillis);
           response = processRequest(chain, request, currentHost);

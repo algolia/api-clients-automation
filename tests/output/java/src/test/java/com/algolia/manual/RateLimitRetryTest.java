@@ -9,6 +9,7 @@ import com.algolia.config.ClientOptions;
 import com.algolia.config.Host;
 import com.algolia.config.TransformationOptions;
 import com.algolia.exceptions.AlgoliaApiException;
+import com.algolia.exceptions.AlgoliaRetryException;
 import com.algolia.internal.interceptors.RetryStrategy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,9 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Pins the HTTP 429 wait-and-retry round: how `Retry-After` is parsed, how the
- * `maxRateLimitRetries` budget is spent, and that a rate-limited host is retried in place rather
- * than failed over or marked down. The interceptor answers every attempt itself, so no real HTTP is
- * performed.
+ * `maxRateLimitRetries` budget is spent and shared across hosts, that a rate-limited host is
+ * retried in place rather than failed over or marked down, and that a waited-out 429 stays visible
+ * in the retry error. The interceptor answers every attempt itself, so no real HTTP is performed.
  */
 class RateLimitRetryTest {
 
@@ -104,6 +105,35 @@ class RateLimitRetryTest {
       assertEquals(429, exception.getStatusCode());
       assertEquals("Status Code: 429 - {\"message\":\"Too many requests\"}", exception.getMessage());
       assertEquals(Arrays.asList(FIRST_HOST, FIRST_HOST, FIRST_HOST, FIRST_HOST), server.hosts);
+    }
+  }
+
+  @Test
+  @DisplayName("the maxRateLimitRetries budget is shared across hosts")
+  void sharesTheBudgetAcrossHosts() throws Exception {
+    FakeServer server = new FakeServer(rateLimited("1"), serverError(), rateLimited("1"), rateLimited("1"), rateLimited("1"), ok());
+
+    try (SearchClient client = searchClient(server, ClientOptions.builder())) {
+      AlgoliaApiException exception = assertThrows(AlgoliaApiException.class, () -> client.customGet("1/test"));
+
+      assertEquals(429, exception.getStatusCode());
+      assertEquals(Arrays.asList(FIRST_HOST, FIRST_HOST, SECOND_HOST, SECOND_HOST, SECOND_HOST), server.hosts);
+    }
+  }
+
+  @Test
+  @DisplayName("a waited-out 429 stays visible when every host then fails")
+  void keepsTheWaitedOut429WhenEveryHostFails() throws Exception {
+    FakeServer server = new FakeServer(rateLimited("1", "RateLimitCid"), serverError());
+
+    try (SearchClient client = searchClient(server, ClientOptions.builder())) {
+      AlgoliaRetryException exception = assertThrows(AlgoliaRetryException.class, () -> client.customGet("1/test"));
+
+      assertEquals(Arrays.asList(FIRST_HOST, FIRST_HOST, SECOND_HOST), server.hosts);
+      assertEquals("RateLimitCid", exception.getCorrelationId());
+      AlgoliaApiException rateLimited = (AlgoliaApiException) exception.getErrors().get(0);
+      assertEquals(429, rateLimited.getStatusCode());
+      assertEquals("RateLimitCid", rateLimited.getCorrelationId());
     }
   }
 
@@ -187,15 +217,23 @@ class RateLimitRetryTest {
   }
 
   private static Reply rateLimited(String retryAfter) {
-    return new Reply(429, "Too Many Requests", "application/json", JSON_BODY, retryAfter);
+    return rateLimited(retryAfter, null);
+  }
+
+  private static Reply rateLimited(String retryAfter, String correlationId) {
+    return new Reply(429, "Too Many Requests", "application/json", JSON_BODY, retryAfter, correlationId);
   }
 
   private static Reply rateLimitedHtml() {
-    return new Reply(429, "Too Many Requests", "text/html", HTML_BODY, null);
+    return new Reply(429, "Too Many Requests", "text/html", HTML_BODY, null, null);
+  }
+
+  private static Reply serverError() {
+    return new Reply(500, "Server Error", "application/json", "{\"message\":\"server error\"}", null, null);
   }
 
   private static Reply ok() {
-    return new Reply(200, "OK", "application/json", "{\"message\":\"ok rate limit retry\"}", null);
+    return new Reply(200, "OK", "application/json", "{\"message\":\"ok rate limit retry\"}", null, null);
   }
 
   private static final class Reply {
@@ -205,13 +243,15 @@ class RateLimitRetryTest {
     final String contentType;
     final String body;
     final String retryAfter;
+    final String correlationId;
 
-    Reply(int code, String message, String contentType, String body, String retryAfter) {
+    Reply(int code, String message, String contentType, String body, String retryAfter, String correlationId) {
       this.code = code;
       this.message = message;
       this.contentType = contentType;
       this.body = body;
       this.retryAfter = retryAfter;
+      this.correlationId = correlationId;
     }
   }
 
@@ -239,6 +279,9 @@ class RateLimitRetryTest {
         .body(ResponseBody.create(reply.body, MediaType.parse(reply.contentType)));
       if (reply.retryAfter != null) {
         response.header("Retry-After", reply.retryAfter);
+      }
+      if (reply.correlationId != null) {
+        response.header("Correlation-ID", reply.correlationId);
       }
       return response.build();
     }
