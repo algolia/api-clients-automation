@@ -185,18 +185,22 @@ runs:
           clients/algoliasearch-client-swift/.build
         key: swift-build-${{ inputs.version }}-${{ runner.os }}
 
+    # SWIFTFORMAT_SHA is the commit the SWIFTFORMAT_VERSION tag points at; the checkout below is
+    # built from source and put on PATH, so it must not follow a tag that can be moved
     - name: Set swiftformat version
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.63.0" >> $GITHUB_OUTPUT
+      run: |
+        echo "SWIFTFORMAT_VERSION=0.63.0" >> $GITHUB_OUTPUT
+        echo "SWIFTFORMAT_SHA=0256422f1a5e967c68dc923f1905c0a155dca188" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         repository: nicklockwood/SwiftFormat
-        ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}
+        ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_SHA }}
         path: swiftformat
 
     - name: Cache the build folder for swiftformat
@@ -205,7 +209,7 @@ runs:
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: swiftformat/.build
-        key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}-${{ runner.os }}
+        key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_SHA }}-${{ runner.os }}
 
     - name: Build swiftformat
       if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}
