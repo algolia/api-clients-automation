@@ -22,7 +22,9 @@ public enum RateLimitRetry {
             $0.key.caseInsensitiveCompare("Retry-After") == .orderedSame
         }?.value.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard let raw, !raw.isEmpty, raw.allSatisfy({ $0 >= "0" && $0 <= "9" }) else {
+        // ASCII digits only: a Character comparison would let a digit carrying a combining mark
+        // through the guard and into the saturating branch below
+        guard let raw, !raw.isEmpty, raw.unicodeScalars.allSatisfy({ (48 ... 57).contains($0.value) }) else {
             return self.defaultWaitNanoseconds
         }
 

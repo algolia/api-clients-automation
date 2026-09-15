@@ -74,6 +74,8 @@ final class RateLimitRetryTests: XCTestCase {
         XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["retry-after": "3"]), 3_000_000_000)
         XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": " 4 "]), 4_000_000_000)
         XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "007"]), 7_000_000_000)
+        // a digit with a combining mark is one Character but not a number: junk, so the 1s fallback
+        XCTAssertEqual(RateLimitRetry.waitNanoseconds(from: ["Retry-After": "1\u{0301}"]), 1_000_000_000)
     }
 
     func testParseRetryAfterCapsAtTheLongestSupportedWait() {
@@ -158,6 +160,20 @@ final class RateLimitRetryTests: XCTestCase {
         XCTAssertEqual(waits, [1_000_000_000, 1_000_000_000, 1_000_000_000])
     }
 
+    func testWaitedOut429StaysVisibleWhenEveryHostFails() async throws {
+        let builder = RateLimitRequestBuilder(statuses: [429, 500, 500], retryAfter: "1")
+        let client = try self.makeClient(builder: builder, exposeIntermediateErrors: true) { _ in }
+
+        do {
+            _ = try await client.customGet(path: "1/test")
+            XCTFail("expected noReachableHosts")
+        } catch let AlgoliaError.noReachableHosts(intermediateErrors, _) {
+            XCTAssertEqual(intermediateErrors.count, 3)
+            XCTAssertTrue(RateLimitRetry.isRateLimited(intermediateErrors[0]))
+        }
+        XCTAssertEqual(builder.urls.count, 3)
+    }
+
     func testExhaustsMaxRateLimitRetries() async throws {
         let builder = RateLimitRequestBuilder(statuses: [429, 429, 429, 429], retryAfter: "1")
         let client = try self.makeClient(builder: builder, extraHost: false) { _ in }
@@ -175,6 +191,7 @@ final class RateLimitRetryTests: XCTestCase {
         builder: RateLimitRequestBuilder,
         extraHost: Bool = true,
         maxRetries: Int = RateLimitRetry.defaultMaxRetries,
+        exposeIntermediateErrors: Bool = false,
         sleep: @escaping (UInt64) async throws -> Void
     ) throws -> SearchClient {
         var hosts = [RetryableHost(url: URL(string: "http://host-a.example")!)]
@@ -187,7 +204,11 @@ final class RateLimitRetryTests: XCTestCase {
             hosts: hosts,
             maxRateLimitRetries: maxRetries
         )
-        let transporter = Transporter(configuration: configuration, requestBuilder: builder)
+        let transporter = Transporter(
+            configuration: configuration,
+            requestBuilder: builder,
+            exposeIntermediateErrors: exposeIntermediateErrors
+        )
         transporter.sleep = sleep
         return SearchClient(configuration: configuration, transporter: transporter)
     }

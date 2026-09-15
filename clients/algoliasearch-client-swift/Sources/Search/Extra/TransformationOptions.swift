@@ -45,6 +45,8 @@ public struct TransformationOptions {
     /// - parameter hosts: Override the hosts.
     /// - parameter compression: Override the compression.
     /// - parameter defaultHeaders: Additional headers merged into every request.
+    /// - parameter maxRateLimitRetries: Override how many times a 429 is waited out on the same host (Ingestion
+    /// default: 3).
     public init(
         region: Region,
         readTimeout: TimeInterval? = nil,

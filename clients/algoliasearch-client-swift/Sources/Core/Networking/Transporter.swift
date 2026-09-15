@@ -156,6 +156,9 @@ open class Transporter {
                        RateLimitRetry.isRateLimited(httpError),
                        rateLimitRetriesLeft > 0 {
                         rateLimitRetriesLeft -= 1
+                        // keep the waited-out 429 (and its Correlation-ID) visible if the request
+                        // later dies on the other hosts, as the other clients do
+                        intermediateErrors.append(error)
                         let wait = RateLimitRetry.waitNanoseconds(from: httpError.headers)
                         try await self.sleep(wait)
                         continue
