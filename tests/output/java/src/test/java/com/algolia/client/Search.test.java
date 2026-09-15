@@ -53,6 +53,14 @@ class SearchClientClientTests {
       .build();
   }
 
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, int maxRateLimitRetries) {
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .setMaxRateLimitRetries(maxRateLimitRetries)
+      .build();
+  }
+
   @Test
   @DisplayName("calls api with correct read host")
   void apiTest0() {
@@ -407,6 +415,145 @@ class SearchClientClientTests {
         JSONAssert.assertEquals("{\"message\":\"success server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
       );
     });
+  }
+
+  @Test
+  @DisplayName("retries 429 on the same host using Retry-After")
+  void apiTest13() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6697
+          ),
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6698
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/rate-limit/retry-after/java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"message\":\"ok rate limit retry\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("retries 429 with a 1s wait when Retry-After is missing")
+  void apiTest14() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6697
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/rate-limit/missing-header/java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"message\":\"ok rate limit retry\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("retries 429 with a 1s wait when Retry-After is invalid")
+  void apiTest15() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6697
+          )
+        ),
+        false
+      )
+    );
+
+    Object res = client.customGet("1/test/rate-limit/invalid-header/java");
+
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"message\":\"ok rate limit retry\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("returns 429 after maxRateLimitRetries is used up")
+  void apiTest16() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6697
+          )
+        ),
+        false
+      )
+    );
+
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        Object res = client.customGet("1/test/rate-limit/exhausted/java");
+      });
+      assertEquals("Status Code: 429 - {\"message\":\"Too many requests\"}", exception.getMessage());
+    }
+  }
+
+  @Test
+  @DisplayName("fails on the first 429 when maxRateLimitRetries is 0")
+  void apiTest17() {
+    SearchClient client = new SearchClient(
+      "test-app-id",
+      "test-api-key",
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6697
+          )
+        ),
+        false,
+        0
+      )
+    );
+
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        Object res = client.customGet("1/test/rate-limit/zero-retries/java");
+      });
+      assertEquals("Status Code: 429 - {\"message\":\"Too many requests\"}", exception.getMessage());
+    }
   }
 
   @Test
