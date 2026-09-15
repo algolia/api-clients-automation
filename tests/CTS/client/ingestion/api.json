@@ -1,7 +1,7 @@
 [
   {
     "testName": "can handle HTML error",
-    "skipLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "skipLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -25,7 +25,6 @@
         },
         "expected": {
           "error": {
-            "ruby": "429: Too Many Requests",
             "scala": "<html><body>429 Too Many Requests</body></html>"
           }
         }
@@ -34,7 +33,7 @@
   },
   {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -67,6 +66,7 @@
             "kotlin": "Client request\\\\(GET http://%localhost%:6676/1/html-error\\\\) invalid: 429 Too Many Requests. Text: \\\"<html><body>429 Too Many Requests</body></html>\\\"",
             "php": "429: Too Many Requests",
             "python": "Too Many Requests",
+            "ruby": "429: Too Many Requests",
             "swift": "HTTP error: Status code: 429 Message: No message"
           }
         }

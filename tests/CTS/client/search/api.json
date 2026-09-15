@@ -418,7 +418,7 @@
   },
   {
     "testName": "retries 429 on the same host using Retry-After",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -453,7 +453,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is missing",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -485,7 +485,7 @@
   },
   {
     "testName": "retries 429 with a 1s wait when Retry-After is invalid",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -517,7 +517,7 @@
   },
   {
     "testName": "returns 429 after maxRateLimitRetries is used up",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -548,6 +548,7 @@
             "kotlin": "Client request\\\\(GET http://%localhost%:6697/1/test/rate-limit/exhausted/kotlin\\\\) invalid: 429 Too Many Requests. Text: \\\"\\\\{\\\"message\\\":\\\"Too many requests\\\"\\\\}\\\"",
             "php": "Too many requests",
             "python": "Too many requests",
+            "ruby": "429: Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
@@ -556,7 +557,7 @@
   },
   {
     "testName": "fails on the first 429 when maxRateLimitRetries is 0",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "swift"],
+    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -588,6 +589,7 @@
             "kotlin": "Client request\\\\(GET http://%localhost%:6697/1/test/rate-limit/zero-retries/kotlin\\\\) invalid: 429 Too Many Requests. Text: \\\"\\\\{\\\"message\\\":\\\"Too many requests\\\"\\\\}\\\"",
             "php": "Too many requests",
             "python": "Too many requests",
+            "ruby": "429: Too many requests",
             "swift": "HTTP error: Status code: 429 Message: Too many requests"
           }
         }
