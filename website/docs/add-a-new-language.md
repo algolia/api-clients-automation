@@ -66,6 +66,9 @@ HTTP 429 is not a host-failover case. Your transporter should wait on the **same
 - [429 wait/retry on the Python transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-python/algoliasearch/http/transporter.py)
 - [429 wait/retry on the PHP ApiWrapper](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-php/lib/RetryStrategy/ApiWrapper.php)
 - [429 wait/retry on the C# transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-csharp/algoliasearch/Transport/HttpTransport.cs)
+- [429 wait/retry on the Go transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-go/algolia/transport/transport.go)
+- [429 wait/retry on the Swift transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-swift/Sources/Core/Networking/Transporter.swift)
+- [429 wait/retry on the Java RetryStrategy](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/internal/interceptors/RetryStrategy.java)
 
 ### Different client hosts
 
