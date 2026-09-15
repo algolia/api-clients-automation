@@ -36,6 +36,8 @@ public final class RetryStrategy implements Interceptor {
 
   private static final int RATE_LIMIT_STATUS_CODE = 429;
 
+  private static final String RATE_LIMIT_REASON_PHRASE = "Too Many Requests";
+
   private static final long DEFAULT_RATE_LIMIT_WAIT_MILLIS = 1000L;
 
   private static final Pattern WHOLE_SECONDS = Pattern.compile("\\d+");
@@ -76,7 +78,7 @@ public final class RetryStrategy implements Interceptor {
         while (isRateLimited(response) && rateLimitRetriesLeft > 0) {
           rateLimitRetriesLeft--;
           long waitMillis = rateLimitWaitMillis(response.header("Retry-After"));
-          errors.add(new AlgoliaApiException(response.message(), response.code(), response.header("Correlation-ID")));
+          errors.add(rateLimitError(response));
           response.close();
           sleep(waitMillis);
           response = processRequest(chain, request, currentHost);
@@ -134,6 +136,12 @@ public final class RetryStrategy implements Interceptor {
   /** Determines if a response was rate limited. */
   private static boolean isRateLimited(@Nonnull Response response) {
     return response.code() == RATE_LIMIT_STATUS_CODE;
+  }
+
+  /** The waited-out 429 as recorded among the retry errors. */
+  private static AlgoliaApiException rateLimitError(@Nonnull Response response) {
+    String reason = response.message().isEmpty() ? RATE_LIMIT_REASON_PHRASE : response.message();
+    return new AlgoliaApiException(reason, response.code(), response.header("Correlation-ID"));
   }
 
   /**

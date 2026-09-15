@@ -138,6 +138,18 @@ class RateLimitRetryTest {
   }
 
   @Test
+  @DisplayName("a waited-out 429 keeps its reason phrase when the transport carries none")
+  void keepsAReasonPhraseWhenTheTransportCarriesNone() throws Exception {
+    FakeServer server = new FakeServer(rateLimitedWithoutReasonPhrase(), serverError());
+
+    try (SearchClient client = searchClient(server, ClientOptions.builder())) {
+      AlgoliaRetryException exception = assertThrows(AlgoliaRetryException.class, () -> client.customGet("1/test"));
+
+      assertEquals("Status Code: 429 - Too Many Requests", exception.getErrors().get(0).getMessage());
+    }
+  }
+
+  @Test
   @DisplayName("an HTML 429 still surfaces once maxRateLimitRetries is used up")
   void surfacesAnHtml429OnceRetriesAreUsedUp() throws Exception {
     FakeServer server = new FakeServer(rateLimitedHtml());
@@ -222,6 +234,10 @@ class RateLimitRetryTest {
 
   private static Reply rateLimited(String retryAfter, String correlationId) {
     return new Reply(429, "Too Many Requests", "application/json", JSON_BODY, retryAfter, correlationId);
+  }
+
+  private static Reply rateLimitedWithoutReasonPhrase() {
+    return new Reply(429, "", "application/json", JSON_BODY, "1", null);
   }
 
   private static Reply rateLimitedHtml() {
