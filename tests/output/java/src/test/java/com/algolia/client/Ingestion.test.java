@@ -54,8 +54,16 @@ class IngestionClientClientTests {
       .build();
   }
 
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, int maxRateLimitRetries) {
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .setMaxRateLimitRetries(maxRateLimitRetries)
+      .build();
+  }
+
   @Test
-  @DisplayName("can handle HTML error")
+  @DisplayName("can handle HTML error when rate-limit retries are disabled")
   void apiTest0() {
     IngestionClient client = new IngestionClient(
       "test-app-id",
@@ -70,7 +78,8 @@ class IngestionClientClientTests {
             6676
           )
         ),
-        false
+        false,
+        0
       )
     );
 
