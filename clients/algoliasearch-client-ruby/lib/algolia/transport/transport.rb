@@ -164,13 +164,17 @@ module Algolia
         )
       end
 
-      # How many 429s are waited out per request: nil falls back to the default and
-      # a negative value behaves like 0.
+      # How many 429s are waited out per request: nil falls back to the default, a
+      # negative value behaves like 0, and so does false, which a caller may pass to
+      # mean "no retries" (only nil means unset, as for request_id_enabled).
       #
       # @return [Integer]
       #
       def max_rate_limit_retries
-        [@config.max_rate_limit_retries || Defaults::MAX_RATE_LIMIT_RETRIES, 0].max
+        retries = @config.max_rate_limit_retries
+        return Defaults::MAX_RATE_LIMIT_RETRIES if retries.nil?
+
+        [retries || 0, 0].max
       end
 
       # Retry-After as a wait in whole seconds. Only a positive whole number of ASCII

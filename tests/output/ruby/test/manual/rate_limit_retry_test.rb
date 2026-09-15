@@ -142,6 +142,15 @@ class TestRateLimitRetry < Test::Unit::TestCase
     assert_equal(1, @requester.attempts.length)
   end
 
+  def test_false_disables_retries_like_zero
+    client = client_for({"host-a" => [rate_limited]}, max_rate_limit_retries: false)
+
+    error = assert_raise(Algolia::AlgoliaHttpError) { client.custom_get("1/test") }
+    assert_equal(429, error.code)
+    assert_equal([], @waits)
+    assert_equal(1, @requester.attempts.length)
+  end
+
   def test_negative_retries_behave_like_zero
     client = client_for({"host-a" => [rate_limited, OK]}, max_rate_limit_retries: -1)
 
