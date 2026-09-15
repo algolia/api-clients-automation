@@ -1,37 +1,6 @@
 [
   {
-    "testName": "can handle HTML error",
-    "skipLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "scala", "swift"],
-    "autoCreateClient": false,
-    "steps": [
-      {
-        "type": "createClient",
-        "parameters": {
-          "appId": "test-app-id",
-          "apiKey": "test-api-key",
-          "region": "us",
-          "customHosts": [
-            {
-              "port": 6676
-            }
-          ]
-        }
-      },
-      {
-        "type": "method",
-        "method": "customGet",
-        "parameters": {
-          "path": "1/html-error"
-        },
-        "expected": {
-          "error": {}
-        }
-      }
-    ]
-  },
-  {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "scala", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
