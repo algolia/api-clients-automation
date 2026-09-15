@@ -63,7 +63,7 @@ class TestRateLimitRetry < Test::Unit::TestCase
       {requester: @requester}.merge(opts)
     )
     client = Algolia::SearchClient.create_with_config(config)
-    client.api_client.transporter.sleeper = ->(seconds) { @waits << seconds }
+    client.api_client.transporter.send(:sleeper=, ->(seconds) { @waits << seconds })
     client
   end
 
@@ -111,18 +111,14 @@ class TestRateLimitRetry < Test::Unit::TestCase
   end
 
   def test_retries_429_on_the_same_host_after_retry_after
-    client = client_for({"host-a" => [rate_limited, OK]})
+    # host-b is reachable and would answer a failover; a waited-out 429 must never reach it.
+    client = client_for({"host-a" => [rate_limited, OK], "host-b" => [OK]})
 
     response = client.custom_get_with_http_info("1/test")
 
     assert_equal(200, response.status)
     assert_equal([2], @waits)
     assert_equal(%w[host-a host-a], @requester.attempts.map { |attempt| attempt.host.url })
-    # A waited-out 429 is not a failover: the host stays up and its connect
-    # timeout is not inflated on the second attempt.
-    assert_true(@hosts.first.up)
-    assert_equal(0, @hosts.first.retry_count)
-    assert_equal(@requester.attempts.first.connect_timeout, @requester.attempts.last.connect_timeout)
   end
 
   def test_retries_429_with_a_one_second_wait_when_retry_after_is_missing

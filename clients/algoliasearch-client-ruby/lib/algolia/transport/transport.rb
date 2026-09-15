@@ -34,10 +34,10 @@ module Algolia
       end
 
       # Callable waiting the given number of whole seconds before a 429 is retried,
-      # Kernel#sleep by default. Replace it in tests to observe the waits without
-      # spending wall-clock time.
-      # @api private
+      # Kernel#sleep by default. Private on purpose: it is a test seam, not gem
+      # surface, and the tests reach it with send(:sleeper=, ...).
       attr_writer :sleeper
+      private :sleeper=
 
       # Whether the transport mints Request-ID headers. Resolved per request so a
       # caller can flip config.request_id_enabled at any time, like every other
