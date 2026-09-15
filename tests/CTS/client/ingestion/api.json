@@ -1,39 +1,6 @@
 [
   {
-    "testName": "can handle HTML error",
-    "skipLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
-    "autoCreateClient": false,
-    "steps": [
-      {
-        "type": "createClient",
-        "parameters": {
-          "appId": "test-app-id",
-          "apiKey": "test-api-key",
-          "region": "us",
-          "customHosts": [
-            {
-              "port": 6676
-            }
-          ]
-        }
-      },
-      {
-        "type": "method",
-        "method": "customGet",
-        "parameters": {
-          "path": "1/html-error"
-        },
-        "expected": {
-          "error": {
-            "scala": "<html><body>429 Too Many Requests</body></html>"
-          }
-        }
-      }
-    ]
-  },
-  {
     "testName": "can handle HTML error when rate-limit retries are disabled",
-    "onlyLanguages": ["csharp", "dart", "go", "java", "javascript", "kotlin", "php", "python", "ruby", "swift"],
     "autoCreateClient": false,
     "steps": [
       {
@@ -67,6 +34,7 @@
             "php": "429: Too Many Requests",
             "python": "Too Many Requests",
             "ruby": "429: Too Many Requests",
+            "scala": "<html><body>429 Too Many Requests</body></html>",
             "swift": "HTTP error: Status code: 429 Message: No message"
           }
         }
