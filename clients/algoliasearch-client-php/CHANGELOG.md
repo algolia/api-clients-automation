@@ -1,3 +1,7 @@
+## [4.50.0](https://github.com/algolia/algoliasearch-client-php/compare/4.49.0...4.50.0)
+
+- [7891d38a10](https://github.com/algolia/api-clients-automation/commit/7891d38a10) feat(php): wait and retry on 429 with Retry-After ([#6975](https://github.com/algolia/api-clients-automation/pull/6975)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [4.49.0](https://github.com/algolia/algoliasearch-client-php/compare/4.48.0...4.49.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.

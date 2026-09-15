@@ -1,3 +1,7 @@
+## [7.50.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.49.0...7.50.0)
+
+- [5478923689](https://github.com/algolia/api-clients-automation/commit/5478923689) feat(csharp): wait and retry on 429 with Retry-After ([#6976](https://github.com/algolia/api-clients-automation/pull/6976)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [7.49.0](https://github.com/algolia/algoliasearch-client-csharp/compare/7.48.0...7.49.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
