@@ -18,6 +18,8 @@ public struct AgentStudioClientConfiguration: BaseConfiguration, Credentials {
     public var defaultHeaders: [String: String]?
     public var hosts: [RetryableHost]
     public let compression: CompressionAlgorithm
+    /// How many times a 429 is waited out on the same host. Default 3; 0 fails on the first 429.
+    public var maxRateLimitRetries: Int
 
     public init(
         appID: String,
@@ -27,7 +29,8 @@ public struct AgentStudioClientConfiguration: BaseConfiguration, Credentials {
         logLevel: LogLevel = DefaultConfiguration.default.logLevel,
         defaultHeaders: [String: String]? = DefaultConfiguration.default.defaultHeaders,
         hosts: [RetryableHost]? = nil,
-        compression: CompressionAlgorithm = .none
+        compression: CompressionAlgorithm = .none,
+        maxRateLimitRetries: Int = RateLimitRetry.defaultMaxRetries
     ) throws {
         guard !appID.isEmpty else {
             throw AlgoliaError.invalidCredentials("appId")
@@ -48,6 +51,7 @@ public struct AgentStudioClientConfiguration: BaseConfiguration, Credentials {
             "Content-Type": "application/json",
         ].merging(defaultHeaders ?? [:]) { _, new in new }
         self.compression = compression
+        self.maxRateLimitRetries = maxRateLimitRetries
 
         UserAgentController.append(UserAgent(title: "AgentStudio", version: Version.current.description))
 
