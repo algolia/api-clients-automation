@@ -19,6 +19,7 @@ final class ABTest {
     required this.endAt,
     this.stoppedAt,
     required this.name,
+    required this.hypothesis,
     required this.status,
     required this.variants,
     this.configuration,
@@ -49,6 +50,10 @@ final class ABTest {
   @JsonKey(name: r'name')
   final String name;
 
+  /// Expected outcome of the A/B test.
+  @JsonKey(name: r'hypothesis')
+  final String hypothesis;
+
   @JsonKey(name: r'status')
   final Status status;
 
@@ -72,6 +77,7 @@ final class ABTest {
           other.endAt == endAt &&
           other.stoppedAt == stoppedAt &&
           other.name == name &&
+          other.hypothesis == hypothesis &&
           other.status == status &&
           other.variants == variants &&
           other.configuration == configuration &&
@@ -85,6 +91,7 @@ final class ABTest {
       endAt.hashCode +
       (stoppedAt == null ? 0 : stoppedAt.hashCode) +
       name.hashCode +
+      hypothesis.hashCode +
       status.hashCode +
       variants.hashCode +
       configuration.hashCode +

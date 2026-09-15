@@ -25,8 +25,12 @@ package algoliasearch.abtestingv3
 
 /** MetricResult
   *
+  * @param name
+  *   Metric name. Revenue per search results use `revenue_per_search`.
   * @param updatedAt
   *   Date and time when the metric was last updated, in RFC 3339 format.
+  * @param value
+  *   Metric value. For `revenue_per_search`, this is the winsorized mean revenue per search in the specified currency.
   * @param valueCIHigh
   *   The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
   *   either the relative ratio or relative difference between the metric values for the control and the variant.
@@ -41,7 +45,7 @@ package algoliasearch.abtestingv3
   *   PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the
   *   current variant based on the control.
   * @param dimension
-  *   Dimension defined during test creation.
+  *   Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
   * @param criticalValue
   *   The value that was computed during error correction. It is used to determine significance of the metric pValue.
   *   The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given
@@ -59,5 +63,6 @@ case class MetricResult(
     dimension: Option[String] = scala.None,
     metadata: Option[MetricMetadata] = scala.None,
     criticalValue: Option[Double] = scala.None,
-    significant: Option[Boolean] = scala.None
+    significant: Option[Boolean] = scala.None,
+    bayesian: Option[BayesianMetricResult] = scala.None
 )

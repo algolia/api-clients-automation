@@ -39,6 +39,17 @@ describe('addABTests', () => {
   });
 });
 
+describe('applyVariantSettings', () => {
+  test('applyVariantSettings', async () => {
+    const req = (await client.applyVariantSettings({ id: 42, variantId: 2 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2/apply');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
@@ -323,6 +334,26 @@ describe('getABTest', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('getABTest with both inference methods', async () => {
+    const req = (await client.getABTest({ id: 42, methods: ['frequentist', 'bayesian'] })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ methods: 'frequentist%2Cbayesian' });
+  });
+});
+
+describe('getABTestSettings', () => {
+  test('getABTestSettings', async () => {
+    const req = (await client.getABTestSettings({ id: 42 })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('getTimeseries', () => {
@@ -333,6 +364,26 @@ describe('getTimeseries', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('getTimeseries with Bayesian revenue per search', async () => {
+    const req = (await client.getTimeseries({
+      id: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: ['revenue_per_search'],
+      methods: ['bayesian'],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/timeseries');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: 'revenue_per_search',
+      methods: 'bayesian',
+    });
   });
 });
 
@@ -353,6 +404,7 @@ describe('listABTests', () => {
       indexPrefix: 'cts_e2e ab',
       indexSuffix: 't',
       direction: 'asc',
+      methods: ['frequentist', 'bayesian'],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/3/abtests');
@@ -364,7 +416,36 @@ describe('listABTests', () => {
       indexPrefix: 'cts_e2e%20ab',
       indexSuffix: 't',
       direction: 'asc',
+      methods: 'frequentist%2Cbayesian',
     });
+  });
+});
+
+describe('saveVariantSettings', () => {
+  test('saveVariantSettings', async () => {
+    const req = (await client.saveVariantSettings({
+      id: 42,
+      variantId: 2,
+      saveSettingsRequest: { saveFeaturesSettings: true },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ saveFeaturesSettings: true });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('save settings with an empty options object', async () => {
+    const req = (await client.saveVariantSettings({
+      id: 42,
+      variantId: 2,
+      saveSettingsRequest: {},
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/settings/2');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 

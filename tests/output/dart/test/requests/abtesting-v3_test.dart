@@ -44,6 +44,28 @@ void main() {
     ),
   );
 
+  // applyVariantSettings
+  test(
+    'applyVariantSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.applyVariantSettings(
+        id: 42,
+        variantId: 2,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2/apply');
+        expect(request.method, 'post');
+        expect(request.body, {});
+      },
+    ),
+  );
+
   // customDelete
   test(
     'allow del method for a custom path with minimal parameters',
@@ -664,6 +686,54 @@ void main() {
     ),
   );
 
+  // getABTest
+  test(
+    'getABTest with both inference methods',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getABTest(
+        id: 42,
+        methods: [
+          AnalysisMethod.fromJson("frequentist"),
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"methods":"frequentist%2Cbayesian"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getABTestSettings
+  test(
+    'getABTestSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getABTestSettings(
+        id: 42,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getTimeseries
   test(
     'getTimeseries',
@@ -680,6 +750,37 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/3/abtests/42/timeseries');
         expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getTimeseries
+  test(
+    'getTimeseries with Bayesian revenue per search',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTimeseries(
+        id: 42,
+        startDate: "1999-09-19",
+        endDate: "2001-01-01",
+        metric: [
+          MetricName.fromJson("revenue_per_search"),
+        ],
+        methods: [
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/timeseries');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""");
         expect(request.body, null);
       },
     ),
@@ -720,13 +821,65 @@ void main() {
         indexPrefix: "cts_e2e ab",
         indexSuffix: "t",
         direction: Direction.fromJson("asc"),
+        methods: [
+          AnalysisMethod.fromJson("frequentist"),
+          AnalysisMethod.fromJson("bayesian"),
+        ],
       ),
       intercept: (request) {
         expectPath(request.path, '/3/abtests');
         expect(request.method, 'get');
         expectParams(request.queryParameters,
-            """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}""");
+            """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}""");
         expect(request.body, null);
+      },
+    ),
+  );
+
+  // saveVariantSettings
+  test(
+    'saveVariantSettings',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveVariantSettings(
+        id: 42,
+        variantId: 2,
+        saveSettingsRequest: SaveSettingsRequest(
+          saveFeaturesSettings: true,
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2');
+        expect(request.method, 'post');
+        expectBody(request.body, """{"saveFeaturesSettings":true}""");
+      },
+    ),
+  );
+
+  // saveVariantSettings
+  test(
+    'save settings with an empty options object',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.saveVariantSettings(
+        id: 42,
+        variantId: 2,
+        saveSettingsRequest: SaveSettingsRequest(),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/settings/2');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
       },
     ),
   );

@@ -17,6 +17,7 @@ ABTest _$ABTestFromJson(Map<String, dynamic> json) => $checkedCreate(
           endAt: $checkedConvert('endAt', (v) => v as String),
           stoppedAt: $checkedConvert('stoppedAt', (v) => v as String?),
           name: $checkedConvert('name', (v) => v as String),
+          hypothesis: $checkedConvert('hypothesis', (v) => v as String),
           status:
               $checkedConvert('status', (v) => $enumDecode(_$StatusEnumMap, v)),
           variants: $checkedConvert(
@@ -55,6 +56,7 @@ Map<String, dynamic> _$ABTestToJson(ABTest instance) {
 
   writeNotNull('stoppedAt', instance.stoppedAt);
   val['name'] = instance.name;
+  val['hypothesis'] = instance.hypothesis;
   val['status'] = instance.status.toJson();
   val['variants'] = instance.variants.map((e) => e.toJson()).toList();
   writeNotNull('configuration', instance.configuration?.toJson());

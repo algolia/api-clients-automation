@@ -40,6 +40,33 @@ func SnippetForAddABTestsOfAbtestingV3() {
 	// SEPARATOR<
 }
 
+func SnippetForApplyVariantSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the applyVariantSettings method.
+
+	   applyVariantSettings
+	*/
+
+	// >SEPARATOR applyVariantSettings default
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(
+		42, 2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// SEPARATOR<
+}
+
 func SnippetForCustomDeleteOfAbtestingV3() {
 	/*
 	   Snippet for the customDelete method.
@@ -647,7 +674,7 @@ func SnippetForGetABTestOfAbtestingV3() {
 	   getABTest
 	*/
 
-	// >SEPARATOR getABTest default
+	// >SEPARATOR getABTest getABTest
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -669,6 +696,65 @@ func SnippetForGetABTestOfAbtestingV3() {
 	// SEPARATOR<
 }
 
+func SnippetForGetABTestOfAbtestingV31() {
+	/*
+	   Snippet for the getABTest method.
+
+	   getABTest with both inference methods
+	*/
+
+	// >SEPARATOR getABTest getABTest with both inference methods
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetABTest(client.NewApiGetABTestRequest(
+		42).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetABTestSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the getABTestSettings method.
+
+	   getABTestSettings
+	*/
+
+	// >SEPARATOR getABTestSettings default
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetABTestSettings(client.NewApiGetABTestSettingsRequest(
+		42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForGetTimeseriesOfAbtestingV3() {
 	/*
 	   Snippet for the getTimeseries method.
@@ -676,7 +762,7 @@ func SnippetForGetTimeseriesOfAbtestingV3() {
 	   getTimeseries
 	*/
 
-	// >SEPARATOR getTimeseries default
+	// >SEPARATOR getTimeseries getTimeseries
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -687,6 +773,37 @@ func SnippetForGetTimeseriesOfAbtestingV3() {
 	// Call the API
 	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
 		42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetTimeseriesOfAbtestingV31() {
+	/*
+	   Snippet for the getTimeseries method.
+
+	   getTimeseries with Bayesian revenue per search
+	*/
+
+	// >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+		[]abtestingV3.MetricName{abtestingV3.MetricName("revenue_per_search")}).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -748,7 +865,9 @@ func SnippetForListABTestsOfAbtestingV31() {
 			WithLimit(21).
 			WithIndexPrefix("cts_e2e ab").
 			WithIndexSuffix("t").
-			WithDirection(abtestingV3.Direction("asc")),
+			WithDirection(abtestingV3.Direction("asc")).
+			WithMethods(
+				[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}),
 	)
 	if err != nil {
 		// handle the eventual error
@@ -758,6 +877,62 @@ func SnippetForListABTestsOfAbtestingV31() {
 	// >LOG
 	// print the response
 	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSaveVariantSettingsOfAbtestingV3() {
+	/*
+	   Snippet for the saveVariantSettings method.
+
+	   saveVariantSettings
+	*/
+
+	// >SEPARATOR saveVariantSettings saveVariantSettings
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+		42, 2,
+		abtestingV3.NewEmptySaveSettingsRequest().SetSaveFeaturesSettings(true)))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// SEPARATOR<
+}
+
+func SnippetForSaveVariantSettingsOfAbtestingV31() {
+	/*
+	   Snippet for the saveVariantSettings method.
+
+	   save settings with an empty options object
+	*/
+
+	// >SEPARATOR saveVariantSettings save settings with an empty options object
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	err = client.SaveVariantSettings(client.NewApiSaveVariantSettingsRequest(
+		42, 2,
+		abtestingV3.NewEmptySaveSettingsRequest()))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
 	// SEPARATOR<
 }
 

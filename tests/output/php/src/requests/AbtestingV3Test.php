@@ -63,6 +63,24 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('applyVariantSettings')]
+    public function testApplyVariantSettings(): void
+    {
+        $client = $this->getClient();
+        $client->applyVariantSettings(
+            42,
+            2,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2/apply',
+                'method' => 'POST',
+                'body' => json_decode(''),
+            ],
+        ]);
+    }
+
     #[TestDox('allow del method for a custom path with minimal parameters')]
     public function testCustomDelete(): void
     {
@@ -551,6 +569,46 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getABTest with both inference methods')]
+    public function testGetABTest1(): void
+    {
+        $client = $this->getClient();
+        $client->getABTest(
+            42,
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"methods":"frequentist%2Cbayesian"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('getABTestSettings')]
+    public function testGetABTestSettings(): void
+    {
+        $client = $this->getClient();
+        $client->getABTestSettings(
+            42,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
     #[TestDox('getTimeseries')]
     public function testGetTimeseries(): void
     {
@@ -564,6 +622,32 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'path' => '/3/abtests/42/timeseries',
                 'method' => 'GET',
                 'body' => null,
+            ],
+        ]);
+    }
+
+    #[TestDox('getTimeseries with Bayesian revenue per search')]
+    public function testGetTimeseries1(): void
+    {
+        $client = $this->getClient();
+        $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/timeseries',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}', true),
             ],
         ]);
     }
@@ -593,6 +677,11 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             'cts_e2e ab',
             't',
             'asc',
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         $this->assertRequests([
@@ -600,7 +689,46 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'path' => '/3/abtests',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}', true),
+                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('saveVariantSettings')]
+    public function testSaveVariantSettings(): void
+    {
+        $client = $this->getClient();
+        $client->saveVariantSettings(
+            42,
+            2,
+            ['saveFeaturesSettings' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2',
+                'method' => 'POST',
+                'body' => json_decode('{"saveFeaturesSettings":true}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('save settings with an empty options object')]
+    public function testSaveVariantSettings1(): void
+    {
+        $client = $this->getClient();
+        $client->saveVariantSettings(
+            42,
+            2,
+            [],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/settings/2',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
             ],
         ]);
     }

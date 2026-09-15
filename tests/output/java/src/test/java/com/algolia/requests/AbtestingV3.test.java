@@ -72,6 +72,18 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("applyVariantSettings")
+  void applyVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.applyVariantSettings(42, 2);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2/apply", req.path);
+    assertEquals("POST", req.method);
+    assertEquals("{}", req.body);
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {
@@ -746,6 +758,45 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getABTest with both inference methods")
+  void getABTestTest1() {
+    assertDoesNotThrow(() -> {
+      client.getABTest(42, Arrays.asList(AnalysisMethod.FREQUENTIST, AnalysisMethod.BAYESIAN));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"methods\":\"frequentist%2Cbayesian\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("getABTestSettings")
+  void getABTestSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.getABTestSettings(42);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getTimeseries")
   void getTimeseriesTest() {
     assertDoesNotThrow(() -> {
@@ -755,6 +806,39 @@ class AbtestingV3ClientRequestsTests {
     assertEquals("/3/abtests/42/timeseries", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getTimeseries with Bayesian revenue per search")
+  void getTimeseriesTest1() {
+    assertDoesNotThrow(() -> {
+      client.getTimeseries(
+        42,
+        "1999-09-19",
+        "2001-01-01",
+        Arrays.asList(MetricName.REVENUE_PER_SEARCH),
+        Arrays.asList(AnalysisMethod.BAYESIAN)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/timeseries", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"revenue_per_search\",\"methods\":\"bayesian\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
   }
 
   @Test
@@ -773,7 +857,7 @@ class AbtestingV3ClientRequestsTests {
   @DisplayName("listABTests with parameters")
   void listABTestsTest1() {
     assertDoesNotThrow(() -> {
-      client.listABTests(0, 21, "cts_e2e ab", "t", Direction.ASC);
+      client.listABTests(0, 21, "cts_e2e ab", "t", Direction.ASC, Arrays.asList(AnalysisMethod.FREQUENTIST, AnalysisMethod.BAYESIAN));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/3/abtests", req.path);
@@ -782,7 +866,7 @@ class AbtestingV3ClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\",\"direction\":\"asc\"}",
+        "{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\",\"direction\":\"asc\",\"methods\":\"frequentist%2Cbayesian\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -794,6 +878,30 @@ class AbtestingV3ClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("saveVariantSettings")
+  void saveVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"saveFeaturesSettings\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("save settings with an empty options object")
+  void saveVariantSettingsTest1() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest());
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test

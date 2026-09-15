@@ -5,13 +5,17 @@ package algoliasearch.api
 
 import algoliasearch.abtestingv3.ABTest
 import algoliasearch.abtestingv3.ABTestResponse
+import algoliasearch.abtestingv3.ABTestSettingsResponse
 import algoliasearch.abtestingv3.AddABTestsRequest
+import algoliasearch.abtestingv3.AnalysisMethod._
+import algoliasearch.abtestingv3.ConflictResponse
 import algoliasearch.abtestingv3.Direction._
 import algoliasearch.abtestingv3.ErrorBase
 import algoliasearch.abtestingv3.EstimateABTestRequest
 import algoliasearch.abtestingv3.EstimateABTestResponse
 import algoliasearch.abtestingv3.ListABTestsResponse
 import algoliasearch.abtestingv3.MetricName._
+import algoliasearch.abtestingv3.SaveSettingsRequest
 import algoliasearch.abtestingv3.Timeseries
 import algoliasearch.abtestingv3._
 import algoliasearch.ApiClient
@@ -124,6 +128,60 @@ class AbtestingV3Client(
       .withMethod("POST")
       .withPath(s"/3/abtests")
       .withBody(addABTestsRequest)
+      .build()
+  }
+
+  /** Applies the captured settings of the given variant to the control index. The settings must first be captured with
+    * the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this
+    * operation with the control variant (variant 1). Settings can be applied up to 14 days after the A/B test ends, and
+    * reverted up to 15 days after. Later requests return `400`. Each set of captured settings can only be applied once,
+    * and settings that were reverted can't be applied again. Both cases return `400`. The control index must not be in
+    * use by an active A/B test. Otherwise, the request returns `422`.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def applyVariantSettings(id: Int, variantId: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Unit] = Future {
+    execute[Unit](applyVariantSettingsHttpRequest(id = id, variantId = variantId), requestOptions)
+  }
+
+  /** Variant of `applyVariantSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def applyVariantSettingsWithHTTPInfo(id: Int, variantId: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](applyVariantSettingsHttpRequest(id = id, variantId = variantId), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `applyVariantSettings` and
+    * `applyVariantSettingsWithHTTPInfo`.
+    */
+  private def applyVariantSettingsHttpRequest(id: Int, variantId: Int): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `applyVariantSettings`.")
+    requireNotNull(variantId, "Parameter `variantId` is required when calling `applyVariantSettings`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/abtests/${escape(id)}/settings/${escape(variantId)}/apply")
       .build()
   }
 
@@ -421,11 +479,16 @@ class AbtestingV3Client(
     *
     * @param id
     *   Unique A/B test identifier.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
-  def getABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[ABTest] =
-    Future {
-      execute[ABTest](getABTestHttpRequest(id = id), requestOptions)
-    }
+  def getABTest(id: Int, methods: Option[Seq[AnalysisMethod]] = None, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[ABTest] = Future {
+    execute[ABTest](getABTestHttpRequest(id = id, methods = methods), requestOptions)
+  }
 
   /** Variant of `getABTest` that returns the full HTTP response: status code, headers, raw body and deserialized data.
     *
@@ -434,22 +497,73 @@ class AbtestingV3Client(
     *
     * @param id
     *   Unique A/B test identifier.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
-  def getABTestWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[AlgoliaHttpResponse[ABTest]] = Future {
-    executeWithHttpInfo[ABTest](getABTestHttpRequest(id = id), requestOptions)
+  def getABTestWithHTTPInfo(
+      id: Int,
+      methods: Option[Seq[AnalysisMethod]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ABTest]] = Future {
+    executeWithHttpInfo[ABTest](getABTestHttpRequest(id = id, methods = methods), requestOptions)
   }
 
   /** Validates the parameters and builds the request shared by `getABTest` and `getABTestWithHTTPInfo`.
     */
-  private def getABTestHttpRequest(id: Int): HttpRequest = {
+  private def getABTestHttpRequest(id: Int, methods: Option[Seq[AnalysisMethod]] = None): HttpRequest = {
     requireNotNull(id, "Parameter `id` is required when calling `getABTest`.")
 
     HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/3/abtests/${escape(id)}")
+      .withQueryParameter("methods", methods)
+      .build()
+  }
+
+  /** Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the
+    * control index. Settings are captured by the `saveVariantSettings` operation. The response includes an entry for
+    * the control (variant 1) alongside the captured variant, so the control's original configuration can be restored
+    * later. Returns `404` if the A/B test doesn't exist or no settings have been captured for it.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def getABTestSettings(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[ABTestSettingsResponse] = Future {
+    execute[ABTestSettingsResponse](getABTestSettingsHttpRequest(id = id), requestOptions)
+  }
+
+  /** Variant of `getABTestSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    */
+  def getABTestSettingsWithHTTPInfo(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[ABTestSettingsResponse]] = Future {
+    executeWithHttpInfo[ABTestSettingsResponse](getABTestSettingsHttpRequest(id = id), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getABTestSettings` and `getABTestSettingsWithHTTPInfo`.
+    */
+  private def getABTestSettingsHttpRequest(id: Int): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `getABTestSettings`.")
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/3/abtests/${escape(id)}/settings")
       .build()
   }
 
@@ -466,16 +580,21 @@ class AbtestingV3Client(
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param metric
     *   List of metrics to retrieve. If not specified, all metrics are returned.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
   def getTimeseries(
       id: Int,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
       metric: Option[Seq[MetricName]] = None,
+      methods: Option[Seq[AnalysisMethod]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Timeseries] = Future {
     execute[Timeseries](
-      getTimeseriesHttpRequest(id = id, startDate = startDate, endDate = endDate, metric = metric),
+      getTimeseriesHttpRequest(id = id, startDate = startDate, endDate = endDate, metric = metric, methods = methods),
       requestOptions
     )
   }
@@ -494,16 +613,21 @@ class AbtestingV3Client(
     *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param metric
     *   List of metrics to retrieve. If not specified, all metrics are returned.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
   def getTimeseriesWithHTTPInfo(
       id: Int,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
       metric: Option[Seq[MetricName]] = None,
+      methods: Option[Seq[AnalysisMethod]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Timeseries]] = Future {
     executeWithHttpInfo[Timeseries](
-      getTimeseriesHttpRequest(id = id, startDate = startDate, endDate = endDate, metric = metric),
+      getTimeseriesHttpRequest(id = id, startDate = startDate, endDate = endDate, metric = metric, methods = methods),
       requestOptions
     )
   }
@@ -514,7 +638,8 @@ class AbtestingV3Client(
       id: Int,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
-      metric: Option[Seq[MetricName]] = None
+      metric: Option[Seq[MetricName]] = None,
+      methods: Option[Seq[AnalysisMethod]] = None
   ): HttpRequest = {
     requireNotNull(id, "Parameter `id` is required when calling `getTimeseries`.")
 
@@ -525,6 +650,7 @@ class AbtestingV3Client(
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("metric", metric)
+      .withQueryParameter("methods", methods)
       .build()
   }
 
@@ -544,6 +670,10 @@ class AbtestingV3Client(
     * @param direction
     *   Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are
     *   always listed first.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
   def listABTests(
       offset: Option[Int] = None,
@@ -551,6 +681,7 @@ class AbtestingV3Client(
       indexPrefix: Option[String] = None,
       indexSuffix: Option[String] = None,
       direction: Option[Direction] = None,
+      methods: Option[Seq[AnalysisMethod]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[ListABTestsResponse] = Future {
     execute[ListABTestsResponse](
@@ -559,7 +690,8 @@ class AbtestingV3Client(
         limit = limit,
         indexPrefix = indexPrefix,
         indexSuffix = indexSuffix,
-        direction = direction
+        direction = direction,
+        methods = methods
       ),
       requestOptions
     )
@@ -582,6 +714,10 @@ class AbtestingV3Client(
     * @param direction
     *   Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are
     *   always listed first.
+    * @param methods
+    *   Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured
+    *   method, or `frequentist` if no method is configured. Request both methods to include both sets of available
+    *   results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     */
   def listABTestsWithHTTPInfo(
       offset: Option[Int] = None,
@@ -589,6 +725,7 @@ class AbtestingV3Client(
       indexPrefix: Option[String] = None,
       indexSuffix: Option[String] = None,
       direction: Option[Direction] = None,
+      methods: Option[Seq[AnalysisMethod]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ListABTestsResponse]] = Future {
     executeWithHttpInfo[ListABTestsResponse](
@@ -597,7 +734,8 @@ class AbtestingV3Client(
         limit = limit,
         indexPrefix = indexPrefix,
         indexSuffix = indexSuffix,
-        direction = direction
+        direction = direction,
+        methods = methods
       ),
       requestOptions
     )
@@ -610,7 +748,8 @@ class AbtestingV3Client(
       limit: Option[Int] = None,
       indexPrefix: Option[String] = None,
       indexSuffix: Option[String] = None,
-      direction: Option[Direction] = None
+      direction: Option[Direction] = None,
+      methods: Option[Seq[AnalysisMethod]] = None
   ): HttpRequest = {
 
     HttpRequest
@@ -622,6 +761,81 @@ class AbtestingV3Client(
       .withQueryParameter("indexPrefix", indexPrefix)
       .withQueryParameter("indexSuffix", indexSuffix)
       .withQueryParameter("direction", direction)
+      .withQueryParameter("methods", methods)
+      .build()
+  }
+
+  /** Captures the settings of the given variant and of the control, then stops the A/B test. The captured settings can
+    * later be applied to the control index with the `applyVariantSettings` operation, and read back with the
+    * `getABTestSettings` operation. The A/B test must have reached 80% of its planned duration. Earlier requests return
+    * `400`. Settings can only be captured once per A/B test. A second request returns `409`. `synonyms` and
+    * `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def saveVariantSettings(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[Unit] = Future {
+    execute[Unit](
+      saveVariantSettingsHttpRequest(id = id, variantId = variantId, saveSettingsRequest = saveSettingsRequest),
+      requestOptions
+    )
+  }
+
+  /** Variant of `saveVariantSettings` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *   - editSettings
+    *
+    * @param id
+    *   Unique A/B test identifier.
+    * @param variantId
+    *   One-based index of the A/B test variant. The control is variant 1.
+    */
+  def saveVariantSettingsWithHTTPInfo(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
+    executeWithHttpInfo[Unit](
+      saveVariantSettingsHttpRequest(id = id, variantId = variantId, saveSettingsRequest = saveSettingsRequest),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `saveVariantSettings` and
+    * `saveVariantSettingsWithHTTPInfo`.
+    */
+  private def saveVariantSettingsHttpRequest(
+      id: Int,
+      variantId: Int,
+      saveSettingsRequest: SaveSettingsRequest
+  ): HttpRequest = {
+    requireNotNull(id, "Parameter `id` is required when calling `saveVariantSettings`.")
+    requireNotNull(variantId, "Parameter `variantId` is required when calling `saveVariantSettings`.")
+    requireNotNull(
+      saveSettingsRequest,
+      "Parameter `saveSettingsRequest` is required when calling `saveVariantSettings`."
+    )
+
+    HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/3/abtests/${escape(id)}/settings/${escape(variantId)}")
+      .withBody(saveSettingsRequest)
       .build()
   }
 
