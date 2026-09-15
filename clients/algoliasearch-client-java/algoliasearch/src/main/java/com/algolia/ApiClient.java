@@ -108,7 +108,7 @@ public abstract class ApiClient implements Closeable {
       builder.addInterceptor(new RequestIdInterceptor());
     }
     builder
-      .addInterceptor(new RetryStrategy(statefulHosts))
+      .addInterceptor(new RetryStrategy(statefulHosts, options.getMaxRateLimitRetries()))
       .setConnectTimeout(connectTimeout)
       .setReadTimeout(readTimeout)
       .setWriteTimeout(writeTimeout);

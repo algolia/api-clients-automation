@@ -52,6 +52,14 @@ class AgentStudioClientClientTests {
       .build();
   }
 
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, int maxRateLimitRetries) {
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .setMaxRateLimitRetries(maxRateLimitRetries)
+      .build();
+  }
+
   @Test
   @DisplayName("calls api with default read timeouts")
   void apiTest0() {
