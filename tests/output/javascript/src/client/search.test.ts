@@ -324,6 +324,23 @@ describe('api', () => {
     expect(result).toEqual({ message: 'ok rate limit retry' });
   }, 25000);
 
+  test('retries 429 with a 1s wait when Retry-After is invalid', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/invalid-header/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
   test('returns 429 after maxRateLimitRetries is used up', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
       hosts: [
