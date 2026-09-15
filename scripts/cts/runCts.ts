@@ -101,6 +101,11 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
         language,
       });
+      if (suites.client) {
+        await run('./gradle/gradlew -p clients/algoliasearch-client-kotlin :client:jvmTest', {
+          language,
+        });
+      }
       break;
     case 'php':
       await runComposerInstall();
