@@ -36,6 +36,7 @@ module Algolia
       # Callable waiting the given number of whole seconds before a 429 is retried,
       # Kernel#sleep by default. Replace it in tests to observe the waits without
       # spending wall-clock time.
+      # @api private
       attr_writer :sleeper
 
       # Whether the transport mints Request-ID headers. Resolved per request so a
