@@ -78,6 +78,9 @@ class DioRequester implements Requester {
             // Never the unrelated X-Algolia-RequestID edge header; dio
             // lowercases header names on parse.
             correlationId: e.response?.headers['correlation-id']?.join(','),
+            headers: e.response?.headers.map.map(
+              (key, values) => MapEntry(key, values.join(',')),
+            ),
           );
         default:
           throw AlgoliaIOException(e);
