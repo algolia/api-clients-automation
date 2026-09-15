@@ -121,14 +121,13 @@ class TestRateLimitRetry {
     var calls = 0
     val engine = MockEngine { if (++calls == 1) rateLimited(retryAfter = "2") else ok() }
     clientOf(engine).use { client ->
-      val start = TimeSource.Monotonic.markNow()
+      val waits = client.recordedWaits()
       val response = client.customGet(path = "1/test")
-      val elapsed = start.elapsedNow()
 
       assertEquals(buildJsonObject { put("message", "ok") }, response)
+      assertEquals(listOf(2.seconds), waits)
       assertEquals(2, engine.requestHistory.size)
       assertEquals(listOf("first.host", "first.host"), engine.requestHistory.map { it.url.host })
-      assertTrue(elapsed >= 2.seconds, "waited $elapsed, expected at least 2s")
 
       client.customGet(path = "1/test")
       assertEquals("first.host", engine.requestHistory.last().url.host)
