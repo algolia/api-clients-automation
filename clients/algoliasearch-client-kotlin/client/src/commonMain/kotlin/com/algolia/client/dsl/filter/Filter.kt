@@ -31,7 +31,7 @@ public sealed interface Filter : FilterGroup {
     public val attribute: String,
     public val value: String,
     public val score: Int? = null,
-  ) : Filter {
+  ) : Filter, FacetAtom {
 
     public constructor(
       attribute: String,
@@ -50,7 +50,7 @@ public sealed interface Filter : FilterGroup {
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
   @JvmInline
-  public value class Tag(public val value: String) : Filter
+  public value class Tag(public val value: String) : Filter, TagAtom
 
   /** Numeric comparison of [attribute] against [value] with [operator]. */
   @AlgoliaDsl
@@ -59,7 +59,7 @@ public sealed interface Filter : FilterGroup {
     public val attribute: String,
     public val operator: NumericOperator,
     public val value: Number,
-  ) : Filter
+  ) : Filter, NumericAtom
 
   /** Numeric range of [attribute] between [lowerBound] and [upperBound], inclusive. */
   @AlgoliaDsl
@@ -68,7 +68,7 @@ public sealed interface Filter : FilterGroup {
     public val attribute: String,
     public val lowerBound: Number,
     public val upperBound: Number,
-  ) : Filter {
+  ) : Filter, NumericAtom {
 
     public constructor(
       attribute: String,

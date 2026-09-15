@@ -184,8 +184,8 @@ internal class RuleSynonymDslTest {
           "consequence": {
             "params": {
               "facetFilters": [["\"brand\":\"Apple\""]],
-              "numericFilters": [["\"price\":0 TO 9"]],
-              "tagFilters": [["\"featured\""]],
+              "numericFilters": [["price:0 TO 9"]],
+              "tagFilters": [["featured"]],
               "optionalFilters": [["\"category\":\"Book\""]]
             }
           }

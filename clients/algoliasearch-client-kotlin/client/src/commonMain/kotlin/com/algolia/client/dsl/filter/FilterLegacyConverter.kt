@@ -21,7 +21,7 @@ import com.algolia.client.model.search.TagFilters
  * - [FilterGroup.Or] of leaves `A`, `B` → `[["A", "B"]]` → `A OR B`
  * - [FilterGroup.And] of `Or(A, B)` and leaf `C` → `[["A", "B"], ["C"]]` → `(A OR B) AND C`
  *
- * [FilterGroup.Or] has no compile-time leaf kind. Children are classified at runtime.
+ * [FilterGroup.Or] carries its family in the type.
  *
  * ## Family partition
  *
@@ -35,16 +35,17 @@ import com.algolia.client.model.search.TagFilters
  *
  * ## Reject cases ([IllegalArgumentException])
  *
- * - **Mixed-family [FilterGroup.Or]:** the `Or` subtree contains more than one of Facet, Numeric,
- *   Tag. The converter does not drop the foreign side or emit invalid JSON.
- * - **[FilterGroup.And] nested in [FilterGroup.Or]:** a child of `Or` encodes as more than one
- *   `AND` row (OR-of-ANDs). `List<List<String>>` cannot represent that. A single-child `And` is
- *   flattened to that child.
  * - **De Morgan OR-of-ANDs:** [FilterGroup.Not] of an [FilterGroup.And] whose negated children
- *   include a conjunction (for example `Not(And(Or(A, B), C))`).
+ *   include a conjunction (for example `Not.Group(And(Or.Facet(A, B), C))`).
  *
- * Version 2 used typed `Or.Facet` / `Or.Numeric` / `Or.Tag`. This converter enforces the same
- * homogeneity at runtime.
+ * ## Quoting
+ *
+ * Facet (and optional) leaves always quote attribute and value. That matches version 2
+ * `FilterConverter.Legacy` with `escape = true`.
+ *
+ * Numeric attributes and tag values use the same T5 rule as [FilterSqlConverter]: quote only when
+ * the token is empty or contains a space, a quote, or `AND` / `OR` / `NOT`. That matches the
+ * version 2 query helpers, which default to `escape = false` (`Unquoted`) for simple tokens.
  */
 @AlgoliaExperimentalDsl
 public object FilterLegacyConverter {
@@ -53,8 +54,8 @@ public object FilterLegacyConverter {
    * Legacy [FacetFilters] for [Filter.Facet] leaves in [root].
    *
    * Ignores [Filter.Tag], [Filter.Comparison], and [Filter.Range]. Throws
-   * [IllegalArgumentException] for a mixed-family [FilterGroup.Or] or an `And` nested in `Or` that
-   * the nested-list format cannot encode. Returns `null` when no Facet leaf remains.
+   * [IllegalArgumentException] for a De Morgan OR-of-ANDs that the nested-list format cannot
+   * encode. Returns `null` when no Facet leaf remains.
    */
   @AlgoliaExperimentalDsl
   public fun facet(root: FilterGroup): FacetFilters? =
@@ -72,9 +73,9 @@ public object FilterLegacyConverter {
   /**
    * Legacy [NumericFilters] for [Filter.Comparison] and [Filter.Range] leaves in [root].
    *
-   * Ignores [Filter.Facet] and [Filter.Tag]. Throws [IllegalArgumentException] for a mixed-family
-   * [FilterGroup.Or] or an `And` nested in `Or` that the nested-list format cannot encode. Returns
-   * `null` when no numeric leaf remains.
+   * Ignores [Filter.Facet] and [Filter.Tag]. Throws [IllegalArgumentException] for a De Morgan
+   * OR-of-ANDs that the nested-list format cannot encode. Returns `null` when no numeric leaf
+   * remains.
    */
   @AlgoliaExperimentalDsl
   public fun numeric(root: FilterGroup): NumericFilters? =
@@ -84,8 +85,8 @@ public object FilterLegacyConverter {
    * Legacy [TagFilters] for [Filter.Tag] leaves in [root].
    *
    * Ignores [Filter.Facet], [Filter.Comparison], and [Filter.Range]. Throws
-   * [IllegalArgumentException] for a mixed-family [FilterGroup.Or] or an `And` nested in `Or` that
-   * the nested-list format cannot encode. Returns `null` when no Tag leaf remains.
+   * [IllegalArgumentException] for a De Morgan OR-of-ANDs that the nested-list format cannot
+   * encode. Returns `null` when no Tag leaf remains.
    */
   @AlgoliaExperimentalDsl
   public fun tag(root: FilterGroup): TagFilters? =
@@ -116,7 +117,7 @@ private fun toRows(
     }
     is FilterGroup.Not -> toRows(group.child, family, !negated)
     is FilterGroup.And -> convertAnd(group.children, family, negated)
-    is FilterGroup.Or -> convertOr(group.children, family, negated)
+    is FilterGroup.Or -> orRows(group.children, family, negated)
   }
 }
 
@@ -131,35 +132,39 @@ private fun convertAnd(
     return if (relevant.size == 1) {
       toRows(relevant.single(), family, negated = true)
     } else {
-      convertOr(relevant.map { FilterGroup.Not(it) }, family, negated = false)
+      orRow(relevant, family, negated = true)
     }
   }
   return relevant.flatMap { toRows(it, family, negated = false) }.filter { it.isNotEmpty() }
 }
 
-private fun convertOr(
+private fun orRows(
   children: List<FilterGroup>,
   family: FilterFamily,
   negated: Boolean,
 ): List<List<String>> {
   val families = children.fold(emptySet<FilterFamily>()) { acc, child -> acc + leafFamilies(child) }
-  require(families.size <= 1) {
-    "Or mixes filter families $families. List<List<String>> cannot encode a mixed-family Or."
-  }
   if (family !in families) return emptyList()
   if (negated) {
     return children.flatMap { toRows(it, family, negated = true) }.filter { it.isNotEmpty() }
   }
+  return orRow(children, family, negated = false)
+}
+
+private fun orRow(
+  children: List<FilterGroup>,
+  family: FilterFamily,
+  negated: Boolean,
+): List<List<String>> {
   val literals = mutableListOf<String>()
   for (child in children) {
-    val rows = toRows(child, family, negated = false).filter { it.isNotEmpty() }
+    val rows = toRows(child, family, negated).filter { it.isNotEmpty() }
     when (rows.size) {
       0 -> Unit
       1 -> literals += rows.single()
       else ->
         throw IllegalArgumentException(
-          "Or contains an And that List<List<String>> cannot encode. " +
-            "A nested And inside Or would require OR-of-ANDs."
+          "Not of an And that holds a disjunction cannot encode as List<List<String>>."
         )
     }
   }
@@ -195,15 +200,15 @@ private fun encodeLeaf(filter: Filter, negated: Boolean): List<String> {
       listOf("$attribute:$value$score")
     }
     is Filter.Tag -> {
-      val raw = filter.value.escape()
+      val raw = FilterQuote.quote(filter.value)
       listOf(if (negated) "-$raw" else raw)
     }
     is Filter.Comparison -> {
       val operator = if (negated) filter.operator.negated() else filter.operator
-      listOf("${filter.attribute.escape()} ${operator.raw} ${filter.value}")
+      listOf("${FilterQuote.quote(filter.attribute)} ${operator.raw} ${filter.value}")
     }
     is Filter.Range -> {
-      val attribute = filter.attribute.escape()
+      val attribute = FilterQuote.quote(filter.attribute)
       if (negated) {
         listOf("$attribute < ${filter.lowerBound}", "$attribute > ${filter.upperBound}")
       } else {
