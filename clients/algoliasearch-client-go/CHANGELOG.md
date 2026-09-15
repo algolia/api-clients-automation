@@ -1,3 +1,7 @@
+## [4.48.0](https://github.com/algolia/algoliasearch-client-go/compare/4.47.0...4.48.0)
+
+- [6461ab0ee1](https://github.com/algolia/api-clients-automation/commit/6461ab0ee1) feat(go): wait and retry on 429 with Retry-After ([#6977](https://github.com/algolia/api-clients-automation/pull/6977)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [4.47.0](https://github.com/algolia/algoliasearch-client-go/compare/4.46.0...4.47.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
