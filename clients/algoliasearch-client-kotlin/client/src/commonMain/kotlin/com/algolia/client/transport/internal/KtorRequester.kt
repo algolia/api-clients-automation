@@ -141,6 +141,7 @@ public class KtorRequester(
               rateLimitRetriesLeft > 0
           ) {
             rateLimitRetriesLeft--
+            errors += exception.asApiException()
             rateLimitWait(retryAfterWait(exception.response.headers))
             continue
           }

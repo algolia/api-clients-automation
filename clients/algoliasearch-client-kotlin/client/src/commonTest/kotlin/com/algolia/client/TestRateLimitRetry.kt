@@ -6,7 +6,10 @@ import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.Host
 import com.algolia.client.configuration.TransformationOptions
 import com.algolia.client.exception.AlgoliaApiException
+import com.algolia.client.exception.AlgoliaClientException
+import com.algolia.client.exception.AlgoliaRetryException
 import com.algolia.client.transport.internal.DEFAULT_RATE_LIMIT_WAIT
+import com.algolia.client.transport.internal.HEADER_CORRELATION_ID
 import com.algolia.client.transport.internal.KtorRequester
 import com.algolia.client.transport.internal.retryAfterWait
 import io.ktor.client.engine.mock.*
@@ -45,6 +48,7 @@ class TestRateLimitRetry {
     retryAfter: String? = null,
     contentType: String = "application/json",
     body: String = """{"message":"Too many requests"}""",
+    correlationId: String? = null,
   ) =
     respond(
       content = body,
@@ -53,6 +57,7 @@ class TestRateLimitRetry {
         headersOf(
           HttpHeaders.ContentType to listOf(contentType),
           HttpHeaders.RetryAfter to listOfNotNull(retryAfter),
+          HEADER_CORRELATION_ID to listOfNotNull(correlationId),
         ),
     )
 
@@ -148,6 +153,31 @@ class TestRateLimitRetry {
         listOf("first.host", "first.host", "second.host", "second.host", "second.host"),
         engine.requestHistory.map { it.url.host },
       )
+    }
+  }
+
+  @Test
+  fun keepsWaitedOutRateLimitsAmongTheRetryErrors() = runTest {
+    val statuses = ArrayDeque(listOf(429, 500, 500))
+    val engine = MockEngine {
+      if (statuses.removeFirst() == 500) serverError()
+      else rateLimited(retryAfter = "1", correlationId = "rate-limited-call")
+    }
+    clientOf(engine).use { client ->
+      val waits = client.recordedWaits()
+      val exception = assertFailsWith<AlgoliaRetryException> { client.customGet(path = "1/test") }
+
+      assertEquals(listOf(1.seconds), waits)
+      assertEquals(
+        listOf("first.host", "first.host", "second.host"),
+        engine.requestHistory.map { it.url.host },
+      )
+      assertEquals(3, exception.exceptions.size)
+      val rateLimited = assertIs<AlgoliaApiException>(exception.exceptions.first())
+      assertEquals(429, rateLimited.httpErrorCode)
+      assertEquals("rate-limited-call", rateLimited.correlationId)
+      assertEquals("rate-limited-call", exception.correlationId)
+      assertTrue(exception.exceptions.drop(1).all { it is AlgoliaClientException })
     }
   }
 
