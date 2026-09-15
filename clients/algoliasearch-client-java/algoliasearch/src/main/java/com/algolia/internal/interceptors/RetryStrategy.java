@@ -1,6 +1,7 @@
 package com.algolia.internal.interceptors;
 
 import com.algolia.config.CallType;
+import com.algolia.config.ClientOptions;
 import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaClientException;
 import com.algolia.exceptions.AlgoliaRequestException;
@@ -52,7 +53,7 @@ public final class RetryStrategy implements Interceptor {
    * @param hosts List of stateful hosts.
    */
   public RetryStrategy(List<StatefulHost> hosts) {
-    this(hosts, 3);
+    this(hosts, ClientOptions.DEFAULT_MAX_RATE_LIMIT_RETRIES);
   }
 
   /**

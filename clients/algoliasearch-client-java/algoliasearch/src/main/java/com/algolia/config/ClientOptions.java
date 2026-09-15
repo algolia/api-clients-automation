@@ -14,6 +14,9 @@ import javax.annotation.Nonnull;
 
 public final class ClientOptions implements ClientConfig {
 
+  /** Default number of same-host retries after HTTP 429. */
+  public static final int DEFAULT_MAX_RATE_LIMIT_RETRIES = 3;
+
   public static Builder builder() {
     return new Builder();
   }
@@ -135,7 +138,7 @@ public final class ClientOptions implements ClientConfig {
     private Duration writeTimeout = Duration.ZERO;
     private Duration readTimeout = Duration.ZERO;
     private CompressionType compressionType = CompressionType.NONE;
-    private int maxRateLimitRetries = 3;
+    private int maxRateLimitRetries = DEFAULT_MAX_RATE_LIMIT_RETRIES;
 
     public Builder setRequester(Requester requester) {
       this.customRequester = requester;
