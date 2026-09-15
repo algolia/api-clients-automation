@@ -17,6 +17,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlin.test.*
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 import kotlinx.coroutines.test.runTest
@@ -102,6 +103,17 @@ class TestRateLimitRetry {
   fun retryAfterWaitSaturatesWhenTooLargeToRepresent() {
     assertEquals(Duration.INFINITE, retryAfterWait(retryAfterOf("99999999999999999999")))
     assertEquals(Duration.INFINITE, retryAfterWait(retryAfterOf(Long.MAX_VALUE.toString())))
+  }
+
+  @Test
+  fun rateLimitWaitIsNotFastForwardedByRunTest() = runTest {
+    clientOf(MockEngine { ok() }).use { client ->
+      val start = TimeSource.Monotonic.markNow()
+      (client.requester as KtorRequester).rateLimitWait(200.milliseconds)
+      val elapsed = start.elapsedNow()
+
+      assertTrue(elapsed >= 200.milliseconds, "waited $elapsed, expected at least 200ms")
+    }
   }
 
   @Test

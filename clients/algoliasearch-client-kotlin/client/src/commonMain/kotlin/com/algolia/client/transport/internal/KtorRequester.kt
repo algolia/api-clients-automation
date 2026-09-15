@@ -61,7 +61,7 @@ public class KtorRequester(
   private val mutex: Mutex = Mutex()
   private val retryableHosts = hosts.map { RetryableHost(it) }
 
-  /** Wait between same-host 429 retries. */
+  /** Wait between same-host 429 retries, in real time even under `runTest`. */
   internal var rateLimitWait: suspend (Duration) -> Unit = { duration ->
     withContext(Dispatchers.Default) { delay(duration) }
   }
