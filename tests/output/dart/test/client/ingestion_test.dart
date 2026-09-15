@@ -6,13 +6,13 @@ import 'package:test_api/hooks.dart';
 import 'dart:io' as io;
 
 void main() {
-  test('can handle HTML error', () async {
+  test('can handle HTML error when rate-limit retries are disabled', () async {
     final requester = RequestInterceptor();
     final client = IngestionClient(
         appId: "test-app-id",
         apiKey: "test-api-key",
         region: 'us',
-        options: ClientOptions(hosts: [
+        options: ClientOptions(maxRateLimitRetries: 0, hosts: [
           Host.create(
               url:
                   '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6676',

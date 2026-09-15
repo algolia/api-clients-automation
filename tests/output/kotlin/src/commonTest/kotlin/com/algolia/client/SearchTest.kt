@@ -418,6 +418,182 @@ class SearchTest {
   }
 
   @Test
+  fun `retries 429 on the same host using Retry-After`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6697,
+                ),
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6698,
+                ),
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/rate-limit/retry-after/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"ok rate limit retry"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `retries 429 with a 1s wait when Retry-After is missing`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6697,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/rate-limit/missing-header/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"ok rate limit retry"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `retries 429 with a 1s wait when Retry-After is invalid`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6697,
+                )
+              )
+          ),
+      )
+
+    client.runTest(
+      call = {
+        customGet(path = "1/test/rate-limit/invalid-header/kotlin")
+      },
+      response = {
+        assertNotNull(it)
+        JSONAssert.assertEquals(
+          """{"message":"ok rate limit retry"}""",
+          Json.encodeToString(Json.encodeToJsonElement(it)),
+          JSONCompareMode.STRICT,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `returns 429 after maxRateLimitRetries is used up`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6697,
+                )
+              )
+          ),
+      )
+
+    assertFails {
+        client.customGet(path = "1/test/rate-limit/exhausted/kotlin")
+      }
+      .let { error ->
+        assertError(
+          error,
+          "Client request\\(GET http://%localhost%:6697/1/test/rate-limit/exhausted/kotlin\\) invalid: 429 Too Many Requests. Text: \"\\{\"message\":\"Too many requests\"\\}\""
+            .replace(
+              "%localhost%",
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            ),
+        )
+      }
+  }
+
+  @Test
+  fun `fails on the first 429 when maxRateLimitRetries is 0`() = runTest {
+    val client =
+      SearchClient(
+        appId = "test-app-id",
+        apiKey = "test-api-key",
+        options =
+          ClientOptions(
+            hosts =
+              listOf(
+                Host(
+                  url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                  protocol = "http",
+                  port = 6697,
+                )
+              ),
+            maxRateLimitRetries = 0,
+          ),
+      )
+
+    assertFails {
+        client.customGet(path = "1/test/rate-limit/zero-retries/kotlin")
+      }
+      .let { error ->
+        assertError(
+          error,
+          "Client request\\(GET http://%localhost%:6697/1/test/rate-limit/zero-retries/kotlin\\) invalid: 429 Too Many Requests. Text: \"\\{\"message\":\"Too many requests\"\\}\""
+            .replace(
+              "%localhost%",
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            ),
+        )
+      }
+  }
+
+  @Test
   fun `calls api with correct user agent`() = runTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 

@@ -20,7 +20,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 class IngestionTest {
 
   @Test
-  fun `can handle HTML error`() = runTest {
+  fun `can handle HTML error when rate-limit retries are disabled`() = runTest {
     val client =
       IngestionClient(
         appId = "test-app-id",
@@ -35,7 +35,8 @@ class IngestionTest {
                   protocol = "http",
                   port = 6676,
                 )
-              )
+              ),
+            maxRateLimitRetries = 0,
           ),
       )
 
