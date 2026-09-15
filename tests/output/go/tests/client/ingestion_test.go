@@ -12,6 +12,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
@@ -32,7 +33,7 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// can handle HTML error.
+// can handle HTML error when rate-limit retries are disabled.
 func TestIngestionapi0(t *testing.T) {
 	var (
 		err error
@@ -51,9 +52,10 @@ func TestIngestionapi0(t *testing.T) {
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
-			AppID:  "test-app-id",
-			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+			AppID:               "test-app-id",
+			ApiKey:              "test-api-key",
+			Hosts:               []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+			MaxRateLimitRetries: utils.ToPtr(0),
 		},
 		Region: ingestion.Region("us"),
 	}
