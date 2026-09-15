@@ -191,8 +191,8 @@ internal class DslSerializationTest {
       {
         "facetFilters": [["\"brand\":\"Apple\""]],
         "optionalFilters": [["\"category\":\"Book\""]],
-        "numericFilters": [["\"price\" = 15"]],
-        "tagFilters": [["\"featured\""]]
+        "numericFilters": [["price = 15"]],
+        "tagFilters": [["featured"]]
       }
       """,
     )
@@ -212,8 +212,8 @@ internal class DslSerializationTest {
       {
         "facetFilters": [["\"brand\":\"Apple\""]],
         "optionalFilters": [["\"category\":\"Book\""]],
-        "numericFilters": [["\"price\" = 15"]],
-        "tagFilters": [["\"featured\""]]
+        "numericFilters": [["price = 15"]],
+        "tagFilters": [["featured"]]
       }
       """,
     )
@@ -231,8 +231,28 @@ internal class DslSerializationTest {
       """
       {
         "facetFilters": [["\"brand\":\"Apple\""]],
-        "numericFilters": [["\"price\" = 15"]],
-        "tagFilters": [["\"featured\""]]
+        "numericFilters": [["price = 15"]],
+        "tagFilters": [["featured"]]
+      }
+      """,
+    )
+  }
+
+  @Test
+  fun queryFacetFiltersOrEncodesNestedList() {
+    val dsl = query {
+      facetFilters {
+        or {
+          facet("brand", "Acme")
+          facet("brand", "Globex")
+        }
+      }
+    }
+    assertEncodedJson(
+      dsl,
+      """
+      {
+        "facetFilters": [["\"brand\":\"Acme\"","\"brand\":\"Globex\""]]
       }
       """,
     )

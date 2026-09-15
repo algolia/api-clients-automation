@@ -12,9 +12,8 @@ import com.algolia.client.model.search.TagFilters
 /**
  * Builds a typed [FilterGroup] tree with a Kotlin DSL.
  *
- * Top-level children are combined with [FilterGroup.And]. [or] is untyped: mixed-family children
- * compile, and [FilterSqlConverter] / [FilterLegacyConverter] throw [IllegalArgumentException] at
- * conversion time. The builder does not merge or drop illegal `Or` children.
+ * Top-level children are combined with [FilterGroup.And]. Use [orFacet], [orTag], or [orNumeric]
+ * for a homogeneous OR. A mixed-family OR does not compile.
  *
  * ```
  * val built =
@@ -23,7 +22,7 @@ import com.algolia.client.model.search.TagFilters
  *       facet("color", "red")
  *       facet("category", "shirt")
  *     }
- *     or {
+ *     orNumeric {
  *       range("price", 0 until 10)
  *       comparison("price", NumericOperator.Equals, 15)
  *     }
@@ -42,22 +41,29 @@ public class FilterDsl {
     children += FilterGroup.And(FilterDsl().apply(block).snapshot())
   }
 
-  /**
-   * Adds an untyped [FilterGroup.Or] of the children in [block].
-   *
-   * Converters reject mixed families and nested `And` / `Or`.
-   */
-  public fun or(block: FilterDsl.() -> Unit) {
-    children += FilterGroup.Or(FilterDsl().apply(block).snapshot())
+  /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. */
+  public fun orFacet(block: FacetOrDsl.() -> Unit) {
+    children += FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot())
+  }
+
+  /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. */
+  public fun orTag(block: TagOrDsl.() -> Unit) {
+    children += FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot())
+  }
+
+  /** Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. */
+  public fun orNumeric(block: NumericOrDsl.() -> Unit) {
+    children += FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot())
   }
 
   /**
    * Adds a [FilterGroup.Not] of the children in [block].
    *
-   * One child is negated as-is. Several children are negated as an [FilterGroup.And].
+   * One child is negated as a typed [FilterGroup.Not] variant. Several children are negated as
+   * [FilterGroup.Not.Group] of an [FilterGroup.And].
    */
   public fun not(block: FilterDsl.() -> Unit) {
-    children += FilterGroup.Not(FilterDsl().apply(block).asNode())
+    children += negate(FilterDsl().apply(block).snapshot())
   }
 
   /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
@@ -96,9 +102,9 @@ public class FilterDsl {
 
   internal fun build(): Filters = Filters(asNode())
 
-  private fun snapshot(): List<FilterGroup> = children.toList()
+  internal fun snapshot(): List<FilterGroup> = children.toList()
 
-  private fun asNode(): FilterGroup =
+  internal fun asNode(): FilterGroup =
     when (children.size) {
       0 -> FilterGroup.And()
       1 -> children.single()
@@ -109,8 +115,7 @@ public class FilterDsl {
 /**
  * A [FilterGroup] tree plus converters to the SQL `filters` string and the legacy oneOf wrappers.
  *
- * Empty [FilterGroup.And] / [FilterGroup.Or] convert to `null`. Mixed-family [FilterGroup.Or]
- * throws at conversion time.
+ * Empty [FilterGroup.And] / [FilterGroup.Or] convert to `null`.
  */
 @AlgoliaExperimentalDsl
 public class Filters(public val group: FilterGroup) {

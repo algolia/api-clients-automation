@@ -4,8 +4,9 @@ package com.algolia.client.dsl.generated
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 {{#x-dsl-has-filter-helpers}}
-import com.algolia.client.dsl.filter.FilterDsl
-import com.algolia.client.dsl.filter.filters as buildFilters
+{{#filterHelperImports}}
+import {{{.}}}
+{{/filterHelperImports}}
 {{/x-dsl-has-filter-helpers}}
 import com.algolia.client.model.search.*
 import kotlinx.serialization.json.*
