@@ -1,0 +1,5 @@
+StatusEnum:
+  type: string
+  enum:
+  - resolved
+  - cancelled

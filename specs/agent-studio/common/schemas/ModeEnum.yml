@@ -1,0 +1,5 @@
+ModeEnum:
+  type: string
+  enum:
+  - static
+  - dynamic

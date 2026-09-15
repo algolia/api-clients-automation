@@ -1,0 +1,62 @@
+[
+  {
+    "testName": "trimContext with required parameters",
+    "parameters": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello, how are you?"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/unstable/context/trim",
+      "method": "POST",
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "trimContext with all parameters",
+    "parameters": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello, how are you?"
+        },
+        {
+          "role": "assistant",
+          "content": "I am well."
+        }
+      ],
+      "keepLastMessages": 1,
+      "maxTokensEstimate": 256,
+      "dropToolParts": true
+    },
+    "request": {
+      "path": "/1/unstable/context/trim",
+      "method": "POST",
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "Hello, how are you?"
+          },
+          {
+            "role": "assistant",
+            "content": "I am well."
+          }
+        ],
+        "keepLastMessages": 1,
+        "maxTokensEstimate": 256,
+        "dropToolParts": true
+      }
+    }
+  }
+]

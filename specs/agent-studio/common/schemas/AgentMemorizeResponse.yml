@@ -2,14 +2,14 @@ AgentMemorizeResponse:
   properties:
     savedMemories:
       items:
-        $ref: 'MemoryRecord.yml#/MemoryRecord'
+        $ref: MemoryRecord.yml#/MemoryRecord
       type: array
       title: savedmemories
       description: Memories saved to Algolia.
     taskId:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: taskid
       description: Algolia task ID for the save operation.
     message:
@@ -18,6 +18,6 @@ AgentMemorizeResponse:
       description: Summary of the operation outcome.
   type: object
   required:
-    - message
+  - message
   title: agentMemorizeResponse
   description: Response model for agent memorize endpoint.

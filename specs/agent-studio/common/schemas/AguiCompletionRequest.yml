@@ -1,0 +1,35 @@
+AguiCompletionRequest:
+  properties:
+    threadId:
+      description: Conversation (thread) id.
+      maxLength: 128
+      minLength: 1
+      title: threadid
+      type: string
+    runId:
+      description: Identifier for the current AG-UI run.
+      maxLength: 128
+      minLength: 1
+      title: runid
+      type: string
+    parentRunId:
+      maxLength: 128
+      minLength: 1
+      type: string
+      default: null
+      title: parentrunid
+    messages:
+      items:
+        $ref: ItemsUnion.yml#/ItemsUnion
+      title: messages
+      type: array
+    forwardedProps:
+      $ref: ForwardedProps.yml#/ForwardedProps
+    resume:
+      $ref: ResumeUnion.yml#/ResumeUnion
+  required:
+  - threadId
+  - runId
+  - messages
+  title: aguiCompletionRequest
+  type: object

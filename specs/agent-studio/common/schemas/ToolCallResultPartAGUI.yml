@@ -1,0 +1,27 @@
+ToolCallResultPartAGUI:
+  properties:
+    toolCallId:
+      title: toolcallid
+      type: string
+    state:
+      title: state
+      type: string
+    type:
+      const: tool-result
+      default: tool-result
+      title: type
+      type: string
+    content:
+      title: content
+      type: string
+    error:
+      type: string
+      default: null
+      title: error
+  required:
+  - type
+  - toolCallId
+  - state
+  - content
+  title: toolCallResultPartAGUI
+  type: object

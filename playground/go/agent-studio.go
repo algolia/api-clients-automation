@@ -99,13 +99,15 @@ func testAgentStudioStreaming(appID, apiKey string) int {
 	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
 		agent.GetId(),
 		agentStudio.CompatibilityMode("ai-sdk-5"),
-		agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(
-			[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
-				agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
-					[]agentStudio.TextPartV5{
-						*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("Hello, what can you do? Keep it short."),
-					}))},
-		)),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnionAgentCompletionRequest(
+				[]agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(
+					agentStudio.NewEmptyUserMessageV5().SetRole("user").SetParts(
+						[]agentStudio.TextPartV5{
+							*agentStudio.NewEmptyTextPartV5().SetType("text").SetText("Hello, what can you do? Keep it short."),
+						}))},
+			)),
+		),
 	).WithStream(true))
 	if err != nil {
 		fmt.Printf("cannot create completion stream: %v\n", err)

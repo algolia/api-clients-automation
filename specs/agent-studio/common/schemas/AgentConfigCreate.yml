@@ -44,11 +44,11 @@ AgentConfigCreate:
         features: '[memory]'
     tools:
       items:
-        $ref: 'ToolConfigInput.yml#/ToolConfigInput'
+        $ref: ToolConfig.yml#/ToolConfig
       type: array
       title: tools
   type: object
   required:
-    - name
-    - instructions
+  - name
+  - instructions
   title: agentConfigCreate

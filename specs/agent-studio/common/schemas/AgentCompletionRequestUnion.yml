@@ -1,0 +1,4 @@
+AgentCompletionRequestUnion:
+  oneOf:
+    - $ref: 'AgentCompletionRequest.yml#/AgentCompletionRequest'
+    - $ref: 'AguiCompletionRequest.yml#/AguiCompletionRequest'

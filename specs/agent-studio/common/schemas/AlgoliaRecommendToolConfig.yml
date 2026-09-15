@@ -1,0 +1,30 @@
+AlgoliaRecommendToolConfig:
+  description: |-
+    Configuration for the Algolia Recommend tool.
+    Allows specifying recommend models and related parameters.
+  properties:
+    name:
+      maxLength: 32
+      minLength: 3
+      title: name
+      type: string
+    type:
+      const: algolia_recommend
+      default: algolia_recommend
+      title: type
+      type: string
+    allowedConfigs:
+      default: []
+      items:
+        $ref: AlgoliaRecommendToolIndexConfig.yml#/AlgoliaRecommendToolIndexConfig
+      title: allowedconfigs
+      type: array
+    predefinedRecommendParameters:
+      additionalProperties: true
+      title: predefinedrecommendparameters
+      type: object
+  required:
+  - type
+  - name
+  title: algoliaRecommendToolConfig
+  type: object

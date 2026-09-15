@@ -1,0 +1,34 @@
+FeedbackUpdateRequest:
+  properties:
+    messageId:
+      type: string
+      title: messageid
+    agentId:
+      type: string
+      title: agentid
+    vote:
+      oneOf:
+      - $ref: OneOfEnum.yml#/OneOfEnum
+      - type: 'null'
+      title: vote
+    tags:
+      oneOf:
+      - items:
+          type: string
+          maxLength: 50
+        type: array
+        maxItems: 10
+      - type: 'null'
+      title: tags
+    notes:
+      oneOf:
+      - type: string
+        maxLength: 1000
+      - type: 'null'
+      title: notes
+  type: object
+  required:
+  - messageId
+  - agentId
+  title: feedbackUpdateRequest
+  description: Request model for updating an existing feedback entry.
