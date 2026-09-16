@@ -31,6 +31,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     additionalProperties.put("packageName", client.equals("query-suggestions") ? "suggestions" : Helpers.camelize(client));
     additionalProperties.put("enumClassPrefix", true);
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize(client)) + "Client", true);
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
 
     String outputFolder = "algolia" + File.separator + client;
     setOutputDir(getOutputDir() + File.separator + outputFolder);
@@ -165,6 +166,15 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
         String renamed = "agent-studio".equals(client) ? "GetAgentStudioConfiguration" : "GetApplicationConfiguration";
         op.operationId = renamed;
         op.nickname = renamed;
+      }
+    }
+
+    // Gates the sse imports and the callAPIStream helper in the templates, as Go
+    // fails to compile on unused imports.
+    for (CodegenOperation op : operations.getOperations().getOperation()) {
+      if ((boolean) op.vendorExtensions.getOrDefault("x-streaming", false)) {
+        additionalProperties.put("hasStreamingOperations", true);
+        break;
       }
     }
 

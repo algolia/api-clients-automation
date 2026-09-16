@@ -105,6 +105,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => '\Algolia\AlgoliaSearch\Model\Recommend\RenderingContent',
         'enableReRanking' => 'bool',
         'reRankingApplyFilter' => '\Algolia\AlgoliaSearch\Model\Recommend\ReRankingApplyFilter',
+        'facetFilters' => '\Algolia\AlgoliaSearch\Model\Recommend\FacetFilters',
     ];
 
     /**
@@ -196,6 +197,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => null,
         'enableReRanking' => null,
         'reRankingApplyFilter' => null,
+        'facetFilters' => null,
     ];
 
     /**
@@ -288,6 +290,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => 'renderingContent',
         'enableReRanking' => 'enableReRanking',
         'reRankingApplyFilter' => 'reRankingApplyFilter',
+        'facetFilters' => 'facetFilters',
     ];
 
     /**
@@ -379,6 +382,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => 'setRenderingContent',
         'enableReRanking' => 'setEnableReRanking',
         'reRankingApplyFilter' => 'setReRankingApplyFilter',
+        'facetFilters' => 'setFacetFilters',
     ];
 
     /**
@@ -470,6 +474,7 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         'renderingContent' => 'getRenderingContent',
         'enableReRanking' => 'getEnableReRanking',
         'reRankingApplyFilter' => 'getReRankingApplyFilter',
+        'facetFilters' => 'getFacetFilters',
     ];
 
     /**
@@ -734,6 +739,9 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
         }
         if (isset($data['reRankingApplyFilter'])) {
             $this->container['reRankingApplyFilter'] = $data['reRankingApplyFilter'];
+        }
+        if (isset($data['facetFilters'])) {
+            $this->container['facetFilters'] = $data['facetFilters'];
         }
     }
 
@@ -2797,6 +2805,30 @@ class FallbackParams extends AbstractModel implements ModelInterface, \ArrayAcce
     public function setReRankingApplyFilter($reRankingApplyFilter)
     {
         $this->container['reRankingApplyFilter'] = $reRankingApplyFilter;
+
+        return $this;
+    }
+
+    /**
+     * Gets facetFilters.
+     *
+     * @return null|FacetFilters
+     */
+    public function getFacetFilters()
+    {
+        return $this->container['facetFilters'] ?? null;
+    }
+
+    /**
+     * Sets facetFilters.
+     *
+     * @param null|FacetFilters $facetFilters facetFilters
+     *
+     * @return self
+     */
+    public function setFacetFilters($facetFilters)
+    {
+        $this->container['facetFilters'] = $facetFilters;
 
         return $this;
     }

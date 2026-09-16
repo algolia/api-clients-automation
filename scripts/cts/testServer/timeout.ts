@@ -111,6 +111,20 @@ function addRoutes(app: express.Express): void {
   app.get('/1/test/instant', (req, res) => {
     res.json({ success: true });
   });
+
+  app.get('/1/test/delayed-headers/:ms', (req, res) => {
+    setTimeout(() => {
+      res.json({ message: 'delayed response' });
+    }, Number(req.params.ms));
+  });
+
+  app.get('/1/test/repeated-headers', (req, res) => {
+    res.writeEarlyHints({ link: '</style.css>; rel=preload' });
+    res.append('Set-Cookie', 'a=1');
+    res.append('Set-Cookie', 'b=2');
+    res.setHeader('X-Colon-Value', 'https://host.test:8080/path');
+    res.json({ success: true });
+  });
 }
 
 export function timeoutServer(): Promise<Server> {

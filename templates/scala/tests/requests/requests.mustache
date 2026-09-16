@@ -78,6 +78,9 @@ class {{clientPrefix}}Test extends AnyFunSuite {
       assert(actualHeaders(k) == v.asInstanceOf[JString].s)
     }
     {{/headers}}
+    {{#absentHeaders}}
+    assert(!res.headers.keys.exists(_.equalsIgnoreCase("{{{.}}}")))
+    {{/absentHeaders}}
     {{/request}}
   }
   

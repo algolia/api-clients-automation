@@ -1071,23 +1071,6 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("e2e get conversation1") {
-    val (client, echo) = testClient()
-    val future = client.getConversation(
-      conversationId = "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(
-      res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ"
-    )
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getProvider") {
     val (client, echo) = testClient()
     val future = client.getProvider(

@@ -113,7 +113,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -185,7 +185,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -211,7 +211,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -237,7 +237,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -265,7 +265,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -293,7 +293,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -319,7 +319,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -345,7 +345,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -372,7 +372,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -399,7 +399,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
@@ -505,6 +505,56 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'body' => null,
             ],
         ]);
+    }
+
+    #[TestDox('the Correlation-ID ends with the sent Request-ID')]
+    public function testGetComposition1(): void
+    {
+        $client = $this->getClient();
+        $client->getComposition(
+            'id1',
+            requestOptions: [
+                'headers' => [
+                    'request-id' => 'CtsE2eEcho4',
+                ],
+            ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/id1',
+                'method' => 'GET',
+                'body' => null,
+                'headers' => json_decode('{"request-id":"CtsE2eEcho4"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('the Correlation-ID ends with the Request-ID sent as a query parameter')]
+    public function testGetComposition2(): void
+    {
+        $client = $this->getClient();
+        $client->getComposition(
+            'id1',
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eEchoQ',
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/id1',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"x-algolia-request-id":"CtsE2eEchoQ"}', true),
+            ],
+        ]);
+
+        $this->assertFalse(
+            $this->recordedRequests[0]->hasHeader('request-id'),
+            'the `request-id` header must not be sent'
+        );
     }
 
     #[TestDox('getRule')]

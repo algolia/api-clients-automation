@@ -902,6 +902,28 @@ def snippet_for_get_no_results_rate1():
     # SEPARATOR<
 
 
+def snippet_for_get_patterns_fields():
+    """
+    Snippet for the getPatternsFields method.
+
+    getPatternsFields
+    """
+    # >SEPARATOR getPatternsFields default
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_patterns_fields()
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_get_purchase_rate():
     """
     Snippet for the getPurchaseRate method.
@@ -1614,6 +1636,303 @@ def snippet_for_get_users_count1():
         start_date="1999-09-19",
         end_date="2001-01-01",
         tags="tag",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_distribution():
+    """
+    Snippet for the queryPatternsDistribution method.
+
+    queryPatternsDistribution
+    """
+    # >SEPARATOR queryPatternsDistribution default
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_distribution(
+        distribution_payload={
+            "distributions": [
+                {
+                    "kind": "clickPosition",
+                    "bins": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                    ],
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "index",
+                    ],
+                },
+            ],
+        },
+        index="index",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_scalar():
+    """
+    Snippet for the queryPatternsScalar method.
+
+    queryPatternsScalar
+    """
+    # >SEPARATOR queryPatternsScalar default
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_scalar(
+        scalar_payload={
+            "metrics": [
+                {
+                    "kind": "conversionRate",
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "index",
+                    ],
+                },
+            ],
+        },
+        index="index",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_table():
+    """
+    Snippet for the queryPatternsTable method.
+
+    queryPatternsTable with minimal parameters
+    """
+    # >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_table(
+        table_payload={
+            "metrics": [
+                {
+                    "kind": "searchesCount",
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "index",
+                    ],
+                },
+            ],
+        },
+        index="index",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_table1():
+    """
+    Snippet for the queryPatternsTable method.
+
+    queryPatternsTable with all parameters
+    """
+    # >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_table(
+        table_payload={
+            "domain": "core",
+            "metrics": [
+                {
+                    "kind": "searchesCount",
+                },
+            ],
+            "groupBy": [
+                {
+                    "kind": "query",
+                },
+            ],
+            "filters": [
+                {
+                    "kind": "clicked",
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "index",
+                    ],
+                },
+            ],
+            "orderBy": [
+                {
+                    "kind": "searchesCount",
+                    "direction": "desc",
+                },
+            ],
+            "limit": 100,
+            "offset": 0,
+        },
+        index="index",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_timeseries():
+    """
+    Snippet for the queryPatternsTimeseries method.
+
+    queryPatternsTimeseries with minimal parameters
+    """
+    # >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_timeseries(
+        timeseries_payload={
+            "metrics": [
+                {
+                    "kind": "searchesCount",
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "index",
+                    ],
+                },
+            ],
+        },
+        index="index",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_query_patterns_timeseries1():
+    """
+    Snippet for the queryPatternsTimeseries method.
+
+    queryPatternsTimeseries with all parameters
+    """
+    # >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AnalyticsClient instead, which exposes the exact same methods.
+    client = AnalyticsClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.query_patterns_timeseries(
+        timeseries_payload={
+            "domain": "core",
+            "metrics": [
+                {
+                    "kind": "searchesCount",
+                },
+                {
+                    "domain": "abtesting",
+                    "kind": "isMsrQuery",
+                },
+            ],
+            "groupBy": [
+                {
+                    "kind": "index",
+                },
+            ],
+            "filters": [
+                {
+                    "kind": "clicked",
+                },
+                {
+                    "kind": "country",
+                    "operator": "=",
+                    "parameter": {
+                        "kind": "country",
+                    },
+                },
+            ],
+            "parameters": [
+                {
+                    "kind": "indices",
+                    "value": [
+                        "indexA",
+                        "indexB",
+                    ],
+                },
+                {
+                    "kind": "startDate",
+                    "value": "2024-01-01T00:00:00Z",
+                },
+                {
+                    "kind": "endDate",
+                    "value": "2024-01-07T23:59:59Z",
+                },
+                {
+                    "kind": "country",
+                    "value": "FR",
+                },
+            ],
+            "limit": 50,
+            "offset": 0,
+        },
+        index="indexA,indexB",
     )
 
     # >LOG

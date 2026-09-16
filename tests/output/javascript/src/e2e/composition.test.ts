@@ -15,6 +15,52 @@ if (!process.env.METIS_API_KEY) {
 
 const client = compositionClient(process.env.METIS_APPLICATION_ID, process.env.METIS_API_KEY);
 
+describe('getComposition', () => {
+  test('the Correlation-ID ends with the sent Request-ID', async () => {
+    const resp = await client.getComposition(
+      { compositionID: 'id1' },
+      {
+        headers: { 'request-id': 'CtsE2eEcho4' },
+      },
+    );
+
+    const expectedBody = { objectID: 'id1' };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+    const httpResp = await client.transporter.requestWithHttpInfo(
+      { method: 'GET', path: '/1/compositions/id1', queryParameters: {}, headers: {} },
+      {
+        headers: { 'request-id': 'CtsE2eEcho4' },
+      },
+    );
+
+    expect(httpResp.headers?.['correlation-id']).toBeDefined();
+    expect(httpResp.headers?.['correlation-id']?.endsWith('CtsE2eEcho4')).toBe(true);
+  });
+
+  test('the Correlation-ID ends with the Request-ID sent as a query parameter', async () => {
+    const resp = await client.getComposition(
+      { compositionID: 'id1' },
+      {
+        queryParameters: { 'x-algolia-request-id': 'CtsE2eEchoQ' },
+      },
+    );
+
+    const expectedBody = { objectID: 'id1' };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+    const httpResp = await client.transporter.requestWithHttpInfo(
+      { method: 'GET', path: '/1/compositions/id1', queryParameters: {}, headers: {} },
+      {
+        queryParameters: { 'x-algolia-request-id': 'CtsE2eEchoQ' },
+      },
+    );
+
+    expect(httpResp.headers?.['correlation-id']).toBeDefined();
+    expect(httpResp.headers?.['correlation-id']?.endsWith('CtsE2eEchoQ')).toBe(true);
+  });
+});
+
 describe('listCompositions', () => {
   test('listCompositions', async () => {
     const resp = await client.listCompositions();

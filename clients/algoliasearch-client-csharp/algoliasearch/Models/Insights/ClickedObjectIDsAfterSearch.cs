@@ -36,7 +36,7 @@ public partial class ClickedObjectIDsAfterSearch
   /// <param name="index">Index name (case-sensitive) to which the event's items belong. (required).</param>
   /// <param name="objectIDs">Object IDs of the records that are part of the event. (required).</param>
   /// <param name="positions">Position of the clicked item the search results.  You must provide 1 `position` for each `objectID`.  (required).</param>
-  /// <param name="queryID">Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.  (required).</param>
+  /// <param name="queryID">Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. For agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string.  (required).</param>
   /// <param name="userToken">Anonymous or pseudonymous user identifier.  Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).  (required).</param>
   public ClickedObjectIDsAfterSearch(
     string eventName,
@@ -86,9 +86,9 @@ public partial class ClickedObjectIDsAfterSearch
   public List<int> Positions { get; set; }
 
   /// <summary>
-  /// Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
+  /// Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. For agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string.
   /// </summary>
-  /// <value>Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. </value>
+  /// <value>Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. For agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string. </value>
   [JsonPropertyName("queryID")]
   public string QueryID { get; set; }
 

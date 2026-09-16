@@ -1,4 +1,4 @@
-from asyncio import TimeoutError
+from asyncio import TimeoutError, sleep
 from gzip import compress as gzip_compress
 from json import dumps, loads
 from typing import AsyncIterator, List, Optional
@@ -13,8 +13,14 @@ from algoliasearch.http.exceptions import (
     RequestException,
 )
 from algoliasearch.http.hosts import Host
+from algoliasearch.http.request_id import get_correlation_id, with_request_id
 from algoliasearch.http.request_options import RequestOptions
-from algoliasearch.http.retry import RetryOutcome, RetryStrategy
+from algoliasearch.http.retry import (
+    RATE_LIMIT_STATUS_CODE,
+    RetryOutcome,
+    RetryStrategy,
+    parse_retry_after_seconds,
+)
 from algoliasearch.http.sse import ServerSentEvent, aiter_sse_events
 from algoliasearch.http.verb import Verb
 
@@ -46,6 +52,8 @@ class Transporter(BaseTransporter):
                 connector=TCPConnector(use_dns_cache=False), trust_env=True
             )
 
+        request_options = with_request_id(request_options, self._config)
+
         query_parameters = self.prepare(
             request_options, verb == Verb.GET or use_read_transporter
         )
@@ -59,51 +67,68 @@ class Transporter(BaseTransporter):
             request_options.data = gzip_compress(request_options.data.encode("utf-8"))
             request_options.headers["content-encoding"] = "gzip"
 
+        last_correlation_id = None
+        rate_limit_retries_left = self._config.max_rate_limit_retries
+
         for host in self._retry_strategy.valid_hosts(self._hosts):
             url = self.build_url(host, path)
             proxy = self.get_proxy(url)
 
-            try:
-                connect_timeout = (
-                    request_options.timeouts["connect"] * (host.retry_count + 1)
-                ) / 1000
-                request_timeout = self._timeout / 1000
+            while True:
+                try:
+                    connect_timeout = (
+                        request_options.timeouts["connect"] * (host.retry_count + 1)
+                    ) / 1000
+                    request_timeout = self._timeout / 1000
 
-                timeout_config = ClientTimeout(
-                    connect=connect_timeout, sock_read=request_timeout
-                )
+                    timeout_config = ClientTimeout(
+                        connect=connect_timeout, sock_read=request_timeout
+                    )
 
-                async with self._session.request(
-                    method=verb,
-                    url=url,
-                    headers=request_options.headers,
-                    data=request_options.data,
-                    proxy=proxy,
-                    timeout=timeout_config,
-                ) as resp:
-                    _raw_data = await resp.text()
+                    async with self._session.request(
+                        method=verb,
+                        url=url,
+                        headers=request_options.headers,
+                        data=request_options.data,
+                        proxy=proxy,
+                        timeout=timeout_config,
+                    ) as resp:
+                        _raw_data = await resp.text()
 
+                        response = ApiResponse(
+                            verb=verb,
+                            path=path,
+                            url=url,
+                            host=host.url,
+                            status_code=resp.status,
+                            headers=resp.headers,  # pyright: ignore # insensitive dict is still a dict
+                            data=_raw_data,
+                            raw_data=_raw_data,
+                            error_message=str(resp.reason),
+                        )
+
+                except TimeoutError as e:
                     response = ApiResponse(
                         verb=verb,
                         path=path,
                         url=url,
                         host=host.url,
-                        status_code=resp.status,
-                        headers=resp.headers,  # pyright: ignore # insensitive dict is still a dict
-                        data=_raw_data,
-                        raw_data=_raw_data,
-                        error_message=str(resp.reason),
+                        error_message=str(e),
+                        is_timed_out_error=True,
                     )
 
-            except TimeoutError as e:
-                response = ApiResponse(
-                    verb=verb,
-                    path=path,
-                    url=url,
-                    host=host.url,
-                    error_message=str(e),
-                    is_timed_out_error=True,
-                )
+                correlation_id = get_correlation_id(response.headers)
+                last_correlation_id = correlation_id or last_correlation_id
+
+                if (
+                    response.status_code == RATE_LIMIT_STATUS_CODE
+                    and rate_limit_retries_left > 0
+                ):
+                    rate_limit_retries_left -= 1
+                    await sleep(parse_retry_after_seconds(response.headers))
+                    continue
+
+                break
 
             decision = self._retry_strategy.decide(host, response)
 
@@ -114,10 +139,11 @@ class Transporter(BaseTransporter):
                 if response.data and "message" in response.data:
                     content = loads(response.data)["message"]
 
-                raise RequestException(content, response.status_code)
+                raise RequestException(content, response.status_code, correlation_id)
 
         raise AlgoliaUnreachableHostException(
-            "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support"
+            "Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support",
+            last_correlation_id,
         )
 
     async def request_stream(
@@ -132,6 +158,7 @@ class Transporter(BaseTransporter):
                 connector=TCPConnector(use_dns_cache=False), trust_env=True
             )
 
+        request_options = with_request_id(request_options, self._config)
         request_options.headers["accept"] = "text/event-stream"
 
         query_parameters = self.prepare(
@@ -156,19 +183,35 @@ class Transporter(BaseTransporter):
             connect=connect_timeout, sock_read=request_timeout
         )
 
-        resp = await self._session.request(
-            method=verb,
-            url=url,
-            headers=request_options.headers,
-            data=request_options.data,
-            proxy=proxy,
-            timeout=timeout_config,
-        )
+        rate_limit_retries_left = self._config.max_rate_limit_retries
+
+        while True:
+            resp = await self._session.request(
+                method=verb,
+                url=url,
+                headers=request_options.headers,
+                data=request_options.data,
+                proxy=proxy,
+                timeout=timeout_config,
+            )
+
+            if resp.status == RATE_LIMIT_STATUS_CODE and rate_limit_retries_left > 0:
+                rate_limit_retries_left -= 1
+                wait_seconds = parse_retry_after_seconds(resp.headers)
+                resp.release()
+                await sleep(wait_seconds)
+                continue
+
+            break
 
         try:
             if resp.status >= 400:
                 error_text = await resp.text()
-                raise RequestException(error_text, resp.status)
+                raise RequestException(
+                    error_text,
+                    resp.status,
+                    get_correlation_id(resp.headers),  # pyright: ignore # insensitive dict is still a dict
+                )
 
             async for event in aiter_sse_events(resp.content.iter_any()):
                 yield event

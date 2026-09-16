@@ -686,6 +686,7 @@ class RecommendTest {
                         query = "myQuery",
                         optionalFilters =
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
+                        facetFilters = FacetFilters.of(listOf(FacetFilters.of("brand:apple"))),
                       ),
                   )
                 )
@@ -696,7 +697,7 @@ class RecommendTest {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""",
+          """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}""",
           it.body,
         )
       },

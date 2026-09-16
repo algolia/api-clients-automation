@@ -118,7 +118,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Impossible to connect, please check your Algolia Application Id. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Unreachable hosts. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support Last error for %localhost%: Connection timed out'), $e->getMessage());
         }
     }
 
@@ -254,6 +254,78 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('retries 429 on the same host using Retry-After')]
+    public function test13api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6698']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/retry-after/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('retries 429 with a 1s wait when Retry-After is missing')]
+    public function test14api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/missing-header/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('retries 429 with a 1s wait when Retry-After is invalid')]
+    public function test15api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        $res = $client->customGet(
+            '1/test/rate-limit/invalid-header/php',
+        );
+        $this->assertEquals(
+            '{"message":"ok rate limit retry"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('returns 429 after maxRateLimitRetries is used up')]
+    public function test16api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/rate-limit/exhausted/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Too many requests'), $e->getMessage());
+        }
+    }
+
+    #[TestDox('fails on the first 429 when maxRateLimitRetries is 0')]
+    public function test17api(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6697'])->setMaxRateLimitRetries(0));
+
+        try {
+            $res = $client->customGet(
+                '1/test/rate-limit/zero-retries/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Too many requests'), $e->getMessage());
+        }
+    }
+
     #[TestDox('calls api with correct user agent')]
     public function test0commonApi(): void
     {
@@ -278,7 +350,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.46.2\).*/',
+                '/^Algolia for PHP \(4.49.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
@@ -479,7 +551,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid API key');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Invalid API key'), $e->getMessage());
         }
     }
 
@@ -508,7 +580,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`appId` is missing.'), $e->getMessage());
         }
 
         try {
@@ -519,7 +591,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`appId` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`appId` is missing.'), $e->getMessage());
         }
 
         try {
@@ -530,7 +602,7 @@ class SearchTest extends TestCase implements HttpClientInterface
 
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), '`apiKey` is missing.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', '`apiKey` is missing.'), $e->getMessage());
         }
     }
 
@@ -545,7 +617,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `apiKey` is required when calling `addApiKey`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `apiKey` is required when calling `addApiKey`.'), $e->getMessage());
         }
     }
 
@@ -562,7 +634,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `indexName` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `indexName` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
 
         try {
@@ -573,7 +645,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `objectID` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `objectID` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
 
         try {
@@ -584,7 +656,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Parameter `body` is required when calling `addOrUpdateObject`.');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Parameter `body` is required when calling `addOrUpdateObject`.'), $e->getMessage());
         }
     }
 
@@ -766,7 +838,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Record is too big');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Record is too big'), $e->getMessage());
         }
     }
 
@@ -826,6 +898,137 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('the Request-ID stays stable across retries')]
+    public function test0requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6695', 'http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6696']));
+
+        $res = $client->customPost(
+            '1/test/request-id/retry/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('each call mints a fresh Request-ID')]
+    public function test1requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/fresh/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+
+        $res = $client->customGet(
+            '1/test/request-id/fresh/php',
+        );
+        $this->assertEquals(
+            '{"status":"ok"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('a caller-supplied Request-ID is never overwritten')]
+    public function test2requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->customGet(
+            '1/test/request-id/caller/php',
+            [],
+            requestOptions: [
+                'headers' => [
+                    'request-id' => 'CtsUserProvided',
+                ],
+            ]
+        );
+        $this->assertEquals(
+            '{"requestId":"CtsUserProvided"}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('every request of one helper call shares one Request-ID')]
+    public function test3requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        $res = $client->saveObjects(
+            'cts_request_id_php',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            true,
+            2,
+        );
+        $this->assertEquals(
+            '[{"taskID":42,"objectIDs":["1","2"]},{"taskID":42,"objectIDs":["3","4"]}]',
+            json_encode($res)
+        );
+
+        $res = $client->saveObjects(
+            'cts_request_id_php',
+            [
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fred',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gina',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+            ],
+            true,
+            2,
+        );
+        $this->assertEquals(
+            '[{"taskID":42,"objectIDs":["5","6"]},{"taskID":42,"objectIDs":["7","8"]}]',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('client errors expose the Correlation-ID')]
+    public function test4requestId(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6694']));
+
+        try {
+            $res = $client->customGet(
+                '1/test/request-id/error/php',
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'request-id error test (Correlation-ID: CtsFixedCorrelationId)'), $e->getMessage());
+        }
+    }
+
     #[TestDox('call saveObjects without error')]
     public function test0saveObjects(): void
     {
@@ -869,7 +1072,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             );
             $this->fail('Expected exception to be thrown');
         } catch (\Exception $e) {
-            $this->assertEquals($e->getMessage(), 'Invalid Application-ID or API key');
+            $this->assertEquals(str_replace('%localhost%', 'true' == getenv('CI') ? 'localhost' : 'host.docker.internal', 'Invalid Application-ID or API key'), $e->getMessage());
         }
     }
 
@@ -908,7 +1111,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             false,
             1000,
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => '*',
                 ],
@@ -1050,7 +1253,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             true,
             10,
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-user-id' => 'test-user',
                 ],
@@ -1067,7 +1270,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'playlists',
             ['query' => 'foo',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user1234',
                 ],

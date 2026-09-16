@@ -188,6 +188,7 @@ FallbackParams _$FallbackParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('enableReRanking', (v) => v as bool?),
           reRankingApplyFilter:
               $checkedConvert('reRankingApplyFilter', (v) => v),
+          facetFilters: $checkedConvert('facetFilters', (v) => v),
         );
         return val;
       },
@@ -301,6 +302,7 @@ Map<String, dynamic> _$FallbackParamsToJson(FallbackParams instance) {
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  writeNotNull('facetFilters', instance.facetFilters);
   return val;
 }
 

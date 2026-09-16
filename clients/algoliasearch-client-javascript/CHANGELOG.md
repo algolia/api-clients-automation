@@ -1,3 +1,42 @@
+## [5.59.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.58.0...5.59.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
+- [120ed46971](https://github.com/algolia/api-clients-automation/commit/120ed46971) chore(ci): enable yarn hardened mode and immutable installs (API-476) ([#6915](https://github.com/algolia/api-clients-automation/pull/6915)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [86409a3b15](https://github.com/algolia/api-clients-automation/commit/86409a3b15) feat(javascript): wait and retry on 429 with Retry-After ([#6965](https://github.com/algolia/api-clients-automation/pull/6965)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [31395ba02e](https://github.com/algolia/api-clients-automation/commit/31395ba02e) chore(deps): dependencies 2026-08-31 ([#6959](https://github.com/algolia/api-clients-automation/pull/6959)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [5.58.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.57.0...5.58.0)
+
+- [120ed46971](https://github.com/algolia/api-clients-automation/commit/120ed46971) chore(ci): enable yarn hardened mode and immutable installs (API-476) ([#6915](https://github.com/algolia/api-clients-automation/pull/6915)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [5.57.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.56.0...5.57.0)
+
+- [816ba11161](https://github.com/algolia/api-clients-automation/commit/816ba11161) fix(javascript): add warning in replaceAllObjects for empty objects ([#6608](https://github.com/algolia/api-clients-automation/pull/6608)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [2d0d8f3252](https://github.com/algolia/api-clients-automation/commit/2d0d8f3252) feat(javascript): Request-ID and Correlation-ID support ([#6747](https://github.com/algolia/api-clients-automation/pull/6747)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [1f389d1f7f](https://github.com/algolia/api-clients-automation/commit/1f389d1f7f) feat(specs): add agentic analytics support to insights spec ([#6876](https://github.com/algolia/api-clients-automation/pull/6876)) by [@sirockin](https://github.com/sirockin/)
+- [65cc642811](https://github.com/algolia/api-clients-automation/commit/65cc642811) feat(specs): add decision (declared winner) to abtesting-v3 ABTest ([#6732](https://github.com/algolia/api-clients-automation/pull/6732)) by [@cdhawke](https://github.com/cdhawke/)
+- [adb99cc4d4](https://github.com/algolia/api-clients-automation/commit/adb99cc4d4) chore(javascript): raise abtesting bundle budget ([#6884](https://github.com/algolia/api-clients-automation/pull/6884)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+- [637defc23a](https://github.com/algolia/api-clients-automation/commit/637defc23a) feat(specs): add analytics v3 pattern endpoints ([#6795](https://github.com/algolia/api-clients-automation/pull/6795)) by [@Niamsy](https://github.com/Niamsy/)
+- [bed536e149](https://github.com/algolia/api-clients-automation/commit/bed536e149) chore(deps): dependencies 2026-08-10 ([#6835](https://github.com/algolia/api-clients-automation/pull/6835)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [5.56.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.2...5.56.0)
+
+- [8a5ab6f7e8](https://github.com/algolia/api-clients-automation/commit/8a5ab6f7e8) feat(javascript): add WithHTTPInfo methods ([#6682](https://github.com/algolia/api-clients-automation/pull/6682)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)
+- [02821a2f9d](https://github.com/algolia/api-clients-automation/commit/02821a2f9d) chore(deps): dependencies 2026-07-13 ([#6692](https://github.com/algolia/api-clients-automation/pull/6692)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [5.55.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.1...5.55.2)
 
 - [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)

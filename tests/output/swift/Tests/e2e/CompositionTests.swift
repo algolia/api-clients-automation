@@ -49,6 +49,70 @@ final class CompositionClientRequestsTestsE2E: XCTestCase {
         self.client = try? CompositionClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
     }
 
+    /// the Correlation-ID ends with the sent Request-ID
+    func testGetCompositionTest1() async throws {
+        guard let client = CompositionClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.getCompositionWithHTTPInfo(compositionID: "id1", requestOptions: RequestOptions(
+            headers: ["request-id": "CtsE2eEcho4"]
+        ))
+        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"objectID\":\"id1\"}")
+
+        XCTAssertEqual(response.statusCode, 200)
+
+        // Re-issue the request through customGet to read the response headers;
+        // customGet prepends the leading slash that request.path carries.
+        let httpResponse: Response<AnyCodable> = try await client.customGetWithHTTPInfo(
+            path: String("/1/compositions/id1".dropFirst()),
+            requestOptions: RequestOptions(
+                headers: ["request-id": "CtsE2eEcho4"]
+            )
+        )
+
+        let correlationID = try XCTUnwrap(
+            httpResponse.headers.first { $0.key.caseInsensitiveCompare("Correlation-ID") == .orderedSame }?.value
+        )
+        XCTAssertTrue(
+            correlationID.hasSuffix("CtsE2eEcho4"),
+            "Correlation-ID \(correlationID) must end with CtsE2eEcho4"
+        )
+    }
+
+    /// the Correlation-ID ends with the Request-ID sent as a query parameter
+    func testGetCompositionTest2() async throws {
+        guard let client = CompositionClientRequestsTestsE2E.client else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let response = try await client.getCompositionWithHTTPInfo(compositionID: "id1", requestOptions: RequestOptions(
+            queryParameters: ["x-algolia-request-id": "CtsE2eEchoQ"]
+        ))
+        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"objectID\":\"id1\"}")
+
+        XCTAssertEqual(response.statusCode, 200)
+
+        // Re-issue the request through customGet to read the response headers;
+        // customGet prepends the leading slash that request.path carries.
+        let httpResponse: Response<AnyCodable> = try await client.customGetWithHTTPInfo(
+            path: String("/1/compositions/id1".dropFirst()),
+            requestOptions: RequestOptions(
+                queryParameters: ["x-algolia-request-id": "CtsE2eEchoQ"]
+            )
+        )
+
+        let correlationID = try XCTUnwrap(
+            httpResponse.headers.first { $0.key.caseInsensitiveCompare("Correlation-ID") == .orderedSame }?.value
+        )
+        XCTAssertTrue(
+            correlationID.hasSuffix("CtsE2eEchoQ"),
+            "Correlation-ID \(correlationID) must end with CtsE2eEchoQ"
+        )
+    }
+
     /// listCompositions
     func testListCompositionsTest1() async throws {
         guard let client = CompositionClientRequestsTestsE2E.client else {

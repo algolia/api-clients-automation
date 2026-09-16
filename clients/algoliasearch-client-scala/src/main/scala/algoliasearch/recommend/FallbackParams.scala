@@ -450,5 +450,6 @@ case class FallbackParams(
     attributeCriteriaComputedByMinProximity: Option[Boolean] = scala.None,
     renderingContent: Option[RenderingContent] = scala.None,
     enableReRanking: Option[Boolean] = scala.None,
-    reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None
+    reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
+    facetFilters: Option[FacetFilters] = scala.None
 )

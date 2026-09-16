@@ -607,6 +607,7 @@ class SnippetRecommendClient {
               new FallbackParams()
                 .setQuery("myQuery")
                 .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
+                .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("brand:apple"))))
             )
         )
       )

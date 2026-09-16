@@ -546,6 +546,9 @@ class TestRecommendClient:
                             "optionalFilters": [
                                 "brand:samsung",
                             ],
+                            "facetFilters": [
+                                "brand:apple",
+                            ],
                         },
                     },
                 ],
@@ -557,7 +560,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}"""
         )
 
     async def test_get_recommendations_3(self):
@@ -1295,6 +1298,9 @@ class TestRecommendClientSync:
                             "optionalFilters": [
                                 "brand:samsung",
                             ],
+                            "facetFilters": [
+                                "brand:apple",
+                            ],
                         },
                     },
                 ],
@@ -1306,7 +1312,7 @@ class TestRecommendClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}"""
         )
 
     def test_get_recommendations_3(self):

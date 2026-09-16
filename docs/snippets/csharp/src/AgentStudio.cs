@@ -463,7 +463,7 @@ public class SnippetAgentStudioClient
     var response = await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -539,7 +539,9 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -565,7 +567,9 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -591,7 +595,9 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -617,7 +623,9 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -643,7 +651,7 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
     // print the response
@@ -669,7 +677,7 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
     // print the response
@@ -695,7 +703,7 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -723,7 +731,7 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -751,7 +759,7 @@ public class SnippetAgentStudioClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -1175,7 +1183,7 @@ public class SnippetAgentStudioClient
   /// </summary>
   public async Task SnippetForAgentStudioClientGetConversation()
   {
-    // >SEPARATOR getConversation getConversation
+    // >SEPARATOR getConversation default
     // Initialize the client
     var client = new AgentStudioClient(
       new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1184,30 +1192,6 @@ public class SnippetAgentStudioClient
     // Call the API
     var response = await client.GetConversationAsync(
       "test-conversation-id",
-      "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    );
-    // >LOG
-    // print the response
-    Console.WriteLine(response);
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the GetConversation method.
-  ///
-  /// e2e get conversation
-  /// </summary>
-  public async Task SnippetForAgentStudioClientGetConversation1()
-  {
-    // >SEPARATOR getConversation e2e get conversation
-    // Initialize the client
-    var client = new AgentStudioClient(
-      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-    );
-
-    // Call the API
-    var response = await client.GetConversationAsync(
-      "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
       "76710f1b-8231-42e5-b0d1-f43aac618e15"
     );
     // >LOG

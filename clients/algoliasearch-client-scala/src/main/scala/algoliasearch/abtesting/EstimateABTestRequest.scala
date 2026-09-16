@@ -13,8 +13,9 @@
   * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. ## Response status and errors The A/B testing API
   * returns JSON responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in
   * the API response. Successful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors
-  * return `5xx` statuses. Error responses have a `message` property with more information. ## Version The current
-  * version of the A/B Testing API is version 2, indicated by the `/2/` in each endpoint's URL.
+  * return `5xx` statuses. Error responses have a `message` property with more information. ## Version Version 2 of the
+  * A/B Testing API, indicated by the `/2/` in each endpoint's URL, is deprecated. Use [version
+  * 3](https://www.algolia.com/doc/rest-api/abtesting-v3) instead.
   *
   * The version of the OpenAPI document: 2.0.0
   *

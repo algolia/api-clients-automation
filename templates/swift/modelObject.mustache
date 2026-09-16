@@ -112,10 +112,11 @@
         {{#vars}}
         {{{name}}} = try container.decode{{#required}}{{#isNullable}}IfPresent{{/isNullable}}{{/required}}{{^required}}IfPresent{{/required}}({{> generic_type}}.self, forKey: .{{{name}}})
         {{/vars}}
-        var nonAdditionalPropertyKeys = Set<String>()
-        {{#vars}}
-        nonAdditionalPropertyKeys.insert("{{{baseName}}}")
-        {{/vars}}
+        let nonAdditionalPropertyKeys: Set<String> = [
+            {{#vars}}
+            "{{{baseName}}}",
+            {{/vars}}
+        ]
         let additionalPropertiesContainer = try decoder.container(keyedBy: String.self)
         additionalProperties = try additionalPropertiesContainer.decodeMap({{{additionalPropertiesType}}}.self, excludedKeys: nonAdditionalPropertyKeys)
     }{{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}{{^objcCompatible}}{{/objcCompatible}}

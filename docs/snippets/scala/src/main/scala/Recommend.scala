@@ -687,7 +687,8 @@ class SnippetRecommendClient {
               fallbackParameters = Some(
                 FallbackParams(
                   query = Some("myQuery"),
-                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
+                  optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung")))),
+                  facetFilters = Some(FacetFilters(Seq(FacetFilters("brand:apple"))))
                 )
               )
             )

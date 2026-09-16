@@ -15,7 +15,7 @@ foreach ($playlists as $playlist) {
             $playlists,
             false,
             1000,
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => $playlistUserID,
                 ],

@@ -25,6 +25,11 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Un
     {{#statusCode}}
     assert_equal(res.status, {{statusCode}})
     {{/statusCode}}
+    {{#correlationIdSuffix}}
+    correlation_id = res.headers.find { |k, _| k.to_s.casecmp?("Correlation-ID") }&.last
+    assert_not_nil(correlation_id, 'the response must carry a Correlation-ID header')
+    assert(correlation_id.end_with?('{{{correlationIdSuffix}}}'), "Correlation-ID #{correlation_id} must end with {{{correlationIdSuffix}}}")
+    {{/correlationIdSuffix}}
     {{#body}}
     res = @client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
     expected_body = JSON.parse(%q({{{.}}}))

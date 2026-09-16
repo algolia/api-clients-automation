@@ -51,6 +51,7 @@ public class AbtestingClient(
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
    * Creates a new A/B test.
    *
    * Required API Key ACLs:
@@ -58,20 +59,45 @@ public class AbtestingClient(
    *
    * @param addABTestsRequest
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun addABTests(
     addABTestsRequest: AddABTestsRequest,
     requestOptions: RequestOptions? = null,
   ): ABTestResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
-        body = addABTestsRequest,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = addABTestsRequestConfig(addABTestsRequest = addABTestsRequest),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
+   * Creates a new A/B test. This variant of [addABTests] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param addABTestsRequest
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun addABTestsWithHTTPInfo(
+    addABTestsRequest: AddABTestsRequest,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ABTestResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = addABTestsRequestConfig(addABTestsRequest = addABTestsRequest),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun addABTestsRequestConfig(addABTestsRequest: AddABTestsRequest): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
+      body = addABTestsRequest,
     )
   }
 
@@ -87,19 +113,44 @@ public class AbtestingClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -115,19 +166,44 @@ public class AbtestingClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -145,20 +221,48 @@ public class AbtestingClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -176,92 +280,205 @@ public class AbtestingClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
     )
   }
 
   /**
-   * Deletes an A/B test by its ID.
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * Required API Key ACLs:
    * - editSettings
    *
    * @param id Unique A/B test identifier.
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun deleteABTest(id: Int, requestOptions: RequestOptions? = null): ABTestResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteABTestRequestConfig(id = id),
       requestOptions = requestOptions,
     )
   }
 
   /**
-   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
-   * size and duration of an A/B test based on historical traffic.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID. This variant of [deleteABTest] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param id Unique A/B test identifier.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun deleteABTestWithHTTPInfo(
+    id: Int,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ABTestResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteABTestRequestConfig(id = id),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteABTestRequestConfig(id: Int): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * Required API Key ACLs:
    * - analytics
    *
    * @param estimateABTestRequest
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun estimateABTest(
     estimateABTestRequest: EstimateABTestRequest,
     requestOptions: RequestOptions? = null,
   ): EstimateABTestResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "estimate"),
-        body = estimateABTestRequest,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = estimateABTestRequestConfig(estimateABTestRequest = estimateABTestRequest),
       requestOptions = requestOptions,
     )
   }
 
   /**
-   * Retrieves the details for an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic. This variant
+   * of [estimateABTest] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param estimateABTestRequest
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun estimateABTestWithHTTPInfo(
+    estimateABTestRequest: EstimateABTestRequest,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<EstimateABTestResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = estimateABTestRequestConfig(estimateABTestRequest = estimateABTestRequest),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun estimateABTestRequestConfig(
+    estimateABTestRequest: EstimateABTestRequest
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "estimate"),
+      body = estimateABTestRequest,
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * Required API Key ACLs:
    * - analytics
    *
    * @param id Unique A/B test identifier.
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun getABTest(id: Int, requestOptions: RequestOptions? = null): ABTest {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getABTestRequestConfig(id = id),
       requestOptions = requestOptions,
     )
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID. This variant of [getABTest]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param id Unique A/B test identifier.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun getABTestWithHTTPInfo(
+    id: Int,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ABTest> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getABTestRequestConfig(id = id),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getABTestRequestConfig(id: Int): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id"),
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * Required API Key ACLs:
@@ -274,6 +491,7 @@ public class AbtestingClient(
    * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
    *   included in the response.
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun listABTests(
     offset: Int? = null,
@@ -282,42 +500,119 @@ public class AbtestingClient(
     indexSuffix: String? = null,
     requestOptions: RequestOptions? = null,
   ): ListABTestsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
-        query =
-          buildMap {
-            offset?.let { put("offset", it) }
-            limit?.let { put("limit", it) }
-            indexPrefix?.let { put("indexPrefix", it) }
-            indexSuffix?.let { put("indexSuffix", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listABTestsRequestConfig(
+          offset = offset,
+          limit = limit,
+          indexPrefix = indexPrefix,
+          indexSuffix = indexSuffix,
+        ),
       requestOptions = requestOptions,
     )
   }
 
   /**
-   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
+   * Lists all A/B tests you configured for this application. This variant of [listABTests] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - analytics
+   *
+   * @param offset Position of the first item to return. (default to 0)
+   * @param limit Number of items to return. (default to 10)
+   * @param indexPrefix Index name prefix. Only A/B tests for indices starting with this string are
+   *   included in the response.
+   * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
+   *   included in the response.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun listABTestsWithHTTPInfo(
+    offset: Int? = null,
+    limit: Int? = null,
+    indexPrefix: String? = null,
+    indexSuffix: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListABTestsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listABTestsRequestConfig(
+          offset = offset,
+          limit = limit,
+          indexPrefix = indexPrefix,
+          indexSuffix = indexSuffix,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listABTestsRequestConfig(
+    offset: Int?,
+    limit: Int?,
+    indexPrefix: String?,
+    indexSuffix: String?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests"),
+      query =
+        buildMap {
+          offset?.let { put("offset", it) }
+          limit?.let { put("limit", it) }
+          indexPrefix?.let { put("indexPrefix", it) }
+          indexSuffix?.let { put("indexSuffix", it) }
+        },
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * Required API Key ACLs:
    * - editSettings
    *
    * @param id Unique A/B test identifier.
    * @param requestOptions additional request configuration.
+   * @deprecated
    */
   public suspend fun stopABTest(id: Int, requestOptions: RequestOptions? = null): ABTestResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id", "stop"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = stopABTestRequestConfig(id = id),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests. This
+   * variant of [stopABTest] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - editSettings
+   *
+   * @param id Unique A/B test identifier.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun stopABTestWithHTTPInfo(
+    id: Int,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ABTestResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = stopABTestRequestConfig(id = id),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun stopABTestRequestConfig(id: Int): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "abtests", "$id", "stop"),
     )
   }
 }

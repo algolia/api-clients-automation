@@ -100,16 +100,37 @@ class PersonalizationClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -124,16 +145,36 @@ class PersonalizationClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -151,17 +192,44 @@ class PersonalizationClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -179,17 +247,44 @@ class PersonalizationClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Deletes a user profile. The response includes a date and time when the user profile can safely be considered
@@ -204,15 +299,35 @@ class PersonalizationClient(
   def deleteUserProfile(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[DeleteUserProfileResponse] = Future {
+    execute[DeleteUserProfileResponse](deleteUserProfileHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Variant of `deleteUserProfile` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - recommendation
+    *
+    * @param userToken
+    *   Unique identifier representing a user for which to fetch the personalization profile.
+    */
+  def deleteUserProfileWithHTTPInfo(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[DeleteUserProfileResponse]] = Future {
+    executeWithHttpInfo[DeleteUserProfileResponse](deleteUserProfileHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `deleteUserProfile` and `deleteUserProfileWithHTTPInfo`.
+    */
+  private def deleteUserProfileHttpRequest(userToken: String): HttpRequest = {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `deleteUserProfile`.")
     requireNotEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserProfile`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/profiles/${escape(userToken)}")
       .build()
-    execute[DeleteUserProfileResponse](request, requestOptions)
   }
 
   /** Retrieves the current personalization strategy.
@@ -223,13 +338,31 @@ class PersonalizationClient(
   def getPersonalizationStrategy(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PersonalizationStrategyParams] = Future {
+    execute[PersonalizationStrategyParams](getPersonalizationStrategyHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getPersonalizationStrategy` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - recommendation
+    */
+  def getPersonalizationStrategyWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PersonalizationStrategyParams]] = Future {
+    executeWithHttpInfo[PersonalizationStrategyParams](getPersonalizationStrategyHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getPersonalizationStrategy` and
+    * `getPersonalizationStrategyWithHTTPInfo`.
+    */
+  private def getPersonalizationStrategyHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/strategies/personalization")
       .build()
-    execute[PersonalizationStrategyParams](request, requestOptions)
   }
 
   /** Retrieves a user profile and their affinities for different facets.
@@ -243,15 +376,36 @@ class PersonalizationClient(
   def getUserTokenProfile(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[GetUserTokenResponse] = Future {
+    execute[GetUserTokenResponse](getUserTokenProfileHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Variant of `getUserTokenProfile` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - recommendation
+    *
+    * @param userToken
+    *   Unique identifier representing a user for which to fetch the personalization profile.
+    */
+  def getUserTokenProfileWithHTTPInfo(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[GetUserTokenResponse]] = Future {
+    executeWithHttpInfo[GetUserTokenResponse](getUserTokenProfileHttpRequest(userToken = userToken), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getUserTokenProfile` and
+    * `getUserTokenProfileWithHTTPInfo`.
+    */
+  private def getUserTokenProfileHttpRequest(userToken: String): HttpRequest = {
     requireNotNull(userToken, "Parameter `userToken` is required when calling `getUserTokenProfile`.")
     requireNotEmpty(userToken, "Parameter `userToken` is required when calling `getUserTokenProfile`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/profiles/personalization/${escape(userToken)}")
       .build()
-    execute[GetUserTokenResponse](request, requestOptions)
   }
 
   /** Creates a new personalization strategy.
@@ -263,18 +417,45 @@ class PersonalizationClient(
       personalizationStrategyParams: PersonalizationStrategyParams,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[SetPersonalizationStrategyResponse] = Future {
+    execute[SetPersonalizationStrategyResponse](
+      setPersonalizationStrategyHttpRequest(personalizationStrategyParams = personalizationStrategyParams),
+      requestOptions
+    )
+  }
+
+  /** Variant of `setPersonalizationStrategy` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - recommendation
+    */
+  def setPersonalizationStrategyWithHTTPInfo(
+      personalizationStrategyParams: PersonalizationStrategyParams,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[SetPersonalizationStrategyResponse]] = Future {
+    executeWithHttpInfo[SetPersonalizationStrategyResponse](
+      setPersonalizationStrategyHttpRequest(personalizationStrategyParams = personalizationStrategyParams),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `setPersonalizationStrategy` and
+    * `setPersonalizationStrategyWithHTTPInfo`.
+    */
+  private def setPersonalizationStrategyHttpRequest(
+      personalizationStrategyParams: PersonalizationStrategyParams
+  ): HttpRequest = {
     requireNotNull(
       personalizationStrategyParams,
       "Parameter `personalizationStrategyParams` is required when calling `setPersonalizationStrategy`."
     )
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/1/strategies/personalization")
       .withBody(personalizationStrategyParams)
       .build()
-    execute[SetPersonalizationStrategyResponse](request, requestOptions)
   }
 
 }

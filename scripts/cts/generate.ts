@@ -1,4 +1,4 @@
-import { callGenerator, isWSL, run, setupAndGen } from '../common.ts';
+import { YARN_HARDENED_MODE_PREFIX, callGenerator, isWSL, run, setupAndGen } from '../common.ts';
 import { getTestOutputFolder } from '../config.ts';
 import { formatter } from '../formatter.ts';
 import type { Generator } from '../types.ts';
@@ -28,7 +28,7 @@ export async function ctsGenerateMany(
     }
 
     if (lang === 'javascript') {
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', {
+      await run(`${YARN_HARDENED_MODE_PREFIX}YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install`, {
         cwd: 'tests/output/javascript',
       });
     }

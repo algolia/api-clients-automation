@@ -237,6 +237,9 @@ public partial interface ISearchClient
   /// Finally, the temporary one replaces the existing index.
   /// See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
   /// </summary>
+  /// <remarks>
+  /// Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+  /// </remarks>
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to store in the given Algolia `indexName`.</param>
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.</param>
@@ -437,8 +440,27 @@ public partial interface ISearchClient
   /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
   Task<bool> IndexExistsAsync(string indexName, CancellationToken cancellationToken = default);
 
+  /// <summary>
+  /// Helper: Check if an index exists.
+  /// </summary>
+  /// <param name="indexName">The index in which to check.</param>
+  /// <param name="options">Add extra http header or query parameters to Algolia.</param>
+  /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+  Task<bool> IndexExistsAsync(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  );
+
   /// <inheritdoc cref="IndexExistsAsync(string, CancellationToken)"/>
   bool IndexExists(string indexName, CancellationToken cancellationToken = default);
+
+  /// <inheritdoc cref="IndexExistsAsync(string, RequestOptions, CancellationToken)"/>
+  bool IndexExists(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  );
 
   /// <summary>
   /// Helper: Similar to the `SaveObjects` method but requires a Push connector to be created first,
@@ -517,6 +539,9 @@ public partial interface ISearchClient
   /// <see cref="TransformationOptions"/> must have been set via <see cref="SearchClient.SetTransformationOptions"/> or <see cref="SearchClient.WithTransformation"/>.
   /// A temporary index is created during this process in order to backup your data.
   /// </summary>
+  /// <remarks>
+  /// Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+  /// </remarks>
   /// <param name="indexName">The index in which to perform the request.</param>
   /// <param name="objects">The list of `objects` to store in the given Algolia `indexName`.</param>
   /// <param name="batchSize">The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.</param>
@@ -553,6 +578,48 @@ public partial class SearchClient : ISearchClient
   /// </summary>
   public const int DefaultMaxRetries = RetryHelper.DefaultMaxRetries;
 
+  /// <summary>
+  /// Derives the request options carrying the shared per-invocation Request-ID; untouched when unsupported or the caller already supplied one.
+  /// </summary>
+  private RequestOptions WithRequestId(RequestOptions options)
+  {
+    if (
+      !_transport._algoliaConfig.RequestIdEnabled
+      || RequestIdHelper.HasRequestId(options?.Headers)
+      || RequestIdHelper.HasRequestIdQueryParameter(options?.QueryParameters)
+      || RequestIdHelper.HasRequestId(_transport._algoliaConfig.DefaultHeaders)
+    )
+    {
+      return options;
+    }
+
+    var copy = options?.ShallowCopy() ?? new RequestOptions();
+    copy.Headers = new Dictionary<string, string>(
+      options?.Headers ?? new Dictionary<string, string>()
+    )
+    {
+      [Defaults.RequestIdHeader] = RequestIdHelper.Generate(),
+    };
+    return copy;
+  }
+
+  /// <summary>
+  /// Derives the options for a rescue cleanup: the headers survive, the
+  /// caller's timeouts do not, so a timeout that killed the main operation
+  /// cannot also kill the cleanup and leak the temporary index.
+  /// </summary>
+  private static RequestOptions WithoutTimeouts(RequestOptions options)
+  {
+    var copy = options?.ShallowCopy();
+    if (copy != null)
+    {
+      copy.ReadTimeout = null;
+      copy.WriteTimeout = null;
+      copy.ConnectTimeout = null;
+    }
+    return copy;
+  }
+
   /// <inheritdoc/>
   public async Task<GetTaskResponse> WaitForTaskAsync(
     string indexName,
@@ -561,8 +628,11 @@ public partial class SearchClient : ISearchClient
     Func<int, int> timeout = null,
     RequestOptions requestOptions = null,
     CancellationToken ct = default
-  ) =>
-    await RetryHelper
+  )
+  {
+    requestOptions = WithRequestId(requestOptions);
+
+    return await RetryHelper
       .RetryUntil(
         async () => await GetTaskAsync(indexName, taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
@@ -571,6 +641,7 @@ public partial class SearchClient : ISearchClient
         ct
       )
       .ConfigureAwait(false);
+  }
 
   /// <inheritdoc/>
   public GetTaskResponse WaitForTask(
@@ -592,8 +663,11 @@ public partial class SearchClient : ISearchClient
     Func<int, int> timeout = null,
     RequestOptions requestOptions = null,
     CancellationToken ct = default
-  ) =>
-    await RetryHelper
+  )
+  {
+    requestOptions = WithRequestId(requestOptions);
+
+    return await RetryHelper
       .RetryUntil(
         async () => await GetAppTaskAsync(taskId, requestOptions, ct),
         resp => resp.Status == Models.Search.TaskStatus.Published,
@@ -602,6 +676,7 @@ public partial class SearchClient : ISearchClient
         ct
       )
       .ConfigureAwait(false);
+  }
 
   /// <inheritdoc/>
   public GetTaskResponse WaitForAppTask(
@@ -624,6 +699,8 @@ public partial class SearchClient : ISearchClient
     CancellationToken ct = default
   )
   {
+    requestOptions = WithRequestId(requestOptions);
+
     if (operation == ApiKeyOperation.Update)
     {
       if (apiKey == null)
@@ -713,6 +790,7 @@ public partial class SearchClient : ISearchClient
     RequestOptions requestOptions = null
   )
   {
+    requestOptions = WithRequestId(requestOptions);
     browseParams.HitsPerPage = 1000;
     var all = await CreateIterable<BrowseResponse<T>>(
         async prevResp =>
@@ -741,6 +819,7 @@ public partial class SearchClient : ISearchClient
     RequestOptions requestOptions = null
   )
   {
+    requestOptions = WithRequestId(requestOptions);
     const int hitsPerPage = 1000;
     searchRulesParams.HitsPerPage = hitsPerPage;
 
@@ -776,6 +855,7 @@ public partial class SearchClient : ISearchClient
     RequestOptions requestOptions = null
   )
   {
+    requestOptions = WithRequestId(requestOptions);
     const int hitsPerPage = 1000;
     var page = synonymsParams.Page ?? 0;
     synonymsParams.HitsPerPage = hitsPerPage;
@@ -910,6 +990,7 @@ public partial class SearchClient : ISearchClient
   )
     where T : class
   {
+    options = WithRequestId(options);
     chunkedOptions ??= new ChunkedHelperOptions
     {
       MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries,
@@ -918,6 +999,14 @@ public partial class SearchClient : ISearchClient
     if (objects == null)
     {
       throw new ArgumentNullException(nameof(objects));
+    }
+
+    if (objects is IReadOnlyCollection<T> collection && collection.Count == 0)
+    {
+      _logger.LogWarning(
+        "ReplaceAllObjects was called with an empty list of objects, which will delete all records currently in the \"{Index}\" index.",
+        indexName
+      );
     }
 
     if (scopes == null)
@@ -1021,10 +1110,19 @@ public partial class SearchClient : ISearchClient
         BatchResponses = batchResponse,
       };
     }
-    catch (Exception ex)
+    catch
     {
-      await DeleteIndexAsync(tmpIndexName, cancellationToken: cancellationToken)
-        .ConfigureAwait(false);
+      // The failure may be the caller's own cancellation or timeout, and the
+      // cleanup must still delete the temporary index.
+      try
+      {
+        await DeleteIndexAsync(tmpIndexName, WithoutTimeouts(options), CancellationToken.None)
+          .ConfigureAwait(false);
+      }
+      catch
+      {
+        // A failing cleanup must not replace the root cause.
+      }
 
       throw;
     }
@@ -1066,6 +1164,7 @@ public partial class SearchClient : ISearchClient
   )
     where T : class
   {
+    options = WithRequestId(options);
     var maxRetries = chunkedOptions?.MaxRetries ?? RetryHelper.DefaultMaxRetries;
     var objectsList = objects.ToList();
     var totalObjects = objectsList.Count;
@@ -1350,27 +1449,37 @@ public partial class SearchClient : ISearchClient
   public async Task<bool> IndexExistsAsync(
     string indexName,
     CancellationToken cancellationToken = default
+  ) => await IndexExistsAsync(indexName, null, cancellationToken).ConfigureAwait(false);
+
+  /// <inheritdoc/>
+  public async Task<bool> IndexExistsAsync(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
   )
   {
     try
     {
-      await GetSettingsAsync(indexName, null, null, cancellationToken);
+      await GetSettingsAsync(indexName, null, options, cancellationToken);
     }
     catch (AlgoliaApiException ex) when (ex.HttpErrorCode == 404)
     {
-      return await Task.FromResult(false);
-    }
-    catch (Exception ex)
-    {
-      throw;
+      return false;
     }
 
-    return await Task.FromResult(true);
+    return true;
   }
 
   /// <inheritdoc/>
   public bool IndexExists(string indexName, CancellationToken cancellationToken = default) =>
     AsyncHelper.RunSync(() => IndexExistsAsync(indexName, cancellationToken));
+
+  /// <inheritdoc/>
+  public bool IndexExists(
+    string indexName,
+    RequestOptions options,
+    CancellationToken cancellationToken = default
+  ) => AsyncHelper.RunSync(() => IndexExistsAsync(indexName, options, cancellationToken));
 
   // ==================== SaveObjectsWithTransformation ====================
 
@@ -1515,10 +1624,21 @@ public partial class SearchClient : ISearchClient
       MaxRetries = ChunkedHelperOptions.DefaultReplaceAllObjectsMaxRetries,
     };
     var maxRetries = chunkedOptions.MaxRetries;
+    // The shared Request-ID only covers the search-side calls: the ingestion
+    // push goes to an API that must not receive the header.
+    var searchOptions = WithRequestId(options);
     if (_ingestionTransporter == null)
     {
       throw new AlgoliaException(
         "TransformationOptions must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion"
+      );
+    }
+
+    if (objects is IReadOnlyCollection<object> collection && collection.Count == 0)
+    {
+      _logger.LogWarning(
+        "ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the \"{Index}\" index.",
+        indexName
       );
     }
 
@@ -1540,7 +1660,7 @@ public partial class SearchClient : ISearchClient
       var copyOperationResponse = await OperationIndexAsync(
           indexName,
           new OperationIndexParams(OperationType.Copy, tmpIndexName) { Scope = scopes },
-          options,
+          searchOptions,
           cancellationToken
         )
         .ConfigureAwait(false);
@@ -1565,7 +1685,7 @@ public partial class SearchClient : ISearchClient
           tmpIndexName,
           copyOperationResponse.TaskID,
           maxRetries: maxRetries,
-          requestOptions: options,
+          requestOptions: searchOptions,
           ct: cancellationToken
         )
         .ConfigureAwait(false);
@@ -1574,7 +1694,7 @@ public partial class SearchClient : ISearchClient
       copyOperationResponse = await OperationIndexAsync(
           indexName,
           new OperationIndexParams(OperationType.Copy, tmpIndexName) { Scope = scopes },
-          options,
+          searchOptions,
           cancellationToken
         )
         .ConfigureAwait(false);
@@ -1583,7 +1703,7 @@ public partial class SearchClient : ISearchClient
           tmpIndexName,
           copyOperationResponse.TaskID,
           maxRetries: maxRetries,
-          requestOptions: options,
+          requestOptions: searchOptions,
           ct: cancellationToken
         )
         .ConfigureAwait(false);
@@ -1592,7 +1712,7 @@ public partial class SearchClient : ISearchClient
       var moveOperationResponse = await OperationIndexAsync(
           tmpIndexName,
           new OperationIndexParams(OperationType.Move, indexName),
-          options,
+          searchOptions,
           cancellationToken
         )
         .ConfigureAwait(false);
@@ -1601,7 +1721,7 @@ public partial class SearchClient : ISearchClient
           tmpIndexName,
           moveOperationResponse.TaskID,
           maxRetries: maxRetries,
-          requestOptions: options,
+          requestOptions: searchOptions,
           ct: cancellationToken
         )
         .ConfigureAwait(false);
@@ -1614,10 +1734,11 @@ public partial class SearchClient : ISearchClient
     }
     catch
     {
-      // Clean up temp index on error
+      // Clean up temp index on error; the failure may be the caller's own
+      // cancellation, and the cleanup must still delete the temporary index.
       try
       {
-        await DeleteIndexAsync(tmpIndexName, cancellationToken: cancellationToken)
+        await DeleteIndexAsync(tmpIndexName, WithoutTimeouts(searchOptions), CancellationToken.None)
           .ConfigureAwait(false);
       }
       catch

@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -252,6 +253,55 @@ func WithApiKey(apiKey *ApiKey) waitForApiKeyOption {
 
 // --------- Helper to convert options ---------
 
+// requestIDOption mints the Request-ID shared by every request of one helper
+// invocation. ok is false when this client does not support Request-ID or the
+// caller already supplied one through the options (as a header or as the
+// x-algolia-request-id query parameter) or DefaultHeader, in which case the
+// options must be forwarded untouched.
+func requestIDOption[T RequestOption](c *APIClient, opts []T) (requestOption, bool) {
+	if c.cfg.RequestIDEnabled == nil || !*c.cfg.RequestIDEnabled {
+		return nil, false
+	}
+
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	if transport.HasRequestID(conf.headerParams, c.cfg.DefaultHeader) || transport.HasRequestIDQueryParam(conf.queryParams) {
+		return nil, false
+	}
+
+	return WithHeaderParam(transport.RequestIDHeader, transport.NewRequestID()), true
+}
+
+// cleanupOptions returns the header and query parameters carried by the given
+// options (including the Request-ID shared by the helper invocation) as
+// standalone options: failure-path cleanups must keep the caller's parameter
+// overrides without inheriting its context or timeouts.
+func cleanupOptions[T RequestOption](opts []T) []RequestOption {
+	conf := config{headerParams: map[string]string{}}
+
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	cleanupOpts := make([]RequestOption, 0, len(conf.headerParams)+len(conf.queryParams))
+
+	for key, value := range conf.headerParams {
+		cleanupOpts = append(cleanupOpts, WithHeaderParam(key, value))
+	}
+
+	for key, values := range conf.queryParams {
+		for _, value := range values {
+			cleanupOpts = append(cleanupOpts, WithQueryParam(key, value))
+		}
+	}
+
+	return cleanupOpts
+}
+
 func toRequestOptions[T RequestOption](opts []T) []RequestOption {
 	requestOpts := make([]RequestOption, 0, len(opts))
 
@@ -463,7 +513,7 @@ func (c *APIClient) AddApiKey(r ApiAddApiKeyRequest, opts ...RequestOption) (*Ad
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -634,7 +684,7 @@ func (c *APIClient) AddOrUpdateObject(r ApiAddOrUpdateObjectRequest, opts ...Req
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -756,7 +806,7 @@ func (c *APIClient) AppendSource(r ApiAppendSourceRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -907,7 +957,7 @@ func (c *APIClient) AssignUserId(r ApiAssignUserIdRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1062,7 +1112,7 @@ func (c *APIClient) Batch(r ApiBatchRequest, opts ...RequestOption) (*BatchRespo
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1216,7 +1266,7 @@ func (c *APIClient) BatchAssignUserIds(r ApiBatchAssignUserIdsRequest, opts ...R
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1356,7 +1406,7 @@ func (c *APIClient) BatchDictionaryEntries(r ApiBatchDictionaryEntriesRequest, o
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1546,7 +1596,7 @@ func (c *APIClient) Browse(r ApiBrowseRequest, opts ...RequestOption) (*BrowseRe
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1664,7 +1714,7 @@ func (c *APIClient) ClearObjects(r ApiClearObjectsRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1803,7 +1853,7 @@ func (c *APIClient) ClearRules(r ApiClearRulesRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1942,7 +1992,7 @@ func (c *APIClient) ClearSynonyms(r ApiClearSynonymsRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2078,7 +2128,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2214,7 +2264,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2377,7 +2427,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2540,7 +2590,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2655,7 +2705,7 @@ func (c *APIClient) DeleteApiKey(r ApiDeleteApiKeyRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2810,7 +2860,7 @@ func (c *APIClient) DeleteBy(r ApiDeleteByRequest, opts ...RequestOption) (*Upda
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2947,7 +2997,7 @@ func (c *APIClient) DeleteIndex(r ApiDeleteIndexRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3087,7 +3137,7 @@ func (c *APIClient) DeleteObject(r ApiDeleteObjectRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3250,7 +3300,7 @@ func (c *APIClient) DeleteRule(r ApiDeleteRuleRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3365,7 +3415,7 @@ func (c *APIClient) DeleteSource(r ApiDeleteSourceRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3526,7 +3576,7 @@ func (c *APIClient) DeleteSynonym(r ApiDeleteSynonymRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3649,7 +3699,7 @@ func (c *APIClient) GetApiKey(r ApiGetApiKeyRequest, opts ...RequestOption) (*Ge
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3761,7 +3811,7 @@ func (c *APIClient) GetAppTask(r ApiGetAppTaskRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3837,7 +3887,7 @@ func (c *APIClient) GetDictionaryLanguages(opts ...RequestOption) (*map[string]L
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3912,7 +3962,7 @@ func (c *APIClient) GetDictionarySettings(opts ...RequestOption) (*GetDictionary
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4111,7 +4161,7 @@ func (c *APIClient) GetLogs(r ApiGetLogsRequest, opts ...RequestOption) (*GetLog
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4277,7 +4327,7 @@ func (c *APIClient) GetObject(r ApiGetObjectRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4403,7 +4453,7 @@ func (c *APIClient) GetObjects(r ApiGetObjectsRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4540,7 +4590,7 @@ func (c *APIClient) GetRule(r ApiGetRuleRequest, opts ...RequestOption) (*Rule, 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4683,7 +4733,7 @@ func (c *APIClient) GetSettings(r ApiGetSettingsRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4758,7 +4808,7 @@ func (c *APIClient) GetSources(opts ...RequestOption) ([]Source, error) {
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4897,7 +4947,7 @@ func (c *APIClient) GetSynonym(r ApiGetSynonymRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5039,7 +5089,7 @@ func (c *APIClient) GetTask(r ApiGetTaskRequest, opts ...RequestOption) (*GetTas
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5124,7 +5174,7 @@ func (c *APIClient) GetTopUserIds(opts ...RequestOption) (*GetTopUserIdsResponse
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5250,7 +5300,7 @@ func (c *APIClient) GetUserId(r ApiGetUserIdRequest, opts ...RequestOption) (*Us
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5375,7 +5425,7 @@ func (c *APIClient) HasPendingMappings(r ApiHasPendingMappingsRequest, opts ...R
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5450,7 +5500,7 @@ func (c *APIClient) ListApiKeys(opts ...RequestOption) (*ListApiKeysResponse, er
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5529,7 +5579,7 @@ func (c *APIClient) ListClusters(opts ...RequestOption) (*ListClustersResponse, 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5676,7 +5726,7 @@ func (c *APIClient) ListIndices(r ApiListIndicesRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5830,7 +5880,7 @@ func (c *APIClient) ListUserIds(r ApiListUserIdsRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5962,7 +6012,7 @@ func (c *APIClient) MultipleBatch(r ApiMultipleBatchRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6157,7 +6207,7 @@ func (c *APIClient) OperationIndex(r ApiOperationIndexRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6417,7 +6467,7 @@ func (c *APIClient) PartialUpdateObject(r ApiPartialUpdateObjectRequest, opts ..
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6537,7 +6587,7 @@ func (c *APIClient) RemoveUserId(r ApiRemoveUserIdRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6659,7 +6709,7 @@ func (c *APIClient) ReplaceSources(r ApiReplaceSourcesRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6784,7 +6834,7 @@ func (c *APIClient) RestoreApiKey(r ApiRestoreApiKeyRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -6945,7 +6995,7 @@ func (c *APIClient) SaveObject(r ApiSaveObjectRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7136,7 +7186,7 @@ func (c *APIClient) SaveRule(r ApiSaveRuleRequest, opts ...RequestOption) (*Upda
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7335,7 +7385,7 @@ func (c *APIClient) SaveRules(r ApiSaveRulesRequest, opts ...RequestOption) (*Up
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7524,7 +7574,7 @@ func (c *APIClient) SaveSynonym(r ApiSaveSynonymRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7720,7 +7770,7 @@ func (c *APIClient) SaveSynonyms(r ApiSaveSynonymsRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7856,7 +7906,7 @@ func (c *APIClient) Search(r ApiSearchRequest, opts ...RequestOption) (*SearchRe
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -7996,7 +8046,7 @@ func (c *APIClient) SearchDictionaryEntries(r ApiSearchDictionaryEntriesRequest,
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8173,7 +8223,7 @@ func (c *APIClient) SearchForFacetValues(r ApiSearchForFacetValuesRequest, opts 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8315,7 +8365,7 @@ func (c *APIClient) SearchRules(r ApiSearchRulesRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8463,7 +8513,7 @@ func (c *APIClient) SearchSingleIndex(r ApiSearchSingleIndexRequest, opts ...Req
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8605,7 +8655,7 @@ func (c *APIClient) SearchSynonyms(r ApiSearchSynonymsRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8739,7 +8789,7 @@ func (c *APIClient) SearchUserIds(r ApiSearchUserIdsRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -8861,7 +8911,7 @@ func (c *APIClient) SetDictionarySettings(r ApiSetDictionarySettingsRequest, opt
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -9036,7 +9086,7 @@ func (c *APIClient) SetSettings(r ApiSetSettingsRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -9181,7 +9231,7 @@ func (c *APIClient) UpdateApiKey(r ApiUpdateApiKeyRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -9407,6 +9457,10 @@ func (c *APIClient) WaitForTask(
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(100)}, opts...)
 
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]IterableOption{opt}, opts...)
+	}
+
 	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
 			return c.GetTask(c.NewApiGetTaskRequest(indexName, taskID), toRequestOptions(opts)...)
@@ -9440,6 +9494,10 @@ func (c *APIClient) WaitForAppTask(
 	opts = append([]IterableOption{WithTimeout(func(count int) time.Duration {
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(100)}, opts...)
+
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]IterableOption{opt}, opts...)
+	}
 
 	return CreateIterable(
 		func(*GetTaskResponse, error) (*GetTaskResponse, error) {
@@ -9574,6 +9632,10 @@ func (c *APIClient) WaitForApiKey(
 		return time.Duration(min(200*count, 5000)) * time.Millisecond
 	}), WithMaxRetries(100)}, opts...)
 
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]WaitForApiKeyOption{opt}, opts...)
+	}
+
 	return CreateIterable(
 		func(*GetApiKeyResponse, error) (*GetApiKeyResponse, error) {
 			return c.GetApiKey(c.NewApiGetApiKeyRequest(key), toRequestOptions(opts)...)
@@ -9600,6 +9662,10 @@ func (c *APIClient) BrowseObjects(
 ) error {
 	if browseParams.HitsPerPage == nil {
 		browseParams.HitsPerPage = utils.ToPtr(int32(1000))
+	}
+
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]IterableOption{opt}, opts...)
 	}
 
 	_, err := CreateIterable(
@@ -9640,6 +9706,10 @@ func (c *APIClient) BrowseRules(
 	hitsPerPage := int32(1000)
 	if searchRulesParams.HitsPerPage != nil {
 		hitsPerPage = *searchRulesParams.HitsPerPage
+	}
+
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]IterableOption{opt}, opts...)
 	}
 
 	_, err := CreateIterable(
@@ -9690,6 +9760,10 @@ func (c *APIClient) BrowseSynonyms(
 
 	if searchSynonymsParams.Page == nil {
 		searchSynonymsParams.Page = utils.ToPtr(int32(0))
+	}
+
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]IterableOption{opt}, opts...)
 	}
 
 	_, err := CreateIterable(
@@ -9911,6 +9985,10 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 		opt.apply(&conf)
 	}
 
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]ChunkedBatchOption{opt}, opts...)
+	}
+
 	requests := make([]BatchRequest, 0, len(objects)%conf.batchSize)
 	responses := make([]BatchResponse, 0, len(objects)%conf.batchSize)
 
@@ -9944,6 +10022,8 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 ReplaceAllObjectsWithTransformation is similar to the `replaceAllObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. TransformationOptions must have been passed to the client constructor or set via SetTransformationOptions.
 See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
 
+Warning: calling this method with an empty `objects` slice replaces the index with an empty one, deleting all existing records.
+
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
 	@param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
@@ -9961,6 +10041,15 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 		)
 	}
 
+	if len(objects) == 0 {
+		slog.Warn(
+			fmt.Sprintf(
+				"ReplaceAllObjectsWithTransformation was called with an empty list of objects, which will delete all records currently in the %q index.",
+				indexName,
+			),
+		)
+	}
+
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
 	conf := config{
@@ -9973,6 +10062,16 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 	}
 
 	opts = append(opts, WithWaitForTasks(true))
+
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]ReplaceAllObjectsOption{opt}, opts...)
+	}
+
+	// The failure-path cleanups must survive the caller's context so the
+	// temporary index cannot leak: forward the caller's header and query
+	// parameters (including the shared Request-ID), never its context or
+	// timeouts.
+	cleanupOpts := cleanupOptions(opts)
 
 	copyResp, err := c.OperationIndex(
 		c.NewApiOperationIndexRequest(
@@ -9991,14 +10090,14 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 		&indexName,
 		toIngestionChunkedBatchOptions(replaceAllObjectsToChunkBatchOptions(opts))...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10010,14 +10109,14 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 		),
 		toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10026,14 +10125,14 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 		c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)),
 		toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10061,6 +10160,8 @@ func (c *APIClient) ReplaceAllObjectsWithTransformation(
 ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
 See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
 
+Warning: calling this method with an empty `objects` slice replaces the index with an empty one, deleting all existing records.
+
 	@param indexName string - the index name to replace objects into.
 	@param objects []map[string]any - List of objects to replace.
 	@param opts ...ReplaceAllObjectsOption - Optional parameters for the request.
@@ -10072,6 +10173,15 @@ func (c *APIClient) ReplaceAllObjects(
 	objects []map[string]any,
 	opts ...ReplaceAllObjectsOption,
 ) (*ReplaceAllObjectsResponse, error) {
+	if len(objects) == 0 {
+		slog.Warn(
+			fmt.Sprintf(
+				"ReplaceAllObjects was called with an empty list of objects, which will delete all records currently in the %q index.",
+				indexName,
+			),
+		)
+	}
+
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
 	conf := config{
@@ -10085,6 +10195,16 @@ func (c *APIClient) ReplaceAllObjects(
 
 	opts = append(opts, WithWaitForTasks(true))
 
+	if opt, ok := requestIDOption(c, opts); ok {
+		opts = append([]ReplaceAllObjectsOption{opt}, opts...)
+	}
+
+	// The failure-path cleanups must survive the caller's context so the
+	// temporary index cannot leak: forward the caller's header and query
+	// parameters (including the shared Request-ID), never its context or
+	// timeouts.
+	cleanupOpts := cleanupOptions(opts)
+
 	copyResp, err := c.OperationIndex(
 		c.NewApiOperationIndexRequest(
 			indexName,
@@ -10097,14 +10217,14 @@ func (c *APIClient) ReplaceAllObjects(
 
 	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, replaceAllObjectsToChunkBatchOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10116,14 +10236,14 @@ func (c *APIClient) ReplaceAllObjects(
 		),
 		toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10132,14 +10252,14 @@ func (c *APIClient) ReplaceAllObjects(
 		c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)),
 		toRequestOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
 
 	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, replaceAllObjectsToIterableOptions(opts)...)
 	if err != nil {
-		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName))
+		_, _ = c.DeleteIndex(c.NewApiDeleteIndexRequest(tmpIndexName), cleanupOpts...)
 
 		return nil, err
 	}
@@ -10151,11 +10271,11 @@ func (c *APIClient) ReplaceAllObjects(
 	}, nil
 }
 
-// Exists returns whether an initialized index exists or not, along with a nil
-// error. When encountering a network error, a non-nil error is returned along
-// with false.
-func (c *APIClient) IndexExists(indexName string) (bool, error) {
-	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName))
+// IndexExists returns whether an initialized index exists or not, along with
+// a nil error. When encountering a network error, a non-nil error is returned
+// along with false.
+func (c *APIClient) IndexExists(indexName string, opts ...RequestOption) (bool, error) {
+	_, err := c.GetSettings(c.NewApiGetSettingsRequest(indexName), opts...)
 	if err == nil {
 		return true, nil
 	}

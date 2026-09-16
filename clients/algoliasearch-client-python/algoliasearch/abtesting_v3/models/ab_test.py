@@ -19,6 +19,7 @@ else:
 
 
 from algoliasearch.abtesting_v3.models.ab_test_configuration import ABTestConfiguration
+from algoliasearch.abtesting_v3.models.decision import Decision
 from algoliasearch.abtesting_v3.models.status import Status
 from algoliasearch.abtesting_v3.models.variant import Variant
 
@@ -32,7 +33,7 @@ _ALIASES = {
     "status": "status",
     "variants": "variants",
     "configuration": "configuration",
-    "migrated_ab_test_id": "migratedAbTestID",
+    "decision": "decision",
 }
 
 
@@ -61,8 +62,7 @@ class ABTest(BaseModel):
     variants: List[Variant]
     """ A/B test variants.  The first variant is your _control_ index, typically your production index. All of the additional variants are indexes with changed settings that you want to test against the control.  """
     configuration: Optional[ABTestConfiguration] = None
-    migrated_ab_test_id: Optional[int] = None
-    """ Unique migrated A/B test identifier. """
+    decision: Optional[Decision] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -108,6 +108,11 @@ class ABTest(BaseModel):
         obj["configuration"] = (
             ABTestConfiguration.from_dict(obj["configuration"])
             if obj.get("configuration") is not None
+            else None
+        )
+        obj["decision"] = (
+            Decision.from_dict(obj["decision"])
+            if obj.get("decision") is not None
             else None
         )
 

@@ -64,10 +64,6 @@ class TimeoutIntegrationTest extends TestCase
     // GuzzleHttpClient connect timeout increases across failed requests: 2s -> 4s -> 6s.
     public function testGuzzleRetryCountStateful(): void
     {
-        if (!class_exists('\GuzzleHttp\Client')) {
-            $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
-        }
-
         [$wrapper, $clusterHosts] = $this->createApiWrapperWithClusterHosts(
             new GuzzleHttpClient(),
             [self::NON_ROUTABLE_IP]
@@ -168,10 +164,6 @@ class TimeoutIntegrationTest extends TestCase
     // GuzzleHttpClient retry_count resets to 0 after successful request.
     public function testGuzzleRetryCountResets(): void
     {
-        if (!class_exists('\GuzzleHttp\Client')) {
-            $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
-        }
-
         $badHost = self::NON_ROUTABLE_IP;
         $goodHostFull = 'http://'.getTestServerHost();
 
@@ -280,10 +272,6 @@ class TimeoutIntegrationTest extends TestCase
     // guzzle test that multiple hosts maintain independent retry counts.
     public function testGuzzleMultipleHostsIndependentRetryCount(): void
     {
-        if (!class_exists('\GuzzleHttp\Client')) {
-            $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
-        }
-
         $badHost1 = self::NON_ROUTABLE_IP;
         $badHost2 = '10.255.255.2';
 
@@ -376,10 +364,6 @@ class TimeoutIntegrationTest extends TestCase
     // guzzle 1 good host and 1 bad host
     public function testGuzzleMultipleHostsMixedIndependentRetryCount(): void
     {
-        if (!class_exists('\GuzzleHttp\Client')) {
-            $this->markTestSkipped('Guzzle is not installed. Install guzzlehttp/guzzle to run this test.');
-        }
-
         $badHostFull = 'https://'.self::NON_ROUTABLE_IP.':443';
         $goodHostFull = 'http://'.getTestServerHost();
 

@@ -24,6 +24,59 @@ if (getenv('METIS_APPLICATION_ID')) {
 #[CoversClass(CompositionClient::class)]
 class CompositionTest extends TestCase
 {
+    #[TestDox('the Correlation-ID ends with the sent Request-ID')]
+    public function testGetComposition1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getComposition(
+            'id1',
+            requestOptions: [
+                'headers' => [
+                    'request-id' => 'CtsE2eEcho4',
+                ],
+            ]
+        );
+
+        $expected = json_decode('{"objectID":"id1"}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+        $httpResp = $client->customGetWithHttpInfo(ltrim('/1/compositions/id1', '/'), null, [
+            'headers' => [
+                'request-id' => 'CtsE2eEcho4',
+            ],
+        ]);
+
+        $correlationId = $httpResp->getHeader('Correlation-ID');
+        $this->assertNotEmpty($correlationId, 'the response must carry a Correlation-ID header');
+        $this->assertStringEndsWith('CtsE2eEcho4', $correlationId[0]);
+    }
+
+    #[TestDox('the Correlation-ID ends with the Request-ID sent as a query parameter')]
+    public function testGetComposition2(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->getComposition(
+            'id1',
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eEchoQ',
+                ], ]
+        );
+
+        $expected = json_decode('{"objectID":"id1"}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+        $httpResp = $client->customGetWithHttpInfo(ltrim('/1/compositions/id1', '/'), null, [
+            'queryParameters' => [
+                'x-algolia-request-id' => 'CtsE2eEchoQ',
+            ],
+        ]);
+
+        $correlationId = $httpResp->getHeader('Correlation-ID');
+        $this->assertNotEmpty($correlationId, 'the response must carry a Correlation-ID header');
+        $this->assertStringEndsWith('CtsE2eEchoQ', $correlationId[0]);
+    }
+
     #[TestDox('listCompositions')]
     public function testListCompositions1(): void
     {

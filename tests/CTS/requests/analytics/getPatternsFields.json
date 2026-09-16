@@ -1,0 +1,10 @@
+[
+  {
+    "testName": "getPatternsFields",
+    "parameters": {},
+    "request": {
+      "path": "/3/patterns/fields",
+      "method": "GET"
+    }
+  }
+]

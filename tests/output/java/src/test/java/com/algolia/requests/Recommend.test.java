@@ -785,6 +785,7 @@ class RecommendClientRequestsTests {
                 new FallbackParams()
                   .setQuery("myQuery")
                   .setOptionalFilters(OptionalFilters.of(Arrays.asList(OptionalFilters.of("brand:samsung"))))
+                  .setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("brand:apple"))))
               )
           )
         )
@@ -795,7 +796,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"],\"facetFilters\":[\"brand:apple\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )

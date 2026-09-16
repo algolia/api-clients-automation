@@ -730,6 +730,66 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// the Correlation-ID ends with the sent Request-ID
+    func testGetCompositionTest1() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getCompositionWithHTTPInfo(compositionID: "id1", requestOptions: RequestOptions(
+            headers: ["request-id": "CtsE2eEcho4"]
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/id1")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+
+        let expectedHeaders = try XCTUnwrap("{\"request-id\":\"CtsE2eEcho4\"}".data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
+
+        let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+        for header in expectedHeadersMap {
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
+        }
+    }
+
+    /// the Correlation-ID ends with the Request-ID sent as a query parameter
+    func testGetCompositionTest2() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getCompositionWithHTTPInfo(compositionID: "id1", requestOptions: RequestOptions(
+            queryParameters: ["x-algolia-request-id": "CtsE2eEchoQ"]
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/id1")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// getRule
     func testGetRuleTest() async throws {
         let configuration = try CompositionClientConfiguration(

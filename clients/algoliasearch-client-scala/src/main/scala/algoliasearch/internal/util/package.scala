@@ -7,6 +7,9 @@ import scala.annotation.tailrec
 
 package object util {
 
+  /** Name of the header Algolia clusters return on every response. */
+  private[algoliasearch] val CorrelationIdHeader: String = "correlation-id"
+
   private[internal] def currentDateTime(): OffsetDateTime = {
     val now: Instant = Clock.system(ZoneOffset.UTC).instant()
     OffsetDateTime.ofInstant(now, ZoneOffset.UTC.getRules.getOffset(now))

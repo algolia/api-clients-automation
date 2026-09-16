@@ -145,7 +145,8 @@ void main() {
         expectPath(request.path, '/test/all');
         expect(request.method, 'get');
         expectHeaders(
-            request.headers, """{"x-header-1":"spaces are left alone"}""");
+            request.headers, """{"x-header-1":"spaces are left alone"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters,
             """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
         expect(request.body, null);
@@ -290,7 +291,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -323,7 +325,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -706,6 +709,9 @@ void main() {
                 optionalFilters: [
                   "brand:samsung",
                 ],
+                facetFilters: [
+                  "brand:apple",
+                ],
               ),
             ),
           ],
@@ -715,7 +721,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}""");
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}""");
       },
     ),
   );

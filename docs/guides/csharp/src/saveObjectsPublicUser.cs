@@ -20,7 +20,7 @@ class SaveObjectsPublicUser
       playlists,
       false,
       1000,
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
     );
   }
 }

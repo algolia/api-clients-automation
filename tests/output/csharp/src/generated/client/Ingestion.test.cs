@@ -26,7 +26,7 @@ public class IngestionClientTests
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "can handle HTML error")]
+  [Fact(DisplayName = "can handle HTML error when rate-limit retries are disabled")]
   public async Task ApiTest0()
   {
     IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
@@ -46,6 +46,7 @@ public class IngestionClientTests
           Accept = CallType.Read | CallType.Write,
         },
       },
+      MaxRateLimitRetries = 0,
     };
     var client = new IngestionClient(_config);
 
@@ -134,7 +135,7 @@ public class IngestionClientTests
     await client.ValidateSourceBeforeUpdateAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new SourceUpdate { Name = "newName" },
-      new RequestOptionBuilder().SetWriteTimeout(TimeSpan.FromMilliseconds(3456)).Build()
+      options: new RequestOptionBuilder().SetWriteTimeout(TimeSpan.FromMilliseconds(3456)).Build()
     );
     EchoResponse result = _echo.LastResponse;
 
@@ -163,7 +164,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.46.2\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.49.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -220,6 +221,38 @@ public class IngestionClientTests
     Assert.Equal(
       "`region` is required and must be one of the following: eu, us".ToLowerInvariant(),
       _ex.Message.ToLowerInvariant()
+    );
+  }
+
+  [Fact(DisplayName = "the ingestion client sends no Request-ID")]
+  public async Task RequestIdTest0()
+  {
+    IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new IngestionClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/request-id/negative/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
     );
   }
 

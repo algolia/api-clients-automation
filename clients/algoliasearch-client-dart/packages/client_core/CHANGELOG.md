@@ -1,3 +1,30 @@
+## [1.53.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.52.1...1.53.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [31395ba02e](https://github.com/algolia/api-clients-automation/commit/31395ba02e) chore(deps): dependencies 2026-08-31 ([#6959](https://github.com/algolia/api-clients-automation/pull/6959)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [1.52.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.52.0...1.52.1)
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
+## [1.52.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.4...1.52.0)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [1f389d1f7f](https://github.com/algolia/api-clients-automation/commit/1f389d1f7f) feat(specs): add agentic analytics support to insights spec ([#6876](https://github.com/algolia/api-clients-automation/pull/6876)) by [@sirockin](https://github.com/sirockin/)
+- [65cc642811](https://github.com/algolia/api-clients-automation/commit/65cc642811) feat(specs): add decision (declared winner) to abtesting-v3 ABTest ([#6732](https://github.com/algolia/api-clients-automation/pull/6732)) by [@cdhawke](https://github.com/cdhawke/)
+- [bed536e149](https://github.com/algolia/api-clients-automation/commit/bed536e149) chore(deps): dependencies 2026-08-10 ([#6835](https://github.com/algolia/api-clients-automation/pull/6835)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [3bb5bb5f3d](https://github.com/algolia/api-clients-automation/commit/3bb5bb5f3d) feat(dart): Request-ID and Correlation-ID support ([#6878](https://github.com/algolia/api-clients-automation/pull/6878)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
+## [1.51.4](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.3...1.51.4)
+
+- [76dd01ea75](https://github.com/algolia/api-clients-automation/commit/76dd01ea75) fix(dart): add missing READMEs for ingestion and agent studio packages ([#6689](https://github.com/algolia/api-clients-automation/pull/6689)) by [@Fluf22](https://github.com/Fluf22/)
+- [e6f54ed6b7](https://github.com/algolia/api-clients-automation/commit/e6f54ed6b7) fix(dart): add warning in replaceAllObjectsWithTransformation for empty objects ([#6616](https://github.com/algolia/api-clients-automation/pull/6616)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)
+
 ## [1.51.3](https://github.com/algolia/algoliasearch-client-dart/compare/1.51.2...1.51.3)
 
 - [07511de2ea](https://github.com/algolia/api-clients-automation/commit/07511de2ea) fix(dart): publish ingestion before search in release workflow ([#6605](https://github.com/algolia/api-clients-automation/pull/6605)) by [@Fluf22](https://github.com/Fluf22/)

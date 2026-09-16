@@ -31,5 +31,32 @@ public interface Requester {
     returnType: TypeInfo,
   ): T
 
+  /**
+   * Executes a network request with the specified configuration and options, then returns the full
+   * HTTP response information: status code, headers, raw body and the body deserialized as the
+   * specified type.
+   *
+   * This is a suspending function, which means it can be used with coroutines for asynchronous
+   * execution.
+   *
+   * The default implementation throws [UnsupportedOperationException]; implementations must
+   * override this method to support the `*WithHTTPInfo` client methods.
+   *
+   * @param T The type of the deserialized response body. This should match the returnType
+   *   parameter.
+   * @param requestConfig The configuration for the network request, including the URL, method,
+   *   headers, and body.
+   * @param requestOptions Optional settings for the request execution, such as timeouts or cache
+   *   policies. Default value is null.
+   * @param returnType A TypeInfo object representing the expected type (T) of the deserialized
+   *   response body.
+   */
+  public suspend fun <T> executeWithHttpInfo(
+    requestConfig: RequestConfig,
+    requestOptions: RequestOptions? = null,
+    returnType: TypeInfo,
+  ): AlgoliaHttpResponse<T> =
+    throw UnsupportedOperationException("This Requester implementation does not expose HTTP info.")
+
   public fun setClientApiKey(apiKey: String)
 }

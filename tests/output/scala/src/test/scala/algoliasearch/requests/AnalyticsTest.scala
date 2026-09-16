@@ -854,6 +854,19 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
+  test("getPatternsFields") {
+    val (client, echo) = testClient()
+    val future = client.getPatternsFields(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/fields")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("get getPurchaseRate with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.getPurchaseRate(
@@ -1515,6 +1528,299 @@ class AnalyticsTest extends AnyFunSuite {
       .asInstanceOf[JObject]
       .obj
       .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsDistribution") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsDistribution(
+      distributionPayload = DistributionPayload(
+        distributions = Seq(
+          DistributionDefinition(
+            kind = "clickPosition",
+            bins = Seq(BinEdge(1), BinEdge(2), BinEdge(3), BinEdge(4), BinEdge(5))
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("index"))
+          )
+        )
+      ),
+      index = Some("index")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/distribution")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsScalar") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsScalar(
+      scalarPayload = ScalarPayload(
+        metrics = Seq(
+          FieldReference(
+            kind = "conversionRate"
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("index"))
+          )
+        )
+      ),
+      index = Some("index")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/scalar")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsTable with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsTable(
+      tablePayload = TablePayload(
+        metrics = Seq(
+          FieldReference(
+            kind = "searchesCount"
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("index"))
+          )
+        )
+      ),
+      index = Some("index")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/table")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsTable with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsTable(
+      tablePayload = TablePayload(
+        domain = Some("core"),
+        metrics = Seq(
+          FieldReference(
+            kind = "searchesCount"
+          )
+        ),
+        groupBy = Some(
+          Seq(
+            FieldReference(
+              kind = "query"
+            )
+          )
+        ),
+        filters = Some(
+          Seq(
+            FilterDefinition(
+              kind = "clicked"
+            )
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("index"))
+          )
+        ),
+        orderBy = Some(
+          Seq(
+            OrderDefinition(
+              kind = "searchesCount",
+              direction = OrderDirection.withName("desc")
+            )
+          )
+        ),
+        limit = Some(100),
+        offset = Some(0)
+      ),
+      index = Some("index")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/table")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsTimeseries with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsTimeseries(
+      timeseriesPayload = TimeseriesPayload(
+        metrics = Seq(
+          FieldReference(
+            kind = "searchesCount"
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("index"))
+          )
+        )
+      ),
+      index = Some("index")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/timeseries")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("queryPatternsTimeseries with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.queryPatternsTimeseries(
+      timeseriesPayload = TimeseriesPayload(
+        domain = Some("core"),
+        metrics = Seq(
+          FieldReference(
+            kind = "searchesCount"
+          ),
+          FieldReference(
+            domain = Some("abtesting"),
+            kind = "isMsrQuery"
+          )
+        ),
+        groupBy = Some(
+          Seq(
+            FieldReference(
+              kind = "index"
+            )
+          )
+        ),
+        filters = Some(
+          Seq(
+            FilterDefinition(
+              kind = "clicked"
+            ),
+            FilterDefinition(
+              kind = "country",
+              operator = Some("="),
+              parameter = Some(
+                ParameterReference(
+                  kind = "country"
+                )
+              )
+            )
+          )
+        ),
+        parameters = Seq(
+          ParameterDefinition(
+            kind = "indices",
+            value = ParameterValue(Seq("indexA", "indexB"))
+          ),
+          ParameterDefinition(
+            kind = "startDate",
+            value = ParameterValue("2024-01-01T00:00:00Z")
+          ),
+          ParameterDefinition(
+            kind = "endDate",
+            value = ParameterValue("2024-01-07T23:59:59Z")
+          ),
+          ParameterDefinition(
+            kind = "country",
+            value = ParameterValue("FR")
+          )
+        ),
+        limit = Some(50),
+        offset = Some(0)
+      ),
+      index = Some("indexA,indexB")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/patterns/timeseries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse("""{"index":"indexA%2CindexB"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {

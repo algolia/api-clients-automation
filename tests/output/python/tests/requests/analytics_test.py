@@ -673,6 +673,18 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_patterns_fields_(self):
+        """
+        getPatternsFields
+        """
+        _req = await self._client.get_patterns_fields_with_http_info()
+
+        assert _req.path == "/3/patterns/fields"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_purchase_rate_(self):
         """
         get getPurchaseRate with minimal parameters
@@ -1255,6 +1267,255 @@ class TestAnalyticsClient:
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    async def test_query_patterns_distribution_(self):
+        """
+        queryPatternsDistribution
+        """
+        _req = await self._client.query_patterns_distribution_with_http_info(
+            distribution_payload={
+                "distributions": [
+                    {
+                        "kind": "clickPosition",
+                        "bins": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ],
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/distribution"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    async def test_query_patterns_scalar_(self):
+        """
+        queryPatternsScalar
+        """
+        _req = await self._client.query_patterns_scalar_with_http_info(
+            scalar_payload={
+                "metrics": [
+                    {
+                        "kind": "conversionRate",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/scalar"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    async def test_query_patterns_table_(self):
+        """
+        queryPatternsTable with minimal parameters
+        """
+        _req = await self._client.query_patterns_table_with_http_info(
+            table_payload={
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/table"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    async def test_query_patterns_table_1(self):
+        """
+        queryPatternsTable with all parameters
+        """
+        _req = await self._client.query_patterns_table_with_http_info(
+            table_payload={
+                "domain": "core",
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "groupBy": [
+                    {
+                        "kind": "query",
+                    },
+                ],
+                "filters": [
+                    {
+                        "kind": "clicked",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+                "orderBy": [
+                    {
+                        "kind": "searchesCount",
+                        "direction": "desc",
+                    },
+                ],
+                "limit": 100,
+                "offset": 0,
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/table"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}"""
+        )
+
+    async def test_query_patterns_timeseries_(self):
+        """
+        queryPatternsTimeseries with minimal parameters
+        """
+        _req = await self._client.query_patterns_timeseries_with_http_info(
+            timeseries_payload={
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/timeseries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    async def test_query_patterns_timeseries_1(self):
+        """
+        queryPatternsTimeseries with all parameters
+        """
+        _req = await self._client.query_patterns_timeseries_with_http_info(
+            timeseries_payload={
+                "domain": "core",
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                    {
+                        "domain": "abtesting",
+                        "kind": "isMsrQuery",
+                    },
+                ],
+                "groupBy": [
+                    {
+                        "kind": "index",
+                    },
+                ],
+                "filters": [
+                    {
+                        "kind": "clicked",
+                    },
+                    {
+                        "kind": "country",
+                        "operator": "=",
+                        "parameter": {
+                            "kind": "country",
+                        },
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "indexA",
+                            "indexB",
+                        ],
+                    },
+                    {
+                        "kind": "startDate",
+                        "value": "2024-01-01T00:00:00Z",
+                    },
+                    {
+                        "kind": "endDate",
+                        "value": "2024-01-07T23:59:59Z",
+                    },
+                    {
+                        "kind": "country",
+                        "value": "FR",
+                    },
+                ],
+                "limit": 50,
+                "offset": 0,
+            },
+            index="indexA,indexB",
+        )
+
+        assert _req.path == "/3/patterns/timeseries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "indexA%2CindexB"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}"""
+        )
 
 
 class TestAnalyticsClientSync:
@@ -1923,6 +2184,18 @@ class TestAnalyticsClientSync:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    def test_get_patterns_fields_(self):
+        """
+        getPatternsFields
+        """
+        _req = self._client.get_patterns_fields_with_http_info()
+
+        assert _req.path == "/3/patterns/fields"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     def test_get_purchase_rate_(self):
         """
         get getPurchaseRate with minimal parameters
@@ -2505,3 +2778,252 @@ class TestAnalyticsClientSync:
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    def test_query_patterns_distribution_(self):
+        """
+        queryPatternsDistribution
+        """
+        _req = self._client.query_patterns_distribution_with_http_info(
+            distribution_payload={
+                "distributions": [
+                    {
+                        "kind": "clickPosition",
+                        "bins": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ],
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/distribution"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    def test_query_patterns_scalar_(self):
+        """
+        queryPatternsScalar
+        """
+        _req = self._client.query_patterns_scalar_with_http_info(
+            scalar_payload={
+                "metrics": [
+                    {
+                        "kind": "conversionRate",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/scalar"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    def test_query_patterns_table_(self):
+        """
+        queryPatternsTable with minimal parameters
+        """
+        _req = self._client.query_patterns_table_with_http_info(
+            table_payload={
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/table"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    def test_query_patterns_table_1(self):
+        """
+        queryPatternsTable with all parameters
+        """
+        _req = self._client.query_patterns_table_with_http_info(
+            table_payload={
+                "domain": "core",
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "groupBy": [
+                    {
+                        "kind": "query",
+                    },
+                ],
+                "filters": [
+                    {
+                        "kind": "clicked",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+                "orderBy": [
+                    {
+                        "kind": "searchesCount",
+                        "direction": "desc",
+                    },
+                ],
+                "limit": 100,
+                "offset": 0,
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/table"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}"""
+        )
+
+    def test_query_patterns_timeseries_(self):
+        """
+        queryPatternsTimeseries with minimal parameters
+        """
+        _req = self._client.query_patterns_timeseries_with_http_info(
+            timeseries_payload={
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "index",
+                        ],
+                    },
+                ],
+            },
+            index="index",
+        )
+
+        assert _req.path == "/3/patterns/timeseries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}"""
+        )
+
+    def test_query_patterns_timeseries_1(self):
+        """
+        queryPatternsTimeseries with all parameters
+        """
+        _req = self._client.query_patterns_timeseries_with_http_info(
+            timeseries_payload={
+                "domain": "core",
+                "metrics": [
+                    {
+                        "kind": "searchesCount",
+                    },
+                    {
+                        "domain": "abtesting",
+                        "kind": "isMsrQuery",
+                    },
+                ],
+                "groupBy": [
+                    {
+                        "kind": "index",
+                    },
+                ],
+                "filters": [
+                    {
+                        "kind": "clicked",
+                    },
+                    {
+                        "kind": "country",
+                        "operator": "=",
+                        "parameter": {
+                            "kind": "country",
+                        },
+                    },
+                ],
+                "parameters": [
+                    {
+                        "kind": "indices",
+                        "value": [
+                            "indexA",
+                            "indexB",
+                        ],
+                    },
+                    {
+                        "kind": "startDate",
+                        "value": "2024-01-01T00:00:00Z",
+                    },
+                    {
+                        "kind": "endDate",
+                        "value": "2024-01-07T23:59:59Z",
+                    },
+                    {
+                        "kind": "country",
+                        "value": "FR",
+                    },
+                ],
+                "limit": 50,
+                "offset": 0,
+            },
+            index="indexA,indexB",
+        )
+
+        assert _req.path == "/3/patterns/timeseries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {"index": "indexA%2CindexB"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}"""
+        )

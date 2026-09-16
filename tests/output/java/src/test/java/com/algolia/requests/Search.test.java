@@ -3853,6 +3853,37 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("the classic engine accepts a Request-ID sent as a query parameter")
+  void searchRulesTest1() {
+    assertDoesNotThrow(() -> {
+      client.searchRules(
+        "cts_e2e_browse",
+        new SearchRulesParams().setQuery("zorro"),
+        new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/cts_e2e_browse/rules/search", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"zorro\"}", req.body, JSONCompareMode.STRICT));
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"x-algolia-request-id\":\"CtsE2eQry11\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("search with minimal parameters")
   void searchSingleIndexTest() {
     assertDoesNotThrow(() -> {

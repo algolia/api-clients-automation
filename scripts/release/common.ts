@@ -1,18 +1,18 @@
 import fsp from 'fs/promises';
 
 import config from '../../config/release.config.json' with { type: 'json' };
-import { run } from '../common.ts';
+import { git } from '../common.ts';
 
 export function getLastReleasedTag(): Promise<string> {
-  return run(`git describe --abbrev=0 --tags --match "${config.releasedTag}*"`);
+  return git(['describe', '--abbrev=0', '--tags', '--match', `${config.releasedTag}*`]);
 }
 
 export function getFileChanges(commit: string): Promise<string> {
-  return run(`git diff --name-only ${commit}^ ${commit}`);
+  return git(['diff', '--name-only', '--end-of-options', `${commit}^`, commit]);
 }
 
 export async function getNewReleasedTag(): Promise<string> {
-  const lastCommitHash = await run('git rev-parse --short HEAD');
+  const lastCommitHash = await git(['rev-parse', '--short', 'HEAD']);
   const now = new Date().toISOString().split('T')[0];
 
   return `${config.releasedTag}-${now}-${lastCommitHash}`;

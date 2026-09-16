@@ -74,6 +74,12 @@ public class TestsClient extends TestsGenerator {
           System.out.println("Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language);
           continue skipTest;
         }
+        if (test.onlyLanguages != null && !test.onlyLanguages.contains(language)) {
+          System.out.println(
+            "Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language + " (onlyLanguages)"
+          );
+          continue skipTest;
+        }
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
@@ -123,6 +129,12 @@ public class TestsClient extends TestsGenerator {
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               stepOut.put("gzipEncoding", gzipEncoding);
+
+              boolean hasMaxRateLimitRetries = step.parameters != null && step.parameters.containsKey("maxRateLimitRetries");
+              stepOut.put("hasMaxRateLimitRetries", hasMaxRateLimitRetries);
+              if (hasMaxRateLimitRetries) {
+                stepOut.put("maxRateLimitRetries", step.parameters.get("maxRateLimitRetries"));
+              }
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {

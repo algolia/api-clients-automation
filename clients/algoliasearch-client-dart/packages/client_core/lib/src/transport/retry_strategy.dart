@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algolia_client_core/src/transport/dio/dio_requester.dart';
+import 'package:algolia_client_core/src/transport/rate_limit.dart';
 import 'package:algolia_client_core/src/transport/retryable_host.dart';
+import 'package:meta/meta.dart';
 
 /// Component to run http requests with retry logic.
 final class RetryStrategy {
@@ -10,6 +12,29 @@ final class RetryStrategy {
   final Duration readTimeout;
   final Duration writeTimeout;
   final List<RetryableHost> _hosts;
+
+  /// Whether every execution mints a Request-ID, reused across its retry
+  /// attempts. [ClientOptions.requestIdEnabled] overrides the generated
+  /// client's setting; a caller-supplied Request-ID is never overwritten.
+  final bool requestIdSupport;
+
+  /// Whether the client default headers already carry a Request-ID, in which
+  /// case minting is suppressed; computed at construction because the default
+  /// requester snapshots its headers then.
+  final bool hasDefaultRequestId;
+
+  /// Whether a minted Request-ID is sent as the `x-algolia-request-id` query
+  /// parameter instead of the header, as browsers require.
+  final bool requestIdAsQueryParameter;
+
+  /// How many times a 429 is waited out on the same host per execution; see
+  /// [ClientOptions.maxRateLimitRetries].
+  final int maxRateLimitRetries;
+
+  /// Waits between same-host 429 retries. Not part of the supported API:
+  /// tests inject a recorder here so they do not wait wall-clock.
+  @visibleForTesting
+  final Future<void> Function(Duration) sleep;
 
   /// Provides access to hosts for testing purposes.
   List<RetryableHost> get hosts => _hosts;
@@ -20,7 +45,17 @@ final class RetryStrategy {
     required this.readTimeout,
     required this.writeTimeout,
     required Iterable<Host> hosts,
-  }) : _hosts = hosts.map((host) => RetryableHost(host)).toList();
+    this.requestIdSupport = false,
+    this.hasDefaultRequestId = false,
+    this.requestIdAsQueryParameter = platformRequestIdAsQueryParameter,
+    int? maxRateLimitRetries,
+    Future<void> Function(Duration)? sleep,
+  })  : _hosts = hosts.map((host) => RetryableHost(host)).toList(),
+        maxRateLimitRetries = resolveMaxRateLimitRetries(maxRateLimitRetries),
+        sleep = sleep ?? _defaultSleep;
+
+  static Future<void> _defaultSleep(Duration duration) =>
+      Future<void>.delayed(duration);
 
   /// Creates [RetryStrategy], defaults to [DioRequester].
   ///
@@ -39,6 +74,7 @@ final class RetryStrategy {
     Duration defaultConnectTimeout = const Duration(seconds: 2),
     Duration defaultReadTimeout = const Duration(seconds: 5),
     Duration defaultWriteTimeout = const Duration(seconds: 30),
+    bool requestIdSupport = false,
   }) {
     final connectTimeout = options.connectTimeout == ClientOptions.unsetTimeout
         ? defaultConnectTimeout
@@ -69,6 +105,12 @@ final class RetryStrategy {
       writeTimeout: writeTimeout,
       hosts: options.hosts ?? defaultHosts.call(),
       requester: requester,
+      requestIdSupport: options.requestIdEnabled ?? requestIdSupport,
+      // With a custom requester the options headers are not applied above, so
+      // they must not suppress minting either.
+      hasDefaultRequestId:
+          options.requester == null && hasRequestIdHeader(options.headers),
+      maxRateLimitRetries: options.maxRateLimitRetries,
     );
   }
 
@@ -80,31 +122,94 @@ final class RetryStrategy {
     final callType = _callTypeOf(request);
     final hosts = _callableHosts(callType);
     final List<AlgoliaException> errors = [];
+
+    // Minted once per execution so every retry attempt shares one value; a
+    // caller-supplied ID wins on any channel, including the query parameter,
+    // which the server consults only when the header is absent.
+    final requestId = requestIdSupport &&
+            !hasDefaultRequestId &&
+            !hasRequestIdHeader(options?.headers) &&
+            !hasRequestIdHeader(request.headers) &&
+            !hasRequestIdQueryParameter(options?.urlParameters) &&
+            !hasRequestIdQueryParameter(request.queryParams)
+        ? generateRequestId()
+        : null;
+
+    // One budget per execution, shared across hosts.
+    var rateLimitRetriesLeft = maxRateLimitRetries;
+
     for (final host in hosts) {
-      final httpRequest = _buildRequest(host, request, callType, options);
-      final requesterConnectTimeout =
-          requester.connectTimeout ?? Duration(seconds: 2);
-      if (options?.connectTimeout != null) {
-        requester.setConnectTimeout(options!.connectTimeout!);
-      }
-      try {
-        final response = await requester.perform(httpRequest);
-        host.reset();
-        requester.setConnectTimeout(requesterConnectTimeout);
-        return response.statusCode == 204 ? null : response.body;
-      } on AlgoliaTimeoutException catch (e) {
-        host.timedOut();
-        errors.add(e);
-      } on AlgoliaIOException catch (e) {
-        host.failed();
-        errors.add(e);
-      } on AlgoliaApiException catch (e) {
-        if (e.statusCode ~/ 100 == 4) rethrow;
-        host.failed();
-        errors.add(e);
+      // A 429 is retried on this same host after Retry-After, so the loop runs
+      // until the host answers, fails over or the rate-limit budget is spent.
+      while (true) {
+        final httpRequest =
+            _buildRequest(host, request, callType, options, requestId);
+        final requesterConnectTimeout =
+            requester.connectTimeout ?? Duration(seconds: 2);
+        if (options?.connectTimeout != null) {
+          requester.setConnectTimeout(options!.connectTimeout!);
+        }
+        // Set by the 429 branch; the wait happens after the finally below has
+        // restored the requester's connect timeout, so a concurrent request on
+        // the same client does not pick up this call's override meanwhile.
+        Duration? rateLimitWait;
+        try {
+          final response = await requester.perform(httpRequest);
+          final statusCode = response.statusCode;
+          if (statusCode != null && statusCode ~/ 100 != 2) {
+            // A requester that returns an error response instead of throwing
+            // still surfaces the Correlation-ID and Retry-After; the handler
+            // below classifies it.
+            throw AlgoliaApiException(
+              statusCode,
+              response.body,
+              correlationId: _correlationIdOf(response.headers),
+              headers: response.headers,
+            );
+          }
+          host.reset();
+          return statusCode == 204 ? null : response.body;
+        } on AlgoliaTimeoutException catch (e) {
+          host.timedOut();
+          errors.add(e);
+          break;
+        } on AlgoliaIOException catch (e) {
+          host.failed();
+          errors.add(e);
+          break;
+        } on AlgoliaApiException catch (e) {
+          if (isRateLimited(e.statusCode) && rateLimitRetriesLeft > 0) {
+            rateLimitRetriesLeft--;
+            // Keep the waited-out 429 (and its Correlation-ID) visible if the
+            // request later dies on the other hosts. The host is not marked
+            // down and its connect-timeout multiplier does not move.
+            errors.add(e);
+            rateLimitWait = parseRetryAfter(e.headers);
+          } else {
+            if (e.statusCode ~/ 100 == 4) rethrow;
+            host.failed();
+            errors.add(e);
+            break;
+          }
+        } finally {
+          requester.setConnectTimeout(requesterConnectTimeout);
+        }
+        // Only a waited-out 429 reaches this point; every other outcome has
+        // returned, rethrown or broken out to the next host above.
+        await sleep(rateLimitWait);
       }
     }
     throw UnreachableHostsException(errors);
+  }
+
+  /// The Correlation-ID header of a response, whatever its casing; never the
+  /// unrelated X-Algolia-RequestID edge header.
+  static String? _correlationIdOf(Map<String, String>? headers) {
+    if (headers == null) return null;
+    for (final entry in headers.entries) {
+      if (entry.key.toLowerCase() == 'correlation-id') return entry.value;
+    }
+    return null;
   }
 
   /// Returns a list of callable hosts.
@@ -128,13 +233,15 @@ final class RetryStrategy {
     }
   }
 
-  /// Constructs an HTTP request for a given [host], [request] and [options].
+  /// Constructs an HTTP request for a given [host], [request] and [options],
+  /// carrying the minted [requestId] on the platform channel.
   HttpRequest _buildRequest(
     RetryableHost host,
     ApiRequest request,
     CallType callType,
-    RequestOptions? options,
-  ) {
+    RequestOptions? options, [
+    String? requestId,
+  ]) {
     final baseTimeout = _timeoutOf(callType, options);
     final baseConnectTimeout = options?.connectTimeout ??
         requester.connectTimeout ??
@@ -146,15 +253,24 @@ final class RetryStrategy {
         path: request.path,
         timeout: baseTimeout,
         connectTimeout: connectTimeout,
-        headers: {...?options?.headers, ...?request.headers},
+        headers: {
+          ...?options?.headers,
+          ...?request.headers,
+          if (requestId != null && !requestIdAsQueryParameter)
+            requestIdHeader: requestId,
+        },
         body: options?.body ?? request.body != null
             ? request.body
             : _requiresBody(request)
                 ? const <String, dynamic>{}
                 : null,
-        queryParameters: {...?request.queryParams, ...?options?.urlParameters}
-            .map((key, value) => MapEntry(
-                _encodeQueryParameter(key), _encodeQueryParameter(value))));
+        queryParameters: {
+          ...?request.queryParams,
+          ...?options?.urlParameters,
+          if (requestId != null && requestIdAsQueryParameter)
+            requestIdQueryParameter: requestId,
+        }.map((key, value) => MapEntry(
+            _encodeQueryParameter(key), _encodeQueryParameter(value))));
   }
 
   /// Determines the call type of a given [config].

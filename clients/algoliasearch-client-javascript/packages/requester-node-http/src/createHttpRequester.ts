@@ -5,6 +5,7 @@ import { URL } from 'url';
 import zlib from 'zlib';
 
 import type { EndRequest, Requester, Response } from '@algolia/client-common';
+import { StreamRequestError } from '@algolia/client-common';
 
 export type CreateHttpRequesterOptions = Partial<{
   agent: http.Agent | https.Agent;
@@ -20,6 +21,18 @@ export type CreateHttpRequesterOptions = Partial<{
 const agentOptions = { keepAlive: true };
 const defaultHttpAgent = new http.Agent(agentOptions);
 const defaultHttpsAgent = new https.Agent(agentOptions);
+
+function toResponseHeaders(incomingHeaders: http.IncomingHttpHeaders): Record<string, string> {
+  const headers: Record<string, string> = {};
+
+  for (const [name, value] of Object.entries(incomingHeaders)) {
+    if (value !== undefined) {
+      headers[name] = Array.isArray(value) ? value.join(', ') : value;
+    }
+  }
+
+  return headers;
+}
 
 export function createHttpRequester({
   agent: userGlobalAgent,
@@ -82,6 +95,7 @@ export function createHttpRequester({
           resolve({
             status: response.statusCode || 0,
             content: buffer.toString(),
+            headers: toResponseHeaders(response.headers),
             isTimedOut: false,
           });
         });
@@ -155,7 +169,7 @@ export function createHttpRequester({
             body += chunk;
           });
           response.on('end', () => {
-            reject(new Error(`HTTP ${statusCode}: ${body}`));
+            reject(new StreamRequestError(statusCode, body, toResponseHeaders(response.headers)));
           });
           return;
         }

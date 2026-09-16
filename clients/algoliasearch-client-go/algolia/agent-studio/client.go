@@ -74,6 +74,11 @@ func NewClientWithConfig(cfg AgentStudioConfiguration) (*APIClient, error) {
 		cfg.WriteTimeout = 25000 * time.Millisecond
 	}
 
+	// Request-ID tracing default for this API; a caller-supplied value always wins.
+	if cfg.RequestIDEnabled == nil {
+		cfg.RequestIDEnabled = utils.ToPtr(false)
+	}
+
 	apiClient := APIClient{
 		appID: cfg.AppID,
 		cfg:   &cfg,
@@ -103,7 +108,7 @@ func getDefaultHosts(appID string) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.44.0); Go (%s); AgentStudio (4.44.0)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.47.0); Go (%s); AgentStudio (4.47.0)", runtime.Version())
 }
 
 // AddDefaultHeader adds a new HTTP header to the default header in the request.
@@ -145,6 +150,27 @@ func (c *APIClient) callAPI(
 	}
 
 	return resp, body, nil
+}
+
+// callAPIStream does the request and returns the raw response without reading
+// its body, so that the caller can consume it as a stream. A non-2xx response
+// is returned as an errs.HTTPStatusError.
+func (c *APIClient) callAPIStream(
+	request *http.Request,
+	useReadTransporter bool,
+	requestConfiguration transport.RequestConfiguration,
+) (*http.Response, error) {
+	callKind := call.Write
+	if useReadTransporter || request.Method == http.MethodGet {
+		callKind = call.Read
+	}
+
+	resp, err := c.transport.RequestStream(request.Context(), request, callKind, requestConfiguration)
+	if err != nil {
+		return nil, fmt.Errorf("failed to do request: %w", err)
+	}
+
+	return resp, nil
 }
 
 // prepareRequest build the request.
@@ -271,6 +297,9 @@ func (c *APIClient) decodeError(res *http.Response, body []byte) error {
 	apiErr := &APIError{
 		Message: string(body), // default to the full body if we cannot guess the type of the error.
 		Status:  res.StatusCode,
+		// Correlation-ID comes from the search infrastructure; the unrelated
+		// X-Algolia-RequestID edge header must never be read instead.
+		CorrelationID: res.Header.Get("Correlation-ID"),
 	}
 
 	if strings.Contains(res.Header.Get("Content-Type"), "application/json") {
@@ -342,12 +371,19 @@ func setBody(body any, c compression.Compression) (*bytes.Buffer, error) {
 }
 
 type APIError struct {
-	Message              string         `json:"message"`
-	Status               int            `json:"status"`
+	Message string `json:"message"`
+	Status  int    `json:"status"`
+	// CorrelationID is the value of the Correlation-ID header of the failed
+	// response, when present. Quote it when contacting Algolia support.
+	CorrelationID        string         `json:"-"`
 	AdditionalProperties map[string]any `json:"-"`
 }
 
 func (e APIError) Error() string {
+	if e.CorrelationID != "" {
+		return fmt.Sprintf("API error [%d] %s (Correlation-ID: %s)", e.Status, e.Message, e.CorrelationID)
+	}
+
 	return fmt.Sprintf("API error [%d] %s", e.Status, e.Message)
 }
 

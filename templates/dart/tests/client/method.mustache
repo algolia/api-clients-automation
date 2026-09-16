@@ -3,7 +3,7 @@ try {
       {{#parametersWithDataType}}
       {{> tests/request_param}}
       {{/parametersWithDataType}}
-      {{#hasRequestOptions}}requestOptions: RequestOptions({{#requestOptions.timeouts}}{{#write}}writeTimeout: Duration(milliseconds: {{{.}}}),{{/write}}{{#read}}readTimeout: Duration(milliseconds: {{{.}}}),{{/read}}{{#connect}}connectTimeout: Duration(milliseconds: {{{.}}}),{{/connect}}{{/requestOptions.timeouts}}),{{/hasRequestOptions}}
+      {{#hasRequestOptions}}requestOptions: RequestOptions({{#requestOptions.headers}}headers: { {{#parametersWithDataType}}'{{{key}}}': {{> tests/param_value}},{{/parametersWithDataType}} },{{/requestOptions.headers}}{{#requestOptions.queryParameters}}urlParameters: { {{#parametersWithDataType}}'{{{key}}}': {{> tests/param_value}},{{/parametersWithDataType}} },{{/requestOptions.queryParameters}}{{#requestOptions.timeouts}}{{#write}}writeTimeout: Duration(milliseconds: {{{.}}}),{{/write}}{{#read}}readTimeout: Duration(milliseconds: {{{.}}}),{{/read}}{{#connect}}connectTimeout: Duration(milliseconds: {{{.}}}),{{/connect}}{{/requestOptions.timeouts}}),{{/hasRequestOptions}}
   );
   {{#testResponse}}
   {{^match.isPrimitive}}

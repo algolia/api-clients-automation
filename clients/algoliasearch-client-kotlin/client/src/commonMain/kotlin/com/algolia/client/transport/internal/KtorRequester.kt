@@ -6,6 +6,7 @@ import com.algolia.client.configuration.internal.HEADER_APIKEY
 import com.algolia.client.exception.AlgoliaRetryException
 import com.algolia.client.exception.internal.asApiException
 import com.algolia.client.exception.internal.asClientException
+import com.algolia.client.transport.AlgoliaHttpResponse
 import com.algolia.client.transport.RequestConfig
 import com.algolia.client.transport.RequestMethod
 import com.algolia.client.transport.RequestOptions
@@ -15,16 +16,35 @@ import io.ktor.client.call.*
 import io.ktor.client.network.sockets.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.client.utils.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.reflect.*
 import io.ktor.utils.io.errors.*
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
+
+internal const val RATE_LIMIT_STATUS_CODE: Int = 429
+
+internal val DEFAULT_RATE_LIMIT_WAIT: Duration = 1.seconds
+
+private val WHOLE_SECONDS = Regex("\\d+")
+
+/** `Retry-After` as a wait; only a positive whole number of seconds is honored, else 1 second. */
+internal fun retryAfterWait(headers: Headers): Duration {
+  val retryAfter = headers[HttpHeaders.RetryAfter]?.trim().orEmpty()
+  if (!retryAfter.matches(WHOLE_SECONDS)) return DEFAULT_RATE_LIMIT_WAIT
+  val seconds = retryAfter.toLongOrNull() ?: return Duration.INFINITE
+  return if (seconds > 0) seconds.seconds else DEFAULT_RATE_LIMIT_WAIT
+}
 
 /** Default implementation of [Requester] using Ktor's [HttpClient]. */
 public class KtorRequester(
@@ -33,11 +53,18 @@ public class KtorRequester(
   private val readTimeout: Duration,
   private val writeTimeout: Duration,
   hosts: List<Host>,
+  internal val sendsRequestId: Boolean = false,
+  private val maxRateLimitRetries: Int = 3,
 ) : Requester, kotlin.AutoCloseable {
 
   private val hostStatusExpirationDelayMS: Long = 1000L * 60L * 5L
   private val mutex: Mutex = Mutex()
   private val retryableHosts = hosts.map { RetryableHost(it) }
+
+  /** Wait between same-host 429 retries, in real time even under `runTest`. */
+  internal var rateLimitWait: suspend (Duration) -> Unit = { duration ->
+    withContext(Dispatchers.Default) { delay(duration) }
+  }
 
   public override fun setClientApiKey(apiKey: String) {
     headers {
@@ -56,11 +83,39 @@ public class KtorRequester(
     requestConfig: RequestConfig,
     requestOptions: RequestOptions?,
     returnType: TypeInfo,
-  ): T {
+  ): T =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      @Suppress("UNCHECKED_CAST")
+      val body: T = if (response.hasEmptyBody()) null as T else response.body<T>(returnType)
+      body
+    }
+
+  override suspend fun <T> executeWithHttpInfo(
+    requestConfig: RequestConfig,
+    requestOptions: RequestOptions?,
+    returnType: TypeInfo,
+  ): AlgoliaHttpResponse<T> =
+    executeWithRetry(requestConfig, requestOptions) { response ->
+      val isEmpty = response.hasEmptyBody()
+      AlgoliaHttpResponse(
+        statusCode = response.status.value,
+        headers = response.headers.toMap(),
+        body = if (isEmpty) null else response.bodyAsText(),
+        data = if (isEmpty) null else response.body<T>(returnType),
+      )
+    }
+
+  private suspend fun <R> executeWithRetry(
+    requestConfig: RequestConfig,
+    requestOptions: RequestOptions?,
+    handleResponse: suspend (HttpResponse) -> R,
+  ): R {
     val callType = callTypeOf(requestConfig)
     val hosts = callableHosts(callType)
     val errors by lazy(LazyThreadSafetyMode.NONE) { mutableListOf<Throwable>() }
     val requestBuilder = httpRequestBuilderOf(requestConfig, requestOptions)
+    var lastCorrelationId: String? = null
+    var rateLimitRetriesLeft = maxRateLimitRetries
 
     for (host in hosts) {
       requestBuilder.url.protocol = URLProtocol.createOrDefault(host.protocol)
@@ -69,21 +124,37 @@ public class KtorRequester(
         requestBuilder.url.port = host.port!!
       }
       requestBuilder.setTimeout(requestOptions, callType, host)
-      try {
-        val response = httpClient.request(requestBuilder)
-        @Suppress("UNCHECKED_CAST")
-        val body: T =
-          if (response.status.value == 204 || response.contentLength() == 0L) null as T
-          else response.body<T>(returnType)
-        mutex.withLock { host.reset() }
-        return body
-      } catch (exception: Throwable) {
-        host.onError(exception)
-        errors += exception.asClientException()
+      while (true) {
+        try {
+          val response = httpClient.request(requestBuilder)
+          val result = handleResponse(response)
+          mutex.withLock { host.reset() }
+          return result
+        } catch (exception: Throwable) {
+          if (exception is ResponseException) {
+            lastCorrelationId =
+              exception.response.headers[HEADER_CORRELATION_ID] ?: lastCorrelationId
+          }
+          if (
+            exception is ClientRequestException &&
+              exception.response.status.value == RATE_LIMIT_STATUS_CODE &&
+              rateLimitRetriesLeft > 0
+          ) {
+            rateLimitRetriesLeft--
+            errors += exception.asApiException()
+            rateLimitWait(retryAfterWait(exception.response.headers))
+            continue
+          }
+          host.onError(exception)
+          errors += exception.asClientException()
+          break
+        }
       }
     }
-    throw AlgoliaRetryException(errors)
+    throw AlgoliaRetryException(errors, lastCorrelationId)
   }
+
+  private fun HttpResponse.hasEmptyBody(): Boolean = status.value == 204 || contentLength() == 0L
 
   private fun callTypeOf(requestConfig: RequestConfig): CallType =
     if (requestConfig.isRead || requestConfig.method == RequestMethod.GET) {
@@ -169,7 +240,15 @@ public class KtorRequester(
         queryParameter(urlParameters)
         body?.let { setBody(it) }
       }
+
+      if (sendsRequestId && !carriesRequestId()) {
+        headers.append(HEADER_REQUEST_ID, generateRequestId())
+      }
     }
+
+  private fun HttpRequestBuilder.carriesRequestId(): Boolean =
+    headers.contains(HEADER_REQUEST_ID) ||
+      url.encodedParameters.names().any { it.equals(QUERY_PARAM_REQUEST_ID, ignoreCase = true) }
 
   private fun requiresBody(requestConfig: RequestConfig) =
     requestConfig.method == RequestMethod.POST || requestConfig.method == RequestMethod.PUT

@@ -504,14 +504,15 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 						recommend.NewEmptyRecommendSearchParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
 							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:apple")}))).SetFallbackParameters(
 						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetOptionalFilters(recommend.ArrayOfOptionalFiltersAsOptionalFilters(
-							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")}))))})))
+							[]recommend.OptionalFilters{*recommend.StringAsOptionalFilters("brand:samsung")})).SetFacetFilters(recommend.ArrayOfFacetFiltersAsFacetFilters(
+							[]recommend.FacetFilters{*recommend.StringAsFacetFilters("brand:apple")}))))})))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/*/recommendations", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}`)
+			Assertf(*echo.Body, "%s", `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}`)
 	})
 	t.Run("get recommendations for trending model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(

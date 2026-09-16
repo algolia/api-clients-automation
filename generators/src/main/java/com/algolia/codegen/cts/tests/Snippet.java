@@ -18,6 +18,10 @@ public class Snippet {
   public RequestOptions requestOptions;
   public List<String> skipLanguages;
 
+  // For streaming operations, set to true in the CTS to render the snippet with the raw
+  // streaming variant (e.g. `createAgentCompletionStreamRaw`) instead of the typed one.
+  public Boolean raw;
+
   public Snippet(String method, String testName, Map<String, Object> parameters, RequestOptions requestOptions) {
     this.method = method;
     this.testName = testName;
@@ -48,6 +52,9 @@ public class Snippet {
     context.put("parameters", null);
     context.put("parametersWithDataType", null);
     context.put("parametersWithDataTypeMap", null);
+    context.put("useRawStream", false);
+    context.put("streamMethodSuffix", null);
+    context.put("streamMethodSuffixSnake", null);
 
     if (ope.returnType != null && ope.returnType.length() > 0) {
       context.put("returnType", camelize(ope.returnType));
@@ -77,7 +84,18 @@ public class Snippet {
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());
       context.put("isHelper", isHelper);
-      context.put("isStreaming", (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false));
+
+      boolean isStreaming = (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false);
+      context.put("isStreaming", isStreaming);
+      if (isStreaming) {
+        boolean useRawStream = raw != null && raw;
+        context.put("useRawStream", useRawStream);
+        context.put("streamMethodSuffix", useRawStream ? "StreamRaw" : "Stream");
+        context.put("streamMethodSuffixSnake", useRawStream ? "_stream_raw" : "_stream");
+      } else if (raw != null) {
+        throw new CTSException("`raw` is only valid on streaming operations, remove it from the snippet '" + testName + "' of " + method);
+      }
+
       context.put("hasRequestOptions", requestOptions != null);
 
       if (requestOptions != null) {

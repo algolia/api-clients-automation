@@ -874,7 +874,9 @@ final class RecommendClientRequestsTests: XCTestCase {
                                 optionalFilters: RecommendOptionalFilters
                                     .arrayOfRecommendOptionalFilters([RecommendOptionalFilters
                                             .string("brand:samsung")]),
-                                query: "myQuery"
+                                query: "myQuery",
+                                facetFilters: RecommendFacetFilters
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("brand:apple")])
                             )
                         ))])
             )
@@ -884,7 +886,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"]}}]}"
+        let expectedBodyData = "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:apple\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"optionalFilters\":[\"brand:samsung\"],\"facetFilters\":[\"brand:apple\"]}}]}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

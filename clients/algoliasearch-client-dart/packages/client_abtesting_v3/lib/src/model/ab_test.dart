@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_abtesting_v3/src/model/status.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_configuration.dart';
+import 'package:algolia_client_abtesting_v3/src/model/decision.dart';
 import 'package:algolia_client_abtesting_v3/src/model/variant.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -21,7 +22,7 @@ final class ABTest {
     required this.status,
     required this.variants,
     this.configuration,
-    this.migratedAbTestID,
+    this.decision,
   });
 
   /// Unique A/B test identifier.
@@ -58,9 +59,8 @@ final class ABTest {
   @JsonKey(name: r'configuration')
   final ABTestConfiguration? configuration;
 
-  /// Unique migrated A/B test identifier.
-  @JsonKey(name: r'migratedAbTestID')
-  final int? migratedAbTestID;
+  @JsonKey(name: r'decision')
+  final Decision? decision;
 
   @override
   bool operator ==(Object other) =>
@@ -75,7 +75,7 @@ final class ABTest {
           other.status == status &&
           other.variants == variants &&
           other.configuration == configuration &&
-          other.migratedAbTestID == migratedAbTestID;
+          other.decision == decision;
 
   @override
   int get hashCode =>
@@ -88,7 +88,7 @@ final class ABTest {
       status.hashCode +
       variants.hashCode +
       configuration.hashCode +
-      migratedAbTestID.hashCode;
+      decision.hashCode;
 
   factory ABTest.fromJson(Map<String, dynamic> json) => _$ABTestFromJson(json);
 

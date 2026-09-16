@@ -26,7 +26,7 @@ class SearchWithAnalyticsAndHeader
     await client.SearchSingleIndexAsync<Hit>(
       "<YOUR_INDEX_NAME>",
       searchParams,
-      new RequestOptionBuilder().AddExtraHeader("X-Forwarded-For", ip).Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Forwarded-For", ip).Build()
     );
   }
 }

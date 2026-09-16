@@ -12,6 +12,9 @@ import java.util.Objects;
 /** Log */
 public class Log {
 
+  @JsonProperty("cid")
+  private String cid;
+
   @JsonProperty("timestamp")
   private String timestamp;
 
@@ -56,6 +59,20 @@ public class Log {
 
   @JsonProperty("inner_queries")
   private List<LogQuery> innerQueries;
+
+  public Log setCid(String cid) {
+    this.cid = cid;
+    return this;
+  }
+
+  /**
+   * Correlation ID of the logged API request, also returned in that request's `Correlation-ID`
+   * response header.
+   */
+  @javax.annotation.Nullable
+  public String getCid() {
+    return cid;
+  }
 
   public Log setTimestamp(String timestamp) {
     this.timestamp = timestamp;
@@ -242,6 +259,7 @@ public class Log {
     }
     Log log = (Log) o;
     return (
+      Objects.equals(this.cid, log.cid) &&
       Objects.equals(this.timestamp, log.timestamp) &&
       Objects.equals(this.method, log.method) &&
       Objects.equals(this.answerCode, log.answerCode) &&
@@ -263,6 +281,7 @@ public class Log {
   @Override
   public int hashCode() {
     return Objects.hash(
+      cid,
       timestamp,
       method,
       answerCode,
@@ -285,6 +304,7 @@ public class Log {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Log {\n");
+    sb.append("    cid: ").append(toIndentedString(cid)).append("\n");
     sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("    method: ").append(toIndentedString(method)).append("\n");
     sb.append("    answerCode: ").append(toIndentedString(answerCode)).append("\n");

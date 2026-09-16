@@ -52,6 +52,14 @@ class AgentStudioClientClientTests {
       .build();
   }
 
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, int maxRateLimitRetries) {
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .setMaxRateLimitRetries(maxRateLimitRetries)
+      .build();
+  }
+
   @Test
   @DisplayName("calls api with default read timeouts")
   void apiTest0() {
@@ -102,7 +110,7 @@ class AgentStudioClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.41.2\\).*";
+      String regexp = "^Algolia for Java \\(4.44.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

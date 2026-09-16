@@ -65,15 +65,44 @@ public class IngestionClient(
     authenticationCreate: AuthenticationCreate,
     requestOptions: RequestOptions? = null,
   ): AuthenticationCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications"),
-        body = authenticationCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        createAuthenticationRequestConfig(authenticationCreate = authenticationCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new authentication resource. This variant of [createAuthentication] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param authenticationCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createAuthenticationWithHTTPInfo(
+    authenticationCreate: AuthenticationCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AuthenticationCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createAuthenticationRequestConfig(authenticationCreate = authenticationCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createAuthenticationRequestConfig(
+    authenticationCreate: AuthenticationCreate
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications"),
+      body = authenticationCreate,
     )
   }
 
@@ -92,15 +121,39 @@ public class IngestionClient(
     destinationCreate: DestinationCreate,
     requestOptions: RequestOptions? = null,
   ): DestinationCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations"),
-        body = destinationCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createDestinationRequestConfig(destinationCreate = destinationCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new destination. This variant of [createDestination] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param destinationCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createDestinationWithHTTPInfo(
+    destinationCreate: DestinationCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DestinationCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createDestinationRequestConfig(destinationCreate = destinationCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createDestinationRequestConfig(destinationCreate: DestinationCreate): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations"),
+      body = destinationCreate,
     )
   }
 
@@ -119,15 +172,39 @@ public class IngestionClient(
     sourceCreate: SourceCreate,
     requestOptions: RequestOptions? = null,
   ): SourceCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources"),
-        body = sourceCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createSourceRequestConfig(sourceCreate = sourceCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new source. This variant of [createSource] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createSourceWithHTTPInfo(
+    sourceCreate: SourceCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SourceCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createSourceRequestConfig(sourceCreate = sourceCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createSourceRequestConfig(sourceCreate: SourceCreate): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources"),
+      body = sourceCreate,
     )
   }
 
@@ -146,15 +223,39 @@ public class IngestionClient(
     taskCreate: TaskCreate,
     requestOptions: RequestOptions? = null,
   ): TaskCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks"),
-        body = taskCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createTaskRequestConfig(taskCreate = taskCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new task. This variant of [createTask] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskCreate Request body for creating a task.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createTaskWithHTTPInfo(
+    taskCreate: TaskCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createTaskRequestConfig(taskCreate = taskCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createTaskRequestConfig(taskCreate: TaskCreate): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks"),
+      body = taskCreate,
     )
   }
 
@@ -174,15 +275,41 @@ public class IngestionClient(
     taskCreate: TaskCreateV1,
     requestOptions: RequestOptions? = null,
   ): TaskCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks"),
-        body = taskCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = createTaskV1RequestConfig(taskCreate = taskCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new task using the v1 endpoint. Use `createTask` instead. This variant of
+   * [createTaskV1] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskCreate Request body for creating a task.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun createTaskV1WithHTTPInfo(
+    taskCreate: TaskCreateV1,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = createTaskV1RequestConfig(taskCreate = taskCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createTaskV1RequestConfig(taskCreate: TaskCreateV1): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks"),
+      body = taskCreate,
     )
   }
 
@@ -201,15 +328,44 @@ public class IngestionClient(
     transformationCreate: TransformationCreate,
     requestOptions: RequestOptions? = null,
   ): TransformationCreateResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations"),
-        body = transformationCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        createTransformationRequestConfig(transformationCreate = transformationCreate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Creates a new transformation. This variant of [createTransformation] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationCreate Request body for creating a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createTransformationWithHTTPInfo(
+    transformationCreate: TransformationCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TransformationCreateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        createTransformationRequestConfig(transformationCreate = transformationCreate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun createTransformationRequestConfig(
+    transformationCreate: TransformationCreate
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations"),
+      body = transformationCreate,
     )
   }
 
@@ -225,19 +381,44 @@ public class IngestionClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customDelete]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customDeleteWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customDeleteRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customDeleteRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customDelete`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -253,19 +434,44 @@ public class IngestionClient(
     parameters: Map<kotlin.String, Any>? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customGet] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customGetWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customGetRequestConfig(path = path, parameters = parameters),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customGetRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customGet`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
     )
   }
 
@@ -283,20 +489,48 @@ public class IngestionClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPost]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPostWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPostRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPostRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPost`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -314,20 +548,48 @@ public class IngestionClient(
     body: JsonObject? = null,
     requestOptions: RequestOptions? = null,
   ): JsonObject {
-    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "/{path}".replace("{path}", path),
-        query =
-          buildMap {
-            parameters?.let { putAll(it) }
-          },
-        body = body,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * This method lets you send requests to the Algolia REST API. This variant of [customPut] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * @param path Path of the endpoint, for example `1/newFeature`.
+   * @param parameters Query parameters to apply to the current query.
+   * @param body Parameters to send with the custom request.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun customPutWithHTTPInfo(
+    path: String,
+    parameters: Map<kotlin.String, Any>? = null,
+    body: JsonObject? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<JsonObject> {
+    return requester.executeWithHttpInfo(
+      requestConfig = customPutRequestConfig(path = path, parameters = parameters, body = body),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun customPutRequestConfig(
+    path: String,
+    parameters: Map<kotlin.String, Any>?,
+    body: JsonObject?,
+  ): RequestConfig {
+    require(path.isNotBlank()) { "Parameter `path` is required when calling `customPut`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "/{path}".replace("{path}", path),
+      query =
+        buildMap {
+          parameters?.let { putAll(it) }
+        },
+      body = body,
     )
   }
 
@@ -347,19 +609,45 @@ public class IngestionClient(
     authenticationID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
+    return requester.execute(
+      requestConfig = deleteAuthenticationRequestConfig(authenticationID = authenticationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes an authentication resource. You can't delete authentication resources that are used by
+   * a source or a destination. This variant of [deleteAuthentication] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param authenticationID Unique identifier of an authentication resource.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteAuthenticationWithHTTPInfo(
+    authenticationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteAuthenticationRequestConfig(authenticationID = authenticationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteAuthenticationRequestConfig(authenticationID: String): RequestConfig {
     require(authenticationID.isNotBlank()) {
       "Parameter `authenticationID` is required when calling `deleteAuthentication`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "authentications", "$authenticationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "authentications", "$authenticationID"),
     )
   }
 
@@ -378,18 +666,43 @@ public class IngestionClient(
     destinationID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
+    return requester.execute(
+      requestConfig = deleteDestinationRequestConfig(destinationID = destinationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
+   * This variant of [deleteDestination] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param destinationID Unique identifier of a destination.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteDestinationWithHTTPInfo(
+    destinationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteDestinationRequestConfig(destinationID = destinationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteDestinationRequestConfig(destinationID: String): RequestConfig {
     require(destinationID.isNotBlank()) {
       "Parameter `destinationID` is required when calling `deleteDestination`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
     )
   }
 
@@ -408,17 +721,42 @@ public class IngestionClient(
     sourceID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
+    return requester.execute(
+      requestConfig = deleteSourceRequestConfig(sourceID = sourceID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a source by its ID. You can't delete sources that are referenced in tasks. This variant
+   * of [deleteSource] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteSourceWithHTTPInfo(
+    sourceID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteSourceRequestConfig(sourceID = sourceID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteSourceRequestConfig(sourceID: String): RequestConfig {
     require(sourceID.isNotBlank()) {
       "Parameter `sourceID` is required when calling `deleteSource`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
     )
   }
 
@@ -437,15 +775,39 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `deleteTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteTaskRequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a task by its ID. This variant of [deleteTask] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteTaskWithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteTaskRequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteTaskRequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `deleteTask`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
     )
   }
 
@@ -465,15 +827,41 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `deleteTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = deleteTaskV1RequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead. This variant of
+   * [deleteTaskV1] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun deleteTaskV1WithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteTaskV1RequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteTaskV1RequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `deleteTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
     )
   }
 
@@ -492,19 +880,44 @@ public class IngestionClient(
     transformationID: String,
     requestOptions: RequestOptions? = null,
   ): DeleteResponse {
+    return requester.execute(
+      requestConfig = deleteTransformationRequestConfig(transformationID = transformationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Deletes a transformation by its ID. This variant of [deleteTransformation] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationID Unique identifier of a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteTransformationWithHTTPInfo(
+    transformationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DeleteResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = deleteTransformationRequestConfig(transformationID = transformationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun deleteTransformationRequestConfig(transformationID: String): RequestConfig {
     require(transformationID.isNotBlank()) {
       "Parameter `transformationID` is required when calling `deleteTransformation`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.DELETE,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "transformations", "$transformationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.DELETE,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "transformations", "$transformationID"),
     )
   }
 
@@ -523,16 +936,39 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `disableTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "disable"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = disableTaskRequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Disables a task. This variant of [disableTask] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun disableTaskWithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = disableTaskRequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun disableTaskRequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `disableTask`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "disable"),
     )
   }
 
@@ -552,16 +988,41 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `disableTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "disable"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = disableTaskV1RequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Disables a task using the v1 endpoint. Use `disableTask` instead. This variant of
+   * [disableTaskV1] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun disableTaskV1WithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = disableTaskV1RequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun disableTaskV1RequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `disableTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "disable"),
     )
   }
 
@@ -580,15 +1041,39 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `enableTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "enable"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = enableTaskRequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Enables a task. This variant of [enableTask] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun enableTaskWithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = enableTaskRequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun enableTaskRequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `enableTask`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "enable"),
     )
   }
 
@@ -608,15 +1093,41 @@ public class IngestionClient(
     taskID: String,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `enableTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "enable"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = enableTaskV1RequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Enables a task using the v1 endpoint. Use `enableTask` instead. This variant of [enableTaskV1]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun enableTaskV1WithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = enableTaskV1RequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun enableTaskV1RequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `enableTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "enable"),
     )
   }
 
@@ -635,19 +1146,44 @@ public class IngestionClient(
     authenticationID: String,
     requestOptions: RequestOptions? = null,
   ): Authentication {
+    return requester.execute(
+      requestConfig = getAuthenticationRequestConfig(authenticationID = authenticationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves an authentication resource by its ID. This variant of [getAuthentication] returns the
+   * full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param authenticationID Unique identifier of an authentication resource.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getAuthenticationWithHTTPInfo(
+    authenticationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Authentication> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getAuthenticationRequestConfig(authenticationID = authenticationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getAuthenticationRequestConfig(authenticationID: String): RequestConfig {
     require(authenticationID.isNotBlank()) {
       "Parameter `authenticationID` is required when calling `getAuthentication`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "authentications", "$authenticationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "authentications", "$authenticationID"),
     )
   }
 
@@ -666,18 +1202,43 @@ public class IngestionClient(
     destinationID: String,
     requestOptions: RequestOptions? = null,
   ): Destination {
+    return requester.execute(
+      requestConfig = getDestinationRequestConfig(destinationID = destinationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a destination by its ID. This variant of [getDestination] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param destinationID Unique identifier of a destination.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getDestinationWithHTTPInfo(
+    destinationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Destination> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getDestinationRequestConfig(destinationID = destinationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getDestinationRequestConfig(destinationID: String): RequestConfig {
     require(destinationID.isNotBlank()) {
       "Parameter `destinationID` is required when calling `getDestination`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
     )
   }
 
@@ -698,18 +1259,45 @@ public class IngestionClient(
     eventID: String,
     requestOptions: RequestOptions? = null,
   ): Event {
+    return requester.execute(
+      requestConfig = getEventRequestConfig(runID = runID, eventID = eventID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a single task run event by its ID. This variant of [getEvent] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param runID Unique identifier of a task run.
+   * @param eventID Unique identifier of an event.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getEventWithHTTPInfo(
+    runID: String,
+    eventID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Event> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getEventRequestConfig(runID = runID, eventID = eventID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getEventRequestConfig(runID: String, eventID: String): RequestConfig {
     require(runID.isNotBlank()) { "Parameter `runID` is required when calling `getEvent`." }
     require(eventID.isNotBlank()) { "Parameter `eventID` is required when calling `getEvent`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "runs", "$runID", "events", "$eventID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "runs", "$runID", "events", "$eventID"),
     )
   }
 
@@ -725,15 +1313,39 @@ public class IngestionClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getRun(runID: String, requestOptions: RequestOptions? = null): Run {
-    require(runID.isNotBlank()) { "Parameter `runID` is required when calling `getRun`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs", "$runID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getRunRequestConfig(runID = runID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieve a single task run by its ID. This variant of [getRun] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param runID Unique identifier of a task run.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getRunWithHTTPInfo(
+    runID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Run> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getRunRequestConfig(runID = runID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getRunRequestConfig(runID: String): RequestConfig {
+    require(runID.isNotBlank()) { "Parameter `runID` is required when calling `getRun`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs", "$runID"),
     )
   }
 
@@ -749,15 +1361,39 @@ public class IngestionClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getSource(sourceID: String, requestOptions: RequestOptions? = null): Source {
-    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `getSource`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getSourceRequestConfig(sourceID = sourceID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieve a source by its ID. This variant of [getSource] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getSourceWithHTTPInfo(
+    sourceID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Source> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getSourceRequestConfig(sourceID = sourceID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getSourceRequestConfig(sourceID: String): RequestConfig {
+    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `getSource`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
     )
   }
 
@@ -773,15 +1409,39 @@ public class IngestionClient(
    * @param requestOptions additional request configuration.
    */
   public suspend fun getTask(taskID: String, requestOptions: RequestOptions? = null): Task {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `getTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getTaskRequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a task by its ID. This variant of [getTask] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTaskWithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Task> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTaskRequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTaskRequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `getTask`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
     )
   }
 
@@ -798,15 +1458,41 @@ public class IngestionClient(
    * @deprecated
    */
   public suspend fun getTaskV1(taskID: String, requestOptions: RequestOptions? = null): TaskV1 {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `getTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = getTaskV1RequestConfig(taskID = taskID),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead. This variant of
+   * [getTaskV1] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun getTaskV1WithHTTPInfo(
+    taskID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskV1> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTaskV1RequestConfig(taskID = taskID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTaskV1RequestConfig(taskID: String): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `getTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
     )
   }
 
@@ -825,19 +1511,44 @@ public class IngestionClient(
     transformationID: String,
     requestOptions: RequestOptions? = null,
   ): Transformation {
+    return requester.execute(
+      requestConfig = getTransformationRequestConfig(transformationID = transformationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a transformation by its ID. This variant of [getTransformation] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationID Unique identifier of a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTransformationWithHTTPInfo(
+    transformationID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<Transformation> {
+    return requester.executeWithHttpInfo(
+      requestConfig = getTransformationRequestConfig(transformationID = transformationID),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun getTransformationRequestConfig(transformationID: String): RequestConfig {
     require(transformationID.isNotBlank()) {
       "Parameter `transformationID` is required when calling `getTransformation`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "transformations", "$transformationID"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "transformations", "$transformationID"),
     )
   }
 
@@ -867,23 +1578,82 @@ public class IngestionClient(
     order: OrderKeys? = null,
     requestOptions: RequestOptions? = null,
   ): ListAuthenticationsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            type?.let { put("type", it.joinToString(",")) }
-            platform?.let { put("platform", it.joinToString(",")) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listAuthenticationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          platform = platform,
+          sort = sort,
+          order = order,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of all authentication resources. This variant of [listAuthentications] returns
+   * the full HTTP response information (status code, headers, raw body) along with the deserialized
+   * response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param type Type of authentication resource to retrieve.
+   * @param platform Ecommerce platform for which to retrieve authentications.
+   * @param sort Property by which to sort the list of authentications. (default to
+   *   AuthenticationSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listAuthenticationsWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    type: List<AuthenticationType>? = null,
+    platform: List<PlatformWithNone>? = null,
+    sort: AuthenticationSortKeys? = null,
+    order: OrderKeys? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListAuthenticationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listAuthenticationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          platform = platform,
+          sort = sort,
+          order = order,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listAuthenticationsRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    type: List<AuthenticationType>?,
+    platform: List<PlatformWithNone>?,
+    sort: AuthenticationSortKeys?,
+    order: OrderKeys?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          type?.let { put("type", it.joinToString(",")) }
+          platform?.let { put("platform", it.joinToString(",")) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+        },
     )
   }
 
@@ -915,24 +1685,88 @@ public class IngestionClient(
     order: OrderKeys? = null,
     requestOptions: RequestOptions? = null,
   ): ListDestinationsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            type?.let { put("type", it.joinToString(",")) }
-            authenticationID?.let { put("authenticationID", it.joinToString(",")) }
-            transformationID?.let { put("transformationID", it) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listDestinationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          authenticationID = authenticationID,
+          transformationID = transformationID,
+          sort = sort,
+          order = order,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of destinations. This variant of [listDestinations] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param type Destination type.
+   * @param authenticationID Authentication ID used by destinations.
+   * @param transformationID Get the list of destinations used by a transformation.
+   * @param sort Property by which to sort the destinations. (default to
+   *   DestinationSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listDestinationsWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    type: List<DestinationType>? = null,
+    authenticationID: List<String>? = null,
+    transformationID: String? = null,
+    sort: DestinationSortKeys? = null,
+    order: OrderKeys? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListDestinationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listDestinationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          authenticationID = authenticationID,
+          transformationID = transformationID,
+          sort = sort,
+          order = order,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listDestinationsRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    type: List<DestinationType>?,
+    authenticationID: List<String>?,
+    transformationID: String?,
+    sort: DestinationSortKeys?,
+    order: OrderKeys?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          type?.let { put("type", it.joinToString(",")) }
+          authenticationID?.let { put("authenticationID", it.joinToString(",")) }
+          transformationID?.let { put("transformationID", it) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+        },
     )
   }
 
@@ -969,26 +1803,101 @@ public class IngestionClient(
     endDate: String? = null,
     requestOptions: RequestOptions? = null,
   ): ListEventsResponse {
-    require(runID.isNotBlank()) { "Parameter `runID` is required when calling `listEvents`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs", "$runID", "events"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            status?.let { put("status", it.joinToString(",")) }
-            type?.let { put("type", it.joinToString(",")) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listEventsRequestConfig(
+          runID = runID,
+          itemsPerPage = itemsPerPage,
+          page = page,
+          status = status,
+          type = type,
+          sort = sort,
+          order = order,
+          startDate = startDate,
+          endDate = endDate,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of events for a task run, identified by its ID. This variant of [listEvents]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param runID Unique identifier of a task run.
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param status Event status for filtering the list of task runs.
+   * @param type Event type for filtering the list of task runs.
+   * @param sort Property by which to sort the list of task run events.
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
+   *   default, the current time minus three hours is used.
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
+   *   the current time is used.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listEventsWithHTTPInfo(
+    runID: String,
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    status: List<EventStatus>? = null,
+    type: List<EventType>? = null,
+    sort: EventSortKeys? = null,
+    order: OrderKeys? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListEventsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listEventsRequestConfig(
+          runID = runID,
+          itemsPerPage = itemsPerPage,
+          page = page,
+          status = status,
+          type = type,
+          sort = sort,
+          order = order,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listEventsRequestConfig(
+    runID: String,
+    itemsPerPage: Int?,
+    page: Int?,
+    status: List<EventStatus>?,
+    type: List<EventType>?,
+    sort: EventSortKeys?,
+    order: OrderKeys?,
+    startDate: String?,
+    endDate: String?,
+  ): RequestConfig {
+    require(runID.isNotBlank()) { "Parameter `runID` is required when calling `listEvents`." }
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs", "$runID", "events"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          status?.let { put("status", it.joinToString(",")) }
+          type?.let { put("type", it.joinToString(",")) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+        },
     )
   }
 
@@ -1025,26 +1934,100 @@ public class IngestionClient(
     endDate: String? = null,
     requestOptions: RequestOptions? = null,
   ): RunListResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            status?.let { put("status", it.joinToString(",")) }
-            type?.let { put("type", it.joinToString(",")) }
-            taskID?.let { put("taskID", it) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-            startDate?.let { put("startDate", it) }
-            endDate?.let { put("endDate", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listRunsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          status = status,
+          type = type,
+          taskID = taskID,
+          sort = sort,
+          order = order,
+          startDate = startDate,
+          endDate = endDate,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieve a list of task runs. This variant of [listRuns] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param status Run status for filtering the list of task runs.
+   * @param type Run type for filtering the list of task runs.
+   * @param taskID Task ID for filtering the list of task runs.
+   * @param sort Property by which to sort the list of task runs. (default to RunSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param startDate Date and time for the earliest run to retrieve, in RFC 3339 format. By
+   *   default, the current day minus seven days is used.
+   * @param endDate Date and time for the latest run to retrieve, in RFC 3339 format. By default,
+   *   the current day is used.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listRunsWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    status: List<RunStatus>? = null,
+    type: List<RunType>? = null,
+    taskID: String? = null,
+    sort: RunSortKeys? = null,
+    order: OrderKeys? = null,
+    startDate: String? = null,
+    endDate: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RunListResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listRunsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          status = status,
+          type = type,
+          taskID = taskID,
+          sort = sort,
+          order = order,
+          startDate = startDate,
+          endDate = endDate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listRunsRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    status: List<RunStatus>?,
+    type: List<RunType>?,
+    taskID: String?,
+    sort: RunSortKeys?,
+    order: OrderKeys?,
+    startDate: String?,
+    endDate: String?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "runs"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          status?.let { put("status", it.joinToString(",")) }
+          type?.let { put("type", it.joinToString(",")) }
+          taskID?.let { put("taskID", it) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+          startDate?.let { put("startDate", it) }
+          endDate?.let { put("endDate", it) }
+        },
     )
   }
 
@@ -1075,23 +2058,82 @@ public class IngestionClient(
     order: OrderKeys? = null,
     requestOptions: RequestOptions? = null,
   ): ListSourcesResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            type?.let { put("type", it.joinToString(",")) }
-            authenticationID?.let { put("authenticationID", it.joinToString(",")) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listSourcesRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          authenticationID = authenticationID,
+          sort = sort,
+          order = order,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of sources. This variant of [listSources] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param type Source type. Some sources require authentication.
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *   that doesn't have an authentication.
+   * @param sort Property by which to sort the list of sources. (default to
+   *   SourceSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listSourcesWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    type: List<SourceType>? = null,
+    authenticationID: List<String>? = null,
+    sort: SourceSortKeys? = null,
+    order: OrderKeys? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListSourcesResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listSourcesRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          type = type,
+          authenticationID = authenticationID,
+          sort = sort,
+          order = order,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listSourcesRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    type: List<SourceType>?,
+    authenticationID: List<String>?,
+    sort: SourceSortKeys?,
+    order: OrderKeys?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          type?.let { put("type", it.joinToString(",")) }
+          authenticationID?.let { put("authenticationID", it.joinToString(",")) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+        },
     )
   }
 
@@ -1131,28 +2173,111 @@ public class IngestionClient(
     order: OrderKeys? = null,
     requestOptions: RequestOptions? = null,
   ): ListTasksResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            action?.let { put("action", it.joinToString(",")) }
-            enabled?.let { put("enabled", it) }
-            sourceID?.let { put("sourceID", it.joinToString(",")) }
-            sourceType?.let { put("sourceType", it.joinToString(",")) }
-            destinationID?.let { put("destinationID", it.joinToString(",")) }
-            triggerType?.let { put("triggerType", it.joinToString(",")) }
-            withEmailNotifications?.let { put("withEmailNotifications", it) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listTasksRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          action = action,
+          enabled = enabled,
+          sourceID = sourceID,
+          sourceType = sourceType,
+          destinationID = destinationID,
+          triggerType = triggerType,
+          withEmailNotifications = withEmailNotifications,
+          sort = sort,
+          order = order,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of tasks. This variant of [listTasks] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param action Actions for filtering the list of tasks.
+   * @param enabled Whether to filter the list of tasks by the `enabled` status.
+   * @param sourceID Source IDs for filtering the list of tasks.
+   * @param sourceType Filters the tasks with the specified source type.
+   * @param destinationID Destination IDs for filtering the list of tasks.
+   * @param triggerType Type of task trigger for filtering the list of tasks.
+   * @param withEmailNotifications If specified, the response only includes tasks with
+   *   notifications.email.enabled set to this value.
+   * @param sort Property by which to sort the list of tasks. (default to TaskSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listTasksWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    action: List<ActionType>? = null,
+    enabled: Boolean? = null,
+    sourceID: List<String>? = null,
+    sourceType: List<SourceType>? = null,
+    destinationID: List<String>? = null,
+    triggerType: List<TriggerType>? = null,
+    withEmailNotifications: Boolean? = null,
+    sort: TaskSortKeys? = null,
+    order: OrderKeys? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListTasksResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listTasksRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          action = action,
+          enabled = enabled,
+          sourceID = sourceID,
+          sourceType = sourceType,
+          destinationID = destinationID,
+          triggerType = triggerType,
+          withEmailNotifications = withEmailNotifications,
+          sort = sort,
+          order = order,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listTasksRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    action: List<ActionType>?,
+    enabled: Boolean?,
+    sourceID: List<String>?,
+    sourceType: List<SourceType>?,
+    destinationID: List<String>?,
+    triggerType: List<TriggerType>?,
+    withEmailNotifications: Boolean?,
+    sort: TaskSortKeys?,
+    order: OrderKeys?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          action?.let { put("action", it.joinToString(",")) }
+          enabled?.let { put("enabled", it) }
+          sourceID?.let { put("sourceID", it.joinToString(",")) }
+          sourceType?.let { put("sourceType", it.joinToString(",")) }
+          destinationID?.let { put("destinationID", it.joinToString(",")) }
+          triggerType?.let { put("triggerType", it.joinToString(",")) }
+          withEmailNotifications?.let { put("withEmailNotifications", it) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+        },
     )
   }
 
@@ -1188,26 +2313,100 @@ public class IngestionClient(
     order: OrderKeys? = null,
     requestOptions: RequestOptions? = null,
   ): ListTasksResponseV1 {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            action?.let { put("action", it.joinToString(",")) }
-            enabled?.let { put("enabled", it) }
-            sourceID?.let { put("sourceID", it.joinToString(",")) }
-            destinationID?.let { put("destinationID", it.joinToString(",")) }
-            triggerType?.let { put("triggerType", it.joinToString(",")) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listTasksV1RequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          action = action,
+          enabled = enabled,
+          sourceID = sourceID,
+          destinationID = destinationID,
+          triggerType = triggerType,
+          sort = sort,
+          order = order,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead. This variant of
+   * [listTasksV1] returns the full HTTP response information (status code, headers, raw body) along
+   * with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param action Actions for filtering the list of tasks.
+   * @param enabled Whether to filter the list of tasks by the `enabled` status.
+   * @param sourceID Source IDs for filtering the list of tasks.
+   * @param destinationID Destination IDs for filtering the list of tasks.
+   * @param triggerType Type of task trigger for filtering the list of tasks.
+   * @param sort Property by which to sort the list of tasks. (default to TaskSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun listTasksV1WithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    action: List<ActionType>? = null,
+    enabled: Boolean? = null,
+    sourceID: List<String>? = null,
+    destinationID: List<String>? = null,
+    triggerType: List<TriggerType>? = null,
+    sort: TaskSortKeys? = null,
+    order: OrderKeys? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListTasksResponseV1> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listTasksV1RequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          action = action,
+          enabled = enabled,
+          sourceID = sourceID,
+          destinationID = destinationID,
+          triggerType = triggerType,
+          sort = sort,
+          order = order,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listTasksV1RequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    action: List<ActionType>?,
+    enabled: Boolean?,
+    sourceID: List<String>?,
+    destinationID: List<String>?,
+    triggerType: List<TriggerType>?,
+    sort: TaskSortKeys?,
+    order: OrderKeys?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          action?.let { put("action", it.joinToString(",")) }
+          enabled?.let { put("enabled", it) }
+          sourceID?.let { put("sourceID", it.joinToString(",")) }
+          destinationID?.let { put("destinationID", it.joinToString(",")) }
+          triggerType?.let { put("triggerType", it.joinToString(",")) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+        },
     )
   }
 
@@ -1235,22 +2434,76 @@ public class IngestionClient(
     type: TransformationType? = null,
     requestOptions: RequestOptions? = null,
   ): ListTransformationsResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.GET,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations"),
-        query =
-          buildMap {
-            itemsPerPage?.let { put("itemsPerPage", it) }
-            page?.let { put("page", it) }
-            sort?.let { put("sort", it) }
-            order?.let { put("order", it) }
-            type?.let { put("type", it) }
-          },
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        listTransformationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          sort = sort,
+          order = order,
+          type = type,
+        ),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of transformations. This variant of [listTransformations] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param itemsPerPage Number of items per page. (default to 10)
+   * @param page Page number of the paginated API response.
+   * @param sort Property by which to sort the list of transformations. (default to
+   *   TransformationSortKeys.createdAt)
+   * @param order Sort order of the response, ascending or descending. (default to OrderKeys.desc)
+   * @param type Whether to filter the list of transformations by the type of transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun listTransformationsWithHTTPInfo(
+    itemsPerPage: Int? = null,
+    page: Int? = null,
+    sort: TransformationSortKeys? = null,
+    order: OrderKeys? = null,
+    type: TransformationType? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<ListTransformationsResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        listTransformationsRequestConfig(
+          itemsPerPage = itemsPerPage,
+          page = page,
+          sort = sort,
+          order = order,
+          type = type,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun listTransformationsRequestConfig(
+    itemsPerPage: Int?,
+    page: Int?,
+    sort: TransformationSortKeys?,
+    order: OrderKeys?,
+    type: TransformationType?,
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.GET,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations"),
+      query =
+        buildMap {
+          itemsPerPage?.let { put("itemsPerPage", it) }
+          page?.let { put("page", it) }
+          sort?.let { put("sort", it) }
+          order?.let { put("order", it) }
+          type?.let { put("type", it) }
+        },
     )
   }
 
@@ -1284,28 +2537,86 @@ public class IngestionClient(
     referenceIndexName: String? = null,
     requestOptions: RequestOptions? = null,
   ): WatchResponse {
-    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `push`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "push", "$indexName"),
-        query =
-          buildMap {
-            watch?.let { put("watch", it) }
-            referenceIndexName?.let { put("referenceIndexName", it) }
-          },
-        body = pushTaskPayload,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions =
-        RequestOptions(
-          readTimeout = 180000.milliseconds,
-          writeTimeout = 180000.milliseconds,
-          connectTimeout = 180000.milliseconds,
-        ) + requestOptions,
+      requestConfig =
+        pushRequestConfig(
+          indexName = indexName,
+          pushTaskPayload = pushTaskPayload,
+          watch = watch,
+          referenceIndexName = referenceIndexName,
+        ),
+      requestOptions = pushRequestOptions(requestOptions),
     )
   }
+
+  /**
+   * Pushes records through the Pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the
+   * [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data),
+   * this is the recommended way of ingesting your records. This method is similar to `pushTask`,
+   * but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error
+   * will be returned. This variant of [push] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param indexName Name of the index on which to perform the operation.
+   * @param pushTaskPayload
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *   the ingestion to be finished before responding.
+   * @param referenceIndexName This is required when targeting an index that does not have a push
+   *   connector setup (e.g. a tmp index), but you wish to attach another index's transformation to
+   *   it (e.g. the source index name).
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun pushWithHTTPInfo(
+    indexName: String,
+    pushTaskPayload: PushTaskPayload,
+    watch: Boolean? = null,
+    referenceIndexName: String? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<WatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        pushRequestConfig(
+          indexName = indexName,
+          pushTaskPayload = pushTaskPayload,
+          watch = watch,
+          referenceIndexName = referenceIndexName,
+        ),
+      requestOptions = pushRequestOptions(requestOptions),
+    )
+  }
+
+  private fun pushRequestConfig(
+    indexName: String,
+    pushTaskPayload: PushTaskPayload,
+    watch: Boolean?,
+    referenceIndexName: String?,
+  ): RequestConfig {
+    require(indexName.isNotBlank()) { "Parameter `indexName` is required when calling `push`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "push", "$indexName"),
+      query =
+        buildMap {
+          watch?.let { put("watch", it) }
+          referenceIndexName?.let { put("referenceIndexName", it) }
+        },
+      body = pushTaskPayload,
+    )
+  }
+
+  private fun pushRequestOptions(requestOptions: RequestOptions?): RequestOptions =
+    RequestOptions(
+      readTimeout = 180000.milliseconds,
+      writeTimeout = 180000.milliseconds,
+      connectTimeout = 180000.milliseconds,
+    ) + requestOptions
 
   /**
    * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
@@ -1332,27 +2643,70 @@ public class IngestionClient(
     watch: Boolean? = null,
     requestOptions: RequestOptions? = null,
   ): WatchResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `pushTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "push"),
-        query =
-          buildMap {
-            watch?.let { put("watch", it) }
-          },
-        body = pushTaskPayload,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions =
-        RequestOptions(
-          readTimeout = 180000.milliseconds,
-          writeTimeout = 180000.milliseconds,
-          connectTimeout = 180000.milliseconds,
-        ) + requestOptions,
+      requestConfig =
+        pushTaskRequestConfig(taskID = taskID, pushTaskPayload = pushTaskPayload, watch = watch),
+      requestOptions = pushTaskRequestOptions(requestOptions),
     )
   }
+
+  /**
+   * Pushes records through the pipeline, directly to an index. You can make the call synchronous by
+   * providing the `watch` parameter, for asynchronous calls, you can use the observability
+   * endpoints or the debugger dashboard to see the status of your task. If you want to transform
+   * your data before indexing, this is the recommended way of ingesting your records. This method
+   * is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when
+   * many `destinations` target the same `indexName`. This variant of [pushTask] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param pushTaskPayload
+   * @param watch When provided, the push operation will be synchronous and the API will wait for
+   *   the ingestion to be finished before responding.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun pushTaskWithHTTPInfo(
+    taskID: String,
+    pushTaskPayload: PushTaskPayload,
+    watch: Boolean? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<WatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        pushTaskRequestConfig(taskID = taskID, pushTaskPayload = pushTaskPayload, watch = watch),
+      requestOptions = pushTaskRequestOptions(requestOptions),
+    )
+  }
+
+  private fun pushTaskRequestConfig(
+    taskID: String,
+    pushTaskPayload: PushTaskPayload,
+    watch: Boolean?,
+  ): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `pushTask`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "push"),
+      query =
+        buildMap {
+          watch?.let { put("watch", it) }
+        },
+      body = pushTaskPayload,
+    )
+  }
+
+  private fun pushTaskRequestOptions(requestOptions: RequestOptions?): RequestOptions =
+    RequestOptions(
+      readTimeout = 180000.milliseconds,
+      writeTimeout = 180000.milliseconds,
+      connectTimeout = 180000.milliseconds,
+    ) + requestOptions
 
   /**
    * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
@@ -1372,16 +2726,43 @@ public class IngestionClient(
     taskReplace: TaskReplace,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `replaceTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
-        body = taskReplace,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = replaceTaskRequestConfig(taskID = taskID, taskReplace = taskReplace),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of
+   * fields. This variant of [replaceTask] returns the full HTTP response information (status code,
+   * headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param taskReplace
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun replaceTaskWithHTTPInfo(
+    taskID: String,
+    taskReplace: TaskReplace,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = replaceTaskRequestConfig(taskID = taskID, taskReplace = taskReplace),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun replaceTaskRequestConfig(taskID: String, taskReplace: TaskReplace): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `replaceTask`." }
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
+      body = taskReplace,
     )
   }
 
@@ -1403,17 +2784,48 @@ public class IngestionClient(
     runSourcePayload: RunSourcePayload? = null,
     requestOptions: RequestOptions? = null,
   ): RunSourceResponse {
-    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `runSource`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID", "run"),
-        body = runSourcePayload,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        runSourceRequestConfig(sourceID = sourceID, runSourcePayload = runSourcePayload),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools
+   * sources. Creates one run per task. This variant of [runSource] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param runSourcePayload
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun runSourceWithHTTPInfo(
+    sourceID: String,
+    runSourcePayload: RunSourcePayload? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RunSourceResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        runSourceRequestConfig(sourceID = sourceID, runSourcePayload = runSourcePayload),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun runSourceRequestConfig(
+    sourceID: String,
+    runSourcePayload: RunSourcePayload?,
+  ): RequestConfig {
+    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `runSource`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID", "run"),
+      body = runSourcePayload,
     )
   }
 
@@ -1434,16 +2846,43 @@ public class IngestionClient(
     runTaskPayload: RunTaskPayload? = null,
     requestOptions: RequestOptions? = null,
   ): RunResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `runTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "run"),
-        body = runTaskPayload,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = runTaskRequestConfig(taskID = taskID, runTaskPayload = runTaskPayload),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Runs a task. You can check the status of task runs with the observability endpoints. This
+   * variant of [runTask] returns the full HTTP response information (status code, headers, raw
+   * body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param runTaskPayload
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun runTaskWithHTTPInfo(
+    taskID: String,
+    runTaskPayload: RunTaskPayload? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RunResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = runTaskRequestConfig(taskID = taskID, runTaskPayload = runTaskPayload),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun runTaskRequestConfig(taskID: String, runTaskPayload: RunTaskPayload?): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `runTask`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID", "run"),
+      body = runTaskPayload,
     )
   }
 
@@ -1466,16 +2905,47 @@ public class IngestionClient(
     runTaskPayload: RunTaskPayload? = null,
     requestOptions: RequestOptions? = null,
   ): RunResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `runTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "run"),
-        body = runTaskPayload,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = runTaskV1RequestConfig(taskID = taskID, runTaskPayload = runTaskPayload),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs
+   * with the observability endpoints. This variant of [runTaskV1] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param runTaskPayload
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun runTaskV1WithHTTPInfo(
+    taskID: String,
+    runTaskPayload: RunTaskPayload? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<RunResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = runTaskV1RequestConfig(taskID = taskID, runTaskPayload = runTaskPayload),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun runTaskV1RequestConfig(
+    taskID: String,
+    runTaskPayload: RunTaskPayload?,
+  ): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `runTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID", "run"),
+      body = runTaskPayload,
     )
   }
 
@@ -1494,15 +2964,44 @@ public class IngestionClient(
     authenticationSearch: AuthenticationSearch,
     requestOptions: RequestOptions? = null,
   ): List<Authentication> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications", "search"),
-        body = authenticationSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        searchAuthenticationsRequestConfig(authenticationSearch = authenticationSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for authentication resources. This variant of [searchAuthentications] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param authenticationSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchAuthenticationsWithHTTPInfo(
+    authenticationSearch: AuthenticationSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<Authentication>> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchAuthenticationsRequestConfig(authenticationSearch = authenticationSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchAuthenticationsRequestConfig(
+    authenticationSearch: AuthenticationSearch
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "authentications", "search"),
+      body = authenticationSearch,
     )
   }
 
@@ -1521,15 +3020,39 @@ public class IngestionClient(
     destinationSearch: DestinationSearch,
     requestOptions: RequestOptions? = null,
   ): List<Destination> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "search"),
-        body = destinationSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchDestinationsRequestConfig(destinationSearch = destinationSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for destinations. This variant of [searchDestinations] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param destinationSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchDestinationsWithHTTPInfo(
+    destinationSearch: DestinationSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<Destination>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchDestinationsRequestConfig(destinationSearch = destinationSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchDestinationsRequestConfig(destinationSearch: DestinationSearch): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "search"),
+      body = destinationSearch,
     )
   }
 
@@ -1548,15 +3071,39 @@ public class IngestionClient(
     sourceSearch: SourceSearch,
     requestOptions: RequestOptions? = null,
   ): List<Source> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "search"),
-        body = sourceSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchSourcesRequestConfig(sourceSearch = sourceSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for sources. This variant of [searchSources] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchSourcesWithHTTPInfo(
+    sourceSearch: SourceSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<Source>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchSourcesRequestConfig(sourceSearch = sourceSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchSourcesRequestConfig(sourceSearch: SourceSearch): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "search"),
+      body = sourceSearch,
     )
   }
 
@@ -1575,15 +3122,39 @@ public class IngestionClient(
     taskSearch: TaskSearch,
     requestOptions: RequestOptions? = null,
   ): List<Task> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "search"),
-        body = taskSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchTasksRequestConfig(taskSearch = taskSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for tasks. This variant of [searchTasks] returns the full HTTP response information
+   * (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchTasksWithHTTPInfo(
+    taskSearch: TaskSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<Task>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchTasksRequestConfig(taskSearch = taskSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchTasksRequestConfig(taskSearch: TaskSearch): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "search"),
+      body = taskSearch,
     )
   }
 
@@ -1603,15 +3174,41 @@ public class IngestionClient(
     taskSearch: TaskSearch,
     requestOptions: RequestOptions? = null,
   ): List<TaskV1> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "search"),
-        body = taskSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = searchTasksV1RequestConfig(taskSearch = taskSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for tasks using the v1 endpoint. Use `searchTasks` instead. This variant of
+   * [searchTasksV1] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskSearch
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun searchTasksV1WithHTTPInfo(
+    taskSearch: TaskSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<TaskV1>> {
+    return requester.executeWithHttpInfo(
+      requestConfig = searchTasksV1RequestConfig(taskSearch = taskSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchTasksV1RequestConfig(taskSearch: TaskSearch): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "search"),
+      body = taskSearch,
     )
   }
 
@@ -1630,15 +3227,44 @@ public class IngestionClient(
     transformationSearch: TransformationSearch,
     requestOptions: RequestOptions? = null,
   ): List<Transformation> {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations", "search"),
-        body = transformationSearch,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig =
+        searchTransformationsRequestConfig(transformationSearch = transformationSearch),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for transformations. This variant of [searchTransformations] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchTransformationsWithHTTPInfo(
+    transformationSearch: TransformationSearch,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<List<Transformation>> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        searchTransformationsRequestConfig(transformationSearch = transformationSearch),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun searchTransformationsRequestConfig(
+    transformationSearch: TransformationSearch
+  ): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations", "search"),
+      body = transformationSearch,
     )
   }
 
@@ -1658,26 +3284,55 @@ public class IngestionClient(
     sourceID: String,
     requestOptions: RequestOptions? = null,
   ): WatchResponse {
+    return requester.execute(
+      requestConfig = triggerDockerSourceDiscoverRequestConfig(sourceID = sourceID),
+      requestOptions = triggerDockerSourceDiscoverRequestOptions(requestOptions),
+    )
+  }
+
+  /**
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
+   * with sources with `type: docker` and `imageType: airbyte`. This variant of
+   * [triggerDockerSourceDiscover] returns the full HTTP response information (status code, headers,
+   * raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun triggerDockerSourceDiscoverWithHTTPInfo(
+    sourceID: String,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<WatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = triggerDockerSourceDiscoverRequestConfig(sourceID = sourceID),
+      requestOptions = triggerDockerSourceDiscoverRequestOptions(requestOptions),
+    )
+  }
+
+  private fun triggerDockerSourceDiscoverRequestConfig(sourceID: String): RequestConfig {
     require(sourceID.isNotBlank()) {
       "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "sources", "$sourceID", "discover"),
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions =
-        RequestOptions(
-          readTimeout = 180000.milliseconds,
-          writeTimeout = 180000.milliseconds,
-          connectTimeout = 180000.milliseconds,
-        ) + requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID", "discover"),
     )
   }
+
+  private fun triggerDockerSourceDiscoverRequestOptions(
+    requestOptions: RequestOptions?
+  ): RequestOptions =
+    RequestOptions(
+      readTimeout = 180000.milliseconds,
+      writeTimeout = 180000.milliseconds,
+      connectTimeout = 180000.milliseconds,
+    ) + requestOptions
 
   /**
    * Try a transformation before creating it.
@@ -1694,15 +3349,40 @@ public class IngestionClient(
     transformationTry: TransformationTry,
     requestOptions: RequestOptions? = null,
   ): TransformationTryResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations", "try"),
-        body = transformationTry,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = tryTransformationRequestConfig(transformationTry = transformationTry),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Try a transformation before creating it. This variant of [tryTransformation] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationTry
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun tryTransformationWithHTTPInfo(
+    transformationTry: TransformationTry,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TransformationTryResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = tryTransformationRequestConfig(transformationTry = transformationTry),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun tryTransformationRequestConfig(transformationTry: TransformationTry): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "transformations", "try"),
+      body = transformationTry,
     )
   }
 
@@ -1723,20 +3403,58 @@ public class IngestionClient(
     transformationTry: TransformationTry,
     requestOptions: RequestOptions? = null,
   ): TransformationTryResponse {
+    return requester.execute(
+      requestConfig =
+        tryTransformationBeforeUpdateRequestConfig(
+          transformationID = transformationID,
+          transformationTry = transformationTry,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Try a transformation before updating it. This variant of [tryTransformationBeforeUpdate]
+   * returns the full HTTP response information (status code, headers, raw body) along with the
+   * deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationID Unique identifier of a transformation.
+   * @param transformationTry
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun tryTransformationBeforeUpdateWithHTTPInfo(
+    transformationID: String,
+    transformationTry: TransformationTry,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TransformationTryResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        tryTransformationBeforeUpdateRequestConfig(
+          transformationID = transformationID,
+          transformationTry = transformationTry,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun tryTransformationBeforeUpdateRequestConfig(
+    transformationID: String,
+    transformationTry: TransformationTry,
+  ): RequestConfig {
     require(transformationID.isNotBlank()) {
       "Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "transformations", "$transformationID", "try"),
-        body = transformationTry,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "transformations", "$transformationID", "try"),
+      body = transformationTry,
     )
   }
 
@@ -1757,20 +3475,58 @@ public class IngestionClient(
     authenticationUpdate: AuthenticationUpdate,
     requestOptions: RequestOptions? = null,
   ): AuthenticationUpdateResponse {
+    return requester.execute(
+      requestConfig =
+        updateAuthenticationRequestConfig(
+          authenticationID = authenticationID,
+          authenticationUpdate = authenticationUpdate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates an authentication resource. This variant of [updateAuthentication] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param authenticationID Unique identifier of an authentication resource.
+   * @param authenticationUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateAuthenticationWithHTTPInfo(
+    authenticationID: String,
+    authenticationUpdate: AuthenticationUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<AuthenticationUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateAuthenticationRequestConfig(
+          authenticationID = authenticationID,
+          authenticationUpdate = authenticationUpdate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateAuthenticationRequestConfig(
+    authenticationID: String,
+    authenticationUpdate: AuthenticationUpdate,
+  ): RequestConfig {
     require(authenticationID.isNotBlank()) {
       "Parameter `authenticationID` is required when calling `updateAuthentication`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "authentications", "$authenticationID"),
-        body = authenticationUpdate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "authentications", "$authenticationID"),
+      body = authenticationUpdate,
     )
   }
 
@@ -1791,19 +3547,57 @@ public class IngestionClient(
     destinationUpdate: DestinationUpdate,
     requestOptions: RequestOptions? = null,
   ): DestinationUpdateResponse {
+    return requester.execute(
+      requestConfig =
+        updateDestinationRequestConfig(
+          destinationID = destinationID,
+          destinationUpdate = destinationUpdate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates the destination by its ID. This variant of [updateDestination] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param destinationID Unique identifier of a destination.
+   * @param destinationUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateDestinationWithHTTPInfo(
+    destinationID: String,
+    destinationUpdate: DestinationUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<DestinationUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateDestinationRequestConfig(
+          destinationID = destinationID,
+          destinationUpdate = destinationUpdate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateDestinationRequestConfig(
+    destinationID: String,
+    destinationUpdate: DestinationUpdate,
+  ): RequestConfig {
     require(destinationID.isNotBlank()) {
       "Parameter `destinationID` is required when calling `updateDestination`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path =
-          "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
-        body = destinationUpdate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "destinations", "$destinationID"),
+      body = destinationUpdate,
     )
   }
 
@@ -1824,18 +3618,47 @@ public class IngestionClient(
     sourceUpdate: SourceUpdate,
     requestOptions: RequestOptions? = null,
   ): SourceUpdateResponse {
+    return requester.execute(
+      requestConfig = updateSourceRequestConfig(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates a source by its ID. This variant of [updateSource] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param sourceUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateSourceWithHTTPInfo(
+    sourceID: String,
+    sourceUpdate: SourceUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<SourceUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = updateSourceRequestConfig(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateSourceRequestConfig(
+    sourceID: String,
+    sourceUpdate: SourceUpdate,
+  ): RequestConfig {
     require(sourceID.isNotBlank()) {
       "Parameter `sourceID` is required when calling `updateSource`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
-        body = sourceUpdate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID"),
+      body = sourceUpdate,
     )
   }
 
@@ -1856,16 +3679,42 @@ public class IngestionClient(
     taskUpdate: TaskUpdate,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `updateTask`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
-        body = taskUpdate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = updateTaskRequestConfig(taskID = taskID, taskUpdate = taskUpdate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Partially updates a task by its ID. This variant of [updateTask] returns the full HTTP response
+   * information (status code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param taskUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateTaskWithHTTPInfo(
+    taskID: String,
+    taskUpdate: TaskUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = updateTaskRequestConfig(taskID = taskID, taskUpdate = taskUpdate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateTaskRequestConfig(taskID: String, taskUpdate: TaskUpdate): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `updateTask`." }
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("2", "tasks", "$taskID"),
+      body = taskUpdate,
     )
   }
 
@@ -1887,16 +3736,44 @@ public class IngestionClient(
     taskUpdate: TaskUpdateV1,
     requestOptions: RequestOptions? = null,
   ): TaskUpdateResponse {
-    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `updateTaskV1`." }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PATCH,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
-        body = taskUpdate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
+      requestConfig = updateTaskV1RequestConfig(taskID = taskID, taskUpdate = taskUpdate),
       requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates a task by its ID using the v1 endpoint. Use `updateTask` instead. This variant of
+   * [updateTaskV1] returns the full HTTP response information (status code, headers, raw body)
+   * along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param taskID Unique identifier of a task.
+   * @param taskUpdate
+   * @param requestOptions additional request configuration.
+   * @deprecated
+   */
+  public suspend fun updateTaskV1WithHTTPInfo(
+    taskID: String,
+    taskUpdate: TaskUpdateV1,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TaskUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = updateTaskV1RequestConfig(taskID = taskID, taskUpdate = taskUpdate),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateTaskV1RequestConfig(taskID: String, taskUpdate: TaskUpdateV1): RequestConfig {
+    require(taskID.isNotBlank()) { "Parameter `taskID` is required when calling `updateTaskV1`." }
+    return RequestConfig(
+      method = RequestMethod.PATCH,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "tasks", "$taskID"),
+      body = taskUpdate,
     )
   }
 
@@ -1917,20 +3794,58 @@ public class IngestionClient(
     transformationCreate: TransformationCreate,
     requestOptions: RequestOptions? = null,
   ): TransformationUpdateResponse {
+    return requester.execute(
+      requestConfig =
+        updateTransformationRequestConfig(
+          transformationID = transformationID,
+          transformationCreate = transformationCreate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates a transformation by its ID. This variant of [updateTransformation] returns the full
+   * HTTP response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param transformationID Unique identifier of a transformation.
+   * @param transformationCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateTransformationWithHTTPInfo(
+    transformationID: String,
+    transformationCreate: TransformationCreate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<TransformationUpdateResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        updateTransformationRequestConfig(
+          transformationID = transformationID,
+          transformationCreate = transformationCreate,
+        ),
+      requestOptions = requestOptions,
+    )
+  }
+
+  private fun updateTransformationRequestConfig(
+    transformationID: String,
+    transformationCreate: TransformationCreate,
+  ): RequestConfig {
     require(transformationID.isNotBlank()) {
       "Parameter `transformationID` is required when calling `updateTransformation`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.PUT,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "transformations", "$transformationID"),
-        body = transformationCreate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
+    return RequestConfig(
+      method = RequestMethod.PUT,
+      path =
+        "".split("/").filter { it.isNotBlank() } +
+          listOf("1", "transformations", "$transformationID"),
+      body = transformationCreate,
     )
   }
 
@@ -1950,22 +3865,49 @@ public class IngestionClient(
     sourceCreate: SourceCreate? = null,
     requestOptions: RequestOptions? = null,
   ): WatchResponse {
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "validate"),
-        body = sourceCreate,
-      )
     return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions =
-        RequestOptions(
-          readTimeout = 180000.milliseconds,
-          writeTimeout = 180000.milliseconds,
-          connectTimeout = 180000.milliseconds,
-        ) + requestOptions,
+      requestConfig = validateSourceRequestConfig(sourceCreate = sourceCreate),
+      requestOptions = validateSourceRequestOptions(requestOptions),
     )
   }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia. This variant of [validateSource] returns the full HTTP response information (status
+   * code, headers, raw body) along with the deserialized response body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun validateSourceWithHTTPInfo(
+    sourceCreate: SourceCreate? = null,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<WatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig = validateSourceRequestConfig(sourceCreate = sourceCreate),
+      requestOptions = validateSourceRequestOptions(requestOptions),
+    )
+  }
+
+  private fun validateSourceRequestConfig(sourceCreate: SourceCreate?): RequestConfig {
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path = "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "validate"),
+      body = sourceCreate,
+    )
+  }
+
+  private fun validateSourceRequestOptions(requestOptions: RequestOptions?): RequestOptions =
+    RequestOptions(
+      readTimeout = 180000.milliseconds,
+      writeTimeout = 180000.milliseconds,
+      connectTimeout = 180000.milliseconds,
+    ) + requestOptions
 
   /**
    * Validates an update of a source payload to ensure it can be created and that the data source
@@ -1985,25 +3927,61 @@ public class IngestionClient(
     sourceUpdate: SourceUpdate,
     requestOptions: RequestOptions? = null,
   ): WatchResponse {
+    return requester.execute(
+      requestConfig =
+        validateSourceBeforeUpdateRequestConfig(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions = validateSourceBeforeUpdateRequestOptions(requestOptions),
+    )
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia. This variant of [validateSourceBeforeUpdate] returns the full HTTP
+   * response information (status code, headers, raw body) along with the deserialized response
+   * body.
+   *
+   * Required API Key ACLs:
+   * - addObject
+   * - deleteIndex
+   * - editSettings
+   *
+   * @param sourceID Unique identifier of a source.
+   * @param sourceUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun validateSourceBeforeUpdateWithHTTPInfo(
+    sourceID: String,
+    sourceUpdate: SourceUpdate,
+    requestOptions: RequestOptions? = null,
+  ): AlgoliaHttpResponse<WatchResponse> {
+    return requester.executeWithHttpInfo(
+      requestConfig =
+        validateSourceBeforeUpdateRequestConfig(sourceID = sourceID, sourceUpdate = sourceUpdate),
+      requestOptions = validateSourceBeforeUpdateRequestOptions(requestOptions),
+    )
+  }
+
+  private fun validateSourceBeforeUpdateRequestConfig(
+    sourceID: String,
+    sourceUpdate: SourceUpdate,
+  ): RequestConfig {
     require(sourceID.isNotBlank()) {
       "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`."
     }
-    val requestConfig =
-      RequestConfig(
-        method = RequestMethod.POST,
-        path =
-          "".split("/").filter { it.isNotBlank() } +
-            listOf("1", "sources", "$sourceID", "validate"),
-        body = sourceUpdate,
-      )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions =
-        RequestOptions(
-          readTimeout = 180000.milliseconds,
-          writeTimeout = 180000.milliseconds,
-          connectTimeout = 180000.milliseconds,
-        ) + requestOptions,
+    return RequestConfig(
+      method = RequestMethod.POST,
+      path =
+        "".split("/").filter { it.isNotBlank() } + listOf("1", "sources", "$sourceID", "validate"),
+      body = sourceUpdate,
     )
   }
+
+  private fun validateSourceBeforeUpdateRequestOptions(
+    requestOptions: RequestOptions?
+  ): RequestOptions =
+    RequestOptions(
+      readTimeout = 180000.milliseconds,
+      writeTimeout = 180000.milliseconds,
+      connectTimeout = 180000.milliseconds,
+    ) + requestOptions
 }

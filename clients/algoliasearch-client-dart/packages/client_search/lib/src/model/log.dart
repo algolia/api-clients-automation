@@ -10,6 +10,7 @@ part 'log.g.dart';
 final class Log {
   /// Returns a new [Log] instance.
   const Log({
+    this.cid,
     required this.timestamp,
     required this.method,
     required this.answerCode,
@@ -26,6 +27,10 @@ final class Log {
     this.queryNbHits,
     this.innerQueries,
   });
+
+  /// Correlation ID of the logged API request, also returned in that request's `Correlation-ID` response header.
+  @JsonKey(name: r'cid')
+  final String? cid;
 
   /// Date and time of the API request, in RFC 3339 format.
   @JsonKey(name: r'timestamp')
@@ -91,6 +96,7 @@ final class Log {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Log &&
+          other.cid == cid &&
           other.timestamp == timestamp &&
           other.method == method &&
           other.answerCode == answerCode &&
@@ -109,6 +115,7 @@ final class Log {
 
   @override
   int get hashCode =>
+      cid.hashCode +
       timestamp.hashCode +
       method.hashCode +
       answerCode.hashCode +

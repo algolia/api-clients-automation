@@ -2438,6 +2438,30 @@
         "description": "Unique record identifier.",
         "example": "test-record-123"
       },
+      "facetFilters": {
+        "description": "Filter the search by facet values, so that only records with the same facet values are retrieved.\n\n**Prefer using the `filters` parameter, which supports all filter types and combinations with boolean operators.**\n\n- `[filter1, filter2]` is interpreted as `filter1 AND filter2`.\n- `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`.\n- `facet:-value` is interpreted as `NOT facet:value`.\n\nWhile it's best to avoid attributes that start with a `-`, you can still filter them by escaping with a backslash:\n`facet:\\-value`.\n",
+        "example": [
+          [
+            "category:Book",
+            "category:-Movie"
+          ],
+          "author:John Doe"
+        ],
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/facetFilters"
+            }
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "x-categories": [
+          "Filtering"
+        ]
+      },
       "fallbackParams": {
         "title": "fallbackParameters",
         "description": "Search parameters to use for a fallback request if there aren't enough recommendations.",
@@ -2450,6 +2474,14 @@
           },
           {
             "$ref": "#/components/schemas/recommendIndexSettings"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "facetFilters": {
+                "$ref": "#/components/schemas/facetFilters"
+              }
+            }
           }
         ]
       },

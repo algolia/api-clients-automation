@@ -109,7 +109,8 @@ public class AddedToCartObjectIDsAfterSearch implements EventsItems {
   /**
    * Unique identifier for a search query. The query ID is required for events related to search or
    * browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID
-   * is included in the API response.
+   * is included in the API response. For agentic analytics events, the query ID may be prefixed
+   * with `message_` followed by any printable string.
    */
   @javax.annotation.Nonnull
   public String getQueryID() {

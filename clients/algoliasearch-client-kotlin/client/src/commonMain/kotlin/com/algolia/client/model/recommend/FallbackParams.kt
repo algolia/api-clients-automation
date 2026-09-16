@@ -341,6 +341,7 @@ import kotlinx.serialization.json.*
  *   [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting
  *   only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
  * @param reRankingApplyFilter
+ * @param facetFilters
  */
 @Serializable
 public data class FallbackParams(
@@ -916,4 +917,5 @@ public data class FallbackParams(
   @SerialName(value = "enableReRanking") val enableReRanking: Boolean? = null,
   @SerialName(value = "reRankingApplyFilter")
   val reRankingApplyFilter: ReRankingApplyFilter? = null,
+  @SerialName(value = "facetFilters") val facetFilters: FacetFilters? = null,
 ) {}

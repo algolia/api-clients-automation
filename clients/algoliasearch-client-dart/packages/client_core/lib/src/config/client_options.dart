@@ -63,6 +63,19 @@ final class ClientOptions {
   /// Set to 'gzip' to enable gzip compression for POST/PUT requests.
   final String? compression;
 
+  /// Whether the transport sends a Request-ID, minted once per call and
+  /// reused across retries. Null keeps the generated client's setting (only
+  /// search, recommend, composition and algoliasearch mint); false disables
+  /// minting. A caller-supplied Request-ID is never overwritten.
+  final bool? requestIdEnabled;
+
+  /// How many times a 429 is waited out on the same host before it surfaces.
+  /// Null means 3; 0 fails on the first 429 without waiting; negative values
+  /// behave like 0. The wait is `Retry-After` in whole seconds, or 1 second
+  /// when the header is missing or invalid. 5xx, timeouts and network errors
+  /// keep failing over to the next host.
+  final int? maxRateLimitRetries;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
     this.connectTimeout = unsetTimeout,
@@ -76,6 +89,8 @@ final class ClientOptions {
     this.interceptors,
     this.httpClientAdapter,
     this.compression,
+    this.requestIdEnabled,
+    this.maxRateLimitRetries,
   });
 
   @override
@@ -93,7 +108,9 @@ final class ClientOptions {
           requester == other.requester &&
           interceptors == other.interceptors &&
           httpClientAdapter == other.httpClientAdapter &&
-          compression == other.compression;
+          compression == other.compression &&
+          requestIdEnabled == other.requestIdEnabled &&
+          maxRateLimitRetries == other.maxRateLimitRetries;
 
   @override
   int get hashCode =>
@@ -107,10 +124,12 @@ final class ClientOptions {
       requester.hashCode ^
       interceptors.hashCode ^
       httpClientAdapter.hashCode ^
-      compression.hashCode;
+      compression.hashCode ^
+      requestIdEnabled.hashCode ^
+      maxRateLimitRetries.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression, requestIdEnabled: $requestIdEnabled, maxRateLimitRetries: $maxRateLimitRetries}';
   }
 }

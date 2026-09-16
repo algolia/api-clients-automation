@@ -42,6 +42,11 @@ public class Helpers {
     return camel;
   }
 
+  /** Whether the given client talks to an API that supports the Request-ID tracing channel. */
+  public static boolean requestIdSupport(String client) {
+    return client.equals("search") || client.equals("recommend") || client.equals("composition");
+  }
+
   // convert camelCase77String to CAMEL_CASE_77_STRING
   public static String toScreamingSnakeCase(String camelCase) {
     return camelCase

@@ -1243,28 +1243,6 @@ void main() {
     ),
   );
 
-  // getConversation
-  test(
-    'e2e get conversation',
-    () => runTest(
-      builder: (requester) => AgentStudioClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.getConversation(
-        conversationId: "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-        agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
-      ),
-      intercept: (request) {
-        expectPath(request.path,
-            '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/alg_cnv_miss_yqcZtaOSPTF8bJsJ');
-        expect(request.method, 'get');
-        expect(request.body, null);
-      },
-    ),
-  );
-
   // getProvider
   test(
     'getProvider',

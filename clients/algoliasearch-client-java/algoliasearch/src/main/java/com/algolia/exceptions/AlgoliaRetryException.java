@@ -1,6 +1,7 @@
 package com.algolia.exceptions;
 
 import java.util.List;
+import javax.annotation.Nullable;
 
 /**
  * Exception thrown when an error occurs during the retry strategy. For example: All hosts are
@@ -23,6 +24,24 @@ public class AlgoliaRetryException extends AlgoliaRuntimeException {
 
   public List<Throwable> getErrors() {
     return errors;
+  }
+
+  /** The `Correlation-ID` of the last attempt whose response carried one, or null when none did. */
+  @Nullable
+  public String getCorrelationId() {
+    if (errors == null) {
+      return null;
+    }
+    for (int i = errors.size() - 1; i >= 0; i--) {
+      Throwable error = errors.get(i);
+      if (error instanceof AlgoliaApiException) {
+        String correlationId = ((AlgoliaApiException) error).getCorrelationId();
+        if (correlationId != null) {
+          return correlationId;
+        }
+      }
+    }
+    return null;
   }
 
   @Override

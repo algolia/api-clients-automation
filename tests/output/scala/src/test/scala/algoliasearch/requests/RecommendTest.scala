@@ -657,7 +657,8 @@ class RecommendTest extends AnyFunSuite {
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung"))))
+                optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("brand:samsung")))),
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("brand:apple"))))
               )
             )
           )
@@ -671,7 +672,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"]}}]}"""
+      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","optionalFilters":["brand:apple"]},"fallbackParameters":{"query":"myQuery","optionalFilters":["brand:samsung"],"facetFilters":["brand:apple"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

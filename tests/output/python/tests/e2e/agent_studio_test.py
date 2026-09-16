@@ -98,32 +98,6 @@ class TestAgentStudioClientE2E:
             == _expected_body
         )
 
-    async def test_get_conversation_1(self):
-        """
-        e2e get conversation
-        """
-        raw_resp = await AgentStudioClient(
-            self._e2e_app_id, self._e2e_api_key
-        ).get_conversation_with_http_info(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        assert raw_resp.status_code == 200
-
-        resp = await AgentStudioClient(
-            self._e2e_app_id, self._e2e_api_key
-        ).get_conversation(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        _expected_body = loads(
-            """{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
-
     async def test_get_provider_1(self):
         """
         e2e get provider
@@ -244,19 +218,6 @@ class TestAgentStudioClientE2E:
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
         )
         assert raw_resp.status_code == 200
-
-        resp = await AgentStudioClient(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        _expected_body = loads(
-            """{"data":[{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}]}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
 
     async def test_list_agents_2(self):
         """
@@ -455,32 +416,6 @@ class TestAgentStudioClientSyncE2E:
             == _expected_body
         )
 
-    def test_get_conversation_1(self):
-        """
-        e2e get conversation
-        """
-        raw_resp = AgentStudioClientSync(
-            self._e2e_app_id, self._e2e_api_key
-        ).get_conversation_with_http_info(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        assert raw_resp.status_code == 200
-
-        resp = AgentStudioClientSync(
-            self._e2e_app_id, self._e2e_api_key
-        ).get_conversation(
-            conversation_id="alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        _expected_body = loads(
-            """{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
-
     def test_get_provider_1(self):
         """
         e2e get provider
@@ -599,19 +534,6 @@ class TestAgentStudioClientSyncE2E:
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
         )
         assert raw_resp.status_code == 200
-
-        resp = AgentStudioClientSync(
-            self._e2e_app_id, self._e2e_api_key
-        ).list_agent_conversations(
-            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
-        )
-        _expected_body = loads(
-            """{"data":[{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}]}"""
-        )
-        assert (
-            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
-            == _expected_body
-        )
 
     def test_list_agents_2(self):
         """

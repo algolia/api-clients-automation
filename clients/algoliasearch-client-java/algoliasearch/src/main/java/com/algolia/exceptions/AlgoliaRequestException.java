@@ -1,5 +1,7 @@
 package com.algolia.exceptions;
 
+import javax.annotation.Nullable;
+
 /** Represents a retryable exception (4XX). */
 public final class AlgoliaRequestException extends AlgoliaApiException {
 
@@ -9,6 +11,10 @@ public final class AlgoliaRequestException extends AlgoliaApiException {
 
   public AlgoliaRequestException(String message, int httpErrorCode) {
     super(message, httpErrorCode);
+  }
+
+  public AlgoliaRequestException(String message, int httpErrorCode, @Nullable String correlationId) {
+    super(message, httpErrorCode, correlationId);
   }
 
   public AlgoliaRequestException(Throwable cause, int httpErrorCode) {

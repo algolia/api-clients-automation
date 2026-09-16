@@ -83,8 +83,10 @@ info:
     ## Version
 
 
-    The current version of the A/B Testing API is version 2, indicated by the
-    `/2/` in each endpoint's URL.
+    Version 2 of the A/B Testing API, indicated by the `/2/` in each endpoint's
+    URL, is deprecated.
+
+    Use [version 3](https://www.algolia.com/doc/rest-api/abtesting-v3) instead.
   version: 2.0.0
 servers:
   - url: https://analytics.{region}.algolia.com
@@ -108,6 +110,10 @@ tags:
 
       A/B tests are configurations one or more indices, usually your production
       index and an index with different settings that you want to test.
+
+
+      These operations are **deprecated**. Use the A/B Testing API v3
+      (`/3/abtests`) instead.
 externalDocs:
   url: https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing
   description: A/B testing.
@@ -226,10 +232,16 @@ paths:
       tags:
         - abtesting
       operationId: addABTests
+      deprecated: true
       x-acl:
         - editSettings
       summary: Create an A/B test
-      description: Creates a new A/B test.
+      description: |
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+        Replaced by `POST /3/abtests`.
+
+        Creates a new A/B test.
       requestBody:
         required: true
         content:
@@ -280,11 +292,17 @@ paths:
       tags:
         - abtesting
       operationId: listABTests
+      deprecated: true
       x-mcp-tool: true
       x-acl:
         - analytics
       summary: List all A/B tests
-      description: Lists all A/B tests you configured for this application.
+      description: |
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+        Replaced by `GET /3/abtests`.
+
+        Lists all A/B tests you configured for this application.
       parameters:
         - name: offset
           in: query
@@ -361,10 +379,16 @@ paths:
       tags:
         - abtesting
       operationId: getABTest
+      deprecated: true
       x-acl:
         - analytics
       summary: Retrieve A/B test details
-      description: Retrieves the details for an A/B test by its ID.
+      description: |
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+        Replaced by `GET /3/abtests/{id}`.
+
+        Retrieves the details for an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
       responses:
@@ -393,10 +417,16 @@ paths:
       tags:
         - abtesting
       operationId: deleteABTest
+      deprecated: true
       x-acl:
         - editSettings
       summary: Delete an A/B test
-      description: Deletes an A/B test by its ID.
+      description: |
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+        Replaced by `DELETE /3/abtests/{id}`.
+
+        Deletes an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
       responses:
@@ -426,10 +456,15 @@ paths:
       tags:
         - abtesting
       operationId: stopABTest
+      deprecated: true
       x-acl:
         - editSettings
       summary: Stop an A/B test
       description: |
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+        Replaced by `POST /3/abtests/{id}/stop`.
+
         Stops an A/B test by its ID.
 
         You can't restart stopped A/B tests.
@@ -462,10 +497,17 @@ paths:
       tags:
         - abtesting
       operationId: estimateABTest
+      deprecated: true
       x-acl:
         - analytics
       summary: Estimate the sample size and duration of an A/B test
-      description: >-
+      description: >
+        This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+
+        Replaced by `POST /3/abtests/estimate`.
+
+
         Given the traffic percentage and the expected effect size, this endpoint
         estimates the sample size and duration of an A/B test based on
         historical traffic.

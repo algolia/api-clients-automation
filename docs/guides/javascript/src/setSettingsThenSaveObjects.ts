@@ -4,10 +4,10 @@ import type { IndexSettings } from 'algoliasearch';
 
 const playlists: Record<string, any>[] = [/* Your records */];
 
-const getAppIDFor = (_: string) => {
+const getAppIDFor = (__: string) => {
   return ''; // Implement your own logic here
 };
-const getIndexingApiKeyFor = (_: string) => {
+const getIndexingApiKeyFor = (__: string) => {
   return ''; // Implement your own logic here
 };
 

@@ -1,4 +1,5 @@
-{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsyncMethod}}Async{{/isAsyncMethod}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
+{{! Named argument so options cannot land in an optional parameter slot; helpers named requestOptions would need renaming if the CTS ever passes them options. }}
+{{#isAsyncMethod}}await {{/isAsyncMethod}}client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{#isAsyncMethod}}Async{{/isAsyncMethod}}{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, options: new RequestOptionBuilder()
 {{#requestOptions.queryParameters.parametersWithDataType}}
     .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
 {{/requestOptions.queryParameters.parametersWithDataType}}

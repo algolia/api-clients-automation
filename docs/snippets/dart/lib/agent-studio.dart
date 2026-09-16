@@ -1107,7 +1107,7 @@ void snippetForgetConfiguration1() async {
 //
 // getConversation
 void snippetForgetConversation() async {
-  // >SEPARATOR getConversation getConversation
+  // >SEPARATOR getConversation default
   // Initialize the client
   final client = AgentStudioClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1115,26 +1115,6 @@ void snippetForgetConversation() async {
   // Call the API
   final response = await client.getConversation(
     conversationId: "test-conversation-id",
-    agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
-  );
-  // >LOG
-  // print the response
-  print(response);
-  // SEPARATOR<
-}
-
-// Snippet for the getConversation method.
-//
-// e2e get conversation
-void snippetForgetConversation1() async {
-  // >SEPARATOR getConversation e2e get conversation
-  // Initialize the client
-  final client = AgentStudioClient(
-      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-  // Call the API
-  final response = await client.getConversation(
-    conversationId: "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
     agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
   );
   // >LOG

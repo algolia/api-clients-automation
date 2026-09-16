@@ -698,6 +698,23 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 	})
 }
 
+func TestAnalytics_GetPatternsFields(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("getPatternsFields", func(t *testing.T) {
+		_, err := client.GetPatternsFields()
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/fields", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestAnalytics_GetPurchaseRate(t *testing.T) {
 	t.Parallel()
 
@@ -1352,6 +1369,212 @@ func TestAnalytics_GetUsersCount(t *testing.T) {
 
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_QueryPatternsDistribution(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("queryPatternsDistribution", func(t *testing.T) {
+		_, err := client.QueryPatternsDistribution(client.NewApiQueryPatternsDistributionRequest(
+
+			analytics.NewEmptyDistributionPayload().SetDistributions(
+				[]analytics.DistributionDefinition{*analytics.NewEmptyDistributionDefinition().SetKind("clickPosition").SetBins(
+					[]analytics.BinEdge{*analytics.Int32AsBinEdge(1), *analytics.Int32AsBinEdge(2), *analytics.Int32AsBinEdge(3), *analytics.Int32AsBinEdge(4), *analytics.Int32AsBinEdge(5)})}).SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"index"})),
+				}),
+		).WithIndex("index"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/distribution", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_QueryPatternsScalar(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("queryPatternsScalar", func(t *testing.T) {
+		_, err := client.QueryPatternsScalar(client.NewApiQueryPatternsScalarRequest(
+
+			analytics.NewEmptyScalarPayload().SetMetrics(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("conversionRate")}).SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"index"})),
+				}),
+		).WithIndex("index"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/scalar", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_QueryPatternsTable(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("queryPatternsTable with minimal parameters", func(t *testing.T) {
+		_, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(
+
+			analytics.NewEmptyTablePayload().SetMetrics(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"index"})),
+				}),
+		).WithIndex("index"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/table", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("queryPatternsTable with all parameters", func(t *testing.T) {
+		_, err := client.QueryPatternsTable(client.NewApiQueryPatternsTableRequest(
+
+			analytics.NewEmptyTablePayload().SetDomain("core").SetMetrics(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetGroupBy(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("query")}).SetFilters(
+				[]analytics.FilterDefinition{*analytics.NewEmptyFilterDefinition().SetKind("clicked")}).SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"index"})),
+				}).
+				SetOrderBy(
+					[]analytics.OrderDefinition{
+						*analytics.NewEmptyOrderDefinition().SetKind("searchesCount").SetDirection(analytics.OrderDirection("desc")),
+					}).
+				SetLimit(100).SetOffset(0)).WithIndex("index"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/table", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_QueryPatternsTimeseries(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("queryPatternsTimeseries with minimal parameters", func(t *testing.T) {
+		_, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(
+
+			analytics.NewEmptyTimeseriesPayload().SetMetrics(
+				[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("searchesCount")}).SetParameters(
+				[]analytics.ParameterDefinition{
+					*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+						[]string{"index"})),
+				}),
+		).WithIndex("index"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/timeseries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("queryPatternsTimeseries with all parameters", func(t *testing.T) {
+		_, err := client.QueryPatternsTimeseries(client.NewApiQueryPatternsTimeseriesRequest(
+
+			analytics.NewEmptyTimeseriesPayload().SetDomain("core").SetMetrics(
+				[]analytics.FieldReference{
+					*analytics.NewEmptyFieldReference().SetKind("searchesCount"),
+					*analytics.NewEmptyFieldReference().SetDomain("abtesting").SetKind("isMsrQuery"),
+				}).
+				SetGroupBy(
+					[]analytics.FieldReference{*analytics.NewEmptyFieldReference().SetKind("index")}).SetFilters(
+				[]analytics.FilterDefinition{
+					*analytics.NewEmptyFilterDefinition().SetKind("clicked"),
+					*analytics.NewEmptyFilterDefinition().SetKind("country").SetOperator("=").SetParameter(
+						analytics.NewEmptyParameterReference().SetKind("country")),
+				}).
+				SetParameters(
+					[]analytics.ParameterDefinition{
+						*analytics.NewEmptyParameterDefinition().SetKind("indices").SetValue(analytics.ArrayOfStringAsParameterValue(
+							[]string{"indexA", "indexB"})),
+						*analytics.NewEmptyParameterDefinition().SetKind("startDate").SetValue(analytics.StringAsParameterValue("2024-01-01T00:00:00Z")),
+						*analytics.NewEmptyParameterDefinition().SetKind("endDate").SetValue(analytics.StringAsParameterValue("2024-01-07T23:59:59Z")),
+						*analytics.NewEmptyParameterDefinition().SetKind("country").SetValue(analytics.StringAsParameterValue("FR")),
+					}).
+				SetLimit(50).SetOffset(0)).WithIndex("indexA,indexB"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/patterns/timeseries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}`)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"indexA%2CindexB"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 
 		for k, v := range queryParams {

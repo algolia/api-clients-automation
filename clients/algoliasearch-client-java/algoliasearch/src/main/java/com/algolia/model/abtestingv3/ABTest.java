@@ -39,8 +39,8 @@ public class ABTest {
   @JsonProperty("configuration")
   private ABTestConfiguration configuration;
 
-  @JsonProperty("migratedAbTestID")
-  private Integer migratedAbTestID;
+  @JsonProperty("decision")
+  private Decision decision;
 
   public ABTest setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -150,15 +150,15 @@ public class ABTest {
     return configuration;
   }
 
-  public ABTest setMigratedAbTestID(Integer migratedAbTestID) {
-    this.migratedAbTestID = migratedAbTestID;
+  public ABTest setDecision(Decision decision) {
+    this.decision = decision;
     return this;
   }
 
-  /** Unique migrated A/B test identifier. */
+  /** Get decision */
   @javax.annotation.Nullable
-  public Integer getMigratedAbTestID() {
-    return migratedAbTestID;
+  public Decision getDecision() {
+    return decision;
   }
 
   @Override
@@ -180,13 +180,13 @@ public class ABTest {
       Objects.equals(this.status, abTest.status) &&
       Objects.equals(this.variants, abTest.variants) &&
       Objects.equals(this.configuration, abTest.configuration) &&
-      Objects.equals(this.migratedAbTestID, abTest.migratedAbTestID)
+      Objects.equals(this.decision, abTest.decision)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(abTestID, updatedAt, createdAt, endAt, stoppedAt, name, status, variants, configuration, migratedAbTestID);
+    return Objects.hash(abTestID, updatedAt, createdAt, endAt, stoppedAt, name, status, variants, configuration, decision);
   }
 
   @Override
@@ -202,7 +202,7 @@ public class ABTest {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
     sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
-    sb.append("    migratedAbTestID: ").append(toIndentedString(migratedAbTestID)).append("\n");
+    sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
     sb.append("}");
     return sb.toString();
   }

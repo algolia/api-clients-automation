@@ -44,6 +44,96 @@ public class CompositionClientRequestTestsE2E
   [Fact]
   public void Dispose() { }
 
+  [Fact(DisplayName = "the Correlation-ID ends with the sent Request-ID")]
+  public async Task GetCompositionTest1()
+  {
+    try
+    {
+      var resp = await client.GetCompositionAsync(
+        "id1",
+        options: new RequestOptionBuilder().AddExtraHeader("request-id", "CtsE2eEcho4").Build()
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      TestHelpers.LenientJsonAssert(
+        "{\"objectID\":\"id1\"}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
+      );
+      // Re-issue the request through customGet to read the response
+      // headers; customGet prepends the leading slash of request.path.
+      // Generation already hard-fails non-GET correlationIdSuffix tests
+      // (TestsRequest.java enforces GET-only), so the hard-coded GET is safe by construction.
+      var httpResp = await client.CustomGetWithHTTPInfoAsync(
+        "/1/compositions/id1".TrimStart('/'),
+        options: new RequestOptionBuilder().AddExtraHeader("request-id", "CtsE2eEcho4").Build()
+      );
+
+      var correlationId = httpResp
+        .ResponseHeaders?.Where(h =>
+          h.Key.Equals("Correlation-ID", StringComparison.OrdinalIgnoreCase)
+        )
+        .Select(h => h.Value)
+        .SingleOrDefault();
+      Assert.False(
+        string.IsNullOrEmpty(correlationId),
+        "the response must carry a Correlation-ID header"
+      );
+      Assert.EndsWith("CtsE2eEcho4", correlationId);
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
+  [Fact(DisplayName = "the Correlation-ID ends with the Request-ID sent as a query parameter")]
+  public async Task GetCompositionTest2()
+  {
+    try
+    {
+      var resp = await client.GetCompositionAsync(
+        "id1",
+        options: new RequestOptionBuilder()
+          .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ")
+          .Build()
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      TestHelpers.LenientJsonAssert(
+        "{\"objectID\":\"id1\"}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
+      );
+      // Re-issue the request through customGet to read the response
+      // headers; customGet prepends the leading slash of request.path.
+      // Generation already hard-fails non-GET correlationIdSuffix tests
+      // (TestsRequest.java enforces GET-only), so the hard-coded GET is safe by construction.
+      var httpResp = await client.CustomGetWithHTTPInfoAsync(
+        "/1/compositions/id1".TrimStart('/'),
+        options: new RequestOptionBuilder()
+          .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ")
+          .Build()
+      );
+
+      var correlationId = httpResp
+        .ResponseHeaders?.Where(h =>
+          h.Key.Equals("Correlation-ID", StringComparison.OrdinalIgnoreCase)
+        )
+        .Select(h => h.Value)
+        .SingleOrDefault();
+      Assert.False(
+        string.IsNullOrEmpty(correlationId),
+        "the response must carry a Correlation-ID header"
+      );
+      Assert.EndsWith("CtsE2eEchoQ", correlationId);
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
   [Fact(DisplayName = "listCompositions")]
   public async Task ListCompositionsTest1()
   {

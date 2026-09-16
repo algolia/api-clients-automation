@@ -1,0 +1,34 @@
+[
+  {
+    "testName": "the ingestion client sends no Request-ID",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "region": "us",
+          "customHosts": [
+            {
+              "port": 6694
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "method": "customGet",
+        "parameters": {
+          "path": "1/test/request-id/negative/${{language}}"
+        },
+        "expected": {
+          "type": "response",
+          "match": {
+            "status": "ok"
+          }
+        }
+      }
+    ]
+  }
+]

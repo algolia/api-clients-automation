@@ -21,6 +21,84 @@ class TestCompositionClientE2E:
     if _e2e_api_key is None:
         raise Exception("please provide an `METIS_API_KEY` env var for e2e tests")
 
+    async def test_get_composition_1(self):
+        """
+        the Correlation-ID ends with the sent Request-ID
+        """
+        raw_resp = await CompositionClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        _correlation_id = next(
+            (
+                _value
+                for _key, _value in (raw_resp.headers or {}).items()
+                if _key.lower() == "correlation-id"
+            ),
+            None,
+        )
+        assert _correlation_id is not None
+        assert _correlation_id.endswith("CtsE2eEcho4")
+
+        resp = await CompositionClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+        _expected_body = loads("""{"objectID":"id1"}""")
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
+    async def test_get_composition_2(self):
+        """
+        the Correlation-ID ends with the Request-ID sent as a query parameter
+        """
+        raw_resp = await CompositionClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        _correlation_id = next(
+            (
+                _value
+                for _key, _value in (raw_resp.headers or {}).items()
+                if _key.lower() == "correlation-id"
+            ),
+            None,
+        )
+        assert _correlation_id is not None
+        assert _correlation_id.endswith("CtsE2eEchoQ")
+
+        resp = await CompositionClient(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+        _expected_body = loads("""{"objectID":"id1"}""")
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
     async def test_list_compositions_1(self):
         """
         listCompositions
@@ -53,6 +131,84 @@ class TestCompositionClientSyncE2E:
     _e2e_api_key = environ.get("METIS_API_KEY")
     if _e2e_api_key is None:
         raise Exception("please provide an `METIS_API_KEY` env var for e2e tests")
+
+    def test_get_composition_1(self):
+        """
+        the Correlation-ID ends with the sent Request-ID
+        """
+        raw_resp = CompositionClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        _correlation_id = next(
+            (
+                _value
+                for _key, _value in (raw_resp.headers or {}).items()
+                if _key.lower() == "correlation-id"
+            ),
+            None,
+        )
+        assert _correlation_id is not None
+        assert _correlation_id.endswith("CtsE2eEcho4")
+
+        resp = CompositionClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+        _expected_body = loads("""{"objectID":"id1"}""")
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
+
+    def test_get_composition_2(self):
+        """
+        the Correlation-ID ends with the Request-ID sent as a query parameter
+        """
+        raw_resp = CompositionClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+        assert raw_resp.status_code == 200
+
+        _correlation_id = next(
+            (
+                _value
+                for _key, _value in (raw_resp.headers or {}).items()
+                if _key.lower() == "correlation-id"
+            ),
+            None,
+        )
+        assert _correlation_id is not None
+        assert _correlation_id.endswith("CtsE2eEchoQ")
+
+        resp = CompositionClientSync(
+            self._e2e_app_id, self._e2e_api_key
+        ).get_composition(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+        _expected_body = loads("""{"objectID":"id1"}""")
+        assert (
+            self._helpers.union(_expected_body, self._helpers.unwrap(resp))
+            == _expected_body
+        )
 
     def test_list_compositions_1(self):
         """

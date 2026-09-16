@@ -174,6 +174,8 @@ abstract class Configuration
             'connectTimeout' => $this->defaultConnectTimeout,
             'defaultHeaders' => [],
             'compressionType' => 'none',
+            'requestIdEnabled' => false,
+            'maxRateLimitRetries' => 3,
         ];
     }
 
@@ -267,6 +269,29 @@ abstract class Configuration
     }
 
     /**
+     * Whether this client sends the `request-id` tracing header. Only the search, recommend and
+     * composition clients enable it by default.
+     *
+     * @return bool
+     */
+    public function getRequestIdEnabled()
+    {
+        return $this->config['requestIdEnabled'] ?? false;
+    }
+
+    /**
+     * @param bool $requestIdEnabled
+     *
+     * @return $this
+     */
+    public function setRequestIdEnabled($requestIdEnabled)
+    {
+        $this->config['requestIdEnabled'] = $requestIdEnabled;
+
+        return $this;
+    }
+
+    /**
      * Switch the API key used to authenticate requessts.
      *
      * @param string $apiKey The new API key to be used
@@ -336,6 +361,29 @@ abstract class Configuration
     public function setCompressionType($compressionType)
     {
         $this->config['compressionType'] = $compressionType;
+
+        return $this;
+    }
+
+    /**
+     * How many times to wait and retry on the same host after HTTP 429. Wait time is `Retry-After`
+     * in whole seconds, or 1 second if the header is missing or invalid.
+     *
+     * @return int
+     */
+    public function getMaxRateLimitRetries()
+    {
+        return $this->config['maxRateLimitRetries'] ?? 3;
+    }
+
+    /**
+     * @param int $maxRateLimitRetries `0` fails on the first 429, without waiting
+     *
+     * @return $this
+     */
+    public function setMaxRateLimitRetries($maxRateLimitRetries)
+    {
+        $this->config['maxRateLimitRetries'] = $maxRateLimitRetries;
 
         return $this;
     }

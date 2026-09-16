@@ -1,4 +1,5 @@
 import type { ServerSentEvent } from '../sse';
+import type { AlgoliaHttpResponse } from './algoliaHttpResponse';
 import type { Cache } from './cache';
 import type { Host } from './host';
 import type { Logger } from './logger';
@@ -129,6 +130,13 @@ export type TransporterOptions = {
   timeouts: Timeouts;
 
   /**
+   * How many times to wait and retry on the same host after HTTP 429.
+   * Default is 3. `0` fails on the first 429 (no wait).
+   * Wait time is `Retry-After` in whole seconds, or 1 second if the header is missing or invalid.
+   */
+  maxRateLimitRetries?: number | undefined;
+
+  /**
    * The hosts used by the requester.
    */
   hosts: Host[];
@@ -161,6 +169,13 @@ export type TransporterOptions = {
   compress?: (data: string) => Promise<Uint8Array>;
 
   compression?: 'gzip';
+
+  /**
+   * Where the generated Request-ID is sent: as the `Request-ID` header, or as the
+   * `x-algolia-request-id` query parameter. When undefined, no Request-ID is sent.
+   * A caller-supplied Request-ID is never overwritten.
+   */
+  requestIdChannel?: 'headers' | 'queryParameters' | undefined;
 };
 
 export type Transporter = TransporterOptions & {
@@ -170,4 +185,20 @@ export type Transporter = TransporterOptions & {
    */
   request: <TResponse>(baseRequest: Request, baseRequestOptions?: RequestOptions) => Promise<TResponse>;
   requestStream: (baseRequest: Request, baseRequestOptions?: RequestOptions) => AsyncGenerator<ServerSentEvent>;
+};
+
+/**
+ * The transporter returned by `createTransporter`. Kept separate from `Transporter` so that
+ * existing implementations of `Transporter` remain type-valid.
+ */
+export type TransporterWithHttpInfo = Transporter & {
+  /**
+   * Performs a request and returns the full HTTP response information — status code,
+   * headers (when the requester captures them), raw body and deserialized data.
+   * Both the requests and the responses caches are bypassed: it always hits the network.
+   */
+  requestWithHttpInfo: <TData>(
+    baseRequest: Request,
+    baseRequestOptions?: RequestOptions,
+  ) => Promise<AlgoliaHttpResponse<TData>>;
 };

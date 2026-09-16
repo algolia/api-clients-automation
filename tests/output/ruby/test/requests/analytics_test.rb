@@ -471,6 +471,18 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getPatternsFields
+  def test_get_patterns_fields
+    req = @client.get_patterns_fields_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/patterns/fields", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # get getPurchaseRate with minimal parameters
   def test_get_purchase_rate
     req = @client.get_purchase_rate_with_http_info("index")
@@ -961,6 +973,164 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
+  end
+
+  # queryPatternsDistribution
+  def test_query_patterns_distribution
+    req = @client.query_patterns_distribution_with_http_info(
+      Algolia::Analytics::DistributionPayload.new(
+        distributions: [Algolia::Analytics::DistributionDefinition.new(kind: "clickPosition", bins: [1, 2, 3, 4, 5])],
+        parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+      ),
+      "index"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/distribution", req.path)
+    assert_equal({:"index" => "index"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"distributions\":[{\"kind\":\"clickPosition\",\"bins\":[1,2,3,4,5]}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryPatternsScalar
+  def test_query_patterns_scalar
+    req = @client.query_patterns_scalar_with_http_info(
+      Algolia::Analytics::ScalarPayload.new(
+        metrics: [Algolia::Analytics::FieldReference.new(kind: "conversionRate")],
+        parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+      ),
+      "index"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/scalar", req.path)
+    assert_equal({:"index" => "index"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"metrics\":[{\"kind\":\"conversionRate\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryPatternsTable with minimal parameters
+  def test_query_patterns_table
+    req = @client.query_patterns_table_with_http_info(
+      Algolia::Analytics::TablePayload.new(
+        metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+        parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+      ),
+      "index"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/table", req.path)
+    assert_equal({:"index" => "index"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryPatternsTable with all parameters
+  def test_query_patterns_table1
+    req = @client.query_patterns_table_with_http_info(
+      Algolia::Analytics::TablePayload.new(
+        domain: "core",
+        metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+        group_by: [Algolia::Analytics::FieldReference.new(kind: "query")],
+        filters: [Algolia::Analytics::FilterDefinition.new(kind: "clicked")],
+        parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])],
+        order_by: [Algolia::Analytics::OrderDefinition.new(kind: "searchesCount", direction: "desc")],
+        limit: 100,
+        offset: 0
+      ),
+      "index"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/table", req.path)
+    assert_equal({:"index" => "index"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"}],\"groupBy\":[{\"kind\":\"query\"}],\"filters\":[{\"kind\":\"clicked\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}],\"orderBy\":[{\"kind\":\"searchesCount\",\"direction\":\"desc\"}],\"limit\":100,\"offset\":0}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryPatternsTimeseries with minimal parameters
+  def test_query_patterns_timeseries
+    req = @client.query_patterns_timeseries_with_http_info(
+      Algolia::Analytics::TimeseriesPayload.new(
+        metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+        parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+      ),
+      "index"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/timeseries", req.path)
+    assert_equal({:"index" => "index"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # queryPatternsTimeseries with all parameters
+  def test_query_patterns_timeseries1
+    req = @client.query_patterns_timeseries_with_http_info(
+      Algolia::Analytics::TimeseriesPayload.new(
+        domain: "core",
+        metrics: [
+          Algolia::Analytics::FieldReference.new(kind: "searchesCount"),
+          Algolia::Analytics::FieldReference.new(domain: "abtesting", kind: "isMsrQuery")
+        ],
+        group_by: [Algolia::Analytics::FieldReference.new(kind: "index")],
+        filters: [
+          Algolia::Analytics::FilterDefinition.new(kind: "clicked"),
+          Algolia::Analytics::FilterDefinition.new(
+            kind: "country",
+            operator: "=",
+            parameter: Algolia::Analytics::ParameterReference.new(kind: "country")
+          )
+        ],
+        parameters: [
+          Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["indexA", "indexB"]),
+          Algolia::Analytics::ParameterDefinition.new(kind: "startDate", value: "2024-01-01T00:00:00Z"),
+          Algolia::Analytics::ParameterDefinition.new(kind: "endDate", value: "2024-01-07T23:59:59Z"),
+          Algolia::Analytics::ParameterDefinition.new(kind: "country", value: "FR")
+        ],
+        limit: 50,
+        offset: 0
+      ),
+      "indexA,indexB"
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/patterns/timeseries", req.path)
+    assert_equal({:"index" => "indexA%2CindexB"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"},{\"domain\":\"abtesting\",\"kind\":\"isMsrQuery\"}],\"groupBy\":[{\"kind\":\"index\"}],\"filters\":[{\"kind\":\"clicked\"},{\"kind\":\"country\",\"operator\":\"=\",\"parameter\":{\"kind\":\"country\"}}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"indexA\",\"indexB\"]},{\"kind\":\"startDate\",\"value\":\"2024-01-01T00:00:00Z\"},{\"kind\":\"endDate\",\"value\":\"2024-01-07T23:59:59Z\"},{\"kind\":\"country\",\"value\":\"FR\"}],\"limit\":50,\"offset\":0}"
+      ),
+      JSON.parse(req.body)
+    )
   end
 
 end

@@ -147,6 +147,9 @@
             "query": "myQuery",
             "optionalFilters": [
               "brand:samsung"
+            ],
+            "facetFilters": [
+              "brand:apple"
             ]
           }
         }
@@ -173,6 +176,9 @@
               "query": "myQuery",
               "optionalFilters": [
                 "brand:samsung"
+              ],
+              "facetFilters": [
+                "brand:apple"
               ]
             }
           }

@@ -1,6 +1,8 @@
 package com.algolia.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.api.CompositionClient;
 import com.algolia.config.*;
@@ -34,6 +36,34 @@ class CompositionClientRequestsTestsE2E {
   @AfterAll
   void tearUp() throws Exception {
     client.close();
+  }
+
+  @Test
+  @DisplayName("the Correlation-ID ends with the sent Request-ID")
+  void getCompositionTest1() {
+    Composition res = client.getComposition("id1", new RequestOptions().addExtraHeader("request-id", "CtsE2eEcho4"));
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"objectID\":\"id1\"}", json.writeValueAsString(res)));
+    okhttp3.Response httpResp = client.customGetWithHTTPInfo(
+      "/1/compositions/id1".substring(1),
+      new RequestOptions().addExtraHeader("request-id", "CtsE2eEcho4")
+    );
+
+    assertNotNull(httpResp.header("Correlation-ID"));
+    assertTrue(httpResp.header("Correlation-ID").endsWith("CtsE2eEcho4"));
+  }
+
+  @Test
+  @DisplayName("the Correlation-ID ends with the Request-ID sent as a query parameter")
+  void getCompositionTest2() {
+    Composition res = client.getComposition("id1", new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ"));
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"objectID\":\"id1\"}", json.writeValueAsString(res)));
+    okhttp3.Response httpResp = client.customGetWithHTTPInfo(
+      "/1/compositions/id1".substring(1),
+      new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ")
+    );
+
+    assertNotNull(httpResp.header("Correlation-ID"));
+    assertTrue(httpResp.header("Correlation-ID").endsWith("CtsE2eEchoQ"));
   }
 
   @Test

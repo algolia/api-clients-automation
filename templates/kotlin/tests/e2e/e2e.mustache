@@ -47,6 +47,33 @@ class {{clientPrefix}}Test {
             {{/body}}
             {{/response}}
         )
+        {{#response}}
+        {{#correlationIdSuffix}}
+        val httpResponse = client.customGetWithHTTPInfo(
+            path = "{{{request.path}}}",
+            {{#hasRequestOptions}}
+            requestOptions = RequestOptions(
+                {{#requestOptions.queryParameters}}
+                urlParameters = buildMap {
+                    {{#parametersWithDataType}}
+                    put("{{{key}}}", {{> tests/param_value}})
+                    {{/parametersWithDataType}}
+                },
+                {{/requestOptions.queryParameters}}
+                {{#requestOptions.headers}}
+                headers = buildMap {
+                    {{#parametersWithDataType}}
+                    put("{{{key}}}", {{> tests/param_value}})
+                    {{/parametersWithDataType}}
+                },
+                {{/requestOptions.headers}}
+            ),
+            {{/hasRequestOptions}}
+        )
+        val correlationId = assertNotNull(httpResponse.headers["correlation-id"]?.firstOrNull(), "the response must carry a Correlation-ID")
+        assertTrue(correlationId.endsWith("{{{correlationIdSuffix}}}"), "expected Correlation-ID `$correlationId` to end with `{{{correlationIdSuffix}}}`")
+        {{/correlationIdSuffix}}
+        {{/response}}
     }
 
     {{/tests}}

@@ -283,6 +283,106 @@ describe('api', () => {
       expect(result).toEqual({ message: 'success server response' });
     }
   }, 25000);
+
+  test('retries 429 on the same host using Retry-After', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6698,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/retry-after/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
+  test('retries 429 with a 1s wait when Retry-After is missing', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/missing-header/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
+  test('retries 429 with a 1s wait when Retry-After is invalid', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet({ path: '1/test/rate-limit/invalid-header/javascript' });
+
+    expect(result).toEqual({ message: 'ok rate limit retry' });
+  }, 25000);
+
+  test('returns 429 after maxRateLimitRetries is used up', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/test/rate-limit/exhausted/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Too many requests');
+    }
+  }, 25000);
+
+  test('fails on the first 429 when maxRateLimitRetries is 0', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6697,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      maxRateLimitRetries: 0,
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/test/rate-limit/zero-retries/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('Too many requests');
+    }
+  }, 25000);
 });
 
 describe('commonApi', () => {
@@ -301,7 +401,7 @@ describe('commonApi', () => {
 
     const result = (await client.customPost({ path: '1/test' })) as unknown as EchoResponse;
 
-    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.55.2\).*/);
+    expect(decodeURIComponent(result.algoliaAgent)).toMatch(/^Algolia for JavaScript \(5.59.0\).*/);
   }, 25000);
 });
 
@@ -905,6 +1005,154 @@ describe('replaceAllObjectsWithTransformation', () => {
   }, 25000);
 });
 
+describe('requestId', () => {
+  test('the Request-ID stays stable across retries', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6695,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+        {
+          url: 'localhost',
+          port: 6696,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customPost({ path: '1/test/request-id/retry/javascript' });
+
+    expect(result).toEqual({ status: 'ok' });
+  }, 25000);
+
+  test('each call mints a fresh Request-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.customGet({ path: '1/test/request-id/fresh/javascript' });
+
+      expect(result).toEqual({ status: 'ok' });
+    }
+    {
+      const result = await client.customGet({ path: '1/test/request-id/fresh/javascript' });
+
+      expect(result).toEqual({ status: 'ok' });
+    }
+  }, 25000);
+
+  test('a caller-supplied Request-ID is never overwritten', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    const result = await client.customGet(
+      { path: '1/test/request-id/caller/javascript', parameters: {} },
+      {
+        headers: { 'request-id': 'CtsUserProvided' },
+      },
+    );
+
+    expect(result).toEqual({ requestId: 'CtsUserProvided' });
+  }, 25000);
+
+  test('every request of one helper call shares one Request-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    {
+      const result = await client.saveObjects({
+        indexName: 'cts_request_id_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+          { objectID: '3', name: 'Cyril' },
+          { objectID: '4', name: 'David' },
+        ],
+        batchSize: 2,
+        waitForTasks: true,
+      });
+
+      expect(result).toEqual([
+        { taskID: 42, objectIDs: ['1', '2'] },
+        { taskID: 42, objectIDs: ['3', '4'] },
+      ]);
+    }
+    {
+      const result = await client.saveObjects({
+        indexName: 'cts_request_id_javascript',
+        objects: [
+          { objectID: '5', name: 'Eva' },
+          { objectID: '6', name: 'Fred' },
+          { objectID: '7', name: 'Gina' },
+          { objectID: '8', name: 'Hugo' },
+        ],
+        batchSize: 2,
+        waitForTasks: true,
+      });
+
+      expect(result).toEqual([
+        { taskID: 42, objectIDs: ['5', '6'] },
+        { taskID: 42, objectIDs: ['7', '8'] },
+      ]);
+    }
+  }, 25000);
+
+  test('client errors expose the Correlation-ID', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6694,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.customGet({ path: '1/test/request-id/error/javascript' });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch('request-id error test (Correlation-ID: CtsFixedCorrelationId)');
+    }
+  }, 25000);
+});
+
 describe('saveObjects', () => {
   test('call saveObjects without error', async () => {
     const client = algoliasearch('test-app-id', 'test-api-key', {
@@ -1345,7 +1593,9 @@ describe('init', () => {
     const headerResult = (await headerClient.customGet({
       path: '1/bar',
     })) as unknown as EchoResponse;
-    expect(headerResult.headers).toEqual({
+    const { 'request-id': requestId, ...headers } = headerResult.headers;
+    expect(requestId).toMatch(/^[0-9A-Za-z]{11}$/);
+    expect(headers).toEqual({
       accept: 'application/json',
       'content-type': 'text/plain',
       'x-algolia-api-key': 'bar',

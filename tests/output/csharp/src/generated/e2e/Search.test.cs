@@ -339,7 +339,7 @@ public class SearchClientRequestTestsE2E
       Assert.NotNull(resp);
 
       TestHelpers.LenientJsonAssert(
-        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+        "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
         JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }
@@ -386,6 +386,32 @@ public class SearchClientRequestTestsE2E
 
       TestHelpers.LenientJsonAssert(
         "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
+  [Fact(DisplayName = "the classic engine accepts a Request-ID sent as a query parameter")]
+  public async Task SearchRulesTest1()
+  {
+    try
+    {
+      var resp = await client.SearchRulesAsync(
+        "cts_e2e_browse",
+        new SearchRulesParams { Query = "zorro" },
+        options: new RequestOptionBuilder()
+          .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eQry11")
+          .Build()
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      TestHelpers.LenientJsonAssert(
+        "{\"nbHits\":1,\"nbPages\":1,\"page\":0}",
         JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }

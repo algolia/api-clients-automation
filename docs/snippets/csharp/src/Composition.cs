@@ -115,7 +115,7 @@ public class SnippetCompositionClient
     var response = await client.CustomGetAsync(
       "test/all",
       new Dictionary<string, object> { { "query", "to be overridden" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
         .AddExtraQueryParameters("and an array", new List<object> { "array", "with spaces" })
         .AddExtraHeader("x-header-1", "spaces are left alone")
@@ -191,7 +191,9 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -217,7 +219,9 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("query2", "myQueryParameter")
+        .Build()
     );
     // >LOG
     // print the response
@@ -243,7 +247,9 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -269,7 +275,9 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY").Build()
+      options: new RequestOptionBuilder()
+        .AddExtraHeader("x-algolia-api-key", "ALGOLIA_API_KEY")
+        .Build()
     );
     // >LOG
     // print the response
@@ -295,7 +303,7 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
     // >LOG
     // print the response
@@ -321,7 +329,7 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
+      options: new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
     // >LOG
     // print the response
@@ -347,7 +355,7 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { "b and c", "d" })
         .Build()
     );
@@ -375,7 +383,7 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { true, true, false })
         .Build()
     );
@@ -403,7 +411,7 @@ public class SnippetCompositionClient
       "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
-      new RequestOptionBuilder()
+      options: new RequestOptionBuilder()
         .AddExtraQueryParameters("myParam", new List<object> { 1, 2 })
         .Build()
     );
@@ -508,7 +516,7 @@ public class SnippetCompositionClient
   /// </summary>
   public async Task SnippetForCompositionClientGetComposition()
   {
-    // >SEPARATOR getComposition default
+    // >SEPARATOR getComposition getComposition
     // Initialize the client
     var client = new CompositionClient(
       new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -516,6 +524,56 @@ public class SnippetCompositionClient
 
     // Call the API
     var response = await client.GetCompositionAsync("foo");
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetComposition method.
+  ///
+  /// the Correlation-ID ends with the sent Request-ID
+  /// </summary>
+  public async Task SnippetForCompositionClientGetComposition1()
+  {
+    // >SEPARATOR getComposition the Correlation-ID ends with the sent Request-ID
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetCompositionAsync(
+      "id1",
+      options: new RequestOptionBuilder().AddExtraHeader("request-id", "CtsE2eEcho4").Build()
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetComposition method.
+  ///
+  /// the Correlation-ID ends with the Request-ID sent as a query parameter
+  /// </summary>
+  public async Task SnippetForCompositionClientGetComposition2()
+  {
+    // >SEPARATOR getComposition the Correlation-ID ends with the Request-ID sent as a query parameter
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetCompositionAsync(
+      "id1",
+      options: new RequestOptionBuilder()
+        .AddExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ")
+        .Build()
+    );
     // >LOG
     // print the response
     Console.WriteLine(response);

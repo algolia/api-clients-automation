@@ -236,7 +236,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
       )
     )
     expected_body = JSON.parse(
-      "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}"
+      "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
@@ -268,6 +268,24 @@ class TestSearchClientE2E < Test::Unit::TestCase
     expected_body = JSON.parse(
       "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
     )
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
+  # the classic engine accepts a Request-ID sent as a query parameter
+  def test_search_rules1
+    res = @client.search_rules_with_http_info(
+      "cts_e2e_browse",
+      Algolia::Search::SearchRulesParams.new(query: "zorro"),
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+    )
+
+    assert_equal(res.status, 200)
+    res = @client.search_rules(
+      "cts_e2e_browse",
+      Algolia::Search::SearchRulesParams.new(query: "zorro"),
+      {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+    )
+    expected_body = JSON.parse("{\"nbHits\":1,\"nbPages\":1,\"page\":0}")
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 

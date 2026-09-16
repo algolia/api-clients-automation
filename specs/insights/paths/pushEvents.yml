@@ -185,6 +185,27 @@ post:
                   userToken: anonymous-user-1
                   authenticatedUserToken: user-1
                   filters: ['category:books']
+          InstantsearchMinimum:
+            summary: Minimum instantsearch event
+            description: >
+              Minimum valid instantsearch event for agentic analytics
+              telemetry.
+            value:
+              events:
+                - eventName: Instantsearch Telemetry
+                  eventType: instantsearch
+                  userToken: anonymous-user-1
+          InstantsearchWithAgentID:
+            summary: Instantsearch event with agentID
+            description: >
+              Instantsearch event with agentID to correlate events within
+              a single agent session.
+            value:
+              events:
+                - eventName: Instantsearch Telemetry
+                  eventType: instantsearch
+                  userToken: anonymous-user-1
+                  agentID: agent-session-123
 
   responses:
     '200':
@@ -313,7 +334,7 @@ post:
               summary: Wrong event type
               value:
                 status: 422
-                message: EventType must be one of "click", "conversion" or "view"
+                message: EventType must be one of "click", "conversion", "view" or "instantsearch"
             IndexRequired:
               summary: Missing index attribute
               value:

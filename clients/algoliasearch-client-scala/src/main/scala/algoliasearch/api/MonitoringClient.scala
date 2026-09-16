@@ -98,16 +98,37 @@ class MonitoringClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customDelete` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customDeleteWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customDeleteHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customDelete` and `customDeleteWithHTTPInfo`.
+    */
+  private def customDeleteHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customDelete`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customDelete`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("DELETE")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -122,16 +143,36 @@ class MonitoringClient(
       parameters: Option[Map[String, Any]] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Variant of `customGet` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    */
+  def customGetWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customGetHttpRequest(path = path, parameters = parameters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customGet` and `customGetWithHTTPInfo`.
+    */
+  private def customGetHttpRequest(path: String, parameters: Option[Map[String, Any]] = None): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customGet`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customGet`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -149,17 +190,44 @@ class MonitoringClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPost` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPostWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPostHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPost` and `customPostWithHTTPInfo`.
+    */
+  private def customPostHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPost`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPost`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** This method lets you send requests to the Algolia REST API.
@@ -177,17 +245,44 @@ class MonitoringClient(
       body: Option[Any] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[T] = Future {
+    execute[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Variant of `customPut` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param path
+    *   Path of the endpoint, for example `1/newFeature`.
+    * @param parameters
+    *   Query parameters to apply to the current query.
+    * @param body
+    *   Parameters to send with the custom request.
+    */
+  def customPutWithHTTPInfo[T: Manifest](
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[T]] = Future {
+    executeWithHttpInfo[T](customPutHttpRequest(path = path, parameters = parameters, body = body), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `customPut` and `customPutWithHTTPInfo`.
+    */
+  private def customPutHttpRequest(
+      path: String,
+      parameters: Option[Map[String, Any]] = None,
+      body: Option[Any] = None
+  ): HttpRequest = {
     requireNotNull(path, "Parameter `path` is required when calling `customPut`.")
     requireNotEmpty(path, "Parameter `path` is required when calling `customPut`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
-    execute[T](request, requestOptions)
   }
 
   /** Retrieves known incidents for the selected clusters.
@@ -198,15 +293,33 @@ class MonitoringClient(
   def getClusterIncidents(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[IncidentsResponse] = Future {
+    execute[IncidentsResponse](getClusterIncidentsHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Variant of `getClusterIncidents` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * @param clusters
+    *   Subset of clusters, separated by commas.
+    */
+  def getClusterIncidentsWithHTTPInfo(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[IncidentsResponse]] = Future {
+    executeWithHttpInfo[IncidentsResponse](getClusterIncidentsHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getClusterIncidents` and
+    * `getClusterIncidentsWithHTTPInfo`.
+    */
+  private def getClusterIncidentsHttpRequest(clusters: String): HttpRequest = {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.")
     requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getClusterIncidents`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/incidents/${escape(clusters)}")
       .build()
-    execute[IncidentsResponse](request, requestOptions)
   }
 
   /** Retrieves the status of selected clusters.
@@ -217,15 +330,32 @@ class MonitoringClient(
   def getClusterStatus(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[StatusResponse] = Future {
+    execute[StatusResponse](getClusterStatusHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Variant of `getClusterStatus` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param clusters
+    *   Subset of clusters, separated by commas.
+    */
+  def getClusterStatusWithHTTPInfo(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[StatusResponse]] = Future {
+    executeWithHttpInfo[StatusResponse](getClusterStatusHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getClusterStatus` and `getClusterStatusWithHTTPInfo`.
+    */
+  private def getClusterStatusHttpRequest(clusters: String): HttpRequest = {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.")
     requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getClusterStatus`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/status/${escape(clusters)}")
       .build()
-    execute[StatusResponse](request, requestOptions)
   }
 
   /** Retrieves known incidents for all clusters.
@@ -233,13 +363,27 @@ class MonitoringClient(
   def getIncidents(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[IncidentsResponse] = Future {
+    execute[IncidentsResponse](getIncidentsHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getIncidents` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    */
+  def getIncidentsWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[IncidentsResponse]] = Future {
+    executeWithHttpInfo[IncidentsResponse](getIncidentsHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getIncidents` and `getIncidentsWithHTTPInfo`.
+    */
+  private def getIncidentsHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/incidents")
       .build()
-    execute[IncidentsResponse](request, requestOptions)
   }
 
   /** Retrieves indexing latency metrics for selected clusters. This endpoint is intended for infrastructure-level
@@ -254,15 +398,32 @@ class MonitoringClient(
   def getIndexingTime(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[IndexingTimeResponse] = Future {
+    execute[IndexingTimeResponse](getIndexingTimeHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Variant of `getIndexingTime` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param clusters
+    *   Subset of clusters, separated by commas.
+    */
+  def getIndexingTimeWithHTTPInfo(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[IndexingTimeResponse]] = Future {
+    executeWithHttpInfo[IndexingTimeResponse](getIndexingTimeHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getIndexingTime` and `getIndexingTimeWithHTTPInfo`.
+    */
+  private def getIndexingTimeHttpRequest(clusters: String): HttpRequest = {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.")
     requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getIndexingTime`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/indexing/${escape(clusters)}")
       .build()
-    execute[IndexingTimeResponse](request, requestOptions)
   }
 
   /** Retrieves the average latency for search requests for selected clusters.
@@ -273,15 +434,31 @@ class MonitoringClient(
   def getLatency(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[LatencyResponse] = Future {
+    execute[LatencyResponse](getLatencyHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Variant of `getLatency` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param clusters
+    *   Subset of clusters, separated by commas.
+    */
+  def getLatencyWithHTTPInfo(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[LatencyResponse]] = Future {
+    executeWithHttpInfo[LatencyResponse](getLatencyHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getLatency` and `getLatencyWithHTTPInfo`.
+    */
+  private def getLatencyHttpRequest(clusters: String): HttpRequest = {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getLatency`.")
     requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getLatency`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/latency/${escape(clusters)}")
       .build()
-    execute[LatencyResponse](request, requestOptions)
   }
 
   /** Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window. Access to this
@@ -300,15 +477,37 @@ class MonitoringClient(
   def getMetrics(metric: Metric, period: Period, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[InfrastructureResponse] = Future {
+    execute[InfrastructureResponse](getMetricsHttpRequest(metric = metric, period = period), requestOptions)
+  }
+
+  /** Variant of `getMetrics` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    *
+    * @param metric
+    *   Metric to report. For more information about the individual metrics, see the description of the API response. To
+    *   include all metrics, use `*`.
+    * @param period
+    *   Period over which to aggregate the metrics: - `minute`. Aggregate the last minute. 1 data point per 10 seconds.
+    *   \- `hour`. Aggregate the last hour. 1 data point per minute. - `day`. Aggregate the last day. 1 data point per
+    *   10 minutes. - `week`. Aggregate the last week. 1 data point per hour. - `month`. Aggregate the last month. 1
+    *   data point per day.
+    */
+  def getMetricsWithHTTPInfo(metric: Metric, period: Period, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[InfrastructureResponse]] = Future {
+    executeWithHttpInfo[InfrastructureResponse](getMetricsHttpRequest(metric = metric, period = period), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getMetrics` and `getMetricsWithHTTPInfo`.
+    */
+  private def getMetricsHttpRequest(metric: Metric, period: Period): HttpRequest = {
     requireNotNull(metric, "Parameter `metric` is required when calling `getMetrics`.")
     requireNotNull(period, "Parameter `period` is required when calling `getMetrics`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/infrastructure/${escape(metric)}/period/${escape(period)}")
       .build()
-    execute[InfrastructureResponse](request, requestOptions)
   }
 
   /** Test whether clusters are reachable or not.
@@ -319,15 +518,35 @@ class MonitoringClient(
   def getReachability(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
   ): Future[Map[String, Map[String, Boolean]]] = Future {
+    execute[Map[String, Map[String, Boolean]]](getReachabilityHttpRequest(clusters = clusters), requestOptions)
+  }
+
+  /** Variant of `getReachability` that returns the full HTTP response: status code, headers, raw body and deserialized
+    * data.
+    *
+    * @param clusters
+    *   Subset of clusters, separated by commas.
+    */
+  def getReachabilityWithHTTPInfo(clusters: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[AlgoliaHttpResponse[Map[String, Map[String, Boolean]]]] = Future {
+    executeWithHttpInfo[Map[String, Map[String, Boolean]]](
+      getReachabilityHttpRequest(clusters = clusters),
+      requestOptions
+    )
+  }
+
+  /** Validates the parameters and builds the request shared by `getReachability` and `getReachabilityWithHTTPInfo`.
+    */
+  private def getReachabilityHttpRequest(clusters: String): HttpRequest = {
     requireNotNull(clusters, "Parameter `clusters` is required when calling `getReachability`.")
     requireNotEmpty(clusters, "Parameter `clusters` is required when calling `getReachability`.")
 
-    val request = HttpRequest
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/reachability/${escape(clusters)}/probes")
       .build()
-    execute[Map[String, Map[String, Boolean]]](request, requestOptions)
   }
 
   /** Retrieves the servers that belong to clusters. The response depends on whether you authenticate your API request:
@@ -337,26 +556,52 @@ class MonitoringClient(
   def getServers(
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[InventoryResponse] = Future {
+    execute[InventoryResponse](getServersHttpRequest(), requestOptions)
+  }
 
-    val request = HttpRequest
+  /** Variant of `getServers` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    */
+  def getServersWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[InventoryResponse]] = Future {
+    executeWithHttpInfo[InventoryResponse](getServersHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getServers` and `getServersWithHTTPInfo`.
+    */
+  private def getServersHttpRequest(): HttpRequest = {
+
+    HttpRequest
       .builder()
       .withMethod("GET")
       .withPath(s"/1/inventory/servers")
       .build()
-    execute[InventoryResponse](request, requestOptions)
   }
 
   /** Retrieves the status of all Algolia clusters and instances.
     */
   def getStatus(requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[StatusResponse] =
     Future {
-
-      val request = HttpRequest
-        .builder()
-        .withMethod("GET")
-        .withPath(s"/1/status")
-        .build()
-      execute[StatusResponse](request, requestOptions)
+      execute[StatusResponse](getStatusHttpRequest(), requestOptions)
     }
+
+  /** Variant of `getStatus` that returns the full HTTP response: status code, headers, raw body and deserialized data.
+    */
+  def getStatusWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[StatusResponse]] = Future {
+    executeWithHttpInfo[StatusResponse](getStatusHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `getStatus` and `getStatusWithHTTPInfo`.
+    */
+  private def getStatusHttpRequest(): HttpRequest = {
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/status")
+      .build()
+  }
 
 }

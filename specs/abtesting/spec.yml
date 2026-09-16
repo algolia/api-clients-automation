@@ -51,7 +51,8 @@ info:
 
     ## Version
 
-    The current version of the A/B Testing API is version 2, indicated by the `/2/` in each endpoint's URL.
+    Version 2 of the A/B Testing API, indicated by the `/2/` in each endpoint's URL, is deprecated.
+    Use [version 3](https://www.algolia.com/doc/rest-api/abtesting-v3) instead.
   version: 2.0.0
 components:
   securitySchemes:
@@ -79,6 +80,8 @@ tags:
       Manage A/B tests.
 
       A/B tests are configurations one or more indices, usually your production index and an index with different settings that you want to test.
+
+      These operations are **deprecated**. Use the A/B Testing API v3 (`/3/abtests`) instead.
 x-tagGroups:
   - name: General
     tags:

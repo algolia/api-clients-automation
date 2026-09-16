@@ -558,6 +558,7 @@ class SnippetRecommendClient {
                       query = "myQuery",
                       optionalFilters =
                         OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
+                      facetFilters = FacetFilters.of(listOf(FacetFilters.of("brand:apple"))),
                     ),
                 )
               )

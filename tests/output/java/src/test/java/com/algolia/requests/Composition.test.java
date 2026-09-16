@@ -698,6 +698,59 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("the Correlation-ID ends with the sent Request-ID")
+  void getCompositionTest1() {
+    assertDoesNotThrow(() -> {
+      client.getComposition("id1", new RequestOptions().addExtraHeader("request-id", "CtsE2eEcho4"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/id1", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedHeaders = json.readValue(
+        "{\"request-id\":\"CtsE2eEcho4\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, String> actualHeaders = req.headers;
+
+      for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse headers json");
+    }
+  }
+
+  @Test
+  @DisplayName("the Correlation-ID ends with the Request-ID sent as a query parameter")
+  void getCompositionTest2() {
+    assertDoesNotThrow(() -> {
+      client.getComposition("id1", new RequestOptions().addExtraQueryParameters("x-algolia-request-id", "CtsE2eEchoQ"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/id1", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"x-algolia-request-id\":\"CtsE2eEchoQ\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("getRule")
   void getRuleTest() {
     assertDoesNotThrow(() -> {

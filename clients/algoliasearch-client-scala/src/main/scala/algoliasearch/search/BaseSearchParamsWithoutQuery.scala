@@ -22,8 +22,14 @@
   * `attributesToRetrieve=%5B%22title%22,%22description%22%D` ## Response status and errors The Search API returns JSON
   * responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API
   * response. Successful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return
-  * `5xx` statuses. Error responses have a `message` property with more information. ## Version The current version of
-  * the Search API is version 1, indicated by the `/1/` in each endpoint's URL.
+  * `5xx` statuses. Error responses have a `message` property with more information. ## Request identifiers Every
+  * response includes a `Correlation-ID` header that identifies the request in Algolia's logs. When contacting the
+  * Algolia support team about a specific request, include this identifier in your ticket. To tag requests with your own
+  * identifier, send a `Request-ID` header with exactly 11 alphanumeric characters. Clusters that support it embed the
+  * identifier at the end of the `Correlation-ID`, so all attempts of a retried operation can be found by searching for
+  * those characters. Headers that don't match the expected format are ignored. Don't use the `Correlation-ID` as a
+  * unique key: retried requests may receive the same identifier. ## Version The current version of the Search API is
+  * version 1, indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
