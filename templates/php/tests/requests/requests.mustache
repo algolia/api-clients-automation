@@ -108,6 +108,13 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 {{/request.headers}}
             ],
         ]);
+
+        {{#request.absentHeaders}}
+        $this->assertFalse(
+            $this->recordedRequests[0]->hasHeader('{{{.}}}'),
+            'the `{{{.}}}` header must not be sent'
+        );
+        {{/request.absentHeaders}}
     }
     {{/tests}}
     {{/blocksRequests}}

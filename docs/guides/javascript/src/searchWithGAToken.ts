@@ -2,7 +2,7 @@ import { algoliasearch } from 'algoliasearch';
 
 import type { SearchParams } from 'algoliasearch';
 
-const getGoogleAnalyticsUserIdFromBrowserCookie = (_: string) => {
+const getGoogleAnalyticsUserIdFromBrowserCookie = (__: string) => {
   return ''; // Implement your logic here
 };
 

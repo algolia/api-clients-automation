@@ -38,12 +38,13 @@ public <T> CompletableFuture<List<BatchResponse>> chunkedBatchAsync(
   if (batchSize < 1) {
     throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
   }
+  final RequestOptions helperRequestOptions = withRequestId(requestOptions);
   int maxConcurrency = chunkedOptions != null ? chunkedOptions.getMaxConcurrency() : 1;
   Iterator<T> it = objects.iterator();
   // Waves are strictly sequential: responses.add runs only in the post-allOf continuation;
   // future completion provides happens-before between waves (plain list is safe).
   List<BatchResponse> responses = new ArrayList<>();
-  return chunkedBatchNextWave(indexName, it, action, batchSize, maxConcurrency, requestOptions, responses);
+  return chunkedBatchNextWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions, responses);
 }
 
 private <T> CompletableFuture<List<BatchResponse>> chunkedBatchNextWave(

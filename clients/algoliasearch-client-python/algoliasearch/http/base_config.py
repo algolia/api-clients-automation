@@ -33,6 +33,11 @@ class BaseConfig:
         self.compression_type: Optional[Literal["gzip"]] = None
         self.compression_threshold: int = 750
 
+        self.request_id_enabled: bool = False
+
+        # Same-host retries after HTTP 429; 0 fails on the first 429.
+        self.max_rate_limit_retries: int = 3
+
     def set_client_api_key(self, api_key: str) -> None:
         """Sets a new API key to authenticate requests."""
         self.api_key = api_key

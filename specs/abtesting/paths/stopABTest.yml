@@ -2,10 +2,15 @@ post:
   tags:
     - abtest
   operationId: stopABTest
+  deprecated: true
   x-acl:
     - editSettings
   summary: Stop an A/B test
   description: |
+    This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+    Replaced by `POST /3/abtests/{id}/stop`.
+
     Stops an A/B test by its ID.
 
     You can't restart stopped A/B tests.

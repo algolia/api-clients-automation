@@ -21,7 +21,7 @@ $searchParams = (new SearchParamsObject())
 $client->searchSingleIndex(
     '<YOUR_INDEX_NAME>',
     $searchParams,
-    [
+    requestOptions: [
         'headers' => [
             'X-Forwarded-For' => $ip,
         ],

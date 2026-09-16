@@ -331,6 +331,131 @@ void main() {
     }
   });
 
+  test('retries 429 on the same host using Retry-After', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6698',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/retry-after/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('retries 429 with a 1s wait when Retry-After is missing', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/missing-header/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('retries 429 with a 1s wait when Retry-After is invalid', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/invalid-header/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('returns 429 after maxRateLimitRetries is used up', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    await expectError(
+      '429',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/rate-limit/exhausted/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
+  test('fails on the first 429 when maxRateLimitRetries is 0', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(maxRateLimitRetries: 0, hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    await expectError(
+      '429',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/rate-limit/zero-retries/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
@@ -662,6 +787,128 @@ void main() {
     }
   });
 
+  test('the Request-ID stays stable across retries', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6694',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6695',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6696',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customPost(
+        path: "1/test/request-id/retry/dart",
+      );
+      expectBody(res, """{"status":"ok"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('each call mints a fresh Request-ID', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6694',
+              scheme: 'http'),
+        ]));
+
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "1/test/request-id/fresh/dart",
+        );
+        expectBody(res, """{"status":"ok"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+    {
+      requester.setOnRequest((request) {});
+      try {
+        final res = await client.customGet(
+          path: "1/test/request-id/fresh/dart",
+        );
+        expectBody(res, """{"status":"ok"}""");
+      } on InterceptionException catch (_) {
+        // Ignore InterceptionException
+      }
+    }
+  });
+
+  test('a caller-supplied Request-ID is never overwritten', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6694',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/request-id/caller/dart",
+        parameters: {},
+        requestOptions: RequestOptions(
+          headers: {
+            'request-id': "CtsUserProvided",
+          },
+        ),
+      );
+      expectBody(res, """{"requestId":"CtsUserProvided"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('client errors expose the Correlation-ID', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6694',
+              scheme: 'http'),
+        ]));
+
+    await expectError(
+      '{"message":"request-id error test"}} (Correlation-ID: CtsFixedCorrelationId)',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/request-id/error/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
   test('call saveObjectsWithTransformation without error', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(
@@ -845,7 +1092,11 @@ void main() {
           ],
           waitForTasks: true,
           batchSize: 10,
-          requestOptions: RequestOptions(),
+          requestOptions: RequestOptions(
+            headers: {
+              'x-algolia-user-id': "test-user",
+            },
+          ),
         );
       } on InterceptionException catch (_) {
         // Ignore InterceptionException
@@ -871,7 +1122,11 @@ void main() {
         searchParams: SearchParamsObject(
           query: "foo",
         ),
-        requestOptions: RequestOptions(),
+        requestOptions: RequestOptions(
+          headers: {
+            'X-Algolia-User-ID': "user1234",
+          },
+        ),
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException

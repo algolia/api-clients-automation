@@ -2215,8 +2215,62 @@ end
 
 # Snippet for the saveObjects method.
 #
-# call saveObjects without error
+# every request of one helper call shares one Request-ID
 def snippet_for_save_objects
+  # >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [
+      {objectID: "1", name: "Adam"},
+      {objectID: "2", name: "Benoit"},
+      {objectID: "3", name: "Cyril"},
+      {objectID: "4", name: "David"}
+    ],
+    true,
+    2
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjects method.
+#
+# every request of one helper call shares one Request-ID
+def snippet_for_save_objects1
+  # >SEPARATOR saveObjects every request of one helper call shares one Request-ID
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.save_objects(
+    "<YOUR_INDEX_NAME>",
+    [
+      {objectID: "5", name: "Eva"},
+      {objectID: "6", name: "Fred"},
+      {objectID: "7", name: "Gina"},
+      {objectID: "8", name: "Hugo"}
+    ],
+    true,
+    2
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveObjects method.
+#
+# call saveObjects without error
+def snippet_for_save_objects2
   # >SEPARATOR saveObjects call saveObjects without error
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2236,7 +2290,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjects should report errors
-def snippet_for_save_objects1
+def snippet_for_save_objects3
   # >SEPARATOR saveObjects saveObjects should report errors
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2256,7 +2310,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjectsPlaylist
-def snippet_for_save_objects2
+def snippet_for_save_objects4
   # >SEPARATOR saveObjects saveObjectsPlaylist
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2284,7 +2338,7 @@ end
 # Snippet for the saveObjects method.
 #
 # saveObjectsPublicUser
-def snippet_for_save_objects3
+def snippet_for_save_objects5
   # >SEPARATOR saveObjects saveObjectsPublicUser
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -3950,12 +4004,33 @@ end
 #
 # searchRules
 def snippet_for_search_rules
-  # >SEPARATOR searchRules default
+  # >SEPARATOR searchRules searchRules
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_rules("<YOUR_INDEX_NAME>", Algolia::Search::SearchRulesParams.new(query: "zorro"))
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the searchRules method.
+#
+# the classic engine accepts a Request-ID sent as a query parameter
+def snippet_for_search_rules1
+  # >SEPARATOR searchRules the classic engine accepts a Request-ID sent as a query parameter
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_rules(
+    "<YOUR_INDEX_NAME>",
+    Algolia::Search::SearchRulesParams.new(query: "zorro"),
+    {:query_params => JSON.parse("{\"x-algolia-request-id\":\"CtsE2eQry11\"}", :symbolize_names => true)}
+  )
 
   # >LOG
   # print the response

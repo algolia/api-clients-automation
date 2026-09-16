@@ -155,7 +155,8 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/clusters/mapping');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-user-id":"user42"}""");
+        expectHeaders(request.headers, """{"x-algolia-user-id":"user42"}""",
+            allowMintedRequestId: true);
         expectBody(request.body, """{"cluster":"d4242-eu"}""");
       },
     ),
@@ -180,7 +181,8 @@ void main() {
         expectPath(request.path, '/1/clusters/mapping');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-user-id":"user id with spaces"}""");
+            request.headers, """{"x-algolia-user-id":"user id with spaces"}""",
+            allowMintedRequestId: true);
         expectBody(request.body, """{"cluster":"cluster with spaces"}""");
       },
     ),
@@ -433,7 +435,8 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/clusters/mapping/batch');
         expect(request.method, 'post');
-        expectHeaders(request.headers, """{"x-algolia-user-id":"userID"}""");
+        expectHeaders(request.headers, """{"x-algolia-user-id":"userID"}""",
+            allowMintedRequestId: true);
         expectBody(request.body,
             """{"cluster":"theCluster","users":["user1","user2"]}""");
       },
@@ -822,7 +825,8 @@ void main() {
         expectPath(request.path, '/test/all');
         expect(request.method, 'get');
         expectHeaders(
-            request.headers, """{"x-header-1":"spaces are left alone"}""");
+            request.headers, """{"x-header-1":"spaces are left alone"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters,
             """{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""");
         expect(request.body, null);
@@ -967,7 +971,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -1000,7 +1005,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -6955,7 +6961,8 @@ void main() {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-forwarded-for":"XX.XXX.XXX.XXX"}""");
+            request.headers, """{"x-forwarded-for":"XX.XXX.XXX.XXX"}""",
+            allowMintedRequestId: true);
         expectBody(
             request.body, """{"query":"query","aroundLatLngViaIP":true}""");
       },
@@ -6983,7 +6990,8 @@ void main() {
         expectPath(request.path, '/1/indexes/indexName/query');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-forwarded-for":"XX.XXX.XXX.XXX"}""");
+            request.headers, """{"x-forwarded-for":"XX.XXX.XXX.XXX"}""",
+            allowMintedRequestId: true);
         expectBody(request.body, """{}""");
       },
     ),

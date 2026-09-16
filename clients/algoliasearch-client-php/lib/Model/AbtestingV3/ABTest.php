@@ -33,7 +33,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         'status' => '\Algolia\AlgoliaSearch\Model\AbtestingV3\Status',
         'variants' => '\Algolia\AlgoliaSearch\Model\AbtestingV3\Variant[]',
         'configuration' => '\Algolia\AlgoliaSearch\Model\AbtestingV3\ABTestConfiguration',
-        'migratedAbTestID' => 'int',
+        'decision' => '\Algolia\AlgoliaSearch\Model\AbtestingV3\Decision',
     ];
 
     /**
@@ -51,7 +51,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         'status' => null,
         'variants' => null,
         'configuration' => null,
-        'migratedAbTestID' => null,
+        'decision' => null,
     ];
 
     /**
@@ -70,7 +70,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         'status' => 'status',
         'variants' => 'variants',
         'configuration' => 'configuration',
-        'migratedAbTestID' => 'migratedAbTestID',
+        'decision' => 'decision',
     ];
 
     /**
@@ -88,7 +88,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         'status' => 'setStatus',
         'variants' => 'setVariants',
         'configuration' => 'setConfiguration',
-        'migratedAbTestID' => 'setMigratedAbTestID',
+        'decision' => 'setDecision',
     ];
 
     /**
@@ -106,7 +106,7 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         'status' => 'getStatus',
         'variants' => 'getVariants',
         'configuration' => 'getConfiguration',
-        'migratedAbTestID' => 'getMigratedAbTestID',
+        'decision' => 'getDecision',
     ];
 
     /**
@@ -150,8 +150,8 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
         if (isset($data['configuration'])) {
             $this->container['configuration'] = $data['configuration'];
         }
-        if (isset($data['migratedAbTestID'])) {
-            $this->container['migratedAbTestID'] = $data['migratedAbTestID'];
+        if (isset($data['decision'])) {
+            $this->container['decision'] = $data['decision'];
         }
     }
 
@@ -468,25 +468,25 @@ class ABTest extends AbstractModel implements ModelInterface, \ArrayAccess, \Jso
     }
 
     /**
-     * Gets migratedAbTestID.
+     * Gets decision.
      *
-     * @return null|int
+     * @return null|Decision
      */
-    public function getMigratedAbTestID()
+    public function getDecision()
     {
-        return $this->container['migratedAbTestID'] ?? null;
+        return $this->container['decision'] ?? null;
     }
 
     /**
-     * Sets migratedAbTestID.
+     * Sets decision.
      *
-     * @param null|int $migratedAbTestID unique migrated A/B test identifier
+     * @param null|Decision $decision decision
      *
      * @return self
      */
-    public function setMigratedAbTestID($migratedAbTestID)
+    public function setDecision($decision)
     {
-        $this->container['migratedAbTestID'] = $migratedAbTestID;
+        $this->container['decision'] = $decision;
 
         return $this;
     }

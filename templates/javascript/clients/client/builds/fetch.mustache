@@ -24,6 +24,9 @@ import { createHmac } from 'node:crypto';
       logger: createNullLogger(),
       requester: createFetchRequester(),
       algoliaAgents: [{ segment: 'Fetch' }],
+      {{#requestIdSupport}}
+      requestIdChannel: 'queryParameters',
+      {{/requestIdSupport}}
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

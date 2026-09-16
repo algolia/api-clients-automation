@@ -9,6 +9,7 @@
         """
         Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
         """
+        request_options = with_request_id(request_options, self._config)
         _retry_count = 0
 
         {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
@@ -37,6 +38,7 @@
         """
         Helper: Wait for an application-level task to complete for a given `taskID`.
         """
+        request_options = with_request_id(request_options, self._config)
         _retry_count = 0
 
         {{^isSyncClient}}async {{/isSyncClient}}def _func(_: Optional[GetTaskResponse]) -> GetTaskResponse:
@@ -67,6 +69,7 @@
         """
         Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
         """
+        request_options = with_request_id(request_options, self._config)
         _retry_count = 0
 
         if operation == "update" and api_key is None:
@@ -128,6 +131,7 @@
         """
         Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
         """
+        request_options = with_request_id(request_options, self._config)
         if isinstance(browse_params, dict):
             browse_params = BrowseParamsObject().from_dict(browse_params)
 
@@ -162,6 +166,7 @@
         """
         Helper: Iterate on the `search_rules` method of the client to allow aggregating rules of an index.
         """
+        request_options = with_request_id(request_options, self._config)
         if isinstance(search_rules_params, dict):
             search_rules_params = SearchRulesParams().from_dict(search_rules_params)
 
@@ -197,6 +202,7 @@
         """
         Helper: Iterate on the `search_synonyms` method of the client to allow aggregating synonyms of an index.
         """
+        request_options = with_request_id(request_options, self._config)
         if isinstance(search_synonyms_params, dict):
             search_synonyms_params = SearchSynonymsParams().from_dict(search_synonyms_params)
 
@@ -400,6 +406,7 @@
         """
         if batch_size < 1:
             raise ValueError("`batch_size` must be at least 1.")
+        request_options = with_request_id(request_options, self._config)
         chunked_options = chunked_options or ChunkedHelperOptions()
         responses: List[BatchResponse] = []
         it = iter(objects)
@@ -415,7 +422,7 @@
         if wait_for_tasks:
             for response in responses:
                 {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-                    index_name=index_name, task_id=response.task_id, max_retries=chunked_options.max_retries
+                    index_name=index_name, task_id=response.task_id, max_retries=chunked_options.max_retries, request_options=request_options
                 )
         return responses
 
@@ -445,6 +452,7 @@
                 f'replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the "{index_name}" index.'
             )
         chunked_options = chunked_options or ChunkedHelperOptions(max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES)
+        search_request_options = with_request_id(request_options, self._config)
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -456,7 +464,7 @@
                       destination=tmp_index_name,
                       scope=scopes,
                   ),
-                  request_options=request_options,
+                  request_options=search_request_options,
               )
 
           copy_operation_response = {{^isSyncClient}}await {{/isSyncClient}}_copy()
@@ -472,12 +480,12 @@
           )
 
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=search_request_options
           )
 
           copy_operation_response = {{^isSyncClient}}await {{/isSyncClient}}_copy()
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=search_request_options
           )
 
           move_operation_response = {{^isSyncClient}}await {{/isSyncClient}}self.operation_index(
@@ -486,10 +494,10 @@
                   operation=OperationType.MOVE,
                   destination=index_name,
               ),
-              request_options=request_options,
+              request_options=search_request_options,
           )
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=search_request_options
           )
 
           search_watch_responses: List[WatchResponse] = [WatchResponse.model_validate(wr.model_dump()) for wr in watch_responses]
@@ -500,7 +508,7 @@
               move_operation_response=move_operation_response,
           )
         except Exception as e:
-          {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name)
+          {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name, request_options=search_request_options)
 
           raise e
 
@@ -528,6 +536,7 @@
                 f'replace_all_objects was called with an empty list of objects, which will delete all records currently in the "{index_name}" index.'
             )
         chunked_options = chunked_options or ChunkedHelperOptions(max_retries=ChunkedHelperOptions.DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES)
+        request_options = with_request_id(request_options, self._config)
         tmp_index_name = self.create_temporary_name(index_name)
 
         try:
@@ -554,12 +563,12 @@
           )
 
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=request_options
           )
 
           copy_operation_response = {{^isSyncClient}}await {{/isSyncClient}}_copy()
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=copy_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=request_options
           )
 
           move_operation_response = {{^isSyncClient}}await {{/isSyncClient}}self.operation_index(
@@ -571,7 +580,7 @@
               request_options=request_options,
           )
           {{^isSyncClient}}await {{/isSyncClient}}self.wait_for_task(
-              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries
+              index_name=tmp_index_name, task_id=move_operation_response.task_id, max_retries=chunked_options.max_retries, request_options=request_options
           )
 
           return ReplaceAllObjectsResponse(
@@ -580,16 +589,20 @@
               move_operation_response=move_operation_response,
           )
         except Exception as e:
-          {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name)
+          {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name, request_options=request_options)
 
           raise e
 
-    {{^isSyncClient}}async {{/isSyncClient}}def index_exists(self, index_name: str) -> bool:
+    {{^isSyncClient}}async {{/isSyncClient}}def index_exists(
+        self,
+        index_name: str,
+        request_options: Optional[Union[dict, RequestOptions]] = None,
+    ) -> bool:
         """
         Helper: Checks if the given `index_name` exists.
         """
         try:
-            {{^isSyncClient}}await {{/isSyncClient}}self.get_settings(index_name)
+            {{^isSyncClient}}await {{/isSyncClient}}self.get_settings(index_name, request_options=request_options)
         except Exception as e:
             if isinstance(e, RequestException) and e.status_code == 404:
                 return False

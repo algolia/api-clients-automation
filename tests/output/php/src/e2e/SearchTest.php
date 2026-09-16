@@ -210,7 +210,7 @@ class SearchTest extends TestCase
             ],
         );
 
-        $expected = json_decode('{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}', true);
+        $expected = json_decode('{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }
@@ -241,6 +241,25 @@ class SearchTest extends TestCase
         );
 
         $expected = json_decode('{"hits":[{"conditions":[{"alternatives":true,"anchoring":"contains","pattern":"zorro"}],"consequence":{"params":{"ignorePlurals":"true"},"filterPromotes":true,"promote":[{"objectIDs":["Æon Flux"],"position":0}]},"description":"test_rule","enabled":true,"objectID":"qr-1725004648916"}],"nbHits":1,"nbPages":1,"page":0}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+    }
+
+    #[TestDox('the classic engine accepts a Request-ID sent as a query parameter')]
+    public function testSearchRules1(): void
+    {
+        $client = $this->getClient();
+        $resp = $client->searchRules(
+            'cts_e2e_browse',
+            ['query' => 'zorro',
+            ],
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eQry11',
+                ], ]
+        );
+
+        $expected = json_decode('{"nbHits":1,"nbPages":1,"page":0}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }

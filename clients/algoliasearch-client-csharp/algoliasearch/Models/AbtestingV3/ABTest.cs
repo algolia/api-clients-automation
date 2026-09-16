@@ -113,11 +113,10 @@ public partial class ABTest
   public ABTestConfiguration Configuration { get; set; }
 
   /// <summary>
-  /// Unique migrated A/B test identifier.
+  /// Gets or Sets Decision
   /// </summary>
-  /// <value>Unique migrated A/B test identifier.</value>
-  [JsonPropertyName("migratedAbTestID")]
-  public int? MigratedAbTestID { get; set; }
+  [JsonPropertyName("decision")]
+  public Decision Decision { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object
@@ -136,7 +135,7 @@ public partial class ABTest
     sb.Append("  Status: ").Append(Status).Append("\n");
     sb.Append("  Variants: ").Append(Variants).Append("\n");
     sb.Append("  Configuration: ").Append(Configuration).Append("\n");
-    sb.Append("  MigratedAbTestID: ").Append(MigratedAbTestID).Append("\n");
+    sb.Append("  Decision: ").Append(Decision).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -177,10 +176,7 @@ public partial class ABTest
         Configuration == input.Configuration
         || (Configuration != null && Configuration.Equals(input.Configuration))
       )
-      && (
-        MigratedAbTestID == input.MigratedAbTestID
-        || MigratedAbTestID.Equals(input.MigratedAbTestID)
-      );
+      && (Decision == input.Decision || (Decision != null && Decision.Equals(input.Decision)));
   }
 
   /// <summary>
@@ -222,7 +218,10 @@ public partial class ABTest
       {
         hashCode = (hashCode * 59) + Configuration.GetHashCode();
       }
-      hashCode = (hashCode * 59) + MigratedAbTestID.GetHashCode();
+      if (Decision != null)
+      {
+        hashCode = (hashCode * 59) + Decision.GetHashCode();
+      }
       return hashCode;
     }
   }

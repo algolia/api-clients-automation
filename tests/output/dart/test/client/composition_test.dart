@@ -158,6 +158,29 @@ void main() {
     }
   });
 
+  test('the composition client sends a Request-ID', () async {
+    final requester = RequestInterceptor();
+    final client = CompositionClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6694',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/request-id/smoke/composition/dart",
+      );
+      expectBody(res, """{"status":"ok"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
   test('switch API key', () async {
     final requester = RequestInterceptor();
     final client = CompositionClient(

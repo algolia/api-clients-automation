@@ -2,6 +2,8 @@ package tests
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -49,6 +51,25 @@ func (e *EchoRequester) Request(req *http.Request, timeout time.Duration, connec
 		if len(split) == 2 {
 			e.Query.Add(split[0], split[1])
 		}
+	}
+
+	// Echo the request as a single Server-Sent Event, mirroring the JavaScript
+	// echo requester, so that streaming tests can assert on received events.
+	if req.Header.Get("Accept") == "text/event-stream" {
+		payload, err := json.Marshal(map[string]any{
+			"host":   e.Host,
+			"path":   e.Path,
+			"method": e.Method,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("cannot marshal echoed request: %w", err)
+		}
+
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{"Content-Type": []string{"text/event-stream"}},
+			Body:       io.NopCloser(strings.NewReader("data: " + string(payload) + "\n\n")),
+		}, nil
 	}
 
 	return &http.Response{

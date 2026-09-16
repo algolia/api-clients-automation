@@ -73,59 +73,74 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
    * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse addABTests(@Nonnull AddABTestsRequest addABTestsRequest, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(addABTestsAsync(addABTestsRequest, requestOptions));
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
    * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response addABTestsWithHTTPInfo(@Nonnull AddABTestsRequest addABTestsRequest, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(addABTestsWithHTTPInfoAsync(addABTestsRequest, requestOptions));
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
    * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse addABTests(@Nonnull AddABTestsRequest addABTestsRequest) throws AlgoliaRuntimeException {
     return this.addABTests(addABTestsRequest, null);
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST /3/abtests`.
    * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response addABTestsWithHTTPInfo(@Nonnull AddABTestsRequest addABTestsRequest) throws AlgoliaRuntimeException {
     return this.addABTestsWithHTTPInfo(addABTestsRequest, null);
   }
 
   /**
-   * (asynchronously) Creates a new A/B test.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests`. Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> addABTestsAsync(
     @Nonnull AddABTestsRequest addABTestsRequest,
     @Nullable RequestOptions requestOptions
@@ -137,13 +152,16 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new A/B test.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests`. Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> addABTestsWithHTTPInfoAsync(
     @Nonnull AddABTestsRequest addABTestsRequest,
     @Nullable RequestOptions requestOptions
@@ -155,21 +173,27 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates a new A/B test.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests`. Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> addABTestsAsync(@Nonnull AddABTestsRequest addABTestsRequest) throws AlgoliaRuntimeException {
     return this.addABTestsAsync(addABTestsRequest, null);
   }
 
   /**
-   * (asynchronously) Creates a new A/B test.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests`. Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> addABTestsWithHTTPInfoAsync(@Nonnull AddABTestsRequest addABTestsRequest)
     throws AlgoliaRuntimeException {
     return this.addABTestsWithHTTPInfoAsync(addABTestsRequest, null);
@@ -1046,57 +1070,72 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Deletes an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse deleteABTest(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteABTestAsync(id, requestOptions));
   }
 
   /**
-   * Deletes an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response deleteABTestWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteABTestWithHTTPInfoAsync(id, requestOptions));
   }
 
   /**
-   * Deletes an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse deleteABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.deleteABTest(id, null);
   }
 
   /**
-   * Deletes an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `DELETE
+   * /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response deleteABTestWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.deleteABTestWithHTTPInfo(id, null);
   }
 
   /**
-   * (asynchronously) Deletes an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `DELETE /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> deleteABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `deleteABTest`.");
@@ -1107,13 +1146,16 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `DELETE /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> deleteABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `deleteABTest`.");
@@ -1124,34 +1166,43 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `DELETE /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> deleteABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.deleteABTestAsync(id, null);
   }
 
   /**
-   * (asynchronously) Deletes an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `DELETE /3/abtests/{id}`. Deletes an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> deleteABTestWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.deleteABTestWithHTTPInfoAsync(id, null);
   }
 
   /**
-   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
-   * size and duration of an A/B test based on historical traffic.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * @param estimateABTestRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public EstimateABTestResponse estimateABTest(
     @Nonnull EstimateABTestRequest estimateABTestRequest,
     @Nullable RequestOptions requestOptions
@@ -1160,50 +1211,62 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
-   * size and duration of an A/B test based on historical traffic.
-   *
-   * @param estimateABTestRequest (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Response estimateABTestWithHTTPInfo(@Nonnull EstimateABTestRequest estimateABTestRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(estimateABTestWithHTTPInfoAsync(estimateABTestRequest, requestOptions));
-  }
-
-  /**
-   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
-   * size and duration of an A/B test based on historical traffic.
-   *
-   * @param estimateABTestRequest (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public EstimateABTestResponse estimateABTest(@Nonnull EstimateABTestRequest estimateABTestRequest) throws AlgoliaRuntimeException {
-    return this.estimateABTest(estimateABTestRequest, null);
-  }
-
-  /**
-   * Given the traffic percentage and the expected effect size, this endpoint estimates the sample
-   * size and duration of an A/B test based on historical traffic.
-   *
-   * @param estimateABTestRequest (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Response estimateABTestWithHTTPInfo(@Nonnull EstimateABTestRequest estimateABTestRequest) throws AlgoliaRuntimeException {
-    return this.estimateABTestWithHTTPInfo(estimateABTestRequest, null);
-  }
-
-  /**
-   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
    * estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * @param estimateABTestRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
+  public Response estimateABTestWithHTTPInfo(@Nonnull EstimateABTestRequest estimateABTestRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(estimateABTestWithHTTPInfoAsync(estimateABTestRequest, requestOptions));
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public EstimateABTestResponse estimateABTest(@Nonnull EstimateABTestRequest estimateABTestRequest) throws AlgoliaRuntimeException {
+    return this.estimateABTest(estimateABTestRequest, null);
+  }
+
+  /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this endpoint
+   * estimates the sample size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
+  public Response estimateABTestWithHTTPInfo(@Nonnull EstimateABTestRequest estimateABTestRequest) throws AlgoliaRuntimeException {
+    return this.estimateABTestWithHTTPInfo(estimateABTestRequest, null);
+  }
+
+  /**
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this
+   * endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+   *
+   * @param estimateABTestRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
+   */
+  @Deprecated
   public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(
     @Nonnull EstimateABTestRequest estimateABTestRequest,
     @Nullable RequestOptions requestOptions
@@ -1215,14 +1278,17 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
-   * estimates the sample size and duration of an A/B test based on historical traffic.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this
+   * endpoint estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * @param estimateABTestRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> estimateABTestWithHTTPInfoAsync(
     @Nonnull EstimateABTestRequest estimateABTestRequest,
     @Nullable RequestOptions requestOptions
@@ -1234,81 +1300,102 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
-   * estimates the sample size and duration of an A/B test based on historical traffic.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this
+   * endpoint estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * @param estimateABTestRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(@Nonnull EstimateABTestRequest estimateABTestRequest)
     throws AlgoliaRuntimeException {
     return this.estimateABTestAsync(estimateABTestRequest, null);
   }
 
   /**
-   * (asynchronously) Given the traffic percentage and the expected effect size, this endpoint
-   * estimates the sample size and duration of an A/B test based on historical traffic.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/estimate`. Given the traffic percentage and the expected effect size, this
+   * endpoint estimates the sample size and duration of an A/B test based on historical traffic.
    *
    * @param estimateABTestRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> estimateABTestWithHTTPInfoAsync(@Nonnull EstimateABTestRequest estimateABTestRequest)
     throws AlgoliaRuntimeException {
     return this.estimateABTestWithHTTPInfoAsync(estimateABTestRequest, null);
   }
 
   /**
-   * Retrieves the details for an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTest getABTest(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestAsync(id, requestOptions));
   }
 
   /**
-   * Retrieves the details for an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response getABTestWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestWithHTTPInfoAsync(id, requestOptions));
   }
 
   /**
-   * Retrieves the details for an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTest getABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.getABTest(id, null);
   }
 
   /**
-   * Retrieves the details for an A/B test by its ID.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET
+   * /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response getABTestWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.getABTestWithHTTPInfo(id, null);
   }
 
   /**
-   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
@@ -1319,13 +1406,16 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
@@ -1336,26 +1426,33 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.getABTestAsync(id, null);
   }
 
   /**
-   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests/{id}`. Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.getABTestWithHTTPInfoAsync(id, null);
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
@@ -1367,7 +1464,9 @@ public class AbtestingClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListABTestsResponse listABTests(
     Integer offset,
     Integer limit,
@@ -1379,6 +1478,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
@@ -1390,7 +1490,9 @@ public class AbtestingClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response listABTestsWithHTTPInfo(
     Integer offset,
     Integer limit,
@@ -1402,6 +1504,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
@@ -1411,13 +1514,16 @@ public class AbtestingClient extends ApiClient {
    * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
    *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ListABTestsResponse listABTests(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
     throws AlgoliaRuntimeException {
     return this.listABTests(offset, limit, indexPrefix, indexSuffix, null);
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
@@ -1427,13 +1533,16 @@ public class AbtestingClient extends ApiClient {
    * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
    *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response listABTestsWithHTTPInfo(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
     throws AlgoliaRuntimeException {
     return this.listABTestsWithHTTPInfo(offset, limit, indexPrefix, indexSuffix, null);
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1445,6 +1554,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1456,6 +1566,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1465,6 +1576,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `GET /3/abtests`.
    * Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1474,7 +1586,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
@@ -1485,7 +1598,9 @@ public class AbtestingClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListABTestsResponse> listABTestsAsync(
     Integer offset,
     Integer limit,
@@ -1505,7 +1620,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
@@ -1516,7 +1632,9 @@ public class AbtestingClient extends ApiClient {
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync(
     Integer offset,
     Integer limit,
@@ -1536,7 +1654,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
@@ -1545,14 +1664,17 @@ public class AbtestingClient extends ApiClient {
    * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
    *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ListABTestsResponse> listABTestsAsync(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
     throws AlgoliaRuntimeException {
     return this.listABTestsAsync(offset, limit, indexPrefix, indexSuffix, null);
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
@@ -1561,14 +1683,17 @@ public class AbtestingClient extends ApiClient {
    * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
    *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
     throws AlgoliaRuntimeException {
     return this.listABTestsWithHTTPInfoAsync(offset, limit, indexPrefix, indexSuffix, null);
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1579,7 +1704,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1590,7 +1716,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1599,7 +1726,8 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists all A/B tests you configured for this application.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `GET /3/abtests`. Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1608,57 +1736,72 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse stopABTest(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(stopABTestAsync(id, requestOptions));
   }
 
   /**
-   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response stopABTestWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(stopABTestWithHTTPInfoAsync(id, requestOptions));
   }
 
   /**
-   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public ABTestResponse stopABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.stopABTest(id, null);
   }
 
   /**
-   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by `POST
+   * /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public Response stopABTestWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.stopABTestWithHTTPInfo(id, null);
   }
 
   /**
-   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> stopABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `stopABTest`.");
@@ -1669,13 +1812,16 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> stopABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `stopABTest`.");
@@ -1686,21 +1832,27 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<ABTestResponse> stopABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.stopABTestAsync(id, null);
   }
 
   /**
-   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
+   * (asynchronously) This endpoint is deprecated. Use the A/B Testing API v3 instead. Replaced by
+   * `POST /3/abtests/{id}/stop`. Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
    * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
+   * @deprecated
    */
+  @Deprecated
   public CompletableFuture<Response> stopABTestWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
     return this.stopABTestWithHTTPInfoAsync(id, null);
   }

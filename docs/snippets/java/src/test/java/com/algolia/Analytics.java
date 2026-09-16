@@ -687,6 +687,22 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getPatternsFields method.
+  //
+  // getPatternsFields
+  void snippetForGetPatternsFields() throws Exception {
+    // >SEPARATOR getPatternsFields default
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    Catalog response = client.getPatternsFields();
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the getPurchaseRate method.
   //
   // get getPurchaseRate with minimal parameters
@@ -1144,6 +1160,163 @@ class SnippetAnalyticsClient {
 
     // Call the API
     GetUsersCountResponse response = client.getUsersCount("index", "1999-09-19", "2001-01-01", "tag");
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsDistribution method.
+  //
+  // queryPatternsDistribution
+  void snippetForQueryPatternsDistribution() throws Exception {
+    // >SEPARATOR queryPatternsDistribution default
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    Map response = client.queryPatternsDistribution(
+      new DistributionPayload()
+        .setDistributions(
+          Arrays.asList(
+            new DistributionDefinition()
+              .setKind("clickPosition")
+              .setBins(Arrays.asList(BinEdge.of(1), BinEdge.of(2), BinEdge.of(3), BinEdge.of(4), BinEdge.of(5)))
+          )
+        )
+        .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+      "index"
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsScalar method.
+  //
+  // queryPatternsScalar
+  void snippetForQueryPatternsScalar() throws Exception {
+    // >SEPARATOR queryPatternsScalar default
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    Map response = client.queryPatternsScalar(
+      new ScalarPayload()
+        .setMetrics(Arrays.asList(new FieldReference().setKind("conversionRate")))
+        .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+      "index"
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsTable method.
+  //
+  // queryPatternsTable with minimal parameters
+  void snippetForQueryPatternsTable() throws Exception {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    TableResponse response = client.queryPatternsTable(
+      new TablePayload()
+        .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+        .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+      "index"
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsTable method.
+  //
+  // queryPatternsTable with all parameters
+  void snippetForQueryPatternsTable1() throws Exception {
+    // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    TableResponse response = client.queryPatternsTable(
+      new TablePayload()
+        .setDomain("core")
+        .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+        .setGroupBy(Arrays.asList(new FieldReference().setKind("query")))
+        .setFilters(Arrays.asList(new FilterDefinition().setKind("clicked")))
+        .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index")))))
+        .setOrderBy(Arrays.asList(new OrderDefinition().setKind("searchesCount").setDirection(OrderDirection.DESC)))
+        .setLimit(100)
+        .setOffset(0),
+      "index"
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsTimeseries method.
+  //
+  // queryPatternsTimeseries with minimal parameters
+  void snippetForQueryPatternsTimeseries() throws Exception {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    TimeseriesResponse response = client.queryPatternsTimeseries(
+      new TimeseriesPayload()
+        .setMetrics(Arrays.asList(new FieldReference().setKind("searchesCount")))
+        .setParameters(Arrays.asList(new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("index"))))),
+      "index"
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the queryPatternsTimeseries method.
+  //
+  // queryPatternsTimeseries with all parameters
+  void snippetForQueryPatternsTimeseries1() throws Exception {
+    // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    TimeseriesResponse response = client.queryPatternsTimeseries(
+      new TimeseriesPayload()
+        .setDomain("core")
+        .setMetrics(
+          Arrays.asList(new FieldReference().setKind("searchesCount"), new FieldReference().setDomain("abtesting").setKind("isMsrQuery"))
+        )
+        .setGroupBy(Arrays.asList(new FieldReference().setKind("index")))
+        .setFilters(
+          Arrays.asList(
+            new FilterDefinition().setKind("clicked"),
+            new FilterDefinition().setKind("country").setOperator("=").setParameter(new ParameterReference().setKind("country"))
+          )
+        )
+        .setParameters(
+          Arrays.asList(
+            new ParameterDefinition().setKind("indices").setValue(ParameterValue.of(Arrays.asList("indexA", "indexB"))),
+            new ParameterDefinition().setKind("startDate").setValue(ParameterValue.of("2024-01-01T00:00:00Z")),
+            new ParameterDefinition().setKind("endDate").setValue(ParameterValue.of("2024-01-07T23:59:59Z")),
+            new ParameterDefinition().setKind("country").setValue(ParameterValue.of("FR"))
+          )
+        )
+        .setLimit(50)
+        .setOffset(0),
+      "indexA,indexB"
+    );
     // >LOG
     // print the response
     System.out.println(response);

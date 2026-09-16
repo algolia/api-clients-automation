@@ -103,6 +103,41 @@ Console.WriteLine(response);
   });
 });
 
+describe('streaming', () => {
+  it('strips `>LOG` markers from snippets without a `Call the API` section', () => {
+    expect(
+      JSON.stringify(
+        generateSnippetsJSON({
+          python: {
+            ope: {
+              default: `# Initialize the client
+client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+# Use the streaming variant to iterate over events
+for event in client.create_agent_completion_stream(
+    agent_id="agent-id",
+):
+    # >LOG
+    print(event.data)
+`,
+            },
+          },
+        } as unknown as CodeSamples),
+        null,
+        2,
+      ),
+    ).toMatchInlineSnapshot(`
+      "{
+        "python": {
+          "ope": {
+            "default": "# Initialize the client\\nclient = AgentStudioClientSync(\\"ALGOLIA_APPLICATION_ID\\", \\"ALGOLIA_API_KEY\\")\\n\\n# Use the streaming variant to iterate over events\\nfor event in client.create_agent_completion_stream(\\n    agent_id=\\"agent-id\\",\\n):\\n    print(event.data)\\n"
+          }
+        }
+      }"
+    `);
+  });
+});
+
 describe('initialize', () => {
   it("doesn't stop at `client`", () => {
     expect(

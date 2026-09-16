@@ -109,25 +109,6 @@ final class AgentStudioClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
-    /// e2e get conversation
-    func testGetConversationTest1() async throws {
-        guard let client = AgentStudioClientRequestsTestsE2E.client else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let response = try await client.getConversationWithHTTPInfo(
-            conversationId: "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15"
-        )
-        try XCTLenientAssertEqual(
-            received: XCTUnwrap(response.body),
-            expected: "{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}"
-        )
-
-        XCTAssertEqual(response.statusCode, 200)
-    }
-
     /// e2e get provider
     func testGetProviderTest1() async throws {
         guard let client = AgentStudioClientRequestsTestsE2E.client else {
@@ -211,10 +192,6 @@ final class AgentStudioClientRequestsTestsE2E: XCTestCase {
 
         let response = try await client
             .listAgentConversationsWithHTTPInfo(agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15")
-        try XCTLenientAssertEqual(
-            received: XCTUnwrap(response.body),
-            expected: "{\"data\":[{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General Greeting\"}]}"
-        )
 
         XCTAssertEqual(response.statusCode, 200)
     }

@@ -178,7 +178,8 @@ class SearchClient(
       defaultWriteTimeout = writeTimeout(),
       defaultConnectTimeout = connectTimeout(),
       formats = JsonSupport.format,
-      options = clientOptions
+      options = clientOptions,
+      requestIdSupport = true
     ) {
 
   @volatile private[algoliasearch] var ingestionTransporter: Option[IngestionClient] = None

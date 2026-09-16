@@ -13,6 +13,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
+
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/sse"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
@@ -262,7 +265,7 @@ func (c *APIClient) BulkCreateAllowedDomains(r ApiBulkCreateAllowedDomainsReques
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -523,7 +526,7 @@ func (c *APIClient) CreateAgent(r ApiCreateAgentRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -670,7 +673,7 @@ func (c *APIClient) CreateAgentAllowedDomain(r ApiCreateAgentAllowedDomainReques
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -971,10 +974,144 @@ func (c *APIClient) CreateAgentCompletion(r ApiCreateAgentCompletionRequest, opt
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
+}
+
+/*
+CreateAgentCompletionStreamRaw calls the API and returns a raw sse.Decoder over the Server-Sent Events of the response (CreateAgentCompletion streaming version).
+
+    Create a completion for the specified agent.
+
+This endpoint handles two types of requests:
+1. Normal completion request: User message -> Agent response
+2. Tool approval response: User approval -> Execute tool -> Agent response
+
+Tool Approval Flow (for MCP tools with requiresApproval: true):
+- Request 1: User sends message -> Agent requests tool call -> Return approval request
+- Request 2: User approves -> Execute tool -> Agent continues with result.
+
+      Required API Key ACLs:
+      - search
+
+  Request can be constructed by NewApiCreateAgentCompletionRequest with parameters below.
+    @param agentId string - The agentId.
+    @param compatibilityMode CompatibilityMode - Compatibility mode for the completion API.
+    @param agentCompletionRequest AgentCompletionRequest
+    @param stream bool - Whether to stream the response or not.
+    @param cache bool - Use cached responses if available.
+    @param memory bool - Set to false to disable memory (enabled by default).
+    @param analytics bool - Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
+    @param xAlgoliaSecureUserToken string - The X-Algolia-Secure-User-Token.
+  @param opts ...RequestOption - Optional parameters for the API call
+  @return sse.Decoder - A decoder over the raw events, each event's Data field contains a JSON-encoded map[string]any. The caller is responsible for closing it.
+  @return error - An error if the API call fails
+*/
+//nolint:ireturn // The interface is the API, the implementation is not exposed.
+func (c *APIClient) CreateAgentCompletionStreamRaw(r ApiCreateAgentCompletionRequest, opts ...RequestOption) (sse.Decoder, error) {
+	requestPath := "/agent-studio/1/agents/{agentId}/completions"
+	requestPath = strings.ReplaceAll(requestPath, "{agentId}", url.PathEscape(utils.ParameterToString(r.agentId)))
+
+	if r.agentId == "" {
+		return nil, reportError("Parameter `agentId` is required when calling `CreateAgentCompletion`.")
+	}
+
+	if r.agentCompletionRequest == nil {
+		return nil, reportError("Parameter `agentCompletionRequest` is required when calling `CreateAgentCompletion`.")
+	}
+
+	conf := config{
+		context:      context.Background(),
+		queryParams:  url.Values{},
+		headerParams: map[string]string{},
+	}
+
+	conf.queryParams.Set("compatibilityMode", utils.QueryParameterToString(r.compatibilityMode))
+
+	if !utils.IsNilOrEmpty(r.stream) {
+		conf.queryParams.Set("stream", utils.QueryParameterToString(*r.stream))
+	}
+
+	if !utils.IsNilOrEmpty(r.cache) {
+		conf.queryParams.Set("cache", utils.QueryParameterToString(*r.cache))
+	}
+
+	if !utils.IsNilOrEmpty(r.memory) {
+		conf.queryParams.Set("memory", utils.QueryParameterToString(*r.memory))
+	}
+
+	if !utils.IsNilOrEmpty(r.analytics) {
+		conf.queryParams.Set("analytics", utils.QueryParameterToString(*r.analytics))
+	}
+
+	if !utils.IsNilOrEmpty(r.xAlgoliaSecureUserToken) {
+		conf.headerParams["X-Algolia-Secure-User-Token"] = utils.ParameterToString(*r.xAlgoliaSecureUserToken)
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		opt.apply(&conf)
+	}
+
+	var postBody any
+
+	// body params
+	postBody = r.agentCompletionRequest
+
+	req, err := c.prepareRequest(conf.context, requestPath, http.MethodPost, postBody, conf.bodyParams, conf.headerParams, conf.queryParams)
+	if err != nil {
+		return nil, err
+	}
+
+	//nolint:bodyclose // The body is closed by the decoder.
+	res, err := c.callAPIStream(req, false, conf.timeouts)
+	if err != nil {
+		return nil, err
+	}
+
+	return sse.NewEventStreamDecoder(res.Body), nil
+}
+
+/*
+CreateAgentCompletionStream calls the API and returns a typed sse.Stream over the Server-Sent Events of the response (CreateAgentCompletion streaming version).
+
+	Create a completion for the specified agent.
+
+This endpoint handles two types of requests:
+1. Normal completion request: User message -> Agent response
+2. Tool approval response: User approval -> Execute tool -> Agent response
+
+Tool Approval Flow (for MCP tools with requiresApproval: true):
+- Request 1: User sends message -> Agent requests tool call -> Return approval request
+- Request 2: User approves -> Execute tool -> Agent continues with result.
+
+	    Required API Key ACLs:
+	    - search
+
+	Request can be constructed by NewApiCreateAgentCompletionRequest with parameters below.
+	  @param agentId string - The agentId.
+	  @param compatibilityMode CompatibilityMode - Compatibility mode for the completion API.
+	  @param agentCompletionRequest AgentCompletionRequest
+	  @param stream bool - Whether to stream the response or not.
+	  @param cache bool - Use cached responses if available.
+	  @param memory bool - Set to false to disable memory (enabled by default).
+
+
+	  @param analytics bool - Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
+	  @param xAlgoliaSecureUserToken string - The X-Algolia-Secure-User-Token.
+	@param opts ...RequestOption - Optional parameters for the API call
+	@return *sse.Stream[map[string]any] - A stream deserializing each event's payload. The caller is responsible for closing it.
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) CreateAgentCompletionStream(r ApiCreateAgentCompletionRequest, opts ...RequestOption) (*sse.Stream[map[string]any], error) {
+	decoder, err := c.CreateAgentCompletionStreamRaw(r, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return sse.NewStream[map[string]any](decoder, nil), nil
 }
 
 func (r *ApiCreateFeedbackRequest) UnmarshalJSON(b []byte) error {
@@ -1093,7 +1230,7 @@ func (c *APIClient) CreateFeedback(r ApiCreateFeedbackRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1215,7 +1352,7 @@ func (c *APIClient) CreateProvider(r ApiCreateProviderRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1337,7 +1474,7 @@ func (c *APIClient) CreateSecretKey(r ApiCreateSecretKeyRequest, opts ...Request
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1473,7 +1610,7 @@ func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1609,7 +1746,7 @@ func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1772,7 +1909,7 @@ func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -1935,7 +2072,7 @@ func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...RequestOption) (*ma
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -2936,7 +3073,7 @@ func (c *APIClient) ExportConversations(r ApiExportConversationsRequest, opts ..
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3051,7 +3188,7 @@ func (c *APIClient) GetAgent(r ApiGetAgentRequest, opts ...RequestOption) (*Agen
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3185,7 +3322,7 @@ func (c *APIClient) GetAllowedDomain(r ApiGetAllowedDomainRequest, opts ...Reque
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3260,7 +3397,7 @@ func (c *APIClient) GetAgentStudioConfiguration(opts ...RequestOption) (*Applica
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3442,7 +3579,7 @@ func (c *APIClient) GetConversation(r ApiGetConversationRequest, opts ...Request
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3557,7 +3694,7 @@ func (c *APIClient) GetProvider(r ApiGetProviderRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3672,7 +3809,7 @@ func (c *APIClient) GetSecretKey(r ApiGetSecretKeyRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -3787,7 +3924,7 @@ func (c *APIClient) GetUserData(r ApiGetUserDataRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4033,7 +4170,7 @@ func (c *APIClient) ListAgentAllowedDomains(r ApiListAgentAllowedDomainsRequest,
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4316,7 +4453,7 @@ func (c *APIClient) ListAgentConversations(r ApiListAgentConversationsRequest, o
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4483,7 +4620,7 @@ func (c *APIClient) ListAgents(r ApiListAgentsRequest, opts ...RequestOption) (*
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4558,7 +4695,7 @@ func (c *APIClient) ListModels(opts ...RequestOption) (*map[string][]string, err
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4673,7 +4810,7 @@ func (c *APIClient) ListProviderModels(r ApiListProviderModelsRequest, opts ...R
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4816,7 +4953,7 @@ func (c *APIClient) ListProviders(r ApiListProvidersRequest, opts ...RequestOpti
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -4959,7 +5096,7 @@ func (c *APIClient) ListSecretKeys(r ApiListSecretKeysRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5074,7 +5211,7 @@ func (c *APIClient) PublishAgent(r ApiPublishAgentRequest, opts ...RequestOption
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5189,7 +5326,7 @@ func (c *APIClient) UnpublishAgent(r ApiUnpublishAgentRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5330,7 +5467,7 @@ func (c *APIClient) UpdateAgent(r ApiUpdateAgentRequest, opts ...RequestOption) 
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5452,7 +5589,7 @@ func (c *APIClient) UpdateConfiguration(r ApiUpdateConfigurationRequest, opts ..
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5596,7 +5733,7 @@ func (c *APIClient) UpdateProvider(r ApiUpdateProviderRequest, opts ...RequestOp
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil
@@ -5737,7 +5874,7 @@ func (c *APIClient) UpdateSecretKey(r ApiUpdateSecretKeyRequest, opts ...Request
 
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
+		return returnValue, errs.NewDeserializationError(err, res.Header.Get("Correlation-ID"))
 	}
 
 	return returnValue, nil

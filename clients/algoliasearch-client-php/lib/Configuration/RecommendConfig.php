@@ -19,6 +19,8 @@ class RecommendConfig extends Configuration
             'writeTimeout' => 30,
             'connectTimeout' => 2,
             'defaultHeaders' => [],
+            'requestIdEnabled' => true,
+            'maxRateLimitRetries' => 3,
         ];
     }
 }

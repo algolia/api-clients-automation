@@ -16,15 +16,15 @@ module {{moduleName}}
   # Configuration options for the ingestion transporter used by *_with_transformation helpers.
   # When passed to SearchClient.with_transformation or set via set_transformation_options,
   # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
-  # no compression). Only fields explicitly set here override those defaults.
+  # no compression, 3 waits on HTTP 429). Only fields explicitly set here override those defaults.
   # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
   class TransformationOptions
     attr_accessor :region, :connect_timeout, :read_timeout, :write_timeout,
-                  :hosts, :compression_type, :header_params
+                  :hosts, :compression_type, :header_params, :max_rate_limit_retries
 
     def initialize(region, opts = {})
       raise ArgumentError, "`region` is required in `TransformationOptions`. See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion" if region.nil? || region.to_s.strip.empty?
-      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params max_rate_limit_retries]
       unknown = opts.keys - valid_keys
       raise ArgumentError, "Unknown TransformationOptions keys: #{unknown.join(', ')}. Valid keys are: #{valid_keys.join(', ')}" unless unknown.empty?
       @region = region
@@ -34,6 +34,7 @@ module {{moduleName}}
       @hosts = opts[:hosts]
       @compression_type = opts[:compression_type]
       @header_params = opts[:header_params]
+      @max_rate_limit_retries = opts[:max_rate_limit_retries]
     end
   end
 
@@ -59,7 +60,8 @@ module {{moduleName}}
         config.write_timeout = {{x-timeouts.server.write}}
       end
 
-      @api_client = Algolia::ApiClient.new(config)
+      # Per-client capability; an explicit config.request_id_enabled always wins.
+      @api_client = Algolia::ApiClient.new(config, request_id_support: {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}})
       {{#isSearchClient}}
       @ingestion_transporter = nil
       if config.transformation_options

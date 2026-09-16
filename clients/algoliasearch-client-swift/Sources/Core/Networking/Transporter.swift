@@ -16,6 +16,7 @@ open class Transporter {
     let retryStrategy: RetryStrategy
     let requestBuilder: RequestBuilder
     let exposeIntermediateErrors: Bool
+    var sleep: (UInt64) async throws -> Void
 
     public init(
         configuration: BaseConfiguration,
@@ -26,6 +27,7 @@ open class Transporter {
         self.configuration = configuration
         self.retryStrategy = retryStrategy ?? AlgoliaRetryStrategy(configuration: configuration)
         self.exposeIntermediateErrors = exposeIntermediateErrors
+        self.sleep = { try await Task.sleep(nanoseconds: $0) }
 
         guard let requestBuilder else {
             let sessionConfiguration: URLSessionConfiguration = .default
@@ -59,10 +61,16 @@ open class Transporter {
 
         let callType: CallType = useReadTransporter ? CallType.read : httpMethod.toCallType()
         let hostIterator: HostIterator = self.retryStrategy.retryableHosts(for: callType)
+
+        // The Request-ID is minted once per execution, before the host loop, so that every
+        // retry attempt shares the same value and each subsequent call gets a fresh one.
+        // The caller-precedence rules live in `RequestID.withRequestID`.
+        let requestOptions = RequestID.withRequestID(requestOptions, configuration: self.configuration)
         let headers: [String: String] = requestOptions?.headers ?? [:]
         var body: Data? = nil
         var urlComponents = URLComponents()
         var intermediateErrors: [Error] = []
+        var rateLimitRetriesLeft = self.configuration.maxRateLimitRetries
 
         if let requestOptionsData = requestOptions?.body {
             body = try JSONSerialization.data(withJSONObject: requestOptionsData as Any, options: [])
@@ -134,22 +142,37 @@ open class Transporter {
 
             request.httpBody = body
 
-            do {
-                let response: Response<T> = try await requestBuilder.execute(
-                    urlRequest: request, timeout: timeout
-                )
-                self.retryStrategy.notify(host: host, error: nil)
-                return response
-            } catch let cancellationError as CancellationError {
-                throw cancellationError
-            } catch {
-                self.retryStrategy.notify(host: host, error: error)
+            while true {
+                do {
+                    let response: Response<T> = try await requestBuilder.execute(
+                        urlRequest: request, timeout: timeout
+                    )
+                    self.retryStrategy.notify(host: host, error: nil)
+                    return response
+                } catch let cancellationError as CancellationError {
+                    throw cancellationError
+                } catch {
+                    if let httpError = RateLimitRetry.httpError(from: error),
+                       RateLimitRetry.isRateLimited(httpError),
+                       rateLimitRetriesLeft > 0 {
+                        rateLimitRetriesLeft -= 1
+                        // keep the waited-out 429 (and its Correlation-ID) visible if the request
+                        // later dies on the other hosts, as the other clients do
+                        intermediateErrors.append(error)
+                        let wait = RateLimitRetry.waitNanoseconds(from: httpError.headers)
+                        try await self.sleep(wait)
+                        continue
+                    }
 
-                guard self.retryStrategy.canRetry(inCaseOf: error) else {
-                    throw error
+                    self.retryStrategy.notify(host: host, error: error)
+
+                    guard self.retryStrategy.canRetry(inCaseOf: error) else {
+                        throw error
+                    }
+
+                    intermediateErrors.append(error)
+                    break
                 }
-
-                intermediateErrors.append(error)
             }
         }
 

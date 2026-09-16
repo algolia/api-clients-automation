@@ -42,6 +42,8 @@ import org.json4s._
 
 /** Log
   *
+  * @param cid
+  *   Correlation ID of the logged API request, also returned in that request's `Correlation-ID` response header.
   * @param timestamp
   *   Date and time of the API request, in RFC 3339 format.
   * @param method
@@ -74,6 +76,7 @@ import org.json4s._
   *   Queries performed for the given request.
   */
 case class Log(
+    cid: Option[String] = scala.None,
     timestamp: String,
     method: String,
     answerCode /* answer_code */: String,

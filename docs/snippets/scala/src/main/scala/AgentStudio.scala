@@ -1199,7 +1199,7 @@ class SnippetAgentStudioClient {
     * getConversation
     */
   def snippetForAgentStudioClientGetConversation(): Unit = {
-    // >SEPARATOR getConversation getConversation
+    // >SEPARATOR getConversation default
     // Initialize the client
     val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1207,29 +1207,6 @@ class SnippetAgentStudioClient {
     val response = Await.result(
       client.getConversation(
         conversationId = "test-conversation-id",
-        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
-      ),
-      Duration(100, "sec")
-    )
-    // >LOG
-    // print the response
-    println(response)
-    // SEPARATOR<
-  }
-
-  /** Snippet for the getConversation method.
-    *
-    * e2e get conversation
-    */
-  def snippetForAgentStudioClientGetConversation1(): Unit = {
-    // >SEPARATOR getConversation e2e get conversation
-    // Initialize the client
-    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = Await.result(
-      client.getConversation(
-        conversationId = "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
         agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
       ),
       Duration(100, "sec")

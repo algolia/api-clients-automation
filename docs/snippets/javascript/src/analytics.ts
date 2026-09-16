@@ -674,6 +674,24 @@ export async function snippetForGetNoResultsRate1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getPatternsFields method.
+//
+// getPatternsFields
+export async function snippetForGetPatternsFields(): Promise<void> {
+  // >SEPARATOR getPatternsFields default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.getPatternsFields();
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getPurchaseRate method.
 //
 // get getPurchaseRate with minimal parameters
@@ -1248,6 +1266,157 @@ export async function snippetForGetUsersCount1(): Promise<void> {
     startDate: '1999-09-19',
     endDate: '2001-01-01',
     tags: 'tag',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsDistribution method.
+//
+// queryPatternsDistribution
+export async function snippetForQueryPatternsDistribution(): Promise<void> {
+  // >SEPARATOR queryPatternsDistribution default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsDistribution({
+    distributionPayload: {
+      distributions: [{ kind: 'clickPosition', bins: [1, 2, 3, 4, 5] }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+    },
+    index: 'index',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsScalar method.
+//
+// queryPatternsScalar
+export async function snippetForQueryPatternsScalar(): Promise<void> {
+  // >SEPARATOR queryPatternsScalar default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsScalar({
+    scalarPayload: { metrics: [{ kind: 'conversionRate' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+    index: 'index',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsTable method.
+//
+// queryPatternsTable with minimal parameters
+export async function snippetForQueryPatternsTable(): Promise<void> {
+  // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsTable({
+    tablePayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+    index: 'index',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsTable method.
+//
+// queryPatternsTable with all parameters
+export async function snippetForQueryPatternsTable1(): Promise<void> {
+  // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsTable({
+    tablePayload: {
+      domain: 'core',
+      metrics: [{ kind: 'searchesCount' }],
+      groupBy: [{ kind: 'query' }],
+      filters: [{ kind: 'clicked' }],
+      parameters: [{ kind: 'indices', value: ['index'] }],
+      orderBy: [{ kind: 'searchesCount', direction: 'desc' }],
+      limit: 100,
+      offset: 0,
+    },
+    index: 'index',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsTimeseries method.
+//
+// queryPatternsTimeseries with minimal parameters
+export async function snippetForQueryPatternsTimeseries(): Promise<void> {
+  // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsTimeseries({
+    timeseriesPayload: { metrics: [{ kind: 'searchesCount' }], parameters: [{ kind: 'indices', value: ['index'] }] },
+    index: 'index',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the queryPatternsTimeseries method.
+//
+// queryPatternsTimeseries with all parameters
+export async function snippetForQueryPatternsTimeseries1(): Promise<void> {
+  // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAnalytics({ region: 'us' });
+
+  // Call the API
+  const response = await client.queryPatternsTimeseries({
+    timeseriesPayload: {
+      domain: 'core',
+      metrics: [{ kind: 'searchesCount' }, { domain: 'abtesting', kind: 'isMsrQuery' }],
+      groupBy: [{ kind: 'index' }],
+      filters: [{ kind: 'clicked' }, { kind: 'country', operator: '=', parameter: { kind: 'country' } }],
+      parameters: [
+        { kind: 'indices', value: ['indexA', 'indexB'] },
+        { kind: 'startDate', value: '2024-01-01T00:00:00Z' },
+        { kind: 'endDate', value: '2024-01-07T23:59:59Z' },
+        { kind: 'country', value: 'FR' },
+      ],
+      limit: 50,
+      offset: 0,
+    },
+    index: 'indexA,indexB',
   });
 
   // >LOG

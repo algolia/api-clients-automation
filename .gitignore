@@ -61,3 +61,6 @@ swiftformat
 .agents/plans/
 
 foo
+
+# reports saved by the api-clients-review skill
+.agents/reviews/

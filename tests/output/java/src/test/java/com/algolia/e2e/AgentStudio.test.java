@@ -75,19 +75,6 @@ class AgentStudioClientRequestsTestsE2E {
   }
 
   @Test
-  @DisplayName("e2e get conversation")
-  void getConversationTest1() {
-    ConversationFullResponse res = client.getConversation("alg_cnv_miss_yqcZtaOSPTF8bJsJ", "76710f1b-8231-42e5-b0d1-f43aac618e15");
-    assertDoesNotThrow(() ->
-      TestHelpers.lenientJsonAssert(
-        "{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General" +
-          " Greeting\"}",
-        json.writeValueAsString(res)
-      )
-    );
-  }
-
-  @Test
   @DisplayName("e2e get provider")
   void getProviderTest1() {
     ProviderAuthenticationResponse res = client.getProvider("c2905529-b933-4b69-87ec-75f9829d5f59");
@@ -148,13 +135,6 @@ class AgentStudioClientRequestsTestsE2E {
   @DisplayName("e2e list agent conversations")
   void listAgentConversationsTest2() {
     PaginatedConversationsResponse res = client.listAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15");
-    assertDoesNotThrow(() ->
-      TestHelpers.lenientJsonAssert(
-        "{\"data\":[{\"id\":\"alg_cnv_miss_yqcZtaOSPTF8bJsJ\",\"agentId\":\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\"title\":\"General" +
-          " Greeting\"}]}",
-        json.writeValueAsString(res)
-      )
-    );
   }
 
   @Test

@@ -55,6 +55,10 @@ class {{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}Config(BaseConfig):
         self.write_timeout = {{x-timeouts.server.write}}
         self.connect_timeout = {{x-timeouts.server.connect}}
 
+        {{#requestIdSupport}}
+        self.request_id_enabled = True
+
+        {{/requestIdSupport}}
         self._user_agent = UserAgent()
         self.add_user_agent("{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}", __version__)
 

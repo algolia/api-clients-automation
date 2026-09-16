@@ -52,6 +52,8 @@ class IngestionConfig extends ConfigWithRegion
             'writeTimeout' => 25,
             'connectTimeout' => 25,
             'defaultHeaders' => [],
+            'requestIdEnabled' => false,
+            'maxRateLimitRetries' => 3,
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
         ];
     }

@@ -1133,6 +1133,28 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// getPatternsFields
+    func testGetPatternsFieldsTest() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getPatternsFieldsWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/fields")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// get getPurchaseRate with minimal parameters
     func testGetPurchaseRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
@@ -2019,6 +2041,278 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
                 .data(using: .utf8)
         )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsDistribution
+    func testQueryPatternsDistributionTest() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsDistributionWithHTTPInfo(
+            distributionPayload: DistributionPayload(distributions: [DistributionDefinition(
+                kind: "clickPosition",
+                bins: [BinEdge.int(1), BinEdge.int(2), BinEdge.int(3), BinEdge.int(4), BinEdge.int(5)]
+            )], parameters: [ParameterDefinition(kind: "indices", value: ParameterValue.arrayOfString(["index"]))]),
+            index: "index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"distributions\":[{\"kind\":\"clickPosition\",\"bins\":[1,2,3,4,5]}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/distribution")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsScalar
+    func testQueryPatternsScalarTest() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsScalarWithHTTPInfo(
+            scalarPayload: ScalarPayload(
+                metrics: [FieldReference(kind: "conversionRate")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"metrics\":[{\"kind\":\"conversionRate\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/scalar")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsTable with minimal parameters
+    func testQueryPatternsTableTest() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsTableWithHTTPInfo(
+            tablePayload: TablePayload(
+                metrics: [FieldReference(kind: "searchesCount")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/table")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsTable with all parameters
+    func testQueryPatternsTableTest1() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsTableWithHTTPInfo(
+            tablePayload: TablePayload(
+                domain: "core",
+                metrics: [FieldReference(kind: "searchesCount")],
+                groupBy: [FieldReference(kind: "query")],
+                filters: [FilterDefinition(kind: "clicked")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )],
+                orderBy: [OrderDefinition(kind: "searchesCount", direction: OrderDirection.desc)],
+                limit: 100,
+                offset: 0
+            ),
+            index: "index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"}],\"groupBy\":[{\"kind\":\"query\"}],\"filters\":[{\"kind\":\"clicked\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}],\"orderBy\":[{\"kind\":\"searchesCount\",\"direction\":\"desc\"}],\"limit\":100,\"offset\":0}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/table")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsTimeseries with minimal parameters
+    func testQueryPatternsTimeseriesTest() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsTimeseriesWithHTTPInfo(
+            timeseriesPayload: TimeseriesPayload(
+                metrics: [FieldReference(kind: "searchesCount")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"metrics\":[{\"kind\":\"searchesCount\"}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"index\"]}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/timeseries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// queryPatternsTimeseries with all parameters
+    func testQueryPatternsTimeseriesTest1() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.queryPatternsTimeseriesWithHTTPInfo(
+            timeseriesPayload: TimeseriesPayload(domain: "core", metrics: [
+                FieldReference(kind: "searchesCount"),
+                FieldReference(domain: "abtesting", kind: "isMsrQuery"),
+            ], groupBy: [FieldReference(kind: "index")], filters: [
+                FilterDefinition(kind: "clicked"),
+                FilterDefinition(kind: "country", operator: "=", parameter: ParameterReference(kind: "country")),
+            ], parameters: [
+                ParameterDefinition(kind: "indices", value: ParameterValue.arrayOfString(["indexA", "indexB"])),
+                ParameterDefinition(kind: "startDate", value: ParameterValue.string("2024-01-01T00:00:00Z")),
+                ParameterDefinition(kind: "endDate", value: ParameterValue.string("2024-01-07T23:59:59Z")),
+                ParameterDefinition(kind: "country", value: ParameterValue.string("FR")),
+            ], limit: 50, offset: 0),
+            index: "indexA,indexB"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"domain\":\"core\",\"metrics\":[{\"kind\":\"searchesCount\"},{\"domain\":\"abtesting\",\"kind\":\"isMsrQuery\"}],\"groupBy\":[{\"kind\":\"index\"}],\"filters\":[{\"kind\":\"clicked\"},{\"kind\":\"country\",\"operator\":\"=\",\"parameter\":{\"kind\":\"country\"}}],\"parameters\":[{\"kind\":\"indices\",\"value\":[\"indexA\",\"indexB\"]},{\"kind\":\"startDate\",\"value\":\"2024-01-01T00:00:00Z\"},{\"kind\":\"endDate\",\"value\":\"2024-01-07T23:59:59Z\"},{\"kind\":\"country\",\"value\":\"FR\"}],\"limit\":50,\"offset\":0}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/patterns/timeseries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"indexA%2CindexB\"}".data(using: .utf8))
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters

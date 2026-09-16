@@ -441,6 +441,41 @@ func TestComposition_GetComposition(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
+	t.Run("the Correlation-ID ends with the sent Request-ID", func(t *testing.T) {
+		_, err := client.GetComposition(client.NewApiGetCompositionRequest(
+			"id1"), composition.WithHeaderParam("request-id", "CtsE2eEcho4"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/id1", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"request-id":"CtsE2eEcho4"}`), &headers))
+
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+	})
+	t.Run("the Correlation-ID ends with the Request-ID sent as a query parameter", func(t *testing.T) {
+		_, err := client.GetComposition(client.NewApiGetCompositionRequest(
+			"id1"), composition.WithQueryParam("x-algolia-request-id", "CtsE2eEchoQ"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/id1", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-request-id":"CtsE2eEchoQ"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestComposition_GetRule(t *testing.T) {

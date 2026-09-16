@@ -603,6 +603,23 @@ def snippet_for_get_no_results_rate1
   # SEPARATOR<
 end
 
+# Snippet for the getPatternsFields method.
+#
+# getPatternsFields
+def snippet_for_get_patterns_fields
+  # >SEPARATOR getPatternsFields default
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_patterns_fields
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the getPurchaseRate method.
 #
 # get getPurchaseRate with minimal parameters
@@ -1084,6 +1101,170 @@ def snippet_for_get_users_count1
 
   # Call the API
   response = client.get_users_count("index", "1999-09-19", "2001-01-01", "tag")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsDistribution method.
+#
+# queryPatternsDistribution
+def snippet_for_query_patterns_distribution
+  # >SEPARATOR queryPatternsDistribution default
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_distribution(
+    Algolia::Analytics::DistributionPayload.new(
+      distributions: [Algolia::Analytics::DistributionDefinition.new(kind: "clickPosition", bins: [1, 2, 3, 4, 5])],
+      parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+    ),
+    "index"
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsScalar method.
+#
+# queryPatternsScalar
+def snippet_for_query_patterns_scalar
+  # >SEPARATOR queryPatternsScalar default
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_scalar(
+    Algolia::Analytics::ScalarPayload.new(
+      metrics: [Algolia::Analytics::FieldReference.new(kind: "conversionRate")],
+      parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+    ),
+    "index"
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsTable method.
+#
+# queryPatternsTable with minimal parameters
+def snippet_for_query_patterns_table
+  # >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_table(
+    Algolia::Analytics::TablePayload.new(
+      metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+      parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+    ),
+    "index"
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsTable method.
+#
+# queryPatternsTable with all parameters
+def snippet_for_query_patterns_table1
+  # >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_table(
+    Algolia::Analytics::TablePayload.new(
+      domain: "core",
+      metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+      group_by: [Algolia::Analytics::FieldReference.new(kind: "query")],
+      filters: [Algolia::Analytics::FilterDefinition.new(kind: "clicked")],
+      parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])],
+      order_by: [Algolia::Analytics::OrderDefinition.new(kind: "searchesCount", direction: "desc")],
+      limit: 100,
+      offset: 0
+    ),
+    "index"
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsTimeseries method.
+#
+# queryPatternsTimeseries with minimal parameters
+def snippet_for_query_patterns_timeseries
+  # >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_timeseries(
+    Algolia::Analytics::TimeseriesPayload.new(
+      metrics: [Algolia::Analytics::FieldReference.new(kind: "searchesCount")],
+      parameters: [Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["index"])]
+    ),
+    "index"
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the queryPatternsTimeseries method.
+#
+# queryPatternsTimeseries with all parameters
+def snippet_for_query_patterns_timeseries1
+  # >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.query_patterns_timeseries(
+    Algolia::Analytics::TimeseriesPayload.new(
+      domain: "core",
+      metrics: [
+        Algolia::Analytics::FieldReference.new(kind: "searchesCount"),
+        Algolia::Analytics::FieldReference.new(domain: "abtesting", kind: "isMsrQuery")
+      ],
+      group_by: [Algolia::Analytics::FieldReference.new(kind: "index")],
+      filters: [
+        Algolia::Analytics::FilterDefinition.new(kind: "clicked"),
+        Algolia::Analytics::FilterDefinition.new(
+          kind: "country",
+          operator: "=",
+          parameter: Algolia::Analytics::ParameterReference.new(kind: "country")
+        )
+      ],
+      parameters: [
+        Algolia::Analytics::ParameterDefinition.new(kind: "indices", value: ["indexA", "indexB"]),
+        Algolia::Analytics::ParameterDefinition.new(kind: "startDate", value: "2024-01-01T00:00:00Z"),
+        Algolia::Analytics::ParameterDefinition.new(kind: "endDate", value: "2024-01-07T23:59:59Z"),
+        Algolia::Analytics::ParameterDefinition.new(kind: "country", value: "FR")
+      ],
+      limit: 50,
+      offset: 0
+    ),
+    "indexA,indexB"
+  )
 
   # >LOG
   # print the response

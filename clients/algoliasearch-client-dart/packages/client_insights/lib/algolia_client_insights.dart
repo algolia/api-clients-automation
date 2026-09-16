@@ -19,6 +19,8 @@ export 'src/model/converted_object_ids_after_search.dart';
 export 'src/model/error_base.dart';
 export 'src/model/events_response.dart';
 export 'src/model/insights_events.dart';
+export 'src/model/instantsearch.dart';
+export 'src/model/instantsearch_event.dart';
 export 'src/model/object_data.dart';
 export 'src/model/object_data_after_search.dart';
 export 'src/model/purchase_event.dart';

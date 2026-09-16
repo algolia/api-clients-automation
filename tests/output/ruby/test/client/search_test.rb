@@ -314,6 +314,143 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
+  # retries 429 on the same host using Retry-After
+  def test_api13
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6698,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/retry-after/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # retries 429 with a 1s wait when Retry-After is missing
+  def test_api14
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/missing-header/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # retries 429 with a 1s wait when Retry-After is invalid
+  def test_api15
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/invalid-header/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # returns 429 after maxRateLimitRetries is used up
+  def test_api16
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    begin
+      client.custom_get("1/test/rate-limit/exhausted/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "429: Too many requests".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
+  # fails on the first 429 when maxRateLimitRetries is 0
+  def test_api17
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient",
+        max_rate_limit_retries: 0
+      )
+    )
+
+    begin
+      client.custom_get("1/test/rate-limit/zero-retries/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "429: Too many requests".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::SearchClient.create(
@@ -339,7 +476,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.3\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.45.0\).*/))
   end
 
   # call deleteObjects without error
@@ -1045,6 +1182,172 @@ class TestClientSearchClient < Test::Unit::TestCase
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
+  end
+
+  # the Request-ID stays stable across retries
+  def test_request_id0
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6695,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6696,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_post("1/test/request-id/retry/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # each call mints a fresh Request-ID
+  def test_request_id1
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/request-id/fresh/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    req = client.custom_get("1/test/request-id/fresh/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # a caller-supplied Request-ID is never overwritten
+  def test_request_id2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get(
+      "1/test/request-id/caller/ruby",
+      {},
+      {:header_params => {"request-id" => "CtsUserProvided"}}
+    )
+    assert_equal({:"requestId" => "CtsUserProvided"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # every request of one helper call shares one Request-ID
+  def test_request_id3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.save_objects(
+      "cts_request_id_ruby",
+      [
+        {objectID: "1", name: "Adam"},
+        {objectID: "2", name: "Benoit"},
+        {objectID: "3", name: "Cyril"},
+        {objectID: "4", name: "David"}
+      ],
+      true,
+      2
+    )
+    assert_equal(
+      [{:"taskID" => 42, :"objectIDs" => ["1", "2"]}, {:"taskID" => 42, :"objectIDs" => ["3", "4"]}],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+    req = client.save_objects(
+      "cts_request_id_ruby",
+      [
+        {objectID: "5", name: "Eva"},
+        {objectID: "6", name: "Fred"},
+        {objectID: "7", name: "Gina"},
+        {objectID: "8", name: "Hugo"}
+      ],
+      true,
+      2
+    )
+    assert_equal(
+      [{:"taskID" => 42, :"objectIDs" => ["5", "6"]}, {:"taskID" => 42, :"objectIDs" => ["7", "8"]}],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # client errors expose the Correlation-ID
+  def test_request_id4
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    begin
+      client.custom_get("1/test/request-id/error/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "400: request-id error test (Correlation-ID: CtsFixedCorrelationId)".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
   end
 
   # call saveObjects without error

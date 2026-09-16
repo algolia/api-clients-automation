@@ -12,6 +12,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
@@ -32,7 +33,7 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	return client, echo
 }
 
-// can handle HTML error.
+// can handle HTML error when rate-limit retries are disabled.
 func TestIngestionapi0(t *testing.T) {
 	var (
 		err error
@@ -51,9 +52,10 @@ func TestIngestionapi0(t *testing.T) {
 	_ = echo
 	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
-			AppID:  "test-app-id",
-			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+			AppID:               "test-app-id",
+			ApiKey:              "test-api-key",
+			Hosts:               []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6676", call.IsReadWrite)},
+			MaxRateLimitRetries: utils.ToPtr(0),
 		},
 		Region: ingestion.Region("us"),
 	}
@@ -204,7 +206,7 @@ func TestIngestioncommonApi1(t *testing.T) {
 	res, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test"))
 	require.NoError(t, err)
-	require.Regexp(t, `^Algolia for Go \(4.44.1\).*`, echo.Header.Get("User-Agent"))
+	require.Regexp(t, `^Algolia for Go \(4.47.0\).*`, echo.Header.Get("User-Agent"))
 }
 
 // handles 204 No Content responses correctly.
@@ -303,6 +305,42 @@ func TestIngestionparameters1(t *testing.T) {
 	client, err = ingestion.NewClientWithConfig(cfg)
 
 	require.EqualError(t, err, "`region` is required and must be one of the following: eu, us")
+}
+
+// the ingestion client sends no Request-ID.
+func TestIngestionrequestId0(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *ingestion.APIClient
+		cfg    ingestion.IngestionConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = ingestion.IngestionConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6694", call.IsReadWrite)},
+		},
+		Region: ingestion.Region("us"),
+	}
+	client, err = ingestion.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/request-id/negative/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"status":"ok"}`, string(rawBody))
 }
 
 // switch API key.

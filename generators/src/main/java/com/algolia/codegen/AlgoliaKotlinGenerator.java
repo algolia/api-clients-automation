@@ -50,6 +50,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     // Search config
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
 
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
+
     // We don't extend hashmap
     propertyAdditionalKeywords.clear();
 

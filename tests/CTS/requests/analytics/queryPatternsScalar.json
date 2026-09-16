@@ -1,0 +1,21 @@
+[
+  {
+    "testName": "queryPatternsScalar",
+    "parameters": {
+      "scalarPayload": {
+        "metrics": [{ "kind": "conversionRate" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      },
+      "index": "index"
+    },
+    "request": {
+      "path": "/3/patterns/scalar",
+      "method": "POST",
+      "queryParameters": { "index": "index" },
+      "body": {
+        "metrics": [{ "kind": "conversionRate" }],
+        "parameters": [{ "kind": "indices", "value": ["index"] }]
+      }
+    }
+  }
+]

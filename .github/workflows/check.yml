@@ -13,6 +13,8 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: ${{ !contains(github.event.head_commit.message, 'prepare release')}}
 
+permissions: {}
+
 # Uncomment the line below to enable artifacts debugging
 # env:
 #   ACTIONS_RUNNER_DEBUG: true
@@ -22,11 +24,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: the sticky comment is posted with the app token
     steps:
-      - uses: actions/checkout@v7
-
+      # no checkout: no step in this job reads the workspace
       - name: Generate GitHub App Token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -34,7 +34,7 @@ jobs:
           client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: marocchino/sticky-pull-request-comment@v3
+      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           message: |
@@ -47,15 +47,12 @@ jobs:
   setup:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
     env:
       CACHE_VERSION: 1.13 # bump this to run all clients on the CI.
     steps:
-      - name: debugging - dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -79,6 +76,20 @@ jobs:
         shell: bash
         run: yarn workspace scripts createMatrix ${{ steps.diff.outputs.ORIGIN_BRANCH }}
 
+      - name: Compute the docker image matrix
+        id: docker-matrix
+        shell: bash
+        env:
+          BASE_CHANGED: ${{ steps.diff.outputs.DOCKER_BASE_CHANGED }}
+          RUBY_CHANGED: ${{ steps.diff.outputs.DOCKER_RUBY_CHANGED }}
+          SWIFT_CHANGED: ${{ steps.diff.outputs.DOCKER_SWIFT_CHANGED }}
+        run: |
+          images=()
+          if [[ "${BASE_CHANGED:-0}" -gt 0 ]]; then images+=(base); fi
+          if [[ "${RUBY_CHANGED:-0}" -gt 0 ]]; then images+=(ruby); fi
+          if [[ "${SWIFT_CHANGED:-0}" -gt 0 ]]; then images+=(swift); fi
+          echo "DOCKER_IMAGES=$(printf '%s\n' "${images[@]+"${images[@]}"}" | jq -Rsc 'split("\n") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
+
       - name: Compute the client codegen matrix
         id: gen-matrix
         shell: bash
@@ -98,6 +109,14 @@ jobs:
 
       - name: Lint GitHub actions
         run: yarn github-actions:lint
+
+      # the tag-vs-config and live digest comparisons run in the docker jobs instead, so a
+      # renovate version bump cannot fail the job every other job depends on
+      - name: Check that the docker images are digest pinned and share the CI tool versions
+        run: bash scripts/docker/check-version-drift.sh
+
+      - name: Check that the issue sync workflow matches its template
+        run: diff .github/workflows/issue.yml templates/issue.yml
 
       - name: Lint generators
         run: |
@@ -120,6 +139,10 @@ jobs:
 
       RUN_WEBSITE: ${{ steps.diff.outputs.WEBSITE_CHANGED > 0 }}
 
+      RUN_DOCKER: ${{ steps.diff.outputs.DOCKER_CHANGED > 0 }}
+
+      DOCKER_IMAGES: ${{ steps.docker-matrix.outputs.DOCKER_IMAGES }}
+
       SPECS_MATRIX: ${{ steps.spec-matrix.outputs.MATRIX }}
 
       RUN_GEN: ${{ steps.gen-matrix.outputs.RUN_GEN }}
@@ -135,8 +158,10 @@ jobs:
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -159,8 +184,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: setup
+    permissions:
+      contents: read
+    outputs:
+      SPECS_SHA: ${{ steps.specs-zip.outputs.SPECS_SHA }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -170,12 +199,18 @@ jobs:
       - name: Building specs
         run: yarn cli build specs -s
 
+      - name: Zip artifact before storing
+        id: specs-zip
+        run: |
+          zip -r -y specs-bundle.zip ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          echo "SPECS_SHA=$(shasum -a 256 specs-bundle.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
       - name: Store bundled specs
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: specs
-          path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
+          path: specs-bundle.zip
 
   client_gen_javascript:
     timeout-minutes: 15
@@ -195,14 +230,19 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
+    outputs:
+      JS_SHA: ${{ steps.js-zip.outputs.JS_SHA }}
     name: client javascript${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' && format('@{0}', fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).version) || '' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Remove generated clients
         if: ${{ startsWith(github.head_ref, 'chore/prepare-release-') }}
@@ -220,7 +260,7 @@ jobs:
         run: yarn cli generate javascript
 
       - name: Update `yarn.lock` for JavaScript
-        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=0 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        run: cd clients/algoliasearch-client-javascript && YARN_ENABLE_HARDENED_MODE=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 
       - name: Build clients
         run: cd clients/algoliasearch-client-javascript && yarn build
@@ -253,16 +293,10 @@ jobs:
         run: echo "dir=$(cd tests/output/javascript && yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Restore Yarn js tests
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
           key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
-
-      - name: Cache js tests node modules
-        uses: actions/cache@v6
-        with:
-          path: tests/output/javascript/node_modules
-          key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run unit CTS
         run: yarn cli cts run javascript --no-e2e
@@ -293,10 +327,13 @@ jobs:
         run: yarn cli build guides javascript
 
       - name: Zip artifact before storing
-        run: zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+        id: js-zip
+        run: |
+          zip -r -y clients-javascript.zip clients/algoliasearch-client-javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToStore }} ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).guidesToStore }} -x "**/node_modules**" "**/.yarn/cache/**" "**/.yarn/install-state.gz" "**/build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/.nx/**"
+          echo "JS_SHA=$(shasum -a 256 clients-javascript.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Store javascript clients
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: clients-javascript
@@ -323,16 +360,32 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
       METIS_APPLICATION_ID: ${{ secrets.METIS_APPLICATION_ID }}
       METIS_API_KEY: ${{ secrets.METIS_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       hasBreakingChanges: ${{ steps.breakingChanges.outputs.hasBreakingChanges }}
+      # one key per language, set only by the isMainVersion leg that uploads that language's zip.
+      # The other legs leave it empty and empty outputs do not overwrite a set one, the same way
+      # hasBreakingChanges above reaches codegen from the java leg alone
+      SHA_csharp: ${{ steps.client-zip.outputs.SHA_csharp }}
+      SHA_dart: ${{ steps.client-zip.outputs.SHA_dart }}
+      SHA_go: ${{ steps.client-zip.outputs.SHA_go }}
+      SHA_java: ${{ steps.client-zip.outputs.SHA_java }}
+      SHA_kotlin: ${{ steps.client-zip.outputs.SHA_kotlin }}
+      SHA_php: ${{ steps.client-zip.outputs.SHA_php }}
+      SHA_python: ${{ steps.client-zip.outputs.SHA_python }}
+      SHA_ruby: ${{ steps.client-zip.outputs.SHA_ruby }}
+      SHA_scala: ${{ steps.client-zip.outputs.SHA_scala }}
+      SHA_swift: ${{ steps.client-zip.outputs.SHA_swift }}
     name: client ${{ matrix.client.language }}@${{ matrix.client.version }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -417,13 +470,26 @@ jobs:
         if: ${{ matrix.client.isMainVersion }}
         run: zip -r -y clients-${{ matrix.client.language }}.zip ${{ matrix.client.path }} ${{ matrix.client.testsToStore }} ${{ matrix.client.guidesToStore }} -x "**/node_modules**" "**/__pycache__/**" "**/.yarn/cache/**" "**/build/**" "**/.build/**" "**/dist/**" "**/.gradle/**" "**/bin/**" "**/vendor/**" "**/target/**" "**/.dart_tool/**"
 
+      - name: Checksum the ${{ matrix.client.language }} zip
+        id: client-zip
+        if: ${{ matrix.client.isMainVersion }}
+        run: echo "SHA_${{ matrix.client.language }}=$(shasum -a 256 clients-${{ matrix.client.language }}.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
+
+      - name: Run PHP CTS on Guzzle 7
+        if: ${{ matrix.client.language == 'php' && matrix.client.isMainVersion }}
+        run: |
+          composer update "guzzlehttp/guzzle:^7.0" --with-all-dependencies --working-dir=${{ matrix.client.path }}
+          yarn cli cts run php --no-e2e -v
+          git checkout -- ${{ matrix.client.path }}/composer.lock
+          composer install --working-dir=${{ matrix.client.path }}
 
   kotlin_build_macos:
     timeout-minutes: 15
@@ -438,16 +504,19 @@ jobs:
       needs.setup.outputs.KOTLIN_DATA != '' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client kotlin${{ format('@{0}', fromJSON(needs.setup.outputs.KOTLIN_DATA).version) }} macos
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -488,17 +557,20 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    permissions:
+      contents: read
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: specs
+          expected-checksums: ${{ needs.specs.outputs.SPECS_SHA }} specs
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -522,6 +594,7 @@ jobs:
     timeout-minutes: 15
     needs:
       - setup
+      - specs
       - client_gen
       - client_gen_javascript
     if: |
@@ -544,7 +617,7 @@ jobs:
           client-id: ${{ vars.ALGOLIA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.ALGOLIA_BOT_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
@@ -555,6 +628,22 @@ jobs:
         uses: ./scripts/ci/actions/restore-artifacts
         with:
           type: all
+          # every zip codegen restores into the checkout it pushes is verified against the sha256 its
+          # producing job exported. A language filtered out of the matrix has an empty SHA and no line;
+          # a line whose artifact is missing fails the restore instead of leaving the stale tree in place
+          expected-checksums: |
+            ${{ needs.specs.outputs.SPECS_SHA }} specs
+            ${{ needs.client_gen_javascript.result == 'success' && format('{0} clients-javascript', needs.client_gen_javascript.outputs.JS_SHA) || '' }}
+            ${{ needs.client_gen.outputs.SHA_csharp != '' && format('{0} clients-csharp', needs.client_gen.outputs.SHA_csharp) || '' }}
+            ${{ needs.client_gen.outputs.SHA_dart != '' && format('{0} clients-dart', needs.client_gen.outputs.SHA_dart) || '' }}
+            ${{ needs.client_gen.outputs.SHA_go != '' && format('{0} clients-go', needs.client_gen.outputs.SHA_go) || '' }}
+            ${{ needs.client_gen.outputs.SHA_java != '' && format('{0} clients-java', needs.client_gen.outputs.SHA_java) || '' }}
+            ${{ needs.client_gen.outputs.SHA_kotlin != '' && format('{0} clients-kotlin', needs.client_gen.outputs.SHA_kotlin) || '' }}
+            ${{ needs.client_gen.outputs.SHA_php != '' && format('{0} clients-php', needs.client_gen.outputs.SHA_php) || '' }}
+            ${{ needs.client_gen.outputs.SHA_python != '' && format('{0} clients-python', needs.client_gen.outputs.SHA_python) || '' }}
+            ${{ needs.client_gen.outputs.SHA_ruby != '' && format('{0} clients-ruby', needs.client_gen.outputs.SHA_ruby) || '' }}
+            ${{ needs.client_gen.outputs.SHA_scala != '' && format('{0} clients-scala', needs.client_gen.outputs.SHA_scala) || '' }}
+            ${{ needs.client_gen.outputs.SHA_swift != '' && format('{0} clients-swift', needs.client_gen.outputs.SHA_swift) || '' }}
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -608,7 +697,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
@@ -621,7 +710,7 @@ jobs:
             ${{ steps.benchmark.outputs.BENCHMARK_SECTION }}
 
       - name: update generation comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
@@ -643,14 +732,15 @@ jobs:
 
       - name: Deploy documentation
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' && needs.setup.outputs.RUN_WEBSITE == 'true' }}
-        uses: nwtgck/actions-netlify@v4.0
+        uses: nwtgck/actions-netlify@d22a32a27c918fe470bbc562e984f80ec48c2668 # v4.0.0
         with:
           publish-dir: 'website/build'
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          # commit comments need contents: write which this job does not have, the flag never produced a comment
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           netlify-config-path: ./netlify.toml
         env:
@@ -662,6 +752,104 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
+  action_pins:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install zizmor
+        run: pipx install zizmor==1.29.0
+
+      - name: Check that every action ref is pinned to a commit SHA
+        run: |
+          zizmor --no-progress --no-exit-codes --format json .github clients/*/.github > zizmor.json
+          jq -r '.[] | select(.ident == "unpinned-uses") | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1): \(.locations[0].concrete.feature)"' zizmor.json | sort -u > unpinned.txt
+          if [[ -s unpinned.txt ]]; then
+            echo "The following action refs are not pinned to a commit SHA:"
+            cat unpinned.txt
+            exit 1
+          fi
+
+      # scoped to .github, the client repo workflows still have known permission gaps (API-479 follow-up)
+      # single jq command on purpose: the default shell has no pipefail, a pipe would hide a jq failure behind a green gate
+      - name: Check that monorepo workflows keep least-privilege permissions
+        run: |
+          jq -r '.[] | select(.ident == "excessive-permissions") | select(.locations[0].symbolic.key.Local.verbatim_path | startswith("clients/") | not) | "\(.locations[0].symbolic.key.Local.verbatim_path):\(.locations[0].concrete.location.start_point.row + 1)"' zizmor.json > excessive.txt
+          if [[ -s excessive.txt ]]; then
+            echo "The following workflows grant more GITHUB_TOKEN permissions than they use:"
+            cat excessive.txt
+            exit 1
+          fi
+
+      - name: Check that action refs in workflow templates are pinned to a commit SHA
+        run: |
+          grep -rnE 'uses:.*@' templates | grep -vE 'uses:\s*[^@]+@[0-9a-f]{40}(\s|$)' > unpinned-templates.txt || true
+          if [[ -s unpinned-templates.txt ]]; then
+            echo "The following action refs in templates/ are not pinned to a commit SHA:"
+            cat unpinned-templates.txt
+            exit 1
+          fi
+
+      - name: Check that no retired bot secret is referenced
+        run: |
+          banned='ALGOLIA_BOT_TOKEN|ALGOLIA_BOT_APP_ID|GH_PERSONAL_ACCESS_TOKEN'
+          status=0
+          grep -rnE "secrets\.($banned)" .github clients/*/.github templates > pat-refs.txt || status=$?
+          if [[ -s pat-refs.txt ]]; then
+            echo "The following retired secrets are referenced, use the GitHub App token instead:"
+            cat pat-refs.txt
+            exit 1
+          fi
+          if [[ $status -gt 1 ]]; then
+            echo "grep could not read one of the scan paths, the check did not run"
+            exit 1
+          fi
+
+  # yarn docker:setup is the only consumer of these images; a version bump that
+  # leaves a stale checksum is invisible to the tag drift check and to every
+  # other CI job, so build the ones whose own inputs changed. the `!= '[]'` guard
+  # matters: an empty matrix is an error rather than a skipped job
+  docker_images:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    needs: setup
+    if: ${{ needs.setup.outputs.DOCKER_IMAGES != '[]' }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJSON(needs.setup.outputs.DOCKER_IMAGES) }}
+    name: docker ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build ${{ matrix.image }} image
+        run: |
+          export JAVA_VERSION=$(cat config/.java-version)
+          docker compose build --progress=plain ${{ matrix.image }}
+
+  # one run per CI, not one per image: each run resolves every pinned ref against its registry
+  docker_digests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    needs: setup
+    if: ${{ needs.setup.outputs.RUN_DOCKER == 'true' }}
+    permissions:
+      contents: read
+    name: docker digests
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check the pinned tags against the config versions and the live digests
+        run: bash scripts/docker/check-version-drift.sh
+        env:
+          DRIFT_CHECK_TAGS: '1'
+          DRIFT_CHECK_LIVE: '1'
+
   check_green:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -669,10 +857,13 @@ jobs:
       - codegen
       - swift_build_linux
       - kotlin_build_macos
+      - action_pins
+      - docker_images
+      - docker_digests
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") || ("${{ needs.docker_images.result }}" != "skipped" && "${{ needs.docker_images.result }}" != "success") || ("${{ needs.docker_digests.result }}" != "skipped" && "${{ needs.docker_digests.result }}" != "success") ]]; then
             echo "a needed step failed"
             exit 1
           fi
@@ -688,8 +879,7 @@ jobs:
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
-    permissions:
-      pull-requests: write
+    # no GITHUB_TOKEN permissions: every step in this job uses the app token
     steps:
       - name: Generate GitHub App Token
         id: app-token
@@ -700,7 +890,7 @@ jobs:
           # Here, we push to most of the allowed repo, so no need to scope
           owner: algolia
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ needs.codegen.outputs.generatedCommit }}
@@ -736,12 +926,21 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
+      - name: Index snippets to Algolia
+        id: indexSnippets
+        run: yarn workspace scripts indexSnippets
+        if: ${{ steps.waitForAllReleases.outputs.CAN_PUSH_TO_REPO == 'true' }}
+        env:
+          SNIPPETS_APPLICATION_ID: ${{ secrets.SNIPPETS_APPLICATION_ID }}
+          SNIPPETS_API_KEY: ${{ secrets.SNIPPETS_API_KEY }}
+          SINCE_DATE: ${{ vars.SNIPPETS_SINCE_DATE }}
+
       - name: notify failures
-        uses: slackapi/slack-github-action@v3.0.3
-        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '') }}
+        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '' || steps.indexSnippets.outcome == 'failure') }}
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
+            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\nSnippets indexing: **${{ steps.indexSnippets.outcome }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."

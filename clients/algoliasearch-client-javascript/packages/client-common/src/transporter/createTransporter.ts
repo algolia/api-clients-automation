@@ -3,6 +3,7 @@ import { iterSSEEvents } from '../sse';
 import type {
   AlgoliaHttpResponse,
   EndRequest,
+  Headers,
   Host,
   QueryParameters,
   Request,
@@ -19,11 +20,20 @@ import {
   deserializeFailure,
   deserializeSuccess,
   deserializeSuccessWithHttpInfo,
+  getLastCorrelationId,
   serializeData,
   serializeHeaders,
   serializeUrl,
 } from './helpers';
-import { isRetryable, isSuccess } from './responses';
+import { generateRequestId } from './requestId';
+import {
+  headersFromError,
+  isRateLimited,
+  isRateLimitedError,
+  isRetryable,
+  isSuccess,
+  parseRetryAfterMs,
+} from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
 type RetryableOptions = {
@@ -44,7 +54,30 @@ export function createTransporter({
   responsesCache,
   compress,
   compression,
+  requestIdChannel,
+  maxRateLimitRetries = 3,
 }: TransporterOptions): TransporterWithHttpInfo {
+  function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
+    if (
+      requestIdChannel === undefined ||
+      headers['request-id'] !== undefined ||
+      Object.keys(queryParameters).some((parameter) => parameter.toLowerCase() === 'x-algolia-request-id')
+    ) {
+      return;
+    }
+
+    if (requestIdChannel === 'headers') {
+      headers['request-id'] = generateRequestId();
+    } else {
+      queryParameters['x-algolia-request-id'] = generateRequestId();
+    }
+  }
+
+  const wait = (ms: number): Promise<void> =>
+    new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
@@ -146,7 +179,10 @@ export function createTransporter({
       }
     }
 
+    injectRequestId(headers, queryParameters);
+
     let timeoutsCount = 0;
+    let rateLimitRetriesLeft = maxRateLimitRetries;
 
     const retry = async (
       retryableHosts: Host[],
@@ -157,7 +193,7 @@ export function createTransporter({
        */
       const host = retryableHosts.pop();
       if (host === undefined) {
-        throw new RetryError(stackTraceWithoutCredentials(stackTrace));
+        throw new RetryError(stackTraceWithoutCredentials(stackTrace), getLastCorrelationId(stackTrace));
       }
 
       const timeout = { ...timeouts, ...requestOptions.timeouts };
@@ -190,6 +226,20 @@ export function createTransporter({
       };
 
       const response = await requester.send(payload);
+
+      if (isRateLimited(response) && rateLimitRetriesLeft > 0) {
+        rateLimitRetriesLeft--;
+        retryableHosts.push(host);
+        const stackFrame = pushToStackTrace(response);
+        const waitMs = parseRetryAfterMs(response.headers);
+        logger.info('Retryable failure', {
+          ...stackFrameWithoutCredentials(stackFrame),
+          wait: waitMs,
+          rateLimitRetriesLeft,
+        });
+        await wait(waitMs);
+        return retry(retryableHosts, getTimeout);
+      }
 
       if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);
@@ -387,6 +437,8 @@ export function createTransporter({
       }
     }
 
+    injectRequestId(headers, queryParameters);
+
     const isRead = request.useReadTransporter || request.method === 'GET';
     const compatibleHosts = hosts.filter(
       (host) => host.accept === 'readWrite' || (isRead ? host.accept === 'read' : host.accept === 'write'),
@@ -407,8 +459,28 @@ export function createTransporter({
       responseTimeout: isRead ? timeout.read : timeout.write,
     };
 
-    const stream = await requester.sendStream(payload);
-    yield* iterSSEEvents(stream);
+    let rateLimitRetriesLeft = maxRateLimitRetries;
+    while (true) {
+      let stream: ReadableStream<Uint8Array>;
+      try {
+        stream = await requester.sendStream(payload);
+      } catch (error) {
+        if (isRateLimitedError(error) && rateLimitRetriesLeft > 0) {
+          rateLimitRetriesLeft--;
+          const waitMs = parseRetryAfterMs(headersFromError(error));
+          logger.info('Retryable failure', {
+            wait: waitMs,
+            rateLimitRetriesLeft,
+            host,
+          });
+          await wait(waitMs);
+          continue;
+        }
+        throw error;
+      }
+      yield* iterSSEEvents(stream);
+      return;
+    }
   }
 
   return {
@@ -419,7 +491,9 @@ export function createTransporter({
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,
+    requestIdChannel,
     hosts,
+    maxRateLimitRetries,
     request: createRequest,
     requestWithHttpInfo: createRequestWithHttpInfo,
     requestStream,

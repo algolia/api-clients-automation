@@ -325,3 +325,14 @@ withFilterCount:
   example: 5
   minimum: 0
   default: 0
+
+IndexQuery:
+  in: query
+  name: index
+  required: false
+  description: >
+    Comma-separated list of indices the request runs on, used for authorization. Required for
+    index-restricted API keys and must match the indices supplied in the request body's `indices`
+    parameter; optional for unrestricted keys.
+  schema:
+    type: string

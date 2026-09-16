@@ -636,6 +636,22 @@ final class AnalyticsClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getPatternsFields method.
+    ///
+    /// getPatternsFields
+    func snippetForGetPatternsFields() async throws {
+        // >SEPARATOR getPatternsFields default
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getPatternsFields()
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the getPurchaseRate method.
     ///
     /// get getPurchaseRate with minimal parameters
@@ -1158,6 +1174,164 @@ final class AnalyticsClientSnippet {
             startDate: "1999-09-19",
             endDate: "2001-01-01",
             tags: "tag"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsDistribution method.
+    ///
+    /// queryPatternsDistribution
+    func snippetForQueryPatternsDistribution() async throws {
+        // >SEPARATOR queryPatternsDistribution default
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsDistribution(
+            distributionPayload: DistributionPayload(distributions: [DistributionDefinition(
+                kind: "clickPosition",
+                bins: [BinEdge.int(1), BinEdge.int(2), BinEdge.int(3), BinEdge.int(4), BinEdge.int(5)]
+            )], parameters: [ParameterDefinition(kind: "indices", value: ParameterValue.arrayOfString(["index"]))]),
+            index: "index"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsScalar method.
+    ///
+    /// queryPatternsScalar
+    func snippetForQueryPatternsScalar() async throws {
+        // >SEPARATOR queryPatternsScalar default
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsScalar(
+            scalarPayload: ScalarPayload(
+                metrics: [FieldReference(kind: "conversionRate")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsTable method.
+    ///
+    /// queryPatternsTable with minimal parameters
+    func snippetForQueryPatternsTable() async throws {
+        // >SEPARATOR queryPatternsTable queryPatternsTable with minimal parameters
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsTable(
+            tablePayload: TablePayload(
+                metrics: [FieldReference(kind: "searchesCount")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsTable method.
+    ///
+    /// queryPatternsTable with all parameters
+    func snippetForQueryPatternsTable1() async throws {
+        // >SEPARATOR queryPatternsTable queryPatternsTable with all parameters
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsTable(
+            tablePayload: TablePayload(
+                domain: "core",
+                metrics: [FieldReference(kind: "searchesCount")],
+                groupBy: [FieldReference(kind: "query")],
+                filters: [FilterDefinition(kind: "clicked")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )],
+                orderBy: [OrderDefinition(kind: "searchesCount", direction: OrderDirection.desc)],
+                limit: 100,
+                offset: 0
+            ),
+            index: "index"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsTimeseries method.
+    ///
+    /// queryPatternsTimeseries with minimal parameters
+    func snippetForQueryPatternsTimeseries() async throws {
+        // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with minimal parameters
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsTimeseries(
+            timeseriesPayload: TimeseriesPayload(
+                metrics: [FieldReference(kind: "searchesCount")],
+                parameters: [ParameterDefinition(
+                    kind: "indices",
+                    value: ParameterValue.arrayOfString(["index"])
+                )]
+            ),
+            index: "index"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the queryPatternsTimeseries method.
+    ///
+    /// queryPatternsTimeseries with all parameters
+    func snippetForQueryPatternsTimeseries1() async throws {
+        // >SEPARATOR queryPatternsTimeseries queryPatternsTimeseries with all parameters
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.queryPatternsTimeseries(
+            timeseriesPayload: TimeseriesPayload(domain: "core", metrics: [
+                FieldReference(kind: "searchesCount"),
+                FieldReference(domain: "abtesting", kind: "isMsrQuery"),
+            ], groupBy: [FieldReference(kind: "index")], filters: [
+                FilterDefinition(kind: "clicked"),
+                FilterDefinition(kind: "country", operator: "=", parameter: ParameterReference(kind: "country")),
+            ], parameters: [
+                ParameterDefinition(kind: "indices", value: ParameterValue.arrayOfString(["indexA", "indexB"])),
+                ParameterDefinition(kind: "startDate", value: ParameterValue.string("2024-01-01T00:00:00Z")),
+                ParameterDefinition(kind: "endDate", value: ParameterValue.string("2024-01-07T23:59:59Z")),
+                ParameterDefinition(kind: "country", value: ParameterValue.string("FR")),
+            ], limit: 50, offset: 0),
+            index: "indexA,indexB"
         )
         // >LOG
         // print the response

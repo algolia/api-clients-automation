@@ -2,10 +2,16 @@ get:
   tags:
     - abtest
   operationId: getABTest
+  deprecated: true
   x-acl:
     - analytics
   summary: Retrieve A/B test details
-  description: Retrieves the details for an A/B test by its ID.
+  description: |
+    This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+    Replaced by `GET /3/abtests/{id}`.
+
+    Retrieves the details for an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:
@@ -35,10 +41,16 @@ delete:
   tags:
     - abtest
   operationId: deleteABTest
+  deprecated: true
   x-acl:
     - editSettings
   summary: Delete an A/B test
-  description: Deletes an A/B test by its ID.
+  description: |
+    This endpoint is deprecated. Use the A/B Testing API v3 instead.
+
+    Replaced by `DELETE /3/abtests/{id}`.
+
+    Deletes an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:

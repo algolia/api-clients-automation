@@ -162,6 +162,8 @@ class {{configClassname}} extends {{#hasRegionalHost}}ConfigWithRegion{{/hasRegi
             'writeTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.write}}{{/lambda.toSeconds}},
             'connectTimeout' => {{#lambda.toSeconds}}{{x-timeouts.server.connect}}{{/lambda.toSeconds}},
             'defaultHeaders' => [],
+            'requestIdEnabled' => {{#requestIdSupport}}true{{/requestIdSupport}}{{^requestIdSupport}}false{{/requestIdSupport}},
+            'maxRateLimitRetries' => 3,
             {{#isIngestionClient}}
             'waitTaskTimeBeforeRetry' => $this->defaultWaitTaskTimeBeforeRetry,
             {{/isIngestionClient}}

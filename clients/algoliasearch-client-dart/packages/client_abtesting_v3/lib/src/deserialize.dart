@@ -6,6 +6,7 @@ import 'package:algolia_client_abtesting_v3/src/model/ab_tests_variant_search_pa
 import 'package:algolia_client_abtesting_v3/src/model/add_ab_tests_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/create_metric.dart';
 import 'package:algolia_client_abtesting_v3/src/model/custom_search_params.dart';
+import 'package:algolia_client_abtesting_v3/src/model/decision.dart';
 import 'package:algolia_client_abtesting_v3/src/model/direction.dart';
 import 'package:algolia_client_abtesting_v3/src/model/effect_metric.dart';
 import 'package:algolia_client_abtesting_v3/src/model/empty_search_filter.dart';
@@ -70,6 +71,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CustomSearchParams':
       return CustomSearchParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Decision':
+      return Decision.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Direction':
       return Direction.fromJson(value) as ReturnType;
     case 'EffectMetric':

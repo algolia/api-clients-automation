@@ -34,6 +34,17 @@ Each API must be contained in its own directory, for example: [the Search API](h
 
 This file is the main entrypoint of your specification and should describe your API, including the `servers`, `securitySchemes` and `paths` properties.
 
+#### Beta APIs
+
+To mark a whole API as beta, add `x-beta: true` at the root level of `spec.yml`:
+
+```yaml
+x-beta: true
+```
+
+This property only affects [the Algolia public documentation](https://www.algolia.com/doc/api-reference/rest-api/), which displays a banner informing users that the API is in beta.
+It has no effect on the generated API clients, tests, or code snippets.
+
 ### `specs/<apiName>/common/`
 
 This directory contains schemas and parameters that are common to **your API**.
@@ -69,6 +80,17 @@ to document the ACL required to make the request.
 
 The `x-acl` property is an array of strings, the allowed values are: `search`, `browse`, `addObject`, `deleteObject`, `listIndexes`, `deleteIndex`, `settings`, `editSettings`, `analytics`, `recommendation`, `usage`, `logs`, `setUnretrievableAttributes`, `admin`.
 For operations that require the admin API key, use `admin`
+
+##### Beta endpoints
+
+To mark a single endpoint as beta, add `x-beta: true` to the root of the operation:
+
+```yaml
+post:
+  x-beta: true
+```
+
+As for whole APIs, this only adds a beta banner to the documentation and doesn't change the generated code.
 
 ##### Complex objects
 

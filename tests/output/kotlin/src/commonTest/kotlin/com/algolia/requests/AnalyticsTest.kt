@@ -787,6 +787,22 @@ class AnalyticsTest {
     )
   }
 
+  // getPatternsFields
+
+  @Test
+  fun `getPatternsFields`() = runTest {
+    client.runTest(
+      call = {
+        getPatternsFields()
+      },
+      intercept = {
+        assertEquals("/3/patterns/fields".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getPurchaseRate
 
   @Test
@@ -1355,6 +1371,257 @@ class AnalyticsTest {
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
+      },
+    )
+  }
+
+  // queryPatternsDistribution
+
+  @Test
+  fun `queryPatternsDistribution`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsDistribution(
+          distributionPayload =
+            DistributionPayload(
+              distributions =
+                listOf(
+                  DistributionDefinition(
+                    kind = "clickPosition",
+                    bins =
+                      listOf(
+                        BinEdge.of(1),
+                        BinEdge.of(2),
+                        BinEdge.of(3),
+                        BinEdge.of(4),
+                        BinEdge.of(5),
+                      ),
+                  )
+                ),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("index")),
+                  )
+                ),
+            ),
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/distribution".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"distributions":[{"kind":"clickPosition","bins":[1,2,3,4,5]}],"parameters":[{"kind":"indices","value":["index"]}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  // queryPatternsScalar
+
+  @Test
+  fun `queryPatternsScalar`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsScalar(
+          scalarPayload =
+            ScalarPayload(
+              metrics = listOf(FieldReference(kind = "conversionRate")),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("index")),
+                  )
+                ),
+            ),
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/scalar".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"metrics":[{"kind":"conversionRate"}],"parameters":[{"kind":"indices","value":["index"]}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  // queryPatternsTable
+
+  @Test
+  fun `queryPatternsTable with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsTable(
+          tablePayload =
+            TablePayload(
+              metrics = listOf(FieldReference(kind = "searchesCount")),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("index")),
+                  )
+                ),
+            ),
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/table".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `queryPatternsTable with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsTable(
+          tablePayload =
+            TablePayload(
+              domain = "core",
+              metrics = listOf(FieldReference(kind = "searchesCount")),
+              groupBy = listOf(FieldReference(kind = "query")),
+              filters = listOf(FilterDefinition(kind = "clicked")),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("index")),
+                  )
+                ),
+              orderBy =
+                listOf(
+                  OrderDefinition(
+                    kind = "searchesCount",
+                    direction = OrderDirection.entries.first { it.value == "desc" },
+                  )
+                ),
+              limit = 100,
+              offset = 0,
+            ),
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/table".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"domain":"core","metrics":[{"kind":"searchesCount"}],"groupBy":[{"kind":"query"}],"filters":[{"kind":"clicked"}],"parameters":[{"kind":"indices","value":["index"]}],"orderBy":[{"kind":"searchesCount","direction":"desc"}],"limit":100,"offset":0}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  // queryPatternsTimeseries
+
+  @Test
+  fun `queryPatternsTimeseries with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsTimeseries(
+          timeseriesPayload =
+            TimeseriesPayload(
+              metrics = listOf(FieldReference(kind = "searchesCount")),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("index")),
+                  )
+                ),
+            ),
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"metrics":[{"kind":"searchesCount"}],"parameters":[{"kind":"indices","value":["index"]}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `queryPatternsTimeseries with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        queryPatternsTimeseries(
+          timeseriesPayload =
+            TimeseriesPayload(
+              domain = "core",
+              metrics =
+                listOf(
+                  FieldReference(kind = "searchesCount"),
+                  FieldReference(
+                    domain = "abtesting",
+                    kind = "isMsrQuery",
+                  ),
+                ),
+              groupBy = listOf(FieldReference(kind = "index")),
+              filters =
+                listOf(
+                  FilterDefinition(kind = "clicked"),
+                  FilterDefinition(
+                    kind = "country",
+                    operator = "=",
+                    parameter = ParameterReference(kind = "country"),
+                  ),
+                ),
+              parameters =
+                listOf(
+                  ParameterDefinition(
+                    kind = "indices",
+                    value = ParameterValue.of(listOf("indexA", "indexB")),
+                  ),
+                  ParameterDefinition(
+                    kind = "startDate",
+                    value = ParameterValue.of("2024-01-01T00:00:00Z"),
+                  ),
+                  ParameterDefinition(
+                    kind = "endDate",
+                    value = ParameterValue.of("2024-01-07T23:59:59Z"),
+                  ),
+                  ParameterDefinition(
+                    kind = "country",
+                    value = ParameterValue.of("FR"),
+                  ),
+                ),
+              limit = 50,
+              offset = 0,
+            ),
+          index = "indexA,indexB",
+        )
+      },
+      intercept = {
+        assertEquals("/3/patterns/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"index":"indexA%2CindexB"}""", it.url.encodedParameters)
+        assertJsonBody(
+          """{"domain":"core","metrics":[{"kind":"searchesCount"},{"domain":"abtesting","kind":"isMsrQuery"}],"groupBy":[{"kind":"index"}],"filters":[{"kind":"clicked"},{"kind":"country","operator":"=","parameter":{"kind":"country"}}],"parameters":[{"kind":"indices","value":["indexA","indexB"]},{"kind":"startDate","value":"2024-01-01T00:00:00Z"},{"kind":"endDate","value":"2024-01-07T23:59:59Z"},{"kind":"country","value":"FR"}],"limit":50,"offset":0}""",
+          it.body,
+        )
       },
     )
   }

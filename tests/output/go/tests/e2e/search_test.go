@@ -345,7 +345,7 @@ func TestSearchE2E_Search(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{"normalizedQuery":"sofa","categories":[{}]}}}]}`
+		expectedBodyRaw := `{"results":[{"index":"cts_e2e_query_categorization","query":"sofa","extensions":{"queryCategorization":{}}}]}`
 
 		var expectedBody any
 

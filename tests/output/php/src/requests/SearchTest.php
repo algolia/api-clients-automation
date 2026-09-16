@@ -683,7 +683,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -755,7 +755,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -781,7 +781,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -807,7 +807,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -835,7 +835,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -863,7 +863,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -889,7 +889,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -915,7 +915,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -942,7 +942,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -969,7 +969,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],
@@ -3848,6 +3848,35 @@ class SearchTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('the classic engine accepts a Request-ID sent as a query parameter')]
+    public function testSearchRules1(): void
+    {
+        $client = $this->getClient();
+        $client->searchRules(
+            'cts_e2e_browse',
+            ['query' => 'zorro',
+            ],
+            requestOptions: [
+                'queryParameters' => [
+                    'x-algolia-request-id' => 'CtsE2eQry11',
+                ], ]
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/cts_e2e_browse/rules/search',
+                'method' => 'POST',
+                'body' => json_decode('{"query":"zorro"}'),
+                'queryParameters' => json_decode('{"x-algolia-request-id":"CtsE2eQry11"}', true),
+            ],
+        ]);
+
+        $this->assertFalse(
+            $this->recordedRequests[0]->hasHeader('request-id'),
+            'the `request-id` header must not be sent'
+        );
+    }
+
     #[TestDox('search with minimal parameters')]
     public function testSearchSingleIndex(): void
     {
@@ -5780,7 +5809,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             ['query' => 'query',
                 'aroundLatLngViaIP' => true,
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-forwarded-for' => 'XX.XXX.XXX.XXX',
                 ],
@@ -5804,7 +5833,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client->searchSingleIndex(
             'indexName',
             [],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-forwarded-for' => 'XX.XXX.XXX.XXX',
                 ],
@@ -6814,7 +6843,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'indexName',
             ['query' => 'query',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user1234',
                 ],
@@ -6838,7 +6867,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             'playlists',
             ['query' => 'peace',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'X-Algolia-User-ID' => 'user42',
                 ],

@@ -420,6 +420,181 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "retries 429 on the same host using Retry-After")]
+  public async Task ApiTest13()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6698,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/rate-limit/retry-after/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok rate limit retry\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retries 429 with a 1s wait when Retry-After is missing")]
+  public async Task ApiTest14()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/rate-limit/missing-header/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok rate limit retry\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retries 429 with a 1s wait when Retry-After is invalid")]
+  public async Task ApiTest15()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync("1/test/rate-limit/invalid-header/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"message\":\"ok rate limit retry\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "returns 429 after maxRateLimitRetries is used up")]
+  public async Task ApiTest16()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/test/rate-limit/exhausted/csharp");
+    });
+    Assert.Equal(
+      "{\"message\":\"Too many requests\"}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
+  [Fact(DisplayName = "fails on the first 429 when maxRateLimitRetries is 0")]
+  public async Task ApiTest17()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6697,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+      MaxRateLimitRetries = 0,
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/test/rate-limit/zero-retries/csharp");
+    });
+    Assert.Equal(
+      "{\"message\":\"Too many requests\"}".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
   [Fact(DisplayName = "calls api with correct user agent")]
   public async Task CommonApiTest0()
   {
@@ -441,7 +616,7 @@ public class SearchClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.46.3\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.49.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }
@@ -1216,6 +1391,239 @@ public class SearchClientTests
     }
   }
 
+  [Fact(DisplayName = "the Request-ID stays stable across retries")]
+  public async Task RequestIdTest0()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6695,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6696,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomPostAsync("1/test/request-id/retry/csharp");
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"status\":\"ok\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "each call mints a fresh Request-ID")]
+  public async Task RequestIdTest1()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.CustomGetAsync("1/test/request-id/fresh/csharp");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"status\":\"ok\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      var res = await client.CustomGetAsync("1/test/request-id/fresh/csharp");
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"status\":\"ok\"}",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
+  [Fact(DisplayName = "a caller-supplied Request-ID is never overwritten")]
+  public async Task RequestIdTest2()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.CustomGetAsync(
+      "1/test/request-id/caller/csharp",
+      new Dictionary<string, object> { },
+      options: new RequestOptionBuilder().AddExtraHeader("request-id", "CtsUserProvided").Build()
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"requestId\":\"CtsUserProvided\"}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "every request of one helper call shares one Request-ID")]
+  public async Task RequestIdTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    {
+      var res = await client.SaveObjectsAsync(
+        "cts_request_id_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+          new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+          new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+        },
+        true,
+        2
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":42,\"objectIDs\":[\"1\",\"2\"]},{\"taskID\":42,\"objectIDs\":[\"3\",\"4\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+    {
+      var res = await client.SaveObjectsAsync(
+        "cts_request_id_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+          new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fred" } },
+          new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gina" } },
+          new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+        },
+        true,
+        2
+      );
+
+      JsonAssert.EqualOverrideDefault(
+        "[{\"taskID\":42,\"objectIDs\":[\"5\",\"6\"]},{\"taskID\":42,\"objectIDs\":[\"7\",\"8\"]}]",
+        JsonSerializer.Serialize(res, JsonConfig.Options),
+        new JsonDiffConfig(false)
+      );
+    }
+  }
+
+  [Fact(DisplayName = "client errors expose the Correlation-ID")]
+  public async Task RequestIdTest4()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6694,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = new SearchClient(_config);
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.CustomGetAsync("1/test/request-id/error/csharp");
+    });
+    Assert.Equal(
+      "{\"message\":\"request-id error test\"} (Correlation-ID: CtsFixedCorrelationId)".ToLowerInvariant(),
+      _ex.Message.ToLowerInvariant()
+    );
+  }
+
   [Fact(DisplayName = "call saveObjects without error")]
   public async Task SaveObjectsTest0()
   {
@@ -1377,7 +1785,7 @@ public class SearchClientTests
         },
         false,
         1000,
-        new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
+        options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "*").Build()
       );
     }
   }
@@ -1544,7 +1952,7 @@ public class SearchClientTests
         },
         true,
         10,
-        new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
+        options: new RequestOptionBuilder().AddExtraHeader("x-algolia-user-id", "test-user").Build()
       );
     }
   }
@@ -1575,7 +1983,7 @@ public class SearchClientTests
     var res = await client.SearchSingleIndexAsync<Hit>(
       "playlists",
       new SearchParams(new SearchParamsObject { Query = "foo" }),
-      new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
+      options: new RequestOptionBuilder().AddExtraHeader("X-Algolia-User-ID", "user1234").Build()
     );
   }
 

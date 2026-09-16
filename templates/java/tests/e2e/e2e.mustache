@@ -1,6 +1,8 @@
 package com.algolia.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.api.{{client}};
 import com.algolia.config.*;
@@ -46,6 +48,19 @@ class {{client}}RequestsTestsE2E {
         {{#body}}
         assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res)));
         {{/body}}
+        {{#correlationIdSuffix}}
+        okhttp3.Response httpResp = client.customGetWithHTTPInfo("{{{request.path}}}".substring(1){{#hasRequestOptions}}, new RequestOptions()
+          {{#requestOptions.queryParameters.parametersWithDataType}}
+            .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
+          {{/requestOptions.queryParameters.parametersWithDataType}}
+          {{#requestOptions.headers.parametersWithDataType}}
+            .addExtraHeader("{{{key}}}", {{#isVerbatim}}{{{value}}}{{/isVerbatim}}{{^isVerbatim}}"{{{value}}}"{{/isVerbatim}})
+          {{/requestOptions.headers.parametersWithDataType}}
+        {{/hasRequestOptions}});
+
+        assertNotNull(httpResp.header("Correlation-ID"));
+        assertTrue(httpResp.header("Correlation-ID").endsWith("{{{correlationIdSuffix}}}"));
+        {{/correlationIdSuffix}}
         {{/response}}
     }
     {{/tests}}

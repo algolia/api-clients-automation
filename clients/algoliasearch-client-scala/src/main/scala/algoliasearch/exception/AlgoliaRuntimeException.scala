@@ -10,7 +10,25 @@ package algoliasearch.exception
 sealed abstract class AlgoliaRuntimeException(
     message: String = null,
     cause: Throwable = null
-) extends RuntimeException(message, cause)
+) extends RuntimeException(message, cause) {
+
+  private var _correlationId: Option[String] = None
+
+  /** The `Correlation-ID` returned by the Algolia cluster along with the failed response, when it sent one. Quote it in
+    * support requests.
+    */
+  def correlationId: Option[String] = _correlationId
+
+  private[algoliasearch] def withCorrelationId(id: Option[String]): this.type = {
+    _correlationId = id
+    this
+  }
+
+  override def getMessage: String = correlationId match {
+    case Some(id) => s"${super.getMessage} (Correlation-ID: $id)"
+    case None     => super.getMessage
+  }
+}
 
 /** Exception thrown when an error occurs during API requests.
   *
@@ -63,7 +81,16 @@ case class AlgoliaRetryException(
 ) extends AlgoliaRuntimeException(
       "Error(s) while processing the retry strategy. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support",
       exceptions.lastOption.orNull
-    )
+    ) {
+
+  /** The `Correlation-ID` of the last attempt that carried one. Attempts that timed out have no response headers, so a
+    * timeout-only failure has none.
+    */
+  override def correlationId: Option[String] =
+    exceptions.reverseIterator.collectFirst {
+      case exception: AlgoliaRuntimeException if exception.correlationId.isDefined => exception.correlationId.get
+    }
+}
 
 /** Exception thrown when an error occurs during the wait strategy. For example: maximum number of retry exceeded.
   *

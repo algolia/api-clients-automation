@@ -7,12 +7,13 @@
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
   _transformation_options,
-  {hosts: [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/customHosts}}]}
+  {hosts: [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE){{^-last}}, {{/-last}}{{/customHosts}}]{{#hasMaxRateLimitRetries}}, max_rate_limit_retries: {{maxRateLimitRetries}}{{/hasMaxRateLimitRetries}}}
 ){{/hasCustomHosts}}
 {{^hasCustomHosts}}client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.with_transformation(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
-  _transformation_options
+  _transformation_options{{#hasMaxRateLimitRetries}},
+  { max_rate_limit_retries: {{maxRateLimitRetries}} }{{/hasMaxRateLimitRetries}}
 ){{/hasCustomHosts}}
 {{/hasTransformationRegion}}
 {{^hasTransformationRegion}}
@@ -22,12 +23,13 @@ client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.creat
   '{{parametersWithDataTypeMap.apiKey.value}}',
   [{{#customHosts}}Algolia::Transport::StatefulHost.new(ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal', protocol: 'http://', port: {{port}}, accept: CallType::READ | CallType::WRITE),{{/customHosts}}],
   '{{client}}'{{#gzipEncoding}},
-  compression_type: 'gzip'{{/gzipEncoding}}
+  compression_type: 'gzip'{{/gzipEncoding}}{{#hasMaxRateLimitRetries}},
+  max_rate_limit_retries: {{maxRateLimitRetries}}{{/hasMaxRateLimitRetries}}
 )){{/hasCustomHosts}}{{^hasCustomHosts}}
 {{^isError}}client = {{/isError}}Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
   '{{parametersWithDataTypeMap.appId.value}}',
   '{{parametersWithDataTypeMap.apiKey.value}}',
   {{#hasRegionalHost}}{{#parametersWithDataTypeMap.region}}'{{parametersWithDataTypeMap.region.value}}',{{/parametersWithDataTypeMap.region}}{{/hasRegionalHost}}
-  { requester: Algolia::Transport::EchoRequester.new }
+  { requester: Algolia::Transport::EchoRequester.new{{#hasMaxRateLimitRetries}}, max_rate_limit_retries: {{maxRateLimitRetries}}{{/hasMaxRateLimitRetries}} }
 ){{/hasCustomHosts}}
 {{/hasTransformationRegion}}

@@ -266,7 +266,7 @@ class SearchTest {
       },
       response = {
         lenientJsonAssert(
-          "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{\"normalizedQuery\":\"sofa\",\"categories\":[{}]}}}]}",
+          "{\"results\":[{\"index\":\"cts_e2e_query_categorization\",\"query\":\"sofa\",\"extensions\":{\"queryCategorization\":{}}}]}",
           Json.encodeToString(it),
         )
       },
@@ -305,6 +305,28 @@ class SearchTest {
           "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}",
           Json.encodeToString(it),
         )
+      },
+    )
+  }
+
+  @Test
+  fun `the classic engine accepts a Request-ID sent as a query parameter1`() = runTest {
+    client.runTest(
+      call = {
+        searchRules(
+          indexName = "cts_e2e_browse",
+          searchRulesParams = SearchRulesParams(query = "zorro"),
+          requestOptions =
+            RequestOptions(
+              urlParameters =
+                buildMap {
+                  put("x-algolia-request-id", "CtsE2eQry11")
+                }
+            ),
+        )
+      },
+      response = {
+        lenientJsonAssert("{\"nbHits\":1,\"nbPages\":1,\"page\":0}", Json.encodeToString(it))
       },
     )
   }

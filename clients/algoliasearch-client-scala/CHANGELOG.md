@@ -1,3 +1,33 @@
+## [2.47.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.46.0...2.47.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
+- [5672474ec5](https://github.com/algolia/api-clients-automation/commit/5672474ec5) fix(specs): remove plan restriction from Analytics API description ([#6955](https://github.com/algolia/api-clients-automation/pull/6955)) by [@kai687](https://github.com/kai687/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [31395ba02e](https://github.com/algolia/api-clients-automation/commit/31395ba02e) chore(deps): dependencies 2026-08-31 ([#6959](https://github.com/algolia/api-clients-automation/pull/6959)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [2.46.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.45.0...2.46.0)
+
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
+## [2.45.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.44.0...2.45.0)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [b17a8bbb5f](https://github.com/algolia/api-clients-automation/commit/b17a8bbb5f) fix(scala): send request bodies with Content-Length instead of chunked encoding ([#6832](https://github.com/algolia/api-clients-automation/pull/6832)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1f389d1f7f](https://github.com/algolia/api-clients-automation/commit/1f389d1f7f) feat(specs): add agentic analytics support to insights spec ([#6876](https://github.com/algolia/api-clients-automation/pull/6876)) by [@sirockin](https://github.com/sirockin/)
+- [65cc642811](https://github.com/algolia/api-clients-automation/commit/65cc642811) feat(specs): add decision (declared winner) to abtesting-v3 ABTest ([#6732](https://github.com/algolia/api-clients-automation/pull/6732)) by [@cdhawke](https://github.com/cdhawke/)
+- [fa40746b57](https://github.com/algolia/api-clients-automation/commit/fa40746b57) feat(scala): Request-ID and Correlation-ID support ([#6871](https://github.com/algolia/api-clients-automation/pull/6871)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [637defc23a](https://github.com/algolia/api-clients-automation/commit/637defc23a) feat(specs): add analytics v3 pattern endpoints ([#6795](https://github.com/algolia/api-clients-automation/pull/6795)) by [@Niamsy](https://github.com/Niamsy/)
+- [bed536e149](https://github.com/algolia/api-clients-automation/commit/bed536e149) chore(deps): dependencies 2026-08-10 ([#6835](https://github.com/algolia/api-clients-automation/pull/6835)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [2.44.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.43.2...2.44.0)
 
 - [38283179ee](https://github.com/algolia/api-clients-automation/commit/38283179ee) docs(specs): document the Correlation-ID and Request-ID headers ([#6690](https://github.com/algolia/api-clients-automation/pull/6690)) by [@xroche](https://github.com/xroche/)

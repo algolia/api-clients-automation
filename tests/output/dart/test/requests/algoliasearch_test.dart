@@ -141,7 +141,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },
@@ -174,7 +175,8 @@ void main() {
         expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(
-            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""");
+            request.headers, """{"x-algolia-api-key":"ALGOLIA_API_KEY"}""",
+            allowMintedRequestId: true);
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"facet":"filters"}""");
       },

@@ -156,7 +156,7 @@ class SnippetAbtestingV3Client
             'test/all',
             ['query' => 'to be overridden',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'parameters with space',
                     'and an array' => ['array', 'with spaces',
@@ -240,7 +240,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query' => 'myQueryParameter',
                 ], ]
@@ -270,7 +270,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'query2' => 'myQueryParameter',
                 ], ]
@@ -300,7 +300,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -331,7 +331,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'headers' => [
                     'x-algolia-api-key' => 'ALGOLIA_API_KEY',
                 ],
@@ -362,7 +362,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'isItWorking' => true,
                 ], ]
@@ -392,7 +392,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => 2,
                 ], ]
@@ -422,7 +422,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => ['b and c', 'd',
                     ],
@@ -453,7 +453,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [true, true, false,
                     ],
@@ -484,7 +484,7 @@ class SnippetAbtestingV3Client
             ],
             ['facet' => 'filters',
             ],
-            [
+            requestOptions: [
                 'queryParameters' => [
                     'myParam' => [1, 2,
                     ],

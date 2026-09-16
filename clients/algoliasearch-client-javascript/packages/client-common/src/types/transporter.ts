@@ -130,6 +130,13 @@ export type TransporterOptions = {
   timeouts: Timeouts;
 
   /**
+   * How many times to wait and retry on the same host after HTTP 429.
+   * Default is 3. `0` fails on the first 429 (no wait).
+   * Wait time is `Retry-After` in whole seconds, or 1 second if the header is missing or invalid.
+   */
+  maxRateLimitRetries?: number | undefined;
+
+  /**
    * The hosts used by the requester.
    */
   hosts: Host[];
@@ -162,6 +169,13 @@ export type TransporterOptions = {
   compress?: (data: string) => Promise<Uint8Array>;
 
   compression?: 'gzip';
+
+  /**
+   * Where the generated Request-ID is sent: as the `Request-ID` header, or as the
+   * `x-algolia-request-id` query parameter. When undefined, no Request-ID is sent.
+   * A caller-supplied Request-ID is never overwritten.
+   */
+  requestIdChannel?: 'headers' | 'queryParameters' | undefined;
 };
 
 export type Transporter = TransporterOptions & {

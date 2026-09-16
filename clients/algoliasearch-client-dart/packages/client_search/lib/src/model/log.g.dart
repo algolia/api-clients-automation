@@ -11,6 +11,7 @@ Log _$LogFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Log(
+          cid: $checkedConvert('cid', (v) => v as String?),
           timestamp: $checkedConvert('timestamp', (v) => v as String),
           method: $checkedConvert('method', (v) => v as String),
           answerCode: $checkedConvert('answer_code', (v) => v as String),
@@ -47,17 +48,7 @@ Log _$LogFromJson(Map<String, dynamic> json) => $checkedCreate(
     );
 
 Map<String, dynamic> _$LogToJson(Log instance) {
-  final val = <String, dynamic>{
-    'timestamp': instance.timestamp,
-    'method': instance.method,
-    'answer_code': instance.answerCode,
-    'query_body': instance.queryBody,
-    'answer': instance.answer,
-    'url': instance.url,
-    'ip': instance.ip,
-    'query_headers': instance.queryHeaders,
-    'sha1': instance.sha1,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -65,6 +56,16 @@ Map<String, dynamic> _$LogToJson(Log instance) {
     }
   }
 
+  writeNotNull('cid', instance.cid);
+  val['timestamp'] = instance.timestamp;
+  val['method'] = instance.method;
+  val['answer_code'] = instance.answerCode;
+  val['query_body'] = instance.queryBody;
+  val['answer'] = instance.answer;
+  val['url'] = instance.url;
+  val['ip'] = instance.ip;
+  val['query_headers'] = instance.queryHeaders;
+  val['sha1'] = instance.sha1;
   writeNotNull('nb_api_calls', instance.nbApiCalls);
   val['processing_time_ms'] = instance.processingTimeMs;
   writeNotNull('index', instance.index);

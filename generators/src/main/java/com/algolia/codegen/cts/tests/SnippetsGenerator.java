@@ -75,6 +75,7 @@ public class SnippetsGenerator extends TestsGenerator {
             }
 
             Snippet newSnippet = new Snippet(step.method, test.testName, step.parameters, step.requestOptions);
+            newSnippet.skipLanguages = test.skipLanguages;
             Snippet[] existing = snippets.get(step.method);
             if (existing == null) {
               snippets.put(step.method, new Snippet[] { newSnippet });
@@ -101,6 +102,7 @@ public class SnippetsGenerator extends TestsGenerator {
 
     List<Object> blocks = new ArrayList<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, true);
+    boolean hasStreamingSnippets = false;
 
     for (Map.Entry<String, CodegenOperation> entry : operations.entrySet()) {
       String operationId = entry.getKey();
@@ -127,11 +129,15 @@ public class SnippetsGenerator extends TestsGenerator {
         snippet.addMethodCall(test, paramsType, ope);
         addRequestOptions(paramsType, snippet.requestOptions, test);
         tests.add(test);
+        if ((boolean) ope.vendorExtensions.getOrDefault("x-streaming", false)) {
+          hasStreamingSnippets = true;
+        }
       }
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("snippets", tests);
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);
+    bundle.put("hasStreamingSnippets", hasStreamingSnippets);
   }
 }

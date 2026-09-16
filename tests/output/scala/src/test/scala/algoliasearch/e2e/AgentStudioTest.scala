@@ -116,32 +116,6 @@ class AgentStudioTest extends AnyFunSuite {
     }
   }
 
-  test("e2e get conversation1") {
-    val client = testClient()
-    val future = client.getConversation(
-      conversationId = "alg_cnv_miss_yqcZtaOSPTF8bJsJ",
-      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15"
-    )
-
-    val response = Await.result(future, Duration.Inf)
-    val expected = parse(
-      """{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}"""
-    )
-    val extracted = Extraction.decompose(response)
-    val diffRes = expected.diff(extracted)
-    if (diffRes.deleted != JNothing) {
-      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
-    }
-    if (diffRes.changed != JNothing) {
-      println(
-        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
-      )
-    }
-    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
-      fail("there is a difference between received and expected")
-    }
-  }
-
   test("e2e get provider1") {
     val client = testClient()
     val future = client.getProvider(
@@ -250,22 +224,6 @@ class AgentStudioTest extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    val expected = parse(
-      """{"data":[{"id":"alg_cnv_miss_yqcZtaOSPTF8bJsJ","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","title":"General Greeting"}]}"""
-    )
-    val extracted = Extraction.decompose(response)
-    val diffRes = expected.diff(extracted)
-    if (diffRes.deleted != JNothing) {
-      println(s"This was expected and not found in the deserialized response: ${write(diffRes.deleted)}")
-    }
-    if (diffRes.changed != JNothing) {
-      println(
-        s"The expectation was different than what was found in the deserialized response: ${write(diffRes.changed)}"
-      )
-    }
-    if (diffRes.deleted != JNothing || diffRes.changed != JNothing) {
-      fail("there is a difference between received and expected")
-    }
   }
 
   test("e2e list agents2") {

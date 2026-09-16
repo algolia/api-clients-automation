@@ -443,6 +443,43 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_composition_1(self):
+        """
+        the Correlation-ID ends with the sent Request-ID
+        """
+        _req = await self._client.get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+
+        assert _req.path == "/1/compositions/id1"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {"request-id": "CtsE2eEcho4"}.items()
+        assert _req.data is None
+
+    async def test_get_composition_2(self):
+        """
+        the Correlation-ID ends with the Request-ID sent as a query parameter
+        """
+        _req = await self._client.get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+
+        assert _req.path == "/1/compositions/id1"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"x-algolia-request-id": "CtsE2eEchoQ"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_rule_(self):
         """
         getRule
@@ -2540,6 +2577,43 @@ class TestCompositionClientSync:
         assert _req.path == "/1/compositions/foo"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_composition_1(self):
+        """
+        the Correlation-ID ends with the sent Request-ID
+        """
+        _req = self._client.get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "headers": loads("""{"request-id":"CtsE2eEcho4"}"""),
+            },
+        )
+
+        assert _req.path == "/1/compositions/id1"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {"request-id": "CtsE2eEcho4"}.items()
+        assert _req.data is None
+
+    def test_get_composition_2(self):
+        """
+        the Correlation-ID ends with the Request-ID sent as a query parameter
+        """
+        _req = self._client.get_composition_with_http_info(
+            composition_id="id1",
+            request_options={
+                "query_parameters": loads("""{"x-algolia-request-id":"CtsE2eEchoQ"}"""),
+            },
+        )
+
+        assert _req.path == "/1/compositions/id1"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"x-algolia-request-id": "CtsE2eEchoQ"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 

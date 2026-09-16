@@ -59,6 +59,7 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
     additionalProperties.put("is" + Helpers.capitalize(Helpers.camelize((String) additionalProperties.get("client"))) + "Client", true);
     additionalProperties.put("configClassname", getClientName(client) + "Config");
+    additionalProperties.put("requestIdSupport", Helpers.requestIdSupport(client));
 
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("php", "packageVersion"));

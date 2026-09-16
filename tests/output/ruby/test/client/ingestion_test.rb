@@ -3,7 +3,7 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
-  # can handle HTML error
+  # can handle HTML error when rate-limit retries are disabled
   def test_api0
     client = Algolia::IngestionClient.create_with_config(
       Algolia::Configuration.new(
@@ -17,7 +17,8 @@ class TestClientIngestionClient < Test::Unit::TestCase
             accept: CallType::READ | CallType::WRITE
           )
         ],
-        "ingestionClient"
+        "ingestionClient",
+        max_rate_limit_retries: 0
       )
     )
 
@@ -141,7 +142,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.42.3\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.45.0\).*/))
   end
 
   # handles 204 No Content responses correctly
@@ -201,6 +202,28 @@ class TestClientIngestionClient < Test::Unit::TestCase
         e.message
       )
     end
+  end
+
+  # the ingestion client sends no Request-ID
+  def test_request_id0
+    client = Algolia::IngestionClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6694,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "ingestionClient"
+      )
+    )
+
+    req = client.custom_get("1/test/request-id/negative/ruby")
+    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # switch API key

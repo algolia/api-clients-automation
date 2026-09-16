@@ -1,18 +1,18 @@
 import fsp from 'fs/promises';
 import { resolve } from 'path';
 
-import { run } from '../common.ts';
+import { assertSafeRef, git, run } from '../common.ts';
 import { getGitHubUrl } from '../config.ts';
 import { getTargetBranch } from '../release/common.ts';
 import type { Language } from '../types.ts';
 
 /**
- * Returns the number of diff between a `branch` and its `HEAD` for the given `path`.
+ * Returns 1 when there is a diff between a `branch` and its `HEAD` for the given `path`, 0 otherwise.
  *
  * @param opts - Parameters of the method.
  * @param opts.branch - The branch to trigger the operation, defaults to '' (current branch).
  * @param opts.head - The head to compare the operation, defaults to 'HEAD', providing 'null' will check for unstaged changes.
- * @param opts.path - The path to look for changes in, defaults to '.' (current directory).
+ * @param opts.path - The pathspec, or list of pathspecs, to look for changes in, defaults to '.' (current directory).
  * @param opts.cwd - The path to run the command, defaults to current directory.
  */
 export async function getNbGitDiff({
@@ -23,23 +23,20 @@ export async function getNbGitDiff({
 }: Partial<{
   branch: string;
   head: string | null;
-  path: string;
+  path: string | string[];
   cwd: string;
 }>): Promise<number> {
-  const checkHead = head === null ? '' : `...${head}`;
+  const range = `${branch}${head === null ? '' : `...${head}`}`;
+  const pathspecs = Array.isArray(path) ? path : [path];
 
-  const changes = parseInt(
-    await run(`git add -N . && git diff --shortstat ${branch}${checkHead} -- ${path} | wc -l | tr -d ' '`, {
-      cwd,
-    }),
-    10,
+  await git(['add', '-N', '.'], { cwd });
+
+  const shortstat = await git(
+    ['diff', '--shortstat', '--end-of-options', ...(range ? [assertSafeRef(range)] : []), '--', ...pathspecs],
+    { cwd },
   );
 
-  if (isNaN(changes)) {
-    return 0;
-  }
-
-  return changes;
+  return shortstat.split('\n').filter(Boolean).length;
 }
 
 export async function cloneRepository({
