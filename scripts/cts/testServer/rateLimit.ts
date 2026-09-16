@@ -43,23 +43,16 @@ function assertDelay(timestamps: number[], expectedMs: number): void {
   }
 }
 
-// Languages that implement 429 wait-and-retry.
-const RATE_LIMIT_LANGUAGES = ['csharp', 'dart', 'go', 'java', 'javascript', 'kotlin', 'php', 'python', 'ruby', 'swift'];
-
 // Languages whose client CTS suite runs once per mode (python: async + sync, see withSyncTests in TestsClient.java).
 const DOUBLE_RUN_LANGUAGES = ['python'];
 
 export function rateLimitRuns(languages: string[]): Record<string, number> {
-  return Object.fromEntries(
-    languages
-      .filter((lang) => RATE_LIMIT_LANGUAGES.includes(lang))
-      .map((lang) => [lang, DOUBLE_RUN_LANGUAGES.includes(lang) ? 2 : 1]),
-  );
+  return Object.fromEntries(languages.map((lang) => [lang, DOUBLE_RUN_LANGUAGES.includes(lang) ? 2 : 1]));
 }
 
 export function assertValidRateLimitRetries(runs: Record<string, number>): void {
-  if (Object.keys(runs).length > 0) {
-    expect(Object.keys(state).length, 'rate-limit mock was never hit').to.be.at.least(1);
+  for (const lang of Object.keys(runs)) {
+    expect(Object.keys(state), `${lang} never hit the rate-limit mock`).to.include(lang);
   }
 
   for (const [lang, langState] of Object.entries(state)) {
