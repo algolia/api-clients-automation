@@ -12,15 +12,18 @@ import com.algolia.client.dsl.synonym.synonym
 import com.algolia.client.model.search.Anchoring
 import com.algolia.client.model.search.Condition
 import com.algolia.client.model.search.Consequence
+import com.algolia.client.model.search.ConsequenceHide
 import com.algolia.client.model.search.ConsequenceParams
 import com.algolia.client.model.search.ConsequenceQuery
 import com.algolia.client.model.search.Promote
 import com.algolia.client.model.search.PromoteObjectID
+import com.algolia.client.model.search.PromoteObjectIDs
 import com.algolia.client.model.search.Rule
 import com.algolia.client.model.search.SynonymHit
 import com.algolia.client.model.search.SynonymType
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
@@ -50,7 +53,7 @@ internal class RuleSynonymDslTest {
             query("iphone")
             filters { facet("brand", "Apple") }
           }
-          promote("object-1", position = 0)
+          promote { objectID("object-1", position = 0) }
         }
       }
     val ctor =
@@ -153,7 +156,11 @@ internal class RuleSynonymDslTest {
 
   @Test
   fun conditionFiltersHelperMatchesConstructor() {
-    val dsl = rule("x") { condition { filters { facet("brand", "Apple") } } }
+    val dsl =
+      rule("x") {
+        condition { filters { facet("brand", "Apple") } }
+        consequence {}
+      }
     val ctor =
       Rule(
         objectID = "x",
@@ -196,6 +203,46 @@ internal class RuleSynonymDslTest {
     val actual = json.encodeToJsonElement(dsl)
     assertIs<JsonObject>(actual)
     assertEquals(expected.jsonObject, actual.jsonObject)
+  }
+
+  @Test
+  fun ruleWithoutConsequenceThrows() {
+    assertFailsWith<IllegalArgumentException> { rule("x") {} }
+  }
+
+  @Test
+  fun promoteAndHideBlocksReplaceOnSecondCall() {
+    val dsl =
+      rule("x") {
+        consequence {
+          promote { objectID("object-1", position = 0) }
+          promote { objectID("object-2", position = 1) }
+          hide { +"object-9" }
+          hide { +"object-8" }
+        }
+      }
+    val ctor =
+      Rule(
+        objectID = "x",
+        consequence =
+          Consequence(
+            promote = listOf(Promote.of(PromoteObjectID("object-2", 1))),
+            hide = listOf(ConsequenceHide("object-8")),
+          ),
+      )
+    assertJsonEquals(ctor, dsl)
+  }
+
+  @Test
+  fun promoteObjectIDsEncodesGroup() {
+    val dsl = rule("x") { consequence { promote { objectIDs(listOf("a", "b"), position = 1) } } }
+    val ctor =
+      Rule(
+        objectID = "x",
+        consequence =
+          Consequence(promote = listOf(Promote.of(PromoteObjectIDs(listOf("a", "b"), 1)))),
+      )
+    assertJsonEquals(ctor, dsl)
   }
 
   @Test

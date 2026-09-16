@@ -32,7 +32,20 @@ internal class GeneratedBuilderCoverageTest {
   @Test
   fun allGeneratedBuildersMatchConstructors() {
     val builders = generatedBuilderClasses()
-    assertTrue(builders.isNotEmpty(), "expected generated builders on the classpath")
+    assertEquals(
+      setOf(
+        "SearchParamsObjectBuilder",
+        "BrowseParamsObjectBuilder",
+        "DeleteByParamsBuilder",
+        "IndexSettingsBuilder",
+        "RuleBuilder",
+        "ConditionBuilder",
+        "ConsequenceBuilder",
+        "ConsequenceParamsBuilder",
+        "SynonymHitBuilder",
+      ),
+      builders.map { it.simpleName }.toSet(),
+    )
     for (builder in builders) {
       val modelName = builder.simpleName.removeSuffix("Builder")
       val model = Class.forName("com.algolia.client.model.search.$modelName").kotlin
@@ -44,10 +57,9 @@ internal class GeneratedBuilderCoverageTest {
    * Drift guard for generated filter helpers.
    *
    * The generator must emit exactly twenty public `Function1` members (`filters`, `facetFilters`,
-   * `optionalFilters`, `numericFilters`, `tagFilters`) on the five allowlisted builders. A leak
-   * onto SearchForHitsBuilder, SearchForFacetsBuilder, SecuredApiKeyRestrictionsBuilder,
-   * RankingInfoBuilder, or AutoFilteringResultBuilder fails here. A helper the generator silently
-   * stops emitting also fails here.
+   * `optionalFilters`, `numericFilters`, `tagFilters`) on the nine-builder set, by property name
+   * and type. A helper on a model that does not carry that field, or a helper the generator
+   * silently stops emitting, fails here.
    */
   @Test
   fun filterHelpersOnlyOnAllowlistedBuilders() {

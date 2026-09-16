@@ -4,36 +4,27 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.model.search.TagFilters
 
 /** AND-context builder for [Filter.Tag] leaves and [FilterGroup.Or.Tag] groups. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagFilterDsl {
-  private val children: MutableList<FilterGroup> = mutableListOf()
+public class TagFilterDsl internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
+  TagLeaves by TagLeafMixin({ nodes.add(it) }) {
 
-  /** Adds a [Filter.Tag] for [value]. */
-  public fun tag(value: String): Filter.Tag = Filter.Tag(value).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. */
   public fun or(block: TagOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot()))
   }
 
   /** Adds a typed [FilterGroup.Not] of the children in [block]. */
   public fun not(block: TagFilterDsl.() -> Unit) {
-    children += negate(TagFilterDsl().apply(block).snapshot())
+    nodes.add(negate(TagFilterDsl().apply(block).nodes.snapshot()))
   }
 
-  internal fun build(): Filters = Filters(asNode())
-
-  internal fun snapshot(): List<FilterGroup> = children.toList()
-
-  private fun asNode(): FilterGroup =
-    when (children.size) {
-      0 -> FilterGroup.And()
-      1 -> children.single()
-      else -> FilterGroup.And(children.toList())
-    }
+  internal fun root(): FilterGroup = nodes.root()
 }
 
 /**
@@ -42,11 +33,10 @@ public class TagFilterDsl {
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagOrDsl {
-  private val children: MutableList<TagAtom> = mutableListOf()
+public class TagOrDsl internal constructor(private val nodes: FilterAccumulator<TagAtom>) :
+  TagLeaves by TagLeafMixin(nodes::add) {
 
-  /** Adds a [Filter.Tag] for [value]. */
-  public fun tag(value: String): Filter.Tag = Filter.Tag(value).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /**
    * Negates every tag atom collected in [block] and appends each as its own [TagAtom].
@@ -55,13 +45,14 @@ public class TagOrDsl {
    */
   public fun not(block: TagOrDsl.() -> Unit) {
     for (atom in TagOrDsl().apply(block).snapshot()) {
-      children += negateTagAtom(atom)
+      nodes.add(negateTagAtom(atom))
     }
   }
 
-  internal fun snapshot(): List<TagAtom> = children.toList()
+  internal fun snapshot(): List<TagAtom> = nodes.snapshot()
 }
 
-/** Constructs a [Filters] value from a tag-only DSL block. */
+/** Constructs [TagFilters] from a tag-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
-public fun tagFilters(block: TagFilterDsl.() -> Unit): Filters = TagFilterDsl().apply(block).build()
+public fun tagFilters(block: TagFilterDsl.() -> Unit): TagFilters? =
+  FilterLegacyConverter.tag(TagFilterDsl().apply(block).root())

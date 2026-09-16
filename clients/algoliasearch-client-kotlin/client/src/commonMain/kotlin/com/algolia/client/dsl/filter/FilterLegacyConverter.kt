@@ -23,18 +23,12 @@ import com.algolia.client.model.search.TagFilters
  *
  * [FilterGroup.Or] carries its family in the type.
  *
- * ## Family partition
- *
- * Each entry point keeps only its family and ignores other leaves (including under
- * [FilterGroup.And] and [FilterGroup.Not]):
- * - [facet] / [optional]: [Filter.Facet] only
- * - [numeric]: [Filter.Comparison] and [Filter.Range] only
- * - [tag]: [Filter.Tag] only
- *
- * An empty result after that partition is `null`.
+ * Family receivers make a wrong-family leaf unrepresentable. A hand-built tree that still contains
+ * one throws [IllegalArgumentException]. The encoder does not drop other families.
  *
  * ## Reject cases ([IllegalArgumentException])
  *
+ * - **Wrong family:** a leaf that does not match the encoder family.
  * - **De Morgan OR-of-ANDs:** [FilterGroup.Not] of an [FilterGroup.And] whose negated children
  *   include a conjunction (for example `Not.Group(And(Or.Facet(A, B), C))`).
  *
@@ -44,21 +38,21 @@ import com.algolia.client.model.search.TagFilters
  * `FilterConverter.Legacy` with `escape = true`.
  *
  * Numeric attributes and tag values use the same T5 rule as [FilterSqlConverter]: quote only when
- * the token is empty or contains a space, a quote, or `AND` / `OR` / `NOT`. That matches the
- * version 2 query helpers, which default to `escape = false` (`Unquoted`) for simple tokens.
+ * the token is empty or contains a space, a quote, or `AND` / `OR` / `NOT`.
+ *
+ * ## Range negation
+ *
+ * A negated [Filter.Range] encodes as two comparisons: `attr < lo` and `attr > hi`.
  */
-@AlgoliaExperimentalDsl
-public object FilterLegacyConverter {
+internal object FilterLegacyConverter {
 
   /**
    * Legacy [FacetFilters] for [Filter.Facet] leaves in [root].
    *
-   * Ignores [Filter.Tag], [Filter.Comparison], and [Filter.Range]. Throws
-   * [IllegalArgumentException] for a De Morgan OR-of-ANDs that the nested-list format cannot
-   * encode. Returns `null` when no Facet leaf remains.
+   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
+   * nested-list format cannot encode. Returns `null` when no Facet leaf remains.
    */
-  @AlgoliaExperimentalDsl
-  public fun facet(root: FilterGroup): FacetFilters? =
+  fun facet(root: FilterGroup): FacetFilters? =
     wrapLegacy(toLegacyRows(root, FilterFamily.Facet), FacetFilters::of, FacetFilters::of)
 
   /**
@@ -66,30 +60,25 @@ public object FilterLegacyConverter {
    *
    * Same family rule and reject cases as [facet]. Returns `null` when no Facet leaf remains.
    */
-  @AlgoliaExperimentalDsl
-  public fun optional(root: FilterGroup): OptionalFilters? =
+  fun optional(root: FilterGroup): OptionalFilters? =
     wrapLegacy(toLegacyRows(root, FilterFamily.Facet), OptionalFilters::of, OptionalFilters::of)
 
   /**
    * Legacy [NumericFilters] for [Filter.Comparison] and [Filter.Range] leaves in [root].
    *
-   * Ignores [Filter.Facet] and [Filter.Tag]. Throws [IllegalArgumentException] for a De Morgan
-   * OR-of-ANDs that the nested-list format cannot encode. Returns `null` when no numeric leaf
-   * remains.
+   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
+   * nested-list format cannot encode. Returns `null` when no numeric leaf remains.
    */
-  @AlgoliaExperimentalDsl
-  public fun numeric(root: FilterGroup): NumericFilters? =
+  fun numeric(root: FilterGroup): NumericFilters? =
     wrapLegacy(toLegacyRows(root, FilterFamily.Numeric), NumericFilters::of, NumericFilters::of)
 
   /**
    * Legacy [TagFilters] for [Filter.Tag] leaves in [root].
    *
-   * Ignores [Filter.Facet], [Filter.Comparison], and [Filter.Range]. Throws
-   * [IllegalArgumentException] for a De Morgan OR-of-ANDs that the nested-list format cannot
-   * encode. Returns `null` when no Tag leaf remains.
+   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
+   * nested-list format cannot encode. Returns `null` when no Tag leaf remains.
    */
-  @AlgoliaExperimentalDsl
-  public fun tag(root: FilterGroup): TagFilters? =
+  fun tag(root: FilterGroup): TagFilters? =
     wrapLegacy(toLegacyRows(root, FilterFamily.Tag), TagFilters::of, TagFilters::of)
 }
 
@@ -109,11 +98,8 @@ private fun toRows(
 ): List<List<String>> {
   return when (group) {
     is Filter -> {
-      if (familyOf(group) != family) {
-        emptyList()
-      } else {
-        listOf(encodeLeaf(group, negated))
-      }
+      requireFamily(group, family)
+      listOf(encodeLeaf(group, negated))
     }
     is FilterGroup.Not -> toRows(group.child, family, !negated)
     is FilterGroup.And -> convertAnd(group.children, family, negated)
@@ -126,16 +112,14 @@ private fun convertAnd(
   family: FilterFamily,
   negated: Boolean,
 ): List<List<String>> {
-  val relevant = children.filter { family in leafFamilies(it) }
-  if (relevant.isEmpty()) return emptyList()
   if (negated) {
-    return if (relevant.size == 1) {
-      toRows(relevant.single(), family, negated = true)
+    return if (children.size == 1) {
+      toRows(children.single(), family, negated = true)
     } else {
-      orRow(relevant, family, negated = true)
+      orRow(children, family, negated = true)
     }
   }
-  return relevant.flatMap { toRows(it, family, negated = false) }.filter { it.isNotEmpty() }
+  return children.flatMap { toRows(it, family, negated = false) }.filter { it.isNotEmpty() }
 }
 
 private fun orRows(
@@ -143,8 +127,7 @@ private fun orRows(
   family: FilterFamily,
   negated: Boolean,
 ): List<List<String>> {
-  val families = children.fold(emptySet<FilterFamily>()) { acc, child -> acc + leafFamilies(child) }
-  if (family !in families) return emptyList()
+  if (children.isEmpty()) return emptyList()
   if (negated) {
     return children.flatMap { toRows(it, family, negated = true) }.filter { it.isNotEmpty() }
   }
@@ -179,14 +162,11 @@ private fun familyOf(filter: Filter): FilterFamily =
     is Filter.Range -> FilterFamily.Numeric
   }
 
-private fun leafFamilies(group: FilterGroup): Set<FilterFamily> =
-  when (group) {
-    is Filter -> setOf(familyOf(group))
-    is FilterGroup.And ->
-      group.children.fold(emptySet()) { acc, child -> acc + leafFamilies(child) }
-    is FilterGroup.Or -> group.children.fold(emptySet()) { acc, child -> acc + leafFamilies(child) }
-    is FilterGroup.Not -> leafFamilies(group.child)
+private fun requireFamily(filter: Filter, family: FilterFamily) {
+  require(familyOf(filter) == family) {
+    "${family.name} filters cannot encode ${filter::class.simpleName} leaf $filter"
   }
+}
 
 private fun encodeLeaf(filter: Filter, negated: Boolean): List<String> {
   return when (filter) {

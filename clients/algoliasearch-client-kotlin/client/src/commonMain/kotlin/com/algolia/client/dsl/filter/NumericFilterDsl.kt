@@ -4,52 +4,28 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.model.search.NumericFilters
 
 /** AND-context builder for numeric leaves and [FilterGroup.Or.Numeric] groups. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class NumericFilterDsl {
-  private val children: MutableList<FilterGroup> = mutableListOf()
+public class NumericFilterDsl
+internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
+  NumericLeaves by NumericLeafMixin({ nodes.add(it) }) {
 
-  /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
-  public fun range(attribute: String, lowerBound: Number, upperBound: Number): Filter.Range =
-    Filter.Range(attribute, lowerBound, upperBound).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: IntRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: LongRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Comparison] of [attribute] against [value] with [operator]. */
-  public fun comparison(
-    attribute: String,
-    operator: NumericOperator,
-    value: Number,
-  ): Filter.Comparison = Filter.Comparison(attribute, operator, value).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /** Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. */
   public fun or(block: NumericOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot()))
   }
 
   /** Adds a typed [FilterGroup.Not] of the children in [block]. */
   public fun not(block: NumericFilterDsl.() -> Unit) {
-    children += negate(NumericFilterDsl().apply(block).snapshot())
+    nodes.add(negate(NumericFilterDsl().apply(block).nodes.snapshot()))
   }
 
-  internal fun build(): Filters = Filters(asNode())
-
-  internal fun snapshot(): List<FilterGroup> = children.toList()
-
-  private fun asNode(): FilterGroup =
-    when (children.size) {
-      0 -> FilterGroup.And()
-      1 -> children.single()
-      else -> FilterGroup.And(children.toList())
-    }
+  internal fun root(): FilterGroup = nodes.root()
 }
 
 /**
@@ -58,27 +34,10 @@ public class NumericFilterDsl {
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class NumericOrDsl {
-  private val children: MutableList<NumericAtom> = mutableListOf()
+public class NumericOrDsl internal constructor(private val nodes: FilterAccumulator<NumericAtom>) :
+  NumericLeaves by NumericLeafMixin(nodes::add) {
 
-  /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
-  public fun range(attribute: String, lowerBound: Number, upperBound: Number): Filter.Range =
-    Filter.Range(attribute, lowerBound, upperBound).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: IntRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: LongRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Comparison] of [attribute] against [value] with [operator]. */
-  public fun comparison(
-    attribute: String,
-    operator: NumericOperator,
-    value: Number,
-  ): Filter.Comparison = Filter.Comparison(attribute, operator, value).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /**
    * Negates every numeric atom collected in [block] and appends each as its own [NumericAtom].
@@ -87,14 +46,14 @@ public class NumericOrDsl {
    */
   public fun not(block: NumericOrDsl.() -> Unit) {
     for (atom in NumericOrDsl().apply(block).snapshot()) {
-      children += negateNumericAtom(atom)
+      nodes.add(negateNumericAtom(atom))
     }
   }
 
-  internal fun snapshot(): List<NumericAtom> = children.toList()
+  internal fun snapshot(): List<NumericAtom> = nodes.snapshot()
 }
 
-/** Constructs a [Filters] value from a numeric-only DSL block. */
+/** Constructs [NumericFilters] from a numeric-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
-public fun numericFilters(block: NumericFilterDsl.() -> Unit): Filters =
-  NumericFilterDsl().apply(block).build()
+public fun numericFilters(block: NumericFilterDsl.() -> Unit): NumericFilters? =
+  FilterLegacyConverter.numeric(NumericFilterDsl().apply(block).root())
