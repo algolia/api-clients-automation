@@ -50,6 +50,7 @@ def _build_ingestion_transporter(transformation_options)
   opts[:read_timeout] = transformation_options.read_timeout unless transformation_options.read_timeout.nil?
   opts[:write_timeout] = transformation_options.write_timeout unless transformation_options.write_timeout.nil?
   opts[:compression_type] = transformation_options.compression_type unless transformation_options.compression_type.nil?
+  opts[:max_rate_limit_retries] = transformation_options.max_rate_limit_retries unless transformation_options.max_rate_limit_retries.nil?
 
   config = Algolia::Configuration.new(
     @api_client.config.app_id,

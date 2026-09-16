@@ -3392,7 +3392,7 @@
           },
           "requires": {
             "type": "array",
-            "description": "Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.",
+            "description": "Public ACL identifiers required to read the field, for example `revenueAnalyticsEnabled`.",
             "items": {
               "type": "string"
             }
