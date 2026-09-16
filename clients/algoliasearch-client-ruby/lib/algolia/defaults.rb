@@ -11,6 +11,6 @@ module Algolia
     RATE_LIMIT_WAIT = 1
     # Largest wait Kernel#sleep accepts (a 64-bit long, in seconds). A runtime
     # ceiling like the Go and Swift clients', not a client-side maximum wait.
-    MAX_RATE_LIMIT_WAIT = 2**63 - 1
+    MAX_RATE_LIMIT_WAIT = 2 ** 63 - 1
   end
 end
