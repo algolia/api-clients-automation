@@ -3,7 +3,7 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
-  # can handle HTML error
+  # can handle HTML error when rate-limit retries are disabled
   def test_api0
     client = Algolia::IngestionClient.create_with_config(
       Algolia::Configuration.new(
@@ -17,7 +17,8 @@ class TestClientIngestionClient < Test::Unit::TestCase
             accept: CallType::READ | CallType::WRITE
           )
         ],
-        "ingestionClient"
+        "ingestionClient",
+        max_rate_limit_retries: 0
       )
     )
 
