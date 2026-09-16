@@ -90,7 +90,7 @@ use GuzzleHttp\Psr7\Query;
  */
 class SearchClient
 {
-    public const VERSION = '4.48.0';
+    public const VERSION = '4.49.0';
 
     /**
      * @var ApiWrapperInterface
@@ -5027,6 +5027,9 @@ class SearchClient
         }
         if (null !== ($compressionType = $transformationOptions->getCompressionType())) {
             $ingestionConfig->setCompressionType($compressionType);
+        }
+        if (null !== ($maxRateLimitRetries = $transformationOptions->getMaxRateLimitRetries())) {
+            $ingestionConfig->setMaxRateLimitRetries($maxRateLimitRetries);
         }
 
         return IngestionClient::createWithConfig($ingestionConfig);

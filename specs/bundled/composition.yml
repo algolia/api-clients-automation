@@ -2476,12 +2476,17 @@ components:
       type: object
       description: >-
         An object that contains the extra key-value pairs provided in the
-        injectedItem definition.
+        injectedItem definition. Only present on hits inserted by an
+        injectedItem that defines metadata, either in its `metadata` field or
+        sent by an external source.
       additionalProperties: true
       properties:
         _injectedItemKey:
           type: string
-          description: The key of the injectedItem that inserted this metadata.
+          description: >-
+            The key of the injectedItem that inserted this metadata. Only
+            present when the injectedItem's `metadata.hits.addItemKey` is
+            `true`.
     hit:
       type: object
       description: >
@@ -3784,8 +3789,11 @@ components:
                 addItemKey:
                   type: boolean
                   description: >-
-                    When true, the `_injectedItemKey` field is set in the
-                    `_extra` object of each affected hit.
+                    When true, each affected hit's `_extra` object includes an
+                    `_injectedItemKey` field identifying the injectedItem that
+                    inserted it. Defaults to false, meaning hits don't include
+                    `_injectedItemKey`. To identify injected hits without this
+                    flag, define your own key-value pairs in `extra`.
                 extra:
                   type: object
                   additionalProperties: true

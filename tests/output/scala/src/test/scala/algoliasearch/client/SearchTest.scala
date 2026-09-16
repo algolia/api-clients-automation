@@ -401,6 +401,160 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
+  test("retries 429 on the same host using Retry-After") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6697)
+            ),
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6698)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/rate-limit/retry-after/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"message\":\"ok rate limit retry\"}"))
+  }
+
+  test("retries 429 with a 1s wait when Retry-After is missing") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6697)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/rate-limit/missing-header/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"message\":\"ok rate limit retry\"}"))
+  }
+
+  test("retries 429 with a 1s wait when Retry-After is invalid") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6697)
+            )
+          )
+        )
+        .build()
+    )
+
+    var res = Await.result(
+      client.customGet[JObject](
+        path = "1/test/rate-limit/invalid-header/scala"
+      ),
+      Duration.Inf
+    )
+    assert(parse(write(res)) == parse("{\"message\":\"ok rate limit retry\"}"))
+  }
+
+  test("returns 429 after maxRateLimitRetries is used up") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6697)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertError("Too many requests") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/rate-limit/exhausted/scala"
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
+  test("fails on the first 429 when maxRateLimitRetries is 0") {
+
+    val client = SearchClient(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6697)
+            )
+          )
+        )
+        .withMaxRateLimitRetries(0)
+        .build()
+    )
+
+    assertError("Too many requests") {
+      var res = Await.result(
+        client.customGet[JObject](
+          path = "1/test/rate-limit/zero-retries/scala"
+        ),
+        Duration.Inf
+      )
+    }
+  }
+
   test("calls api with correct user agent") {
     val (client, echo) = testClient()
 
@@ -425,7 +579,7 @@ class SearchTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.46.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.47.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

@@ -31,6 +31,87 @@
   ],
   "packageRules": [
     {
+      "description": "Keep the docker image digests in scripts/docker/ pinned and up to date",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "scripts/docker/**"
+      ],
+      "pinDigests": true
+    },
+    {
+      "description": "python has no config/.*-version regex manager, so its image tag is bumped by hand; only keep its digest fresh",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "python"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "enabled": false,
+      "matchFileNames": [
+        "scripts/docker/**"
+      ]
+    },
+    {
+      "description": "Move the go docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "go language version",
+      "matchDepNames": [
+        "golang"
+      ]
+    },
+    {
+      "description": "Move the php docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "php language version",
+      "matchDepNames": [
+        "php",
+        "php/php-src"
+      ]
+    },
+    {
+      "description": "Move the dotnet docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "dotnet language version",
+      "matchDepNames": [
+        "mcr.microsoft.com/dotnet/sdk",
+        "dotnet-sdk"
+      ]
+    },
+    {
+      "description": "Move the swift docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "swift language version",
+      "matchDepNames": [
+        "swift",
+        "swiftlang/swift"
+      ]
+    },
+    {
+      "description": "Move the dart docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "dart language version",
+      "matchDepNames": [
+        "dart"
+      ]
+    },
+    {
+      "description": "Move the ruby docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "groupName": "ruby language version",
+      "matchDepNames": [
+        "ruby"
+      ]
+    },
+    {
+      "description": "Update the swiftformat docker image and the CI source build together",
+      "groupName": "swiftformat",
+      "matchPackageNames": [
+        "nicklockwood/SwiftFormat",
+        "ghcr.io/nicklockwood/swiftformat"
+      ]
+    },
+    {
       "matchDepTypes": [
         "required_provider"
       ],
@@ -63,6 +144,13 @@
         "python"
       ],
       "allowedVersions": "<3.14"
+    },
+    {
+      "description": "@cloudflare/vitest-pool-workers (used by the JavaScript client to run tests in workerd) declares a vitest ^4.1.0 peer range, and vitest 5 removed the published @vitest/runner package it depends on. No released pool version supports vitest 5 yet, so the workerd pool fails to start. Lift this once @cloudflare/vitest-pool-workers supports vitest 5.",
+      "matchPackageNames": [
+        "vitest"
+      ],
+      "allowedVersions": "<5"
     }
   ],
   "customManagers": [
@@ -104,7 +192,35 @@
     },
     {
       "customType": "regex",
-      "description": "Update the java formatter",
+      "description": "Update golangci-lint, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "golangci-lint/v(?<currentValue>[0-9.]+)/install\\.sh",
+        "golangci-install\\.sh -b .+ v(?<currentValue>[0-9.]+)"
+      ],
+      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update nvm, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/Dockerfile/"
+      ],
+      "matchStrings": [
+        "nvm-sh/nvm/v(?<currentValue>[0-9.]+)/install\\.sh"
+      ],
+      "depNameTemplate": "nvm-sh/nvm",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the java formatter, the checksums next to it must be refreshed with scripts/docker/update-pins.sh",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
@@ -275,6 +391,32 @@
         "SWIFTFORMAT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "depNameTemplate": "nicklockwood/SwiftFormat",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh, the archive checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh, the per platform archive checksums next to it must be refreshed with scripts/docker/update-pins.sh",
+      "managerFilePatterns": [
+        "/sdkman-install.sh/"
+      ],
+      "matchStrings": [
+        "SDKMAN_NATIVE_VERSION=\"(?<currentValue>[0-9.]+)\"",
+        "cliNativeVersion: (?<currentValue>[0-9.]+);"
+      ],
+      "depNameTemplate": "sdkman/sdkman-cli-native",
       "datasourceTemplate": "github-releases"
     }
   ],

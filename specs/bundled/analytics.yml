@@ -2769,7 +2769,7 @@ components:
           type: array
           description: >-
             Public ACL identifiers required to read the field, for example
-            `clickAnalyticsEnabled`.
+            `revenueAnalyticsEnabled`.
           items:
             type: string
     DomainCatalog:

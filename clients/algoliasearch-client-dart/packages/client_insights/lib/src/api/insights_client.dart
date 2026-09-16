@@ -37,6 +37,7 @@ final class InsightsClient implements ApiClient {
               httpClientAdapter: options.httpClientAdapter,
               compression: options.compression,
               requestIdEnabled: options.requestIdEnabled,
+              maxRateLimitRetries: options.maxRateLimitRetries,
             ),
             defaultHosts: () {
               final allowedRegions = ['de', 'us'];

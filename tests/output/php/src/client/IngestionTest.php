@@ -38,10 +38,10 @@ class IngestionTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    #[TestDox('can handle HTML error')]
+    #[TestDox('can handle HTML error when rate-limit retries are disabled')]
     public function test0api(): void
     {
-        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676']));
+        $client = IngestionClient::createWithConfig(IngestionConfig::create('test-app-id', 'test-api-key', 'us')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6676'])->setMaxRateLimitRetries(0));
 
         try {
             $res = $client->customGet(
@@ -170,7 +170,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \(4.48.0\).*/',
+                '/^Algolia for PHP \(4.49.0\).*/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
