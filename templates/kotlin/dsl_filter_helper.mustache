@@ -7,5 +7,5 @@
    * yields `null`, so the field stays omitted.
    */
   public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
-    this.{{{name}}} = {{{builder}}}(block).{{{converter}}}()
+    this.{{{name}}} = com.algolia.client.dsl.filter.{{{function}}}(block)
   }

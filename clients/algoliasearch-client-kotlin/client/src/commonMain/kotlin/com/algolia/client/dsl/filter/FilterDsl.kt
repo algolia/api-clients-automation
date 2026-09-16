@@ -4,10 +4,6 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.model.search.FacetFilters
-import com.algolia.client.model.search.NumericFilters
-import com.algolia.client.model.search.OptionalFilters
-import com.algolia.client.model.search.TagFilters
 
 /**
  * Builds a typed [FilterGroup] tree with a Kotlin DSL.
@@ -16,7 +12,7 @@ import com.algolia.client.model.search.TagFilters
  * for a homogeneous OR. A mixed-family OR does not compile.
  *
  * ```
- * val built =
+ * val sql =
  *   filters {
  *     and {
  *       facet("color", "red")
@@ -27,33 +23,35 @@ import com.algolia.client.model.search.TagFilters
  *       comparison("price", NumericOperator.Equals, 15)
  *     }
  *   }
- * val sql = built.asSql()
- * val facetFilters = built.asFacetFilters()
  * ```
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FilterDsl {
-  private val children: MutableList<FilterGroup> = mutableListOf()
+public class FilterDsl internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
+  FacetLeaves by FacetLeafMixin({ nodes.add(it) }),
+  TagLeaves by TagLeafMixin({ nodes.add(it) }),
+  NumericLeaves by NumericLeafMixin({ nodes.add(it) }) {
+
+  public constructor() : this(FilterAccumulator())
 
   /** Adds an [FilterGroup.And] of the children in [block]. */
   public fun and(block: FilterDsl.() -> Unit) {
-    children += FilterGroup.And(FilterDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.And(FilterDsl().apply(block).nodes.snapshot()))
   }
 
   /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. */
   public fun orFacet(block: FacetOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot()))
   }
 
   /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. */
   public fun orTag(block: TagOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot()))
   }
 
   /** Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. */
   public fun orNumeric(block: NumericOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot()))
   }
 
   /**
@@ -63,79 +61,13 @@ public class FilterDsl {
    * [FilterGroup.Not.Group] of an [FilterGroup.And].
    */
   public fun not(block: FilterDsl.() -> Unit) {
-    children += negate(FilterDsl().apply(block).snapshot())
+    nodes.add(negate(FilterDsl().apply(block).nodes.snapshot()))
   }
 
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: String, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Boolean, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Number, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Tag] for [value]. */
-  public fun tag(value: String): Filter.Tag = Filter.Tag(value).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
-  public fun range(attribute: String, lowerBound: Number, upperBound: Number): Filter.Range =
-    Filter.Range(attribute, lowerBound, upperBound).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: IntRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
-  public fun range(attribute: String, range: LongRange): Filter.Range =
-    Filter.Range(attribute, range).also { children += it }
-
-  /** Adds a [Filter.Comparison] of [attribute] against [value] with [operator]. */
-  public fun comparison(
-    attribute: String,
-    operator: NumericOperator,
-    value: Number,
-  ): Filter.Comparison = Filter.Comparison(attribute, operator, value).also { children += it }
-
-  internal fun build(): Filters = Filters(asNode())
-
-  internal fun snapshot(): List<FilterGroup> = children.toList()
-
-  internal fun asNode(): FilterGroup =
-    when (children.size) {
-      0 -> FilterGroup.And()
-      1 -> children.single()
-      else -> FilterGroup.And(children.toList())
-    }
+  internal fun root(): FilterGroup = nodes.root()
 }
 
-/**
- * A [FilterGroup] tree plus converters to the SQL `filters` string and the legacy oneOf wrappers.
- *
- * Empty [FilterGroup.And] / [FilterGroup.Or] convert to `null`.
- */
+/** Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
-public class Filters(public val group: FilterGroup) {
-
-  /** SQL `filters` string, or `null` when [group] is an empty And / Or. */
-  public fun asSql(): String? = FilterSqlConverter(group)
-
-  /** Legacy [FacetFilters] for [Filter.Facet] leaves, or `null` when none remain. */
-  public fun asFacetFilters(): FacetFilters? = FilterLegacyConverter.facet(group)
-
-  /** Legacy [OptionalFilters] for [Filter.Facet] leaves, or `null` when none remain. */
-  public fun asOptionalFilters(): OptionalFilters? = FilterLegacyConverter.optional(group)
-
-  /** Legacy [NumericFilters] for numeric leaves, or `null` when none remain. */
-  public fun asNumericFilters(): NumericFilters? = FilterLegacyConverter.numeric(group)
-
-  /** Legacy [TagFilters] for [Filter.Tag] leaves, or `null` when none remain. */
-  public fun asTagFilters(): TagFilters? = FilterLegacyConverter.tag(group)
-}
-
-/** Constructs a [Filters] value from the DSL block. */
-@AlgoliaExperimentalDsl
-public fun filters(block: FilterDsl.() -> Unit): Filters = FilterDsl().apply(block).build()
+public fun filters(block: FilterDsl.() -> Unit): String? =
+  FilterSqlConverter(FilterDsl().apply(block).root())

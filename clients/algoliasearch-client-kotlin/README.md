@@ -59,9 +59,12 @@ import com.algolia.client.dsl.*
 @OptIn(AlgoliaExperimentalDsl::class)
 val params = query {
   query = "shoes"
-  filters { facet("brand", "Apple") }
+  filters { facet("brand", "Apple") }          // SQL string
+  facetFilters { or { facet("color", "red"); facet("color", "blue") } }
 }
 ```
+
+`filters { }` sets the SQL `filters` string. `facetFilters { }`, `optionalFilters { }`, `numericFilters { }`, and `tagFilters { }` set the matching typed field. An empty block omits the field.
 
 ```kotlin
 import com.algolia.client.dsl.*
@@ -75,6 +78,25 @@ val indexSettings = settings {
 }
 ```
 
+Use the generated `browse` method with the value builder:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+client.browse("idx", browse { query = "shoes"; filters { facet("brand", "Apple") } })
+```
+
+A `rule` requires `consequence`. `promote { }` and `hide { }` replace the list on a second call:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val promo = rule("promo") {
+  consequence {
+    promote { objectID("object-1", position = 0) }
+    hide { +"object-9" }
+  }
+}
+```
+
 ### Migrating from version 2
 
 Map version 2 types to version 3 types:
@@ -84,6 +106,7 @@ Map version 2 types to version 3 types:
 - `Attribute` → `String`
 - `initIndex` is gone. Pass the index name to the client method.
 - `index.search { }` → `client.searchSingleIndex(indexName) { }`
+- `index.browse(query)` → `client.browse(indexName, browse { })`
 
 `SearchClient.search` is multi-query. Use `searchSingleIndex` for a single index.
 

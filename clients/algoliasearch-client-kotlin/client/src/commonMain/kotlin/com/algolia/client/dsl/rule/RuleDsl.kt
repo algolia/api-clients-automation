@@ -9,7 +9,6 @@ import com.algolia.client.dsl.generated.ConsequenceBuilder
 import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
 import com.algolia.client.dsl.generated.RuleBuilder
 import com.algolia.client.model.search.Condition
-import com.algolia.client.model.search.Consequence
 import com.algolia.client.model.search.ConsequenceHide
 import com.algolia.client.model.search.ConsequenceQuery
 import com.algolia.client.model.search.ConsequenceRedirect
@@ -21,8 +20,8 @@ import com.algolia.client.model.search.Rule
 /**
  * Constructs a [Rule] from the generated [RuleBuilder].
  *
- * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. An omitted [consequence]
- * becomes an empty [Consequence]. Last write wins on each builder property.
+ * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. [consequence] is
+ * required; [RuleBuilder.build] throws if it is missing. Last write wins on each builder property.
  *
  * ```
  * val built =
@@ -36,14 +35,13 @@ import com.algolia.client.model.search.Rule
  *         query("iphone")
  *         filters { facet("brand", "Apple") }
  *       }
- *       promote("object-1", position = 0)
+ *       promote { objectID("object-1", position = 0) }
  *     }
  *   }
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun rule(block: RuleBuilder.() -> Unit): Rule =
-  RuleBuilder().apply(block).apply { if (consequence == null) consequence = Consequence() }.build()
+public fun rule(block: RuleBuilder.() -> Unit): Rule = RuleBuilder().apply(block).build()
 
 /**
  * Constructs a [Rule] with [objectID] already set.
@@ -51,7 +49,7 @@ public fun rule(block: RuleBuilder.() -> Unit): Rule =
  * The [block] may overwrite [RuleBuilder.objectID]. Last write wins.
  *
  * ```
- * val built = rule("promo-iphone") { consequence { hide("object-9") } }
+ * val built = rule("promo-iphone") { consequence { hide { +"object-9" } } }
  * ```
  */
 @AlgoliaExperimentalDsl
@@ -125,22 +123,49 @@ public fun ConsequenceBuilder.params(block: ConsequenceParamsBuilder.() -> Unit)
   params = ConsequenceParamsBuilder().apply(block).build()
 }
 
-/** Appends a single-record promotion at [position]. */
+/** Builds a list of [Promote] values. Last write wins when [promote] is called again. */
+@AlgoliaDsl
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.promote(objectID: String, position: Int) {
-  promote = (promote ?: emptyList()) + Promote.of(PromoteObjectID(objectID, position))
+public class PromoteDsl {
+  private val values: MutableList<Promote> = mutableListOf()
+
+  /** Adds a single-record promotion at [position]. */
+  public fun objectID(objectID: String, position: Int) {
+    values += Promote.of(PromoteObjectID(objectID, position))
+  }
+
+  /** Adds a group promotion of [objectIDs] at [position]. */
+  public fun objectIDs(objectIDs: List<String>, position: Int) {
+    values += Promote.of(PromoteObjectIDs(objectIDs, position))
+  }
+
+  internal fun build(): List<Promote> = values.toList()
 }
 
-/** Appends a group promotion of [objectIDs] at [position]. */
+/** Builds a list of hidden records. Last write wins when [hide] is called again. */
+@AlgoliaDsl
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.promote(objectIDs: List<String>, position: Int) {
-  promote = (promote ?: emptyList()) + Promote.of(PromoteObjectIDs(objectIDs, position))
+public class HideDsl {
+  private val values: MutableList<ConsequenceHide> = mutableListOf()
+
+  /** Adds [this] object ID to the hide list. */
+  public operator fun String.unaryPlus() {
+    values += ConsequenceHide(this)
+  }
+
+  internal fun build(): List<ConsequenceHide> = values.toList()
 }
 
-/** Appends a hidden record. */
+/** Sets [ConsequenceBuilder.promote] from [block]. A second call replaces the list. */
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.hide(objectID: String) {
-  hide = (hide ?: emptyList()) + ConsequenceHide(objectID)
+public fun ConsequenceBuilder.promote(block: PromoteDsl.() -> Unit) {
+  promote = PromoteDsl().apply(block).build()
+}
+
+/** Sets [ConsequenceBuilder.hide] from [block]. A second call replaces the list. */
+@AlgoliaExperimentalDsl
+public fun ConsequenceBuilder.hide(block: HideDsl.() -> Unit) {
+  hide = HideDsl().apply(block).build()
 }
 
 /**

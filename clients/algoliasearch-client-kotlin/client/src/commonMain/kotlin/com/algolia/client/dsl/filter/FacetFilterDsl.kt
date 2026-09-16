@@ -4,45 +4,29 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.model.search.FacetFilters
+import com.algolia.client.model.search.OptionalFilters
 
 /** AND-context builder for [Filter.Facet] leaves and [FilterGroup.Or.Facet] groups. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FacetFilterDsl {
-  private val children: MutableList<FilterGroup> = mutableListOf()
+public class FacetFilterDsl
+internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
+  FacetLeaves by FacetLeafMixin({ nodes.add(it) }) {
 
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: String, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Boolean, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Number, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. */
   public fun or(block: FacetOrDsl.() -> Unit) {
-    children += FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot())
+    nodes.add(FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot()))
   }
 
   /** Adds a typed [FilterGroup.Not] of the children in [block]. */
   public fun not(block: FacetFilterDsl.() -> Unit) {
-    children += negate(FacetFilterDsl().apply(block).snapshot())
+    nodes.add(negate(FacetFilterDsl().apply(block).nodes.snapshot()))
   }
 
-  internal fun build(): Filters = Filters(asNode())
-
-  internal fun snapshot(): List<FilterGroup> = children.toList()
-
-  private fun asNode(): FilterGroup =
-    when (children.size) {
-      0 -> FilterGroup.And()
-      1 -> children.single()
-      else -> FilterGroup.And(children.toList())
-    }
+  internal fun root(): FilterGroup = nodes.root()
 }
 
 /**
@@ -51,20 +35,10 @@ public class FacetFilterDsl {
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FacetOrDsl {
-  private val children: MutableList<FacetAtom> = mutableListOf()
+public class FacetOrDsl internal constructor(private val nodes: FilterAccumulator<FacetAtom>) :
+  FacetLeaves by FacetLeafMixin(nodes::add) {
 
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: String, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Boolean, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
-
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. */
-  public fun facet(attribute: String, value: Number, score: Int? = null): Filter.Facet =
-    Filter.Facet(attribute, value, score).also { children += it }
+  public constructor() : this(FilterAccumulator())
 
   /**
    * Negates every facet atom collected in [block] and appends each as its own [FacetAtom].
@@ -73,14 +47,19 @@ public class FacetOrDsl {
    */
   public fun not(block: FacetOrDsl.() -> Unit) {
     for (atom in FacetOrDsl().apply(block).snapshot()) {
-      children += negateFacetAtom(atom)
+      nodes.add(negateFacetAtom(atom))
     }
   }
 
-  internal fun snapshot(): List<FacetAtom> = children.toList()
+  internal fun snapshot(): List<FacetAtom> = nodes.snapshot()
 }
 
-/** Constructs a [Filters] value from a facet-only DSL block. */
+/** Constructs [FacetFilters] from a facet-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
-public fun facetFilters(block: FacetFilterDsl.() -> Unit): Filters =
-  FacetFilterDsl().apply(block).build()
+public fun facetFilters(block: FacetFilterDsl.() -> Unit): FacetFilters? =
+  FilterLegacyConverter.facet(FacetFilterDsl().apply(block).root())
+
+/** Constructs [OptionalFilters] from a facet-only DSL block, or `null` when the block is empty. */
+@AlgoliaExperimentalDsl
+public fun optionalFilters(block: FacetFilterDsl.() -> Unit): OptionalFilters? =
+  FilterLegacyConverter.optional(FacetFilterDsl().apply(block).root())

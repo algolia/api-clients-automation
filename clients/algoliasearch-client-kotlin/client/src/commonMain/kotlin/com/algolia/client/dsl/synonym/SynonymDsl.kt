@@ -39,15 +39,22 @@ public fun synonym(block: SynonymHitBuilder.() -> Unit): SynonymHit =
  * }
  * ```
  */
-@AlgoliaExperimentalDsl
-public fun synonym(objectID: String, block: SynonymWordsDsl.() -> Unit): SynonymHit =
+private fun synonymHit(
+  objectID: String,
+  type: SynonymType,
+  configure: SynonymHitBuilder.() -> Unit,
+): SynonymHit =
   SynonymHitBuilder()
     .apply {
       this.objectID = objectID
-      type = SynonymType.Synonym
-      synonyms(block)
+      this.type = type
+      configure()
     }
     .build()
+
+@AlgoliaExperimentalDsl
+public fun synonym(objectID: String, block: SynonymWordsDsl.() -> Unit): SynonymHit =
+  synonymHit(objectID, SynonymType.Synonym) { synonyms(block) }
 
 /**
  * Constructs a one-way ([SynonymType.OneWaySynonym]) [SynonymHit].
@@ -60,14 +67,10 @@ public fun oneWaySynonym(
   input: String,
   block: SynonymWordsDsl.() -> Unit,
 ): SynonymHit =
-  SynonymHitBuilder()
-    .apply {
-      this.objectID = objectID
-      type = SynonymType.OneWaySynonym
-      this.input = input
-      synonyms(block)
-    }
-    .build()
+  synonymHit(objectID, SynonymType.OneWaySynonym) {
+    this.input = input
+    synonyms(block)
+  }
 
 /** Constructs a one-typo alternative-correction ([SynonymType.AltCorrection1]) [SynonymHit]. */
 @AlgoliaExperimentalDsl
@@ -76,14 +79,10 @@ public fun altCorrection1(
   word: String,
   block: SynonymWordsDsl.() -> Unit,
 ): SynonymHit =
-  SynonymHitBuilder()
-    .apply {
-      this.objectID = objectID
-      type = SynonymType.AltCorrection1
-      this.word = word
-      corrections(block)
-    }
-    .build()
+  synonymHit(objectID, SynonymType.AltCorrection1) {
+    this.word = word
+    corrections(block)
+  }
 
 /** Constructs a two-typo alternative-correction ([SynonymType.AltCorrection2]) [SynonymHit]. */
 @AlgoliaExperimentalDsl
@@ -92,14 +91,10 @@ public fun altCorrection2(
   word: String,
   block: SynonymWordsDsl.() -> Unit,
 ): SynonymHit =
-  SynonymHitBuilder()
-    .apply {
-      this.objectID = objectID
-      type = SynonymType.AltCorrection2
-      this.word = word
-      corrections(block)
-    }
-    .build()
+  synonymHit(objectID, SynonymType.AltCorrection2) {
+    this.word = word
+    corrections(block)
+  }
 
 /** Constructs a placeholder ([SynonymType.Placeholder]) [SynonymHit]. */
 @AlgoliaExperimentalDsl
@@ -108,14 +103,10 @@ public fun placeholder(
   placeholder: String,
   block: SynonymWordsDsl.() -> Unit,
 ): SynonymHit =
-  SynonymHitBuilder()
-    .apply {
-      this.objectID = objectID
-      type = SynonymType.Placeholder
-      this.placeholder = placeholder
-      replacements(block)
-    }
-    .build()
+  synonymHit(objectID, SynonymType.Placeholder) {
+    this.placeholder = placeholder
+    replacements(block)
+  }
 
 /**
  * Sets [SynonymHitBuilder.synonyms] from [block]. Last write wins if [synonyms] was already set in

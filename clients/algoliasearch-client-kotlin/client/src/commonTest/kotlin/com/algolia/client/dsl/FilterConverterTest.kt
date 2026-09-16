@@ -2,7 +2,9 @@
 
 package com.algolia.client.dsl
 
+import com.algolia.client.dsl.filter.FacetFilterDsl
 import com.algolia.client.dsl.filter.Filter
+import com.algolia.client.dsl.filter.FilterDsl
 import com.algolia.client.dsl.filter.FilterGroup
 import com.algolia.client.dsl.filter.FilterLegacyConverter
 import com.algolia.client.dsl.filter.FilterSqlConverter
@@ -19,7 +21,6 @@ import com.algolia.client.model.search.TagFilters
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
 
 /**
  * Golden vectors for [FilterSqlConverter] and [FilterLegacyConverter].
@@ -39,26 +40,20 @@ internal class FilterConverterTest {
   @Test
   fun legacyGoldenVectors() {
     legacyVectors.forEach { vector ->
-      assertEquals(
-        vector.facet,
-        FilterLegacyConverter.facet(vector.group)?.rows(),
-        "${vector.name} facet",
-      )
-      assertEquals(
-        vector.facet,
-        FilterLegacyConverter.optional(vector.group)?.rows(),
-        "${vector.name} optional",
-      )
-      assertEquals(
-        vector.numeric,
-        FilterLegacyConverter.numeric(vector.group)?.rows(),
-        "${vector.name} numeric",
-      )
-      assertEquals(
-        vector.tag,
-        FilterLegacyConverter.tag(vector.group)?.rows(),
-        "${vector.name} tag",
-      )
+      val actual =
+        when (vector.family) {
+          Family.Facet -> FilterLegacyConverter.facet(vector.group)?.rows()
+          Family.Numeric -> FilterLegacyConverter.numeric(vector.group)?.rows()
+          Family.Tag -> FilterLegacyConverter.tag(vector.group)?.rows()
+        }
+      assertEquals(vector.rows, actual, vector.name)
+      if (vector.family == Family.Facet) {
+        assertEquals(
+          vector.rows,
+          FilterLegacyConverter.optional(vector.group)?.rows(),
+          "${vector.name} optional",
+        )
+      }
     }
   }
 
@@ -87,7 +82,7 @@ internal class FilterConverterTest {
 
   @Test
   fun docsDslVectorsMatchConverters() {
-    val built = filters {
+    val sql = filters {
       and {
         facet("color", "red")
         facet("category", "shirt")
@@ -97,30 +92,22 @@ internal class FilterConverterTest {
         comparison("price", NumericOperator.Equals, 15)
       }
     }
-    assertEquals(
-      "((color:red AND category:shirt) AND (price:0 TO 9 OR price = 15))",
-      built.asSql(),
-    )
-    assertEquals(FilterSqlConverter(built.group), built.asSql())
-    assertEquals(
-      listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
-      built.asFacetFilters()?.rows(),
-    )
-    assertEquals(
-      listOf(listOf("price:0 TO 9", "price = 15")),
-      built.asNumericFilters()?.rows(),
-    )
-    assertNull(built.asTagFilters())
+    assertEquals("((color:red AND category:shirt) AND (price:0 TO 9 OR price = 15))", sql)
   }
 
   private class SqlVector(val name: String, val group: FilterGroup, val sql: String?)
 
+  private enum class Family {
+    Facet,
+    Numeric,
+    Tag,
+  }
+
   private class LegacyVector(
     val name: String,
     val group: FilterGroup,
-    val facet: List<List<String>>? = null,
-    val numeric: List<List<String>>? = null,
-    val tag: List<List<String>>? = null,
+    val family: Family,
+    val rows: List<List<String>>? = null,
   )
 
   private class RejectVector(
@@ -206,7 +193,7 @@ internal class FilterConverterTest {
       SqlVector("empty or", FilterGroup.Or.Facet(), null),
       SqlVector("empty or tag", FilterGroup.Or.Tag(), null),
       SqlVector("empty or numeric", FilterGroup.Or.Numeric(), null),
-      SqlVector("empty dsl", filters {}.group, null),
+      SqlVector("empty dsl", FilterGroup.And(), null),
       SqlVector(
         "docs and+orNumeric",
         FilterGroup.And(
@@ -224,73 +211,85 @@ internal class FilterConverterTest {
 
   private val legacyVectors: List<LegacyVector> =
     listOf(
-      LegacyVector("facet", colorRed, facet = listOf(listOf("\"color\":\"red\""))),
+      LegacyVector("facet", colorRed, Family.Facet, listOf(listOf("\"color\":\"red\""))),
       LegacyVector(
         "facet score",
         Filter.Facet("color", "red", score = 2),
-        facet = listOf(listOf("\"color\":\"red\"<score=2>")),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\"<score=2>")),
       ),
-      LegacyVector("tag", Filter.Tag("featured"), tag = listOf(listOf("featured"))),
-      LegacyVector("range until", priceUntil10, numeric = listOf(listOf("price:0 TO 9"))),
+      LegacyVector("tag", Filter.Tag("featured"), Family.Tag, listOf(listOf("featured"))),
+      LegacyVector("range until", priceUntil10, Family.Numeric, listOf(listOf("price:0 TO 9"))),
       LegacyVector(
         "comparison equals",
         priceEquals15,
-        numeric = listOf(listOf("price = 15")),
+        Family.Numeric,
+        listOf(listOf("price = 15")),
       ),
       LegacyVector(
         "and facets",
         FilterGroup.And(colorRed, categoryShirt),
-        facet = listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
       ),
       LegacyVector(
         "or facets",
         FilterGroup.Or.Facet(colorRed, colorBlue),
-        facet = listOf(listOf("\"color\":\"red\"", "\"color\":\"blue\"")),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\"", "\"color\":\"blue\"")),
       ),
       LegacyVector(
         "or numeric",
         FilterGroup.Or.Numeric(priceUntil10, priceEquals15),
-        numeric = listOf(listOf("price:0 TO 9", "price = 15")),
+        Family.Numeric,
+        listOf(listOf("price:0 TO 9", "price = 15")),
       ),
       LegacyVector(
         "not facet",
         FilterGroup.Not.Facet(colorRed),
-        facet = listOf(listOf("\"color\":-\"red\"")),
+        Family.Facet,
+        listOf(listOf("\"color\":-\"red\"")),
       ),
       LegacyVector(
         "not tag",
         FilterGroup.Not.Tag(Filter.Tag("featured")),
-        tag = listOf(listOf("-featured")),
+        Family.Tag,
+        listOf(listOf("-featured")),
       ),
       LegacyVector(
         "not comparison less",
         FilterGroup.Not.Numeric(Filter.Comparison("attributeA", NumericOperator.Less, 5)),
-        numeric = listOf(listOf("attributeA >= 5")),
+        Family.Numeric,
+        listOf(listOf("attributeA >= 5")),
       ),
       LegacyVector(
         "not range",
         FilterGroup.Not.Numeric(Filter.Range("attributeA", 0..10)),
-        numeric = listOf(listOf("attributeA < 0", "attributeA > 10")),
+        Family.Numeric,
+        listOf(listOf("attributeA < 0", "attributeA > 10")),
       ),
       LegacyVector(
         "quote space",
         Filter.Facet("author", "John Doe"),
-        facet = listOf(listOf("\"author\":\"John Doe\"")),
+        Family.Facet,
+        listOf(listOf("\"author\":\"John Doe\"")),
       ),
       LegacyVector(
         "quote AND",
         Filter.Facet("title", "foo AND bar"),
-        facet = listOf(listOf("\"title\":\"foo AND bar\"")),
+        Family.Facet,
+        listOf(listOf("\"title\":\"foo AND bar\"")),
       ),
       LegacyVector(
         "quote embedded",
         Filter.Tag("45\"-50\" tv's"),
-        tag = listOf(listOf("\"45\\\"-50\\\" tv's\"")),
+        Family.Tag,
+        listOf(listOf("\"45\\\"-50\\\" tv's\"")),
       ),
-      LegacyVector("empty and", FilterGroup.And()),
-      LegacyVector("empty or", FilterGroup.Or.Facet()),
-      LegacyVector("empty or tag", FilterGroup.Or.Tag()),
-      LegacyVector("empty or numeric", FilterGroup.Or.Numeric()),
+      LegacyVector("empty and", FilterGroup.And(), Family.Facet),
+      LegacyVector("empty or", FilterGroup.Or.Facet(), Family.Facet),
+      LegacyVector("empty or tag", FilterGroup.Or.Tag(), Family.Tag),
+      LegacyVector("empty or numeric", FilterGroup.Or.Numeric(), Family.Numeric),
       LegacyVector(
         "v2 and+or facets",
         FilterGroup.And(
@@ -303,29 +302,24 @@ internal class FilterConverterTest {
             Filter.Facet("attributeB", "unknown"),
           ),
         ),
-        facet =
-          listOf(
-            listOf("\"attributeA\":\"unknown\""),
-            listOf("\"attributeB\":\"unknown\""),
-            listOf("\"attributeA\":\"unknown\"", "\"attributeB\":\"unknown\""),
-          ),
-      ),
-      LegacyVector(
-        "family partition and",
-        FilterGroup.And(colorRed, priceUntil10, Filter.Tag("featured")),
-        facet = listOf(listOf("\"color\":\"red\"")),
-        numeric = listOf(listOf("price:0 TO 9")),
-        tag = listOf(listOf("featured")),
+        Family.Facet,
+        listOf(
+          listOf("\"attributeA\":\"unknown\""),
+          listOf("\"attributeB\":\"unknown\""),
+          listOf("\"attributeA\":\"unknown\"", "\"attributeB\":\"unknown\""),
+        ),
       ),
       LegacyVector(
         "quote numeric attribute space",
         Filter.Comparison("my attr", NumericOperator.Equals, 15),
-        numeric = listOf(listOf("\"my attr\" = 15")),
+        Family.Numeric,
+        listOf(listOf("\"my attr\" = 15")),
       ),
       LegacyVector(
         "quote tag space",
         Filter.Tag("foo bar"),
-        tag = listOf(listOf("\"foo bar\"")),
+        Family.Tag,
+        listOf(listOf("\"foo bar\"")),
       ),
     )
 
@@ -467,59 +461,98 @@ internal class FilterConverterTest {
           "((_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1))",
         ),
       )
-    for ((name, built, sql) in vectors) {
-      assertEquals(sql, built.asSql(), name)
+    for ((name, sql, expected) in vectors) {
+      assertEquals(expected, sql, name)
     }
   }
 
   @Test
   fun notEncodingVectors() {
-    val negatedLeaf = filters { not { facet("color", "red") } }
-    assertEquals("NOT color:red", negatedLeaf.asSql())
-    assertEquals(listOf(listOf("\"color\":-\"red\"")), negatedLeaf.asFacetFilters()?.rows())
-
-    val notInsideOr = filters {
-      orFacet {
-        facet("color", "red")
-        not { facet("color", "blue") }
-      }
-    }
-    assertEquals("(color:red OR NOT color:blue)", notInsideOr.asSql())
+    assertEquals("NOT color:red", filters { not { facet("color", "red") } })
     assertEquals(
-      listOf(listOf("\"color\":\"red\"", "\"color\":-\"blue\"")),
-      notInsideOr.asFacetFilters()?.rows(),
+      listOf(listOf("\"color\":-\"red\"")),
+      facetFilters { not { facet("color", "red") } }?.rows(),
     )
 
-    val orInsideNot = filters {
-      not {
+    assertEquals(
+      "(color:red OR NOT color:blue)",
+      filters {
         orFacet {
           facet("color", "red")
-          facet("color", "blue")
+          not { facet("color", "blue") }
         }
-      }
-    }
-    assertEquals("NOT (color:red OR color:blue)", orInsideNot.asSql())
+      },
+    )
     assertEquals(
-      listOf(listOf("\"color\":-\"red\""), listOf("\"color\":-\"blue\"")),
-      orInsideNot.asFacetFilters()?.rows(),
+      listOf(listOf("\"color\":\"red\"", "\"color\":-\"blue\"")),
+      facetFilters {
+          or {
+            facet("color", "red")
+            not { facet("color", "blue") }
+          }
+        }
+        ?.rows(),
     )
 
-    val deMorgan = filters {
-      orFacet {
+    assertEquals(
+      "NOT (color:red OR color:blue)",
+      filters {
         not {
-          facet("color", "red")
-          facet("category", "shirt")
+          orFacet {
+            facet("color", "red")
+            facet("color", "blue")
+          }
+        }
+      },
+    )
+    assertEquals(
+      listOf(listOf("\"color\":-\"red\""), listOf("\"color\":-\"blue\"")),
+      facetFilters {
+          not {
+            or {
+              facet("color", "red")
+              facet("color", "blue")
+            }
+          }
+        }
+        ?.rows(),
+    )
+
+    val deMorgan =
+      FacetFilterDsl().apply {
+        or {
+          not {
+            facet("color", "red")
+            facet("category", "shirt")
+          }
         }
       }
-    }
     assertEquals(
       FilterGroup.Or.Facet(FilterGroup.Not.Facet(colorRed), FilterGroup.Not.Facet(categoryShirt)),
-      deMorgan.group,
+      deMorgan.root(),
     )
-    assertEquals("(NOT color:red OR NOT category:shirt)", deMorgan.asSql())
+    assertEquals(
+      "(NOT color:red OR NOT category:shirt)",
+      filters {
+        orFacet {
+          not {
+            facet("color", "red")
+            facet("category", "shirt")
+          }
+        }
+      },
+    )
     assertEquals(
       listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
-      deMorgan.asFacetFilters()?.rows(),
+      facetFilters {
+          or {
+            not {
+              facet("color", "red")
+              facet("category", "shirt")
+            }
+          }
+        }
+        ?.rows(),
     )
   }
 
@@ -527,50 +560,52 @@ internal class FilterConverterTest {
   fun dslFamilyReceiversBuildTypedGroups() {
     assertEquals(
       FilterGroup.Or.Facet(Filter.Facet("attributeA", 0)),
-      filters { orFacet { facet("attributeA", 0) } }.group,
+      FilterDsl().apply { orFacet { facet("attributeA", 0) } }.root(),
     )
     assertEquals(
       FilterGroup.Or.Tag(Filter.Tag("a")),
-      filters { orTag { tag("a") } }.group,
+      FilterDsl().apply { orTag { tag("a") } }.root(),
     )
     assertEquals(
       FilterGroup.Or.Numeric(Filter.Range("attributeA", 0..1)),
-      filters { orNumeric { range("attributeA", 0..1) } }.group,
+      FilterDsl().apply { orNumeric { range("attributeA", 0..1) } }.root(),
     )
   }
 
   @Test
   fun familyHelperOrBuildsFamilyGroup() {
-    val facets = facetFilters {
-      or {
-        facet("color", "red")
-        facet("color", "blue")
-      }
-    }
-    assertEquals(FilterGroup.Or.Facet(colorRed, colorBlue), facets.group)
     assertEquals(
       listOf(listOf("\"color\":\"red\"", "\"color\":\"blue\"")),
-      facets.asFacetFilters()?.rows(),
+      facetFilters {
+          or {
+            facet("color", "red")
+            facet("color", "blue")
+          }
+        }
+        ?.rows(),
     )
 
-    val numerics = numericFilters {
-      or {
-        range("price", 0..1)
-        comparison("price", NumericOperator.NotEquals, 0)
-      }
-    }
     assertEquals(
       listOf(listOf("price:0 TO 1", "price != 0")),
-      numerics.asNumericFilters()?.rows(),
+      numericFilters {
+          or {
+            range("price", 0..1)
+            comparison("price", NumericOperator.NotEquals, 0)
+          }
+        }
+        ?.rows(),
     )
 
-    val tags = tagFilters {
-      or {
-        tag("a")
-        tag("b")
-      }
-    }
-    assertEquals(listOf(listOf("a", "b")), tags.asTagFilters()?.rows())
+    assertEquals(
+      listOf(listOf("a", "b")),
+      tagFilters {
+          or {
+            tag("a")
+            tag("b")
+          }
+        }
+        ?.rows(),
+    )
 
     val mixedAnd = facetFilters {
       facet("color", "red")
@@ -581,23 +616,64 @@ internal class FilterConverterTest {
     }
     assertEquals(
       listOf(listOf("\"color\":\"red\""), listOf("\"size\":\"s\"", "\"size\":\"m\"")),
-      mixedAnd.asFacetFilters()?.rows(),
+      mixedAnd?.rows(),
     )
   }
 
   @Test
   fun notAndWithNestedOrRejectsLegacyOnly() {
-    val built = filters {
-      not {
-        orFacet {
-          facet("color", "red")
-          facet("color", "blue")
+    assertEquals(
+      "NOT ((color:red OR color:blue) AND category:shirt)",
+      filters {
+        not {
+          orFacet {
+            facet("color", "red")
+            facet("color", "blue")
+          }
+          facet("category", "shirt")
         }
-        facet("category", "shirt")
+      },
+    )
+    assertFailsWith<IllegalArgumentException> {
+      facetFilters {
+        not {
+          or {
+            facet("color", "red")
+            facet("color", "blue")
+          }
+          facet("category", "shirt")
+        }
       }
     }
-    assertEquals("NOT ((color:red OR color:blue) AND category:shirt)", built.asSql())
-    assertFailsWith<IllegalArgumentException> { built.asFacetFilters() }
+  }
+
+  @Test
+  fun wrongFamilyLeafThrows() {
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.numeric(Filter.Facet("a", "b"))
+    }
+    assertFailsWith<IllegalArgumentException> { FilterLegacyConverter.facet(Filter.Tag("t")) }
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.optional(Filter.Range("p", 0..1))
+    }
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.tag(Filter.Comparison("p", NumericOperator.Less, 1))
+    }
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.facet(FilterGroup.And(Filter.Facet("a", "b"), Filter.Tag("t")))
+    }
+  }
+
+  @Test
+  fun sqlAcceptsEveryFamily() {
+    assertEquals(
+      "(a:b AND _tags:t AND p:0 TO 1)",
+      filters {
+        facet("a", "b")
+        tag("t")
+        range("p", 0..1)
+      },
+    )
   }
 }
 
