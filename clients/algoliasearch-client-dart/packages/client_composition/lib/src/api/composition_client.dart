@@ -48,6 +48,7 @@ final class CompositionClient implements ApiClient {
             httpClientAdapter: options.httpClientAdapter,
             compression: options.compression,
             requestIdEnabled: options.requestIdEnabled,
+            maxRateLimitRetries: options.maxRateLimitRetries,
           ),
           defaultHosts: () =>
               [

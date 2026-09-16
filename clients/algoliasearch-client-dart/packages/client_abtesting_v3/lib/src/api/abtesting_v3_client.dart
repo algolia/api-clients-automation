@@ -45,6 +45,7 @@ final class AbtestingV3Client implements ApiClient {
               httpClientAdapter: options.httpClientAdapter,
               compression: options.compression,
               requestIdEnabled: options.requestIdEnabled,
+              maxRateLimitRetries: options.maxRateLimitRetries,
             ),
             defaultHosts: () {
               final allowedRegions = ['de', 'us'];

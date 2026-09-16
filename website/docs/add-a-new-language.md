@@ -60,7 +60,7 @@ The constructor of the client can be edited (from the `.mustache` files) to acce
 
 The retry strategy cannot be generated and needs to be implemented outside of the generated client folder. You can achieve this by creating a `utils` (_or any naming that you find relevant_) folder and add a transporter and retry strategy logic to it.
 
-HTTP 429 is not a host-failover case. Your transporter should wait on the **same host** (`Retry-After` in whole seconds, or 1 second if the header is missing or invalid) up to `maxRateLimitRetries` (default 3; `0` fails on the first 429). 5xx, timeouts, and network errors still try other hosts.
+HTTP 429 is not a host-failover case. Your transporter should wait on the **same host** (`Retry-After` in whole seconds, or 1 second if the header is missing or invalid) up to `maxRateLimitRetries` (default 3; `0` fails on the first 429). 5xx, timeouts, and network errors still try other hosts. The CTS enforces this: the rate-limit client tests run for every language, and `scripts/cts/testServer/rateLimit.ts` fails the run when a language never hit the rate-limit mock.
 
 - [429 wait/retry on the JavaScript transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-common/src/transporter/createTransporter.ts)
 - [429 wait/retry on the Python transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-python/algoliasearch/http/transporter.py)
@@ -69,6 +69,10 @@ HTTP 429 is not a host-failover case. Your transporter should wait on the **same
 - [429 wait/retry on the Go transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-go/algolia/transport/transport.go)
 - [429 wait/retry on the Swift transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-swift/Sources/Core/Networking/Transporter.swift)
 - [429 wait/retry on the Java RetryStrategy](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-java/algoliasearch/src/main/java/com/algolia/internal/interceptors/RetryStrategy.java)
+- [429 wait/retry on the Kotlin KtorRequester](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/transport/internal/KtorRequester.kt)
+- [429 wait/retry on the Dart transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-dart/packages/client_core/lib/src/transport/retry_strategy.dart)
+- [429 wait/retry on the Ruby transporter](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-ruby/lib/algolia/transport/transport.rb)
+- [429 wait/retry on the Scala RetryStrategy](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-scala/src/main/scala/algoliasearch/internal/interceptor/RetryStrategy.scala)
 
 ### Different client hosts
 

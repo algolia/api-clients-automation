@@ -40,7 +40,7 @@ class IngestionTest extends AnyFunSuite {
     )
   }
 
-  test("can handle HTML error") {
+  test("can handle HTML error when rate-limit retries are disabled") {
 
     val client = IngestionClient(
       appId = "test-app-id",
@@ -58,6 +58,7 @@ class IngestionTest extends AnyFunSuite {
             )
           )
         )
+        .withMaxRateLimitRetries(0)
         .build()
     )
 
