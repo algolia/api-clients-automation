@@ -4,6 +4,11 @@ package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.dsl.filter.NumericOperator
+import com.algolia.client.dsl.filter.facetFilters
+import com.algolia.client.dsl.filter.filters
+import com.algolia.client.dsl.filter.numericFilters
+import com.algolia.client.dsl.filter.optionalFilters
+import com.algolia.client.dsl.filter.tagFilters
 import com.algolia.client.model.search.BrowseParamsObject
 import com.algolia.client.model.search.DeleteByParams
 import com.algolia.client.model.search.IndexSettings
@@ -159,7 +164,7 @@ internal class DslSerializationTest {
   }
 
   @Test
-  fun settingsDslClassesShareTheStringListBase() {
+  fun settingsHelpersEncodeEachList() {
     val dsl = settings {
       searchableAttributes { +"name" }
       attributesForFaceting { +"brand" }
@@ -262,6 +267,29 @@ internal class DslSerializationTest {
   fun emptyFilterBlockLeavesFieldUnset() {
     assertEncodedJson(query { filters {} }, "{}")
     assertEncodedJson(query { facetFilters {} }, "{}")
+    assertEncodedJson(query { numericFilters {} }, "{}")
+    assertEncodedJson(query { tagFilters {} }, "{}")
+    assertEncodedJson(query { optionalFilters {} }, "{}")
+  }
+
+  @Test
+  fun standaloneFilterHelpersMatchBuilderHelpers() {
+    val ctor =
+      SearchParamsObject(
+        filters = filters { facet("brand", "Apple") },
+        facetFilters = facetFilters { facet("brand", "Apple") },
+        numericFilters = numericFilters { comparison("price", NumericOperator.Equals, 15) },
+        tagFilters = tagFilters { tag("featured") },
+        optionalFilters = optionalFilters { facet("category", "Book") },
+      )
+    val dsl = query {
+      filters { facet("brand", "Apple") }
+      facetFilters { facet("brand", "Apple") }
+      numericFilters { comparison("price", NumericOperator.Equals, 15) }
+      tagFilters { tag("featured") }
+      optionalFilters { facet("category", "Book") }
+    }
+    assertJsonEquals(ctor, dsl)
   }
 
   private inline fun <reified T> assertEncodedJson(dsl: T, expectedJson: String) {

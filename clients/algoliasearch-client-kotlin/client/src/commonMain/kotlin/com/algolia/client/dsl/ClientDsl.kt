@@ -15,7 +15,8 @@ import com.algolia.client.transport.RequestOptions
 /**
  * Searches a single index with a [query] DSL block.
  *
- * [SearchParamsObject] is not a [SearchParams]. This wraps [query] with [SearchParams.of].
+ * Wraps [query] with [SearchParams.of] for symmetry with the generated method. [SearchParamsObject]
+ * is a [SearchParams].
  *
  * Do not use [SearchClient.search] for this: that method is multi-query.
  *

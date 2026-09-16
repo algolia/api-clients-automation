@@ -19,14 +19,13 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  *
  * [Documentation](https://www.algolia.com/doc/api-reference/api-parameters/filters/)
  */
-@AlgoliaExperimentalDsl
-public object FilterSqlConverter {
+internal object FilterSqlConverter {
 
   /**
    * Returns the SQL `filters` string for [root], or `null` when [root] is an empty
    * [FilterGroup.And] or [FilterGroup.Or] (including an `And` / `Or` whose children are all empty).
    */
-  public operator fun invoke(root: FilterGroup): String? = emit(root)
+  operator fun invoke(root: FilterGroup): String? = emit(root)
 
   private fun emit(node: FilterGroup): String? {
     return when (node) {
