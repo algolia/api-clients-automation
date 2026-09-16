@@ -42,6 +42,7 @@ final class RecommendClient implements ApiClient {
             httpClientAdapter: options.httpClientAdapter,
             compression: options.compression,
             requestIdEnabled: options.requestIdEnabled,
+            maxRateLimitRetries: options.maxRateLimitRetries,
           ),
           defaultHosts: () =>
               [
