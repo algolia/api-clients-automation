@@ -219,7 +219,7 @@ final class {{classname}} implements ApiClient {
         },
         {{/hasQueryParams}}
         {{#hasBodyParam}}
-        body: {{#bodyParam}}{{{paramName}}}{{#isModel}}{{^isRequired}}?{{/isRequired}}.toJson(){{/isModel}},{{/bodyParam}}
+        body: {{#bodyParam}}{{{paramName}}}{{#isModel}}{{^required}}?{{/required}}.toJson(){{/isModel}}{{^required}} ?? const <String, dynamic>{}{{/required}},{{/bodyParam}}
         {{/hasBodyParam}}
     );
     {{#returnType}}final response = {{/returnType}}await _retryStrategy.execute(

@@ -174,9 +174,16 @@ public class TestsRequest extends TestsGenerator {
 
             req.request.body = escapeBody(req.request.body);
 
-            // In a case of a `GET` or `DELETE` request, we want to assert if the body
-            // is correctly parsed (absent from the payload)
-            if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
+            // No body param in the spec → the request must carry no JSON object at all.
+            // GET and DELETE never have a body. POST/PUT/PATCH without body params
+            // must not invent "{}".
+            String method = req.request.method;
+            boolean noBodyParam = ope.bodyParams.size() == 0;
+            if (
+              method.equals("GET") ||
+              method.equals("DELETE") ||
+              ((method.equals("POST") || method.equals("PUT") || method.equals("PATCH")) && noBodyParam)
+            ) {
               test.put("assertNullBody", true);
             }
           }

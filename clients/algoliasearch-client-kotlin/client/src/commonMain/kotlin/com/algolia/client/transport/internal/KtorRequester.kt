@@ -26,7 +26,6 @@ import kotlin.time.Duration
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.JsonObject
 
 /** Default implementation of [Requester] using Ktor's [HttpClient]. */
 public class KtorRequester(
@@ -191,7 +190,6 @@ public class KtorRequester(
         queryParameter(query)
         when {
           body != null -> setBody(body.body, body.bodyType)
-          requiresBody(requestConfig) -> setBody(EmptyObject)
           else -> setBody(EmptyContent)
         }
       }
@@ -210,9 +208,6 @@ public class KtorRequester(
   private fun HttpRequestBuilder.carriesRequestId(): Boolean =
     headers.contains(HEADER_REQUEST_ID) ||
       url.encodedParameters.names().any { it.equals(QUERY_PARAM_REQUEST_ID, ignoreCase = true) }
-
-  private fun requiresBody(requestConfig: RequestConfig) =
-    requestConfig.method == RequestMethod.POST || requestConfig.method == RequestMethod.PUT
 
   private fun HttpRequestBuilder.requestHeaders(headerOptions: Map<String, Any>) {
     headers.replaceAll(headerOptions)
@@ -257,9 +252,4 @@ public class KtorRequester(
         RequestMethod.POST -> HttpMethod.Post
         RequestMethod.OPTIONS -> HttpMethod.Options
       }
-
-  public companion object {
-    /** Represents an empty Json object */
-    private val EmptyObject = JsonObject(emptyMap())
-  }
 }

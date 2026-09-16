@@ -14,7 +14,6 @@ import org.json4s.native.Serialization.read
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, IOException}
 import java.nio.charset.StandardCharsets
-import java.util.Collections
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.collection.mutable.ListBuffer
@@ -76,12 +75,14 @@ private[algoliasearch] class HttpRequester private (
   /** Creates a request body for the HTTP request. */
   private def createRequestBody(httpRequest: HttpRequest): RequestBody = {
     val method = httpRequest.method
-    var body = httpRequest.body
-    if (!HttpMethod.permitsRequestBody(method) || (method == "DELETE" && body.isEmpty)) return null
-    if (body.isEmpty) {
-      body = if (HttpMethod.requiresRequestBody(method)) Some(Collections.emptyMap) else Some("")
+    if (!HttpMethod.permitsRequestBody(method) || (method == "DELETE" && httpRequest.body.isEmpty))
+      return null
+    httpRequest.body match {
+      case Some(_) => buildRequestBody(httpRequest.body)
+      case None if HttpMethod.requiresRequestBody(method) =>
+        RequestBody.create(Array.emptyByteArray, jsonMediaType)
+      case None => null
     }
-    buildRequestBody(body)
   }
 
   /** Serializes the request body into JSON and returns a fixed-length request body. */
