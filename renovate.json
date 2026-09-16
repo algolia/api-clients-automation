@@ -144,6 +144,13 @@
         "python"
       ],
       "allowedVersions": "<3.14"
+    },
+    {
+      "description": "@cloudflare/vitest-pool-workers (used by the JavaScript client to run tests in workerd) declares a vitest ^4.1.0 peer range, and vitest 5 removed the published @vitest/runner package it depends on. No released pool version supports vitest 5 yet, so the workerd pool fails to start. Lift this once @cloudflare/vitest-pool-workers supports vitest 5.",
+      "matchPackageNames": [
+        "vitest"
+      ],
+      "allowedVersions": "<5"
     }
   ],
   "customManagers": [

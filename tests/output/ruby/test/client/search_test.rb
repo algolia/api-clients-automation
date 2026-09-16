@@ -314,6 +314,143 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
+  # retries 429 on the same host using Retry-After
+  def test_api13
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6698,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/retry-after/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # retries 429 with a 1s wait when Retry-After is missing
+  def test_api14
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/missing-header/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # retries 429 with a 1s wait when Retry-After is invalid
+  def test_api15
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    req = client.custom_get("1/test/rate-limit/invalid-header/ruby")
+    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+  end
+
+  # returns 429 after maxRateLimitRetries is used up
+  def test_api16
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+
+    begin
+      client.custom_get("1/test/rate-limit/exhausted/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "429: Too many requests".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
+  # fails on the first 429 when maxRateLimitRetries is 0
+  def test_api17
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6697,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient",
+        max_rate_limit_retries: 0
+      )
+    )
+
+    begin
+      client.custom_get("1/test/rate-limit/zero-retries/ruby")
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_equal(
+        "429: Too many requests".sub(
+          "%localhost%",
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal"
+        ),
+        e.message
+      )
+    end
+  end
+
   # calls api with correct user agent
   def test_common_api0
     client = Algolia::SearchClient.create(

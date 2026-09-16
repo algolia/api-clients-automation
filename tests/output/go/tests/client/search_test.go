@@ -550,8 +550,43 @@ func TestSearchapi14(t *testing.T) {
 	require.JSONEq(t, `{"message":"ok rate limit retry"}`, string(rawBody))
 }
 
-// returns 429 after maxRateLimitRetries is used up.
+// retries 429 with a 1s wait when Retry-After is invalid.
 func TestSearchapi15(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6697", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+
+	require.NoError(t, err)
+	res, err = client.CustomGet(client.NewApiCustomGetRequest(
+		"1/test/rate-limit/invalid-header/go"))
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `{"message":"ok rate limit retry"}`, string(rawBody))
+}
+
+// returns 429 after maxRateLimitRetries is used up.
+func TestSearchapi16(t *testing.T) {
 	var (
 		err error
 		res any
@@ -583,7 +618,7 @@ func TestSearchapi15(t *testing.T) {
 }
 
 // fails on the first 429 when maxRateLimitRetries is 0.
-func TestSearchapi16(t *testing.T) {
+func TestSearchapi17(t *testing.T) {
 	var (
 		err error
 		res any
