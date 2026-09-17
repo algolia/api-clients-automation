@@ -80,7 +80,7 @@ metricResult:
       format: double
       description: |
         P-value for this variant compared to the control.
-        Omitted when Frequentist results aren't requested or no p-value is available for this metric.
+        Omitted when no p-value is available for this metric.
     dimension:
       type: string
       description: Dimension defined during test creation.
@@ -105,7 +105,6 @@ metricResult:
     - name: addToCartCount
       updatedAt: 2025-06-15T15:06:44.400601Z
       value: 5
-      pValue: 0.01
     - name: clickThroughRate
       updatedAt: 2025-05-15T17:52:15.644906Z
       value: 0.20869847452125934
