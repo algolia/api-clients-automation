@@ -1,19 +1,22 @@
 AssistantMessageV5:
   properties:
     id:
-      type: string
+      oneOf:
+      - type: string
+      - type: 'null'
+      default: null
       title: id
     role:
-      type: string
       const: assistant
-      title: role
       default: assistant
+      title: role
+      type: string
     parts:
       items:
-        $ref: 'AssistantPartV5.yml#/AssistantPartV5'
-      type: array
+        $ref: AssistantPartV5.yml#/AssistantPartV5
       title: parts
-  type: object
+      type: array
   title: assistantMessageV5
+  type: object
   required:
-    - role
+  - role

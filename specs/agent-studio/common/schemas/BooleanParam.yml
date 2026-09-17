@@ -1,0 +1,16 @@
+BooleanParam:
+  description: A boolean search parameter with exposure control.
+  properties:
+    exposed:
+      title: exposed
+      type: boolean
+    default:
+      oneOf:
+      - type: boolean
+      - type: 'null'
+      default: null
+      title: default
+  required:
+  - exposed
+  title: booleanParam
+  type: object
