@@ -165,8 +165,8 @@ bayesianMetricResult:
 metricEvidence:
   type: object
   description: |
-    Evidence verdict for this variant metric's comparison with the control.
-    Only present when the API has a verdict for the comparison. Omitted when evidence isn't applicable or no verdict exists.
+    Evidence status for this variant metric's comparison with the control.
+    Only present when the API has an evidence status for the comparison. Omitted when evidence isn't applicable or no status exists.
   properties:
     status:
       $ref: '#/evidenceStatus'
