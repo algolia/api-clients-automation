@@ -37,3 +37,23 @@ logType:
   type: string
   enum: [all, query, build, error]
   default: all
+
+neuralSearchMode:
+  type: string
+  enum: [inactive, active, preview]
+  description: |
+    Whether NeuralSearch is active for the index.
+    - `inactive`: keyword-only search is returned for live traffic.
+    - `active`: NeuralSearch (keyword + semantic) is returned for live traffic.
+    - `preview`: NeuralSearch runs alongside keyword search for comparison without affecting live results.
+
+neuralSearchPreset:
+  type: string
+  enum: [conservative, expanded_reach, append_only, default, custom]
+  description: |
+    Controls how keyword and semantic results are blended.
+    - `conservative`: semantic search activates only for zero-result keyword queries.
+    - `expanded_reach`: semantic search activates when keyword result counts are low.
+    - `append_only`: semantic results appear after all keyword results.
+    - `default`: semantic search runs on every query and blends with keyword results, giving keyword results higher priority.
+    - `custom`: unlocks `semanticBlendWeight`, `minHitsForSemantic`, and `enableNeuralSearchSortBy` for manual control.
