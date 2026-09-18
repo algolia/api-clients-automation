@@ -33,10 +33,16 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 
@@ -94,10 +100,10 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 {{/request.body}}
                 {{^request.body}}
                 {{#assertNullBody}}
-                "body" => null,
+                "expectEmptyBody" => true,
                 {{/assertNullBody}}
                 {{^assertNullBody}}
-                "body" => json_decode(""),
+                "body" => json_decode("{}"),
                 {{/assertNullBody}}
                 {{/request.body}}
                 {{#request.queryParameters}}

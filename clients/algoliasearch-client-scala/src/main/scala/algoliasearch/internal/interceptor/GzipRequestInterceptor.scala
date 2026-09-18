@@ -13,8 +13,8 @@ private[internal] class GzipRequestInterceptor extends Interceptor {
     val originalRequest: Request = chain.request()
 
     if (
-      originalRequest
-        .body() == null || originalRequest.header("Content-Encoding") != null
+      originalRequest.body() == null || originalRequest.header("Content-Encoding") != null ||
+      originalRequest.body().contentLength() == 0L
     ) {
       return chain.proceed(originalRequest)
     }

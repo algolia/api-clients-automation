@@ -247,7 +247,7 @@ class {{classname}}(
     HttpRequest.builder()
       .withMethod("{{httpMethod}}")
       .withPath({{#vendorExtensions}}{{#x-is-custom-request}}s"{{{serverPathSuffix}}}{{{path}}}"{{/x-is-custom-request}}{{^x-is-custom-request}}s"{{{serverPathSuffix}}}{{#lambda.escape-path}}{{{path}}}{{/lambda.escape-path}}"{{/x-is-custom-request}}{{/vendorExtensions}})
-      {{#bodyParam}}.withBody({{paramName}}){{/bodyParam}}
+      {{#bodyParam}}.withBody({{paramName}}{{^required}}.orElse[Any](Some(Map.empty[String, Any])){{/required}}){{/bodyParam}}
       {{#headerParams}}.withHeader("{{baseName}}", {{paramName}}){{/headerParams}}
       {{#vendorExtensions.x-use-read-transporter}}.withRead(true){{/vendorExtensions.x-use-read-transporter}}
       {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.withQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.withQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}

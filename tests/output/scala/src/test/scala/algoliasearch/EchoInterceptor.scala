@@ -46,7 +46,7 @@ class EchoInterceptor(private val httpCode: Int = 200) extends Interceptor {
   private def processResponseBody(request: Request): Option[String] = {
     val copy = request.newBuilder.build
     val buffer = new Buffer()
-    if (copy.body == null) return None
+    if (copy.body == null || copy.body.contentLength() == 0L) return None
     copy.body.writeTo(buffer)
     Some(buffer.readUtf8)
   }

@@ -259,11 +259,7 @@ final class RetryStrategy {
           if (requestId != null && !requestIdAsQueryParameter)
             requestIdHeader: requestId,
         },
-        body: options?.body ?? request.body != null
-            ? request.body
-            : _requiresBody(request)
-                ? const <String, dynamic>{}
-                : null,
+        body: options?.body ?? request.body,
         queryParameters: {
           ...?request.queryParams,
           ...?options?.urlParameters,
@@ -295,11 +291,6 @@ final class RetryStrategy {
     }
     return Uri.encodeComponent(value.toString());
   }
-
-  /// Checks if a given [request] requires a body
-  bool _requiresBody(ApiRequest request) =>
-      request.method == RequestMethod.post ||
-      request.method == RequestMethod.put;
 
   /// Release underlying resources.
   void dispose() => requester.close();
