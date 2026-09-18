@@ -1,3 +1,7 @@
+## [9.49.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.49.0...9.49.1)
+
+- [115d6a3aec](https://github.com/algolia/api-clients-automation/commit/115d6a3aec) fix(swift): make the CocoaPods release step idempotent ([#7026](https://github.com/algolia/api-clients-automation/pull/7026)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [9.49.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.48.0...9.49.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
