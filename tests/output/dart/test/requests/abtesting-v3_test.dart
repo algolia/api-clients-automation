@@ -44,6 +44,50 @@ void main() {
     ),
   );
 
+  // addABTests
+  test(
+    'addABTests with Bayesian configuration',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.addABTests(
+        addABTestsRequest: AddABTestsRequest(
+          endAt: "2022-12-31T00:00:00.000Z",
+          name: "myABTest",
+          metrics: [
+            CreateMetric(
+              name: "conversionRate",
+            ),
+          ],
+          variants: [
+            AbTestsVariant(
+              index: "AB_TEST_1",
+              trafficPercentage: 30,
+            ),
+            AbTestsVariant(
+              index: "AB_TEST_2",
+              trafficPercentage: 50,
+            ),
+          ],
+          configuration: ABTestConfiguration(
+            method: AnalysisMethod.fromJson("bayesian"),
+            primaryMetric: PrimaryMetric.fromJson("conversion_rate"),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}""");
+      },
+    ),
+  );
+
   // applyVariantSettings
   test(
     'applyVariantSettings',
@@ -686,6 +730,33 @@ void main() {
     ),
   );
 
+  // getABTest
+  test(
+    'getABTest with both inference methods',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getABTest(
+        id: 42,
+        methods: [
+          AnalysisMethod.fromJson("frequentist"),
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"methods":"frequentist%2Cbayesian"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getABTestSettings
   test(
     'getABTestSettings',
@@ -728,6 +799,37 @@ void main() {
     ),
   );
 
+  // getTimeseries
+  test(
+    'getTimeseries with Bayesian revenue per search',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTimeseries(
+        id: 42,
+        startDate: "1999-09-19",
+        endDate: "2001-01-01",
+        metric: [
+          MetricName.fromJson("revenue_per_search"),
+        ],
+        methods: [
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/timeseries');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // listABTests
   test(
     'listABTests with minimal parameters',
@@ -763,12 +865,16 @@ void main() {
         indexPrefix: "cts_e2e ab",
         indexSuffix: "t",
         direction: Direction.fromJson("asc"),
+        methods: [
+          AnalysisMethod.fromJson("frequentist"),
+          AnalysisMethod.fromJson("bayesian"),
+        ],
       ),
       intercept: (request) {
         expectPath(request.path, '/3/abtests');
         expect(request.method, 'get');
         expectParams(request.queryParameters,
-            """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}""");
+            """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}""");
         expect(request.body, null);
       },
     ),

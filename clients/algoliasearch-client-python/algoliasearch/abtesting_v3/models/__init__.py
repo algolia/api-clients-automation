@@ -16,6 +16,8 @@ from .ab_tests_variant import AbTestsVariant
 from .ab_tests_variant_search_params import AbTestsVariantSearchParams
 from .add_ab_tests_request import AddABTestsRequest
 from .add_ab_tests_variant import AddABTestsVariant
+from .analysis_method import AnalysisMethod
+from .bayesian_metric_result import BayesianMetricResult
 from .create_metric import CreateMetric
 from .decision import Decision
 from .direction import Direction
@@ -36,6 +38,7 @@ from .metric_result import MetricResult
 from .metrics_filter import MetricsFilter
 from .minimum_detectable_effect import MinimumDetectableEffect
 from .outliers_filter import OutliersFilter
+from .primary_metric import PrimaryMetric
 from .save_settings_request import SaveSettingsRequest
 from .status import Status
 from .timeseries import Timeseries
@@ -53,6 +56,8 @@ __all__ = (
     "AbTestsVariantSearchParams",
     "AddABTestsRequest",
     "AddABTestsVariant",
+    "AnalysisMethod",
+    "BayesianMetricResult",
     "CreateMetric",
     "Decision",
     "Direction",
@@ -73,6 +78,7 @@ __all__ = (
     "MetricsFilter",
     "MinimumDetectableEffect",
     "OutliersFilter",
+    "PrimaryMetric",
     "SaveSettingsRequest",
     "Status",
     "Timeseries",

@@ -9,6 +9,7 @@ enum MetricName {
   userCount(r'user_count'),
   trackedUserCount(r'tracked_user_count'),
   noResultCount(r'no_result_count'),
+  trackedNoResultCount(r'tracked_no_result_count'),
   addToCartCount(r'add_to_cart_count'),
   purchaseCount(r'purchase_count'),
   clickedSearchCount(r'clicked_search_count'),
@@ -18,7 +19,9 @@ enum MetricName {
   addToCartRate(r'add_to_cart_rate'),
   purchaseRate(r'purchase_rate'),
   averageClickPosition(r'average_click_position'),
-  revenue(r'revenue');
+  revenue(r'revenue'),
+  revenuePerSearch(r'revenue_per_search'),
+  averageOrderValue(r'average_order_value');
 
   const MetricName(this.raw);
   final dynamic raw;

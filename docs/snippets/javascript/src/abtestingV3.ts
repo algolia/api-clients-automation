@@ -8,7 +8,7 @@ import { algoliasearch } from 'algoliasearch';
 //
 // addABTests with minimal parameters
 export async function snippetForAddABTests(): Promise<void> {
-  // >SEPARATOR addABTests default
+  // >SEPARATOR addABTests addABTests with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
@@ -22,6 +22,33 @@ export async function snippetForAddABTests(): Promise<void> {
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the addABTests method.
+//
+// addABTests with Bayesian configuration
+export async function snippetForAddABTests1(): Promise<void> {
+  // >SEPARATOR addABTests addABTests with Bayesian configuration
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.addABTests({
+    endAt: '2022-12-31T00:00:00.000Z',
+    name: 'myABTest',
+    metrics: [{ name: 'conversionRate' }],
+    variants: [
+      { index: 'AB_TEST_1', trafficPercentage: 30 },
+      { index: 'AB_TEST_2', trafficPercentage: 50 },
+    ],
+    configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },
   });
 
   // >LOG
@@ -475,13 +502,31 @@ export async function snippetForEstimateABTest(): Promise<void> {
 //
 // getABTest
 export async function snippetForGetABTest(): Promise<void> {
-  // >SEPARATOR getABTest default
+  // >SEPARATOR getABTest getABTest
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
   // Call the API
   const response = await client.getABTest({ id: 42 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getABTest method.
+//
+// getABTest with both inference methods
+export async function snippetForGetABTest1(): Promise<void> {
+  // >SEPARATOR getABTest getABTest with both inference methods
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getABTest({ id: 42, methods: ['frequentist', 'bayesian'] });
 
   // >LOG
   // print the response
@@ -511,13 +556,37 @@ export async function snippetForGetABTestSettings(): Promise<void> {
 //
 // getTimeseries
 export async function snippetForGetTimeseries(): Promise<void> {
-  // >SEPARATOR getTimeseries default
+  // >SEPARATOR getTimeseries getTimeseries
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
   // Call the API
   const response = await client.getTimeseries({ id: 42 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with Bayesian revenue per search
+export async function snippetForGetTimeseries1(): Promise<void> {
+  // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getTimeseries({
+    id: 42,
+    startDate: '1999-09-19',
+    endDate: '2001-01-01',
+    metric: ['revenue_per_search'],
+    methods: ['bayesian'],
+  });
 
   // >LOG
   // print the response
@@ -559,6 +628,7 @@ export async function snippetForListABTests1(): Promise<void> {
     indexPrefix: 'cts_e2e ab',
     indexSuffix: 't',
     direction: 'asc',
+    methods: ['frequentist', 'bayesian'],
   });
 
   // >LOG

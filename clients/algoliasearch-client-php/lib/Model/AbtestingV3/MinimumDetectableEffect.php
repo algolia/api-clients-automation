@@ -12,7 +12,7 @@ use Algolia\AlgoliaSearch\Model\ModelInterface;
  *
  * @category Class
  *
- * @description Configuration for the smallest difference between test variants you want to detect.
+ * @description Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.
  */
 class MinimumDetectableEffect extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {

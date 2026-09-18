@@ -25,8 +25,12 @@ package algoliasearch.abtestingv3
 
 /** MetricResult
   *
+  * @param name
+  *   Metric name. Revenue per search results use `revenue_per_search`.
   * @param updatedAt
   *   Date and time when the metric was last updated, in RFC 3339 format.
+  * @param value
+  *   Metric value. For `revenue_per_search`, this is the winsorized mean revenue per search in the specified currency.
   * @param valueCIHigh
   *   The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
   *   either the relative ratio or relative difference between the metric values for the control and the variant.
@@ -38,10 +42,9 @@ package algoliasearch.abtestingv3
   *   Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative
   *   difference is used for continuous metrics (e.g., revenue).
   * @param pValue
-  *   PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the
-  *   current variant based on the control.
+  *   P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
   * @param dimension
-  *   Dimension defined during test creation.
+  *   Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
   * @param criticalValue
   *   The value that was computed during error correction. It is used to determine significance of the metric pValue.
   *   The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given
@@ -55,9 +58,10 @@ case class MetricResult(
     value: Double,
     valueCIHigh: Option[Double] = scala.None,
     valueCILow: Option[Double] = scala.None,
-    pValue: Double,
+    pValue: Option[Double] = scala.None,
     dimension: Option[String] = scala.None,
     metadata: Option[MetricMetadata] = scala.None,
     criticalValue: Option[Double] = scala.None,
-    significant: Option[Boolean] = scala.None
+    significant: Option[Boolean] = scala.None,
+    bayesian: Option[BayesianMetricResult] = scala.None
 )

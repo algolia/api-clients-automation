@@ -234,6 +234,9 @@
                   "name": {
                     "$ref": "#/components/schemas/name"
                   },
+                  "hypothesis": {
+                    "$ref": "#/components/schemas/hypothesis"
+                  },
                   "variants": {
                     "type": "array",
                     "description": "A/B test variants.",
@@ -299,6 +302,9 @@
           },
           "404": {
             "$ref": "#/components/responses/IndexNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       },
@@ -360,6 +366,9 @@
             "schema": {
               "$ref": "#/components/schemas/direction"
             }
+          },
+          {
+            "$ref": "#/components/parameters/Methods"
           }
         ],
         "responses": {
@@ -417,6 +426,9 @@
           },
           "404": {
             "$ref": "#/components/responses/IndexNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       }
@@ -435,6 +447,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/ID"
+          },
+          {
+            "$ref": "#/components/parameters/Methods"
           }
         ],
         "responses": {
@@ -470,6 +485,9 @@
           },
           "404": {
             "$ref": "#/components/responses/IndexNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       },
@@ -699,6 +717,9 @@
                 "$ref": "#/components/schemas/MetricName"
               }
             }
+          },
+          {
+            "$ref": "#/components/parameters/Methods"
           }
         ],
         "responses": {
@@ -988,6 +1009,20 @@
           "additionalProperties": true
         }
       },
+      "Methods": {
+        "in": "query",
+        "name": "methods",
+        "description": "Statistical analysis results to include, as a comma-separated list.\nWhen omitted, each test uses its configured method, or `frequentist` if no method is configured.\nRequest both methods to include both sets of available results. This doesn't change the test configuration or compute missing results.\nDuplicate values aren't allowed.\n",
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/components/schemas/AnalysisMethod"
+          }
+        }
+      },
       "ID": {
         "in": "path",
         "name": "id",
@@ -1049,6 +1084,14 @@
         ],
         "example": "desc"
       },
+      "AnalysisMethod": {
+        "type": "string",
+        "description": "A/B test statistical analysis method.\nWhen omitted, the test is treated as `frequentist`. The server doesn't write a default value back to the configuration.\n",
+        "enum": [
+          "bayesian",
+          "frequentist"
+        ]
+      },
       "abTestID": {
         "type": "integer",
         "description": "Unique A/B test identifier.",
@@ -1079,6 +1122,11 @@
         "type": "string",
         "description": "A/B test name.",
         "example": "Custom ranking sales rank test"
+      },
+      "hypothesis": {
+        "type": "string",
+        "description": "Expected outcome of the A/B test.",
+        "example": "Enabling the feature increases conversion rate"
       },
       "Status": {
         "type": "string",
@@ -1115,7 +1163,7 @@
           "winsorizedValue": {
             "type": "number",
             "format": "double",
-            "description": "Only present in case the metric is 'revenue'.\nIt is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.\nIt is tied to a per revenue-currency pair contrary to other\nglobal filter effects (such as outliers and empty search count).\n"
+            "description": "Only present for `revenue` metrics.\nIt is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.\nIt is tied to a per revenue-currency pair contrary to other\nglobal filter effects (such as outliers and empty search count).\n"
           },
           "mean": {
             "type": "number",
@@ -1129,11 +1177,36 @@
           "mean": 53.7
         }
       },
+      "bayesianMetricResult": {
+        "type": "object",
+        "description": "Bayesian inference results for this variant metric.\nOmitted when Bayesian results aren't requested or no Bayesian result is available for this metric.\nIndividual inference fields can be omitted when their values aren't available.\n",
+        "properties": {
+          "probabilityToBeBetter": {
+            "type": "number",
+            "format": "double",
+            "description": "Probability that this variant is better than the control.",
+            "example": 0.991
+          },
+          "relativeEffectCILow": {
+            "type": "number",
+            "format": "double",
+            "description": "Lower bound of the 95% credible interval for the relative effect (variant/control minus 1).",
+            "example": 0.04
+          },
+          "relativeEffectCIHigh": {
+            "type": "number",
+            "format": "double",
+            "description": "Upper bound of the 95% credible interval for the relative effect (variant/control minus 1).",
+            "example": 0.39
+          }
+        }
+      },
       "metricResult": {
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Metric name. Revenue per search results use `revenue_per_search`."
           },
           "updatedAt": {
             "type": "string",
@@ -1141,7 +1214,8 @@
           },
           "value": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "description": "Metric value. For `revenue_per_search`, this is the winsorized mean revenue per search in the specified currency."
           },
           "valueCIHigh": {
             "type": "number",
@@ -1156,11 +1230,11 @@
           "pValue": {
             "type": "number",
             "format": "double",
-            "description": "PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control."
+            "description": "P-value for this variant compared to the control.\nOmitted when no p-value is available for this metric.\n"
           },
           "dimension": {
             "type": "string",
-            "description": "Dimension defined during test creation."
+            "description": "Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency."
           },
           "metadata": {
             "$ref": "#/components/schemas/metricMetadata"
@@ -1173,20 +1247,21 @@
           "significant": {
             "type": "boolean",
             "description": "Whether the pValue is significant or not based on the critical value and the error correction algorithm used.\n"
+          },
+          "bayesian": {
+            "$ref": "#/components/schemas/bayesianMetricResult"
           }
         },
         "required": [
           "name",
           "updatedAt",
-          "value",
-          "pValue"
+          "value"
         ],
         "example": [
           {
             "name": "addToCartCount",
             "updatedAt": "2025-06-15T15:06:44.400601Z",
-            "value": 5,
-            "pValue": 0.01
+            "value": 5
           },
           {
             "name": "clickThroughRate",
@@ -1212,6 +1287,20 @@
             "pValue": 0.04,
             "metadata": {
               "winsorizedValue": 888.8
+            }
+          },
+          {
+            "name": "revenue_per_search",
+            "dimension": "USD",
+            "updatedAt": "2025-05-15T17:52:15.644906Z",
+            "value": 12.45,
+            "metadata": {
+              "mean": 12.45
+            },
+            "bayesian": {
+              "probabilityToBeBetter": 0.991,
+              "relativeEffectCILow": 0.04,
+              "relativeEffectCIHigh": 0.39
             }
           }
         ]
@@ -1340,7 +1429,7 @@
       },
       "MinimumDetectableEffect": {
         "type": "object",
-        "description": "Configuration for the smallest difference between test variants you want to detect.",
+        "description": "Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.",
         "properties": {
           "size": {
             "type": "number",
@@ -1402,6 +1491,18 @@
           "benjamini-hochberg"
         ]
       },
+      "PrimaryMetric": {
+        "type": "string",
+        "description": "Primary metric for Bayesian analysis. Required when `method` is `bayesian`.\nIf the request includes a non-empty `metrics` list, this metric must be in that list.\nRevenue per search requires access to revenue analytics.\n",
+        "example": "conversion_rate",
+        "enum": [
+          "add_to_cart_rate",
+          "click_through_rate",
+          "conversion_rate",
+          "purchase_rate",
+          "revenue_per_search"
+        ]
+      },
       "ABTestConfiguration": {
         "title": "configuration",
         "type": "object",
@@ -1415,6 +1516,12 @@
           },
           "errorCorrection": {
             "$ref": "#/components/schemas/ErrorCorrectionType"
+          },
+          "method": {
+            "$ref": "#/components/schemas/AnalysisMethod"
+          },
+          "primaryMetric": {
+            "$ref": "#/components/schemas/PrimaryMetric"
           }
         }
       },
@@ -1461,6 +1568,9 @@
           "name": {
             "$ref": "#/components/schemas/name"
           },
+          "hypothesis": {
+            "$ref": "#/components/schemas/hypothesis"
+          },
           "status": {
             "$ref": "#/components/schemas/Status"
           },
@@ -1477,6 +1587,7 @@
         "required": [
           "status",
           "name",
+          "hypothesis",
           "createdAt",
           "endAt",
           "updatedAt",
@@ -1646,6 +1757,7 @@
           "user_count",
           "tracked_user_count",
           "no_result_count",
+          "tracked_no_result_count",
           "add_to_cart_count",
           "purchase_count",
           "clicked_search_count",
@@ -1655,7 +1767,9 @@
           "add_to_cart_rate",
           "purchase_rate",
           "average_click_position",
-          "revenue"
+          "revenue",
+          "revenue_per_search",
+          "average_order_value"
         ]
       },
       "metricDate": {

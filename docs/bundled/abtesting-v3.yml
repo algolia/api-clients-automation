@@ -1120,6 +1120,8 @@ paths:
                     $ref: '#/components/schemas/AddABTestsVariant'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
+                hypothesis:
+                  $ref: '#/components/schemas/hypothesis'
               required:
                 - name
                 - variants
@@ -1147,6 +1149,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
       x-codeSamples:
         - lang: csharp
           label: C#
@@ -1519,6 +1523,7 @@ paths:
               --data '
             {
               "name": "Custom ranking sales rank test",
+              "hypothesis": "Enabling the feature increases conversion rate",
               "variants": [
                 {
                   "index": "delcourt_production",
@@ -1561,7 +1566,9 @@ paths:
                     "includes": true
                   }
                 ],
-                "errorCorrection": "bonferroni"
+                "errorCorrection": "bonferroni",
+                "method": "bayesian",
+                "primaryMetric": "conversion_rate"
               },
               "endAt": "2023-06-17T00:00:00Z"
             }
@@ -1608,6 +1615,7 @@ paths:
           schema:
             type: integer
             default: 10
+        - $ref: '#/components/parameters/Methods'
         - name: offset
           in: query
           description: Position of the first item to return.
@@ -1655,6 +1663,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
       x-codeSamples:
         - lang: csharp
           label: C#
@@ -1870,7 +1880,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://analytics.us.algolia.com/3/abtests?offset=0&limit=10&indexPrefix=dev_&indexSuffix=_development&direction=desc' \
+              --url 'https://analytics.us.algolia.com/3/abtests?offset=0&limit=10&indexPrefix=dev_&indexSuffix=_development&direction=desc&methods=bayesian' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -1885,6 +1895,7 @@ paths:
       description: Retrieves the details for an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Methods'
       responses:
         '200':
           description: OK
@@ -1907,6 +1918,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
       x-codeSamples:
         - lang: csharp
           label: C#
@@ -2128,7 +2141,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url https://analytics.us.algolia.com/3/abtests/224 \
+              --url 'https://analytics.us.algolia.com/3/abtests/224?methods=bayesian' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -3139,6 +3152,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/ID'
         - $ref: '#/components/parameters/EndDate'
+        - $ref: '#/components/parameters/Methods'
         - in: query
           name: metric
           description: >-
@@ -3395,7 +3409,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://analytics.us.algolia.com/3/abtests/224/timeseries?startDate=2022-09-19&endDate=2023-01-21&metric=search_count' \
+              --url 'https://analytics.us.algolia.com/3/abtests/224/timeseries?startDate=2022-09-19&endDate=2023-01-21&metric=search_count&methods=bayesian' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -4208,6 +4222,26 @@ components:
       schema:
         type: object
         additionalProperties: true
+    Methods:
+      in: query
+      name: methods
+      description: >
+        Statistical analysis results to include, as a comma-separated list.
+
+        When omitted, each test uses its configured method, or `frequentist` if
+        no method is configured.
+
+        Request both methods to include both sets of available results. This
+        doesn't change the test configuration or compute missing results.
+
+        Duplicate values aren't allowed.
+      style: form
+      explode: false
+      schema:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/components/schemas/AnalysisMethod'
     ID:
       in: path
       name: id
@@ -4258,6 +4292,16 @@ components:
         - asc
         - desc
       example: desc
+    AnalysisMethod:
+      type: string
+      description: >
+        A/B test statistical analysis method.
+
+        When omitted, the test is treated as `frequentist`. The server doesn't
+        write a default value back to the configuration.
+      enum:
+        - bayesian
+        - frequentist
     abTestID:
       type: integer
       description: Unique A/B test identifier.
@@ -4283,6 +4327,10 @@ components:
       type: string
       description: A/B test name.
       example: Custom ranking sales rank test
+    hypothesis:
+      type: string
+      description: Expected outcome of the A/B test.
+      example: Enabling the feature increases conversion rate
     Status:
       type: string
       description: >
@@ -4332,7 +4380,7 @@ components:
           type: number
           format: double
           description: >
-            Only present in case the metric is 'revenue'.
+            Only present for `revenue` metrics.
 
             It is the amount exceeding the 95th percentile of global revenue
             transactions involved in the AB Test. This amount is not considered
@@ -4344,24 +4392,53 @@ components:
       example:
         winsorizedValue: 888.8
         mean: 53.7
+    bayesianMetricResult:
+      type: object
+      description: >
+        Bayesian inference results for this variant metric.
+
+        Omitted when Bayesian results aren't requested or no Bayesian result is
+        available for this metric.
+
+        Individual inference fields can be omitted when their values aren't
+        available.
+      properties:
+        probabilityToBeBetter:
+          type: number
+          format: double
+          description: Probability that this variant is better than the control.
+          example: 0.991
+        relativeEffectCIHigh:
+          type: number
+          format: double
+          description: >-
+            Upper bound of the 95% credible interval for the relative effect
+            (variant/control minus 1).
+          example: 0.39
+        relativeEffectCILow:
+          type: number
+          format: double
+          description: >-
+            Lower bound of the 95% credible interval for the relative effect
+            (variant/control minus 1).
+          example: 0.04
     metricResult:
       type: object
       properties:
         name:
           type: string
-        pValue:
-          type: number
-          format: double
-          description: >-
-            PValue for the first variant (control) will always be 0. For the
-            other variants, pValue is calculated for the current variant based
-            on the control.
+          description: Metric name. Revenue per search results use `revenue_per_search`.
         updatedAt:
           type: string
           description: Date and time when the metric was last updated, in RFC 3339 format.
         value:
           type: number
           format: double
+          description: >-
+            Metric value. For `revenue_per_search`, this is the winsorized mean
+            revenue per search in the specified currency.
+        bayesian:
+          $ref: '#/components/schemas/bayesianMetricResult'
         criticalValue:
           type: number
           format: double
@@ -4375,9 +4452,17 @@ components:
             configuration during the A/B test creation.
         dimension:
           type: string
-          description: Dimension defined during test creation.
+          description: >-
+            Dimension defined during test creation. For revenue metrics,
+            including `revenue_per_search`, this is the currency.
         metadata:
           $ref: '#/components/schemas/metricMetadata'
+        pValue:
+          type: number
+          format: double
+          description: |
+            P-value for this variant compared to the control.
+            Omitted when no p-value is available for this metric.
         significant:
           type: boolean
           description: >
@@ -4417,12 +4502,10 @@ components:
         - name
         - updatedAt
         - value
-        - pValue
       example:
         - name: addToCartCount
           updatedAt: '2025-06-15T15:06:44.400601Z'
           value: 5
-          pValue: 0.01
         - name: clickThroughRate
           updatedAt: '2025-05-15T17:52:15.644906Z'
           value: 0.20869847452125934
@@ -4441,6 +4524,16 @@ components:
           pValue: 0.04
           metadata:
             winsorizedValue: 888.8
+        - name: revenue_per_search
+          dimension: USD
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 12.45
+          metadata:
+            mean: 12.45
+          bayesian:
+            probabilityToBeBetter: 0.991
+            relativeEffectCILow: 0.04
+            relativeEffectCIHigh: 0.39
     metrics:
       type: array
       description: All ABTest metrics that were defined during test creation.
@@ -4558,7 +4651,7 @@ components:
       type: object
       description: >-
         Configuration for the smallest difference between test variants you want
-        to detect.
+        to detect, used to estimate the required sample size.
       properties:
         metric:
           $ref: '#/components/schemas/EffectMetric'
@@ -4615,6 +4708,23 @@ components:
       enum:
         - bonferroni
         - benjamini-hochberg
+    PrimaryMetric:
+      type: string
+      description: >
+        Primary metric for Bayesian analysis. Required when `method` is
+        `bayesian`.
+
+        If the request includes a non-empty `metrics` list, this metric must be
+        in that list.
+
+        Revenue per search requires access to revenue analytics.
+      example: conversion_rate
+      enum:
+        - add_to_cart_rate
+        - click_through_rate
+        - conversion_rate
+        - purchase_rate
+        - revenue_per_search
     ABTestConfiguration:
       title: configuration
       type: object
@@ -4624,8 +4734,12 @@ components:
           $ref: '#/components/schemas/ErrorCorrectionType'
         filters:
           $ref: '#/components/schemas/MetricsFilters'
+        method:
+          $ref: '#/components/schemas/AnalysisMethod'
         minimumDetectableEffect:
           $ref: '#/components/schemas/MinimumDetectableEffect'
+        primaryMetric:
+          $ref: '#/components/schemas/PrimaryMetric'
     Decision:
       type: object
       additionalProperties: false
@@ -4660,6 +4774,8 @@ components:
           $ref: '#/components/schemas/createdAt'
         endAt:
           $ref: '#/components/schemas/endAt'
+        hypothesis:
+          $ref: '#/components/schemas/hypothesis'
         name:
           $ref: '#/components/schemas/name'
         status:
@@ -4677,6 +4793,7 @@ components:
       required:
         - status
         - name
+        - hypothesis
         - createdAt
         - endAt
         - updatedAt
@@ -4811,6 +4928,7 @@ components:
         - user_count
         - tracked_user_count
         - no_result_count
+        - tracked_no_result_count
         - add_to_cart_count
         - purchase_count
         - clicked_search_count
@@ -4821,6 +4939,8 @@ components:
         - purchase_rate
         - average_click_position
         - revenue
+        - revenue_per_search
+        - average_order_value
     metricDate:
       type: object
       properties:

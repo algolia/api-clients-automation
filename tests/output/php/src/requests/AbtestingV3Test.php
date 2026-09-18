@@ -63,6 +63,41 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('addABTests with Bayesian configuration')]
+    public function testAddABTests1(): void
+    {
+        $client = $this->getClient();
+        $client->addABTests(
+            ['endAt' => '2022-12-31T00:00:00.000Z',
+                'name' => 'myABTest',
+                'metrics' => [
+                    ['name' => 'conversionRate',
+                    ],
+                ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 30,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+                'configuration' => ['method' => 'bayesian',
+                    'primaryMetric' => 'conversion_rate',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests',
+                'method' => 'POST',
+                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('applyVariantSettings')]
     public function testApplyVariantSettings(): void
     {
@@ -569,6 +604,29 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getABTest with both inference methods')]
+    public function testGetABTest1(): void
+    {
+        $client = $this->getClient();
+        $client->getABTest(
+            42,
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"methods":"frequentist%2Cbayesian"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('getABTestSettings')]
     public function testGetABTestSettings(): void
     {
@@ -603,6 +661,32 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getTimeseries with Bayesian revenue per search')]
+    public function testGetTimeseries1(): void
+    {
+        $client = $this->getClient();
+        $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/timeseries',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('listABTests with minimal parameters')]
     public function testListABTests(): void
     {
@@ -628,6 +712,11 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             'cts_e2e ab',
             't',
             'asc',
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         $this->assertRequests([
@@ -635,7 +724,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'path' => '/3/abtests',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}', true),
+                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}', true),
             ],
         ]);
     }
