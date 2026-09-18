@@ -36,6 +36,10 @@ post:
     '403':
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: '../../common/responses/IndexNotFound.yml'
+      description: A/B test, variant, or index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ErrorBase.yml'
     '422':
       $ref: '../../common/responses/UnprocessableEntity.yml'
