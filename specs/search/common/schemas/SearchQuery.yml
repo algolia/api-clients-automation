@@ -61,7 +61,7 @@ searchTypeFacet:
   enum: [facet]
   default: facet
   description: |
-    - `default`: perform a search query
+    - `default`: perform a search query.
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
 
 searchTypeDefault:
@@ -69,7 +69,7 @@ searchTypeDefault:
   enum: [default]
   default: default
   description: |
-    - `default`: perform a search query
+    - `default`: perform a search query.
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
 
 searchExtensions:
