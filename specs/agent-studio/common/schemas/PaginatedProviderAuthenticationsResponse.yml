@@ -2,13 +2,13 @@ PaginatedProviderAuthenticationsResponse:
   properties:
     data:
       items:
-        $ref: 'ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
+        $ref: ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse
       type: array
       title: data
     pagination:
-      $ref: 'PaginationMetadata.yml#/PaginationMetadata'
+      $ref: PaginationMetadata.yml#/PaginationMetadata
   type: object
   required:
-    - data
-    - pagination
+  - data
+  - pagination
   title: paginatedProviders

@@ -1,0 +1,21 @@
+ToolCallAGUI:
+  properties:
+    id:
+      title: id
+      type: string
+    type:
+      const: function
+      default: function
+      title: type
+      type: string
+    function:
+      $ref: FunctionCallAGUI.yml#/FunctionCallAGUI
+    encryptedValue:
+      type: string
+      default: null
+      title: encryptedvalue
+  required:
+  - id
+  - function
+  title: toolCallAGUI
+  type: object
