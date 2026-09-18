@@ -8,6 +8,7 @@ import 'package:algolia_client_abtesting_v3/src/model/ab_test.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_settings_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/add_ab_tests_request.dart';
+import 'package:algolia_client_abtesting_v3/src/model/analysis_method.dart';
 import 'package:algolia_client_abtesting_v3/src/model/direction.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_response.dart';
@@ -332,15 +333,20 @@ final class AbtestingV3Client implements ApiClient {
   ///
   /// Parameters:
   /// * [id] Unique A/B test identifier.
+  /// * [methods] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
   /// * [requestOptions] additional request configuration.
   Future<ABTest> getABTest({
     required int id,
+    List<AnalysisMethod>? methods,
     RequestOptions? requestOptions,
   }) async {
     final request = ApiRequest(
       method: RequestMethod.get,
       path: r'/3/abtests/{id}'
           .replaceAll('{' r'id' '}', Uri.encodeComponent(id.toString())),
+      queryParams: {
+        if (methods != null) 'methods': methods,
+      },
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -391,12 +397,14 @@ final class AbtestingV3Client implements ApiClient {
   /// * [startDate] Start date of the period to analyze, in `YYYY-MM-DD` format.
   /// * [endDate] End date of the period to analyze, in `YYYY-MM-DD` format.
   /// * [metric] List of metrics to retrieve. If not specified, all metrics are returned.
+  /// * [methods] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
   /// * [requestOptions] additional request configuration.
   Future<Timeseries> getTimeseries({
     required int id,
     String? startDate,
     String? endDate,
     List<MetricName>? metric,
+    List<AnalysisMethod>? methods,
     RequestOptions? requestOptions,
   }) async {
     final request = ApiRequest(
@@ -407,6 +415,7 @@ final class AbtestingV3Client implements ApiClient {
         if (startDate != null) 'startDate': startDate,
         if (endDate != null) 'endDate': endDate,
         if (metric != null) 'metric': metric,
+        if (methods != null) 'methods': methods,
       },
     );
     final response = await _retryStrategy.execute(
@@ -431,6 +440,7 @@ final class AbtestingV3Client implements ApiClient {
   /// * [indexPrefix] Index name prefix. Only A/B tests for indices starting with this string are included in the response.
   /// * [indexSuffix] Index name suffix. Only A/B tests for indices ending with this string are included in the response.
   /// * [direction] Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.
+  /// * [methods] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
   /// * [requestOptions] additional request configuration.
   Future<ListABTestsResponse> listABTests({
     int? offset,
@@ -438,6 +448,7 @@ final class AbtestingV3Client implements ApiClient {
     String? indexPrefix,
     String? indexSuffix,
     Direction? direction,
+    List<AnalysisMethod>? methods,
     RequestOptions? requestOptions,
   }) async {
     final request = ApiRequest(
@@ -449,6 +460,7 @@ final class AbtestingV3Client implements ApiClient {
         if (indexPrefix != null) 'indexPrefix': indexPrefix,
         if (indexSuffix != null) 'indexSuffix': indexSuffix,
         if (direction != null) 'direction': direction,
+        if (methods != null) 'methods': methods,
       },
     );
     final response = await _retryStrategy.execute(

@@ -53,6 +53,27 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
+	t.Run("addABTests with Bayesian configuration", func(t *testing.T) {
+		_, err := client.AddABTests(client.NewApiAddABTestsRequest(
+
+			abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
+				[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("conversionRate")}).SetVariants(
+				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}).SetConfiguration(
+				abtestingV3.NewEmptyABTestConfiguration().
+					SetMethod(abtestingV3.AnalysisMethod("bayesian")).
+					SetPrimaryMetric(abtestingV3.PrimaryMetric("conversion_rate")),
+			),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}`)
+	})
 }
 
 func TestAbtestingV3_ApplyVariantSettings(t *testing.T) {
@@ -491,6 +512,25 @@ func TestAbtestingV3_GetABTest(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
+	t.Run("getABTest with both inference methods", func(t *testing.T) {
+		_, err := client.GetABTest(client.NewApiGetABTestRequest(
+			42).WithMethods(
+			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"methods":"frequentist%2Cbayesian"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestAbtestingV3_GetABTestSettings(t *testing.T) {
@@ -527,6 +567,32 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
+	t.Run("getTimeseries with Bayesian revenue per search", func(t *testing.T) {
+		_, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+			42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+			[]abtestingV3.MetricName{abtestingV3.MetricName("revenue_per_search")}).WithMethods(
+			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/timeseries", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		queryParams := map[string]string{}
+		require.NoError(
+			t,
+			json.Unmarshal(
+				[]byte(`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}`),
+				&queryParams,
+			),
+		)
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestAbtestingV3_ListABTests(t *testing.T) {
@@ -551,7 +617,9 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 				WithLimit(21).
 				WithIndexPrefix("cts_e2e ab").
 				WithIndexSuffix("t").
-				WithDirection(abtestingV3.Direction("asc")),
+				WithDirection(abtestingV3.Direction("asc")).
+				WithMethods(
+					[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}),
 		)
 		require.NoError(t, err)
 
@@ -563,7 +631,12 @@ func TestAbtestingV3_ListABTests(t *testing.T) {
 		queryParams := map[string]string{}
 		require.NoError(
 			t,
-			json.Unmarshal([]byte(`{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}`), &queryParams),
+			json.Unmarshal(
+				[]byte(
+					`{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}`,
+				),
+				&queryParams,
+			),
 		)
 		require.Len(t, queryParams, len(echo.Query))
 

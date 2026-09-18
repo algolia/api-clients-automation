@@ -32,7 +32,7 @@ def _alias_generator(name: str) -> str:
 
 class MinimumDetectableEffect(BaseModel):
     """
-    Configuration for the smallest difference between test variants you want to detect.
+    Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.
     """
 
     size: float
