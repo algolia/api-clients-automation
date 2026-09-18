@@ -3731,7 +3731,11 @@ paths:
         '403':
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
-          $ref: '#/components/responses/IndexNotFound'
+          description: A/B test, variant, or index not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBase'
         '409':
           $ref: '#/components/responses/Conflict'
         '422':
@@ -3994,7 +3998,11 @@ paths:
         '403':
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
-          $ref: '#/components/responses/IndexNotFound'
+          description: A/B test, variant, or index not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBase'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
       x-codeSamples:
@@ -4871,7 +4879,7 @@ components:
         name:
           type: string
           description: Name of the feature the settings belong to.
-          example: reranking
+          example: drr
         settings:
           description: Feature settings payload. The shape depends on the feature.
       required:
