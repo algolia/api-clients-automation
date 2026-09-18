@@ -8,6 +8,7 @@ import com.algolia.internal.interceptors.LogInterceptor;
 import com.algolia.utils.UseReadTransporter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
-import okio.BufferedSink;
 
 /**
  * HttpRequester is responsible for making HTTP requests using the OkHttp client. It provides a
@@ -134,20 +134,15 @@ public final class HttpRequester implements Requester {
     return buildRequestBody(body);
   }
 
-  /** Serializes the request body into JSON format. */
+  /**
+   * Serializes the request body into JSON and returns a fixed-length request body so OkHttp sends
+   * {@code Content-Length} instead of {@code Transfer-Encoding: chunked}.
+   */
   @Nonnull
   private RequestBody buildRequestBody(Object requestBody) {
-    return new RequestBody() {
-      @Override
-      public MediaType contentType() {
-        return JSON_MEDIA_TYPE;
-      }
-
-      @Override
-      public void writeTo(@Nonnull BufferedSink bufferedSink) {
-        serializer.serialize(bufferedSink.outputStream(), requestBody);
-      }
-    };
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    serializer.serialize(stream, requestBody);
+    return RequestBody.create(stream.toByteArray(), JSON_MEDIA_TYPE);
   }
 
   /** Constructs the headers for the HTTP request. */
