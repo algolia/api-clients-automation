@@ -323,7 +323,7 @@ class AbtestingV3Client(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -378,7 +378,7 @@ class AbtestingV3Client(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }

@@ -86,7 +86,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -105,7 +105,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -123,7 +123,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -142,7 +142,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -172,7 +172,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -510,7 +510,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/configs/theIndexName',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -525,7 +525,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/configs',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -542,7 +542,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/configs/cts_e2e_browse_query_suggestions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -559,7 +559,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/configs/theIndexName/status',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -576,7 +576,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/logs/theIndexName',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -636,10 +636,16 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

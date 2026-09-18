@@ -475,7 +475,7 @@ public class SearchClientRequestTestsE2E
         "cts_e2e_settings",
         new IndexSettings
         {
-          PaginationLimitedTo = 10,
+          PaginationLimitedTo = 10L,
           TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
         },
         true

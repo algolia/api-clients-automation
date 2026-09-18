@@ -15,11 +15,7 @@ public final class GzipRequestInterceptor implements Interceptor {
   public Response intercept(Interceptor.Chain chain) throws IOException {
     Request originalRequest = chain.request();
     RequestBody originalBody = originalRequest.body();
-    if (
-      originalBody == null ||
-      originalRequest.header("Content-Encoding") != null ||
-      originalBody.contentLength() == 0L
-    ) {
+    if (originalBody == null || originalRequest.header("Content-Encoding") != null || originalBody.contentLength() == 0L) {
       return chain.proceed(originalRequest);
     }
 

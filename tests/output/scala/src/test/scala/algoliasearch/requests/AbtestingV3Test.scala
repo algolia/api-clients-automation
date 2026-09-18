@@ -81,7 +81,7 @@ class AbtestingV3Test extends AnyFunSuite {
 
     assert(res.path == "/3/abtests/42/settings/2/apply")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("allow del method for a custom path with minimal parameters") {
@@ -750,7 +750,7 @@ class AbtestingV3Test extends AnyFunSuite {
 
     assert(res.path == "/3/abtests/42/stop")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
 }

@@ -1432,7 +1432,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
-      .setBody(browseParams)
+      .setBody(browseParams != null ? browseParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, BrowseResponse.class, innerType);
@@ -1469,7 +1469,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
-      .setBody(browseParams)
+      .setBody(browseParams != null ? browseParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, BrowseResponse.class, innerType);
@@ -2696,7 +2696,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2724,7 +2724,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2926,7 +2926,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2954,7 +2954,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -10805,7 +10805,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
       .setMethod("POST")
-      .setBody(searchForFacetValuesRequest)
+      .setBody(searchForFacetValuesRequest != null ? searchForFacetValuesRequest : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchForFacetValuesResponse>() {});
@@ -10840,7 +10840,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
       .setMethod("POST")
-      .setBody(searchForFacetValuesRequest)
+      .setBody(searchForFacetValuesRequest != null ? searchForFacetValuesRequest : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -11082,7 +11082,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
       .setMethod("POST")
-      .setBody(searchRulesParams)
+      .setBody(searchRulesParams != null ? searchRulesParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchRulesResponse>() {});
@@ -11108,7 +11108,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
       .setMethod("POST")
-      .setBody(searchRulesParams)
+      .setBody(searchRulesParams != null ? searchRulesParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -11350,7 +11350,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
       .setMethod("POST")
-      .setBody(searchParams)
+      .setBody(searchParams != null ? searchParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, SearchResponse.class, innerType);
@@ -11381,7 +11381,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
       .setMethod("POST")
-      .setBody(searchParams)
+      .setBody(searchParams != null ? searchParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, SearchResponse.class, innerType);
@@ -11619,7 +11619,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
       .setMethod("POST")
-      .setBody(searchSynonymsParams)
+      .setBody(searchSynonymsParams != null ? searchSynonymsParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchSynonymsResponse>() {});
@@ -11645,7 +11645,7 @@ public class SearchClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
       .setMethod("POST")
-      .setBody(searchSynonymsParams)
+      .setBody(searchSynonymsParams != null ? searchSynonymsParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

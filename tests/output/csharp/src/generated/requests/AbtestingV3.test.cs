@@ -60,7 +60,7 @@ public class AbtestingV3ClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/3/abtests/42/settings/2/apply", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
@@ -711,6 +711,6 @@ public class AbtestingV3ClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/3/abtests/42/stop", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 }

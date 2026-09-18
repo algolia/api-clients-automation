@@ -419,7 +419,7 @@ final class SearchClient implements ApiClient {
       path: r'/1/indexes/{indexName}/browse'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       isRead: true,
-      body: browseParams?.toJson(),
+      body: browseParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -629,7 +629,7 @@ final class SearchClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -666,7 +666,7 @@ final class SearchClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -2089,7 +2089,7 @@ final class SearchClient implements ApiClient {
           .replaceAll(
               '{' r'facetName' '}', Uri.encodeComponent(facetName.toString())),
       isRead: true,
-      body: searchForFacetValuesRequest?.toJson(),
+      body: searchForFacetValuesRequest?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -2126,7 +2126,7 @@ final class SearchClient implements ApiClient {
       path: r'/1/indexes/{indexName}/rules/search'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       isRead: true,
-      body: searchRulesParams?.toJson(),
+      body: searchRulesParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -2162,7 +2162,7 @@ final class SearchClient implements ApiClient {
       path: r'/1/indexes/{indexName}/query'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       isRead: true,
-      body: searchParams?.toJson(),
+      body: searchParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -2198,7 +2198,7 @@ final class SearchClient implements ApiClient {
       path: r'/1/indexes/{indexName}/synonyms/search'.replaceAll(
           '{' r'indexName' '}', Uri.encodeComponent(indexName.toString())),
       isRead: true,
-      body: searchSynonymsParams?.toJson(),
+      body: searchSynonymsParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,

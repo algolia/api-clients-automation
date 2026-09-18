@@ -72,7 +72,7 @@ class AbtestingV3Test {
       intercept = {
         assertEquals("/3/abtests/42/settings/2/apply".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }
@@ -758,7 +758,7 @@ class AbtestingV3Test {
       intercept = {
         assertEquals("/3/abtests/42/stop".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }

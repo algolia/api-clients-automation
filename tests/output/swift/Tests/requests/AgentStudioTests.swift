@@ -2126,9 +2126,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -2149,9 +2147,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)

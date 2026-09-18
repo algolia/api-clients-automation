@@ -424,7 +424,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 		require.Equal(t, "/1/indexes/theIndexName/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -442,7 +442,7 @@ func TestSearch_ClearRules(t *testing.T) {
 		require.Equal(t, "/1/indexes/indexName/rules/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -460,7 +460,7 @@ func TestSearch_ClearSynonyms(t *testing.T) {
 		require.Equal(t, "/1/indexes/indexName/synonyms/clear", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -1636,7 +1636,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 		require.Equal(t, "/1/keys/ALGOLIA_API_KEY/restore", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 

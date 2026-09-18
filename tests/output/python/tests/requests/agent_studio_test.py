@@ -1577,6 +1577,7 @@ class TestAgentStudioClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_unpublish_agent_(self):
         """
@@ -1593,6 +1594,7 @@ class TestAgentStudioClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_update_agent_(self):
         """
@@ -3303,6 +3305,7 @@ class TestAgentStudioClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_unpublish_agent_(self):
         """
@@ -3319,6 +3322,7 @@ class TestAgentStudioClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_update_agent_(self):
         """

@@ -1788,7 +1788,7 @@ void main() {
         expectPath(request.path,
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -1809,7 +1809,7 @@ void main() {
         expectPath(request.path,
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );

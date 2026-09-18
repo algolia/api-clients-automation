@@ -69,7 +69,7 @@ func TestAbtestingV3_ApplyVariantSettings(t *testing.T) {
 		require.Equal(t, "/3/abtests/42/settings/2/apply", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -617,6 +617,6 @@ func TestAbtestingV3_StopABTest(t *testing.T) {
 		require.Equal(t, "/3/abtests/42/stop", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }

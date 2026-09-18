@@ -40,6 +40,7 @@ package algoliasearch.search
 
 import algoliasearch.search.AdvancedSyntaxFeatures._
 import algoliasearch.search.AlternativesAsExact._
+import algoliasearch.search.AttributeCriteriaComputedBy._
 import algoliasearch.search.ExactOnSingleWordQuery._
 import algoliasearch.search.Mode._
 import algoliasearch.search.QueryType._

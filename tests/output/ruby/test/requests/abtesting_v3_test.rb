@@ -46,6 +46,8 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal("/3/abtests/42/settings/2/apply", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # allow del method for a custom path with minimal parameters
@@ -462,6 +464,8 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal("/3/abtests/42/stop", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
 end

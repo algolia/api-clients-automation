@@ -76,7 +76,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/settings/2/apply',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -93,7 +93,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -112,7 +112,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -130,7 +130,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -149,7 +149,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -179,7 +179,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -517,7 +517,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -564,7 +564,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -581,7 +581,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/settings',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -598,7 +598,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/timeseries',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -613,7 +613,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -634,7 +634,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}', true),
             ],
         ]);
@@ -691,7 +691,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/stop',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -708,10 +708,16 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

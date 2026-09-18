@@ -1513,7 +1513,7 @@ public class AgentStudioClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "unpublishAgent")]
@@ -1524,7 +1524,7 @@ public class AgentStudioClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "updateAgent with minimal parameters")]

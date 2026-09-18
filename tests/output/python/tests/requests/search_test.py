@@ -544,6 +544,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_clear_rules_(self):
         """
@@ -557,6 +558,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_clear_synonyms_(self):
         """
@@ -570,6 +572,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_custom_delete_(self):
         """
@@ -1804,6 +1807,7 @@ class TestSearchClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_save_object_(self):
         """
@@ -10158,6 +10162,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_clear_rules_(self):
         """
@@ -10171,6 +10176,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_clear_synonyms_(self):
         """
@@ -10184,6 +10190,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_custom_delete_(self):
         """
@@ -11418,6 +11425,7 @@ class TestSearchClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_save_object_(self):
         """

@@ -648,6 +648,6 @@ public class AbtestingClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/2/abtests/42/stop", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 }

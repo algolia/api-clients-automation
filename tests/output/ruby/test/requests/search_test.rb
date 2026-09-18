@@ -423,6 +423,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/theIndexName/clear", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # clearRules
@@ -433,6 +435,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/indexName/rules/clear", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # clearSynonyms
@@ -443,6 +447,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/indexName/synonyms/clear", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # allow del method for a custom path with minimal parameters
@@ -1400,6 +1406,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/keys/ALGOLIA_API_KEY/restore", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # saveObject

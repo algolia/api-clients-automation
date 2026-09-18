@@ -1504,7 +1504,7 @@ class AgentStudioTest extends AnyFunSuite {
 
     assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("unpublishAgent") {
@@ -1518,7 +1518,7 @@ class AgentStudioTest extends AnyFunSuite {
 
     assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("updateAgent with minimal parameters") {

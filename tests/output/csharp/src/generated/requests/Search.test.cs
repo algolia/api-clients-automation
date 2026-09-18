@@ -592,7 +592,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/clear", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "clearRules")]
@@ -603,7 +603,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/rules/clear", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "clearSynonyms")]
@@ -614,7 +614,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/synonyms/clear", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
@@ -1945,7 +1945,7 @@ public class SearchClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/keys/ALGOLIA_API_KEY/restore", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "saveObject")]
@@ -7279,7 +7279,7 @@ public class SearchClientRequestTests
       "cts_e2e_settings",
       new IndexSettings
       {
-        PaginationLimitedTo = 10,
+        PaginationLimitedTo = 10L,
         TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
       },
       true
@@ -8572,7 +8572,7 @@ public class SearchClientRequestTests
         Mode = Enum.Parse<Mode>("NeuralSearch"),
         NumericAttributesForFiltering = new List<string> { "algolia" },
         OptionalWords = new OptionalWords(new List<string> { "myspace" }),
-        PaginationLimitedTo = 0,
+        PaginationLimitedTo = 0L,
         QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
         QueryType = Enum.Parse<QueryType>("PrefixLast"),
         Ranking = new List<string> { "geo" },
@@ -9296,7 +9296,10 @@ public class SearchClientRequestTests
   [Fact(DisplayName = "set_pagination_limit")]
   public async Task SetSettingsTest88()
   {
-    await client.SetSettingsAsync("theIndexName", new IndexSettings { PaginationLimitedTo = 1000 });
+    await client.SetSettingsAsync(
+      "theIndexName",
+      new IndexSettings { PaginationLimitedTo = 1000L }
+    );
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/theIndexName/settings", req.Path);

@@ -1622,7 +1622,7 @@ class AgentStudioClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -1634,7 +1634,7 @@ class AgentStudioClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test

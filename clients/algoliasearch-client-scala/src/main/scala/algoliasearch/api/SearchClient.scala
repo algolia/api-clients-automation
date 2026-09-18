@@ -656,7 +656,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/browse")
-      .withBody(browseParams)
+      .withBody(browseParams.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }
@@ -957,7 +957,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -1012,7 +1012,7 @@ class SearchClient(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -3222,7 +3222,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/facets/${escape(facetName)}/query")
-      .withBody(searchForFacetValuesRequest)
+      .withBody(searchForFacetValuesRequest.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }
@@ -3279,7 +3279,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/rules/search")
-      .withBody(searchRulesParams)
+      .withBody(searchRulesParams.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }
@@ -3338,7 +3338,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/query")
-      .withBody(searchParams)
+      .withBody(searchParams.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }
@@ -3399,7 +3399,7 @@ class SearchClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/synonyms/search")
-      .withBody(searchSynonymsParams)
+      .withBody(searchSynonymsParams.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }

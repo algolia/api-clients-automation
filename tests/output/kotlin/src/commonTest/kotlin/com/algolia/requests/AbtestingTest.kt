@@ -668,7 +668,7 @@ class AbtestingTest {
       intercept = {
         assertEquals("/2/abtests/42/stop".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }

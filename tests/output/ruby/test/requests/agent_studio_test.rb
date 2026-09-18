@@ -1088,6 +1088,8 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # unpublishAgent
@@ -1098,6 +1100,8 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # updateAgent with minimal parameters

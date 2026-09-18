@@ -65,7 +65,7 @@ final class RecommendClient implements ApiClient {
     _retryStrategy.requester.setClientApiKey(apiKey);
   }
 
-  /// Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+  /// Create or update a batch of Recommend Rules.  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
   ///
   /// Required API Key ACLs:
   ///   - editSettings
@@ -91,7 +91,7 @@ final class RecommendClient implements ApiClient {
           .replaceAll(
               '{' r'indexName' '}', Uri.encodeComponent(indexName.toString()))
           .replaceAll('{' r'model' '}', Uri.encodeComponent(model.toString())),
-      body: recommendRule,
+      body: recommendRule ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -195,7 +195,7 @@ final class RecommendClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -232,7 +232,7 @@ final class RecommendClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -430,7 +430,7 @@ final class RecommendClient implements ApiClient {
               '{' r'indexName' '}', Uri.encodeComponent(indexName.toString()))
           .replaceAll('{' r'model' '}', Uri.encodeComponent(model.toString())),
       isRead: true,
-      body: searchRecommendRulesParams?.toJson(),
+      body: searchRecommendRulesParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,

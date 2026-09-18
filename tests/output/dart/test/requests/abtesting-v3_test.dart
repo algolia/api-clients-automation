@@ -61,7 +61,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/3/abtests/42/settings/2/apply');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -838,7 +838,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/3/abtests/42/stop');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );

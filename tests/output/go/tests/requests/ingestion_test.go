@@ -808,7 +808,7 @@ func TestIngestion_DisableTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -826,7 +826,7 @@ func TestIngestion_DisableTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -844,7 +844,7 @@ func TestIngestion_EnableTask(t *testing.T) {
 		require.Equal(t, "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -862,7 +862,7 @@ func TestIngestion_EnableTaskV1(t *testing.T) {
 		require.Equal(t, "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -1558,7 +1558,7 @@ func TestIngestion_TriggerDockerSourceDiscover(t *testing.T) {
 		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 

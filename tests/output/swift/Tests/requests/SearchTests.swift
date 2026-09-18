@@ -771,9 +771,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/clear")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -794,9 +792,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/clear")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -817,9 +813,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/synonyms/clear")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -2763,9 +2757,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/keys/ALGOLIA_API_KEY/restore")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -9799,7 +9791,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "cts_e2e_settings",
             indexSettings: IndexSettings(
-                paginationLimitedTo: 10,
+                paginationLimitedTo: Int64(10),
                 typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
             ),
             forwardToReplicas: true
@@ -11583,7 +11575,7 @@ final class SearchClientRequestsTests: XCTestCase {
             indexSettings: IndexSettings(
                 attributesForFaceting: ["algolia"],
                 replicas: [""],
-                paginationLimitedTo: 0,
+                paginationLimitedTo: Int64(0),
                 unretrievableAttributes: ["foo"],
                 disableTypoToleranceOnWords: ["algolia"],
                 attributesToTransliterate: ["algolia"],
@@ -12696,7 +12688,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "theIndexName",
-            indexSettings: IndexSettings(paginationLimitedTo: 1000)
+            indexSettings: IndexSettings(paginationLimitedTo: Int64(1000))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

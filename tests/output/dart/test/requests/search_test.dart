@@ -661,7 +661,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/indexes/theIndexName/clear');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -681,7 +681,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/rules/clear');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -701,7 +701,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/indexes/indexName/synonyms/clear');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -2363,7 +2363,7 @@ void main() {
       intercept: (request) {
         expectPath(request.path, '/1/keys/ALGOLIA_API_KEY/restore');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );

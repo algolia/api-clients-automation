@@ -6,6 +6,7 @@ namespace Algolia\AlgoliaSearch\Snippets;
 
 // >IMPORT
 use Algolia\AlgoliaSearch\Api\SearchClient;
+use Algolia\AlgoliaSearch\Model\Search\BatchResponse;
 
 // IMPORT<
 
@@ -1303,6 +1304,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->deleteObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -2618,6 +2620,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->partialUpdateObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -2650,6 +2653,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->partialUpdateObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3008,6 +3012,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3049,6 +3054,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3090,6 +3096,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3121,6 +3128,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3152,6 +3160,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [
@@ -3182,6 +3191,7 @@ class SnippetSearchClient
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
+        /** @var array<BatchResponse> $response */
         $response = $client->saveObjects(
             '<YOUR_INDEX_NAME>',
             [

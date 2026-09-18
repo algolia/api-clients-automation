@@ -80,7 +80,7 @@ class AbtestingV3ClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/3/abtests/42/settings/2/apply", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -853,6 +853,6 @@ class AbtestingV3ClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/3/abtests/42/stop", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 }

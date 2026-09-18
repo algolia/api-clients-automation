@@ -43,7 +43,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -62,7 +62,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -80,7 +80,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -99,7 +99,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -129,7 +129,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -467,7 +467,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/addToCartRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -488,7 +488,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/addToCartRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -506,7 +506,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/averageClickPosition',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -527,7 +527,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/averageClickPosition',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -545,7 +545,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/positions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -566,7 +566,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/positions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -584,7 +584,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/clickThroughRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -605,7 +605,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/clicks/clickThroughRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -623,7 +623,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/conversionRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -644,7 +644,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/conversionRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -662,7 +662,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noClickRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -683,7 +683,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noClickRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -701,7 +701,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noResultRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -722,7 +722,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noResultRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -738,7 +738,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/patterns/fields',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -755,7 +755,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/purchaseRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -776,7 +776,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/purchaseRate',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -794,7 +794,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/revenue',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -815,7 +815,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/conversions/revenue',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -833,7 +833,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/count',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -854,7 +854,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/count',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -872,7 +872,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noClicks',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -895,7 +895,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noClicks',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -913,7 +913,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noResults',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -936,7 +936,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches/noResults',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -954,7 +954,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/status',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -972,7 +972,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/countries',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -995,7 +995,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/countries',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1013,7 +1013,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1037,7 +1037,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1056,7 +1056,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/myAttribute',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1075,7 +1075,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/myAttribute1%2CmyAttribute2',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1100,7 +1100,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/myAttribute',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1125,7 +1125,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/myAttribute1%2CmyAttribute2',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1143,7 +1143,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/noResults',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1167,7 +1167,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/filters/noResults',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","search":"mySearch","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1185,7 +1185,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/hits',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1211,7 +1211,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/hits',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1229,7 +1229,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1256,7 +1256,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/searches',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
@@ -1274,7 +1274,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/users/count',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index"}', true),
             ],
         ]);
@@ -1295,7 +1295,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/users/count',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
             ],
         ]);
@@ -1555,10 +1555,16 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

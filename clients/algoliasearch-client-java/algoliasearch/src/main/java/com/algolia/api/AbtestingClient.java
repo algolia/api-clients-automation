@@ -12,6 +12,7 @@ import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -733,7 +734,7 @@ public class AbtestingClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -761,7 +762,7 @@ public class AbtestingClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -963,7 +964,7 @@ public class AbtestingClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -991,7 +992,7 @@ public class AbtestingClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

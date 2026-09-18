@@ -1505,7 +1505,7 @@ func TestAgentStudio_PublishAgent(t *testing.T) {
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 
@@ -1523,7 +1523,7 @@ func TestAgentStudio_UnpublishAgent(t *testing.T) {
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }
 

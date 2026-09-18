@@ -60,6 +60,7 @@ class TestAbtestingV3Client:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_custom_delete_(self):
         """
@@ -622,6 +623,7 @@ class TestAbtestingV3Client:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
 
 class TestAbtestingV3ClientSync:
@@ -677,6 +679,7 @@ class TestAbtestingV3ClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_custom_delete_(self):
         """
@@ -1239,3 +1242,4 @@ class TestAbtestingV3ClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None

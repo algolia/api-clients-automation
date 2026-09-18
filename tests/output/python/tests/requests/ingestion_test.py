@@ -843,6 +843,7 @@ class TestIngestionClient:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_disable_task_v1_(self):
         """
@@ -856,6 +857,7 @@ class TestIngestionClient:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_enable_task_(self):
         """
@@ -869,6 +871,7 @@ class TestIngestionClient:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_enable_task_v1_(self):
         """
@@ -882,6 +885,7 @@ class TestIngestionClient:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_get_authentication_(self):
         """
@@ -1562,6 +1566,7 @@ class TestIngestionClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     async def test_try_transformation_(self):
         """
@@ -2681,6 +2686,7 @@ class TestIngestionClientSync:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_disable_task_v1_(self):
         """
@@ -2694,6 +2700,7 @@ class TestIngestionClientSync:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_enable_task_(self):
         """
@@ -2707,6 +2714,7 @@ class TestIngestionClientSync:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_enable_task_v1_(self):
         """
@@ -2720,6 +2728,7 @@ class TestIngestionClientSync:
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_get_authentication_(self):
         """
@@ -3400,6 +3409,7 @@ class TestIngestionClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_try_transformation_(self):
         """

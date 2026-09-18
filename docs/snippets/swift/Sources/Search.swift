@@ -970,7 +970,10 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.deleteObjects(indexName: "<YOUR_INDEX_NAME>", objectIDs: ["1", "2"])
+        let response: [BatchResponse] = try await client.deleteObjects(
+            indexName: "<YOUR_INDEX_NAME>",
+            objectIDs: ["1", "2"]
+        )
         // >LOG
         // print the response
         print(response)
@@ -1954,7 +1957,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.partialUpdateObjects(
+        let response: [BatchResponse] = try await client.partialUpdateObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
             createIfNotExists: true
@@ -1974,7 +1977,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.partialUpdateObjects(
+        let response: [BatchResponse] = try await client.partialUpdateObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
             createIfNotExists: false
@@ -2195,7 +2198,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [
                 ["objectID": "1", "name": "Adam"],
@@ -2221,7 +2224,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [
                 ["objectID": "5", "name": "Eva"],
@@ -2247,7 +2250,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
@@ -2266,7 +2269,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
         )
@@ -2285,7 +2288,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [[
                 "objectID": "1",
@@ -2310,7 +2313,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
-        let response = try await client.saveObjects(
+        let response: [BatchResponse] = try await client.saveObjects(
             indexName: "<YOUR_INDEX_NAME>",
             objects: [[
                 "objectID": "1",
@@ -7105,7 +7108,7 @@ final class SearchClientSnippet {
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
             indexSettings: IndexSettings(
-                paginationLimitedTo: 10,
+                paginationLimitedTo: Int64(10),
                 typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
             ),
             forwardToReplicas: true
@@ -8215,7 +8218,7 @@ final class SearchClientSnippet {
             indexSettings: IndexSettings(
                 attributesForFaceting: ["algolia"],
                 replicas: [""],
-                paginationLimitedTo: 0,
+                paginationLimitedTo: Int64(0),
                 unretrievableAttributes: ["foo"],
                 disableTypoToleranceOnWords: ["algolia"],
                 attributesToTransliterate: ["algolia"],
@@ -8955,7 +8958,7 @@ final class SearchClientSnippet {
         // Call the API
         let response = try await client.setSettings(
             indexName: "<YOUR_INDEX_NAME>",
-            indexSettings: IndexSettings(paginationLimitedTo: 1000)
+            indexSettings: IndexSettings(paginationLimitedTo: Int64(1000))
         )
         // >LOG
         // print the response

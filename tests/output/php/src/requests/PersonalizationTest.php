@@ -43,7 +43,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -62,7 +62,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -80,7 +80,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -99,7 +99,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -129,7 +129,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -467,7 +467,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/profiles/UserToken',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -482,7 +482,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/strategies/personalization',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -499,7 +499,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/profiles/personalization/UserToken',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -545,10 +545,16 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

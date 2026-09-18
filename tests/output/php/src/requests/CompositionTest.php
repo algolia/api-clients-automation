@@ -43,7 +43,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -62,7 +62,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -80,7 +80,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -99,7 +99,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -129,7 +129,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -467,7 +467,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/1234',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -485,7 +485,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/1234/rules/5678',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -502,7 +502,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -524,7 +524,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/id1',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'headers' => json_decode('{"request-id":"CtsE2eEcho4"}', true),
             ],
         ]);
@@ -546,7 +546,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/id1',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"x-algolia-request-id":"CtsE2eEchoQ"}', true),
             ],
         ]);
@@ -570,7 +570,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo/rules/123',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -588,7 +588,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo/task/42',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -603,7 +603,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -618,7 +618,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1943,10 +1943,16 @@ class CompositionTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

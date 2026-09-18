@@ -542,6 +542,7 @@ class TestAbtestingClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
 
 class TestAbtestingClientSync:
@@ -1079,3 +1080,4 @@ class TestAbtestingClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None

@@ -373,7 +373,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -392,7 +392,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -410,7 +410,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -429,7 +429,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -459,7 +459,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -797,7 +797,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -814,7 +814,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -831,7 +831,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -848,7 +848,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -865,7 +865,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -882,7 +882,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -899,7 +899,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
                 'method' => 'PUT',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -916,7 +916,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable',
                 'method' => 'PUT',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -933,7 +933,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
                 'method' => 'PUT',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -950,7 +950,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable',
                 'method' => 'PUT',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -967,7 +967,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/authentications/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -984,7 +984,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/destinations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1002,7 +1002,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events/6c02aeb1-775e-418e-870b-1faccd4b2c0c',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1019,7 +1019,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1036,7 +1036,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1053,7 +1053,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1070,7 +1070,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1087,7 +1087,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1102,7 +1102,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/authentications',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1130,7 +1130,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/authentications',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}', true),
             ],
         ]);
@@ -1146,7 +1146,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/destinations',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1163,7 +1163,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/runs/6c02aeb1-775e-418e-870b-1faccd4b2c0f/events',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1178,7 +1178,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/runs',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1193,7 +1193,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/sources',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1208,7 +1208,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/2/tasks',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1223,7 +1223,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/tasks',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1238,7 +1238,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1259,7 +1259,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/transformations',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","sort":"createdAt","order":"asc","type":"noCode"}', true),
             ],
         ]);
@@ -1676,7 +1676,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1968,10 +1968,16 @@ class IngestionTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

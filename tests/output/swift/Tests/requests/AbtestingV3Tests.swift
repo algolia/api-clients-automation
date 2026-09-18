@@ -68,9 +68,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/3/abtests/42/settings/2/apply")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
@@ -1024,9 +1022,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/3/abtests/42/stop")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
