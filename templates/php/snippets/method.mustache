@@ -24,6 +24,9 @@ class Snippet{{client}}
         {{> snippets/init}}
 
         // Call the API
+        {{#listReturnType}}
+        /** @var array<{{.}}> $response */
+        {{/listReturnType}}
         {{#hasResponse}}$response = {{/hasResponse}}{{> tests/method}};
 
         // >LOG

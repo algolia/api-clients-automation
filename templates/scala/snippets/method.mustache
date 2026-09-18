@@ -28,7 +28,7 @@ class Snippet{{client}} {
     {{> snippets/init}}
 
     // Call the API
-    {{#hasResponse}}val response = {{/hasResponse}}{{#isAsyncMethod}}Await.result(
+    {{#hasResponse}}val response{{#listReturnType}}: Seq[{{.}}]{{/listReturnType}} = {{/hasResponse}}{{#isAsyncMethod}}Await.result(
       {{/isAsyncMethod}}{{> tests/method}}{{#isAsyncMethod}},
       Duration(100, "sec")
     )
