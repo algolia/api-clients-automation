@@ -6,7 +6,7 @@ FeatureSettings:
     name:
       type: string
       description: Name of the feature the settings belong to.
-      example: 'reranking'
+      example: 'drr'
     settings:
       description: Feature settings payload. The shape depends on the feature.
   required:
