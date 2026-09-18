@@ -28,13 +28,11 @@ public partial class MetricResult
   /// <param name="name">name (required).</param>
   /// <param name="updatedAt">Date and time when the metric was last updated, in RFC 3339 format. (required).</param>
   /// <param name="value">value (required).</param>
-  /// <param name="pValue">PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control. (required).</param>
-  public MetricResult(string name, string updatedAt, double value, double pValue)
+  public MetricResult(string name, string updatedAt, double value)
   {
     Name = name ?? throw new ArgumentNullException(nameof(name));
     UpdatedAt = updatedAt ?? throw new ArgumentNullException(nameof(updatedAt));
     Value = value;
-    PValue = pValue;
   }
 
   /// <summary>
@@ -71,11 +69,11 @@ public partial class MetricResult
   public double? ValueCILow { get; set; }
 
   /// <summary>
-  /// PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+  /// P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
   /// </summary>
-  /// <value>PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.</value>
+  /// <value>P-value for this variant compared to the control. Omitted when no p-value is available for this metric. </value>
   [JsonPropertyName("pValue")]
-  public double PValue { get; set; }
+  public double? PValue { get; set; }
 
   /// <summary>
   /// Dimension defined during test creation.

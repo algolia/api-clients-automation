@@ -23,9 +23,9 @@ export type MetricResult = {
   valueCILow?: number | undefined;
 
   /**
-   * PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+   * P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
    */
-  pValue: number;
+  pValue?: number | undefined;
 
   /**
    * Dimension defined during test creation.

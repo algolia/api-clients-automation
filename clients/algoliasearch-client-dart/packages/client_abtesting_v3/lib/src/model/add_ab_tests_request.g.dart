@@ -13,6 +13,7 @@ AddABTestsRequest _$AddABTestsRequestFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = AddABTestsRequest(
           name: $checkedConvert('name', (v) => v as String),
+          hypothesis: $checkedConvert('hypothesis', (v) => v as String?),
           variants: $checkedConvert('variants', (v) => v as List<dynamic>),
           metrics: $checkedConvert(
               'metrics',
@@ -33,8 +34,6 @@ AddABTestsRequest _$AddABTestsRequestFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AddABTestsRequestToJson(AddABTestsRequest instance) {
   final val = <String, dynamic>{
     'name': instance.name,
-    'variants': instance.variants.toList(),
-    'metrics': instance.metrics.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -43,6 +42,9 @@ Map<String, dynamic> _$AddABTestsRequestToJson(AddABTestsRequest instance) {
     }
   }
 
+  writeNotNull('hypothesis', instance.hypothesis);
+  val['variants'] = instance.variants.toList();
+  val['metrics'] = instance.metrics.map((e) => e.toJson()).toList();
   writeNotNull('configuration', instance.configuration?.toJson());
   val['endAt'] = instance.endAt;
   return val;

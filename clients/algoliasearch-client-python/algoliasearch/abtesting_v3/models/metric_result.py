@@ -51,8 +51,8 @@ class MetricResult(BaseModel):
     """ The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).  """
     value_ci_low: Optional[float] = None
     """ The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).  """
-    p_value: float
-    """ PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control. """
+    p_value: Optional[float] = None
+    """ P-value for this variant compared to the control. Omitted when no p-value is available for this metric.  """
     dimension: Optional[str] = None
     """ Dimension defined during test creation. """
     metadata: Optional[MetricMetadata] = None

@@ -19,7 +19,7 @@ MetricResult _$MetricResultFromJson(Map<String, dynamic> json) =>
               $checkedConvert('valueCIHigh', (v) => (v as num?)?.toDouble()),
           valueCILow:
               $checkedConvert('valueCILow', (v) => (v as num?)?.toDouble()),
-          pValue: $checkedConvert('pValue', (v) => (v as num).toDouble()),
+          pValue: $checkedConvert('pValue', (v) => (v as num?)?.toDouble()),
           dimension: $checkedConvert('dimension', (v) => v as String?),
           metadata: $checkedConvert(
               'metadata',
@@ -49,7 +49,7 @@ Map<String, dynamic> _$MetricResultToJson(MetricResult instance) {
 
   writeNotNull('valueCIHigh', instance.valueCIHigh);
   writeNotNull('valueCILow', instance.valueCILow);
-  val['pValue'] = instance.pValue;
+  writeNotNull('pValue', instance.pValue);
   writeNotNull('dimension', instance.dimension);
   writeNotNull('metadata', instance.metadata?.toJson());
   writeNotNull('criticalValue', instance.criticalValue);

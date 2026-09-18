@@ -21,7 +21,7 @@ module Algolia
       # The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
       attr_accessor :value_ci_low
 
-      # PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+      # P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
       attr_accessor :p_value
 
       # Dimension defined during test creation.
@@ -125,8 +125,6 @@ module Algolia
 
         if attributes.key?(:p_value)
           self.p_value = attributes[:p_value]
-        else
-          self.p_value = nil
         end
 
         if attributes.key?(:dimension)

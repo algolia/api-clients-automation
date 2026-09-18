@@ -38,8 +38,7 @@ package algoliasearch.abtestingv3
   *   Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative
   *   difference is used for continuous metrics (e.g., revenue).
   * @param pValue
-  *   PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the
-  *   current variant based on the control.
+  *   P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
   * @param dimension
   *   Dimension defined during test creation.
   * @param criticalValue
@@ -55,7 +54,7 @@ case class MetricResult(
     value: Double,
     valueCIHigh: Option[Double] = scala.None,
     valueCILow: Option[Double] = scala.None,
-    pValue: Double,
+    pValue: Option[Double] = scala.None,
     dimension: Option[String] = scala.None,
     metadata: Option[MetricMetadata] = scala.None,
     criticalValue: Option[Double] = scala.None,

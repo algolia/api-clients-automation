@@ -15,7 +15,7 @@ final class MetricResult {
     required this.value,
     this.valueCIHigh,
     this.valueCILow,
-    required this.pValue,
+    this.pValue,
     this.dimension,
     this.metadata,
     this.criticalValue,
@@ -40,9 +40,9 @@ final class MetricResult {
   @JsonKey(name: r'valueCILow')
   final double? valueCILow;
 
-  /// PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+  /// P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
   @JsonKey(name: r'pValue')
-  final double pValue;
+  final double? pValue;
 
   /// Dimension defined during test creation.
   @JsonKey(name: r'dimension')

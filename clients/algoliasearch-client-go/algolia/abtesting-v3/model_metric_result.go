@@ -16,8 +16,8 @@ type MetricResult struct {
 	ValueCIHigh *float64 `json:"valueCIHigh,omitempty"`
 	// The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
 	ValueCILow *float64 `json:"valueCILow,omitempty"`
-	// PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
-	PValue float64 `json:"pValue"`
+	// P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
+	PValue *float64 `json:"pValue,omitempty"`
 	// Dimension defined during test creation.
 	Dimension *string         `json:"dimension,omitempty"`
 	Metadata  *MetricMetadata `json:"metadata,omitempty"`
@@ -38,6 +38,12 @@ func WithMetricResultValueCIHigh(val float64) MetricResultOption {
 func WithMetricResultValueCILow(val float64) MetricResultOption {
 	return func(f *MetricResult) {
 		f.ValueCILow = &val
+	}
+}
+
+func WithMetricResultPValue(val float64) MetricResultOption {
+	return func(f *MetricResult) {
+		f.PValue = &val
 	}
 }
 
@@ -69,13 +75,12 @@ func WithMetricResultSignificant(val bool) MetricResultOption {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewMetricResult(name string, updatedAt string, value float64, pValue float64, opts ...MetricResultOption) *MetricResult {
+func NewMetricResult(name string, updatedAt string, value float64, opts ...MetricResultOption) *MetricResult {
 	this := &MetricResult{}
 	this.Name = name
 	this.UpdatedAt = updatedAt
-	this.Value = value
 
-	this.PValue = pValue
+	this.Value = value
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -246,30 +251,39 @@ func (o *MetricResult) SetValueCILow(v float64) *MetricResult {
 	return o
 }
 
-// GetPValue returns the PValue field value.
+// GetPValue returns the PValue field value if set, zero value otherwise.
 func (o *MetricResult) GetPValue() float64 {
-	if o == nil {
+	if o == nil || o.PValue == nil {
 		var ret float64
 
 		return ret
 	}
 
-	return o.PValue
+	return *o.PValue
 }
 
-// GetPValueOk returns a tuple with the PValue field value
+// GetPValueOk returns a tuple with the PValue field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MetricResult) GetPValueOk() (*float64, bool) {
-	if o == nil {
+	if o == nil || o.PValue == nil {
 		return nil, false
 	}
 
-	return &o.PValue, true
+	return o.PValue, true
 }
 
-// SetPValue sets field value.
+// HasPValue returns a boolean if a field has been set.
+func (o *MetricResult) HasPValue() bool {
+	if o != nil && o.PValue != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPValue gets a reference to the given float64 and assigns it to the PValue field.
 func (o *MetricResult) SetPValue(v float64) *MetricResult {
-	o.PValue = v
+	o.PValue = &v
 
 	return o
 }
@@ -436,7 +450,10 @@ func (o MetricResult) MarshalJSON() ([]byte, error) {
 		toSerialize["valueCILow"] = o.ValueCILow
 	}
 
-	toSerialize["pValue"] = o.PValue
+	if o.PValue != nil {
+		toSerialize["pValue"] = o.PValue
+	}
+
 	if o.Dimension != nil {
 		toSerialize["dimension"] = o.Dimension
 	}

@@ -220,9 +220,6 @@ class MetricResult extends AbstractModel implements ModelInterface, \ArrayAccess
         if (!isset($this->container['value']) || null === $this->container['value']) {
             $invalidProperties[] = "'value' can't be null";
         }
-        if (!isset($this->container['pValue']) || null === $this->container['pValue']) {
-            $invalidProperties[] = "'pValue' can't be null";
-        }
 
         return $invalidProperties;
     }
@@ -361,7 +358,7 @@ class MetricResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets pValue.
      *
-     * @return float
+     * @return null|float
      */
     public function getPValue()
     {
@@ -371,7 +368,7 @@ class MetricResult extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets pValue.
      *
-     * @param float $pValue PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+     * @param null|float $pValue P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
      *
      * @return self
      */

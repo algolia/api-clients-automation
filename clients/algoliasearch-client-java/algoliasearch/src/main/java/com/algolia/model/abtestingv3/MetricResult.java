@@ -113,10 +113,10 @@ public class MetricResult {
   }
 
   /**
-   * PValue for the first variant (control) will always be 0. For the other variants, pValue is
-   * calculated for the current variant based on the control.
+   * P-value for this variant compared to the control. Omitted when no p-value is available for this
+   * metric.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getpValue() {
     return pValue;
   }

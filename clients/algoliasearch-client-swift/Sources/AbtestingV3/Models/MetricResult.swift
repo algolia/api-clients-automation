@@ -21,9 +21,8 @@ public struct MetricResult: Codable, JSONEncodable {
     /// Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative
     /// difference is used for continuous metrics (e.g., revenue).
     public var valueCILow: Double?
-    /// PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the
-    /// current variant based on the control.
-    public var pValue: Double
+    /// P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
+    public var pValue: Double?
     /// Dimension defined during test creation.
     public var dimension: String?
     public var metadata: MetricMetadata?
@@ -40,7 +39,7 @@ public struct MetricResult: Codable, JSONEncodable {
         value: Double,
         valueCIHigh: Double? = nil,
         valueCILow: Double? = nil,
-        pValue: Double,
+        pValue: Double? = nil,
         dimension: String? = nil,
         metadata: MetricMetadata? = nil,
         criticalValue: Double? = nil,
@@ -80,7 +79,7 @@ public struct MetricResult: Codable, JSONEncodable {
         try container.encode(self.value, forKey: .value)
         try container.encodeIfPresent(self.valueCIHigh, forKey: .valueCIHigh)
         try container.encodeIfPresent(self.valueCILow, forKey: .valueCILow)
-        try container.encode(self.pValue, forKey: .pValue)
+        try container.encodeIfPresent(self.pValue, forKey: .pValue)
         try container.encodeIfPresent(self.dimension, forKey: .dimension)
         try container.encodeIfPresent(self.metadata, forKey: .metadata)
         try container.encodeIfPresent(self.criticalValue, forKey: .criticalValue)
@@ -97,7 +96,7 @@ extension MetricResult: Hashable {
         hasher.combine(self.value.hashValue)
         hasher.combine(self.valueCIHigh?.hashValue)
         hasher.combine(self.valueCILow?.hashValue)
-        hasher.combine(self.pValue.hashValue)
+        hasher.combine(self.pValue?.hashValue)
         hasher.combine(self.dimension?.hashValue)
         hasher.combine(self.metadata?.hashValue)
         hasher.combine(self.criticalValue?.hashValue)

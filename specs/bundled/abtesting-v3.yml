@@ -241,6 +241,8 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/name'
+                hypothesis:
+                  $ref: '#/components/schemas/hypothesis'
                 variants:
                   type: array
                   description: A/B test variants.
@@ -879,6 +881,10 @@ components:
       type: string
       description: A/B test name.
       example: Custom ranking sales rank test
+    hypothesis:
+      type: string
+      description: Expected outcome of the A/B test.
+      example: Enabling the feature increases conversion rate
     Status:
       type: string
       description: >
@@ -984,10 +990,9 @@ components:
         pValue:
           type: number
           format: double
-          description: >-
-            PValue for the first variant (control) will always be 0. For the
-            other variants, pValue is calculated for the current variant based
-            on the control.
+          description: |
+            P-value for this variant compared to the control.
+            Omitted when no p-value is available for this metric.
         dimension:
           type: string
           description: Dimension defined during test creation.
@@ -1013,12 +1018,10 @@ components:
         - name
         - updatedAt
         - value
-        - pValue
       example:
         - name: addToCartCount
           updatedAt: '2025-06-15T15:06:44.400601Z'
           value: 5
-          pValue: 0.01
         - name: clickThroughRate
           updatedAt: '2025-05-15T17:52:15.644906Z'
           value: 0.20869847452125934
@@ -1262,6 +1265,8 @@ components:
           $ref: '#/components/schemas/stoppedAt'
         name:
           $ref: '#/components/schemas/name'
+        hypothesis:
+          $ref: '#/components/schemas/hypothesis'
         status:
           $ref: '#/components/schemas/Status'
         variants:
@@ -1273,6 +1278,7 @@ components:
       required:
         - status
         - name
+        - hypothesis
         - createdAt
         - endAt
         - updatedAt
