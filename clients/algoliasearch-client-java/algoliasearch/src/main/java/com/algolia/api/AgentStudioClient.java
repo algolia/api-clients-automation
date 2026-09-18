@@ -2094,7 +2094,7 @@ public class AgentStudioClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/agent-studio/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2122,7 +2122,7 @@ public class AgentStudioClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/agent-studio/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2324,7 +2324,7 @@ public class AgentStudioClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/agent-studio/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -2352,7 +2352,7 @@ public class AgentStudioClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/agent-studio/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

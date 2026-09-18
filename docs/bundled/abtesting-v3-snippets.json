@@ -183,6 +183,9 @@
     "addABTests": {
       "default": "ABTestResponse response = client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
+    "applyVariantSettings": {
+      "default": "client.applyVariantSettings(42, 2);"
+    },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
       "allow del method for a custom path with all parameters": "Object response = client.customDelete(\n  \"test/all\",\n  new HashMap() {\n    {\n      put(\"query\", \"parameters\");\n    }\n  }\n);"
@@ -218,12 +221,19 @@
     "getABTest": {
       "default": "ABTest response = client.getABTest(42);"
     },
+    "getABTestSettings": {
+      "default": "ABTestSettingsResponse response = client.getABTestSettings(42);"
+    },
     "getTimeseries": {
       "default": "Timeseries response = client.getTimeseries(42);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
       "listABTests with parameters": "ListABTestsResponse response = client.listABTests(0, 21, \"cts_e2e ab\", \"t\", Direction.ASC);"
+    },
+    "saveVariantSettings": {
+      "saveVariantSettings": "client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));",
+      "save settings with an empty options object": "client.saveVariantSettings(42, 2, new SaveSettingsRequest());"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"

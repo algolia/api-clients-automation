@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -27,6 +26,7 @@ import okio.BufferedSink;
 public final class HttpRequester implements Requester {
 
   private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
+  private static final RequestBody EMPTY_BODY = RequestBody.create(new byte[0], JSON_MEDIA_TYPE);
   private final OkHttpClient httpClient;
   private final JsonSerializer serializer;
   private final AtomicBoolean isClosed = new AtomicBoolean(false);
@@ -125,11 +125,11 @@ public final class HttpRequester implements Requester {
   private RequestBody createRequestBody(HttpRequest httpRequest) {
     String method = httpRequest.getMethod();
     Object body = httpRequest.getBody();
-    if (!HttpMethod.permitsRequestBody(method) || (method.equals("DELETE") && body == null)) {
+    if (!HttpMethod.permitsRequestBody(method)) {
       return null;
     }
     if (body == null) {
-      body = HttpMethod.requiresRequestBody(method) ? Collections.emptyMap() : "";
+      return HttpMethod.requiresRequestBody(method) ? EMPTY_BODY : null;
     }
     return buildRequestBody(body);
   }

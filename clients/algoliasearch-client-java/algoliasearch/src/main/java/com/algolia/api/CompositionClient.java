@@ -593,7 +593,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -621,7 +621,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -823,7 +823,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -851,7 +851,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2569,7 +2569,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/search", compositionID)
       .setMethod("POST")
-      .setBody(searchCompositionRulesParams)
+      .setBody(searchCompositionRulesParams != null ? searchCompositionRulesParams : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchCompositionRulesResponse>() {});
   }
@@ -2594,7 +2594,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/rules/search", compositionID)
       .setMethod("POST")
-      .setBody(searchCompositionRulesParams)
+      .setBody(searchCompositionRulesParams != null ? searchCompositionRulesParams : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -2869,7 +2869,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/facets/{facetName}/query", compositionID, facetName)
       .setMethod("POST")
-      .setBody(searchForFacetValuesRequest)
+      .setBody(searchForFacetValuesRequest != null ? searchForFacetValuesRequest : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchForFacetValuesResponse>() {});
@@ -2904,7 +2904,7 @@ public class CompositionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/compositions/{compositionID}/facets/{facetName}/query", compositionID, facetName)
       .setMethod("POST")
-      .setBody(searchForFacetValuesRequest)
+      .setBody(searchForFacetValuesRequest != null ? searchForFacetValuesRequest : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

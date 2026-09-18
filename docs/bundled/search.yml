@@ -6941,7 +6941,7 @@ paths:
 
             UpdatedAtResponse response = client.setSettings(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+              new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
               true
             );
 

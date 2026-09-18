@@ -72,6 +72,18 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("applyVariantSettings")
+  void applyVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.applyVariantSettings(42, 2);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2/apply", req.path);
+    assertEquals("POST", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {
@@ -746,6 +758,18 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getABTestSettings")
+  void getABTestSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.getABTestSettings(42);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getTimeseries")
   void getTimeseriesTest() {
     assertDoesNotThrow(() -> {
@@ -797,6 +821,30 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("saveVariantSettings")
+  void saveVariantSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"saveFeaturesSettings\":true}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("save settings with an empty options object")
+  void saveVariantSettingsTest1() {
+    assertDoesNotThrow(() -> {
+      client.saveVariantSettings(42, 2, new SaveSettingsRequest());
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/settings/2", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
   @DisplayName("stopABTest")
   void stopABTestTest() {
     assertDoesNotThrow(() -> {
@@ -805,6 +853,6 @@ class AbtestingV3ClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/3/abtests/42/stop", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 }

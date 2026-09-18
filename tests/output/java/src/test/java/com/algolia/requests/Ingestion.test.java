@@ -1083,7 +1083,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path);
     assertEquals("PUT", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -1095,7 +1095,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path);
     assertEquals("PUT", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -1107,7 +1107,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path);
     assertEquals("PUT", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -1119,7 +1119,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path);
     assertEquals("PUT", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
@@ -1790,7 +1790,7 @@ class IngestionClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 
   @Test
