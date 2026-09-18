@@ -1120,6 +1120,8 @@ paths:
                     $ref: '#/components/schemas/AddABTestsVariant'
                 configuration:
                   $ref: '#/components/schemas/ABTestConfiguration'
+                hypothesis:
+                  $ref: '#/components/schemas/hypothesis'
               required:
                 - name
                 - variants
@@ -1519,6 +1521,7 @@ paths:
               --data '
             {
               "name": "Custom ranking sales rank test",
+              "hypothesis": "Enabling the feature increases conversion rate",
               "variants": [
                 {
                   "index": "delcourt_production",
@@ -4283,6 +4286,10 @@ components:
       type: string
       description: A/B test name.
       example: Custom ranking sales rank test
+    hypothesis:
+      type: string
+      description: Expected outcome of the A/B test.
+      example: Enabling the feature increases conversion rate
     Status:
       type: string
       description: >
@@ -4660,6 +4667,8 @@ components:
           $ref: '#/components/schemas/createdAt'
         endAt:
           $ref: '#/components/schemas/endAt'
+        hypothesis:
+          $ref: '#/components/schemas/hypothesis'
         name:
           $ref: '#/components/schemas/name'
         status:
@@ -4677,6 +4686,7 @@ components:
       required:
         - status
         - name
+        - hypothesis
         - createdAt
         - endAt
         - updatedAt

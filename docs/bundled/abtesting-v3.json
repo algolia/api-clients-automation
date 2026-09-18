@@ -234,6 +234,9 @@
                   "name": {
                     "$ref": "#/components/schemas/name"
                   },
+                  "hypothesis": {
+                    "$ref": "#/components/schemas/hypothesis"
+                  },
                   "variants": {
                     "type": "array",
                     "description": "A/B test variants.",
@@ -1080,6 +1083,11 @@
         "description": "A/B test name.",
         "example": "Custom ranking sales rank test"
       },
+      "hypothesis": {
+        "type": "string",
+        "description": "Expected outcome of the A/B test.",
+        "example": "Enabling the feature increases conversion rate"
+      },
       "Status": {
         "type": "string",
         "description": "A/B test status.\n\n- `active`. The A/B test is live and search traffic is split between the two variants.\n- `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.\n- `expired`. The A/B test was automatically stopped after reaching its end date.\n- `failed`. Creating the A/B test failed.\n",
@@ -1461,6 +1469,9 @@
           "name": {
             "$ref": "#/components/schemas/name"
           },
+          "hypothesis": {
+            "$ref": "#/components/schemas/hypothesis"
+          },
           "status": {
             "$ref": "#/components/schemas/Status"
           },
@@ -1477,6 +1488,7 @@
         "required": [
           "status",
           "name",
+          "hypothesis",
           "createdAt",
           "endAt",
           "updatedAt",
