@@ -114,6 +114,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
 
+    if ("search".equals(client)) {
+      final String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
+      supportingFiles.add(new SupportingFile("dsl.mustache", dslFolder, "SearchDsl.kt"));
+    }
+
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
     additionalProperties.put("packageVersion", Helpers.getClientConfigField("kotlin", "packageVersion"));
@@ -220,7 +225,80 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
+    collectSearchDslModels(models);
     return models;
+  }
+
+  /** Models the hand-written DSL builds. Order is the file order. */
+  private static final List<String> SEARCH_DSL_MODELS = List.of(
+    "SearchParamsObject",
+    "BrowseParamsObject",
+    "DeleteByParams",
+    "IndexSettings",
+    "Rule",
+    "Condition",
+    "Consequence",
+    "ConsequenceParams",
+    "SynonymHit"
+  );
+
+  private record DslFilterVar(String type, String receiver, String function) {}
+
+  /** Filter helpers keyed by property name. Emitted only when the property type matches. */
+  private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
+    "filters",
+    new DslFilterVar("String", "FilterDsl", "filters"),
+    "facetFilters",
+    new DslFilterVar("FacetFilters", "FacetFilterDsl", "facetFilters"),
+    "optionalFilters",
+    new DslFilterVar("OptionalFilters", "FacetFilterDsl", "optionalFilters"),
+    "numericFilters",
+    new DslFilterVar("NumericFilters", "NumericFilterDsl", "numericFilters"),
+    "tagFilters",
+    new DslFilterVar("TagFilters", "TagFilterDsl", "tagFilters")
+  );
+
+  private void collectSearchDslModels(Map<String, ModelsMap> models) {
+    if (!"search".equals(additionalProperties.get("client"))) {
+      return;
+    }
+    Map<String, CodegenModel> byClassname = new HashMap<>();
+    for (ModelsMap container : models.values()) {
+      CodegenModel model = container.getModels().get(0).getModel();
+      byClassname.put(model.classname, model);
+    }
+    List<Map<String, Object>> dslModels = new ArrayList<>();
+    for (String classname : SEARCH_DSL_MODELS) {
+      CodegenModel model = byClassname.get(classname);
+      if (model == null) {
+        throw new IllegalStateException("Search DSL model missing from spec: " + classname);
+      }
+      Map<String, Object> dslModel = new LinkedHashMap<>();
+      dslModel.put("classname", model.classname);
+      dslModel.put("vars", model.vars);
+      List<Map<String, Object>> helpers = filterHelpersFor(model);
+      if (!helpers.isEmpty()) {
+        dslModel.put("filterHelpers", helpers);
+      }
+      dslModels.add(dslModel);
+    }
+    additionalProperties.put("dslModels", dslModels);
+  }
+
+  private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {
+    List<Map<String, Object>> helpers = new ArrayList<>();
+    for (CodegenProperty var : model.vars) {
+      DslFilterVar expected = DSL_FILTER_VARS.get(var.name);
+      if (expected == null || !expected.type().equals(var.datatypeWithEnum)) {
+        continue;
+      }
+      Map<String, Object> helper = new LinkedHashMap<>();
+      helper.put("name", var.name);
+      helper.put("receiver", expected.receiver());
+      helper.put("function", expected.function());
+      helpers.add(helper);
+    }
+    return helpers;
   }
 
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";

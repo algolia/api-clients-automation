@@ -49,6 +49,79 @@ Alternatively, you can use [algoliasearch-client-kotlin-bom](/client-bom).
 
 For full documentation, visit the **[Algolia Kotlin API Client](https://www.algolia.com/doc/libraries/sdk/install#kotlin)**.
 
+## Optional Kotlin DSL
+
+The client includes an optional Kotlin DSL for search parameters and index settings. The DSL is optional, experimental on the first 3.x minor (`@OptIn(AlgoliaExperimentalDsl::class)`), and is not source compatible with version 2. Data-class constructors stay supported.
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val params = query {
+  query = "shoes"
+  filters { facet("brand", "Apple") }          // SQL string
+  facetFilters { or { facet("color", "red"); facet("color", "blue") } }
+}
+```
+
+`filters { }` sets the SQL `filters` string. `facetFilters { }`, `optionalFilters { }`, `numericFilters { }`, and `tagFilters { }` set the matching typed field. An empty block omits the field.
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val indexSettings = settings {
+  searchableAttributes {
+    ordered("name")
+    unordered("description")
+  }
+}
+```
+
+Use the generated `browse` method with the value builder:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+client.browse("idx", browse { query = "shoes"; filters { facet("brand", "Apple") } })
+```
+
+A `rule` requires `consequence`. `promote { }` and `hide { }` replace the list on a second call:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val promo = rule("promo") {
+  consequence {
+    promote { objectID("object-1", position = 0) }
+    hide { +"object-9" }
+  }
+}
+```
+
+### Migrating from version 2
+
+Map version 2 types to version 3 types:
+
+- `Query` → `SearchParamsObject` via `query { }`
+- `Settings` → `IndexSettings` via `settings { }`
+- `Attribute` → `String`
+- `initIndex` is gone. Pass the index name to the client method.
+- `index.search { }` → `client.searchSingleIndex(indexName) { }`
+- `index.browse(query)` → `client.browse(indexName, browse { })`
+
+`SearchClient.search` is multi-query. Use `searchSingleIndex` for a single index.
+
+```kotlin
+import com.algolia.client.dsl.*
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val response = client.searchSingleIndex("products") {
+  query = "shoes"
+  filters { facet("brand", "Apple") }
+}
+```
+
+See the [Kotlin upgrade guide](https://www.algolia.com/doc/libraries/sdk/upgrade/kotlin).
+
 ## ❓ Troubleshooting
 
 Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://support.algolia.com/hc/sections/15061037630609-API-Client-FAQs) where you will find answers for the most common issues and gotchas with the client.
