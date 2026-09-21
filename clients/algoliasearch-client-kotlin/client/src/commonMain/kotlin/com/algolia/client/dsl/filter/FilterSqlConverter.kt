@@ -14,6 +14,11 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  *
  * [FilterGroup.Or] carries its family in the type. This converter performs no family check.
  *
+ * A leaf with [Filter.negated] emits `NOT <leaf>`. A [FilterGroup.Not] over an [FilterGroup.And] or
+ * [FilterGroup.Or] emits `NOT (<group>)`. A [FilterGroup.Not] over a leaf or over another
+ * [FilterGroup.Not] folds into parity (`parity xor leaf.negated`), so `NOT NOT` is never emitted
+ * and the result always agrees with [FilterLegacyConverter].
+ *
  * Attributes and values are quoted when they contain spaces, quotes, or the keywords `AND`, `OR`,
  * or `NOT`.
  *
@@ -25,18 +30,31 @@ internal object FilterSqlConverter {
    * Returns the SQL `filters` string for [root], or `null` when [root] is an empty
    * [FilterGroup.And] or [FilterGroup.Or] (including an `And` / `Or` whose children are all empty).
    */
-  operator fun invoke(root: FilterGroup): String? = emit(root)
+  operator fun invoke(root: FilterGroup): String? = emit(root, negated = false)
 
-  private fun emit(node: FilterGroup): String? {
-    return when (node) {
-      is Filter.Facet -> emitFacet(node)
-      is Filter.Tag -> emitTag(node)
-      is Filter.Comparison -> emitComparison(node)
-      is Filter.Range -> emitRange(node)
-      is FilterGroup.And -> emitAnd(node)
-      is FilterGroup.Or -> emitOr(node)
-      is FilterGroup.Not -> emitNot(node)
+  private fun emit(node: FilterGroup, negated: Boolean): String? =
+    when (node) {
+      is Filter -> emitLeaf(node, negated xor node.negated)
+      is FilterGroup.Not -> emit(node.child, !negated)
+      is FilterGroup.And -> emitAnd(node).negateGroup(negated)
+      is FilterGroup.Or -> emitOr(node).negateGroup(negated)
     }
+
+  private fun emitLeaf(filter: Filter, negated: Boolean): String {
+    val text =
+      when (filter) {
+        is Filter.Facet -> emitFacet(filter)
+        is Filter.Tag -> emitTag(filter)
+        is Filter.Comparison -> emitComparison(filter)
+        is Filter.Range -> emitRange(filter)
+      }
+    return if (negated) "NOT $text" else text
+  }
+
+  /** `null` (empty group) under a `Not` is the existing reject case; otherwise prefix `NOT `. */
+  private fun String?.negateGroup(negated: Boolean): String? {
+    if (!negated) return this
+    return "NOT ${this ?: throw IllegalArgumentException("FilterGroup.Not cannot wrap an empty And or Or group.")}"
   }
 
   private fun emitFacet(filter: Filter.Facet): String {
@@ -55,29 +73,14 @@ internal object FilterSqlConverter {
     "${FilterQuote.quote(filter.attribute)}:${filter.lowerBound} TO ${filter.upperBound}"
 
   private fun emitAnd(group: FilterGroup.And): String? {
-    val parts = group.children.mapNotNull(::emit)
+    val parts = group.children.mapNotNull { emit(it, negated = false) }
     if (parts.isEmpty()) return null
     return parts.joinToString(separator = " AND ", prefix = "(", postfix = ")")
   }
 
   private fun emitOr(group: FilterGroup.Or): String? {
     if (group.children.isEmpty()) return null
-    val parts = group.children.map(::requireEmit)
+    val parts = group.children.map { emitLeaf(it, it.negated) }
     return parts.joinToString(separator = " OR ", prefix = "(", postfix = ")")
   }
-
-  private fun emitNot(group: FilterGroup.Not): String {
-    val child = group.child
-    val inner = requireEmit(child)
-    return when (child) {
-      is FilterGroup.And,
-      is FilterGroup.Or -> "NOT $inner"
-      is FilterGroup.Not -> "NOT ($inner)"
-      else -> "NOT $inner"
-    }
-  }
-
-  private fun requireEmit(node: FilterGroup): String =
-    emit(node)
-      ?: throw IllegalArgumentException("FilterGroup.Not cannot wrap an empty And or Or group.")
 }

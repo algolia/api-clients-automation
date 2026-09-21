@@ -131,6 +131,12 @@ internal class DslSerializationTest {
   }
 
   @Test
+  fun queryDoubleNotFiltersIsPositive() {
+    val dsl = query { filters { not { not { facet("brand", "Apple") } } } }
+    assertJsonEquals(SearchParamsObject(filters = "brand:Apple"), dsl)
+  }
+
+  @Test
   fun browseLastWriteWinsFiltersBlockOverwritesString() {
     val dsl = browse {
       filters = "brand:Nike"

@@ -20,7 +20,14 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
     nodes.add(FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot()))
   }
 
-  /** Adds a typed [FilterGroup.Not] of the children in [block]. */
+  /**
+   * Adds a [FilterGroup.Not] of the children in [block]. One child is wrapped as-is (a leaf under
+   * `not { }` stays a leaf inside a [FilterGroup.Not]; its [Filter.negated] flag is not toggled).
+   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. When the only child
+   * is itself a [FilterGroup.Not], it is unwrapped, so `not { not { … } }` is the positive group.
+   * An empty block adds a [FilterGroup.Not] of an empty [FilterGroup.And]: [filters] throws, the
+   * legacy builders encode nothing.
+   */
   public fun not(block: NumericFilterDsl.() -> Unit) {
     nodes.add(negate(NumericFilterDsl().apply(block).nodes.snapshot()))
   }
@@ -29,28 +36,28 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
 }
 
 /**
- * OR-context builder for [NumericAtom] children. Exposes only numeric leaves and [not]. An empty
+ * OR-context builder for [Filter.Numeric] children. Exposes only numeric leaves and [not]. An empty
  * [not] block appends nothing.
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class NumericOrDsl internal constructor(private val nodes: FilterAccumulator<NumericAtom>) :
+public class NumericOrDsl
+internal constructor(private val nodes: FilterAccumulator<Filter.Numeric>) :
   NumericLeaves by NumericLeafMixin(nodes::add) {
 
   public constructor() : this(FilterAccumulator())
 
   /**
-   * Negates every numeric atom collected in [block] and appends each as its own [NumericAtom].
+   * Toggles [Filter.negated] on every numeric leaf collected in [block] and appends each one.
    *
-   * An empty [block] appends nothing.
+   * `not { range(a); comparison(b) }` yields two negated leaves (`NOT a OR NOT b` inside the OR);
+   * `not { not { range(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: NumericOrDsl.() -> Unit) {
-    for (atom in NumericOrDsl().apply(block).snapshot()) {
-      nodes.add(negateNumericAtom(atom))
-    }
+    for (leaf in NumericOrDsl().apply(block).snapshot()) nodes.add(!leaf)
   }
 
-  internal fun snapshot(): List<NumericAtom> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Numeric> = nodes.snapshot()
 }
 
 /** Constructs [NumericFilters] from a numeric-only DSL block, or `null` when the block is empty. */

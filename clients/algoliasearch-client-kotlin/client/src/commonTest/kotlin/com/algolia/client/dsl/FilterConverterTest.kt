@@ -3,12 +3,15 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.dsl.filter.FacetFilterDsl
+import com.algolia.client.dsl.filter.FacetOrDsl
 import com.algolia.client.dsl.filter.Filter
 import com.algolia.client.dsl.filter.FilterDsl
 import com.algolia.client.dsl.filter.FilterGroup
 import com.algolia.client.dsl.filter.FilterLegacyConverter
 import com.algolia.client.dsl.filter.FilterSqlConverter
 import com.algolia.client.dsl.filter.NumericOperator
+import com.algolia.client.dsl.filter.NumericOrDsl
+import com.algolia.client.dsl.filter.TagOrDsl
 import com.algolia.client.dsl.filter.facetFilters
 import com.algolia.client.dsl.filter.filters
 import com.algolia.client.dsl.filter.not
@@ -21,6 +24,7 @@ import com.algolia.client.model.search.TagFilters
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 /**
  * Golden vectors for [FilterSqlConverter] and [FilterLegacyConverter].
@@ -171,18 +175,42 @@ internal class FilterConverterTest {
         FilterGroup.Or.Tag(Filter.Tag("a"), Filter.Tag("b")),
         "(_tags:a OR _tags:b)",
       ),
-      SqlVector("not", FilterGroup.Not.Facet(colorRed), "NOT color:red"),
+      SqlVector("not group leaf", FilterGroup.Not(colorRed), "NOT color:red"),
       SqlVector("not unary", colorRed.not(), "NOT color:red"),
+      SqlVector("not flag ctor", Filter.Facet("color", "red", negated = true), "NOT color:red"),
       SqlVector(
         "not and",
-        FilterGroup.Not.Group(FilterGroup.And(colorRed, categoryShirt)),
+        FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt)),
         "NOT (color:red AND category:shirt)",
       ),
+      SqlVector("not range", !Filter.Range("attributeA", 0..10), "NOT attributeA:0 TO 10"),
       SqlVector(
-        "not range",
-        FilterGroup.Not.Numeric(Filter.Range("attributeA", 0..10)),
+        "not group range",
+        FilterGroup.Not(Filter.Range("attributeA", 0..10)),
         "NOT attributeA:0 TO 10",
       ),
+      SqlVector("double not leaf", colorRed.not().not(), "color:red"),
+      SqlVector("not of negated leaf", FilterGroup.Not(!colorRed), "color:red"),
+      SqlVector(
+        "not not and",
+        FilterGroup.Not(FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt))),
+        "(color:red AND category:shirt)",
+      ),
+      SqlVector("not not range", FilterGroup.Not(FilterGroup.Not(priceUntil10)), "price:0 TO 9"),
+      SqlVector("not of negated range", FilterGroup.Not(!priceUntil10), "price:0 TO 9"),
+      SqlVector(
+        "not and mixed polarity",
+        FilterGroup.Not(FilterGroup.And(!colorRed, categoryShirt)),
+        "NOT (NOT color:red AND category:shirt)",
+      ),
+      SqlVector(
+        "or facet negated leaves",
+        FilterGroup.Or.Facet(!colorRed, !categoryShirt),
+        "(NOT color:red OR NOT category:shirt)",
+      ),
+      SqlVector("not tag flag", !Filter.Tag("featured"), "NOT _tags:featured"),
+      SqlVector("not comparison flag", !priceEquals15, "NOT price = 15"),
+      SqlVector("not not empty and", FilterGroup.Not(FilterGroup.Not(FilterGroup.And())), null),
       SqlVector("quote space", Filter.Facet("author", "John Doe"), "author:\"John Doe\""),
       SqlVector("quote AND", Filter.Facet("title", "foo AND bar"), "title:\"foo AND bar\""),
       SqlVector("quote OR", Filter.Facet("title", "foo OR bar"), "title:\"foo OR bar\""),
@@ -246,27 +274,92 @@ internal class FilterConverterTest {
       ),
       LegacyVector(
         "not facet",
-        FilterGroup.Not.Facet(colorRed),
+        FilterGroup.Not(colorRed),
+        Family.Facet,
+        listOf(listOf("\"color\":-\"red\"")),
+      ),
+      LegacyVector(
+        "not facet flag ctor",
+        Filter.Facet("color", "red", negated = true),
+        Family.Facet,
+        listOf(listOf("\"color\":-\"red\"")),
+      ),
+      LegacyVector(
+        "not facet unary",
+        !colorRed,
         Family.Facet,
         listOf(listOf("\"color\":-\"red\"")),
       ),
       LegacyVector(
         "not tag",
-        FilterGroup.Not.Tag(Filter.Tag("featured")),
+        !Filter.Tag("featured"),
+        Family.Tag,
+        listOf(listOf("-featured")),
+      ),
+      LegacyVector(
+        "not tag flag ctor",
+        Filter.Tag("featured", negated = true),
         Family.Tag,
         listOf(listOf("-featured")),
       ),
       LegacyVector(
         "not comparison less",
-        FilterGroup.Not.Numeric(Filter.Comparison("attributeA", NumericOperator.Less, 5)),
+        !Filter.Comparison("attributeA", NumericOperator.Less, 5),
         Family.Numeric,
         listOf(listOf("attributeA >= 5")),
       ),
       LegacyVector(
         "not range",
-        FilterGroup.Not.Numeric(Filter.Range("attributeA", 0..10)),
+        !Filter.Range("attributeA", 0..10),
         Family.Numeric,
         listOf(listOf("attributeA < 0", "attributeA > 10")),
+      ),
+      LegacyVector(
+        "double not leaf",
+        colorRed.not().not(),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\"")),
+      ),
+      LegacyVector(
+        "not of negated leaf",
+        FilterGroup.Not(!colorRed),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\"")),
+      ),
+      LegacyVector(
+        "not not and",
+        FilterGroup.Not(FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt))),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+      ),
+      LegacyVector(
+        "not not range",
+        FilterGroup.Not(FilterGroup.Not(Filter.Range("attributeA", 0..10))),
+        Family.Numeric,
+        listOf(listOf("attributeA:0 TO 10")),
+      ),
+      LegacyVector(
+        "not of negated range",
+        FilterGroup.Not(!Filter.Range("attributeA", 0..10)),
+        Family.Numeric,
+        listOf(listOf("attributeA:0 TO 10")),
+      ),
+      LegacyVector(
+        "not and mixed polarity",
+        FilterGroup.Not(FilterGroup.And(!colorRed, categoryShirt)),
+        Family.Facet,
+        listOf(listOf("\"color\":\"red\"", "\"category\":-\"shirt\"")),
+      ),
+      LegacyVector(
+        "or facet negated leaves",
+        FilterGroup.Or.Facet(!colorRed, !categoryShirt),
+        Family.Facet,
+        listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+      ),
+      LegacyVector(
+        "not not empty and",
+        FilterGroup.Not(FilterGroup.Not(FilterGroup.And())),
+        Family.Facet,
       ),
       LegacyVector(
         "quote space",
@@ -327,13 +420,13 @@ internal class FilterConverterTest {
     listOf(
       RejectVector(
         "not wrapping empty and",
-        FilterGroup.Not.Group(FilterGroup.And()),
+        FilterGroup.Not(FilterGroup.And()),
         legacyFacetThrows = false,
         legacyAllThrow = false,
       ),
       RejectVector(
         "not wrapping empty or",
-        FilterGroup.Not.Group(FilterGroup.Or.Facet()),
+        FilterGroup.Not(FilterGroup.Or.Facet()),
         legacyFacetThrows = false,
         legacyAllThrow = false,
       ),
@@ -527,10 +620,7 @@ internal class FilterConverterTest {
           }
         }
       }
-    assertEquals(
-      FilterGroup.Or.Facet(FilterGroup.Not.Facet(colorRed), FilterGroup.Not.Facet(categoryShirt)),
-      deMorgan.root(),
-    )
+    assertEquals(FilterGroup.Or.Facet(!colorRed, !categoryShirt), deMorgan.root())
     assertEquals(
       "(NOT color:red OR NOT category:shirt)",
       filters {
@@ -554,6 +644,184 @@ internal class FilterConverterTest {
         }
         ?.rows(),
     )
+  }
+
+  @Test
+  fun doubleNegationIsIdentity() {
+    assertEquals(colorRed, colorRed.not().not())
+    assertEquals(colorRed, ! !colorRed)
+    assertEquals(Filter.Tag("a"), ! !Filter.Tag("a"))
+    assertEquals(priceEquals15, ! !priceEquals15)
+    assertEquals(priceUntil10, ! !priceUntil10)
+    assertEquals(Filter.Facet("color", "red", negated = true), !colorRed)
+    assertEquals(colorRed, !Filter.Facet("color", "red", negated = true))
+
+    val g = FilterGroup.And(colorRed, categoryShirt)
+    assertEquals(FilterGroup.Not(g), !g)
+    assertEquals<FilterGroup>(g, ! !g)
+    assertEquals<FilterGroup>(FilterGroup.Not(colorRed).child, !FilterGroup.Not(colorRed))
+    // `!!Not(flagged leaf)` is the positive leaf, not the original `Not`.
+    assertEquals(colorRed, ! !FilterGroup.Not(!colorRed))
+  }
+
+  @Test
+  fun andContextNotBuildsGroupNot() {
+    assertEquals(
+      FilterGroup.Not(colorRed),
+      FilterDsl().apply { not { facet("color", "red") } }.root(),
+    )
+    assertEquals(colorRed, FilterDsl().apply { not { not { facet("color", "red") } } }.root())
+    assertEquals(
+      FilterGroup.And(colorRed, categoryShirt),
+      FilterDsl()
+        .apply {
+          not {
+            not {
+              facet("color", "red")
+              facet("category", "shirt")
+            }
+          }
+        }
+        .root(),
+    )
+    assertEquals(
+      FilterGroup.Not(FilterGroup.And(FilterGroup.Not(colorRed), categoryShirt)),
+      FilterDsl()
+        .apply {
+          not {
+            not { facet("color", "red") }
+            facet("category", "shirt")
+          }
+        }
+        .root(),
+    )
+    // Unary `!` on a sunk leaf does not touch the tree: the eager sink already appended it.
+    assertEquals(
+      FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt)),
+      FilterDsl()
+        .apply {
+          not {
+            !facet("color", "red")
+            facet("category", "shirt")
+          }
+        }
+        .root(),
+    )
+    assertEquals(
+      colorRed,
+      FacetFilterDsl().apply { not { not { facet("color", "red") } } }.root(),
+    )
+  }
+
+  @Test
+  fun doubleGroupNotAgreesAcrossEncoders() {
+    assertEquals(
+      "(color:red AND category:shirt)",
+      filters {
+        not {
+          not {
+            facet("color", "red")
+            facet("category", "shirt")
+          }
+        }
+      },
+    )
+    assertEquals(
+      listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+      facetFilters {
+          not {
+            not {
+              facet("color", "red")
+              facet("category", "shirt")
+            }
+          }
+        }
+        ?.rows(),
+    )
+    assertEquals(
+      listOf(listOf("price:0 TO 10")),
+      numericFilters { not { not { range("price", 0..10) } } }?.rows(),
+    )
+    assertEquals(listOf(listOf("a")), tagFilters { not { not { tag("a") } } }?.rows())
+
+    assertEquals(
+      "NOT (NOT color:red AND category:shirt)",
+      filters {
+        not {
+          not { facet("color", "red") }
+          facet("category", "shirt")
+        }
+      },
+    )
+    assertEquals(
+      listOf(listOf("\"color\":\"red\"", "\"category\":-\"shirt\"")),
+      facetFilters {
+          not {
+            not { facet("color", "red") }
+            facet("category", "shirt")
+          }
+        }
+        ?.rows(),
+    )
+  }
+
+  @Test
+  fun orContextNotTogglesLeafFlags() {
+    assertEquals(
+      listOf(!colorRed, !categoryShirt),
+      FacetOrDsl()
+        .apply {
+          not {
+            facet("color", "red")
+            facet("category", "shirt")
+          }
+        }
+        .snapshot(),
+    )
+    assertEquals(
+      listOf(colorRed),
+      FacetOrDsl().apply { not { not { facet("color", "red") } } }.snapshot(),
+    )
+    assertEquals(
+      listOf(Filter.Tag("a", negated = true)),
+      TagOrDsl().apply { not { tag("a") } }.snapshot(),
+    )
+    assertEquals(
+      listOf(
+        Filter.Range("p", 0..1, negated = true),
+        Filter.Comparison("p", NumericOperator.Less, 1, negated = true),
+      ),
+      NumericOrDsl()
+        .apply {
+          not {
+            range("p", 0..1)
+            comparison("p", NumericOperator.Less, 1)
+          }
+        }
+        .snapshot(),
+    )
+    assertEquals(
+      FilterGroup.Or.Facet(!colorRed, !categoryShirt),
+      FilterDsl()
+        .apply {
+          orFacet {
+            not {
+              facet("color", "red")
+              facet("category", "shirt")
+            }
+          }
+        }
+        .root(),
+    )
+  }
+
+  @Test
+  fun emptyNotBlock() {
+    assertFailsWith<IllegalArgumentException> { filters { not {} } }
+    assertNull(facetFilters { not {} })
+    assertNull(numericFilters { not {} })
+    assertNull(tagFilters { not {} })
+    assertNull(filters { not { not {} } })
   }
 
   @Test

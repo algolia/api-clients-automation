@@ -40,6 +40,12 @@ import com.algolia.client.model.search.TagFilters
  * Numeric attributes and tag values use the same T5 rule as [FilterSqlConverter]: quote only when
  * the token is empty or contains a space, a quote, or `AND` / `OR` / `NOT`.
  *
+ * ## Leaf negation
+ *
+ * A leaf encodes with `parity xor Filter.negated`, where parity is the number of enclosing
+ * [FilterGroup.Not] nodes mod 2. `Not(Not(A))` is `A`; `Not(!A)` is `A`; `!!A` is `A`. This is the
+ * same rule as [FilterSqlConverter], so both encoders agree on every tree.
+ *
  * ## Range negation
  *
  * A negated [Filter.Range] encodes as two comparisons: `attr < lo` and `attr > hi`.
@@ -99,7 +105,7 @@ private fun toRows(
   return when (group) {
     is Filter -> {
       requireFamily(group, family)
-      listOf(encodeLeaf(group, negated))
+      listOf(encodeLeaf(group, negated xor group.negated))
     }
     is FilterGroup.Not -> toRows(group.child, family, !negated)
     is FilterGroup.And -> convertAnd(group.children, family, negated)
