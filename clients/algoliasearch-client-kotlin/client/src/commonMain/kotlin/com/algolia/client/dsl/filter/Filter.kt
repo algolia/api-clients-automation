@@ -2,13 +2,14 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import kotlin.jvm.JvmInline
+import kotlin.jvm.JvmOverloads
 
 /**
  * A single typed filter leaf.
  *
- * Each [Filter] is also a [FilterGroup], so [FilterGroup.And], [FilterGroup.Or], and
- * [FilterGroup.Not] can nest leaves and groups in the same tree.
+ * Each [Filter] is also a [FilterGroup], so [FilterGroup.And] and [FilterGroup.Or] can nest leaves
+ * and groups in the same tree. Leaves carry a [negated] flag toggled by unary `!`;
+ * [FilterGroup.Not] negates whole groups; the converters XOR the two.
  *
  * Attributes and facet values are [String]. This is the v3 shape. Version 2 used an `Attribute`
  * wrapper.
@@ -20,6 +21,12 @@ import kotlin.jvm.JvmInline
 public sealed interface Filter : FilterGroup {
 
   /**
+   * `true` when this leaf is negated. Toggle with unary `!` / [not]; set with the `negated`
+   * constructor parameter. Converters XOR this with any enclosing [FilterGroup.Not] parity.
+   */
+  public val negated: Boolean
+
+  /**
    * Matches [attribute] to [value] exactly.
    *
    * An optional [score] assigns a priority among several [Facet] filters in the same group.
@@ -27,58 +34,81 @@ public sealed interface Filter : FilterGroup {
    */
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
-  public data class Facet(
+  public data class Facet
+  @JvmOverloads
+  public constructor(
     public val attribute: String,
     public val value: String,
     public val score: Int? = null,
-  ) : Filter, FacetAtom {
+    override val negated: Boolean = false,
+  ) : Filter {
 
+    @JvmOverloads
     public constructor(
       attribute: String,
       value: Boolean,
       score: Int? = null,
-    ) : this(attribute, value.toString(), score)
+      negated: Boolean = false,
+    ) : this(attribute, value.toString(), score, negated)
 
+    @JvmOverloads
     public constructor(
       attribute: String,
       value: Number,
       score: Int? = null,
-    ) : this(attribute, value.toString(), score)
+      negated: Boolean = false,
+    ) : this(attribute, value.toString(), score, negated)
   }
 
   /** Filters on a `_tags` value. */
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
-  @JvmInline
-  public value class Tag(public val value: String) : Filter, TagAtom
+  public data class Tag
+  @JvmOverloads
+  public constructor(public val value: String, override val negated: Boolean = false) : Filter
+
+  /**
+   * A numeric leaf: [Comparison] or [Range]. The only legal children of [FilterGroup.Or.Numeric].
+   */
+  @AlgoliaDsl @AlgoliaExperimentalDsl public sealed interface Numeric : Filter
 
   /** Numeric comparison of [attribute] against [value] with [operator]. */
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
-  public data class Comparison(
+  public data class Comparison
+  @JvmOverloads
+  public constructor(
     public val attribute: String,
     public val operator: NumericOperator,
     public val value: Number,
-  ) : Filter, NumericAtom
+    override val negated: Boolean = false,
+  ) : Numeric
 
   /** Numeric range of [attribute] between [lowerBound] and [upperBound], inclusive. */
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
-  public data class Range(
+  public data class Range
+  @JvmOverloads
+  public constructor(
     public val attribute: String,
     public val lowerBound: Number,
     public val upperBound: Number,
-  ) : Filter, NumericAtom {
+    override val negated: Boolean = false,
+  ) : Numeric {
 
+    @JvmOverloads
     public constructor(
       attribute: String,
       range: IntRange,
-    ) : this(attribute, range.first, range.last)
+      negated: Boolean = false,
+    ) : this(attribute, range.first, range.last, negated)
 
+    @JvmOverloads
     public constructor(
       attribute: String,
       range: LongRange,
-    ) : this(attribute, range.first, range.last)
+      negated: Boolean = false,
+    ) : this(attribute, range.first, range.last, negated)
   }
 }
 

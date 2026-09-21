@@ -62,7 +62,7 @@ public sealed interface NumericLeaves {
   ): Filter.Comparison
 }
 
-internal class FacetLeafMixin(private val sink: (FacetAtom) -> Unit) : FacetLeaves {
+internal class FacetLeafMixin(private val sink: (Filter.Facet) -> Unit) : FacetLeaves {
   override fun facet(attribute: String, value: String, score: Int?): Filter.Facet =
     Filter.Facet(attribute, value, score).also(sink)
 
@@ -73,11 +73,11 @@ internal class FacetLeafMixin(private val sink: (FacetAtom) -> Unit) : FacetLeav
     Filter.Facet(attribute, value, score).also(sink)
 }
 
-internal class TagLeafMixin(private val sink: (TagAtom) -> Unit) : TagLeaves {
+internal class TagLeafMixin(private val sink: (Filter.Tag) -> Unit) : TagLeaves {
   override fun tag(value: String): Filter.Tag = Filter.Tag(value).also(sink)
 }
 
-internal class NumericLeafMixin(private val sink: (NumericAtom) -> Unit) : NumericLeaves {
+internal class NumericLeafMixin(private val sink: (Filter.Numeric) -> Unit) : NumericLeaves {
   override fun range(attribute: String, lowerBound: Number, upperBound: Number): Filter.Range =
     Filter.Range(attribute, lowerBound, upperBound).also(sink)
 

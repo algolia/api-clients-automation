@@ -19,7 +19,14 @@ public class TagFilterDsl internal constructor(private val nodes: FilterAccumula
     nodes.add(FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot()))
   }
 
-  /** Adds a typed [FilterGroup.Not] of the children in [block]. */
+  /**
+   * Adds a [FilterGroup.Not] of the children in [block]. One child is wrapped as-is (a leaf under
+   * `not { }` stays a leaf inside a [FilterGroup.Not]; its [Filter.negated] flag is not toggled).
+   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. When the only child
+   * is itself a [FilterGroup.Not], it is unwrapped, so `not { not { … } }` is the positive group.
+   * An empty block adds a [FilterGroup.Not] of an empty [FilterGroup.And]: [filters] throws, the
+   * legacy builders encode nothing.
+   */
   public fun not(block: TagFilterDsl.() -> Unit) {
     nodes.add(negate(TagFilterDsl().apply(block).nodes.snapshot()))
   }
@@ -28,28 +35,27 @@ public class TagFilterDsl internal constructor(private val nodes: FilterAccumula
 }
 
 /**
- * OR-context builder for [TagAtom] children. Exposes only tag leaves and [not]. An empty [not]
+ * OR-context builder for [Filter.Tag] children. Exposes only tag leaves and [not]. An empty [not]
  * block appends nothing.
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagOrDsl internal constructor(private val nodes: FilterAccumulator<TagAtom>) :
+public class TagOrDsl internal constructor(private val nodes: FilterAccumulator<Filter.Tag>) :
   TagLeaves by TagLeafMixin(nodes::add) {
 
   public constructor() : this(FilterAccumulator())
 
   /**
-   * Negates every tag atom collected in [block] and appends each as its own [TagAtom].
+   * Toggles [Filter.negated] on every tag leaf collected in [block] and appends each one.
    *
-   * An empty [block] appends nothing.
+   * `not { tag(a); tag(b) }` yields two negated leaves (`NOT a OR NOT b` inside the OR); `not { not
+   * { tag(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: TagOrDsl.() -> Unit) {
-    for (atom in TagOrDsl().apply(block).snapshot()) {
-      nodes.add(negateTagAtom(atom))
-    }
+    for (leaf in TagOrDsl().apply(block).snapshot()) nodes.add(!leaf)
   }
 
-  internal fun snapshot(): List<TagAtom> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Tag> = nodes.snapshot()
 }
 
 /** Constructs [TagFilters] from a tag-only DSL block, or `null` when the block is empty. */

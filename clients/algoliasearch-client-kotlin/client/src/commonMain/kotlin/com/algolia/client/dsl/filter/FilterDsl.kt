@@ -57,8 +57,11 @@ public class FilterDsl internal constructor(private val nodes: FilterAccumulator
   /**
    * Adds a [FilterGroup.Not] of the children in [block].
    *
-   * One child is negated as a typed [FilterGroup.Not] variant. Several children are negated as
-   * [FilterGroup.Not.Group] of an [FilterGroup.And].
+   * One child is wrapped as-is (a leaf under `not { }` stays a leaf inside a [FilterGroup.Not]; its
+   * [Filter.negated] flag is not toggled). Several children are wrapped as [FilterGroup.Not] of an
+   * [FilterGroup.And]. When the only child is itself a [FilterGroup.Not], it is unwrapped, so `not
+   * { not { … } }` is the positive group. An empty block adds a [FilterGroup.Not] of an empty
+   * [FilterGroup.And]: [filters] throws, the legacy builders encode nothing.
    */
   public fun not(block: FilterDsl.() -> Unit) {
     nodes.add(negate(FilterDsl().apply(block).nodes.snapshot()))
