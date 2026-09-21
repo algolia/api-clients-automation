@@ -21,7 +21,15 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
     nodes.add(FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot()))
   }
 
-  /** Adds a typed [FilterGroup.Not] of the children in [block]. */
+  /**
+   * Adds a [FilterGroup.Not] of the children in [block].
+   *
+   * One child is wrapped as-is (a leaf under `not { }` stays a leaf inside a [FilterGroup.Not]; its
+   * [Filter.negated] flag is not toggled). Several children are wrapped as [FilterGroup.Not] of an
+   * [FilterGroup.And]. When the only child is itself a [FilterGroup.Not], it is unwrapped, so `not
+   * { not { … } }` is the positive group. An empty block adds a [FilterGroup.Not] of an empty
+   * [FilterGroup.And]: [filters] throws, the legacy builders encode nothing.
+   */
   public fun not(block: FacetFilterDsl.() -> Unit) {
     nodes.add(negate(FacetFilterDsl().apply(block).nodes.snapshot()))
   }
@@ -30,28 +38,27 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
 }
 
 /**
- * OR-context builder for [FacetAtom] children. Exposes only facet leaves and [not]. An empty [not]
- * block appends nothing.
+ * OR-context builder for [Filter.Facet] children. Exposes only facet leaves and [not]. An empty
+ * [not] block appends nothing.
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FacetOrDsl internal constructor(private val nodes: FilterAccumulator<FacetAtom>) :
+public class FacetOrDsl internal constructor(private val nodes: FilterAccumulator<Filter.Facet>) :
   FacetLeaves by FacetLeafMixin(nodes::add) {
 
   public constructor() : this(FilterAccumulator())
 
   /**
-   * Negates every facet atom collected in [block] and appends each as its own [FacetAtom].
+   * Toggles [Filter.negated] on every facet leaf collected in [block] and appends each one.
    *
-   * `not { facet(a); facet(b) }` yields two negated atoms. An empty [block] appends nothing.
+   * `not { facet(a); facet(b) }` yields two negated leaves (`NOT a OR NOT b` inside the OR); `not {
+   * not { facet(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: FacetOrDsl.() -> Unit) {
-    for (atom in FacetOrDsl().apply(block).snapshot()) {
-      nodes.add(negateFacetAtom(atom))
-    }
+    for (leaf in FacetOrDsl().apply(block).snapshot()) nodes.add(!leaf)
   }
 
-  internal fun snapshot(): List<FacetAtom> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Facet> = nodes.snapshot()
 }
 
 /** Constructs [FacetFilters] from a facet-only DSL block, or `null` when the block is empty. */
