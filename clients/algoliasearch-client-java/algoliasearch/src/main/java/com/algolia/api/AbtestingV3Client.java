@@ -1434,12 +1434,74 @@ public class AbtestingV3Client extends ApiClient {
    * Retrieves the details for an A/B test by its ID.
    *
    * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTest getABTest(@Nonnull Integer id, List<AnalysisMethod> methods, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getABTestAsync(id, methods, requestOptions));
+  }
+
+  /**
+   * Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getABTestWithHTTPInfo(@Nonnull Integer id, List<AnalysisMethod> methods, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getABTestWithHTTPInfoAsync(id, methods, requestOptions));
+  }
+
+  /**
+   * Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ABTest getABTest(@Nonnull Integer id, List<AnalysisMethod> methods) throws AlgoliaRuntimeException {
+    return this.getABTest(id, methods, null);
+  }
+
+  /**
+   * Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response getABTestWithHTTPInfo(@Nonnull Integer id, List<AnalysisMethod> methods) throws AlgoliaRuntimeException {
+    return this.getABTestWithHTTPInfo(id, methods, null);
+  }
+
+  /**
+   * Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ABTest getABTest(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getABTestAsync(id, requestOptions));
+    return this.getABTest(id, null, requestOptions);
   }
 
   /**
@@ -1451,7 +1513,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response getABTestWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getABTestWithHTTPInfoAsync(id, requestOptions));
+    return this.getABTestWithHTTPInfo(id, null, requestOptions);
   }
 
   /**
@@ -1461,7 +1523,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ABTest getABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getABTest(id, null);
+    return this.getABTest(id, null, null);
   }
 
   /**
@@ -1471,7 +1533,90 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response getABTestWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getABTestWithHTTPInfo(id, null);
+    return this.getABTestWithHTTPInfo(id, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTest> getABTestAsync(
+    @Nonnull Integer id,
+    List<AnalysisMethod> methods,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}", id)
+      .setMethod("GET")
+      .addQueryParameter("methods", methods)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ABTest>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    List<AnalysisMethod> methods,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/3/abtests/{id}", id)
+      .setMethod("GET")
+      .addQueryParameter("methods", methods)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id, List<AnalysisMethod> methods) throws AlgoliaRuntimeException {
+    return this.getABTestAsync(id, methods, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
+   *
+   * @param id Unique A/B test identifier. (required)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id, List<AnalysisMethod> methods)
+    throws AlgoliaRuntimeException {
+    return this.getABTestWithHTTPInfoAsync(id, methods, null);
   }
 
   /**
@@ -1484,11 +1629,7 @@ public class AbtestingV3Client extends ApiClient {
    */
   public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}", id).setMethod("GET").build();
-
-    return executeAsync(request, requestOptions, new TypeReference<ABTest>() {});
+    return this.getABTestAsync(id, null, requestOptions);
   }
 
   /**
@@ -1501,11 +1642,7 @@ public class AbtestingV3Client extends ApiClient {
    */
   public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTest`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}", id).setMethod("GET").build();
-
-    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+    return this.getABTestWithHTTPInfoAsync(id, null, requestOptions);
   }
 
   /**
@@ -1515,7 +1652,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getABTestAsync(id, null);
+    return this.getABTestAsync(id, null, null);
   }
 
   /**
@@ -1525,7 +1662,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getABTestWithHTTPInfoAsync(id, null);
+    return this.getABTestWithHTTPInfoAsync(id, null, null);
   }
 
   /**
@@ -1668,6 +1805,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1677,9 +1818,10 @@ public class AbtestingV3Client extends ApiClient {
     String startDate,
     String endDate,
     List<MetricName> metric,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getTimeseriesAsync(id, startDate, endDate, metric, requestOptions));
+    return LaunderThrowable.await(getTimeseriesAsync(id, startDate, endDate, metric, methods, requestOptions));
   }
 
   /**
@@ -1690,6 +1832,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1699,9 +1845,10 @@ public class AbtestingV3Client extends ApiClient {
     String startDate,
     String endDate,
     List<MetricName> metric,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getTimeseriesWithHTTPInfoAsync(id, startDate, endDate, metric, requestOptions));
+    return LaunderThrowable.await(getTimeseriesWithHTTPInfoAsync(id, startDate, endDate, metric, methods, requestOptions));
   }
 
   /**
@@ -1712,11 +1859,20 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Timeseries getTimeseries(@Nonnull Integer id, String startDate, String endDate, List<MetricName> metric)
-    throws AlgoliaRuntimeException {
-    return this.getTimeseries(id, startDate, endDate, metric, null);
+  public Timeseries getTimeseries(
+    @Nonnull Integer id,
+    String startDate,
+    String endDate,
+    List<MetricName> metric,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
+    return this.getTimeseries(id, startDate, endDate, metric, methods, null);
   }
 
   /**
@@ -1727,11 +1883,20 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getTimeseriesWithHTTPInfo(@Nonnull Integer id, String startDate, String endDate, List<MetricName> metric)
-    throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfo(id, startDate, endDate, metric, null);
+  public Response getTimeseriesWithHTTPInfo(
+    @Nonnull Integer id,
+    String startDate,
+    String endDate,
+    List<MetricName> metric,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
+    return this.getTimeseriesWithHTTPInfo(id, startDate, endDate, metric, methods, null);
   }
 
   /**
@@ -1743,7 +1908,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Timeseries getTimeseries(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTimeseries(id, null, null, null, requestOptions);
+    return this.getTimeseries(id, null, null, null, null, requestOptions);
   }
 
   /**
@@ -1755,7 +1920,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response getTimeseriesWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfo(id, null, null, null, requestOptions);
+    return this.getTimeseriesWithHTTPInfo(id, null, null, null, null, requestOptions);
   }
 
   /**
@@ -1765,7 +1930,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Timeseries getTimeseries(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getTimeseries(id, null, null, null, null);
+    return this.getTimeseries(id, null, null, null, null, null);
   }
 
   /**
@@ -1775,7 +1940,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response getTimeseriesWithHTTPInfo(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfo(id, null, null, null, null);
+    return this.getTimeseriesWithHTTPInfo(id, null, null, null, null, null);
   }
 
   /**
@@ -1786,6 +1951,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1795,6 +1964,7 @@ public class AbtestingV3Client extends ApiClient {
     String startDate,
     String endDate,
     List<MetricName> metric,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getTimeseries`.");
@@ -1805,6 +1975,7 @@ public class AbtestingV3Client extends ApiClient {
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("metric", metric)
+      .addQueryParameter("methods", methods)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Timeseries>() {});
   }
@@ -1817,6 +1988,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1826,6 +2001,7 @@ public class AbtestingV3Client extends ApiClient {
     String startDate,
     String endDate,
     List<MetricName> metric,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getTimeseries`.");
@@ -1836,6 +2012,7 @@ public class AbtestingV3Client extends ApiClient {
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("metric", metric)
+      .addQueryParameter("methods", methods)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -1848,11 +2025,20 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Timeseries> getTimeseriesAsync(@Nonnull Integer id, String startDate, String endDate, List<MetricName> metric)
-    throws AlgoliaRuntimeException {
-    return this.getTimeseriesAsync(id, startDate, endDate, metric, null);
+  public CompletableFuture<Timeseries> getTimeseriesAsync(
+    @Nonnull Integer id,
+    String startDate,
+    String endDate,
+    List<MetricName> metric,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
+    return this.getTimeseriesAsync(id, startDate, endDate, metric, methods, null);
   }
 
   /**
@@ -1863,15 +2049,20 @@ public class AbtestingV3Client extends ApiClient {
    * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param metric List of metrics to retrieve. If not specified, all metrics are returned.
    *     (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> getTimeseriesWithHTTPInfoAsync(
     @Nonnull Integer id,
     String startDate,
     String endDate,
-    List<MetricName> metric
+    List<MetricName> metric,
+    List<AnalysisMethod> methods
   ) throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfoAsync(id, startDate, endDate, metric, null);
+    return this.getTimeseriesWithHTTPInfoAsync(id, startDate, endDate, metric, methods, null);
   }
 
   /**
@@ -1884,7 +2075,7 @@ public class AbtestingV3Client extends ApiClient {
    */
   public CompletableFuture<Timeseries> getTimeseriesAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getTimeseriesAsync(id, null, null, null, requestOptions);
+    return this.getTimeseriesAsync(id, null, null, null, null, requestOptions);
   }
 
   /**
@@ -1897,7 +2088,7 @@ public class AbtestingV3Client extends ApiClient {
    */
   public CompletableFuture<Response> getTimeseriesWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfoAsync(id, null, null, null, requestOptions);
+    return this.getTimeseriesWithHTTPInfoAsync(id, null, null, null, null, requestOptions);
   }
 
   /**
@@ -1907,7 +2098,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Timeseries> getTimeseriesAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getTimeseriesAsync(id, null, null, null, null);
+    return this.getTimeseriesAsync(id, null, null, null, null, null);
   }
 
   /**
@@ -1917,7 +2108,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> getTimeseriesWithHTTPInfoAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
-    return this.getTimeseriesWithHTTPInfoAsync(id, null, null, null, null);
+    return this.getTimeseriesWithHTTPInfoAsync(id, null, null, null, null, null);
   }
 
   /**
@@ -1931,6 +2122,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1941,9 +2136,10 @@ public class AbtestingV3Client extends ApiClient {
     String indexPrefix,
     String indexSuffix,
     Direction direction,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listABTestsAsync(offset, limit, indexPrefix, indexSuffix, direction, requestOptions));
+    return LaunderThrowable.await(listABTestsAsync(offset, limit, indexPrefix, indexSuffix, direction, methods, requestOptions));
   }
 
   /**
@@ -1957,6 +2153,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1967,9 +2167,12 @@ public class AbtestingV3Client extends ApiClient {
     String indexPrefix,
     String indexSuffix,
     Direction direction,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(listABTestsWithHTTPInfoAsync(offset, limit, indexPrefix, indexSuffix, direction, requestOptions));
+    return LaunderThrowable.await(
+      listABTestsWithHTTPInfoAsync(offset, limit, indexPrefix, indexSuffix, direction, methods, requestOptions)
+    );
   }
 
   /**
@@ -1983,11 +2186,21 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ListABTestsResponse listABTests(Integer offset, Integer limit, String indexPrefix, String indexSuffix, Direction direction)
-    throws AlgoliaRuntimeException {
-    return this.listABTests(offset, limit, indexPrefix, indexSuffix, direction, null);
+  public ListABTestsResponse listABTests(
+    Integer offset,
+    Integer limit,
+    String indexPrefix,
+    String indexSuffix,
+    Direction direction,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
+    return this.listABTests(offset, limit, indexPrefix, indexSuffix, direction, methods, null);
   }
 
   /**
@@ -2001,11 +2214,21 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listABTestsWithHTTPInfo(Integer offset, Integer limit, String indexPrefix, String indexSuffix, Direction direction)
-    throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfo(offset, limit, indexPrefix, indexSuffix, direction, null);
+  public Response listABTestsWithHTTPInfo(
+    Integer offset,
+    Integer limit,
+    String indexPrefix,
+    String indexSuffix,
+    Direction direction,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
+    return this.listABTestsWithHTTPInfo(offset, limit, indexPrefix, indexSuffix, direction, methods, null);
   }
 
   /**
@@ -2016,7 +2239,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListABTestsResponse listABTests(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listABTests(null, null, null, null, null, requestOptions);
+    return this.listABTests(null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2027,7 +2250,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listABTestsWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfo(null, null, null, null, null, requestOptions);
+    return this.listABTestsWithHTTPInfo(null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2036,7 +2259,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListABTestsResponse listABTests() throws AlgoliaRuntimeException {
-    return this.listABTests(null, null, null, null, null, null);
+    return this.listABTests(null, null, null, null, null, null, null);
   }
 
   /**
@@ -2045,7 +2268,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listABTestsWithHTTPInfo() throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfo(null, null, null, null, null, null);
+    return this.listABTestsWithHTTPInfo(null, null, null, null, null, null, null);
   }
 
   /**
@@ -2059,6 +2282,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2069,6 +2296,7 @@ public class AbtestingV3Client extends ApiClient {
     String indexPrefix,
     String indexSuffix,
     Direction direction,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
@@ -2079,6 +2307,7 @@ public class AbtestingV3Client extends ApiClient {
       .addQueryParameter("indexPrefix", indexPrefix)
       .addQueryParameter("indexSuffix", indexSuffix)
       .addQueryParameter("direction", direction)
+      .addQueryParameter("methods", methods)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<ListABTestsResponse>() {});
   }
@@ -2094,6 +2323,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2104,6 +2337,7 @@ public class AbtestingV3Client extends ApiClient {
     String indexPrefix,
     String indexSuffix,
     Direction direction,
+    List<AnalysisMethod> methods,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
@@ -2114,6 +2348,7 @@ public class AbtestingV3Client extends ApiClient {
       .addQueryParameter("indexPrefix", indexPrefix)
       .addQueryParameter("indexSuffix", indexSuffix)
       .addQueryParameter("direction", direction)
+      .addQueryParameter("methods", methods)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -2129,6 +2364,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListABTestsResponse> listABTestsAsync(
@@ -2136,9 +2375,10 @@ public class AbtestingV3Client extends ApiClient {
     Integer limit,
     String indexPrefix,
     String indexSuffix,
-    Direction direction
+    Direction direction,
+    List<AnalysisMethod> methods
   ) throws AlgoliaRuntimeException {
-    return this.listABTestsAsync(offset, limit, indexPrefix, indexSuffix, direction, null);
+    return this.listABTestsAsync(offset, limit, indexPrefix, indexSuffix, direction, methods, null);
   }
 
   /**
@@ -2152,6 +2392,10 @@ public class AbtestingV3Client extends ApiClient {
    *     included in the response. (optional)
    * @param direction Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for
    *     descending. Active A/B tests are always listed first. (optional)
+   * @param methods Statistical analysis results to include, as a comma-separated list. When
+   *     omitted, each test uses its configured method, or `frequentist` if no method is configured.
+   *     Request both methods to include both sets of available results. This doesn't change the
+   *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync(
@@ -2159,9 +2403,10 @@ public class AbtestingV3Client extends ApiClient {
     Integer limit,
     String indexPrefix,
     String indexSuffix,
-    Direction direction
+    Direction direction,
+    List<AnalysisMethod> methods
   ) throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfoAsync(offset, limit, indexPrefix, indexSuffix, direction, null);
+    return this.listABTestsWithHTTPInfoAsync(offset, limit, indexPrefix, indexSuffix, direction, methods, null);
   }
 
   /**
@@ -2172,7 +2417,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListABTestsResponse> listABTestsAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listABTestsAsync(null, null, null, null, null, requestOptions);
+    return this.listABTestsAsync(null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2183,7 +2428,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfoAsync(null, null, null, null, null, requestOptions);
+    return this.listABTestsWithHTTPInfoAsync(null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -2192,7 +2437,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListABTestsResponse> listABTestsAsync() throws AlgoliaRuntimeException {
-    return this.listABTestsAsync(null, null, null, null, null, null);
+    return this.listABTestsAsync(null, null, null, null, null, null, null);
   }
 
   /**
@@ -2201,7 +2446,7 @@ public class AbtestingV3Client extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listABTestsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
-    return this.listABTestsWithHTTPInfoAsync(null, null, null, null, null, null);
+    return this.listABTestsWithHTTPInfoAsync(null, null, null, null, null, null, null);
   }
 
   /**

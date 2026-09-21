@@ -58,6 +58,46 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `addABTests with Bayesian configuration1`() = runTest {
+    client.runTest(
+      call = {
+        addABTests(
+          addABTestsRequest =
+            AddABTestsRequest(
+              endAt = "2022-12-31T00:00:00.000Z",
+              name = "myABTest",
+              metrics = listOf(CreateMetric(name = "conversionRate")),
+              variants =
+                listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 30,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+              configuration =
+                ABTestConfiguration(
+                  method = AnalysisMethod.entries.first { it.value == "bayesian" },
+                  primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
+                ),
+            )
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // applyVariantSettings
 
   @Test
@@ -637,6 +677,28 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `getABTest with both inference methods1`() = runTest {
+    client.runTest(
+      call = {
+        getABTest(
+          id = 42,
+          methods =
+            listOf(
+              AnalysisMethod.entries.first { it.value == "frequentist" },
+              AnalysisMethod.entries.first { it.value == "bayesian" },
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"methods":"frequentist%2Cbayesian"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getABTestSettings
 
   @Test
@@ -669,6 +731,30 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `getTimeseries with Bayesian revenue per search1`() = runTest {
+    client.runTest(
+      call = {
+        getTimeseries(
+          id = 42,
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          metric = listOf(MetricName.entries.first { it.value == "revenue_per_search" }),
+          methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams(
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""",
+          it.url.encodedParameters,
+        )
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // listABTests
 
   @Test
@@ -695,13 +781,18 @@ class AbtestingV3Test {
           indexPrefix = "cts_e2e ab",
           indexSuffix = "t",
           direction = Direction.entries.first { it.value == "asc" },
+          methods =
+            listOf(
+              AnalysisMethod.entries.first { it.value == "frequentist" },
+              AnalysisMethod.entries.first { it.value == "bayesian" },
+            ),
         )
       },
       intercept = {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
-          """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}""",
+          """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)

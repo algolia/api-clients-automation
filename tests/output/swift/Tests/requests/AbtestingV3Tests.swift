@@ -54,6 +54,53 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// addABTests with Bayesian configuration
+    func testAddABTestsTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.addABTestsWithHTTPInfo(addABTestsRequest: AbtestingV3AddABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
+            ],
+            metrics: [CreateMetric(name: "conversionRate")],
+            configuration: AbtestingV3ABTestConfiguration(
+                method: AnalysisMethod.bayesian,
+                primaryMetric: PrimaryMetric.conversionRate
+            ),
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// applyVariantSettings
     func testApplyVariantSettingsTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
@@ -841,6 +888,37 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// getABTest with both inference methods
+    func testGetABTestTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getABTestWithHTTPInfo(
+            id: 42,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"methods\":\"frequentist%2Cbayesian\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// getABTestSettings
     func testGetABTestSettingsTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
@@ -885,6 +963,43 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// getTimeseries with Bayesian revenue per search
+    func testGetTimeseriesTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getTimeseriesWithHTTPInfo(
+            id: 42,
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            metric: [MetricName.revenuePerSearch],
+            methods: [AnalysisMethod.bayesian]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/timeseries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"revenue_per_search\",\"methods\":\"bayesian\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// listABTests with minimal parameters
     func testListABTestsTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
@@ -922,7 +1037,8 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
             limit: 21,
             indexPrefix: "cts_e2e ab",
             indexSuffix: "t",
-            direction: AbtestingV3Direction.asc
+            direction: AbtestingV3Direction.asc,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -933,7 +1049,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters = try XCTUnwrap(
-            "{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\",\"direction\":\"asc\"}"
+            "{\"offset\":\"0\",\"limit\":\"21\",\"indexPrefix\":\"cts_e2e%20ab\",\"indexSuffix\":\"t\",\"direction\":\"asc\",\"methods\":\"frequentist%2Cbayesian\"}"
                 .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(

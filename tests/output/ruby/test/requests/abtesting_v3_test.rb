@@ -38,6 +38,36 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     )
   end
 
+  # addABTests with Bayesian configuration
+  def test_add_ab_tests1
+    req = @client.add_ab_tests_with_http_info(
+      Algolia::AbtestingV3::AddABTestsRequest.new(
+        end_at: "2022-12-31T00:00:00.000Z",
+        name: "myABTest",
+        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "conversionRate")],
+        variants: [
+          Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+          Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+        ],
+        configuration: Algolia::AbtestingV3::ABTestConfiguration.new(
+          method: "bayesian",
+          primary_metric: "conversion_rate"
+        )
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/abtests", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # applyVariantSettings
   def test_apply_variant_settings
     req = @client.apply_variant_settings_with_http_info(42, 2)
@@ -373,6 +403,18 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getABTest with both inference methods
+  def test_get_ab_test1
+    req = @client.get_ab_test_with_http_info(42, ["frequentist", "bayesian"])
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42", req.path)
+    assert_equal({:"methods" => "frequentist%2Cbayesian"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getABTestSettings
   def test_get_ab_test_settings
     req = @client.get_ab_test_settings_with_http_info(42)
@@ -397,6 +439,26 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getTimeseries with Bayesian revenue per search
+  def test_get_timeseries1
+    req = @client.get_timeseries_with_http_info(42, "1999-09-19", "2001-01-01", ["revenue_per_search"], ["bayesian"])
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42/timeseries", req.path)
+    assert_equal(
+      {
+        :"startDate" => "1999-09-19",
+        :"endDate" => "2001-01-01",
+        :"metric" => "revenue_per_search",
+        :"methods" => "bayesian"
+      }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # listABTests with minimal parameters
   def test_list_ab_tests
     req = @client.list_ab_tests_with_http_info
@@ -411,7 +473,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
   # listABTests with parameters
   def test_list_ab_tests1
-    req = @client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t", "asc")
+    req = @client.list_ab_tests_with_http_info(0, 21, "cts_e2e ab", "t", "asc", ["frequentist", "bayesian"])
 
     assert_equal(:get, req.method)
     assert_equal("/3/abtests", req.path)
@@ -421,7 +483,8 @@ class TestAbtestingV3Client < Test::Unit::TestCase
         :"limit" => "21",
         :"indexPrefix" => "cts_e2e%20ab",
         :"indexSuffix" => "t",
-        :"direction" => "asc"
+        :"direction" => "asc",
+        :"methods" => "frequentist%2Cbayesian"
       }.to_a,
       req.query_params.to_a
     )

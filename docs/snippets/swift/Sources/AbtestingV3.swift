@@ -11,7 +11,7 @@ final class AbtestingV3ClientSnippet {
     ///
     /// addABTests with minimal parameters
     func snippetForAddABTests() async throws {
-        // >SEPARATOR addABTests default
+        // >SEPARATOR addABTests addABTests with minimal parameters
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
@@ -29,6 +29,40 @@ final class AbtestingV3ClientSnippet {
                 )),
             ],
             metrics: [CreateMetric(name: "myMetric")],
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the addABTests method.
+    ///
+    /// addABTests with Bayesian configuration
+    func snippetForAddABTests1() async throws {
+        // >SEPARATOR addABTests addABTests with Bayesian configuration
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
+            ],
+            metrics: [CreateMetric(name: "conversionRate")],
+            configuration: AbtestingV3ABTestConfiguration(
+                method: AnalysisMethod.bayesian,
+                primaryMetric: PrimaryMetric.conversionRate
+            ),
             endAt: "2022-12-31T00:00:00.000Z"
         ))
         // >LOG
@@ -472,12 +506,31 @@ final class AbtestingV3ClientSnippet {
     ///
     /// getABTest
     func snippetForGetABTest() async throws {
-        // >SEPARATOR getABTest default
+        // >SEPARATOR getABTest getABTest
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getABTest(id: 42)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getABTest method.
+    ///
+    /// getABTest with both inference methods
+    func snippetForGetABTest1() async throws {
+        // >SEPARATOR getABTest getABTest with both inference methods
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getABTest(
+            id: 42,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
+        )
         // >LOG
         // print the response
         print(response)
@@ -504,12 +557,34 @@ final class AbtestingV3ClientSnippet {
     ///
     /// getTimeseries
     func snippetForGetTimeseries() async throws {
-        // >SEPARATOR getTimeseries default
+        // >SEPARATOR getTimeseries getTimeseries
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTimeseries(id: 42)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getTimeseries method.
+    ///
+    /// getTimeseries with Bayesian revenue per search
+    func snippetForGetTimeseries1() async throws {
+        // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getTimeseries(
+            id: 42,
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            metric: [MetricName.revenuePerSearch],
+            methods: [AnalysisMethod.bayesian]
+        )
         // >LOG
         // print the response
         print(response)
@@ -546,7 +621,8 @@ final class AbtestingV3ClientSnippet {
             limit: 21,
             indexPrefix: "cts_e2e ab",
             indexSuffix: "t",
-            direction: AbtestingV3Direction.asc
+            direction: AbtestingV3Direction.asc,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
         )
         // >LOG
         // print the response
