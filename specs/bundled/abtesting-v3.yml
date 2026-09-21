@@ -241,6 +241,8 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/name'
+                hypothesis:
+                  $ref: '#/components/schemas/hypothesis'
                 variants:
                   type: array
                   description: A/B test variants.
@@ -879,6 +881,10 @@ components:
       type: string
       description: A/B test name.
       example: Custom ranking sales rank test
+    hypothesis:
+      type: string
+      description: Expected outcome of the A/B test.
+      example: Enabling the feature increases conversion rate
     Status:
       type: string
       description: >
@@ -1262,6 +1268,8 @@ components:
           $ref: '#/components/schemas/stoppedAt'
         name:
           $ref: '#/components/schemas/name'
+        hypothesis:
+          $ref: '#/components/schemas/hypothesis'
         status:
           $ref: '#/components/schemas/Status'
         variants:
@@ -1273,6 +1281,7 @@ components:
       required:
         - status
         - name
+        - hypothesis
         - createdAt
         - endAt
         - updatedAt
