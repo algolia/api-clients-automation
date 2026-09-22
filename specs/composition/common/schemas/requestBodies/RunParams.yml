@@ -64,6 +64,17 @@ params:
     userToken:
       $ref: '../../params/Search.yml#/userToken'
 
+externalProvider:
+  title: Run composition external provider parameters as object
+  type: object
+  additionalProperties: false
+  properties:
+    configurationParams:
+      type: object
+      additionalProperties: true
+      description: Values for non-prefixed configuration placeholders, overriding the composition source's `configurationParams` and the configuration's `defaults`.
+      example: {customer_id: 'customer123'}
+
 feedsOrder:
   type: array
   description: |

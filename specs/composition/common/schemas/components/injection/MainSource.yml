@@ -54,3 +54,38 @@ injectionMainRecommendSource:
         - threshold
   required:
     - recommend
+
+injectionMainExternalProviderSource:
+  description: Organic result set will originate from a request to an external provider configuration.
+  x-discriminator-fields:
+    - externalProvider
+  type: object
+  additionalProperties: false
+  properties:
+    externalProvider:
+      title: mainExternalProvider
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to fetch the records.
+          example: Products
+        configurationID:
+          type: string
+          description: Identifier of the external provider configuration.
+          example: 'my-rmn-connection'
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: Default values for the configuration placeholders that are not reserved Composition placeholders.
+          example: {campaign_id: 'winter-sale', customer_id: 'user123'}
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+        ordering:
+          $ref: './ExternalProviderSource.yml#/externalProviderOrdering'
+      required:
+        - index
+        - configurationID
+  required:
+    - externalProvider
