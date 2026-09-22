@@ -1,3 +1,14 @@
+## [6.0.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.59.0...6.0.0)
+
+- [812a3d1db6](https://github.com/algolia/api-clients-automation/commit/812a3d1db6) chore(deps): dependencies 2026-09-14 ([#7030](https://github.com/algolia/api-clients-automation/pull/7030)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [41ed59956a](https://github.com/algolia/api-clients-automation/commit/41ed59956a) fix(specs): clarify when _extra and _injectedItemKey are present on hits ([#7031](https://github.com/algolia/api-clients-automation/pull/7031)) by [@charlottetaylor-oss](https://github.com/charlottetaylor-oss/)
+- [987444f36d](https://github.com/algolia/api-clients-automation/commit/987444f36d) fix(specs): clarify addItemKey description in injectedItem metadata ([#7029](https://github.com/algolia/api-clients-automation/pull/7029)) by [@charlottetaylor-oss](https://github.com/charlottetaylor-oss/)
+- [f6a0478eec](https://github.com/algolia/api-clients-automation/commit/f6a0478eec) docs(specs): update analytics catalog entitlement example ([#7028](https://github.com/algolia/api-clients-automation/pull/7028)) by [@cdhawke](https://github.com/cdhawke/)
+- [5da059b7ae](https://github.com/algolia/api-clients-automation/commit/5da059b7ae) feat(specs): add A/B test settings endpoints to abtesting-v3 ([#6786](https://github.com/algolia/api-clients-automation/pull/6786)) by [@stevenMevans](https://github.com/stevenMevans/)
+- [f89fe94db5](https://github.com/algolia/api-clients-automation/commit/f89fe94db5) fix(clients): send request bodies with Content-Length instead of chunked encoding ([#7069](https://github.com/algolia/api-clients-automation/pull/7069)) by [@Fluf22](https://github.com/Fluf22/)
+- [461575c4a4](https://github.com/algolia/api-clients-automation/commit/461575c4a4) feat(specs): add A/B testing hypothesis ([#6829](https://github.com/algolia/api-clients-automation/pull/6829)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+- [b58c40832b](https://github.com/algolia/api-clients-automation/commit/b58c40832b) fix(specs): BREAKING CHANGE - make AB test pValue optional ([#7066](https://github.com/algolia/api-clients-automation/pull/7066)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [5.59.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.58.0...5.59.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
