@@ -27,11 +27,10 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
    * One child is wrapped as-is (a leaf under `not { }` stays a leaf inside a [FilterGroup.Not]; its
    * [Filter.negated] flag is not toggled). Several children are wrapped as [FilterGroup.Not] of an
    * [FilterGroup.And]. When the only child is itself a [FilterGroup.Not], it is unwrapped, so `not
-   * { not { … } }` is the positive group. An empty block adds a [FilterGroup.Not] of an empty
-   * [FilterGroup.And]: [filters] throws, the legacy builders encode nothing.
+   * { not { … } }` is the positive group. An empty block adds nothing.
    */
   public fun not(block: FacetFilterDsl.() -> Unit) {
-    nodes.add(negate(FacetFilterDsl().apply(block).nodes.snapshot()))
+    negate(FacetFilterDsl().apply(block).nodes.snapshot())?.let(nodes::add)
   }
 
   internal fun root(): FilterGroup = nodes.root()
