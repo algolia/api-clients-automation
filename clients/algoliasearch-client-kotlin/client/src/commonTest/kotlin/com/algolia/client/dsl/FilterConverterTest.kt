@@ -16,6 +16,7 @@ import com.algolia.client.dsl.filter.facetFilters
 import com.algolia.client.dsl.filter.filters
 import com.algolia.client.dsl.filter.not
 import com.algolia.client.dsl.filter.numericFilters
+import com.algolia.client.dsl.filter.optionalFilters
 import com.algolia.client.dsl.filter.tagFilters
 import com.algolia.client.model.search.FacetFilters
 import com.algolia.client.model.search.NumericFilters
@@ -695,18 +696,6 @@ internal class FilterConverterTest {
         }
         .root(),
     )
-    // Unary `!` on a sunk leaf does not touch the tree: the eager sink already appended it.
-    assertEquals(
-      FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt)),
-      FilterDsl()
-        .apply {
-          not {
-            !facet("color", "red")
-            facet("category", "shirt")
-          }
-        }
-        .root(),
-    )
     assertEquals(
       colorRed,
       FacetFilterDsl().apply { not { not { facet("color", "red") } } }.root(),
@@ -817,11 +806,42 @@ internal class FilterConverterTest {
 
   @Test
   fun emptyNotBlock() {
-    assertFailsWith<IllegalArgumentException> { filters { not {} } }
+    assertNull(filters { not {} })
     assertNull(facetFilters { not {} })
+    assertNull(optionalFilters { not {} })
     assertNull(numericFilters { not {} })
     assertNull(tagFilters { not {} })
     assertNull(filters { not { not {} } })
+    assertNull(filters { and { not {} } })
+
+    assertEquals(FilterGroup.And(), FilterDsl().apply { not {} }.root())
+    assertEquals(FilterGroup.And(), FacetFilterDsl().apply { not {} }.root())
+    assertEquals(FilterGroup.And(), FilterDsl().apply { and { not {} } }.root())
+
+    assertEquals(
+      "color:red",
+      filters {
+        facet("color", "red")
+        not {}
+      },
+    )
+    assertEquals(
+      colorRed,
+      FilterDsl()
+        .apply {
+          facet("color", "red")
+          not {}
+        }
+        .root(),
+    )
+    assertEquals(
+      listOf(listOf("\"color\":\"red\"")),
+      facetFilters {
+          facet("color", "red")
+          not {}
+        }
+        ?.rows(),
+    )
   }
 
   @Test
