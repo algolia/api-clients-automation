@@ -10,28 +10,30 @@ import com.algolia.client.model.search.NumericFilters
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
 public class NumericFilterDsl
-internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
-  NumericLeaves by NumericLeafMixin({ nodes.add(it) }) {
+internal constructor(private val core: FamilyAndBuilder<Filter.Numeric>) :
+  NumericLeaves by NumericLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyAndBuilder<Filter.Numeric> { FilterGroup.Or.Numeric(it) })
 
   /** Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. */
   public fun or(block: NumericOrDsl.() -> Unit) {
-    nodes.add(FilterGroup.Or.Numeric(NumericOrDsl().apply(block).snapshot()))
+    core.or(NumericOrDsl().apply(block).snapshot())
   }
 
   /**
-   * Adds a [FilterGroup.Not] of the children in [block]. One child is wrapped as-is (a leaf under
-   * `not { }` stays a leaf inside a [FilterGroup.Not]; its [Filter.negated] flag is not toggled).
-   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. When the only child
-   * is itself a [FilterGroup.Not], it is unwrapped, so `not { not { … } }` is the positive group.
-   * An empty block adds nothing.
+   * Negates the children in [block].
+   *
+   * One child gets unary `!`: a leaf toggles its [Filter.negated] flag (`not { range("p", 0..1) }`
+   * builds the same tree as `!Filter.Range("p", 0..1)`), a nested `not { }` is unwrapped so `not {
+   * not { … } }` is the positive node, and an `or { }` group is wrapped in [FilterGroup.Not].
+   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. An empty block adds
+   * nothing. Both encoders emit a toggled leaf and a [FilterGroup.Not] over that leaf identically.
    */
   public fun not(block: NumericFilterDsl.() -> Unit) {
-    negate(NumericFilterDsl().apply(block).nodes.snapshot())?.let(nodes::add)
+    core.not(NumericFilterDsl().apply(block).core.snapshot())
   }
 
-  internal fun root(): FilterGroup = nodes.root()
+  internal fun root(): FilterGroup = core.root()
 }
 
 /**
@@ -40,11 +42,10 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class NumericOrDsl
-internal constructor(private val nodes: FilterAccumulator<Filter.Numeric>) :
-  NumericLeaves by NumericLeafMixin(nodes::add) {
+public class NumericOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Numeric>) :
+  NumericLeaves by NumericLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyOrBuilder<Filter.Numeric> { !it })
 
   /**
    * Toggles [Filter.negated] on every numeric leaf collected in [block] and appends each one.
@@ -53,10 +54,10 @@ internal constructor(private val nodes: FilterAccumulator<Filter.Numeric>) :
    * `not { not { range(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: NumericOrDsl.() -> Unit) {
-    for (leaf in NumericOrDsl().apply(block).snapshot()) nodes.add(!leaf)
+    core.not(NumericOrDsl().apply(block).snapshot())
   }
 
-  internal fun snapshot(): List<Filter.Numeric> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Numeric> = core.snapshot()
 }
 
 /** Constructs [NumericFilters] from a numeric-only DSL block, or `null` when the block is empty. */
