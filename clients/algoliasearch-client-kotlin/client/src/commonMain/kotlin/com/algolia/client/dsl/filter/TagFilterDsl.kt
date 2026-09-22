@@ -9,28 +9,30 @@ import com.algolia.client.model.search.TagFilters
 /** AND-context builder for [Filter.Tag] leaves and [FilterGroup.Or.Tag] groups. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagFilterDsl internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
-  TagLeaves by TagLeafMixin({ nodes.add(it) }) {
+public class TagFilterDsl internal constructor(private val core: FamilyAndBuilder<Filter.Tag>) :
+  TagLeaves by TagLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyAndBuilder<Filter.Tag> { FilterGroup.Or.Tag(it) })
 
   /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. */
   public fun or(block: TagOrDsl.() -> Unit) {
-    nodes.add(FilterGroup.Or.Tag(TagOrDsl().apply(block).snapshot()))
+    core.or(TagOrDsl().apply(block).snapshot())
   }
 
   /**
-   * Adds a [FilterGroup.Not] of the children in [block]. One child is wrapped as-is (a leaf under
-   * `not { }` stays a leaf inside a [FilterGroup.Not]; its [Filter.negated] flag is not toggled).
-   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. When the only child
-   * is itself a [FilterGroup.Not], it is unwrapped, so `not { not { … } }` is the positive group.
-   * An empty block adds nothing.
+   * Negates the children in [block].
+   *
+   * One child gets unary `!`: a leaf toggles its [Filter.negated] flag (`not { tag("a") }` builds
+   * the same tree as `!Filter.Tag("a")`), a nested `not { }` is unwrapped so `not { not { … } }` is
+   * the positive node, and an `or { }` group is wrapped in [FilterGroup.Not]. Several children are
+   * wrapped as [FilterGroup.Not] of an [FilterGroup.And]. An empty block adds nothing. Both
+   * encoders emit a toggled leaf and a [FilterGroup.Not] over that leaf identically.
    */
   public fun not(block: TagFilterDsl.() -> Unit) {
-    negate(TagFilterDsl().apply(block).nodes.snapshot())?.let(nodes::add)
+    core.not(TagFilterDsl().apply(block).core.snapshot())
   }
 
-  internal fun root(): FilterGroup = nodes.root()
+  internal fun root(): FilterGroup = core.root()
 }
 
 /**
@@ -39,10 +41,10 @@ public class TagFilterDsl internal constructor(private val nodes: FilterAccumula
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagOrDsl internal constructor(private val nodes: FilterAccumulator<Filter.Tag>) :
-  TagLeaves by TagLeafMixin(nodes::add) {
+public class TagOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Tag>) :
+  TagLeaves by TagLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyOrBuilder<Filter.Tag> { !it })
 
   /**
    * Toggles [Filter.negated] on every tag leaf collected in [block] and appends each one.
@@ -51,10 +53,10 @@ public class TagOrDsl internal constructor(private val nodes: FilterAccumulator<
    * { tag(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: TagOrDsl.() -> Unit) {
-    for (leaf in TagOrDsl().apply(block).snapshot()) nodes.add(!leaf)
+    core.not(TagOrDsl().apply(block).snapshot())
   }
 
-  internal fun snapshot(): List<Filter.Tag> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Tag> = core.snapshot()
 }
 
 /** Constructs [TagFilters] from a tag-only DSL block, or `null` when the block is empty. */

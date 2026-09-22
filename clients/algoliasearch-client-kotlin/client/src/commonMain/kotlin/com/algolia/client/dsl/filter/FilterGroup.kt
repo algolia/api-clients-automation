@@ -110,17 +110,15 @@ public operator fun FilterGroup.not(): FilterGroup =
   }
 
 /**
- * AND-context `not { }`. Always a group [FilterGroup.Not] (a single leaf is wrapped, not
- * flag-toggled). A single [FilterGroup.Not] child is unwrapped so `not { not { … } }` is positive.
- * Returns `null` for an empty [children] list; callers add nothing.
+ * AND-context `not { }`. One child gets unary `!` ([FilterGroup.not]): a leaf toggles
+ * [Filter.negated], a [FilterGroup.Not] is unwrapped so `not { not { … } }` is positive, and an
+ * [FilterGroup.And] or [FilterGroup.Or] is wrapped in [FilterGroup.Not]. Several children become
+ * [FilterGroup.Not] of an [FilterGroup.And]. Returns `null` for an empty [children] list; callers
+ * add nothing.
  */
 internal fun negate(children: List<FilterGroup>): FilterGroup? =
   when (children.size) {
     0 -> null
-    1 ->
-      when (val only = children.single()) {
-        is FilterGroup.Not -> only.child
-        else -> FilterGroup.Not(only)
-      }
+    1 -> children.single().not()
     else -> FilterGroup.Not(FilterGroup.And(children))
   }
