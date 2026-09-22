@@ -10,30 +10,30 @@ import com.algolia.client.model.search.OptionalFilters
 /** AND-context builder for [Filter.Facet] leaves and [FilterGroup.Or.Facet] groups. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FacetFilterDsl
-internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
-  FacetLeaves by FacetLeafMixin({ nodes.add(it) }) {
+public class FacetFilterDsl internal constructor(private val core: FamilyAndBuilder<Filter.Facet>) :
+  FacetLeaves by FacetLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyAndBuilder<Filter.Facet> { FilterGroup.Or.Facet(it) })
 
   /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. */
   public fun or(block: FacetOrDsl.() -> Unit) {
-    nodes.add(FilterGroup.Or.Facet(FacetOrDsl().apply(block).snapshot()))
+    core.or(FacetOrDsl().apply(block).snapshot())
   }
 
   /**
-   * Adds a [FilterGroup.Not] of the children in [block].
+   * Negates the children in [block].
    *
-   * One child is wrapped as-is (a leaf under `not { }` stays a leaf inside a [FilterGroup.Not]; its
-   * [Filter.negated] flag is not toggled). Several children are wrapped as [FilterGroup.Not] of an
-   * [FilterGroup.And]. When the only child is itself a [FilterGroup.Not], it is unwrapped, so `not
-   * { not { … } }` is the positive group. An empty block adds nothing.
+   * One child gets unary `!`: a leaf toggles its [Filter.negated] flag (`not { facet("a", "b") }`
+   * builds the same tree as `!Filter.Facet("a", "b")`), a nested `not { }` is unwrapped so `not {
+   * not { … } }` is the positive node, and an `or { }` group is wrapped in [FilterGroup.Not].
+   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. An empty block adds
+   * nothing. Both encoders emit a toggled leaf and a [FilterGroup.Not] over that leaf identically.
    */
   public fun not(block: FacetFilterDsl.() -> Unit) {
-    negate(FacetFilterDsl().apply(block).nodes.snapshot())?.let(nodes::add)
+    core.not(FacetFilterDsl().apply(block).core.snapshot())
   }
 
-  internal fun root(): FilterGroup = nodes.root()
+  internal fun root(): FilterGroup = core.root()
 }
 
 /**
@@ -42,10 +42,10 @@ internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class FacetOrDsl internal constructor(private val nodes: FilterAccumulator<Filter.Facet>) :
-  FacetLeaves by FacetLeafMixin(nodes::add) {
+public class FacetOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Facet>) :
+  FacetLeaves by FacetLeafMixin(core::add) {
 
-  public constructor() : this(FilterAccumulator())
+  public constructor() : this(FamilyOrBuilder<Filter.Facet> { !it })
 
   /**
    * Toggles [Filter.negated] on every facet leaf collected in [block] and appends each one.
@@ -54,10 +54,10 @@ public class FacetOrDsl internal constructor(private val nodes: FilterAccumulato
    * not { facet(a) } }` yields the positive leaf. An empty [block] appends nothing.
    */
   public fun not(block: FacetOrDsl.() -> Unit) {
-    for (leaf in FacetOrDsl().apply(block).snapshot()) nodes.add(!leaf)
+    core.not(FacetOrDsl().apply(block).snapshot())
   }
 
-  internal fun snapshot(): List<Filter.Facet> = nodes.snapshot()
+  internal fun snapshot(): List<Filter.Facet> = core.snapshot()
 }
 
 /** Constructs [FacetFilters] from a facet-only DSL block, or `null` when the block is empty. */
