@@ -102,7 +102,13 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
         language,
       });
       if (suites.client) {
-        await run('./gradle/gradlew -p clients/algoliasearch-client-kotlin :client:jvmTest', {
+        await run(
+          './gradle/gradlew -p clients/algoliasearch-client-kotlin --continue :client:jvmTest :client:jvmDslTest',
+          { language },
+        );
+      }
+      if (suites.e2e) {
+        await run('./gradle/gradlew -p clients/algoliasearch-client-kotlin --continue :client:jvmDslLiveTest', {
           language,
         });
       }
