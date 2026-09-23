@@ -1,0 +1,70 @@
+post:
+  tags:
+  - Tasks
+  operationId: createAgentTask
+  x-acl:
+  - search
+  x-streaming: true
+  summary: Run Task
+  description: |-
+    Run a configured task and return the generated object as ``{ output }``.
+
+    With ``?stream=true``, returns the raw partial JSON text stream expected by
+    AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+  parameters:
+  - name: agentId
+    in: path
+    required: true
+    schema:
+      $ref: ../../common/schemas/AgentIdUnion.yml#/AgentIdUnion
+    description: The agentId.
+  - name: stream
+    in: query
+    required: false
+    schema:
+      type: boolean
+      description: Whether to stream the response or not.
+      default: false
+      title: stream
+    description: Whether to stream the response or not.
+  - name: cache
+    in: query
+    required: false
+    schema:
+      type: boolean
+      description: Use cached responses if available.
+      default: true
+      title: cache
+    description: Use cached responses if available.
+  - name: analytics
+    in: query
+    required: false
+    schema:
+      type: boolean
+      description: 'Set to false to skip endpoint-specific analytics for this task
+        call (default: true). Disables the task analytics event; operational metrics
+        and traces are always emitted.'
+      default: true
+      title: analytics
+    description: 'Set to false to skip endpoint-specific analytics for this task call
+      (default: true). Disables the task analytics event; operational metrics and
+      traces are always emitted.'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../common/schemas/TaskRequest.yml#/TaskRequest
+  responses:
+    '200':
+      description: Successful Response.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/TaskResponse.yml#/TaskResponse
+    '422':
+      description: Validation Error.
+      content:
+        application/json:
+          schema:
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

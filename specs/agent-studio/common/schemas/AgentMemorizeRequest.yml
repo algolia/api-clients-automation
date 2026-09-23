@@ -9,7 +9,7 @@ AgentMemorizeRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: 'MessagesUnionAgentMemorizeRequest.yml#/MessagesUnionAgentMemorizeRequest'
+      $ref: MessagesUnion.yml#/MessagesUnion
     targetMemories:
       type: integer
       maximum: 50.0
@@ -29,8 +29,8 @@ AgentMemorizeRequest:
       default: false
   type: object
   required:
-    - providerID
-    - model
-    - messages
+  - providerID
+  - model
+  - messages
   title: agentMemorizeRequest
   description: Agent endpoint request that extracts and saves semantic memories.

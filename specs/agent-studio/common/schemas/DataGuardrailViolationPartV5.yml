@@ -1,0 +1,17 @@
+DataGuardrailViolationPartV5:
+  description: |-
+    A ``data-guardrail-violation`` part that an AI SDK v5 client sends back.
+
+    Send this part to tell the completions endpoint that a guardrail blocked the previous turn.
+  properties:
+    type:
+      const: data-guardrail-violation
+      default: data-guardrail-violation
+      title: type
+      type: string
+    data:
+      $ref: GuardrailViolationDataV5.yml#/GuardrailViolationDataV5
+  required:
+  - data
+  title: dataGuardrailViolationPartV5
+  type: object
