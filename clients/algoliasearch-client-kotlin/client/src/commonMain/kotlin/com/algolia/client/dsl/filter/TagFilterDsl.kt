@@ -14,6 +14,15 @@ public class TagFilterDsl internal constructor(private val core: FamilyAndBuilde
 
   public constructor() : this(FamilyAndBuilder<Filter.Tag> { FilterGroup.Or.Tag(it) })
 
+  /**
+   * Adds an [FilterGroup.And] of the children in [block]. An empty block adds nothing. The encoders
+   * flatten it into the enclosing `AND`, so `tagFilters { and { tag("a"); tag("b") } }` encodes as
+   * `[["a"], ["b"]]`.
+   */
+  public fun and(block: TagFilterDsl.() -> Unit) {
+    core.and(TagFilterDsl().apply(block).core.snapshot())
+  }
+
   /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. An empty block adds nothing. */
   public fun or(block: TagOrDsl.() -> Unit) {
     core.or(TagOrDsl().apply(block).snapshot())
