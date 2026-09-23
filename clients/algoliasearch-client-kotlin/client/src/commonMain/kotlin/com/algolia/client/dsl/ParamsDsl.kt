@@ -10,7 +10,7 @@ import com.algolia.client.model.search.DeleteByParams
 import com.algolia.client.model.search.SearchParamsObject
 
 /**
- * Constructs a [SearchParamsObject] from the generated [SearchParamsObjectBuilder].
+ * Constructs a [SearchParamsObject] from a [QueryBuilder].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one. If
  * [query] is non-null, it is written first. The [block] may overwrite it. A later `filters { }` or
@@ -34,7 +34,7 @@ import com.algolia.client.model.search.SearchParamsObject
 @AlgoliaExperimentalDsl
 public fun query(
   query: String? = null,
-  block: SearchParamsObjectBuilder.() -> Unit,
+  block: QueryBuilder.() -> Unit,
 ): SearchParamsObject =
   SearchParamsObjectBuilder()
     .apply {
@@ -46,7 +46,7 @@ public fun query(
     .build()
 
 /**
- * Constructs a [BrowseParamsObject] from the generated [BrowseParamsObjectBuilder].
+ * Constructs a [BrowseParamsObject] from a [BrowseBuilder].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one. A later
  * `filters { }` or `filters = "..."` assignment replaces an earlier `filters` value. The same rule
@@ -60,11 +60,11 @@ public fun query(
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun browse(block: BrowseParamsObjectBuilder.() -> Unit): BrowseParamsObject =
+public fun browse(block: BrowseBuilder.() -> Unit): BrowseParamsObject =
   BrowseParamsObjectBuilder().apply(block).build()
 
 /**
- * Constructs a [DeleteByParams] value from the generated [DeleteByParamsBuilder].
+ * Constructs a [DeleteByParams] value from a [DeleteByBuilder].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one,
  * including values set by [filters], [facetFilters], [numericFilters], and [tagFilters].
@@ -82,5 +82,5 @@ public fun browse(block: BrowseParamsObjectBuilder.() -> Unit): BrowseParamsObje
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun deleteBy(block: DeleteByParamsBuilder.() -> Unit): DeleteByParams =
+public fun deleteBy(block: DeleteByBuilder.() -> Unit): DeleteByParams =
   DeleteByParamsBuilder().apply(block).build()
