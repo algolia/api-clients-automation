@@ -2,10 +2,17 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,11 +120,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     supportingFiles.add(new SupportingFile("ApiClient.kt.mustache", apiFolder, "ApiClient.kt"));
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     supportingFiles.add(new SupportingFile("README_BOM.mustache", "client-bom", "README.md"));
-
-    if ("search".equals(client)) {
-      final String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
-      supportingFiles.add(new SupportingFile("dsl.mustache", dslFolder, "SearchDsl.kt"));
-    }
 
     Helpers.addCommonSupportingFiles(supportingFiles, "");
 
@@ -275,6 +277,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       }
       Map<String, Object> dslModel = new LinkedHashMap<>();
       dslModel.put("classname", model.classname);
+      for (CodegenProperty var : model.vars) {
+        var.vendorExtensions.put("x-dsl-build-rhs", buildRhs(model.classname, var));
+      }
       dslModel.put("vars", model.vars);
       List<Map<String, Object>> helpers = filterHelpersFor(model);
       if (!helpers.isEmpty()) {
@@ -282,7 +287,74 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       }
       dslModels.add(dslModel);
     }
-    additionalProperties.put("dslModels", dslModels);
+    writeSearchDslBuilders(dslModels);
+  }
+
+  /**
+   * Right-hand side of one build() argument. A required, non-nullable property must be set;
+   * everything else passes through.
+   */
+  private static String buildRhs(String classname, CodegenProperty var) {
+    if (var.required && !var.isNullable) {
+      return "requireNotNull(" + var.name + ") { \"" + classname + "." + var.name + " is required\" }";
+    }
+    return var.name;
+  }
+
+  /**
+   * One builder per file. A single file with every builder OOMs the Kotlin Native compiler on the
+   * macOS CI job. Deletes every `.kt` in the folder first: `removeExistingCodegen` does not clean
+   * `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder.
+   */
+  private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
+    String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
+    File outDir = new File(getOutputDir(), dslFolder);
+    try {
+      Files.createDirectories(outDir.toPath());
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot create DSL builder directory " + outDir, e);
+    }
+    File[] stale = outDir.listFiles((dir, name) -> name.endsWith(".kt"));
+    if (stale != null) {
+      for (File file : stale) {
+        if (!file.delete()) {
+          throw new RuntimeException("Cannot delete stale DSL builder " + file);
+        }
+      }
+    }
+
+    Template template = compileDslTemplate();
+    for (Map<String, Object> dslModel : dslModels) {
+      Map<String, Object> data = new HashMap<>(additionalProperties);
+      data.putAll(dslModel);
+      String classname = (String) dslModel.get("classname");
+      File out = new File(outDir, classname + "Builder.kt");
+      StringWriter rendered = new StringWriter();
+      template.execute(data, rendered);
+      try {
+        Files.writeString(out.toPath(), rendered.toString(), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        throw new RuntimeException("Cannot write DSL builder " + out, e);
+      }
+    }
+  }
+
+  private Template compileDslTemplate() {
+    File root = new File(templateDir());
+    Mustache.Compiler compiler = Mustache.compiler()
+      .defaultValue("")
+      .escapeHTML(false)
+      .withLoader(name -> {
+        String fileName = name.endsWith(".mustache") ? name : name + ".mustache";
+        File partial = new File(root, fileName);
+        return new InputStreamReader(Files.newInputStream(partial.toPath()), StandardCharsets.UTF_8);
+      });
+    File dsl = new File(root, "dsl.mustache");
+    try (Reader reader = new InputStreamReader(Files.newInputStream(dsl.toPath()), StandardCharsets.UTF_8)) {
+      return compiler.compile(reader);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot compile dsl.mustache from " + dsl, e);
+    }
   }
 
   private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {

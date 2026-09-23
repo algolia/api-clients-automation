@@ -10,7 +10,6 @@ import com.algolia.client.dsl.filter.TagFilterDsl
 import com.algolia.client.model.search.*
 import kotlinx.serialization.json.*
 
-{{#dslModels}}
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
 public class {{classname}}Builder {
@@ -23,9 +22,7 @@ public class {{classname}}Builder {
 
   internal fun build(): {{classname}} = {{classname}}(
 {{#vars}}
-    {{{name}}} = {{#required}}{{^isNullable}}requireNotNull({{{name}}}) { "{{classname}}.{{{name}}} is required" }{{/isNullable}}{{#isNullable}}{{{name}}}{{/isNullable}}{{/required}}{{^required}}{{{name}}}{{/required}},
+    {{{name}}} = {{{vendorExtensions.x-dsl-build-rhs}}},
 {{/vars}}
   )
 }
-
-{{/dslModels}}
