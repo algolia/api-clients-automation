@@ -29,7 +29,9 @@ public sealed interface Filter : FilterGroup {
   /**
    * Matches [attribute] to [value] exactly.
    *
-   * An optional [score] assigns a priority among several [Facet] filters in the same group.
+   * A non-null [score] is emitted as `<score=N>`, including `0`. The engine takes the maximum score
+   * inside an `OR` group and sums scores across `AND`ed filters, in `filters` and in
+   * `optionalFilters`. Its effect in `facetFilters` is undocumented.
    * [Filter scoring](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#filters-scoring)
    */
   @AlgoliaDsl

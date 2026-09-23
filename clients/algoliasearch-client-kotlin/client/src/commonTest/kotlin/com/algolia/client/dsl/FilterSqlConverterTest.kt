@@ -2,11 +2,13 @@
 
 package com.algolia.client.dsl
 
+import com.algolia.client.dsl.filter.FilterLegacyConverter
 import com.algolia.client.dsl.filter.FilterSqlConverter
 import com.algolia.client.dsl.filter.NumericOperator
 import com.algolia.client.dsl.filter.filters
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 /** Golden and ported vectors for [FilterSqlConverter]. Fixtures in FilterConverterFixtures.kt. */
 internal class FilterSqlConverterTest {
@@ -30,12 +32,14 @@ internal class FilterSqlConverterTest {
         comparison("price", NumericOperator.Equals, 15)
       }
     }
-    assertEquals("((color:red AND category:shirt) AND (price:0 TO 9 OR price = 15))", sql)
+    assertEquals("color:red AND category:shirt AND (price:0 TO 9 OR price = 15)", sql)
   }
 
   @Test
   fun v2PortedSqlVectors() {
     // Skip twoAndGroups_OfTheSameType_balanced: version 2 used a Set and collapsed equal groups.
+    // Version 2 wrapped every group, including single leaves, and joined top-level groups without
+    // outer parentheses; v3 flattens nested ANDs and drops single-leaf parentheses.
     val vectors =
       listOf(
         Triple(
@@ -84,7 +88,7 @@ internal class FilterSqlConverterTest {
             orTag { tag("unknown") }
             orNumeric { range("attributeA", 0..1) }
           },
-          "((attributeA:0) AND (attributeA:0) AND (_tags:unknown) AND (attributeA:0 TO 1))",
+          "attributeA:0 AND attributeA:0 AND _tags:unknown AND attributeA:0 TO 1",
         ),
         Triple(
           "twoOfEveryType",
@@ -106,7 +110,7 @@ internal class FilterSqlConverterTest {
               comparison("attributeB", NumericOperator.Greater, 0)
             }
           },
-          "((attributeA:0 AND attributeB:0) AND (attributeA:0 OR attributeB:0) AND (_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1 OR attributeB > 0))",
+          "attributeA:0 AND attributeB:0 AND (attributeA:0 OR attributeB:0) AND (_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1 OR attributeB > 0)",
         ),
         Triple(
           "singleAndGroups_differentTypes",
@@ -116,7 +120,7 @@ internal class FilterSqlConverterTest {
               tag("unknown")
             }
           },
-          "(attributeA:0 AND _tags:unknown)",
+          "attributeA:0 AND _tags:unknown",
         ),
         Triple(
           "twoAndGroups_OfDifferentTypes_balanced",
@@ -130,7 +134,7 @@ internal class FilterSqlConverterTest {
               range("attributeB", 0..1)
             }
           },
-          "((_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1 OR attributeB:0 TO 1))",
+          "(_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1 OR attributeB:0 TO 1)",
         ),
         Triple(
           "twoAndGroups_OfTheSameType_unbalanced",
@@ -141,7 +145,7 @@ internal class FilterSqlConverterTest {
               tag("attributeB")
             }
           },
-          "((_tags:attributeA) AND (_tags:attributeA OR _tags:attributeB))",
+          "_tags:attributeA AND (_tags:attributeA OR _tags:attributeB)",
         ),
         Triple(
           "twoAndGroups_OfDifferentTypes_unbalanced",
@@ -152,7 +156,7 @@ internal class FilterSqlConverterTest {
             }
             orNumeric { range("attributeA", 0..1) }
           },
-          "((_tags:attributeA OR _tags:attributeB) AND (attributeA:0 TO 1))",
+          "(_tags:attributeA OR _tags:attributeB) AND attributeA:0 TO 1",
         ),
       )
     for ((name, sql, expected) in vectors) {
@@ -163,12 +167,52 @@ internal class FilterSqlConverterTest {
   @Test
   fun sqlAcceptsEveryFamily() {
     assertEquals(
-      "(a:b AND _tags:t AND p:0 TO 1)",
+      "a:b AND _tags:t AND p:0 TO 1",
       filters {
         facet("a", "b")
         tag("t")
         range("p", 0..1)
       },
     )
+  }
+
+  @Test
+  fun sqlRejectVectors() {
+    sqlRejectVectors.forEach { vector ->
+      assertFailsWith<IllegalArgumentException>(vector.name) { FilterSqlConverter(vector.group) }
+      if (vector.legacyFacetThrows) {
+        assertFailsWith<IllegalArgumentException>("${vector.name} legacy") {
+          FilterLegacyConverter.facet(vector.group)
+        }
+      }
+    }
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.numeric(
+        sqlRejectVectors.single { it.name == "numeric or of ands" }.group
+      )
+    }
+  }
+
+  @Test
+  fun dslRejectsInexpressibleNot() {
+    assertFailsWith<IllegalArgumentException> {
+      filters {
+        not {
+          orFacet {
+            facet("color", "red")
+            facet("color", "blue")
+          }
+          facet("category", "shirt")
+        }
+      }
+    }
+    assertFailsWith<IllegalArgumentException> {
+      filters {
+        not {
+          facet("color", "red")
+          tag("a")
+        }
+      }
+    }
   }
 }

@@ -5,7 +5,10 @@ package com.algolia.client.dsl
 import com.algolia.client.dsl.filter.Filter
 import com.algolia.client.dsl.filter.FilterGroup
 import com.algolia.client.dsl.filter.FilterLegacyConverter
+import com.algolia.client.dsl.filter.FilterSqlConverter
+import com.algolia.client.dsl.filter.Literal
 import com.algolia.client.dsl.filter.NumericOperator
+import com.algolia.client.dsl.filter.conjunctiveRows
 import com.algolia.client.dsl.filter.facetFilters
 import com.algolia.client.dsl.filter.numericFilters
 import com.algolia.client.dsl.filter.tagFilters
@@ -79,7 +82,7 @@ internal class FilterLegacyConverterTest {
   @Test
   fun familyHelperOrBuildsFamilyGroup() {
     assertEquals(
-      listOf(listOf("\"color\":\"red\"", "\"color\":\"blue\"")),
+      listOf(listOf("color:red", "color:blue")),
       facetFilters {
           or {
             facet("color", "red")
@@ -119,8 +122,82 @@ internal class FilterLegacyConverterTest {
       }
     }
     assertEquals(
-      listOf(listOf("\"color\":\"red\""), listOf("\"size\":\"s\"", "\"size\":\"m\"")),
+      listOf(listOf("color:red"), listOf("size:s", "size:m")),
       mixedAnd?.rows(),
+    )
+  }
+
+  /**
+   * One assert per D2 leaf form, with the exact wire string the live engine accepted. Legacy facet,
+   * optional, and tag leaves are never quoted: a leading `-` in a positive value is escaped as
+   * `\-`, negation is a single `-`, and a negated value that starts with `-` is `--`.
+   */
+  @Test
+  fun leafRuleMatchesLiveEngine() {
+    fun facet(leaf: Filter) = FilterLegacyConverter.facet(leaf)?.rows()?.single()?.single()
+    fun optional(leaf: Filter) = FilterLegacyConverter.optional(leaf)?.rows()?.single()?.single()
+    fun tag(leaf: Filter) = FilterLegacyConverter.tag(leaf)?.rows()?.single()?.single()
+
+    assertEquals("color:red", facet(Filter.Facet("color", "red")))
+    assertEquals("color:-red", facet(Filter.Facet("color", "red", negated = true)))
+    assertEquals("label:\\-Movie", facet(Filter.Facet("label", "-Movie")))
+    assertEquals("label:--Movie", facet(Filter.Facet("label", "-Movie", negated = true)))
+    assertEquals("count:\\-12", facet(Filter.Facet("count", -12)))
+    assertEquals("color:navy blue", facet(Filter.Facet("color", "navy blue")))
+    assertEquals(
+      "provider:NBC: Universal \"East\"",
+      facet(Filter.Facet("provider", "NBC: Universal \"East\"")),
+    )
+
+    assertEquals("color:red<score=0>", optional(Filter.Facet("color", "red", score = 0)))
+    assertEquals(
+      "color:-red<score=2>",
+      optional(Filter.Facet("color", "red", score = 2, negated = true)),
+    )
+
+    assertEquals("x", tag(Filter.Tag("x")))
+    assertEquals("-x", tag(Filter.Tag("x", negated = true)))
+    assertEquals("\\-x", tag(Filter.Tag("-x")))
+    assertEquals("--x", tag(Filter.Tag("-x", negated = true)))
+  }
+
+  /**
+   * A negated And whose only non-empty child is an OR: the empty child is dropped before the size
+   * check, so the OR's negation expands to one row per leaf (De Morgan) instead of throwing.
+   */
+  @Test
+  fun negatedAndWithOneNonEmptyChildDeMorgans() {
+    val tree =
+      FilterGroup.Not(
+        FilterGroup.And(FilterGroup.Or.Facet(), FilterGroup.Or.Facet(colorRed, colorBlue))
+      )
+    assertEquals(
+      listOf(listOf("color:-red"), listOf("color:-blue")),
+      FilterLegacyConverter.facet(tree)?.rows(),
+    )
+    assertEquals("NOT color:red AND NOT color:blue", FilterSqlConverter(tree))
+  }
+
+  /**
+   * The shared normal form: nested Ands flatten, and a negated And is one row of negated literals.
+   */
+  @Test
+  fun conjunctiveRowsShape() {
+    assertEquals(
+      listOf(
+        listOf(Literal(colorRed, true), Literal(colorBlue, true), Literal(categoryShirt, true))
+      ),
+      conjunctiveRows(
+        FilterGroup.Not(FilterGroup.And(FilterGroup.And(colorRed, colorBlue), categoryShirt))
+      ),
+    )
+    assertEquals(
+      listOf(
+        listOf(Literal(colorRed, false)),
+        listOf(Literal(colorBlue, false)),
+        listOf(Literal(categoryShirt, false)),
+      ),
+      conjunctiveRows(FilterGroup.And(colorRed, FilterGroup.And(colorBlue, categoryShirt))),
     )
   }
 

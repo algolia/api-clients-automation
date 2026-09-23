@@ -13,9 +13,14 @@ import com.algolia.client.model.search.TagFilters
 
 /**
  * Shared fixtures for [FilterSqlConverterTest], [FilterLegacyConverterTest], and
- * [FilterNegationDslTest]. Golden vectors: SQL quotes only when T5 requires it (space, quote, `AND`
- * / `OR` / `NOT`); legacy facet rows always quote; legacy numeric attributes and tag values use the
- * same T5 rule.
+ * [FilterNegationDslTest]. Both encoders share `conjunctiveRows`, so every vector has the same
+ * AND/OR shape and leaf polarity in SQL and legacy form; [sqlRejectVectors] lists the trees neither
+ * form can express.
+ *
+ * Golden vectors: SQL quotes an attribute or value only when `FilterQuote.quote` requires it
+ * (space, quote, `AND` / `OR` / `NOT`). Legacy facet and tag rows are never quoted and never escape
+ * quotes (`attr:value`, `attr:-value`, `attr:\-value`; `v`, `-v`, `\-v`). Legacy numeric attributes
+ * use the `FilterQuote.quote` rule.
  */
 internal class SqlVector(val name: String, val group: FilterGroup, val sql: String?)
 
@@ -42,8 +47,11 @@ internal val sqlVectors: List<SqlVector> =
   listOf(
     SqlVector("facet", colorRed, "color:red"),
     SqlVector("facet score", Filter.Facet("color", "red", score = 2), "color:red<score=2>"),
+    SqlVector("facet score zero", Filter.Facet("color", "red", score = 0), "color:red<score=0>"),
     SqlVector("facet boolean", Filter.Facet("available", true), "available:true"),
     SqlVector("facet number", Filter.Facet("count", 10), "count:10"),
+    SqlVector("leading dash facet", Filter.Facet("category", "-Movie"), "category:-Movie"),
+    SqlVector("negative number facet", Filter.Facet("count", -12), "count:-12"),
     SqlVector("tag", Filter.Tag("featured"), "_tags:featured"),
     SqlVector("range until", priceUntil10, "price:0 TO 9"),
     SqlVector("range inclusive", Filter.Range("price", 0..10), "price:0 TO 10"),
@@ -74,8 +82,14 @@ internal val sqlVectors: List<SqlVector> =
       Filter.Comparison("price", NumericOperator.Greater, 5),
       "price > 5",
     ),
-    SqlVector("and", FilterGroup.And(colorRed, categoryShirt), "(color:red AND category:shirt)"),
+    SqlVector("and", FilterGroup.And(colorRed, categoryShirt), "color:red AND category:shirt"),
+    SqlVector(
+      "nested and flattens",
+      FilterGroup.And(colorRed, FilterGroup.And(colorBlue, categoryShirt)),
+      "color:red AND color:blue AND category:shirt",
+    ),
     SqlVector("or facet", FilterGroup.Or.Facet(colorRed, colorBlue), "(color:red OR color:blue)"),
+    SqlVector("single-leaf or root", FilterGroup.Or.Facet(colorRed), "color:red"),
     SqlVector(
       "or numeric",
       FilterGroup.Or.Numeric(priceUntil10, priceEquals15),
@@ -92,7 +106,42 @@ internal val sqlVectors: List<SqlVector> =
     SqlVector(
       "not and",
       FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt)),
-      "NOT (color:red AND category:shirt)",
+      "(NOT color:red OR NOT category:shirt)",
+    ),
+    SqlVector(
+      "not or facet",
+      FilterGroup.Not(FilterGroup.Or.Facet(colorRed, colorBlue)),
+      "NOT color:red AND NOT color:blue",
+    ),
+    SqlVector(
+      "not and nested and",
+      FilterGroup.Not(FilterGroup.And(FilterGroup.And(colorRed, colorBlue), categoryShirt)),
+      "(NOT color:red OR NOT color:blue OR NOT category:shirt)",
+    ),
+    SqlVector(
+      "not and single-leaf or",
+      FilterGroup.Not(FilterGroup.And(FilterGroup.Or.Facet(colorRed), categoryShirt)),
+      "(NOT color:red OR NOT category:shirt)",
+    ),
+    SqlVector(
+      "not and empty child",
+      FilterGroup.Not(FilterGroup.And(colorRed, FilterGroup.Or.Facet(), categoryShirt)),
+      "(NOT color:red OR NOT category:shirt)",
+    ),
+    SqlVector(
+      "and with not or",
+      FilterGroup.And(colorRed, FilterGroup.Not(FilterGroup.Or.Facet(colorBlue, categoryShirt))),
+      "color:red AND NOT color:blue AND NOT category:shirt",
+    ),
+    SqlVector(
+      "not and tags",
+      FilterGroup.Not(FilterGroup.And(Filter.Tag("a"), Filter.Tag("b"))),
+      "(NOT _tags:a OR NOT _tags:b)",
+    ),
+    SqlVector(
+      "de morgan inside and",
+      FilterGroup.And(FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt)), priceEquals15),
+      "(NOT color:red OR NOT category:shirt) AND price = 15",
     ),
     SqlVector("not range", !Filter.Range("attributeA", 0..10), "NOT attributeA:0 TO 10"),
     SqlVector(
@@ -105,14 +154,14 @@ internal val sqlVectors: List<SqlVector> =
     SqlVector(
       "not not and",
       FilterGroup.Not(FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt))),
-      "(color:red AND category:shirt)",
+      "color:red AND category:shirt",
     ),
     SqlVector("not not range", FilterGroup.Not(FilterGroup.Not(priceUntil10)), "price:0 TO 9"),
     SqlVector("not of negated range", FilterGroup.Not(!priceUntil10), "price:0 TO 9"),
     SqlVector(
       "not and mixed polarity",
       FilterGroup.Not(FilterGroup.And(!colorRed, categoryShirt)),
-      "NOT (NOT color:red AND category:shirt)",
+      "(color:red OR NOT category:shirt)",
     ),
     SqlVector(
       "or facet negated leaves",
@@ -134,7 +183,7 @@ internal val sqlVectors: List<SqlVector> =
     SqlVector(
       "not and with range",
       FilterGroup.Not(FilterGroup.And(Filter.Range("price", 0..10), priceEquals15)),
-      "NOT (price:0 TO 10 AND price = 15)",
+      "(NOT price:0 TO 10 OR NOT price = 15)",
     ),
     SqlVector(
       "or numeric negated range",
@@ -158,25 +207,92 @@ internal val sqlVectors: List<SqlVector> =
         FilterGroup.And(colorRed, categoryShirt),
         FilterGroup.Or.Numeric(priceUntil10, priceEquals15),
       ),
-      "((color:red AND category:shirt) AND (price:0 TO 9 OR price = 15))",
+      "color:red AND category:shirt AND (price:0 TO 9 OR price = 15)",
     ),
     SqlVector(
       "optionalFilters docs",
       FilterGroup.And(Filter.Facet("category", "Book"), Filter.Facet("author", "John Doe")),
-      "(category:Book AND author:\"John Doe\")",
+      "category:Book AND author:\"John Doe\"",
     ),
   )
 
 internal val legacyVectors: List<LegacyVector> =
   listOf(
-    LegacyVector("facet", colorRed, Family.Facet, listOf(listOf("\"color\":\"red\""))),
+    LegacyVector("facet", colorRed, Family.Facet, listOf(listOf("color:red"))),
     LegacyVector(
       "facet score",
       Filter.Facet("color", "red", score = 2),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\"<score=2>")),
+      listOf(listOf("color:red<score=2>")),
+    ),
+    LegacyVector(
+      "facet score zero",
+      Filter.Facet("color", "red", score = 0),
+      Family.Facet,
+      listOf(listOf("color:red<score=0>")),
+    ),
+    LegacyVector(
+      "facet score negated",
+      Filter.Facet("color", "red", score = 2, negated = true),
+      Family.Facet,
+      listOf(listOf("color:-red<score=2>")),
+    ),
+    LegacyVector(
+      "leading dash facet",
+      Filter.Facet("category", "-Movie"),
+      Family.Facet,
+      listOf(listOf("category:\\-Movie")),
+    ),
+    LegacyVector(
+      "leading dash facet negated",
+      Filter.Facet("category", "-Movie", negated = true),
+      Family.Facet,
+      listOf(listOf("category:--Movie")),
+    ),
+    LegacyVector(
+      "negative number facet",
+      Filter.Facet("count", -12),
+      Family.Facet,
+      listOf(listOf("count:\\-12")),
+    ),
+    LegacyVector(
+      "inner dash facet",
+      Filter.Facet("sku", "a-b"),
+      Family.Facet,
+      listOf(listOf("sku:a-b")),
+    ),
+    LegacyVector(
+      "space value",
+      Filter.Facet("color", "navy blue"),
+      Family.Facet,
+      listOf(listOf("color:navy blue")),
+    ),
+    LegacyVector(
+      "space value negated",
+      Filter.Facet("color", "navy blue", negated = true),
+      Family.Facet,
+      listOf(listOf("color:-navy blue")),
+    ),
+    LegacyVector(
+      "raw quotes and colon",
+      Filter.Facet("provider", "NBC: Universal \"East\""),
+      Family.Facet,
+      listOf(listOf("provider:NBC: Universal \"East\"")),
     ),
     LegacyVector("tag", Filter.Tag("featured"), Family.Tag, listOf(listOf("featured"))),
+    LegacyVector("leading dash tag", Filter.Tag("-x"), Family.Tag, listOf(listOf("\\-x"))),
+    LegacyVector(
+      "leading dash tag negated",
+      Filter.Tag("-x", negated = true),
+      Family.Tag,
+      listOf(listOf("--x")),
+    ),
+    LegacyVector(
+      "leading dash tag space",
+      Filter.Tag("-x y"),
+      Family.Tag,
+      listOf(listOf("\\-x y")),
+    ),
     LegacyVector("range until", priceUntil10, Family.Numeric, listOf(listOf("price:0 TO 9"))),
     LegacyVector(
       "comparison equals",
@@ -188,13 +304,19 @@ internal val legacyVectors: List<LegacyVector> =
       "and facets",
       FilterGroup.And(colorRed, categoryShirt),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+      listOf(listOf("color:red"), listOf("category:shirt")),
+    ),
+    LegacyVector(
+      "nested and flattens",
+      FilterGroup.And(colorRed, FilterGroup.And(colorBlue, categoryShirt)),
+      Family.Facet,
+      listOf(listOf("color:red"), listOf("color:blue"), listOf("category:shirt")),
     ),
     LegacyVector(
       "or facets",
       FilterGroup.Or.Facet(colorRed, colorBlue),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\"", "\"color\":\"blue\"")),
+      listOf(listOf("color:red", "color:blue")),
     ),
     LegacyVector(
       "or numeric",
@@ -206,19 +328,25 @@ internal val legacyVectors: List<LegacyVector> =
       "not facet",
       FilterGroup.Not(colorRed),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"")),
+      listOf(listOf("color:-red")),
     ),
     LegacyVector(
       "not facet flag ctor",
       Filter.Facet("color", "red", negated = true),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"")),
+      listOf(listOf("color:-red")),
     ),
     LegacyVector(
       "not facet unary",
       !colorRed,
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"")),
+      listOf(listOf("color:-red")),
+    ),
+    LegacyVector(
+      "not or facet",
+      FilterGroup.Not(FilterGroup.Or.Facet(colorRed, colorBlue)),
+      Family.Facet,
+      listOf(listOf("color:-red"), listOf("color:-blue")),
     ),
     LegacyVector(
       "not tag",
@@ -248,19 +376,19 @@ internal val legacyVectors: List<LegacyVector> =
       "double not leaf",
       colorRed.not().not(),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\"")),
+      listOf(listOf("color:red")),
     ),
     LegacyVector(
       "not of negated leaf",
       FilterGroup.Not(!colorRed),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\"")),
+      listOf(listOf("color:red")),
     ),
     LegacyVector(
       "not not and",
       FilterGroup.Not(FilterGroup.Not(FilterGroup.And(colorRed, categoryShirt))),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+      listOf(listOf("color:red"), listOf("category:shirt")),
     ),
     LegacyVector(
       "not not range",
@@ -278,13 +406,13 @@ internal val legacyVectors: List<LegacyVector> =
       "not and mixed polarity",
       FilterGroup.Not(FilterGroup.And(!colorRed, categoryShirt)),
       Family.Facet,
-      listOf(listOf("\"color\":\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:red", "category:-shirt")),
     ),
     LegacyVector(
       "or facet negated leaves",
       FilterGroup.Or.Facet(!colorRed, !categoryShirt),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:-red", "category:-shirt")),
     ),
     LegacyVector(
       "not not empty and",
@@ -316,37 +444,37 @@ internal val legacyVectors: List<LegacyVector> =
       "not and with single-leaf or",
       FilterGroup.Not(FilterGroup.And(FilterGroup.Or.Facet(colorRed), categoryShirt)),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:-red", "category:-shirt")),
     ),
     LegacyVector(
       "not and with nested and",
       FilterGroup.Not(FilterGroup.And(FilterGroup.And(colorRed, colorBlue), categoryShirt)),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"", "\"color\":-\"blue\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:-red", "color:-blue", "category:-shirt")),
     ),
     LegacyVector(
       "not and with empty child",
       FilterGroup.Not(FilterGroup.And(colorRed, FilterGroup.Or.Facet(), categoryShirt)),
       Family.Facet,
-      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:-red", "category:-shirt")),
     ),
     LegacyVector(
       "quote space",
       Filter.Facet("author", "John Doe"),
       Family.Facet,
-      listOf(listOf("\"author\":\"John Doe\"")),
+      listOf(listOf("author:John Doe")),
     ),
     LegacyVector(
       "quote AND",
       Filter.Facet("title", "foo AND bar"),
       Family.Facet,
-      listOf(listOf("\"title\":\"foo AND bar\"")),
+      listOf(listOf("title:foo AND bar")),
     ),
     LegacyVector(
       "quote embedded",
       Filter.Tag("45\"-50\" tv's"),
       Family.Tag,
-      listOf(listOf("\"45\\\"-50\\\" tv's\"")),
+      listOf(listOf("45\"-50\" tv's")),
     ),
     LegacyVector("empty and", FilterGroup.And(), Family.Facet),
     LegacyVector("empty or", FilterGroup.Or.Facet(), Family.Facet),
@@ -366,9 +494,9 @@ internal val legacyVectors: List<LegacyVector> =
       ),
       Family.Facet,
       listOf(
-        listOf("\"attributeA\":\"unknown\""),
-        listOf("\"attributeB\":\"unknown\""),
-        listOf("\"attributeA\":\"unknown\"", "\"attributeB\":\"unknown\""),
+        listOf("attributeA:unknown"),
+        listOf("attributeB:unknown"),
+        listOf("attributeA:unknown", "attributeB:unknown"),
       ),
     ),
     LegacyVector(
@@ -381,7 +509,50 @@ internal val legacyVectors: List<LegacyVector> =
       "quote tag space",
       Filter.Tag("foo bar"),
       Family.Tag,
-      listOf(listOf("\"foo bar\"")),
+      listOf(listOf("foo bar")),
+    ),
+  )
+
+internal class RejectVector(
+  val name: String,
+  val group: FilterGroup,
+  val legacyFacetThrows: Boolean,
+)
+
+/** Trees neither Algolia `filters` nor the nested-list form can express. */
+internal val sqlRejectVectors: List<RejectVector> =
+  listOf(
+    RejectVector(
+      "or of ands",
+      FilterGroup.Not(FilterGroup.And(FilterGroup.Or.Facet(colorRed, colorBlue), categoryShirt)),
+      true,
+    ),
+    RejectVector(
+      "double not conjunction",
+      FilterGroup.Not(
+        FilterGroup.And(FilterGroup.Not(FilterGroup.And(colorRed, colorBlue)), categoryShirt)
+      ),
+      true,
+    ),
+    RejectVector(
+      "mixed facet tag",
+      FilterGroup.Not(FilterGroup.And(colorRed, Filter.Tag("a"))),
+      true,
+    ),
+    RejectVector(
+      "mixed facet numeric",
+      FilterGroup.Not(FilterGroup.And(colorRed, priceEquals15)),
+      true,
+    ),
+    RejectVector(
+      "numeric or of ands",
+      FilterGroup.Not(
+        FilterGroup.And(
+          FilterGroup.Or.Numeric(priceUntil10, priceEquals15),
+          Filter.Comparison("stock", NumericOperator.Greater, 0),
+        )
+      ),
+      false,
     ),
   )
 
