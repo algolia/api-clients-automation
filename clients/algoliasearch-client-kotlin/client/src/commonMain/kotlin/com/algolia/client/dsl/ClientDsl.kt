@@ -4,9 +4,6 @@ package com.algolia.client.dsl
 
 import com.algolia.client.api.SearchClient
 import com.algolia.client.dsl.deleteBy as buildDeleteBy
-import com.algolia.client.dsl.generated.DeleteByParamsBuilder
-import com.algolia.client.dsl.generated.IndexSettingsBuilder
-import com.algolia.client.dsl.generated.SearchParamsObjectBuilder
 import com.algolia.client.model.search.SearchParams
 import com.algolia.client.model.search.SearchResponse
 import com.algolia.client.model.search.UpdatedAtResponse
@@ -32,7 +29,7 @@ import com.algolia.client.transport.RequestOptions
 public suspend fun SearchClient.searchSingleIndex(
   indexName: String,
   requestOptions: RequestOptions? = null,
-  block: SearchParamsObjectBuilder.() -> Unit,
+  block: QueryBuilder.() -> Unit,
 ): SearchResponse =
   searchSingleIndex(
     indexName = indexName,
@@ -54,7 +51,7 @@ public suspend fun SearchClient.setSettings(
   indexName: String,
   forwardToReplicas: Boolean? = null,
   requestOptions: RequestOptions? = null,
-  block: IndexSettingsBuilder.() -> Unit,
+  block: SettingsBuilder.() -> Unit,
 ): UpdatedAtResponse =
   setSettings(
     indexName = indexName,
@@ -74,7 +71,7 @@ public suspend fun SearchClient.setSettings(
 public suspend fun SearchClient.deleteBy(
   indexName: String,
   requestOptions: RequestOptions? = null,
-  block: DeleteByParamsBuilder.() -> Unit,
+  block: DeleteByBuilder.() -> Unit,
 ): UpdatedAtResponse =
   deleteBy(
     indexName = indexName,

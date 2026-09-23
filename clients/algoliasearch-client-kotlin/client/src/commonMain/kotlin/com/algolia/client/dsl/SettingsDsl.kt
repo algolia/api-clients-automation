@@ -4,7 +4,7 @@ import com.algolia.client.dsl.generated.IndexSettingsBuilder
 import com.algolia.client.model.search.IndexSettings
 
 /**
- * Constructs an [IndexSettings] value from the generated [IndexSettingsBuilder].
+ * Constructs an [IndexSettings] value from a [SettingsBuilder].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one,
  * including values set by the typed helpers.
@@ -35,7 +35,7 @@ import com.algolia.client.model.search.IndexSettings
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun settings(block: IndexSettingsBuilder.() -> Unit): IndexSettings =
+public fun settings(block: SettingsBuilder.() -> Unit): IndexSettings =
   IndexSettingsBuilder().apply(block).build()
 
 /**
