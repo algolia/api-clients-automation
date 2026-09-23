@@ -1,3 +1,5 @@
+import java.time.Duration
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.konan.target.HostManager
 
 plugins {
@@ -12,7 +14,20 @@ kotlin {
   applyDefaultHierarchyTemplate()
 
   explicitApi()
-  jvm()
+  jvm {
+    // One compilation per stacked phase: a phase whose API does not exist yet fails alone.
+    val main = compilations.getByName("main")
+    val phases = (0..3).map { compilations.create("dslP$it") }
+    phases.forEachIndexed { index, compilation ->
+      compilation.associateWith(main)
+      phases.take(index).forEach { compilation.associateWith(it) }
+      compilation.defaultSourceSet.dependencies {
+        implementation(libs.kotlin.test.junit)
+        implementation(libs.ktor.client.okhttp)
+        implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
+      }
+    }
+  }
 
   if (HostManager.hostIsMac) {
     iosX64()
@@ -65,4 +80,52 @@ kotlin {
       }
     }
   }
+}
+
+val dslPhases = 0..3
+val repoRoot: String = rootDir.resolve("../..").canonicalPath
+
+dslPhases.forEach { phase ->
+  val compilation = kotlin.jvm().compilations.getByName("dslP$phase")
+  fun Test.dslTest(suite: String) {
+    group = "verification"
+    useJUnit()
+    dependsOn(compilation.compileTaskProvider)
+    testClassesDirs = compilation.output.classesDirs
+    classpath =
+      compilation.compileDependencyFiles +
+        compilation.runtimeDependencyFiles +
+        compilation.output.allOutputs
+    filter.includeTestsMatching("com.algolia.client.dsl.$suite.*")
+    systemProperty("algolia.dsl.phases", dslPhases.joinToString(","))
+    systemProperty("algolia.dsl.sourceRoot", file("src").absolutePath)
+    testLogging {
+      events("failed", "skipped")
+      exceptionFormat = TestExceptionFormat.FULL
+    }
+  }
+  tasks.register<Test>("jvmDslP${phase}Test") {
+    description = "Kotlin DSL capability matrix, phase $phase, offline."
+    dslTest("matrix")
+  }
+  tasks.register<Test>("jvmDslP${phase}LiveTest") {
+    description = "Kotlin DSL capability matrix, phase $phase, against the Algolia API."
+    dslTest("live")
+    systemProperty("algolia.dsl.live", "true")
+    systemProperty("algolia.repoRoot", repoRoot)
+    outputs.upToDateWhen { false }
+    timeout.set(Duration.ofMinutes(15))
+  }
+}
+
+tasks.register("jvmDslTest") {
+  group = "verification"
+  description = "Kotlin DSL capability matrix, all phases, offline."
+  dependsOn(dslPhases.map { "jvmDslP${it}Test" })
+}
+
+tasks.register("jvmDslLiveTest") {
+  group = "verification"
+  description = "Kotlin DSL capability matrix, all phases, against the Algolia API."
+  dependsOn(dslPhases.map { "jvmDslP${it}LiveTest" })
 }
