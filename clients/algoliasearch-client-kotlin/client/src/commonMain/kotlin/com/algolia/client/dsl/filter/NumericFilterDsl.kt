@@ -16,6 +16,15 @@ internal constructor(private val core: FamilyAndBuilder<Filter.Numeric>) :
   public constructor() : this(FamilyAndBuilder<Filter.Numeric> { FilterGroup.Or.Numeric(it) })
 
   /**
+   * Adds an [FilterGroup.And] of the children in [block]. An empty block adds nothing. The encoders
+   * flatten it into the enclosing `AND`, so `numericFilters { and { range("p", 0..1);
+   * comparison("q", NumericOperator.Less, 5) } }` encodes as `[["p:0 TO 1"], ["q < 5"]]`.
+   */
+  public fun and(block: NumericFilterDsl.() -> Unit) {
+    core.and(NumericFilterDsl().apply(block).core.snapshot())
+  }
+
+  /**
    * Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. An empty block adds nothing.
    */
   public fun or(block: NumericOrDsl.() -> Unit) {
