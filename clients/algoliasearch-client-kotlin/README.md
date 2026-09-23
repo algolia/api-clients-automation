@@ -136,16 +136,54 @@ val params = query {
 }
 ```
 
+### Composing queries
+
+`QueryComposer` assembles one `SearchParamsObject` from fragments contributed by several modules. `add { }` contributes to a field; `override { }` sets a field outright:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val composer = QueryComposer()                        // was: QueryWrapper()
+composer.add { filters { orFacet { facet("locale", primary); secondary?.let { facet("locale", it) } } } }
+composer.override { queryLanguages { +SupportedLanguage.En } }
+composer.add { optionalFilters { or { facet("isFeatured", true, score = 500) } } }
+composer.override { sumOrFiltersScores = true }
+val extra: QueryAdditions.() -> Unit = { ruleContexts { +"desktop" } }   // stored fragment
+composer.add(extra)
+val params = composer.build()                         // every lambda above runs here
+client.searchSingleIndex(indexName, SearchParams.of(params))
+```
+
+`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `QueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `QueryBuilder`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws, plus the `IllegalArgumentException` the filter DSL raises for unsupported shapes on the combined tree. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
+
+Compared with a hand-rolled `QueryWrapper` that stored `DSLFilters.() -> Unit`, `DSLFacetFilters.() -> Unit`, and `DSLStrings.() -> Unit` lambdas: fragments are per-field inside one `add { }` (no separate lambda types to declare), and `override { }` runs after all additive fields.
+
 ### Migrating from version 2
 
 Map version 2 types to version 3 types:
 
-- `Query` → `SearchParamsObject` via `query { }`
-- `Settings` → `IndexSettings` via `settings { }`
-- `Attribute` → `String`
-- `initIndex` is gone. Pass the index name to the client method.
-- `index.search { }` → `client.searchSingleIndex(indexName) { }`
-- `index.browse(query)` → `client.browse(indexName, browse { })`
+| Version 2 | Version 3 |
+| --- | --- |
+| `Query(...)`, `query { }` | `query { }` → `SearchParamsObject`; receiver `QueryBuilder` |
+| `index.search(query)` | `client.searchSingleIndex(indexName) { }` |
+| `index.browse(query)` | `client.browse(indexName, browse { })` |
+| `DeleteByQuery().apply { filters { } }` + `index.deleteObjectsBy(q)` | `client.deleteBy(indexName) { filters { } }` |
+| `Settings` | `settings { }` → `IndexSettings`; receiver `SettingsBuilder` |
+| `Attribute("x")` | `"x"` |
+| `DSLFilters` | `FilterDsl` (`com.algolia.client.dsl.filter`) |
+| `DSLFacetFilters` (facet / optional filters) | `FacetFilterDsl` |
+| `DSLAttributes`, `DSLStrings` | `StringListDsl` |
+| `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
+| `Distinct(1)` | `Distinct.of(1)` |
+| `Language.English` | `SupportedLanguage.En` |
+| `TypoTolerance.Min`, `TypoTolerance.True` | `TypoTolerance.of(TypoToleranceEnum.Min)`, `TypoTolerance.of(true)` |
+| `IgnorePlurals.True`, `IgnorePlurals.QueryLanguages(...)` | `IgnorePlurals.of(true)`, `IgnorePlurals.of(listOf(SupportedLanguage.En))` |
+| `RemoveStopWords.True` | `RemoveStopWords.of(true)` |
+| `UserToken("u")` | `"u"` |
+| `ResponseFields.Hits`, `ResponseFields.Other("x")` | `ResponseField.Hits`, `ResponseField.Other("x")` |
+| `ResponseFields.Other("processingTimingsMS")` | `ResponseField.ProcessingTimingsMS` |
+| v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — v2's quoted form was ignored by `optionalFilters` and negation was ignored in `facetFilters` (see Phase 1 PR) |
+| custom query wrapper | `QueryComposer` / `DeleteByComposer` |
+| `initIndex` | removed; pass the index name to each client method |
 
 `SearchClient.search` is multi-query. Use `searchSingleIndex` for a single index.
 
