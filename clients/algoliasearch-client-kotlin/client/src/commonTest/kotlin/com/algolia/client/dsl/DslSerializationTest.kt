@@ -200,8 +200,8 @@ internal class DslSerializationTest {
       dsl,
       """
       {
-        "facetFilters": [["\"brand\":\"Apple\""]],
-        "optionalFilters": [["\"category\":\"Book\""]],
+        "facetFilters": [["brand:Apple"]],
+        "optionalFilters": [["category:Book"]],
         "numericFilters": [["price = 15"]],
         "tagFilters": [["featured"]]
       }
@@ -221,8 +221,8 @@ internal class DslSerializationTest {
       dsl,
       """
       {
-        "facetFilters": [["\"brand\":\"Apple\""]],
-        "optionalFilters": [["\"category\":\"Book\""]],
+        "facetFilters": [["brand:Apple"]],
+        "optionalFilters": [["category:Book"]],
         "numericFilters": [["price = 15"]],
         "tagFilters": [["featured"]]
       }
@@ -241,7 +241,7 @@ internal class DslSerializationTest {
       dsl,
       """
       {
-        "facetFilters": [["\"brand\":\"Apple\""]],
+        "facetFilters": [["brand:Apple"]],
         "numericFilters": [["price = 15"]],
         "tagFilters": [["featured"]]
       }
@@ -263,7 +263,7 @@ internal class DslSerializationTest {
       dsl,
       """
       {
-        "facetFilters": [["\"brand\":\"Acme\"","\"brand\":\"Globex\""]]
+        "facetFilters": [["brand:Acme","brand:Globex"]]
       }
       """,
     )

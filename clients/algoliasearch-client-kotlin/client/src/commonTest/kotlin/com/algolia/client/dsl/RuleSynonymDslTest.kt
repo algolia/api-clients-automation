@@ -190,10 +190,10 @@ internal class RuleSynonymDslTest {
           "objectID": "x",
           "consequence": {
             "params": {
-              "facetFilters": [["\"brand\":\"Apple\""]],
+              "facetFilters": [["brand:Apple"]],
               "numericFilters": [["price:0 TO 9"]],
               "tagFilters": [["featured"]],
-              "optionalFilters": [["\"category\":\"Book\""]]
+              "optionalFilters": [["category:Book"]]
             }
           }
         }
