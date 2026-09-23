@@ -35,7 +35,7 @@ internal class FilterNegationDslTest {
   fun notEncodingVectors() {
     assertEquals("NOT color:red", filters { not { facet("color", "red") } })
     assertEquals(
-      listOf(listOf("\"color\":-\"red\"")),
+      listOf(listOf("color:-red")),
       facetFilters { not { facet("color", "red") } }?.rows(),
     )
 
@@ -49,7 +49,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":\"red\"", "\"color\":-\"blue\"")),
+      listOf(listOf("color:red", "color:-blue")),
       facetFilters {
           or {
             facet("color", "red")
@@ -60,7 +60,7 @@ internal class FilterNegationDslTest {
     )
 
     assertEquals(
-      "NOT (color:red OR color:blue)",
+      "NOT color:red AND NOT color:blue",
       filters {
         not {
           orFacet {
@@ -71,7 +71,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":-\"red\""), listOf("\"color\":-\"blue\"")),
+      listOf(listOf("color:-red"), listOf("color:-blue")),
       facetFilters {
           not {
             or {
@@ -105,7 +105,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:-red", "category:-shirt")),
       facetFilters {
           or {
             not {
@@ -181,7 +181,7 @@ internal class FilterNegationDslTest {
   @Test
   fun doubleGroupNotAgreesAcrossEncoders() {
     assertEquals(
-      "(color:red AND category:shirt)",
+      "color:red AND category:shirt",
       filters {
         not {
           not {
@@ -192,7 +192,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":\"red\""), listOf("\"category\":\"shirt\"")),
+      listOf(listOf("color:red"), listOf("category:shirt")),
       facetFilters {
           not {
             not {
@@ -210,7 +210,7 @@ internal class FilterNegationDslTest {
     assertEquals(listOf(listOf("a")), tagFilters { not { not { tag("a") } } }?.rows())
 
     assertEquals(
-      "NOT (NOT color:red AND category:shirt)",
+      "(color:red OR NOT category:shirt)",
       filters {
         not {
           not { facet("color", "red") }
@@ -219,7 +219,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":\"red\"", "\"category\":-\"shirt\"")),
+      listOf(listOf("color:red", "category:-shirt")),
       facetFilters {
           not {
             not { facet("color", "red") }
@@ -311,7 +311,7 @@ internal class FilterNegationDslTest {
         .root(),
     )
     assertEquals(
-      listOf(listOf("\"color\":\"red\"")),
+      listOf(listOf("color:red")),
       facetFilters {
           facet("color", "red")
           not {}
@@ -362,7 +362,7 @@ internal class FilterNegationDslTest {
       },
     )
     assertEquals(
-      listOf(listOf("\"color\":\"red\"")),
+      listOf(listOf("color:red")),
       facetFilters {
           facet("color", "red")
           or {}
@@ -389,9 +389,8 @@ internal class FilterNegationDslTest {
   }
 
   @Test
-  fun notAndWithNestedOrRejectsLegacyOnly() {
-    assertEquals(
-      "NOT ((color:red OR color:blue) AND category:shirt)",
+  fun notAndWithNestedOrRejectsBothEncoders() {
+    assertFailsWith<IllegalArgumentException> {
       filters {
         not {
           orFacet {
@@ -400,8 +399,8 @@ internal class FilterNegationDslTest {
           }
           facet("category", "shirt")
         }
-      },
-    )
+      }
+    }
     assertFailsWith<IllegalArgumentException> {
       facetFilters {
         not {

@@ -9,7 +9,8 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  * Builds a typed [FilterGroup] tree with a Kotlin DSL.
  *
  * Top-level children are combined with [FilterGroup.And]. Use [orFacet], [orTag], or [orNumeric]
- * for a homogeneous OR. A mixed-family OR does not compile.
+ * for a homogeneous OR. A mixed-family OR does not compile. The example encodes as `color:red AND
+ * category:shirt AND (price:0 TO 9 OR price = 15)`.
  *
  * ```
  * val sql =
@@ -71,7 +72,16 @@ public class FilterDsl internal constructor(private val nodes: FilterAccumulator
   internal fun root(): FilterGroup = nodes.root()
 }
 
-/** Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty. */
+/**
+ * Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty.
+ *
+ * Negation is pushed down to the leaves (`not { orFacet { a; b } }` → `NOT a AND NOT b`, `not { a;
+ * b }` → `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` is
+ * never parenthesised. Throws [IllegalArgumentException] when a `not { }` over several children
+ * would need an `OR` of `AND`s (for example `not { orFacet { a; b }; c }`) or an `OR` across facet,
+ * tag, and numeric filters (for example `not { facet(…); tag(…) }`); Algolia `filters` cannot
+ * express either.
+ */
 @AlgoliaExperimentalDsl
 public fun filters(block: FilterDsl.() -> Unit): String? =
   FilterSqlConverter(FilterDsl().apply(block).root())
