@@ -32,13 +32,6 @@ internal class LegacyVector(
   val rows: List<List<String>>? = null,
 )
 
-internal class RejectVector(
-  val name: String,
-  val group: FilterGroup,
-  val legacyFacetThrows: Boolean = true,
-  val legacyAllThrow: Boolean = true,
-)
-
 internal val colorRed = Filter.Facet("color", "red")
 internal val colorBlue = Filter.Facet("color", "blue")
 internal val categoryShirt = Filter.Facet("category", "shirt")
@@ -129,6 +122,25 @@ internal val sqlVectors: List<SqlVector> =
     SqlVector("not tag flag", !Filter.Tag("featured"), "NOT _tags:featured"),
     SqlVector("not comparison flag", !priceEquals15, "NOT price = 15"),
     SqlVector("not not empty and", FilterGroup.Not(FilterGroup.Not(FilterGroup.And())), null),
+    SqlVector("not empty and", FilterGroup.Not(FilterGroup.And()), null),
+    SqlVector("not empty or facet", FilterGroup.Not(FilterGroup.Or.Facet()), null),
+    SqlVector("not empty or tag", FilterGroup.Not(FilterGroup.Or.Tag()), null),
+    SqlVector("not empty or numeric", FilterGroup.Not(FilterGroup.Or.Numeric()), null),
+    SqlVector(
+      "and of empty groups",
+      FilterGroup.And(FilterGroup.And(), FilterGroup.Not(FilterGroup.Or.Facet())),
+      null,
+    ),
+    SqlVector(
+      "not and with range",
+      FilterGroup.Not(FilterGroup.And(Filter.Range("price", 0..10), priceEquals15)),
+      "NOT (price:0 TO 10 AND price = 15)",
+    ),
+    SqlVector(
+      "or numeric negated range",
+      FilterGroup.Or.Numeric(!Filter.Range("price", 0..10), priceEquals15),
+      "(NOT price:0 TO 10 OR price = 15)",
+    ),
     SqlVector("quote space", Filter.Facet("author", "John Doe"), "author:\"John Doe\""),
     SqlVector("quote AND", Filter.Facet("title", "foo AND bar"), "title:\"foo AND bar\""),
     SqlVector("quote OR", Filter.Facet("title", "foo OR bar"), "title:\"foo OR bar\""),
@@ -279,6 +291,45 @@ internal val legacyVectors: List<LegacyVector> =
       FilterGroup.Not(FilterGroup.Not(FilterGroup.And())),
       Family.Facet,
     ),
+    LegacyVector("not empty and", FilterGroup.Not(FilterGroup.And()), Family.Facet),
+    LegacyVector("not empty or facet", FilterGroup.Not(FilterGroup.Or.Facet()), Family.Facet),
+    LegacyVector("not empty or tag", FilterGroup.Not(FilterGroup.Or.Tag()), Family.Tag),
+    LegacyVector("not empty or numeric", FilterGroup.Not(FilterGroup.Or.Numeric()), Family.Numeric),
+    LegacyVector(
+      "and of empty groups",
+      FilterGroup.And(FilterGroup.And(), FilterGroup.Not(FilterGroup.Or.Facet())),
+      Family.Facet,
+    ),
+    LegacyVector(
+      "not and with range",
+      FilterGroup.Not(FilterGroup.And(Filter.Range("price", 0..10), priceEquals15)),
+      Family.Numeric,
+      listOf(listOf("price < 0", "price > 10", "price != 15")),
+    ),
+    LegacyVector(
+      "or numeric negated range",
+      FilterGroup.Or.Numeric(!Filter.Range("price", 0..10), priceEquals15),
+      Family.Numeric,
+      listOf(listOf("price < 0", "price > 10", "price = 15")),
+    ),
+    LegacyVector(
+      "not and with single-leaf or",
+      FilterGroup.Not(FilterGroup.And(FilterGroup.Or.Facet(colorRed), categoryShirt)),
+      Family.Facet,
+      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+    ),
+    LegacyVector(
+      "not and with nested and",
+      FilterGroup.Not(FilterGroup.And(FilterGroup.And(colorRed, colorBlue), categoryShirt)),
+      Family.Facet,
+      listOf(listOf("\"color\":-\"red\"", "\"color\":-\"blue\"", "\"category\":-\"shirt\"")),
+    ),
+    LegacyVector(
+      "not and with empty child",
+      FilterGroup.Not(FilterGroup.And(colorRed, FilterGroup.Or.Facet(), categoryShirt)),
+      Family.Facet,
+      listOf(listOf("\"color\":-\"red\"", "\"category\":-\"shirt\"")),
+    ),
     LegacyVector(
       "quote space",
       Filter.Facet("author", "John Doe"),
@@ -331,22 +382,6 @@ internal val legacyVectors: List<LegacyVector> =
       Filter.Tag("foo bar"),
       Family.Tag,
       listOf(listOf("\"foo bar\"")),
-    ),
-  )
-
-internal val rejectVectors: List<RejectVector> =
-  listOf(
-    RejectVector(
-      "not wrapping empty and",
-      FilterGroup.Not(FilterGroup.And()),
-      legacyFacetThrows = false,
-      legacyAllThrow = false,
-    ),
-    RejectVector(
-      "not wrapping empty or",
-      FilterGroup.Not(FilterGroup.Or.Facet()),
-      legacyFacetThrows = false,
-      legacyAllThrow = false,
     ),
   )
 

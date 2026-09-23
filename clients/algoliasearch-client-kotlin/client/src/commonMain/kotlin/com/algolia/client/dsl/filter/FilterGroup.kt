@@ -55,7 +55,9 @@ public sealed interface FilterGroup {
    * Negates [child]. Leaves negate themselves with [Filter.negated]; use [Not] for groups.
    *
    * Both converters XOR [Filter.negated] with the number of enclosing [Not] nodes, so `Not(Not(x))`
-   * and `Not(leaf.copy(negated = true))` both encode as the positive `x`.
+   * and `Not(leaf.copy(negated = true))` both encode as the positive `x`. A [Not] over an empty
+   * [And] or [Or] encodes as nothing, exactly like the empty group; the DSL never builds one
+   * because empty `and { }` and `or { }` blocks add no node.
    */
   @AlgoliaDsl
   @AlgoliaExperimentalDsl
@@ -114,7 +116,8 @@ public operator fun FilterGroup.not(): FilterGroup =
  * [Filter.negated], a [FilterGroup.Not] is unwrapped so `not { not { … } }` is positive, and an
  * [FilterGroup.And] or [FilterGroup.Or] is wrapped in [FilterGroup.Not]. Several children become
  * [FilterGroup.Not] of an [FilterGroup.And]. Returns `null` for an empty [children] list; callers
- * add nothing.
+ * add nothing. Both encoders emit a toggled leaf and a [FilterGroup.Not] over that leaf
+ * identically, so the shape chosen here is a convention, not a wire difference.
  */
 internal fun negate(children: List<FilterGroup>): FilterGroup? =
   when (children.size) {

@@ -16,11 +16,9 @@ internal class FamilyAndBuilder<L : Filter>(private val orGroup: (List<L>) -> Fi
     nodes.add(node)
   }
 
-  /**
-   * Adds the family [FilterGroup.Or] built from [leaves]. An empty list still adds an empty group.
-   */
+  /** Adds the family [FilterGroup.Or] built from [leaves]. An empty list adds nothing. */
   fun or(leaves: List<L>) {
-    nodes.add(orGroup(leaves))
+    if (leaves.isNotEmpty()) nodes.add(orGroup(leaves))
   }
 
   /** AND-context `not { }`: [negate] over [children]; an empty list adds nothing. */
@@ -45,7 +43,14 @@ internal class FamilyOrBuilder<L : Filter>(private val toggle: (L) -> L) {
     nodes.add(leaf)
   }
 
-  /** OR-context `not { }`: appends each of [leaves] with [Filter.negated] toggled. */
+  /**
+   * OR-context `not { }`: appends each of [leaves] with [Filter.negated] toggled through [toggle].
+   *
+   * An OR has no group to wrap, so negation distributes over the leaves: `not { a; b }` contributes
+   * `NOT a OR NOT b`, and `not { not { a } }` contributes the positive `a` because the flag flips
+   * twice. An empty list appends nothing. Both encoders emit a toggled leaf and a [FilterGroup.Not]
+   * over that leaf identically, so this is the OR-context twin of [negate].
+   */
   fun not(leaves: List<L>) {
     for (leaf in leaves) nodes.add(toggle(leaf))
   }

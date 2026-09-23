@@ -321,6 +321,58 @@ internal class FilterNegationDslTest {
   }
 
   @Test
+  fun emptyGroupBlocksAddNothing() {
+    // Encoders: an empty group under not { } is null on both paths, never a throw.
+    assertNull(filters { not { and {} } })
+    assertNull(filters { not { orFacet {} } })
+    assertNull(filters { not { orTag {} } })
+    assertNull(filters { not { orNumeric {} } })
+    assertNull(facetFilters { not { or {} } })
+    assertNull(optionalFilters { not { or {} } })
+    assertNull(numericFilters { not { or {} } })
+    assertNull(tagFilters { not { or {} } })
+
+    // Tree: empty and { } / or { } blocks insert no node, so not { } over them has no child.
+    assertEquals(FilterGroup.And(), FilterDsl().apply { and {} }.root())
+    assertEquals(FilterGroup.And(), FilterDsl().apply { orFacet {} }.root())
+    assertEquals(FilterGroup.And(), FilterDsl().apply { not { and {} } }.root())
+    assertEquals(FilterGroup.And(), FilterDsl().apply { not { orFacet {} } }.root())
+    assertEquals(FilterGroup.And(), FacetFilterDsl().apply { or {} }.root())
+    assertEquals(FilterGroup.And(), FacetFilterDsl().apply { not { or {} } }.root())
+    assertEquals(FilterGroup.And(), NumericFilterDsl().apply { not { or {} } }.root())
+    assertEquals(FilterGroup.And(), TagFilterDsl().apply { not { or {} } }.root())
+
+    // An empty sibling leaves a single leaf as the root, so SQL has no wrapping parentheses.
+    assertEquals(
+      colorRed,
+      FilterDsl()
+        .apply {
+          facet("color", "red")
+          and {}
+          not { orFacet {} }
+        }
+        .root(),
+    )
+    assertEquals(
+      "color:red",
+      filters {
+        facet("color", "red")
+        and {}
+        not { orFacet {} }
+      },
+    )
+    assertEquals(
+      listOf(listOf("\"color\":\"red\"")),
+      facetFilters {
+          facet("color", "red")
+          or {}
+          not { or {} }
+        }
+        ?.rows(),
+    )
+  }
+
+  @Test
   fun dslFamilyReceiversBuildTypedGroups() {
     assertEquals(
       FilterGroup.Or.Facet(Filter.Facet("attributeA", 0)),
