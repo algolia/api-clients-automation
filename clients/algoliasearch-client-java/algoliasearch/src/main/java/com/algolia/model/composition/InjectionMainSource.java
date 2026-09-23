@@ -43,6 +43,19 @@ public interface InjectionMainSource {
           );
         }
       }
+      // deserialize InjectionMainExternalProviderSource
+      if (tree.isObject() && tree.has("externalProvider")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(InjectionMainExternalProviderSource.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectionMainExternalProviderSource (error: " +
+              e.getMessage() +
+              ") (type: InjectionMainExternalProviderSource)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

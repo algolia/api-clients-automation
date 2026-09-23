@@ -1079,6 +1079,77 @@ class SnippetCompositionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForPutComposition9() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-external-provider-compo",
+        composition =
+          Composition(
+            objectID = "my-external-provider-compo",
+            name = "my external provider composition",
+            behavior =
+              CompositionInjectionBehavior(
+                injection =
+                  Injection(
+                    main =
+                      InjectionMain(
+                        source =
+                          InjectionMainExternalProviderSource(
+                            externalProvider =
+                              MainExternalProvider(
+                                index = "products",
+                                configurationID = "my-rmn-connection",
+                                configurationParams =
+                                  buildJsonObject {
+                                    put("campaign_id", JsonPrimitive("summer-sale"))
+                                    put("customer_id", JsonPrimitive("customer-default"))
+                                  },
+                                params = MainInjectionQueryParameters(filters = "instock:true"),
+                                ordering =
+                                  ExternalProviderOrdering.entries.first {
+                                    it.value == "providerDefined"
+                                  },
+                              )
+                          )
+                      ),
+                    injectedItems =
+                      listOf(
+                        InjectionInjectedItem(
+                          key = "sponsored",
+                          source =
+                            InjectedItemExternalProviderSource(
+                              externalProvider =
+                                InjectedItemExternalProvider(
+                                  index = "products",
+                                  configurationID = "my-rmn-connection",
+                                  configurationParams =
+                                    buildJsonObject {
+                                      put("campaign_id", JsonPrimitive("summer-sale"))
+                                    },
+                                )
+                            ),
+                          position = 0,
+                          length = 2,
+                        )
+                      ),
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForPutCompositionRule() {
     // >SEPARATOR putCompositionRule putCompositionRule
     // Initialize the client
@@ -1262,6 +1333,75 @@ class SnippetCompositionClient {
                           Deduplication(
                             positioning =
                               DedupPositioning.entries.first { it.value == "highestInjected" }
+                          ),
+                      )
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutCompositionRule4() {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "rule-with-external-provider-source",
+        compositionRule =
+          CompositionRule(
+            objectID = "rule-with-external-provider-source",
+            conditions =
+              listOf(
+                Condition(
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                  pattern = "harry",
+                )
+              ),
+            consequence =
+              CompositionRuleConsequence(
+                behavior =
+                  CompositionInjectionBehavior(
+                    injection =
+                      Injection(
+                        main =
+                          InjectionMain(
+                            source =
+                              InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                          ),
+                        injectedItems =
+                          listOf(
+                            InjectionInjectedItem(
+                              key = "my-unique-external-provider-group-from-rule-key",
+                              source =
+                                InjectedItemExternalProviderSource(
+                                  externalProvider =
+                                    InjectedItemExternalProvider(
+                                      index = "my-index",
+                                      configurationID = "my-rmn-connection",
+                                      configurationParams =
+                                        buildJsonObject {
+                                          put("campaign_id", JsonPrimitive("summer-sale"))
+                                        },
+                                      ordering =
+                                        ExternalProviderOrdering.entries.first {
+                                          it.value == "providerDefined"
+                                        },
+                                    )
+                                ),
+                              position = 0,
+                              length = 3,
+                            )
                           ),
                       )
                   )
@@ -1791,6 +1931,34 @@ class SnippetCompositionClient {
           RequestBody(
             params = Params(query = "batman"),
             feedsOrder = listOf("feed-movies", "feed-comics"),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch4() {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        compositionID = "foo",
+        requestBody =
+          RequestBody(
+            params = Params(query = "batman"),
+            externalProvider =
+              ExternalProvider(
+                configurationParams =
+                  buildJsonObject { put("customer_id", JsonPrimitive("customer123")) }
+              ),
           ),
       )
 

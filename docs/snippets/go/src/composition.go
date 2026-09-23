@@ -1424,6 +1424,61 @@ func SnippetForPutCompositionOfComposition8() {
 	// SEPARATOR<
 }
 
+func SnippetForPutCompositionOfComposition9() {
+	/*
+	   Snippet for the putComposition method.
+
+	   putComposition
+	*/
+
+	// >SEPARATOR putComposition putComposition
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutComposition(client.NewApiPutCompositionRequest(
+		"my-external-provider-compo",
+		composition.NewEmptyComposition().
+			SetObjectID("my-external-provider-compo").
+			SetName("my external provider composition").
+			SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+				composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+					composition.NewEmptyInjection().SetMain(
+						composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainExternalProviderSourceAsInjectionMainSource(
+							composition.NewEmptyInjectionMainExternalProviderSource().SetExternalProvider(
+								composition.NewEmptyMainExternalProvider().
+									SetIndex("products").
+									SetConfigurationID("my-rmn-connection").
+									SetConfigurationParams(map[string]any{"campaign_id": "summer-sale", "customer_id": "customer-default"}).
+									SetParams(
+										composition.NewEmptyMainInjectionQueryParameters().
+											SetFilters("instock:true"),
+									).
+									SetOrdering(composition.ExternalProviderOrdering("providerDefined")),
+							),
+						))).SetInjectedItems(
+						[]composition.InjectionInjectedItem{
+							*composition.NewEmptyInjectionInjectedItem().SetKey("sponsored").SetSource(composition.InjectedItemExternalProviderSourceAsInjectedItemSource(
+								composition.NewEmptyInjectedItemExternalProviderSource().SetExternalProvider(
+									composition.NewEmptyInjectedItemExternalProvider().SetIndex("products").SetConfigurationID("my-rmn-connection").SetConfigurationParams(map[string]any{"campaign_id": "summer-sale"})))).SetPosition(0).SetLength(2),
+						}),
+				))),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForPutCompositionRuleOfComposition() {
 	/*
 	   Snippet for the putCompositionRule method.
@@ -1600,6 +1655,52 @@ func SnippetForPutCompositionRuleOfComposition3() {
 							}).
 							SetDeduplication(
 								composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForPutCompositionRuleOfComposition4() {
+	/*
+	   Snippet for the putCompositionRule method.
+
+	   putCompositionRule
+	*/
+
+	// >SEPARATOR putCompositionRule putCompositionRule
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
+		"compositionID", "rule-with-external-provider-source",
+		composition.NewEmptyCompositionRule().SetObjectID("rule-with-external-provider-source").SetConditions(
+			[]composition.Condition{
+				*composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
+			}).
+			SetConsequence(
+				composition.NewEmptyCompositionRuleConsequence().SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+					composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+						composition.NewEmptyInjection().SetMain(
+							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
+								composition.NewEmptyInjectionMainSearchSource().SetSearch(
+									composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+							[]composition.InjectionInjectedItem{
+								*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-provider-group-from-rule-key").SetSource(composition.InjectedItemExternalProviderSourceAsInjectedItemSource(
+									composition.NewEmptyInjectedItemExternalProviderSource().SetExternalProvider(
+										composition.NewEmptyInjectedItemExternalProvider().SetIndex("my-index").SetConfigurationID("my-rmn-connection").SetConfigurationParams(map[string]any{"campaign_id": "summer-sale"}).SetOrdering(composition.ExternalProviderOrdering("providerDefined"))))).SetPosition(0).SetLength(3),
+							}),
+					))))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2051,6 +2152,38 @@ func SnippetForSearchOfComposition3() {
 		composition.NewEmptyRequestBody().SetParams(
 			composition.NewEmptyParams().SetQuery("batman")).SetFeedsOrder(
 			[]string{"feed-movies", "feed-comics"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSearchOfComposition4() {
+	/*
+	   Snippet for the search method.
+
+	   search
+	*/
+
+	// >SEPARATOR search search
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+		"foo",
+		composition.NewEmptyRequestBody().SetParams(
+			composition.NewEmptyParams().SetQuery("batman")).SetExternalProvider(
+			composition.NewEmptyExternalProvider().SetConfigurationParams(map[string]any{"customer_id": "customer123"}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

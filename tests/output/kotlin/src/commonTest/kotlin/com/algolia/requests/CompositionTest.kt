@@ -1236,6 +1236,89 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `putComposition9`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-external-provider-compo",
+          composition =
+            Composition(
+              objectID = "my-external-provider-compo",
+              name = "my external provider composition",
+              behavior =
+                CompositionInjectionBehavior(
+                  injection =
+                    Injection(
+                      main =
+                        InjectionMain(
+                          source =
+                            InjectionMainExternalProviderSource(
+                              externalProvider =
+                                MainExternalProvider(
+                                  index = "products",
+                                  configurationID = "my-rmn-connection",
+                                  configurationParams =
+                                    buildJsonObject {
+                                      put(
+                                        "campaign_id",
+                                        JsonPrimitive("summer-sale"),
+                                      )
+                                      put(
+                                        "customer_id",
+                                        JsonPrimitive("customer-default"),
+                                      )
+                                    },
+                                  params = MainInjectionQueryParameters(filters = "instock:true"),
+                                  ordering =
+                                    ExternalProviderOrdering.entries.first {
+                                      it.value == "providerDefined"
+                                    },
+                                )
+                            )
+                        ),
+                      injectedItems =
+                        listOf(
+                          InjectionInjectedItem(
+                            key = "sponsored",
+                            source =
+                              InjectedItemExternalProviderSource(
+                                externalProvider =
+                                  InjectedItemExternalProvider(
+                                    index = "products",
+                                    configurationID = "my-rmn-connection",
+                                    configurationParams =
+                                      buildJsonObject {
+                                        put(
+                                          "campaign_id",
+                                          JsonPrimitive("summer-sale"),
+                                        )
+                                      },
+                                  )
+                              ),
+                            position = 0,
+                            length = 2,
+                          )
+                        ),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/my-external-provider-compo".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // putCompositionRule
 
   @Test
@@ -1448,6 +1531,81 @@ class CompositionTest {
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody(
           """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `putCompositionRule4`() = runTest {
+    client.runTest(
+      call = {
+        putCompositionRule(
+          compositionID = "compositionID",
+          objectID = "rule-with-external-provider-source",
+          compositionRule =
+            CompositionRule(
+              objectID = "rule-with-external-provider-source",
+              conditions =
+                listOf(
+                  Condition(
+                    anchoring = Anchoring.entries.first { it.value == "contains" },
+                    pattern = "harry",
+                  )
+                ),
+              consequence =
+                CompositionRuleConsequence(
+                  behavior =
+                    CompositionInjectionBehavior(
+                      injection =
+                        Injection(
+                          main =
+                            InjectionMain(
+                              source =
+                                InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                            ),
+                          injectedItems =
+                            listOf(
+                              InjectionInjectedItem(
+                                key = "my-unique-external-provider-group-from-rule-key",
+                                source =
+                                  InjectedItemExternalProviderSource(
+                                    externalProvider =
+                                      InjectedItemExternalProvider(
+                                        index = "my-index",
+                                        configurationID = "my-rmn-connection",
+                                        configurationParams =
+                                          buildJsonObject {
+                                            put(
+                                              "campaign_id",
+                                              JsonPrimitive("summer-sale"),
+                                            )
+                                          },
+                                        ordering =
+                                          ExternalProviderOrdering.entries.first {
+                                            it.value == "providerDefined"
+                                          },
+                                      )
+                                  ),
+                                position = 0,
+                                length = 3,
+                              )
+                            ),
+                        )
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/compositionID/rules/rule-with-external-provider-source".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}""",
           it.body,
         )
       },
@@ -1996,6 +2154,39 @@ class CompositionTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
           """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `search4`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          compositionID = "foo",
+          requestBody =
+            RequestBody(
+              params = Params(query = "batman"),
+              externalProvider =
+                ExternalProvider(
+                  configurationParams =
+                    buildJsonObject {
+                      put(
+                        "customer_id",
+                        JsonPrimitive("customer123"),
+                      )
+                    }
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}""",
           it.body,
         )
       },

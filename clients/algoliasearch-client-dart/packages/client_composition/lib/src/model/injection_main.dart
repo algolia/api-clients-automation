@@ -14,6 +14,7 @@ final class InjectionMain {
 
   /// One of types:
   /// - [InjectionMainSearchSource]
+  /// - [InjectionMainExternalProviderSource]
   /// - [InjectionMainRecommendSource]
   @JsonKey(name: r'source')
   final dynamic source;

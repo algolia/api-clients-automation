@@ -20,6 +20,9 @@ public class SearchResponse<T> {
   @JsonProperty("results")
   private List<SearchResultsItem<T>> results = new ArrayList<>();
 
+  @JsonProperty("errors")
+  private List<ProcessingError> errors;
+
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonAnyGetter
@@ -60,6 +63,29 @@ public class SearchResponse<T> {
     return results;
   }
 
+  public SearchResponse<T> setErrors(List<ProcessingError> errors) {
+    this.errors = errors;
+    return this;
+  }
+
+  public SearchResponse<T> addErrors(ProcessingError errorsItem) {
+    if (this.errors == null) {
+      this.errors = new ArrayList<>();
+    }
+    this.errors.add(errorsItem);
+    return this;
+  }
+
+  /**
+   * Non-critical errors encountered while processing the request that may have affected the
+   * returned results (for example, an external provider failure that fell back to another result
+   * set).
+   */
+  @javax.annotation.Nullable
+  public List<ProcessingError> getErrors() {
+    return errors;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -72,13 +98,14 @@ public class SearchResponse<T> {
     return (
       Objects.equals(this.compositions, searchResponse.compositions) &&
       Objects.equals(this.results, searchResponse.results) &&
+      Objects.equals(this.errors, searchResponse.errors) &&
       super.equals(o)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(compositions, results, super.hashCode());
+    return Objects.hash(compositions, results, errors, super.hashCode());
   }
 
   @Override
@@ -88,6 +115,7 @@ public class SearchResponse<T> {
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    compositions: ").append(toIndentedString(compositions)).append("\n");
     sb.append("    results: ").append(toIndentedString(results)).append("\n");
+    sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
     sb.append("}");
     return sb.toString();
   }

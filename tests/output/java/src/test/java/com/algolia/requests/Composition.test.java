@@ -1580,6 +1580,76 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("putComposition")
+  void putCompositionTest9() {
+    assertDoesNotThrow(() -> {
+      client.putComposition(
+        "my-external-provider-compo",
+        new Composition()
+          .setObjectID("my-external-provider-compo")
+          .setName("my external provider composition")
+          .setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(
+                  new InjectionMain().setSource(
+                    new InjectionMainExternalProviderSource().setExternalProvider(
+                      new MainExternalProvider()
+                        .setIndex("products")
+                        .setConfigurationID("my-rmn-connection")
+                        .setConfigurationParams(
+                          new HashMap() {
+                            {
+                              put("campaign_id", "summer-sale");
+                              put("customer_id", "customer-default");
+                            }
+                          }
+                        )
+                        .setParams(new MainInjectionQueryParameters().setFilters("instock:true"))
+                        .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                    )
+                  )
+                )
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("sponsored")
+                      .setSource(
+                        new InjectedItemExternalProviderSource().setExternalProvider(
+                          new InjectedItemExternalProvider()
+                            .setIndex("products")
+                            .setConfigurationID("my-rmn-connection")
+                            .setConfigurationParams(
+                              new HashMap() {
+                                {
+                                  put("campaign_id", "summer-sale");
+                                }
+                              }
+                            )
+                        )
+                      )
+                      .setPosition(0)
+                      .setLength(2)
+                  )
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/my-external-provider-compo", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"my-external-provider-compo\",\"name\":\"my external provider" +
+          " composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\",\"customer_id\":\"customer-default\"},\"params\":{\"filters\":\"instock:true\"},\"ordering\":\"providerDefined\"}}},\"injectedItems\":[{\"key\":\"sponsored\",\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"}}},\"position\":0,\"length\":2}]}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("putCompositionRule")
   void putCompositionRuleTest() {
     assertDoesNotThrow(() -> {
@@ -1791,6 +1861,61 @@ class CompositionClientRequestsTests {
       JSONAssert.assertEquals(
         "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my" +
           " description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("putCompositionRule")
+  void putCompositionRuleTest4() {
+    assertDoesNotThrow(() -> {
+      client.putCompositionRule(
+        "compositionID",
+        "rule-with-external-provider-source",
+        new CompositionRule()
+          .setObjectID("rule-with-external-provider-source")
+          .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+          .setConsequence(
+            new CompositionRuleConsequence().setBehavior(
+              new CompositionInjectionBehavior().setInjection(
+                new Injection()
+                  .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
+                  .setInjectedItems(
+                    Arrays.asList(
+                      new InjectionInjectedItem()
+                        .setKey("my-unique-external-provider-group-from-rule-key")
+                        .setSource(
+                          new InjectedItemExternalProviderSource().setExternalProvider(
+                            new InjectedItemExternalProvider()
+                              .setIndex("my-index")
+                              .setConfigurationID("my-rmn-connection")
+                              .setConfigurationParams(
+                                new HashMap() {
+                                  {
+                                    put("campaign_id", "summer-sale");
+                                  }
+                                }
+                              )
+                              .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                          )
+                        )
+                        .setPosition(0)
+                        .setLength(3)
+                    )
+                  )
+              )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/compositionID/rules/rule-with-external-provider-source", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"objectID\":\"rule-with-external-provider-source\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-provider-group-from-rule-key\",\"source\":{\"externalProvider\":{\"index\":\"my-index\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"},\"ordering\":\"providerDefined\"}},\"position\":0,\"length\":3}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2305,6 +2430,36 @@ class CompositionClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("search")
+  void searchTest4() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        "foo",
+        new RequestBody().setParams(new Params().setQuery("batman")).setExternalProvider(
+          new ExternalProvider().setConfigurationParams(
+            new HashMap() {
+              {
+                put("customer_id", "customer123");
+              }
+            }
+          )
+        ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/foo/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"params\":{\"query\":\"batman\"},\"externalProvider\":{\"configurationParams\":{\"customer_id\":\"customer123\"}}}",
         req.body,
         JSONCompareMode.STRICT
       )

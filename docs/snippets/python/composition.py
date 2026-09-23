@@ -1543,6 +1543,68 @@ def snippet_for_put_composition8():
     # SEPARATOR<
 
 
+def snippet_for_put_composition9():
+    """
+    Snippet for the putComposition method.
+
+    putComposition
+    """
+    # >SEPARATOR putComposition putComposition
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition(
+        composition_id="my-external-provider-compo",
+        composition={
+            "objectID": "my-external-provider-compo",
+            "name": "my external provider composition",
+            "behavior": {
+                "injection": {
+                    "main": {
+                        "source": {
+                            "externalProvider": {
+                                "index": "products",
+                                "configurationID": "my-rmn-connection",
+                                "configurationParams": {
+                                    "campaign_id": "summer-sale",
+                                    "customer_id": "customer-default",
+                                },
+                                "params": {
+                                    "filters": "instock:true",
+                                },
+                                "ordering": "providerDefined",
+                            },
+                        },
+                    },
+                    "injectedItems": [
+                        {
+                            "key": "sponsored",
+                            "source": {
+                                "externalProvider": {
+                                    "index": "products",
+                                    "configurationID": "my-rmn-connection",
+                                    "configurationParams": {
+                                        "campaign_id": "summer-sale",
+                                    },
+                                },
+                            },
+                            "position": 0,
+                            "length": 2,
+                        },
+                    ],
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_put_composition_rule():
     """
     Snippet for the putCompositionRule method.
@@ -1801,6 +1863,68 @@ def snippet_for_put_composition_rule3():
                         "deduplication": {
                             "positioning": "highestInjected",
                         },
+                    },
+                },
+            },
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_put_composition_rule4():
+    """
+    Snippet for the putCompositionRule method.
+
+    putCompositionRule
+    """
+    # >SEPARATOR putCompositionRule putCompositionRule
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.put_composition_rule(
+        composition_id="compositionID",
+        object_id="rule-with-external-provider-source",
+        composition_rule={
+            "objectID": "rule-with-external-provider-source",
+            "conditions": [
+                {
+                    "anchoring": "contains",
+                    "pattern": "harry",
+                },
+            ],
+            "consequence": {
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "search": {
+                                    "index": "my-index",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "my-unique-external-provider-group-from-rule-key",
+                                "source": {
+                                    "externalProvider": {
+                                        "index": "my-index",
+                                        "configurationID": "my-rmn-connection",
+                                        "configurationParams": {
+                                            "campaign_id": "summer-sale",
+                                        },
+                                        "ordering": "providerDefined",
+                                    },
+                                },
+                                "position": 0,
+                                "length": 3,
+                            },
+                        ],
                     },
                 },
             },
@@ -2421,6 +2545,38 @@ def snippet_for_search3():
                 "feed-movies",
                 "feed-comics",
             ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search4():
+    """
+    Snippet for the search method.
+
+    search
+    """
+    # >SEPARATOR search search
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search(
+        composition_id="foo",
+        request_body={
+            "params": {
+                "query": "batman",
+            },
+            "externalProvider": {
+                "configurationParams": {
+                    "customer_id": "customer123",
+                },
+            },
         },
     )
 

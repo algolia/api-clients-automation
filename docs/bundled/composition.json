@@ -275,6 +275,9 @@
                   },
                   "feedsOrder": {
                     "$ref": "#/components/schemas/feedsOrder"
+                  },
+                  "externalProvider": {
+                    "$ref": "#/components/schemas/externalProvider"
                   }
                 }
               }
@@ -2097,6 +2100,21 @@
           "feed-3"
         ]
       },
+      "externalProvider": {
+        "title": "Run composition external provider parameters as object",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "configurationParams": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Values for non-prefixed configuration placeholders, overriding the composition source's `configurationParams` and the configuration's `defaults`.",
+            "example": {
+              "customer_id": "customer123"
+            }
+          }
+        }
+      },
       "compositionRunAppliedRules": {
         "type": "object",
         "properties": {
@@ -3068,6 +3086,19 @@
           }
         ]
       },
+      "processingError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Description of the non-critical error."
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
       "searchResults": {
         "type": "object",
         "additionalProperties": false,
@@ -3077,6 +3108,13 @@
             "description": "Search results.",
             "items": {
               "$ref": "#/components/schemas/searchResultsItem"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "description": "Non-critical errors encountered while processing the request that may have affected the returned results (for example, an external provider failure that fell back to another result set).",
+            "items": {
+              "$ref": "#/components/schemas/processingError"
             }
           }
         },
@@ -3946,6 +3984,64 @@
           "recommend"
         ]
       },
+      "externalProviderOrdering": {
+        "type": "string",
+        "description": "Ordering to apply on the items retrieved from the external provider. 'default' uses the relevance ranking from the Algolia retrieval step. 'providerDefined' uses the ordering returned by the external provider.\n",
+        "enum": [
+          "default",
+          "providerDefined"
+        ],
+        "default": "providerDefined"
+      },
+      "injectionMainExternalProviderSource": {
+        "description": "Organic result set will originate from a request to an external provider configuration.",
+        "x-discriminator-fields": [
+          "externalProvider"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "externalProvider": {
+            "title": "mainExternalProvider",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Algolia index used to fetch the records.",
+                "example": "Products"
+              },
+              "configurationID": {
+                "type": "string",
+                "description": "Identifier of the external provider configuration.",
+                "example": "my-rmn-connection"
+              },
+              "configurationParams": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Default values for the configuration placeholders that are not reserved Composition placeholders.",
+                "example": {
+                  "campaign_id": "winter-sale",
+                  "customer_id": "user123"
+                }
+              },
+              "params": {
+                "$ref": "#/components/schemas/mainInjectionQueryParameters"
+              },
+              "ordering": {
+                "$ref": "#/components/schemas/externalProviderOrdering"
+              }
+            },
+            "required": [
+              "index",
+              "configurationID"
+            ]
+          }
+        },
+        "required": [
+          "externalProvider"
+        ]
+      },
       "injectionMainSource": {
         "description": "Source to be used to retrieve organic result set.",
         "oneOf": [
@@ -3954,6 +4050,9 @@
           },
           {
             "$ref": "#/components/schemas/injectionMainRecommendSource"
+          },
+          {
+            "$ref": "#/components/schemas/injectionMainExternalProviderSource"
           }
         ]
       },
@@ -4085,6 +4184,55 @@
           "recommend"
         ]
       },
+      "injectedItemExternalProviderSource": {
+        "description": "Injected items will originate from a request to an external provider configuration.",
+        "x-discriminator-fields": [
+          "externalProvider"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "externalProvider": {
+            "title": "injectedItemExternalProvider",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "type": "string",
+                "description": "Algolia index used to fetch the records.",
+                "example": "Products"
+              },
+              "configurationID": {
+                "type": "string",
+                "description": "Identifier of the external provider configuration.",
+                "example": "my-rmn-connection"
+              },
+              "configurationParams": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Default values for the configuration placeholders that are not reserved Composition placeholders.",
+                "example": {
+                  "campaign_id": "winter-sale",
+                  "customer_id": "user123"
+                }
+              },
+              "params": {
+                "$ref": "#/components/schemas/baseInjectionQueryParameters"
+              },
+              "ordering": {
+                "$ref": "#/components/schemas/externalProviderOrdering"
+              }
+            },
+            "required": [
+              "index",
+              "configurationID"
+            ]
+          }
+        },
+        "required": [
+          "externalProvider"
+        ]
+      },
       "injectedItemSource": {
         "oneOf": [
           {
@@ -4095,6 +4243,9 @@
           },
           {
             "$ref": "#/components/schemas/injectedItemRecommendSource"
+          },
+          {
+            "$ref": "#/components/schemas/injectedItemExternalProviderSource"
           }
         ]
       },

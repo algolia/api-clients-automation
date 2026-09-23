@@ -13,11 +13,14 @@ module Algolia
       # A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
       attr_accessor :feeds_order
 
+      attr_accessor :external_provider
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :params => :params,
-          :feeds_order => :feedsOrder
+          :feeds_order => :feedsOrder,
+          :external_provider => :externalProvider
         }
       end
 
@@ -25,7 +28,8 @@ module Algolia
       def self.types_mapping
         {
           :params => :"Params",
-          :feeds_order => :"Array<String>"
+          :feeds_order => :"Array<String>",
+          :external_provider => :"ExternalProvider"
         }
       end
 
@@ -68,6 +72,10 @@ module Algolia
             self.feeds_order = value
           end
         end
+
+        if attributes.key?(:external_provider)
+          self.external_provider = attributes[:external_provider]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -76,7 +84,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           params == other.params &&
-          feeds_order == other.feeds_order
+          feeds_order == other.feeds_order &&
+          external_provider == other.external_provider
       end
 
       # @see the `==` method
@@ -88,7 +97,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, feeds_order].hash
+        [params, feeds_order, external_provider].hash
       end
 
       # Builds the object from hash

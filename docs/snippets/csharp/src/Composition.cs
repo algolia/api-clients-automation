@@ -1744,6 +1744,85 @@ public class SnippetCompositionClient
   }
 
   /// <summary>
+  /// Snippet for the PutComposition method.
+  ///
+  /// putComposition
+  /// </summary>
+  public async Task SnippetForCompositionClientPutComposition9()
+  {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionAsync(
+      "my-external-provider-compo",
+      new Composition
+      {
+        ObjectID = "my-external-provider-compo",
+        Name = "my external provider composition",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainExternalProviderSource
+                  {
+                    ExternalProvider = new MainExternalProvider
+                    {
+                      Index = "products",
+                      ConfigurationID = "my-rmn-connection",
+                      ConfigurationParams = new Dictionary<string, object>
+                      {
+                        { "campaign_id", "summer-sale" },
+                        { "customer_id", "customer-default" },
+                      },
+                      Params = new MainInjectionQueryParameters { Filters = "instock:true" },
+                      Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "sponsored",
+                  Source = new InjectedItemSource(
+                    new InjectedItemExternalProviderSource
+                    {
+                      ExternalProvider = new InjectedItemExternalProvider
+                      {
+                        Index = "products",
+                        ConfigurationID = "my-rmn-connection",
+                        ConfigurationParams = new Dictionary<string, object>
+                        {
+                          { "campaign_id", "summer-sale" },
+                        },
+                      },
+                    }
+                  ),
+                  Position = 0,
+                  Length = 2,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the PutCompositionRule method.
   ///
   /// putCompositionRule
@@ -2033,6 +2112,79 @@ public class SnippetCompositionClient
                 Deduplication = new Deduplication
                 {
                   Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
+                },
+              },
+            }
+          ),
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the PutCompositionRule method.
+  ///
+  /// putCompositionRule
+  /// </summary>
+  public async Task SnippetForCompositionClientPutCompositionRule4()
+  {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-external-provider-source",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-external-provider-source",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
+            {
+              Injection = new Injection
+              {
+                Main = new InjectionMain
+                {
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                  ),
+                },
+                InjectedItems = new List<InjectionInjectedItem>
+                {
+                  new InjectionInjectedItem
+                  {
+                    Key = "my-unique-external-provider-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new InjectedItemExternalProviderSource
+                      {
+                        ExternalProvider = new InjectedItemExternalProvider
+                        {
+                          Index = "my-index",
+                          ConfigurationID = "my-rmn-connection",
+                          ConfigurationParams = new Dictionary<string, object>
+                          {
+                            { "campaign_id", "summer-sale" },
+                          },
+                          Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
+                  },
                 },
               },
             }
@@ -2801,6 +2953,37 @@ public class SnippetCompositionClient
       {
         Params = new Params { Query = "batman" },
         FeedsOrder = new List<string> { "feed-movies", "feed-comics" },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the Search method.
+  ///
+  /// search
+  /// </summary>
+  public async Task SnippetForCompositionClientSearch4()
+  {
+    // >SEPARATOR search search
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "batman" },
+        ExternalProvider = new ExternalProvider
+        {
+          ConfigurationParams = new Dictionary<string, object> { { "customer_id", "customer123" } },
+        },
       }
     );
     // >LOG

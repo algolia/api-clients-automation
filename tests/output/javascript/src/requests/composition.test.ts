@@ -1112,6 +1112,82 @@ describe('putComposition', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('putComposition', async () => {
+    const req = (await client.putComposition({
+      compositionID: 'my-external-provider-compo',
+      composition: {
+        objectID: 'my-external-provider-compo',
+        name: 'my external provider composition',
+        behavior: {
+          injection: {
+            main: {
+              source: {
+                externalProvider: {
+                  index: 'products',
+                  configurationID: 'my-rmn-connection',
+                  configurationParams: { campaign_id: 'summer-sale', customer_id: 'customer-default' },
+                  params: { filters: 'instock:true' },
+                  ordering: 'providerDefined',
+                },
+              },
+            },
+            injectedItems: [
+              {
+                key: 'sponsored',
+                source: {
+                  externalProvider: {
+                    index: 'products',
+                    configurationID: 'my-rmn-connection',
+                    configurationParams: { campaign_id: 'summer-sale' },
+                  },
+                },
+                position: 0,
+                length: 2,
+              },
+            ],
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/my-external-provider-compo');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'my-external-provider-compo',
+      name: 'my external provider composition',
+      behavior: {
+        injection: {
+          main: {
+            source: {
+              externalProvider: {
+                index: 'products',
+                configurationID: 'my-rmn-connection',
+                configurationParams: { campaign_id: 'summer-sale', customer_id: 'customer-default' },
+                params: { filters: 'instock:true' },
+                ordering: 'providerDefined',
+              },
+            },
+          },
+          injectedItems: [
+            {
+              key: 'sponsored',
+              source: {
+                externalProvider: {
+                  index: 'products',
+                  configurationID: 'my-rmn-connection',
+                  configurationParams: { campaign_id: 'summer-sale' },
+                },
+              },
+              position: 0,
+              length: 2,
+            },
+          ],
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('putCompositionRule', () => {
@@ -1335,6 +1411,69 @@ describe('putCompositionRule', () => {
               { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
             ],
             deduplication: { positioning: 'highestInjected' },
+          },
+        },
+      },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('putCompositionRule', async () => {
+    const req = (await client.putCompositionRule({
+      compositionID: 'compositionID',
+      objectID: 'rule-with-external-provider-source',
+      compositionRule: {
+        objectID: 'rule-with-external-provider-source',
+        conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+        consequence: {
+          behavior: {
+            injection: {
+              main: { source: { search: { index: 'my-index' } } },
+              injectedItems: [
+                {
+                  key: 'my-unique-external-provider-group-from-rule-key',
+                  source: {
+                    externalProvider: {
+                      index: 'my-index',
+                      configurationID: 'my-rmn-connection',
+                      configurationParams: { campaign_id: 'summer-sale' },
+                      ordering: 'providerDefined',
+                    },
+                  },
+                  position: 0,
+                  length: 3,
+                },
+              ],
+            },
+          },
+        },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/compositionID/rules/rule-with-external-provider-source');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      objectID: 'rule-with-external-provider-source',
+      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index' } } },
+            injectedItems: [
+              {
+                key: 'my-unique-external-provider-group-from-rule-key',
+                source: {
+                  externalProvider: {
+                    index: 'my-index',
+                    configurationID: 'my-rmn-connection',
+                    configurationParams: { campaign_id: 'summer-sale' },
+                    ordering: 'providerDefined',
+                  },
+                },
+                position: 0,
+                length: 3,
+              },
+            ],
           },
         },
       },
@@ -1901,6 +2040,24 @@ describe('search', () => {
     expect(req.path).toEqual('/1/compositions/foo/run');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: {
+        params: { query: 'batman' },
+        externalProvider: { configurationParams: { customer_id: 'customer123' } },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      params: { query: 'batman' },
+      externalProvider: { configurationParams: { customer_id: 'customer123' } },
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

@@ -40,6 +40,7 @@ object JsonSupport {
     new DedupPositioningSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
     new ExternalOrderingSerializer() :+
+    new ExternalProviderOrderingSerializer() :+
     new MatchLevelSerializer() :+
     new ModelSerializer() :+
     new QueryTypeSerializer() :+

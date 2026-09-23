@@ -23,6 +23,7 @@ final class InjectionInjectedItem {
 
   /// One of types:
   /// - [InjectedItemExternalSource]
+  /// - [InjectedItemExternalProviderSource]
   /// - [InjectedItemSearchSource]
   /// - [InjectedItemRecommendSource]
   @JsonKey(name: r'source')

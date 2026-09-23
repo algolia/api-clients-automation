@@ -1242,6 +1242,58 @@ def snippet_for_put_composition8
   # SEPARATOR<
 end
 
+# Snippet for the putComposition method.
+#
+# putComposition
+def snippet_for_put_composition9
+  # >SEPARATOR putComposition putComposition
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition(
+    "my-external-provider-compo",
+    Algolia::Composition::Composition.new(
+      algolia_object_id: "my-external-provider-compo",
+      name: "my external provider composition",
+      behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+        injection: Algolia::Composition::Injection.new(
+          main: Algolia::Composition::InjectionMain.new(
+            source: Algolia::Composition::InjectionMainExternalProviderSource.new(
+              external_provider: Algolia::Composition::MainExternalProvider.new(
+                index: "products",
+                configuration_id: "my-rmn-connection",
+                configuration_params: {campaign_id: "summer-sale", customer_id: "customer-default"},
+                params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "instock:true"),
+                ordering: "providerDefined"
+              )
+            )
+          ),
+          injected_items: [
+            Algolia::Composition::InjectionInjectedItem.new(
+              key: "sponsored",
+              source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                  index: "products",
+                  configuration_id: "my-rmn-connection",
+                  configuration_params: {campaign_id: "summer-sale"}
+                )
+              ),
+              position: 0,
+              length: 2
+            )
+          ]
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the putCompositionRule method.
 #
 # putCompositionRule
@@ -1441,6 +1493,56 @@ def snippet_for_put_composition_rule3
               )
             ],
             deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
+          )
+        )
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the putCompositionRule method.
+#
+# putCompositionRule
+def snippet_for_put_composition_rule4
+  # >SEPARATOR putCompositionRule putCompositionRule
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.put_composition_rule(
+    "compositionID",
+    "rule-with-external-provider-source",
+    Algolia::Composition::CompositionRule.new(
+      algolia_object_id: "rule-with-external-provider-source",
+      conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+      consequence: Algolia::Composition::CompositionRuleConsequence.new(
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainSearchSource.new(
+                search: Algolia::Composition::MainSearch.new(index: "my-index")
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectionInjectedItem.new(
+                key: "my-unique-external-provider-group-from-rule-key",
+                source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                  external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                    index: "my-index",
+                    configuration_id: "my-rmn-connection",
+                    configuration_params: {campaign_id: "summer-sale"},
+                    ordering: "providerDefined"
+                  )
+                ),
+                position: 0,
+                length: 3
+              )
+            ]
           )
         )
       )
@@ -1949,6 +2051,29 @@ def snippet_for_search3
     Algolia::Composition::RequestBody.new(
       params: Algolia::Composition::Params.new(query: "batman"),
       feeds_order: ["feed-movies", "feed-comics"]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the search method.
+#
+# search
+def snippet_for_search4
+  # >SEPARATOR search search
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    "foo",
+    Algolia::Composition::RequestBody.new(
+      params: Algolia::Composition::Params.new(query: "batman"),
+      external_provider: Algolia::Composition::ExternalProvider.new(configuration_params: {customer_id: "customer123"})
     )
   )
 

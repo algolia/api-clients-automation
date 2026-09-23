@@ -1544,6 +1544,68 @@ void main() {
     ),
   );
 
+  // putComposition
+  test(
+    'putComposition',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putComposition(
+        compositionID: "my-external-provider-compo",
+        composition: Composition(
+          objectID: "my-external-provider-compo",
+          name: "my external provider composition",
+          behavior: CompositionInjectionBehavior(
+            injection: Injection(
+              main: InjectionMain(
+                source: InjectionMainExternalProviderSource(
+                  externalProvider: MainExternalProvider(
+                    index: "products",
+                    configurationID: "my-rmn-connection",
+                    configurationParams: {
+                      'campaign_id': "summer-sale",
+                      'customer_id': "customer-default",
+                    },
+                    params: MainInjectionQueryParameters(
+                      filters: "instock:true",
+                    ),
+                    ordering:
+                        ExternalProviderOrdering.fromJson("providerDefined"),
+                  ),
+                ),
+              ),
+              injectedItems: [
+                InjectionInjectedItem(
+                  key: "sponsored",
+                  source: InjectedItemExternalProviderSource(
+                    externalProvider: InjectedItemExternalProvider(
+                      index: "products",
+                      configurationID: "my-rmn-connection",
+                      configurationParams: {
+                        'campaign_id': "summer-sale",
+                      },
+                    ),
+                  ),
+                  position: 0,
+                  length: 2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/my-external-provider-compo');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}""");
+      },
+    ),
+  );
+
   // putCompositionRule
   test(
     'putCompositionRule',
@@ -1811,6 +1873,69 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}""");
+      },
+    ),
+  );
+
+  // putCompositionRule
+  test(
+    'putCompositionRule',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.putCompositionRule(
+        compositionID: "compositionID",
+        objectID: "rule-with-external-provider-source",
+        compositionRule: CompositionRule(
+          objectID: "rule-with-external-provider-source",
+          conditions: [
+            Condition(
+              anchoring: Anchoring.fromJson("contains"),
+              pattern: "harry",
+            ),
+          ],
+          consequence: CompositionRuleConsequence(
+            behavior: CompositionInjectionBehavior(
+              injection: Injection(
+                main: InjectionMain(
+                  source: InjectionMainSearchSource(
+                    search: MainSearch(
+                      index: "my-index",
+                    ),
+                  ),
+                ),
+                injectedItems: [
+                  InjectionInjectedItem(
+                    key: "my-unique-external-provider-group-from-rule-key",
+                    source: InjectedItemExternalProviderSource(
+                      externalProvider: InjectedItemExternalProvider(
+                        index: "my-index",
+                        configurationID: "my-rmn-connection",
+                        configurationParams: {
+                          'campaign_id': "summer-sale",
+                        },
+                        ordering: ExternalProviderOrdering.fromJson(
+                            "providerDefined"),
+                      ),
+                    ),
+                    position: 0,
+                    length: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/compositions/compositionID/rules/rule-with-external-provider-source');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}""");
       },
     ),
   );
@@ -2425,6 +2550,37 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "batman",
+          ),
+          externalProvider: ExternalProvider(
+            configurationParams: {
+              'customer_id': "customer123",
+            },
+          ),
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}""");
       },
     ),
   );

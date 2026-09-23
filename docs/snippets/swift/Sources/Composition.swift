@@ -1128,6 +1128,57 @@ final class CompositionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition9() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-external-provider-compo",
+            composition: Composition(
+                objectID: "my-external-provider-compo",
+                name: "my external provider composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainExternalProviderSource(
+                                InjectionMainExternalProviderSource(externalProvider: MainExternalProvider(
+                                    index: "products",
+                                    configurationID: "my-rmn-connection",
+                                    configurationParams: [
+                                        "campaign_id": AnyCodable("summer-sale"),
+                                        "customer_id": AnyCodable("customer-default"),
+                                    ],
+                                    params: MainInjectionQueryParameters(filters: "instock:true"),
+                                    ordering: ExternalProviderOrdering.providerDefined
+                                ))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "sponsored",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "products",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")]
+                                    ))
+                                ),
+                            position: 0,
+                            length: 2
+                        )]
+                    )))
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the putCompositionRule method.
     ///
     /// putCompositionRule
@@ -1295,6 +1346,50 @@ final class CompositionClientSnippet {
                     )))),
                 description: "my description",
                 enabled: true
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putCompositionRule method.
+    ///
+    /// putCompositionRule
+    func snippetForPutCompositionRule4() async throws {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putCompositionRule(
+            compositionID: "compositionID",
+            objectID: "rule-with-external-provider-source",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-external-provider-source",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "my-unique-external-provider-group-from-rule-key",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "my-index",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")],
+                                        ordering: ExternalProviderOrdering.providerDefined
+                                    ))
+                                ),
+                            position: 0,
+                            length: 3
+                        )]
+                    ))))
             )
         )
         // >LOG
@@ -1706,6 +1801,28 @@ final class CompositionClientSnippet {
             requestBody: RequestBody(
                 params: CompositionParams(query: "batman"),
                 feedsOrder: ["feed-movies", "feed-comics"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the search method.
+    ///
+    /// search
+    func snippetForSearch4() async throws {
+        // >SEPARATOR search search
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: CompositionSearchResponse<CompositionHit> = try await client.search(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                externalProvider: ExternalProvider(configurationParams: ["customer_id": AnyCodable("customer123")])
             )
         )
         // >LOG

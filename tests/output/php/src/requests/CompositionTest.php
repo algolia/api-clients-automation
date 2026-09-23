@@ -1220,6 +1220,51 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('putComposition')]
+    public function testPutComposition9(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-external-provider-compo',
+            ['objectID' => 'my-external-provider-compo',
+                'name' => 'my external provider composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['externalProvider' => ['index' => 'products',
+                    'configurationID' => 'my-rmn-connection',
+                    'configurationParams' => ['campaign_id' => 'summer-sale',
+                        'customer_id' => 'customer-default',
+                    ],
+                    'params' => ['filters' => 'instock:true',
+                    ],
+                    'ordering' => 'providerDefined',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'sponsored',
+                            'source' => ['externalProvider' => ['index' => 'products',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-external-provider-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('putCompositionRule')]
     public function testPutCompositionRule(): void
     {
@@ -1415,6 +1460,51 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/compositionID/rules/rule-with-deduplication',
                 'method' => 'PUT',
                 'body' => json_decode('{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule4(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'rule-with-external-provider-source',
+            ['objectID' => 'rule-with-external-provider-source',
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-external-provider-group-from-rule-key',
+                            'source' => ['externalProvider' => ['index' => 'my-index',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                                'ordering' => 'providerDefined',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/rule-with-external-provider-source',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}'),
             ],
         ]);
     }
@@ -1867,6 +1957,29 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/foo/run',
                 'method' => 'POST',
                 'body' => json_decode('{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search')]
+    public function testSearch4(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'externalProvider' => ['configurationParams' => ['customer_id' => 'customer123',
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}'),
             ],
         ]);
     }

@@ -1556,6 +1556,66 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("putComposition9") {
+    val (client, echo) = testClient()
+    val future = client.putComposition(
+      compositionID = "my-external-provider-compo",
+      composition = Composition(
+        objectID = "my-external-provider-compo",
+        name = "my external provider composition",
+        behavior = CompositionInjectionBehavior(
+          injection = Injection(
+            main = InjectionMain(
+              source = Some(
+                InjectionMainExternalProviderSource(
+                  externalProvider = MainExternalProvider(
+                    index = "products",
+                    configurationID = "my-rmn-connection",
+                    configurationParams =
+                      Some(Map("campaign_id" -> "summer-sale", "customer_id" -> "customer-default")),
+                    params = Some(
+                      MainInjectionQueryParameters(
+                        filters = Some("instock:true")
+                      )
+                    ),
+                    ordering = Some(ExternalProviderOrdering.withName("providerDefined"))
+                  )
+                )
+              )
+            ),
+            injectedItems = Some(
+              Seq(
+                InjectionInjectedItem(
+                  key = "sponsored",
+                  source = InjectedItemExternalProviderSource(
+                    externalProvider = InjectedItemExternalProvider(
+                      index = "products",
+                      configurationID = "my-rmn-connection",
+                      configurationParams = Some(Map("campaign_id" -> "summer-sale"))
+                    )
+                  ),
+                  position = 0,
+                  length = 2
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/my-external-provider-compo")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("putCompositionRule") {
     val (client, echo) = testClient()
     val future = client.putCompositionRule(
@@ -1846,6 +1906,68 @@ class CompositionTest extends AnyFunSuite {
     assert(res.method == "PUT")
     val expectedBody = parse(
       """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("putCompositionRule4") {
+    val (client, echo) = testClient()
+    val future = client.putCompositionRule(
+      compositionID = "compositionID",
+      objectID = "rule-with-external-provider-source",
+      compositionRule = CompositionRule(
+        objectID = "rule-with-external-provider-source",
+        conditions = Some(
+          Seq(
+            Condition(
+              anchoring = Some(Anchoring.withName("contains")),
+              pattern = Some("harry")
+            )
+          )
+        ),
+        consequence = CompositionRuleConsequence(
+          behavior = CompositionInjectionBehavior(
+            injection = Injection(
+              main = InjectionMain(
+                source = Some(
+                  InjectionMainSearchSource(
+                    search = MainSearch(
+                      index = "my-index"
+                    )
+                  )
+                )
+              ),
+              injectedItems = Some(
+                Seq(
+                  InjectionInjectedItem(
+                    key = "my-unique-external-provider-group-from-rule-key",
+                    source = InjectedItemExternalProviderSource(
+                      externalProvider = InjectedItemExternalProvider(
+                        index = "my-index",
+                        configurationID = "my-rmn-connection",
+                        configurationParams = Some(Map("campaign_id" -> "summer-sale")),
+                        ordering = Some(ExternalProviderOrdering.withName("providerDefined"))
+                      )
+                    ),
+                    position = 0,
+                    length = 3
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/compositionID/rules/rule-with-external-provider-source")
+    assert(res.method == "PUT")
+    val expectedBody = parse(
+      """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -2496,6 +2618,36 @@ class CompositionTest extends AnyFunSuite {
     assert(res.path == "/1/compositions/foo/run")
     assert(res.method == "POST")
     val expectedBody = parse("""{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search4") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("batman")
+          )
+        ),
+        externalProvider = Some(
+          ExternalProvider(
+            configurationParams = Some(Map("customer_id" -> "customer123"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

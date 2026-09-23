@@ -1632,6 +1632,69 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// putComposition
+    func testPutCompositionTest9() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionWithHTTPInfo(
+            compositionID: "my-external-provider-compo",
+            composition: Composition(
+                objectID: "my-external-provider-compo",
+                name: "my external provider composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainExternalProviderSource(
+                                InjectionMainExternalProviderSource(externalProvider: MainExternalProvider(
+                                    index: "products",
+                                    configurationID: "my-rmn-connection",
+                                    configurationParams: [
+                                        "campaign_id": AnyCodable("summer-sale"),
+                                        "customer_id": AnyCodable("customer-default"),
+                                    ],
+                                    params: MainInjectionQueryParameters(filters: "instock:true"),
+                                    ordering: ExternalProviderOrdering.providerDefined
+                                ))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "sponsored",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "products",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")]
+                                    ))
+                                ),
+                            position: 0,
+                            length: 2
+                        )]
+                    )))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"my-external-provider-compo\",\"name\":\"my external provider composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\",\"customer_id\":\"customer-default\"},\"params\":{\"filters\":\"instock:true\"},\"ordering\":\"providerDefined\"}}},\"injectedItems\":[{\"key\":\"sponsored\",\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"}}},\"position\":0,\"length\":2}]}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/my-external-provider-compo")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// putCompositionRule
     func testPutCompositionRuleTest() async throws {
         let configuration = try CompositionClientConfiguration(
@@ -1850,6 +1913,62 @@ final class CompositionClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-deduplication")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// putCompositionRule
+    func testPutCompositionRuleTest4() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.putCompositionRuleWithHTTPInfo(
+            compositionID: "compositionID",
+            objectID: "rule-with-external-provider-source",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-external-provider-source",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "my-unique-external-provider-group-from-rule-key",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "my-index",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")],
+                                        ordering: ExternalProviderOrdering.providerDefined
+                                    ))
+                                ),
+                            position: 0,
+                            length: 3
+                        )]
+                    ))))
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"objectID\":\"rule-with-external-provider-source\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-provider-group-from-rule-key\",\"source\":{\"externalProvider\":{\"index\":\"my-index\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"},\"ordering\":\"providerDefined\"}},\"position\":0,\"length\":3}]}}}}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/compositionID/rules/rule-with-external-provider-source")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -2385,6 +2504,40 @@ final class CompositionClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData = "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/compositions/foo/run")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search
+    func testSearchTest4() async throws {
+        let configuration = try CompositionClientConfiguration(
+            appID: CompositionClientRequestsTests.APPLICATION_ID,
+            apiKey: CompositionClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = CompositionClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<CompositionSearchResponse<CompositionHit>> = try await client.searchWithHTTPInfo(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                externalProvider: ExternalProvider(configurationParams: ["customer_id": AnyCodable("customer123")])
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"params\":{\"query\":\"batman\"},\"externalProvider\":{\"configurationParams\":{\"customer_id\":\"customer123\"}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

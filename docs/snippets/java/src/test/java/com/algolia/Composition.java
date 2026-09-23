@@ -1350,6 +1350,73 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the putComposition method.
+  //
+  // putComposition
+  void snippetForPutComposition9() throws Exception {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putComposition(
+      "my-external-provider-compo",
+      new Composition()
+        .setObjectID("my-external-provider-compo")
+        .setName("my external provider composition")
+        .setBehavior(
+          new CompositionInjectionBehavior().setInjection(
+            new Injection()
+              .setMain(
+                new InjectionMain().setSource(
+                  new InjectionMainExternalProviderSource().setExternalProvider(
+                    new MainExternalProvider()
+                      .setIndex("products")
+                      .setConfigurationID("my-rmn-connection")
+                      .setConfigurationParams(
+                        new HashMap() {
+                          {
+                            put("campaign_id", "summer-sale");
+                            put("customer_id", "customer-default");
+                          }
+                        }
+                      )
+                      .setParams(new MainInjectionQueryParameters().setFilters("instock:true"))
+                      .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                  )
+                )
+              )
+              .setInjectedItems(
+                Arrays.asList(
+                  new InjectionInjectedItem()
+                    .setKey("sponsored")
+                    .setSource(
+                      new InjectedItemExternalProviderSource().setExternalProvider(
+                        new InjectedItemExternalProvider()
+                          .setIndex("products")
+                          .setConfigurationID("my-rmn-connection")
+                          .setConfigurationParams(
+                            new HashMap() {
+                              {
+                                put("campaign_id", "summer-sale");
+                              }
+                            }
+                          )
+                      )
+                    )
+                    .setPosition(0)
+                    .setLength(2)
+                )
+              )
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the putCompositionRule method.
   //
   // putCompositionRule
@@ -1546,6 +1613,59 @@ class SnippetCompositionClient {
                   )
                 )
                 .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
+            )
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the putCompositionRule method.
+  //
+  // putCompositionRule
+  void snippetForPutCompositionRule4() throws Exception {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    TaskIDResponse response = client.putCompositionRule(
+      "compositionID",
+      "rule-with-external-provider-source",
+      new CompositionRule()
+        .setObjectID("rule-with-external-provider-source")
+        .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
+        .setConsequence(
+          new CompositionRuleConsequence().setBehavior(
+            new CompositionInjectionBehavior().setInjection(
+              new Injection()
+                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
+                .setInjectedItems(
+                  Arrays.asList(
+                    new InjectionInjectedItem()
+                      .setKey("my-unique-external-provider-group-from-rule-key")
+                      .setSource(
+                        new InjectedItemExternalProviderSource().setExternalProvider(
+                          new InjectedItemExternalProvider()
+                            .setIndex("my-index")
+                            .setConfigurationID("my-rmn-connection")
+                            .setConfigurationParams(
+                              new HashMap() {
+                                {
+                                  put("campaign_id", "summer-sale");
+                                }
+                              }
+                            )
+                            .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                        )
+                      )
+                      .setPosition(0)
+                      .setLength(3)
+                  )
+                )
             )
           )
         )
@@ -2050,6 +2170,34 @@ class SnippetCompositionClient {
     SearchResponse response = client.search(
       "foo",
       new RequestBody().setParams(new Params().setQuery("batman")).setFeedsOrder(Arrays.asList("feed-movies", "feed-comics")),
+      Hit.class
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // search
+  void snippetForSearch4() throws Exception {
+    // >SEPARATOR search search
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchResponse response = client.search(
+      "foo",
+      new RequestBody().setParams(new Params().setQuery("batman")).setExternalProvider(
+        new ExternalProvider().setConfigurationParams(
+          new HashMap() {
+            {
+              put("customer_id", "customer123");
+            }
+          }
+        )
+      ),
       Hit.class
     );
     // >LOG

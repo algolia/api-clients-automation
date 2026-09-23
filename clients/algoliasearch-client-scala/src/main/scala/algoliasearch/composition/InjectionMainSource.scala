@@ -46,14 +46,17 @@ object InjectionMainSourceSerializer extends Serializer[InjectionMainSource] {
           Extraction.extract[InjectionMainSearchSource](value)
         case value: JObject if value.obj.exists(_._1 == "recommend") =>
           Extraction.extract[InjectionMainRecommendSource](value)
+        case value: JObject if value.obj.exists(_._1 == "externalProvider") =>
+          Extraction.extract[InjectionMainExternalProviderSource](value)
         case _ => throw new MappingException("Can't convert " + json + " to InjectionMainSource")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: InjectionMainSource =>
     value match {
-      case value: InjectionMainSearchSource    => Extraction.decompose(value)(format - this)
-      case value: InjectionMainRecommendSource => Extraction.decompose(value)(format - this)
+      case value: InjectionMainSearchSource           => Extraction.decompose(value)(format - this)
+      case value: InjectionMainRecommendSource        => Extraction.decompose(value)(format - this)
+      case value: InjectionMainExternalProviderSource => Extraction.decompose(value)(format - this)
     }
   }
 }

@@ -1080,6 +1080,58 @@ export async function snippetForPutComposition8(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the putComposition method.
+//
+// putComposition
+export async function snippetForPutComposition9(): Promise<void> {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putComposition({
+    compositionID: 'my-external-provider-compo',
+    composition: {
+      objectID: 'my-external-provider-compo',
+      name: 'my external provider composition',
+      behavior: {
+        injection: {
+          main: {
+            source: {
+              externalProvider: {
+                index: 'products',
+                configurationID: 'my-rmn-connection',
+                configurationParams: { campaign_id: 'summer-sale', customer_id: 'customer-default' },
+                params: { filters: 'instock:true' },
+                ordering: 'providerDefined',
+              },
+            },
+          },
+          injectedItems: [
+            {
+              key: 'sponsored',
+              source: {
+                externalProvider: {
+                  index: 'products',
+                  configurationID: 'my-rmn-connection',
+                  configurationParams: { campaign_id: 'summer-sale' },
+                },
+              },
+              position: 0,
+              length: 2,
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the putCompositionRule method.
 //
 // putCompositionRule
@@ -1237,6 +1289,52 @@ export async function snippetForPutCompositionRule3(): Promise<void> {
               { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
             ],
             deduplication: { positioning: 'highestInjected' },
+          },
+        },
+      },
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+export async function snippetForPutCompositionRule4(): Promise<void> {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.putCompositionRule({
+    compositionID: 'compositionID',
+    objectID: 'rule-with-external-provider-source',
+    compositionRule: {
+      objectID: 'rule-with-external-provider-source',
+      conditions: [{ anchoring: 'contains', pattern: 'harry' }],
+      consequence: {
+        behavior: {
+          injection: {
+            main: { source: { search: { index: 'my-index' } } },
+            injectedItems: [
+              {
+                key: 'my-unique-external-provider-group-from-rule-key',
+                source: {
+                  externalProvider: {
+                    index: 'my-index',
+                    configurationID: 'my-rmn-connection',
+                    configurationParams: { campaign_id: 'summer-sale' },
+                    ordering: 'providerDefined',
+                  },
+                },
+                position: 0,
+                length: 3,
+              },
+            ],
           },
         },
       },
@@ -1670,6 +1768,29 @@ export async function snippetForSearch3(): Promise<void> {
   const response = await client.search({
     compositionID: 'foo',
     requestBody: { params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch4(): Promise<void> {
+  // >SEPARATOR search search
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    compositionID: 'foo',
+    requestBody: {
+      params: { query: 'batman' },
+      externalProvider: { configurationParams: { customer_id: 'customer123' } },
+    },
   });
 
   // >LOG

@@ -1105,6 +1105,57 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # putComposition
+  def test_put_composition9
+    req = @client.put_composition_with_http_info(
+      "my-external-provider-compo",
+      Algolia::Composition::Composition.new(
+        algolia_object_id: "my-external-provider-compo",
+        name: "my external provider composition",
+        behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+          injection: Algolia::Composition::Injection.new(
+            main: Algolia::Composition::InjectionMain.new(
+              source: Algolia::Composition::InjectionMainExternalProviderSource.new(
+                external_provider: Algolia::Composition::MainExternalProvider.new(
+                  index: "products",
+                  configuration_id: "my-rmn-connection",
+                  configuration_params: {campaign_id: "summer-sale", customer_id: "customer-default"},
+                  params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "instock:true"),
+                  ordering: "providerDefined"
+                )
+              )
+            ),
+            injected_items: [
+              Algolia::Composition::InjectionInjectedItem.new(
+                key: "sponsored",
+                source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                  external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                    index: "products",
+                    configuration_id: "my-rmn-connection",
+                    configuration_params: {campaign_id: "summer-sale"}
+                  )
+                ),
+                position: 0,
+                length: 2
+              )
+            ]
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/my-external-provider-compo", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"my-external-provider-compo\",\"name\":\"my external provider composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\",\"customer_id\":\"customer-default\"},\"params\":{\"filters\":\"instock:true\"},\"ordering\":\"providerDefined\"}}},\"injectedItems\":[{\"key\":\"sponsored\",\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"}}},\"position\":0,\"length\":2}]}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # putCompositionRule
   def test_put_composition_rule
     req = @client.put_composition_rule_with_http_info(
@@ -1307,6 +1358,55 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(
       JSON.parse(
         "{\"objectID\":\"rule-with-deduplication\",\"description\":\"my description\",\"enabled\":true,\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-injected-item-key\",\"source\":{\"search\":{\"index\":\"my-index\"}},\"position\":0,\"length\":3}],\"deduplication\":{\"positioning\":\"highestInjected\"}}}}}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # putCompositionRule
+  def test_put_composition_rule4
+    req = @client.put_composition_rule_with_http_info(
+      "compositionID",
+      "rule-with-external-provider-source",
+      Algolia::Composition::CompositionRule.new(
+        algolia_object_id: "rule-with-external-provider-source",
+        conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
+        consequence: Algolia::Composition::CompositionRuleConsequence.new(
+          behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+            injection: Algolia::Composition::Injection.new(
+              main: Algolia::Composition::InjectionMain.new(
+                source: Algolia::Composition::InjectionMainSearchSource.new(
+                  search: Algolia::Composition::MainSearch.new(index: "my-index")
+                )
+              ),
+              injected_items: [
+                Algolia::Composition::InjectionInjectedItem.new(
+                  key: "my-unique-external-provider-group-from-rule-key",
+                  source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                    external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                      index: "my-index",
+                      configuration_id: "my-rmn-connection",
+                      configuration_params: {campaign_id: "summer-sale"},
+                      ordering: "providerDefined"
+                    )
+                  ),
+                  position: 0,
+                  length: 3
+                )
+              ]
+            )
+          )
+        )
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal("/1/compositions/compositionID/rules/rule-with-external-provider-source", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"objectID\":\"rule-with-external-provider-source\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-provider-group-from-rule-key\",\"source\":{\"externalProvider\":{\"index\":\"my-index\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"},\"ordering\":\"providerDefined\"}},\"position\":0,\"length\":3}]}}}}"
       ),
       JSON.parse(req.body)
     )
@@ -1790,6 +1890,30 @@ class TestCompositionClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse("{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}"),
+      JSON.parse(req.body)
+    )
+  end
+
+  # search
+  def test_search4
+    req = @client.search_with_http_info(
+      "foo",
+      Algolia::Composition::RequestBody.new(
+        params: Algolia::Composition::Params.new(query: "batman"),
+        external_provider: Algolia::Composition::ExternalProvider.new(
+          configuration_params: {customer_id: "customer123"}
+        )
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"params\":{\"query\":\"batman\"},\"externalProvider\":{\"configurationParams\":{\"customer_id\":\"customer123\"}}}"
+      ),
       JSON.parse(req.body)
     )
   end
