@@ -15,6 +15,15 @@ public class FacetFilterDsl internal constructor(private val core: FamilyAndBuil
 
   public constructor() : this(FamilyAndBuilder<Filter.Facet> { FilterGroup.Or.Facet(it) })
 
+  /**
+   * Adds an [FilterGroup.And] of the children in [block]. An empty block adds nothing. The encoders
+   * flatten it into the enclosing `AND`, so `optionalFilters { and { a; b }; or { c; d } }` encodes
+   * as `[[a], [b], [c, d]]`.
+   */
+  public fun and(block: FacetFilterDsl.() -> Unit) {
+    core.and(FacetFilterDsl().apply(block).core.snapshot())
+  }
+
   /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. An empty block adds nothing. */
   public fun or(block: FacetOrDsl.() -> Unit) {
     core.or(FacetOrDsl().apply(block).snapshot())
