@@ -6,20 +6,24 @@ injectionMainSearchSource:
   additionalProperties: false
   properties:
     search:
-      title: mainSearch
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          type: string
-          description: Index to retrieve search results from.
-          example: Products
-        params:
-          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
-      required:
-        - index
+      $ref: '#/injectionMainSearch'
   required:
     - search
+
+# Split out from injectionMainSearchSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainSearch:
+  title: injectionMainSearch
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Search.yml#/baseSearchSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
 
 injectionMainRecommendSource:
   description: Organic result set will originate from a recommend request.
@@ -29,31 +33,26 @@ injectionMainRecommendSource:
   additionalProperties: false
   properties:
     recommend:
-      title: mainRecommend
-      type: object
+      $ref: '#/injectionMainRecommend'
+  required:
+    - recommend
+
+# Split out from injectionMainRecommendSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainRecommend:
+  title: injectionMainRecommend
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Recommend.yml#/baseRecommendSource'
+    - type: object
       additionalProperties: false
       properties:
-        indexName:
-          type: string
-          description: Index to retrieve recommendations from.
-          example: Products
-        model:
-          $ref: './RecommendModel.yml#/model'
-        threshold:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: Minimum score a recommendation must have to be included.
         queryParameters:
           $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
         fallbackParameters:
           $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
-      required:
-        - indexName
-        - model
-        - threshold
-  required:
-    - recommend
 
 injectionMainExternalProviderSource:
   description: Organic result set will originate from a request to an external provider configuration.
@@ -63,29 +62,21 @@ injectionMainExternalProviderSource:
   additionalProperties: false
   properties:
     externalProvider:
-      title: mainExternalProvider
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          type: string
-          description: Algolia index used to fetch the records.
-          example: Products
-        configurationID:
-          type: string
-          description: Identifier of the external provider configuration.
-          example: 'my-rmn-connection'
-        configurationParams:
-          type: object
-          additionalProperties: true
-          description: Default values for the configuration placeholders that are not reserved Composition placeholders.
-          example: {campaign_id: 'winter-sale', customer_id: 'user123'}
-        params:
-          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
-        ordering:
-          $ref: './ExternalProviderSource.yml#/externalProviderOrdering'
-      required:
-        - index
-        - configurationID
+      $ref: '#/injectionMainExternalProvider'
   required:
     - externalProvider
+
+# Split out from injectionMainExternalProviderSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainExternalProvider:
+  title: injectionMainExternalProvider
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/ExternalProvider.yml#/baseExternalProviderSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
