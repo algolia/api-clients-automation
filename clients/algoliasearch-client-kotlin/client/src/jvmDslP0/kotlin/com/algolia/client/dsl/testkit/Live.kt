@@ -34,7 +34,8 @@ private const val LIVE_PROPERTY = "algolia.dsl.live"
 private const val REPO_ROOT_PROPERTY = "algolia.repoRoot"
 private const val INDEX_PREFIX = "kotlin_dsl_live_"
 private const val LOG_PREFIX = "[kotlin-dsl-live]"
-private const val JANITOR_MAX_PAGES = 10
+private const val JANITOR_HITS_PER_PAGE = 100
+private const val JANITOR_MAX_PAGES = 1_000
 private const val JANITOR_MAX_AGE_SECONDS: Long = 24 * 60 * 60
 
 /** Matches every index this kit creates; group 1 is the creation epoch in seconds. */
@@ -45,10 +46,14 @@ private val SETUP_TIMEOUT: Duration = 180.seconds
 private val CLOSE_TIMEOUT: Duration = 30.seconds
 
 /**
- * Resolves the application id and admin key the live tests run with. Same convention as the
- * generated e2e tests: with `CI=true` the values come from the environment, otherwise from the
- * repo-root `.env` (the root is passed by the live Gradle tasks as `algolia.repoRoot`). Values are
- * never logged.
+ * Resolves the application id and admin key the live tests run with.
+ * - With `CI=true`: from the process environment only, like the generated e2e tests.
+ * - Otherwise: from the repo-root `.env` file (the root is passed by the live Gradle tasks as
+ *   `algolia.repoRoot`). A key declared in the file wins over an exported environment variable of
+ *   the same name; the environment is only read for keys the file does not declare (or when the
+ *   file is missing).
+ *
+ * Values are never logged.
  */
 internal object LiveCredentials {
   fun load(): Pair<String, String> {
@@ -63,9 +68,15 @@ internal object LiveCredentials {
         "Kotlin DSL live tests must run through the Gradle live tasks (jvmDslP<n>LiveTest): " +
           "system property `$REPO_ROOT_PROPERTY` is not set."
       }
-      val dotenv = Dotenv.configure().directory(repoRoot).ignoreIfMissing().load()
-      appId = dotenv[APP_ID_ENV]
-      apiKey = dotenv[ADMIN_KEY_ENV]
+      val fromFile =
+        Dotenv.configure()
+          .directory(repoRoot)
+          .ignoreIfMissing()
+          .load()
+          .entries(Dotenv.Filter.DECLARED_IN_ENV_FILE)
+          .associate { it.key to it.value }
+      appId = fromFile[APP_ID_ENV] ?: System.getenv(APP_ID_ENV)
+      apiKey = fromFile[ADMIN_KEY_ENV] ?: System.getenv(ADMIN_KEY_ENV)
     }
     if (appId.isNullOrBlank() || apiKey.isNullOrBlank()) {
       throw IllegalStateException(
@@ -123,22 +134,36 @@ internal class LiveIndex private constructor(val client: SearchClient, val name:
       return "$INDEX_PREFIX${epoch}_${hex}_$purpose"
     }
 
-    /** Deletes indices of this kit older than 24 h (leaked by killed JVMs). Errors are logged. */
+    /**
+     * Deletes indices of this kit older than 24 h (leaked by killed JVMs). Every page is listed
+     * before the first deletion: deleting while paging shifts later indices onto pages already
+     * read. Errors are logged.
+     */
     private suspend fun janitor(client: SearchClient) {
       val cutoff = System.currentTimeMillis() / 1000 - JANITOR_MAX_AGE_SECONDS
       logged("janitor") {
-        for (page in 0 until JANITOR_MAX_PAGES) {
-          val listing = client.listIndices(page = page, hitsPerPage = 100)
+        val stale = mutableListOf<String>()
+        var page = 0
+        while (true) {
+          if (page >= JANITOR_MAX_PAGES) {
+            println("$LOG_PREFIX janitor stopped listing after $JANITOR_MAX_PAGES pages")
+            break
+          }
+          val listing = client.listIndices(page = page, hitsPerPage = JANITOR_HITS_PER_PAGE)
           for (index in listing.items) {
             val epoch =
               INDEX_EPOCH.find(index.name)?.groupValues?.get(1)?.toLongOrNull() ?: continue
-            if (epoch >= cutoff) continue
-            logged("janitor delete of ${index.name}") {
-              client.deleteIndex(index.name)
-              println("$LOG_PREFIX janitor deleted stale ${index.name}")
-            }
+            if (epoch < cutoff) stale += index.name
           }
-          if (page + 1 >= (listing.nbPages ?: 1)) break
+          page++
+          if (listing.items.size < JANITOR_HITS_PER_PAGE) break
+          if (listing.nbPages?.let { page >= it } == true) break
+        }
+        for (name in stale) {
+          logged("janitor delete of $name") {
+            client.deleteIndex(name)
+            println("$LOG_PREFIX janitor deleted stale $name")
+          }
         }
       }
     }
