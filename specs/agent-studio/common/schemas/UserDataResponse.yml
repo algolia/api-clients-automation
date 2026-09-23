@@ -2,16 +2,16 @@ UserDataResponse:
   properties:
     conversations:
       items:
-        $ref: 'ConversationFullResponse.yml#/ConversationFullResponse'
+        $ref: ConversationFullResponse.yml#/ConversationFullResponse
       type: array
       title: conversations
     memories:
       items:
-        $ref: 'MemoryRecord.yml#/MemoryRecord'
+        $ref: MemoryRecord.yml#/MemoryRecord
       type: array
       title: memories
   type: object
   required:
-    - conversations
-    - memories
+  - conversations
+  - memories
   title: userDataResponse

@@ -1,0 +1,6 @@
+ToolCallsUnion:
+  oneOf:
+  - items:
+      $ref: ToolCallAGUI.yml#/ToolCallAGUI
+    type: array
+  - type: 'null'
