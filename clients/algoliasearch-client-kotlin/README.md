@@ -66,6 +66,34 @@ val params = query {
 
 `filters { }` sets the SQL `filters` string. `facetFilters { }`, `optionalFilters { }`, `numericFilters { }`, and `tagFilters { }` set the matching typed field. An empty block omits the field.
 
+Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`), or a group with `not { }`. `and { }` and `or { }` work in every filter block, including `optionalFilters`:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val params = query {
+  filters {
+    orFacet { facet("entityId", "a"); facet("entityId", "b") }
+    facet("batchId", "b-1", isNegated = true)
+  }
+  optionalFilters {
+    and { facet("genre", "comedy", score = 500); facet("provider", "NBC", score = 500) }
+    or { facet("isFeatured", true, score = 0); facet("isNew", true) }
+  }
+}
+```
+
+The `filters` string only uses shapes Algolia supports: `NOT` applies to single filters (`not { orFacet { a; b } }` encodes as `NOT a AND NOT b`, `not { a; b }` as `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` has no parentheses. A `not { }` that would need an `OR` of `AND`s, or an `OR` across facet, tag, and numeric filters, throws `IllegalArgumentException`. `facetFilters`, `optionalFilters`, and `tagFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
+
+Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `FilterDsl`, `FacetFilterDsl`, `NumericFilterDsl`, and `TagFilterDsl`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val locale: FilterDsl.() -> Unit = { orFacet { facet("locale", "en-US") } }
+
+@OptIn(AlgoliaExperimentalDsl::class)
+val base: QueryBuilder.() -> Unit = { hitsPerPage = 20; filters(locale) }
+```
+
 ```kotlin
 import com.algolia.client.dsl.*
 
