@@ -10,7 +10,8 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  * Matches version 2 `FilterGroupsConverter.SQL` leaf syntax (`attribute:value`, `_tags:value`,
  * `attribute op number`, `attribute:lower TO upper`, `attribute:value<score=N>`) and group joining
  * (`AND` / `OR` / `NOT`). Empty [FilterGroup.And] and [FilterGroup.Or] groups become `null` so
- * `SearchParamsObject.filters` can stay omitted.
+ * `SearchParamsObject.filters` can stay omitted. A [FilterGroup.Not] over an empty group is `null`
+ * as well. This converter never throws.
  *
  * [FilterGroup.Or] carries its family in the type. This converter performs no family check.
  *
@@ -28,7 +29,8 @@ internal object FilterSqlConverter {
 
   /**
    * Returns the SQL `filters` string for [root], or `null` when [root] is an empty
-   * [FilterGroup.And] or [FilterGroup.Or] (including an `And` / `Or` whose children are all empty).
+   * [FilterGroup.And] or [FilterGroup.Or] (including an `And` / `Or` whose children are all empty,
+   * or a [FilterGroup.Not] over such a group).
    */
   operator fun invoke(root: FilterGroup): String? = emit(root, negated = false)
 
@@ -51,11 +53,12 @@ internal object FilterSqlConverter {
     return if (negated) "NOT $text" else text
   }
 
-  /** `null` (empty group) under a `Not` is the existing reject case; otherwise prefix `NOT `. */
-  private fun String?.negateGroup(negated: Boolean): String? {
-    if (!negated) return this
-    return "NOT ${this ?: throw IllegalArgumentException("FilterGroup.Not cannot wrap an empty And or Or group.")}"
-  }
+  /**
+   * Prefixes `NOT ` when [negated]. `null` (an empty group) stays `null`, so `Not(And())` and
+   * `Not(Or.Facet())` encode as nothing, exactly like the empty group they wrap.
+   */
+  private fun String?.negateGroup(negated: Boolean): String? =
+    if (negated && this != null) "NOT $this" else this
 
   private fun emitFacet(filter: Filter.Facet): String {
     val attribute = FilterQuote.quote(filter.attribute)

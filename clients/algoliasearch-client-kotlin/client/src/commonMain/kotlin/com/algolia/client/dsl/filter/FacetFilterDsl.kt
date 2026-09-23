@@ -15,19 +15,14 @@ public class FacetFilterDsl internal constructor(private val core: FamilyAndBuil
 
   public constructor() : this(FamilyAndBuilder<Filter.Facet> { FilterGroup.Or.Facet(it) })
 
-  /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. */
+  /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. An empty block adds nothing. */
   public fun or(block: FacetOrDsl.() -> Unit) {
     core.or(FacetOrDsl().apply(block).snapshot())
   }
 
   /**
-   * Negates the children in [block].
-   *
-   * One child gets unary `!`: a leaf toggles its [Filter.negated] flag (`not { facet("a", "b") }`
-   * builds the same tree as `!Filter.Facet("a", "b")`), a nested `not { }` is unwrapped so `not {
-   * not { … } }` is the positive node, and an `or { }` group is wrapped in [FilterGroup.Not].
-   * Several children are wrapped as [FilterGroup.Not] of an [FilterGroup.And]. An empty block adds
-   * nothing. Both encoders emit a toggled leaf and a [FilterGroup.Not] over that leaf identically.
+   * Negates the children in [block]. One child gets unary `!` ([FilterGroup.not]); several become
+   * [FilterGroup.Not] of an [FilterGroup.And]; an empty block adds nothing.
    */
   public fun not(block: FacetFilterDsl.() -> Unit) {
     core.not(FacetFilterDsl().apply(block).core.snapshot())
@@ -48,10 +43,8 @@ public class FacetOrDsl internal constructor(private val core: FamilyOrBuilder<F
   public constructor() : this(FamilyOrBuilder<Filter.Facet> { !it })
 
   /**
-   * Toggles [Filter.negated] on every facet leaf collected in [block] and appends each one.
-   *
-   * `not { facet(a); facet(b) }` yields two negated leaves (`NOT a OR NOT b` inside the OR); `not {
-   * not { facet(a) } }` yields the positive leaf. An empty [block] appends nothing.
+   * Appends each facet leaf in [block] with [Filter.negated] toggled: `not { a; b }` contributes
+   * `NOT a OR NOT b`. An empty block appends nothing.
    */
   public fun not(block: FacetOrDsl.() -> Unit) {
     core.not(FacetOrDsl().apply(block).snapshot())

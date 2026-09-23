@@ -26,11 +26,16 @@ import com.algolia.client.model.search.TagFilters
  * Family receivers make a wrong-family leaf unrepresentable. A hand-built tree that still contains
  * one throws [IllegalArgumentException]. The encoder does not drop other families.
  *
+ * ## Empty groups
+ *
+ * An empty [FilterGroup.And] or [FilterGroup.Or] contributes no row, with or without an enclosing
+ * [FilterGroup.Not]. A tree with no rows encodes as `null`, matching [FilterSqlConverter].
+ *
  * ## Reject cases ([IllegalArgumentException])
  *
  * - **Wrong family:** a leaf that does not match the encoder family.
  * - **De Morgan OR-of-ANDs:** [FilterGroup.Not] of an [FilterGroup.And] whose negated children
- *   include a conjunction (for example `Not.Group(And(Or.Facet(A, B), C))`).
+ *   include a conjunction (for example `Not(And(Or.Facet(A, B), C))`).
  *
  * ## Quoting
  *
@@ -118,36 +123,43 @@ private fun convertAnd(
   family: FilterFamily,
   negated: Boolean,
 ): List<List<String>> {
-  if (negated) {
-    return if (children.size == 1) {
-      toRows(children.single(), family, negated = true)
-    } else {
-      orRow(children, family, negated = true)
-    }
+  if (!negated) {
+    return children.flatMap { toRows(it, family, negated = false) }.filter { it.isNotEmpty() }
   }
-  return children.flatMap { toRows(it, family, negated = false) }.filter { it.isNotEmpty() }
+  return when (children.size) {
+    0 -> emptyList()
+    1 -> toRows(children.single(), family, negated = true)
+    else -> negatedAndRow(children, family)
+  }
 }
 
+/**
+ * OR of leaves. Positive: one row holding every leaf literal (a negated [Filter.Range] contributes
+ * its two comparisons to that same row). Negated: De Morgan turns `NOT (a OR b)` into `NOT a AND
+ * NOT b`, one row per leaf. Empty: no rows. A leaf always encodes as exactly one row, so this never
+ * rejects.
+ */
 private fun orRows(
-  children: List<FilterGroup>,
+  children: List<Filter>,
   family: FilterFamily,
   negated: Boolean,
 ): List<List<String>> {
   if (children.isEmpty()) return emptyList()
-  if (negated) {
-    return children.flatMap { toRows(it, family, negated = true) }.filter { it.isNotEmpty() }
-  }
-  return orRow(children, family, negated = false)
+  if (negated) return children.flatMap { toRows(it, family, negated = true) }
+  return listOf(children.flatMap { toRows(it, family, negated = false).single() })
 }
 
-private fun orRow(
-  children: List<FilterGroup>,
-  family: FilterFamily,
-  negated: Boolean,
-): List<List<String>> {
+/**
+ * De Morgan for a negated [FilterGroup.And] of two or more children: `NOT (a AND b)` is the single
+ * OR row `NOT a OR NOT b`, so each child must collapse to one row. A child that needs several rows
+ * — a negated [FilterGroup.Or] with two or more leaves, or a positive conjunction under a double
+ * [FilterGroup.Not] — is an OR of ANDs, which `List<List<String>>` cannot encode: that is the
+ * [IllegalArgumentException] reject case. A child with no row (an empty group) is skipped.
+ */
+private fun negatedAndRow(children: List<FilterGroup>, family: FilterFamily): List<List<String>> {
   val literals = mutableListOf<String>()
   for (child in children) {
-    val rows = toRows(child, family, negated).filter { it.isNotEmpty() }
+    val rows = toRows(child, family, negated = true).filter { it.isNotEmpty() }
     when (rows.size) {
       0 -> Unit
       1 -> literals += rows.single()

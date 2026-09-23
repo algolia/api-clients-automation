@@ -39,25 +39,40 @@ internal class FilterLegacyConverterTest {
     }
   }
 
+  /**
+   * De Morgan on a negated And: each child must collapse to one OR row. A child that needs several
+   * rows is an OR of ANDs, which the nested-list format cannot encode.
+   */
   @Test
-  fun legacyRejectVectors() {
-    rejectVectors.forEach { vector ->
-      if (vector.legacyFacetThrows) {
-        assertFailsWith<IllegalArgumentException>("${vector.name} legacy facet") {
-          FilterLegacyConverter.facet(vector.group)
-        }
-        assertFailsWith<IllegalArgumentException>("${vector.name} legacy optional") {
-          FilterLegacyConverter.optional(vector.group)
-        }
-      }
-      if (vector.legacyAllThrow) {
-        assertFailsWith<IllegalArgumentException>("${vector.name} legacy numeric") {
-          FilterLegacyConverter.numeric(vector.group)
-        }
-        assertFailsWith<IllegalArgumentException>("${vector.name} legacy tag") {
-          FilterLegacyConverter.tag(vector.group)
-        }
-      }
+  fun negatedAndHoldingDisjunctionThrows() {
+    val orOfAnds =
+      FilterGroup.Not(FilterGroup.And(FilterGroup.Or.Facet(colorRed, colorBlue), categoryShirt))
+    assertFailsWith<IllegalArgumentException> { FilterLegacyConverter.facet(orOfAnds) }
+    assertFailsWith<IllegalArgumentException> { FilterLegacyConverter.optional(orOfAnds) }
+
+    // A double Not re-positivizes the inner And, which is a conjunction again.
+    val doubleNot =
+      FilterGroup.Not(
+        FilterGroup.And(FilterGroup.Not(FilterGroup.And(colorRed, colorBlue)), categoryShirt)
+      )
+    assertFailsWith<IllegalArgumentException> { FilterLegacyConverter.facet(doubleNot) }
+
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.numeric(
+        FilterGroup.Not(
+          FilterGroup.And(
+            FilterGroup.Or.Numeric(priceUntil10, priceEquals15),
+            Filter.Comparison("stock", NumericOperator.Greater, 0),
+          )
+        )
+      )
+    }
+    assertFailsWith<IllegalArgumentException> {
+      FilterLegacyConverter.tag(
+        FilterGroup.Not(
+          FilterGroup.And(FilterGroup.Or.Tag(Filter.Tag("a"), Filter.Tag("b")), Filter.Tag("c"))
+        )
+      )
     }
   }
 

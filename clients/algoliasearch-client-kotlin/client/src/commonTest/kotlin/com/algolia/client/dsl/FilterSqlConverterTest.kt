@@ -7,7 +7,6 @@ import com.algolia.client.dsl.filter.NumericOperator
 import com.algolia.client.dsl.filter.filters
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 /** Golden and ported vectors for [FilterSqlConverter]. Fixtures in FilterConverterFixtures.kt. */
 internal class FilterSqlConverterTest {
@@ -16,13 +15,6 @@ internal class FilterSqlConverterTest {
   fun sqlGoldenVectors() {
     sqlVectors.forEach { vector ->
       assertEquals(vector.sql, FilterSqlConverter(vector.group), vector.name)
-    }
-  }
-
-  @Test
-  fun sqlRejectVectors() {
-    rejectVectors.forEach { vector ->
-      assertFailsWith<IllegalArgumentException>(vector.name) { FilterSqlConverter(vector.group) }
     }
   }
 
