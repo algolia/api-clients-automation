@@ -44,6 +44,7 @@ injectedItemSource:
     - $ref: './InjectedItemSource.yml#/injectedItemSearchSource'
     - $ref: './InjectedItemSource.yml#/injectedItemExternalSource'
     - $ref: './InjectedItemSource.yml#/injectedItemRecommendSource'
+    - $ref: './InjectedItemSource.yml#/injectedItemExternalProviderSource'
 
 dedupPositioning:
   type: string

@@ -393,5 +393,93 @@
         }
       }
     }
+  },
+  {
+    "parameters": {
+      "compositionID": "compositionID",
+      "objectID": "rule-with-external-provider-source",
+      "compositionRule": {
+        "objectID": "rule-with-external-provider-source",
+        "conditions": [
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "my-index"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "my-unique-external-provider-group-from-rule-key",
+                  "source": {
+                    "externalProvider": {
+                      "index": "my-index",
+                      "configurationID": "my-rmn-connection",
+                      "configurationParams": {
+                        "campaign_id": "summer-sale"
+                      },
+                      "ordering": "providerDefined"
+                    }
+                  },
+                  "position": 0,
+                  "length": 3
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/compositionID/rules/rule-with-external-provider-source",
+      "method": "PUT",
+      "body": {
+        "objectID": "rule-with-external-provider-source",
+        "conditions": [
+          {
+            "anchoring": "contains",
+            "pattern": "harry"
+          }
+        ],
+        "consequence": {
+          "behavior": {
+            "injection": {
+              "main": {
+                "source": {
+                  "search": {
+                    "index": "my-index"
+                  }
+                }
+              },
+              "injectedItems": [
+                {
+                  "key": "my-unique-external-provider-group-from-rule-key",
+                  "source": {
+                    "externalProvider": {
+                      "index": "my-index",
+                      "configurationID": "my-rmn-connection",
+                      "configurationParams": {
+                        "campaign_id": "summer-sale"
+                      },
+                      "ordering": "providerDefined"
+                    }
+                  },
+                  "position": 0,
+                  "length": 3
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
   }
 ]

@@ -23,6 +23,8 @@ post:
               $ref: '../../common/schemas/requestBodies/RunParams.yml#/params'
             feedsOrder:
               $ref: '../../common/schemas/requestBodies/RunParams.yml#/feedsOrder'
+            externalProvider:
+              $ref: '../../common/schemas/requestBodies/RunParams.yml#/externalProvider'
   responses:
     '200':
       description: OK

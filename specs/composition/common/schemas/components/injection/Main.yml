@@ -11,3 +11,4 @@ injectionMainSource:
   oneOf:
     - $ref: './MainSource.yml#/injectionMainSearchSource'
     - $ref: './MainSource.yml#/injectionMainRecommendSource'
+    - $ref: './MainSource.yml#/injectionMainExternalProviderSource'
