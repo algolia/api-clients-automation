@@ -125,6 +125,17 @@ val promo = rule("promo") {
 }
 ```
 
+List parameters on `query { }`, `browse { }`, and rule `params { }` take `+` blocks. A block replaces the list; an empty block omits the field. This differs from the `settings { }` list helpers, where an empty block sends an empty list. To send `[]` from a query, assign it: `attributesToRetrieve = emptyList()`.
+
+```kotlin
+@OptIn(AlgoliaExperimentalDsl::class)
+val params = query {
+  restrictSearchableAttributes { +"title"; +"alternateTitles" }
+  queryLanguages { +SupportedLanguage.En }
+  responseFields { +ResponseField.Hits; +ResponseField.ProcessingTimingsMS; +ResponseField.Other("renderingContent") }
+}
+```
+
 ### Migrating from version 2
 
 Map version 2 types to version 3 types:
