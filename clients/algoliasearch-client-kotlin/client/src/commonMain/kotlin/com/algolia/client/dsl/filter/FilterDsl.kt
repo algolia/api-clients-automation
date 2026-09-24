@@ -61,71 +61,38 @@ public class FilterDsl internal constructor(private val nodes: FilterAccumulator
     if (leaves.isNotEmpty()) nodes.add(FilterGroup.Or.Numeric(leaves))
   }
 
-  /**
-   * Negates the children in [block]. One child gets unary `!` ([FilterGroup.not]); several become
-   * [FilterGroup.Not] of an [FilterGroup.And]; an empty block adds nothing.
-   */
-  public fun not(block: FilterDsl.() -> Unit) {
-    negate(FilterDsl().apply(block).nodes.snapshot())?.let(nodes::add)
-  }
-
   internal fun root(): FilterGroup = nodes.root()
 }
 
 /**
  * Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty.
  *
- * Negation is pushed down to the leaves (`not { orFacet { a; b } }` → `NOT a AND NOT b`, `not { a;
- * b }` → `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` is
- * never parenthesised. Throws [IllegalArgumentException] when a `not { }` over several children
- * would need an `OR` of `AND`s (for example `not { orFacet { a; b }; c }`) or an `OR` across facet,
- * tag, and numeric filters (for example `not { facet(…); tag(…) }`); Algolia `filters` cannot
- * express either.
+ * `NOT` only precedes a single filter (`isNegated`), nested `and { }` blocks are flattened, the
+ * top-level `AND` is never parenthesised, and each `OR` holds one filter family by construction.
  */
 @AlgoliaExperimentalDsl
 public fun filters(block: FilterDsl.() -> Unit): String? =
   FilterSqlConverter(FilterDsl().apply(block).root())
 
-/**
- * OR-context builder for [Filter.Numeric] children. Exposes only numeric leaves and [not]. An empty
- * [not] block appends nothing.
- */
+/** OR-context builder for [Filter.Numeric] children. Exposes only numeric leaves. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class NumericOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Numeric>) :
-  NumericLeaves by NumericLeafMixin(core::add) {
+public class NumericOrDsl
+internal constructor(private val leaves: FilterAccumulator<Filter.Numeric>) :
+  NumericLeaves by NumericLeafMixin(leaves::add) {
 
-  public constructor() : this(FamilyOrBuilder<Filter.Numeric> { !it })
+  public constructor() : this(FilterAccumulator())
 
-  /**
-   * Appends each numeric leaf in [block] with [Filter.negated] toggled: `not { a; b }` contributes
-   * `NOT a OR NOT b`. An empty block appends nothing.
-   */
-  public fun not(block: NumericOrDsl.() -> Unit) {
-    core.not(NumericOrDsl().apply(block).snapshot())
-  }
-
-  internal fun snapshot(): List<Filter.Numeric> = core.snapshot()
+  internal fun snapshot(): List<Filter.Numeric> = leaves.snapshot()
 }
 
-/**
- * OR-context builder for [Filter.Tag] children. Exposes only tag leaves and [not]. An empty [not]
- * block appends nothing.
- */
+/** OR-context builder for [Filter.Tag] children. Exposes only tag leaves. */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl
-public class TagOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Tag>) :
-  TagLeaves by TagLeafMixin(core::add) {
+public class TagOrDsl internal constructor(private val leaves: FilterAccumulator<Filter.Tag>) :
+  TagLeaves by TagLeafMixin(leaves::add) {
 
-  public constructor() : this(FamilyOrBuilder<Filter.Tag> { !it })
+  public constructor() : this(FilterAccumulator())
 
-  /**
-   * Appends each tag leaf in [block] with [Filter.negated] toggled: `not { a; b }` contributes `NOT
-   * a OR NOT b`. An empty block appends nothing.
-   */
-  public fun not(block: TagOrDsl.() -> Unit) {
-    core.not(TagOrDsl().apply(block).snapshot())
-  }
-
-  internal fun snapshot(): List<Filter.Tag> = core.snapshot()
+  internal fun snapshot(): List<Filter.Tag> = leaves.snapshot()
 }

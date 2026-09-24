@@ -18,8 +18,7 @@ import com.algolia.client.model.search.SearchParamsObject
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
  * mutable list) are read at build time and side effects in a block repeat on each build. [build]
- * can be called repeatedly and may throw [IllegalArgumentException] for a filter tree Algolia
- * cannot express (see [QueryAdditions.filters]). Not thread-safe.
+ * can be called repeatedly. Not thread-safe.
  */
 @AlgoliaDsl
 @AlgoliaExperimentalDsl

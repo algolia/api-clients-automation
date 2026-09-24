@@ -16,21 +16,17 @@ internal object CrossCheckRowsP1 {
 
   fun x02(): SearchParamsObject = query {
     filters {
-      not {
-        facet("color", "red")
-        facet("category", "shirt")
+      orFacet {
+        facet("color", "red", isNegated = true)
+        facet("category", "shirt", isNegated = true)
       }
     }
   }
 
   fun x04(): SearchParamsObject = query {
     filters {
-      not {
-        orFacet {
-          facet("color", "red")
-          facet("color", "blue")
-        }
-      }
+      facet("color", "red", isNegated = true)
+      facet("color", "blue", isNegated = true)
     }
   }
 
@@ -100,26 +96,5 @@ internal object CrossCheckRowsP1 {
       facet("category", "shirt")
     }
     getRankingInfo = true
-  }
-
-  fun x19a(): SearchParamsObject = query {
-    filters {
-      not {
-        facet("color", "red")
-        tag("x")
-      }
-    }
-  }
-
-  fun x19b(): SearchParamsObject = query {
-    filters {
-      not {
-        orFacet {
-          facet("color", "red")
-          facet("color", "blue")
-        }
-        facet("category", "shirt")
-      }
-    }
   }
 }

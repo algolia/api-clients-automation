@@ -7,7 +7,6 @@ import com.algolia.client.model.search.SearchParamsObject
 import com.algolia.client.model.search.SupportedLanguage
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlinx.serialization.json.encodeToJsonElement
 
@@ -167,28 +166,10 @@ internal class QueryComposerTest {
   fun fieldBlocksShareOneReceiver() {
     val params = composeQuery {
       add { filters { orFacet { facet("a", "1") } } }
-      add { filters { not { facet("b", "2") } } }
+      add { filters { facet("b", "2", isNegated = true) } }
     }
     // Both fragments ran in one FilterDsl: one top-level AND, never parenthesised.
     assertEquals("a:1 AND NOT b:2", params.filters)
-  }
-
-  @Test
-  fun rejectSurfacesAtBuild() {
-    val composer = QueryComposer()
-    // NOT over (OR AND leaf) would need an OR of ANDs, which `filters` cannot express.
-    composer.add {
-      filters {
-        not {
-          orFacet {
-            facet("a", "1")
-            facet("a", "2")
-          }
-          facet("b", "3")
-        }
-      }
-    }
-    assertFailsWith<IllegalArgumentException> { composer.build() }
   }
 
   @Test

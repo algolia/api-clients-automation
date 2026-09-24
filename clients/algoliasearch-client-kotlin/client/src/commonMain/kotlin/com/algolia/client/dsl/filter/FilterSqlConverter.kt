@@ -13,15 +13,12 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  * encoders produce the same AND/OR shape and leaf polarity on every tree (leaf text differs: this
  * encoder quotes and writes `NOT <leaf>`, while the legacy encoder never quotes and writes `-`
  * after the colon):
- * - `NOT` only precedes a leaf: `NOT (a OR b)` is `NOT a AND NOT b`, `NOT (a AND b)` is `(NOT a OR
- *   NOT b)`. Algolia does not support negating a group.
+ * - `NOT` only precedes a single leaf whose [Filter.negated] is `true`. Groups are never negated.
  * - Nested [FilterGroup.And]s are flattened and the top-level `AND` is never parenthesised. Algolia
  *   does not support `(A AND (B OR C))`.
- * - An `OR` of two or more filters is parenthesised: `(a OR b)`.
+ * - An `OR` of two or more filters is parenthesised: `(a OR b)`. Each [FilterGroup.Or] holds one
+ *   filter family by construction.
  * - Empty groups contribute nothing; a tree with no filter encodes as `null`.
- *
- * Throws [IllegalArgumentException] when the tree needs an `OR` of `AND`s, or an `OR` that mixes
- * facet, tag, and numeric filters. Algolia supports neither.
  *
  * Attributes and values are quoted when they contain spaces, quotes, or the keywords `AND`, `OR`,
  * or `NOT`.
@@ -37,24 +34,20 @@ internal object FilterSqlConverter {
     return rows.joinToString(separator = " AND ") { emitRow(it) }
   }
 
-  private fun emitRow(row: List<Literal>): String {
-    if (row.size == 1) return emitLiteral(row.single())
-    val family = familyOf(row.first().filter)
-    require(row.all { familyOf(it.filter) == family }) {
-      "An OR group cannot mix facet, tag, and numeric filters: $row"
-    }
-    return row.joinToString(separator = " OR ", prefix = "(", postfix = ")") { emitLiteral(it) }
+  private fun emitRow(row: List<Filter>): String {
+    if (row.size == 1) return emitLeaf(row.single())
+    return row.joinToString(separator = " OR ", prefix = "(", postfix = ")") { emitLeaf(it) }
   }
 
-  private fun emitLiteral(literal: Literal): String {
+  private fun emitLeaf(filter: Filter): String {
     val text =
-      when (val filter = literal.filter) {
+      when (filter) {
         is Filter.Facet -> emitFacet(filter)
         is Filter.Tag -> emitTag(filter)
         is Filter.Comparison -> emitComparison(filter)
         is Filter.Range -> emitRange(filter)
       }
-    return if (literal.negated) "NOT $text" else text
+    return if (filter.negated) "NOT $text" else text
   }
 
   private fun emitFacet(filter: Filter.Facet): String {

@@ -18,18 +18,13 @@ import com.algolia.client.model.search.OptionalFilters
  * - [FilterGroup.Or] of leaves `A`, `B` → `[["A", "B"]]` → `A OR B`
  * - [FilterGroup.And] of `Or(A, B)` and leaf `C` → `[["A", "B"], ["C"]]` → `(A OR B) AND C`
  *
- * [FacetFilterDsl] makes a non-facet leaf unrepresentable. A hand-built tree that still contains
- * one throws [IllegalArgumentException]. The encoder does not drop other families.
+ * [FacetFilterDsl] makes a non-facet leaf unrepresentable, so the [Filter.Tag] / [Filter.Numeric]
+ * branch of [encodeLeaf] is unreachable from the DSL and only guards a hand-built tree.
  *
  * ## Empty groups
  *
- * An empty [FilterGroup.And] or [FilterGroup.Or] contributes no row, with or without an enclosing
- * [FilterGroup.Not]. A tree with no rows encodes as `null`, matching [FilterSqlConverter].
- *
- * ## Reject cases ([IllegalArgumentException])
- *
- * - **Non-facet leaf:** a [Filter.Tag] or [Filter.Numeric] leaf.
- * - **OR of ANDs:** see [conjunctiveRows].
+ * An empty [FilterGroup.And] or [FilterGroup.Or] contributes no row. A tree with no rows encodes as
+ * `null`, matching [FilterSqlConverter].
  *
  * ## Encoding
  *
@@ -55,34 +50,21 @@ import com.algolia.client.model.search.OptionalFilters
 internal object FilterLegacyConverter {
 
   /**
-   * Legacy [OptionalFilters] for the [Filter.Facet] leaves in [root].
-   *
-   * Throws [IllegalArgumentException] for a non-facet leaf or a De Morgan OR-of-ANDs that the
-   * nested-list format cannot encode. Returns `null` when no leaf remains.
+   * Legacy [OptionalFilters] for the [Filter.Facet] leaves in [root]. Returns `null` when no leaf
+   * remains.
    */
   fun optional(root: FilterGroup): OptionalFilters? =
-    wrapLegacy(toLegacyRows(root, FilterFamily.Facet), OptionalFilters::of, OptionalFilters::of)
+    wrapLegacy(toLegacyRows(root), OptionalFilters::of, OptionalFilters::of)
 }
 
-private fun toLegacyRows(root: FilterGroup, family: FilterFamily): List<List<String>> =
-  conjunctiveRows(root).map { row ->
-    row.flatMap { literal ->
-      requireFamily(literal.filter, family)
-      encodeLeaf(literal.filter, literal.negated)
-    }
-  }
+private fun toLegacyRows(root: FilterGroup): List<List<String>> =
+  conjunctiveRows(root).map { row -> row.flatMap(::encodeLeaf) }
 
-private fun requireFamily(filter: Filter, family: FilterFamily) {
-  require(familyOf(filter) == family) {
-    "${family.name} filters cannot encode ${filter::class.simpleName} leaf $filter"
-  }
-}
-
-private fun encodeLeaf(filter: Filter, negated: Boolean): List<String> {
+private fun encodeLeaf(filter: Filter): List<String> {
   return when (filter) {
     is Filter.Facet -> {
       val score = filter.score?.let { "<score=$it>" }.orEmpty()
-      listOf("${filter.attribute}:${legacyValue(filter.value, negated)}$score")
+      listOf("${filter.attribute}:${legacyValue(filter.value, filter.negated)}$score")
     }
     is Filter.Tag,
     is Filter.Numeric -> error("optionalFilters holds facet leaves only: $filter")
