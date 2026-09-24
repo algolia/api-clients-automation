@@ -38,6 +38,17 @@ public suspend fun SearchClient.searchSingleIndex(
   )
 
 /**
+ * Searches [indexName] with the parameters [composer] builds; `build()` runs on each call, so a
+ * fragment added between two calls is sent by the second.
+ */
+@AlgoliaExperimentalDsl
+public suspend fun SearchClient.searchSingleIndex(
+  indexName: String,
+  composer: QueryComposer,
+  requestOptions: RequestOptions? = null,
+): SearchResponse = searchSingleIndex(indexName, SearchParams.of(composer.build()), requestOptions)
+
+/**
  * Updates index settings with a [settings] DSL block.
  *
  * ```
@@ -78,3 +89,14 @@ public suspend fun SearchClient.deleteBy(
     deleteByParams = buildDeleteBy(block),
     requestOptions = requestOptions,
   )
+
+/**
+ * Deletes from [indexName] the records matching the parameters [composer] builds; `build()` runs on
+ * each call, so a fragment added between two calls is applied by the second.
+ */
+@AlgoliaExperimentalDsl
+public suspend fun SearchClient.deleteBy(
+  indexName: String,
+  composer: DeleteByComposer,
+  requestOptions: RequestOptions? = null,
+): UpdatedAtResponse = deleteBy(indexName, composer.build(), requestOptions)

@@ -149,9 +149,10 @@ composer.add { optionalFilters { or { facet("isFeatured", true, score = 500) } }
 composer.override { sumOrFiltersScores = true }
 val extra: QueryAdditions.() -> Unit = { ruleContexts { +"desktop" } }   // stored fragment
 composer.add(extra)
-val params = composer.build()                         // every lambda above runs here
-client.searchSingleIndex(indexName, SearchParams.of(params))
+client.searchSingleIndex(indexName, composer)         // every lambda above runs here
 ```
+
+`client.searchSingleIndex(indexName, composer)` calls `composer.build()` and sends the result; `client.deleteBy(indexName, composer)` does the same for a `DeleteByComposer`. `composer.build()` still returns the `SearchParamsObject` when you need the value itself, for example to pass it to `SearchParams.of` or to inspect it.
 
 `add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `QueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `QueryBuilder`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
 
