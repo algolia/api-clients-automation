@@ -9,44 +9,44 @@ import com.algolia.client.model.search.*
 internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
 
   interface Additive {
-    fun restrictSearchableAttributes(block: StringListDsl.() -> Unit)
+    fun restrictSearchableAttributes(block: DSLStrings.() -> Unit)
 
-    fun attributesToHighlight(block: StringListDsl.() -> Unit)
+    fun attributesToHighlight(block: DSLStrings.() -> Unit)
 
-    fun filters(block: FilterDsl.() -> Unit)
+    fun filters(block: DSLFilters.() -> Unit)
 
-    fun optionalFilters(block: FacetFilterDsl.() -> Unit)
+    fun optionalFilters(block: DSLFacetFilters.() -> Unit)
 
-    fun ruleContexts(block: StringListDsl.() -> Unit)
+    fun ruleContexts(block: DSLStrings.() -> Unit)
   }
 
-  private val restrict = mutableListOf<StringListDsl.() -> Unit>()
-  private val highlight = mutableListOf<StringListDsl.() -> Unit>()
-  private val hardFilters = mutableListOf<FilterDsl.() -> Unit>()
-  private val optional = mutableListOf<FacetFilterDsl.() -> Unit>()
-  private val contexts = mutableListOf<StringListDsl.() -> Unit>()
+  private val restrict = mutableListOf<DSLStrings.() -> Unit>()
+  private val highlight = mutableListOf<DSLStrings.() -> Unit>()
+  private val hardFilters = mutableListOf<DSLFilters.() -> Unit>()
+  private val optional = mutableListOf<DSLFacetFilters.() -> Unit>()
+  private val contexts = mutableListOf<DSLStrings.() -> Unit>()
   private val overrides = mutableListOf<QueryBuilder.() -> Unit>()
 
   fun add(block: Additive.() -> Unit) {
     block(
       object : Additive {
-        override fun restrictSearchableAttributes(block: StringListDsl.() -> Unit) {
+        override fun restrictSearchableAttributes(block: DSLStrings.() -> Unit) {
           restrict += block
         }
 
-        override fun attributesToHighlight(block: StringListDsl.() -> Unit) {
+        override fun attributesToHighlight(block: DSLStrings.() -> Unit) {
           highlight += block
         }
 
-        override fun filters(block: FilterDsl.() -> Unit) {
+        override fun filters(block: DSLFilters.() -> Unit) {
           hardFilters += block
         }
 
-        override fun optionalFilters(block: FacetFilterDsl.() -> Unit) {
+        override fun optionalFilters(block: DSLFacetFilters.() -> Unit) {
           optional += block
         }
 
-        override fun ruleContexts(block: StringListDsl.() -> Unit) {
+        override fun ruleContexts(block: DSLStrings.() -> Unit) {
           contexts += block
         }
       }

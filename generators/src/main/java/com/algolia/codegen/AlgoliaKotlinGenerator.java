@@ -249,9 +249,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   /** Filter helpers keyed by property name. Emitted only when the property type matches. */
   private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
     "filters",
-    new DslFilterVar("String", "FilterDsl", "filters"),
+    new DslFilterVar("String", "DSLFilters", "filters"),
     "optionalFilters",
-    new DslFilterVar("OptionalFilters", "FacetFilterDsl", "optionalFilters")
+    new DslFilterVar("OptionalFilters", "DSLFacetFilters", "optionalFilters")
   );
 
   private void collectSearchDslModels(Map<String, ModelsMap> models) {

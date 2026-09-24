@@ -21,14 +21,14 @@ internal object RowsP0 {
     filters { facet("genre", "drama") }
   }
 
-  val locales: FilterDsl.() -> Unit = {
+  val locales: DSLFilters.() -> Unit = {
     orFacet {
       facet("locale", "en-US")
       facet("locale", "fr-FR")
     }
   }
-  val counts: FilterDsl.() -> Unit = { range("count", 0..10) }
-  val featured: FilterDsl.() -> Unit = { tag("featured") }
+  val counts: DSLFilters.() -> Unit = { range("count", 0..10) }
+  val featured: DSLFilters.() -> Unit = { tag("featured") }
 
   fun c05(): SearchParamsObject = query {
     filters {

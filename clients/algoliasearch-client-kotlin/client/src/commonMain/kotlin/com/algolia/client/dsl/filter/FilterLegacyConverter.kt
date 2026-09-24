@@ -18,7 +18,7 @@ import com.algolia.client.model.search.OptionalFilters
  * - [FilterGroup.Or] of leaves `A`, `B` → `[["A", "B"]]` → `A OR B`
  * - [FilterGroup.And] of `Or(A, B)` and leaf `C` → `[["A", "B"], ["C"]]` → `(A OR B) AND C`
  *
- * [FacetFilterDsl] makes a non-facet leaf unrepresentable, so the [Filter.Tag] / [Filter.Numeric]
+ * [DSLFacetFilters] makes a non-facet leaf unrepresentable, so the [Filter.Tag] / [Filter.Numeric]
  * branch of [encodeLeaf] is unreachable from the DSL and only guards a hand-built tree.
  *
  * ## Empty groups

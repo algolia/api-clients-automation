@@ -84,11 +84,11 @@ val params = query {
 
 The `filters` string only uses shapes Algolia supports: `NOT` only precedes a single filter (`isNegated`), nested `and { }` blocks are flattened, the top-level `AND` has no parentheses, and each `OR` holds one filter family by construction. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
 
-Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `FilterDsl` and `FacetFilterDsl`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
+Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `DSLFilters` and `DSLFacetFilters`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
-val locale: FilterDsl.() -> Unit = { orFacet { facet("locale", "en-US") } }
+val locale: DSLFilters.() -> Unit = { orFacet { facet("locale", "en-US") } }
 
 @OptIn(AlgoliaExperimentalDsl::class)
 val base: QueryBuilder.() -> Unit = { hitsPerPage = 20; filters(locale) }
@@ -169,10 +169,12 @@ Map version 2 types to version 3 types:
 | `DeleteByQuery().apply { filters { } }` + `index.deleteObjectsBy(q)` | `client.deleteBy(indexName) { filters { } }` |
 | `Settings` | `settings { }` → `IndexSettings`; receiver `SettingsBuilder` |
 | `Attribute("x")` | `"x"` |
-| `DSLFilters` | `FilterDsl` (`com.algolia.client.dsl.filter`) |
-| `DSLFacetFilters` (facet / optional filters) | `FacetFilterDsl` |
+| `DSLFilters`, `DSLFacetFilters` (facet / optional filters) | same names (`com.algolia.client.dsl.filter`) |
+| `DSLGroupFacet`, `DSLGroupNumeric`, `DSLGroupTag` | same names |
+| `DSLFacet`, `DSLNumeric`, `DSLTag` | same names |
 | `facetFilters { }`, `numericFilters { }`, `tagFilters { }` | `filters { }` |
-| `DSLAttributes`, `DSLStrings` | `StringListDsl` |
+| `DSLAttributes`, `DSLStrings` | same names; `DSLAttributes` is an alias of `DSLStrings` |
+| `DSLLanguage`, `DSLSearchableAttributes`, `DSLAttributesForFaceting`, `DSLCustomRanking`, `DSLRanking`, `@DSLParameters` | same names |
 | `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
 | `not { }`, unary `!` | `isNegated = true` on each leaf |
 | `Distinct(1)` | `Distinct.of(1)` |

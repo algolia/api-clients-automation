@@ -53,7 +53,7 @@ internal object CrossCheckRowsP1 {
     }
   }
 
-  private fun optional(block: FacetFilterDsl.() -> Unit): SearchParamsObject = query {
+  private fun optional(block: DSLFacetFilters.() -> Unit): SearchParamsObject = query {
     optionalFilters(block)
     getRankingInfo = true
   }
