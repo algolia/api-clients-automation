@@ -112,6 +112,6 @@ public fun QueryBuilder.naturalLanguages(block: LanguagesDsl.() -> Unit) {
  * An empty list sent explicitly strips the response; the empty block omits the field instead.
  */
 @AlgoliaExperimentalDsl
-public fun QueryBuilder.responseFields(block: ResponseFieldsDsl.() -> Unit) {
-  responseFields = ResponseFieldsDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun QueryBuilder.responseFields(block: StringListDsl.() -> Unit) {
+  responseFields = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
 }

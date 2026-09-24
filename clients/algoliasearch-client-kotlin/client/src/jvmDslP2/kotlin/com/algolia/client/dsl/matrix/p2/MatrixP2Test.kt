@@ -51,7 +51,6 @@ internal class MatrixP2Test {
   @Test
   fun C29_responseFieldsWithOtherAndConstant() {
     assertWire(ServerContract.L22a, RowsP2.c29())
-    assertWire(ServerContract.L22a, RowsP2.c29Constant())
   }
 
   @Test

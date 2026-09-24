@@ -68,7 +68,7 @@ public class QueryAdditions internal constructor() {
   private val disableTypoToleranceOnAttributeBlocks = Blocks<StringListDsl>()
   private val queryLanguageBlocks = Blocks<LanguagesDsl>()
   private val naturalLanguageBlocks = Blocks<LanguagesDsl>()
-  private val responseFieldBlocks = Blocks<ResponseFieldsDsl>()
+  private val responseFieldBlocks = Blocks<StringListDsl>()
 
   /** Records a `filters` fragment. All fragments run inside one [FilterDsl], so they are AND-ed. */
   public fun filters(block: FilterDsl.() -> Unit) {
@@ -131,7 +131,7 @@ public class QueryAdditions internal constructor() {
   }
 
   /** Records a `responseFields` fragment. Fragments concatenate in call order. */
-  public fun responseFields(block: ResponseFieldsDsl.() -> Unit) {
+  public fun responseFields(block: StringListDsl.() -> Unit) {
     responseFieldBlocks.add(block)
   }
 

@@ -88,19 +88,10 @@ internal object RowsP2 {
 
   fun c29(): SearchParamsObject = query {
     responseFields {
-      +ResponseField.Hits
-      +ResponseField.Exhaustive
-      +ResponseField.ProcessingTimeMS
-      +ResponseField.Other("processingTimingsMS")
-    }
-  }
-
-  fun c29Constant(): SearchParamsObject = query {
-    responseFields {
-      +ResponseField.Hits
-      +ResponseField.Exhaustive
-      +ResponseField.ProcessingTimeMS
-      +ResponseField.ProcessingTimingsMS
+      +"hits"
+      +"exhaustive"
+      +"processingTimeMS"
+      +"processingTimingsMS"
     }
   }
 

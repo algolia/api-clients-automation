@@ -132,7 +132,7 @@ List parameters on `query { }`, `browse { }`, and rule `params { }` take `+` blo
 val params = query {
   restrictSearchableAttributes { +"title"; +"alternateTitles" }
   queryLanguages { +SupportedLanguage.En }
-  responseFields { +ResponseField.Hits; +ResponseField.ProcessingTimingsMS; +ResponseField.Other("renderingContent") }
+  responseFields { +"hits"; +"processingTimingsMS"; +"renderingContent" }
 }
 ```
 
@@ -181,8 +181,7 @@ Map version 2 types to version 3 types:
 | `IgnorePlurals.True`, `IgnorePlurals.QueryLanguages(...)` | `IgnorePlurals.of(true)`, `IgnorePlurals.of(listOf(SupportedLanguage.En))` |
 | `RemoveStopWords.True` | `RemoveStopWords.of(true)` |
 | `UserToken("u")` | `"u"` |
-| `ResponseFields.Hits`, `ResponseFields.Other("x")` | `ResponseField.Hits`, `ResponseField.Other("x")` |
-| `ResponseFields.Other("processingTimingsMS")` | `ResponseField.ProcessingTimingsMS` |
+| `ResponseFields.Hits`, `ResponseFields.Other("x")` | `+"hits"`, `+"x"` |
 | v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — v2's quoted form was ignored by `optionalFilters` (see Phase 1 PR) |
 | custom query wrapper | `QueryComposer` / `DeleteByComposer` |
 | `initIndex` | removed; pass the index name to each client method |
