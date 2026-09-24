@@ -105,6 +105,8 @@ dslPhases.forEach { phase ->
   tasks.register<Test>("jvmDslP${phase}Test") {
     description = "Kotlin DSL capability matrix, phase $phase, offline."
     dslTest("matrix")
+    // Phases 1–3 keep no offline matrix class: their rows are asserted live on the DSL's bytes.
+    filter.isFailOnNoMatchingTests = false
   }
   tasks.register<Test>("jvmDslP${phase}LiveTest") {
     description = "Kotlin DSL capability matrix, phase $phase, against the Algolia API."
