@@ -40,24 +40,36 @@ private constructor(private val rows: MutableList<List<Filter>>, private val str
   /** [strict]: an empty group block throws instead of adding nothing (delete-by filters). */
   internal constructor(strict: Boolean = false) : this(mutableListOf(), strict)
 
-  /** ANDs the filters in [block] into this block. An empty block adds nothing. */
+  /**
+   * ANDs the filters in [block] into this block. An empty block adds nothing; in delete-by filters
+   * it throws.
+   */
   public fun and(block: DSLFilters.() -> Unit) {
     val added = DSLFilters(strict).apply(block).rows
     require(!strict || added.isNotEmpty()) { widensDelete("and { }") }
     rows.addAll(added)
   }
 
-  /** Adds `(a OR b …)` of the facet leaves in [block]. An empty block adds nothing. */
+  /**
+   * Adds `(a OR b …)` of the facet leaves in [block]. An empty block adds nothing; in delete-by
+   * filters it throws.
+   */
   public fun orFacet(block: DSLGroupFacet.() -> Unit) {
     addGroup("orFacet { }", DSLGroupFacet().apply(block).leaves())
   }
 
-  /** Adds `(a OR b …)` of the tag leaves in [block]. An empty block adds nothing. */
+  /**
+   * Adds `(a OR b …)` of the tag leaves in [block]. An empty block adds nothing; in delete-by
+   * filters it throws.
+   */
   public fun orTag(block: DSLGroupTag.() -> Unit) {
     addGroup("orTag { }", DSLGroupTag().apply(block).leaves())
   }
 
-  /** Adds `(a OR b …)` of the numeric leaves in [block]. An empty block adds nothing. */
+  /**
+   * Adds `(a OR b …)` of the numeric leaves in [block]. An empty block adds nothing; in delete-by
+   * filters it throws.
+   */
   public fun orNumeric(block: DSLGroupNumeric.() -> Unit) {
     addGroup("orNumeric { }", DSLGroupNumeric().apply(block).leaves())
   }
