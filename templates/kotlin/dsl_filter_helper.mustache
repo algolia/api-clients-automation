@@ -1,4 +1,6 @@
 
+  private var {{{name}}}Write: FilterWrite<{{{type}}}, {{{leaf}}}>? = null
+
   /**
    * Sets [DSL{{classname}}.{{{name}}}] from a typed filter block.
    *
@@ -13,5 +15,9 @@
 {{/strict}}
    */
   public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
-    this.{{{name}}} = com.algolia.client.dsl.filter.{{{function}}}(block)
+    val write = com.algolia.client.dsl.filter.{{{function}}}(block)
+    {{{name}}}Write = write
+    this.{{{name}}} = write.value
   }
+
+  internal fun {{{name}}}Rows(): List<List<{{{leaf}}}>>? = rowsBehind({{{name}}}, {{{name}}}Write)

@@ -67,6 +67,10 @@ private constructor(private val rows: MutableList<List<Filter>>, private val str
     if (leaves.isNotEmpty()) rows.add(leaves)
   }
 
+  internal fun addRows(seed: List<List<Filter>>) {
+    rows.addAll(seed)
+  }
+
   internal fun rowCount(): Int = rows.size
 
   internal fun rows(): List<List<Filter>> = rows.toList()
@@ -83,15 +87,19 @@ internal fun widensDelete(construct: String): String =
  * top-level `AND` is never parenthesised, and each `OR` holds one filter family by construction.
  */
 @AlgoliaExperimentalDsl
-public fun filters(block: DSLFilters.() -> Unit): String? =
-  FiltersEncoder(DSLFilters().apply(block).rows())
+public fun filters(block: DSLFilters.() -> Unit): String? = writeFilters(block).value
+
+internal fun writeFilters(block: DSLFilters.() -> Unit): FilterWrite<String, Filter> {
+  val rows = DSLFilters().apply(block).rows()
+  return FilterWrite(FiltersEncoder(rows), rows)
+}
 
 /**
- * [filters] for delete-by: throws [IllegalArgumentException] when the block, or any group block in
- * it, adds no filter, since dropping it would widen the delete.
+ * [writeFilters] for delete-by: throws [IllegalArgumentException] when the block, or any group
+ * block in it, adds no filter, since dropping it would widen the delete.
  */
-internal fun deleteByFilters(block: DSLFilters.() -> Unit): String {
+internal fun writeDeleteByFilters(block: DSLFilters.() -> Unit): FilterWrite<String, Filter> {
   val rows = DSLFilters(strict = true).apply(block).rows()
   require(rows.isNotEmpty()) { widensDelete("filters { }") }
-  return checkNotNull(FiltersEncoder(rows))
+  return FilterWrite(FiltersEncoder(rows), rows)
 }

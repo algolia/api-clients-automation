@@ -10,20 +10,32 @@ import com.algolia.client.model.search.SearchParamsObject
  * Collects query fragments from several modules and builds one [SearchParamsObject].
  *
  * [add] and [override] only store their blocks; nothing runs until [build]. Each [build] runs every
- * stored [add] block, then writes each additive field once: all `filters { }` fragments run inside
- * one [DSLFilters] (so they are AND-ed), all `ruleContexts { }` fragments inside one [DSLStrings]
- * (so they concatenate in call order), and so on. Then every [override] block runs on the same
+ * stored [add] block, runs [base] on a fresh [DSLQuery], then merges each additive field into it
+ * once: all `filters { }` fragments run inside one [DSLFilters] after the base rows (so they are
+ * AND-ed with the base), all `ruleContexts { }` fragments inside one [DSLStrings] after the base
+ * list (so they concatenate in call order), and so on. Then every [override] block runs on the same
  * [DSLQuery], in call order: last write wins, so an override that sets `filters` or a list field
- * replaces the accumulated value. Empty fragments leave the field omitted.
+ * replaces the merged value. Empty fragments leave the field as the base set it, or omitted.
+ *
+ * Put the starting query in [base], not in an [override]: an override replaces the fragments. A
+ * base that assigns `filters` or `optionalFilters` directly (`filters = "a OR b"`) cannot be merged
+ * with fragments for that field, so [build] throws [IllegalStateException]. Use the `filters { }`
+ * block in the base instead.
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
  * mutable list) are read at build time and side effects in a block repeat on each build. [build]
  * can be called repeatedly. Not thread-safe.
+ *
+ * ```
+ * val composer = DSLQueryComposer(base = { hitsPerPage = 10; filters { facet("base", "x") } })
+ * composer.add { filters { facet("module", "y") } }
+ * val params = composer.build() // filters = "base:x AND module:y"
+ * ```
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLQueryComposer public constructor() {
-  private val core = ComposerCore(::DSLQueryAdditions, ::DSLQuery, DSLQueryAdditions::applyTo)
+public class DSLQueryComposer public constructor(base: DSLQuery.() -> Unit = {}) {
+  private val core = ComposerCore(::DSLQueryAdditions, ::DSLQuery, base, DSLQueryAdditions::applyTo)
 
   /**
    * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
@@ -46,39 +58,38 @@ public class DSLQueryComposer public constructor() {
 public class DSLQueryAdditions internal constructor() {
   // Field names differ from the recorder names: `filters(it)` inside the lambda must resolve to the
   // builder helper, and a property must not appear in its own initializer.
-  private val filtersField: Additive<DSLQuery, DSLFilters> = Additive { filters(it) }
-  private val optionalFiltersField: Additive<DSLQuery, DSLFacetFilters> = Additive {
-    optionalFilters(it)
-  }
-  private val restrictSearchableAttributesField: Additive<DSLQuery, DSLAttributes> = Additive {
-    restrictSearchableAttributes(it)
-  }
-  private val attributesToHighlightField: Additive<DSLQuery, DSLAttributes> = Additive {
-    attributesToHighlight(it)
-  }
-  private val attributesToRetrieveField: Additive<DSLQuery, DSLAttributes> = Additive {
-    attributesToRetrieve(it)
-  }
-  private val attributesToSnippetField: Additive<DSLQuery, DSLStrings> = Additive {
-    attributesToSnippet(it)
-  }
-  private val ruleContextsField: Additive<DSLQuery, DSLStrings> = Additive { ruleContexts(it) }
-  private val analyticsTagsField: Additive<DSLQuery, DSLStrings> = Additive {
-    analyticsTags(it)
-  }
-  private val facetsField: Additive<DSLQuery, DSLAttributes> = Additive { facets(it) }
-  private val disableTypoToleranceOnAttributesField: Additive<DSLQuery, DSLAttributes> = Additive {
-    disableTypoToleranceOnAttributes(it)
-  }
-  private val queryLanguagesField: Additive<DSLQuery, DSLLanguage> = Additive {
-    queryLanguages(it)
-  }
-  private val naturalLanguagesField: Additive<DSLQuery, DSLLanguage> = Additive {
-    naturalLanguages(it)
-  }
-  private val responseFieldsField: Additive<DSLQuery, DSLStrings> = Additive {
-    responseFields(it)
-  }
+  private val filtersField: Additive<DSLQuery, DSLFilters> =
+    filterAdditive("filters", DSLQuery::filtersRows, DSLFilters::addRows) { filters(it) }
+  private val optionalFiltersField: Additive<DSLQuery, DSLFacetFilters> =
+    filterAdditive("optionalFilters", DSLQuery::optionalFiltersRows, DSLFacetFilters::addRows) {
+      optionalFilters(it)
+    }
+  private val restrictSearchableAttributesField: Additive<DSLQuery, DSLAttributes> =
+    listAdditive(DSLQuery::restrictSearchableAttributes, { +it }) {
+      restrictSearchableAttributes(it)
+    }
+  private val attributesToHighlightField: Additive<DSLQuery, DSLAttributes> =
+    listAdditive(DSLQuery::attributesToHighlight, { +it }) { attributesToHighlight(it) }
+  private val attributesToRetrieveField: Additive<DSLQuery, DSLAttributes> =
+    listAdditive(DSLQuery::attributesToRetrieve, { +it }) { attributesToRetrieve(it) }
+  private val attributesToSnippetField: Additive<DSLQuery, DSLStrings> =
+    listAdditive(DSLQuery::attributesToSnippet, { +it }) { attributesToSnippet(it) }
+  private val ruleContextsField: Additive<DSLQuery, DSLStrings> =
+    listAdditive(DSLQuery::ruleContexts, { +it }) { ruleContexts(it) }
+  private val analyticsTagsField: Additive<DSLQuery, DSLStrings> =
+    listAdditive(DSLQuery::analyticsTags, { +it }) { analyticsTags(it) }
+  private val facetsField: Additive<DSLQuery, DSLAttributes> =
+    listAdditive(DSLQuery::facets, { +it }) { facets(it) }
+  private val disableTypoToleranceOnAttributesField: Additive<DSLQuery, DSLAttributes> =
+    listAdditive(DSLQuery::disableTypoToleranceOnAttributes, { +it }) {
+      disableTypoToleranceOnAttributes(it)
+    }
+  private val queryLanguagesField: Additive<DSLQuery, DSLLanguage> =
+    listAdditive(DSLQuery::queryLanguages, { +it }) { queryLanguages(it) }
+  private val naturalLanguagesField: Additive<DSLQuery, DSLLanguage> =
+    listAdditive(DSLQuery::naturalLanguages, { +it }) { naturalLanguages(it) }
+  private val responseFieldsField: Additive<DSLQuery, DSLStrings> =
+    listAdditive(DSLQuery::responseFields, { +it }) { responseFields(it) }
 
   private val fields: List<Additive<DSLQuery, *>> =
     listOf(
@@ -154,8 +165,11 @@ public class DSLQueryAdditions internal constructor() {
   }
 }
 
-/** `DSLQueryComposer().apply(block).build()`. */
+/** `DSLQueryComposer(base).apply(block).build()`. */
 @AlgoliaExperimentalDsl
-public fun composeQuery(block: DSLQueryComposer.() -> Unit): SearchParamsObject {
-  return DSLQueryComposer().apply(block).build()
+public fun composeQuery(
+  base: DSLQuery.() -> Unit = {},
+  block: DSLQueryComposer.() -> Unit,
+): SearchParamsObject {
+  return DSLQueryComposer(base).apply(block).build()
 }

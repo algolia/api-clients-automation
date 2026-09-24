@@ -3,11 +3,14 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
+import com.algolia.client.model.search.OptionalFilters
 import com.algolia.client.model.search.SearchParamsObject
 import com.algolia.client.model.search.SupportedLanguage
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 import kotlinx.serialization.json.encodeToJsonElement
 
 /**
@@ -160,6 +163,89 @@ internal class DSLQueryComposerTest {
     val params = composer.build()
     assertEquals("locale:fr-FR", params.filters)
     assertEquals(listOf("a", "b"), params.ruleContexts)
+  }
+
+  @Test
+  fun baseFiltersMergeWithFragments() {
+    val params =
+      DSLQueryComposer(
+          base = {
+            hitsPerPage = 10
+            filters { facet("base", "x") }
+          }
+        )
+        .apply { add { filters { facet("module", "y") } } }
+        .build()
+    assertEquals("base:x AND module:y", params.filters)
+    assertEquals(10, params.hitsPerPage)
+  }
+
+  @Test
+  fun baseOptionalFiltersMergeWithFragments() {
+    val params =
+      composeQuery(base = { optionalFilters { facet("genre", "comedy") } }) {
+        add { optionalFilters { or { facet("isFeatured", true) } } }
+      }
+    assertEquals(
+      listOf(listOf("genre:comedy"), listOf("isFeatured:true")),
+      assertNotNull(params.optionalFilters).rows(),
+    )
+  }
+
+  @Test
+  fun baseListsPrecedeFragments() {
+    val params =
+      composeQuery(base = { ruleContexts { +"base" } }) {
+        add { ruleContexts { +"a" } }
+        add { ruleContexts { +"b" } }
+      }
+    assertEquals(listOf("base", "a", "b"), params.ruleContexts)
+
+    val explicitEmpty =
+      composeQuery(base = { attributesToRetrieve = emptyList() }) {
+        add { attributesToRetrieve {} }
+      }
+    assertEquals(emptyList(), explicitEmpty.attributesToRetrieve)
+  }
+
+  @Test
+  fun rawBaseFilterCannotMergeWithFragments() {
+    val error =
+      assertFailsWith<IllegalStateException> {
+        composeQuery(base = { filters = "a:1 OR b:2" }) { add { filters { facet("c", "3") } } }
+      }
+    assertTrue(error.message.orEmpty().contains("filters { } in the base"))
+
+    assertFailsWith<IllegalStateException> {
+      composeQuery(base = { optionalFilters = OptionalFilters.of("a:1") }) {
+        add { optionalFilters { facet("b", "2") } }
+      }
+    }
+
+    val untouched =
+      composeQuery(base = { filters = "a:1 OR b:2" }) { add { ruleContexts { +"x" } } }
+    assertEquals("a:1 OR b:2", untouched.filters)
+  }
+
+  @Test
+  fun overrideStillWinsOverTheMergedValue() {
+    val params =
+      composeQuery(base = { filters { facet("base", "x") } }) {
+        add { filters { facet("module", "y") } }
+        override { filters { facet("final", "z") } }
+      }
+    assertEquals("final:z", params.filters)
+  }
+
+  @Test
+  fun baseOnlyComposerEqualsQuery() {
+    val base: DSLQuery.() -> Unit = {
+      hitsPerPage = 3
+      filters { orFacet { facet("a", "1") } }
+      ruleContexts { +"c" }
+    }
+    assertEquals(query(block = base), DSLQueryComposer(base).build())
+    assertEquals(query(block = base), composeQuery(base) {})
   }
 
   @Test

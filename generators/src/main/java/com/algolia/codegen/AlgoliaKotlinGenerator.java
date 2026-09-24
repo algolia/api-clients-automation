@@ -257,12 +257,13 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   /**
-   * `name { }` sets the property to `function { }` evaluated on a fresh `receiver`. `strict`: the
-   * function throws on an empty block instead of returning null (delete-by).
+   * `name { }` sets the property to the value `function { }` writes on a fresh `receiver`, and keeps
+   * the `leaf` rows behind it for the composers. `strict`: the function throws on an empty block
+   * instead of writing null (delete-by).
    */
-  private record DslFilterHelper(String type, String receiver, String function, boolean strict) implements DslHelper {
+  private record DslFilterHelper(String type, String receiver, String function, String leaf, boolean strict) implements DslHelper {
     public Map<String, Object> templateData(String name) {
-      return Map.of("name", name, "receiver", receiver, "function", function, "strict", strict);
+      return Map.of("name", name, "type", type, "receiver", receiver, "function", function, "leaf", leaf, "strict", strict);
     }
   }
 
@@ -280,9 +281,15 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
-  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "filters", false);
-  private static final DslFilterHelper DELETE_BY_SQL = new DslFilterHelper("String", "DSLFilters", "deleteByFilters", true);
-  private static final DslFilterHelper OPTIONAL = new DslFilterHelper("OptionalFilters", "DSLFacetFilters", "optionalFilters", false);
+  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "writeFilters", "Filter", false);
+  private static final DslFilterHelper DELETE_BY_SQL = new DslFilterHelper("String", "DSLFilters", "writeDeleteByFilters", "Filter", true);
+  private static final DslFilterHelper OPTIONAL = new DslFilterHelper(
+    "OptionalFilters",
+    "DSLFacetFilters",
+    "writeOptionalFilters",
+    "Filter.Facet",
+    false
+  );
 
   /**
    * Model → property → filter helper. Exactly the helpers the DSL exposes; a missing or drifted

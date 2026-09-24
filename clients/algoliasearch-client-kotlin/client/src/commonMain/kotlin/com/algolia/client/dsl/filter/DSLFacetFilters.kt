@@ -32,10 +32,21 @@ private constructor(private val rows: MutableList<List<Filter.Facet>>) :
     DSLGroupFacet().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
   }
 
+  internal fun addRows(seed: List<List<Filter.Facet>>) {
+    rows.addAll(seed)
+  }
+
   internal fun rows(): List<List<Filter.Facet>> = rows.toList()
 }
 
 /** Constructs [OptionalFilters] from a facet-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
 public fun optionalFilters(block: DSLFacetFilters.() -> Unit): OptionalFilters? =
-  OptionalFiltersEncoder(DSLFacetFilters().apply(block).rows())
+  writeOptionalFilters(block).value
+
+internal fun writeOptionalFilters(
+  block: DSLFacetFilters.() -> Unit
+): FilterWrite<OptionalFilters, Filter.Facet> {
+  val rows = DSLFacetFilters().apply(block).rows()
+  return FilterWrite(OptionalFiltersEncoder(rows), rows)
+}
