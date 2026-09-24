@@ -685,7 +685,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "bar"
                         )
                       )
@@ -732,7 +732,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "foo"
                         )
                       )
@@ -793,7 +793,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "foo",
                           params = Some(
                             MainInjectionQueryParameters(
@@ -915,7 +915,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "foo"
                         )
                       )
@@ -972,7 +972,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "foo"
                   )
                 )
@@ -1021,7 +1021,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "foo"
                   )
                 )
@@ -1076,7 +1076,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "foo",
                     params = Some(
                       MainInjectionQueryParameters(
@@ -1192,7 +1192,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "foo",
                     params = Some(
                       MainInjectionQueryParameters(
@@ -1252,7 +1252,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "products"
                   )
                 )
@@ -1287,7 +1287,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainRecommendSource(
-                  recommend = MainRecommend(
+                  recommend = InjectionMainRecommend(
                     indexName = "products",
                     model = Model.withName("trending-items"),
                     threshold = 50
@@ -1300,7 +1300,7 @@ class CompositionTest extends AnyFunSuite {
                 InjectionInjectedItem(
                   key = "injected-recommend-key",
                   source = InjectedItemRecommendSource(
-                    recommend = Recommend(
+                    recommend = InjectedItemRecommend(
                       indexName = "products",
                       model = Model.withName("trending-items"),
                       threshold = 30,
@@ -1345,7 +1345,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainSearchSource(
-                  search = MainSearch(
+                  search = InjectionMainSearch(
                     index = "products",
                     params = Some(
                       MainInjectionQueryParameters(
@@ -1361,7 +1361,7 @@ class CompositionTest extends AnyFunSuite {
                 InjectionInjectedItem(
                   key = "injected-recommend-key",
                   source = InjectedItemRecommendSource(
-                    recommend = Recommend(
+                    recommend = InjectedItemRecommend(
                       indexName = "products",
                       model = Model.withName("trending-items"),
                       threshold = 40
@@ -1404,7 +1404,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainRecommendSource(
-                        recommend = MainRecommend(
+                        recommend = InjectionMainRecommend(
                           indexName = "products",
                           model = Model.withName("trending-items"),
                           threshold = 50
@@ -1448,7 +1448,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "products",
                           params = Some(
                             MainInjectionQueryParameters(
@@ -1485,7 +1485,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "articles",
                           params = Some(
                             MainInjectionQueryParameters(
@@ -1523,7 +1523,7 @@ class CompositionTest extends AnyFunSuite {
                   main = InjectionMain(
                     source = Some(
                       InjectionMainSearchSource(
-                        search = MainSearch(
+                        search = InjectionMainSearch(
                           index = "videos",
                           params = Some(
                             MainInjectionQueryParameters(
@@ -1568,7 +1568,7 @@ class CompositionTest extends AnyFunSuite {
             main = InjectionMain(
               source = Some(
                 InjectionMainExternalProviderSource(
-                  externalProvider = MainExternalProvider(
+                  externalProvider = InjectionMainExternalProvider(
                     index = "products",
                     configurationID = "my-rmn-connection",
                     configurationParams =
@@ -1637,7 +1637,7 @@ class CompositionTest extends AnyFunSuite {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo"
                     )
                   )
@@ -1696,7 +1696,7 @@ class CompositionTest extends AnyFunSuite {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo"
                     )
                   )
@@ -1796,7 +1796,7 @@ class CompositionTest extends AnyFunSuite {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "my-index",
                       params = Some(
                         MainInjectionQueryParameters(
@@ -1868,7 +1868,7 @@ class CompositionTest extends AnyFunSuite {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "my-index"
                     )
                   )
@@ -1932,7 +1932,7 @@ class CompositionTest extends AnyFunSuite {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "my-index"
                     )
                   )
@@ -1997,7 +1997,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainSearchSource(
-                            search = MainSearch(
+                            search = InjectionMainSearch(
                               index = "<YOUR_INDEX_NAME>"
                             )
                           )
@@ -2050,7 +2050,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainSearchSource(
-                            search = MainSearch(
+                            search = InjectionMainSearch(
                               index = "foo"
                             )
                           )
@@ -2158,7 +2158,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainSearchSource(
-                            search = MainSearch(
+                            search = InjectionMainSearch(
                               index = "my-index",
                               params = Some(
                                 MainInjectionQueryParameters(
@@ -2236,7 +2236,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainRecommendSource(
-                            recommend = MainRecommend(
+                            recommend = InjectionMainRecommend(
                               indexName = "products",
                               model = Model.withName("trending-items"),
                               threshold = 50
@@ -2249,7 +2249,7 @@ class CompositionTest extends AnyFunSuite {
                           InjectionInjectedItem(
                             key = "injected-recommend-from-rule-key",
                             source = InjectedItemRecommendSource(
-                              recommend = Recommend(
+                              recommend = InjectedItemRecommend(
                                 indexName = "products",
                                 model = Model.withName("trending-items"),
                                 threshold = 30,
@@ -2312,7 +2312,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainSearchSource(
-                            search = MainSearch(
+                            search = InjectionMainSearch(
                               index = "products",
                               params = Some(
                                 MainInjectionQueryParameters(
@@ -2328,7 +2328,7 @@ class CompositionTest extends AnyFunSuite {
                           InjectionInjectedItem(
                             key = "injected-recommend-from-rule-key",
                             source = InjectedItemRecommendSource(
-                              recommend = Recommend(
+                              recommend = InjectedItemRecommend(
                                 indexName = "products",
                                 model = Model.withName("trending-items"),
                                 threshold = 40
@@ -2389,7 +2389,7 @@ class CompositionTest extends AnyFunSuite {
                             main = InjectionMain(
                               source = Some(
                                 InjectionMainRecommendSource(
-                                  recommend = MainRecommend(
+                                  recommend = InjectionMainRecommend(
                                     indexName = "products",
                                     model = Model.withName("trending-items"),
                                     threshold = 50
@@ -2453,7 +2453,7 @@ class CompositionTest extends AnyFunSuite {
                       main = InjectionMain(
                         source = Some(
                           InjectionMainSearchSource(
-                            search = MainSearch(
+                            search = InjectionMainSearch(
                               index = "my-index"
                             )
                           )

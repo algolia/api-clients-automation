@@ -7,21 +7,21 @@ import Foundation
 #endif
 
 public struct InjectedItemExternal: Codable, JSONEncodable {
-    /// Composition Index name.
+    /// Algolia index used to retrieve records.
     public var index: String
-    public var params: BaseInjectionQueryParameters?
     public var ordering: ExternalOrdering?
+    public var params: BaseInjectionQueryParameters?
 
-    public init(index: String, params: BaseInjectionQueryParameters? = nil, ordering: ExternalOrdering? = nil) {
+    public init(index: String, ordering: ExternalOrdering? = nil, params: BaseInjectionQueryParameters? = nil) {
         self.index = index
-        self.params = params
         self.ordering = ordering
+        self.params = params
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case index
-        case params
         case ordering
+        case params
     }
 
     // Encodable protocol methods
@@ -29,8 +29,8 @@ public struct InjectedItemExternal: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.index, forKey: .index)
-        try container.encodeIfPresent(self.params, forKey: .params)
         try container.encodeIfPresent(self.ordering, forKey: .ordering)
+        try container.encodeIfPresent(self.params, forKey: .params)
     }
 }
 
@@ -39,7 +39,7 @@ extension InjectedItemExternal: Equatable {}
 extension InjectedItemExternal: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.index.hashValue)
-        hasher.combine(self.params?.hashValue)
         hasher.combine(self.ordering?.hashValue)
+        hasher.combine(self.params?.hashValue)
     }
 }

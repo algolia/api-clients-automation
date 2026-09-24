@@ -30,7 +30,7 @@ package algoliasearch.composition
 /** InjectedItemSearch
   *
   * @param index
-  *   Composition Index name.
+  *   Algolia index used to retrieve records.
   */
 case class InjectedItemSearch(
     index: String,

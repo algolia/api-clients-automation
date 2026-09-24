@@ -565,7 +565,9 @@ class SnippetCompositionClient {
                               main =
                                 InjectionMain(
                                   source =
-                                    InjectionMainSearchSource(search = MainSearch(index = "bar"))
+                                    InjectionMainSearchSource(
+                                      search = InjectionMainSearch(index = "bar")
+                                    )
                                 )
                             )
                         ),
@@ -606,7 +608,8 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                        source =
+                          InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
@@ -650,7 +653,8 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                        source =
+                          InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
@@ -705,7 +709,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainSearchSource(
                             search =
-                              MainSearch(
+                              InjectionMainSearch(
                                 index = "foo",
                                 params = MainInjectionQueryParameters(filters = "brand:adidas"),
                               )
@@ -759,7 +763,10 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "products"))
+                        source =
+                          InjectionMainSearchSource(
+                            search = InjectionMainSearch(index = "products")
+                          )
                       )
                   )
               ),
@@ -796,7 +803,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainRecommendSource(
                             recommend =
-                              MainRecommend(
+                              InjectionMainRecommend(
                                 indexName = "<YOUR_INDEX_NAME>",
                                 model = Model.entries.first { it.value == "trending-items" },
                                 threshold = 50,
@@ -810,7 +817,7 @@ class SnippetCompositionClient {
                           source =
                             InjectedItemRecommendSource(
                               recommend =
-                                Recommend(
+                                InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 30,
@@ -857,7 +864,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainSearchSource(
                             search =
-                              MainSearch(
+                              InjectionMainSearch(
                                 index = "products",
                                 params = MainInjectionQueryParameters(filters = "brand:nike"),
                               )
@@ -870,7 +877,7 @@ class SnippetCompositionClient {
                           source =
                             InjectedItemRecommendSource(
                               recommend =
-                                Recommend(
+                                InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 40,
@@ -921,7 +928,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainRecommendSource(
                                         recommend =
-                                          MainRecommend(
+                                          InjectionMainRecommend(
                                             indexName = "<YOUR_INDEX_NAME>",
                                             model =
                                               Model.entries.first { it.value == "trending-items" },
@@ -974,7 +981,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "products",
                                             params = MainInjectionQueryParameters(hitsPerPage = 12),
                                           )
@@ -1010,7 +1017,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "articles",
                                             params =
                                               MainInjectionQueryParameters(
@@ -1051,7 +1058,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "videos",
                                             params =
                                               MainInjectionQueryParameters(
@@ -1101,7 +1108,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainExternalProviderSource(
                             externalProvider =
-                              MainExternalProvider(
+                              InjectionMainExternalProvider(
                                 index = "products",
                                 configurationID = "my-rmn-connection",
                                 configurationParams =
@@ -1178,7 +1185,8 @@ class SnippetCompositionClient {
                       Injection(
                         main =
                           InjectionMain(
-                            source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                            source =
+                              InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                           ),
                         injectedItems =
                           listOf(
@@ -1245,7 +1253,7 @@ class SnippetCompositionClient {
                             source =
                               InjectionMainSearchSource(
                                 search =
-                                  MainSearch(
+                                  InjectionMainSearch(
                                     index = "my-index",
                                     params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                   )
@@ -1315,7 +1323,9 @@ class SnippetCompositionClient {
                         main =
                           InjectionMain(
                             source =
-                              InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                              InjectionMainSearchSource(
+                                search = InjectionMainSearch(index = "my-index")
+                              )
                           ),
                         injectedItems =
                           listOf(
@@ -1377,7 +1387,9 @@ class SnippetCompositionClient {
                         main =
                           InjectionMain(
                             source =
-                              InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                              InjectionMainSearchSource(
+                                search = InjectionMainSearch(index = "my-index")
+                              )
                           ),
                         injectedItems =
                           listOf(
@@ -1446,7 +1458,7 @@ class SnippetCompositionClient {
                                     InjectionMain(
                                       source =
                                         InjectionMainSearchSource(
-                                          search = MainSearch(index = "<YOUR_INDEX_NAME>")
+                                          search = InjectionMainSearch(index = "<YOUR_INDEX_NAME>")
                                         )
                                     )
                                 )
@@ -1510,7 +1522,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "my-index",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1595,7 +1607,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainRecommendSource(
                                           recommend =
-                                            MainRecommend(
+                                            InjectionMainRecommend(
                                               indexName = "<YOUR_INDEX_NAME>",
                                               model =
                                                 Model.entries.first {
@@ -1612,7 +1624,7 @@ class SnippetCompositionClient {
                                         source =
                                           InjectedItemRecommendSource(
                                             recommend =
-                                              Recommend(
+                                              InjectedItemRecommend(
                                                 indexName = "<YOUR_INDEX_NAME>",
                                                 model =
                                                   Model.entries.first {
@@ -1682,7 +1694,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "products",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1698,7 +1710,7 @@ class SnippetCompositionClient {
                                         source =
                                           InjectedItemRecommendSource(
                                             recommend =
-                                              Recommend(
+                                              InjectedItemRecommend(
                                                 indexName = "<YOUR_INDEX_NAME>",
                                                 model =
                                                   Model.entries.first {
@@ -1770,7 +1782,7 @@ class SnippetCompositionClient {
                                                   source =
                                                     InjectionMainRecommendSource(
                                                       recommend =
-                                                        MainRecommend(
+                                                        InjectionMainRecommend(
                                                           indexName = "<YOUR_INDEX_NAME>",
                                                           model =
                                                             Model.entries.first {
@@ -1839,7 +1851,7 @@ class SnippetCompositionClient {
                                     InjectionMain(
                                       source =
                                         InjectionMainSearchSource(
-                                          search = MainSearch(index = "my-index")
+                                          search = InjectionMainSearch(index = "my-index")
                                         )
                                     ),
                                   injectedItems =

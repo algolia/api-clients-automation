@@ -27,10 +27,10 @@
   */
 package algoliasearch.composition
 
-import algoliasearch.composition.Recommend
+import algoliasearch.composition.InjectedItemRecommend
 
 /** Injected items will originate from a recommendation request performed on the specified index.
   */
 case class InjectedItemRecommendSource(
-    recommend: Recommend
+    recommend: InjectedItemRecommend
 ) extends InjectedItemSourceTrait

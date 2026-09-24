@@ -701,7 +701,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "bar" },
+                            Search = new InjectionMainSearch { Index = "bar" },
                           }
                         ),
                       },
@@ -762,7 +762,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "foo" },
+                            Search = new InjectionMainSearch { Index = "foo" },
                           }
                         ),
                       },
@@ -841,7 +841,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "foo",
                               Params = new MainInjectionQueryParameters
@@ -979,7 +979,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "foo" },
+                            Search = new InjectionMainSearch { Index = "foo" },
                           }
                         ),
                       },
@@ -1045,7 +1045,10 @@ public class SnippetCompositionClient
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "foo" },
+                  }
                 ),
               },
               InjectedItems = new List<InjectionInjectedItem>
@@ -1102,7 +1105,10 @@ public class SnippetCompositionClient
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "foo" },
+                  }
                 ),
               },
               InjectedItems = new List<InjectionInjectedItem>
@@ -1166,7 +1172,7 @@ public class SnippetCompositionClient
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "foo",
                       Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1284,7 +1290,7 @@ public class SnippetCompositionClient
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "foo",
                       Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1355,7 +1361,10 @@ public class SnippetCompositionClient
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "products" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "products" },
+                  }
                 ),
               },
             },
@@ -1399,7 +1408,7 @@ public class SnippetCompositionClient
                 Source = new InjectionMainSource(
                   new InjectionMainRecommendSource
                   {
-                    Recommend = new MainRecommend
+                    Recommend = new InjectionMainRecommend
                     {
                       IndexName = "<YOUR_INDEX_NAME>",
                       Model = Enum.Parse<Model>("TrendingItems"),
@@ -1416,7 +1425,7 @@ public class SnippetCompositionClient
                   Source = new InjectedItemSource(
                     new InjectedItemRecommendSource
                     {
-                      Recommend = new Recommend
+                      Recommend = new InjectedItemRecommend
                       {
                         IndexName = "<YOUR_INDEX_NAME>",
                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -1473,7 +1482,7 @@ public class SnippetCompositionClient
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "products",
                       Params = new MainInjectionQueryParameters { Filters = "brand:nike" },
@@ -1489,7 +1498,7 @@ public class SnippetCompositionClient
                   Source = new InjectedItemSource(
                     new InjectedItemRecommendSource
                     {
-                      Recommend = new Recommend
+                      Recommend = new InjectedItemRecommend
                       {
                         IndexName = "<YOUR_INDEX_NAME>",
                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -1550,7 +1559,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainRecommendSource
                           {
-                            Recommend = new MainRecommend
+                            Recommend = new InjectionMainRecommend
                             {
                               IndexName = "<YOUR_INDEX_NAME>",
                               Model = Enum.Parse<Model>("TrendingItems"),
@@ -1613,7 +1622,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "products",
                               Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
@@ -1657,7 +1666,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "articles",
                               Params = new MainInjectionQueryParameters
@@ -1710,7 +1719,7 @@ public class SnippetCompositionClient
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "videos",
                               Params = new MainInjectionQueryParameters
@@ -1773,7 +1782,7 @@ public class SnippetCompositionClient
                 Source = new InjectionMainSource(
                   new InjectionMainExternalProviderSource
                   {
-                    ExternalProvider = new MainExternalProvider
+                    ExternalProvider = new InjectionMainExternalProvider
                     {
                       Index = "products",
                       ConfigurationID = "my-rmn-connection",
@@ -1856,7 +1865,10 @@ public class SnippetCompositionClient
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "foo" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -1920,7 +1932,10 @@ public class SnippetCompositionClient
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "foo" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -2015,7 +2030,7 @@ public class SnippetCompositionClient
                   Source = new InjectionMainSource(
                     new InjectionMainSearchSource
                     {
-                      Search = new MainSearch
+                      Search = new InjectionMainSearch
                       {
                         Index = "my-index",
                         Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -2091,7 +2106,10 @@ public class SnippetCompositionClient
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "my-index" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -2159,7 +2177,10 @@ public class SnippetCompositionClient
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "my-index" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -2238,7 +2259,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "<YOUR_INDEX_NAME>" },
+                              Search = new InjectionMainSearch { Index = "<YOUR_INDEX_NAME>" },
                             }
                           ),
                         },
@@ -2301,7 +2322,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "foo" },
+                              Search = new InjectionMainSearch { Index = "foo" },
                             }
                           ),
                         },
@@ -2419,7 +2440,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch
+                              Search = new InjectionMainSearch
                               {
                                 Index = "my-index",
                                 Params = new MainInjectionQueryParameters
@@ -2512,7 +2533,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainRecommendSource
                             {
-                              Recommend = new MainRecommend
+                              Recommend = new InjectionMainRecommend
                               {
                                 IndexName = "<YOUR_INDEX_NAME>",
                                 Model = Enum.Parse<Model>("TrendingItems"),
@@ -2529,7 +2550,7 @@ public class SnippetCompositionClient
                             Source = new InjectedItemSource(
                               new InjectedItemRecommendSource
                               {
-                                Recommend = new Recommend
+                                Recommend = new InjectedItemRecommend
                                 {
                                   IndexName = "<YOUR_INDEX_NAME>",
                                   Model = Enum.Parse<Model>("TrendingItems"),
@@ -2608,7 +2629,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch
+                              Search = new InjectionMainSearch
                               {
                                 Index = "products",
                                 Params = new MainInjectionQueryParameters
@@ -2627,7 +2648,7 @@ public class SnippetCompositionClient
                             Source = new InjectedItemSource(
                               new InjectedItemRecommendSource
                               {
-                                Recommend = new Recommend
+                                Recommend = new InjectedItemRecommend
                                 {
                                   IndexName = "<YOUR_INDEX_NAME>",
                                   Model = Enum.Parse<Model>("TrendingItems"),
@@ -2706,7 +2727,7 @@ public class SnippetCompositionClient
                                   Source = new InjectionMainSource(
                                     new InjectionMainRecommendSource
                                     {
-                                      Recommend = new MainRecommend
+                                      Recommend = new InjectionMainRecommend
                                       {
                                         IndexName = "<YOUR_INDEX_NAME>",
                                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -2786,7 +2807,7 @@ public class SnippetCompositionClient
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "my-index" },
+                              Search = new InjectionMainSearch { Index = "my-index" },
                             }
                           ),
                         },

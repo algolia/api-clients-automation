@@ -13,29 +13,29 @@ public struct InjectedItemExternalProvider: Codable, JSONEncodable {
     public var configurationID: String
     /// Default values for the configuration placeholders that are not reserved Composition placeholders.
     public var configurationParams: [String: AnyCodable]?
-    public var params: BaseInjectionQueryParameters?
     public var ordering: ExternalProviderOrdering?
+    public var params: BaseInjectionQueryParameters?
 
     public init(
         index: String,
         configurationID: String,
         configurationParams: [String: AnyCodable]? = nil,
-        params: BaseInjectionQueryParameters? = nil,
-        ordering: ExternalProviderOrdering? = nil
+        ordering: ExternalProviderOrdering? = nil,
+        params: BaseInjectionQueryParameters? = nil
     ) {
         self.index = index
         self.configurationID = configurationID
         self.configurationParams = configurationParams
-        self.params = params
         self.ordering = ordering
+        self.params = params
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case index
         case configurationID
         case configurationParams
-        case params
         case ordering
+        case params
     }
 
     // Encodable protocol methods
@@ -45,8 +45,8 @@ public struct InjectedItemExternalProvider: Codable, JSONEncodable {
         try container.encode(self.index, forKey: .index)
         try container.encode(self.configurationID, forKey: .configurationID)
         try container.encodeIfPresent(self.configurationParams, forKey: .configurationParams)
-        try container.encodeIfPresent(self.params, forKey: .params)
         try container.encodeIfPresent(self.ordering, forKey: .ordering)
+        try container.encodeIfPresent(self.params, forKey: .params)
     }
 }
 
@@ -57,7 +57,7 @@ extension InjectedItemExternalProvider: Hashable {
         hasher.combine(self.index.hashValue)
         hasher.combine(self.configurationID.hashValue)
         hasher.combine(self.configurationParams?.hashValue)
-        hasher.combine(self.params?.hashValue)
         hasher.combine(self.ordering?.hashValue)
+        hasher.combine(self.params?.hashValue)
     }
 }

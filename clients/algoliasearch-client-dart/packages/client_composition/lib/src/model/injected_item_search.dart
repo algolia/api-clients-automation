@@ -14,7 +14,7 @@ final class InjectedItemSearch {
     this.params,
   });
 
-  /// Composition Index name.
+  /// Algolia index used to retrieve records.
   @JsonKey(name: r'index')
   final String index;
 

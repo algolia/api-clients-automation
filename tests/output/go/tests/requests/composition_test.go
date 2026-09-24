@@ -557,7 +557,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("bar")))))))))),
+											composition.NewEmptyInjectionMainSearch().SetIndex("bar")))))))))),
 					*composition.NewEmptyMultipleBatchRequest().SetAction(composition.Action("delete")).SetBody(composition.DeleteCompositionActionAsBatchCompositionAction(
 						composition.NewEmptyDeleteCompositionAction().SetObjectID("baz"))),
 				}),
@@ -581,7 +581,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+											composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.InjectedItemExternalSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemExternalSource().SetExternal(
 											composition.NewEmptyInjectedItemExternal().SetIndex("foo").SetOrdering(composition.ExternalOrdering("userDefined")).SetParams(
@@ -607,7 +607,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("foo").SetParams(
+											composition.NewEmptyInjectionMainSearch().SetIndex("foo").SetParams(
 												composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas")))))).SetInjectedItems(
 									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -641,7 +641,7 @@ func TestComposition_MultipleBatch(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+											composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
 											composition.NewEmptyInjectedItemSearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
@@ -675,7 +675,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+									composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 									composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -702,7 +702,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+									composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-group-key").SetSource(composition.InjectedItemExternalSourceAsInjectedItemSource(
 									composition.NewEmptyInjectedItemExternalSource().SetExternal(
@@ -730,7 +730,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("foo").SetParams(
+									composition.NewEmptyInjectionMainSearch().SetIndex("foo").SetParams(
 										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas")))))).SetInjectedItems(
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
@@ -767,7 +767,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("foo").SetParams(
+									composition.NewEmptyInjectionMainSearch().SetIndex("foo").SetParams(
 										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas")))))).SetInjectedItems(
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
@@ -797,7 +797,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("products")))))))),
+									composition.NewEmptyInjectionMainSearch().SetIndex("products")))))))),
 		))
 		require.NoError(t, err)
 
@@ -818,7 +818,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
-									composition.NewEmptyMainRecommend().
+									composition.NewEmptyInjectionMainRecommend().
 										SetIndexName("products").
 										SetModel(composition.Model("trending-items")).
 										SetThreshold(50),
@@ -827,7 +827,7 @@ func TestComposition_PutComposition(t *testing.T) {
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
 									composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
-										composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+										composition.NewEmptyInjectedItemRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
 											composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(3).SetLength(2),
 							}),
 					))),
@@ -851,12 +851,12 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainSearchSource().SetSearch(
-									composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+									composition.NewEmptyInjectionMainSearch().SetIndex("products").SetParams(
 										composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:nike")))))).SetInjectedItems(
 							[]composition.InjectionInjectedItem{
 								*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
 									composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
-										composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(3),
+										composition.NewEmptyInjectedItemRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(3),
 							}),
 					))),
 		))
@@ -881,7 +881,7 @@ func TestComposition_PutComposition(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
-											composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).
+											composition.NewEmptyInjectionMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).
 							SetFeedsOrder(
 								[]string{"trending"}),
 					),
@@ -908,7 +908,7 @@ func TestComposition_PutComposition(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+											composition.NewEmptyInjectionMainSearch().SetIndex("products").SetParams(
 												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(12)))))).SetInjectedItems(
 									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("featured-products").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -917,7 +917,7 @@ func TestComposition_PutComposition(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("articles").SetParams(
+											composition.NewEmptyInjectionMainSearch().SetIndex("articles").SetParams(
 												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(5).SetAttributesToRetrieve(
 													[]string{"title", "excerpt", "publishedAt"})))))).SetInjectedItems(
 									[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("editorial-picks").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
@@ -927,7 +927,7 @@ func TestComposition_PutComposition(t *testing.T) {
 								composition.NewEmptyInjection().SetMain(
 									composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 										composition.NewEmptyInjectionMainSearchSource().SetSearch(
-											composition.NewEmptyMainSearch().SetIndex("videos").SetParams(
+											composition.NewEmptyInjectionMainSearch().SetIndex("videos").SetParams(
 												composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(3).SetAttributesToRetrieve(
 													[]string{"title", "thumbnail", "duration"})))))))}).
 							SetFeedsOrder(
@@ -954,7 +954,7 @@ func TestComposition_PutComposition(t *testing.T) {
 						composition.NewEmptyInjection().SetMain(
 							composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainExternalProviderSourceAsInjectionMainSource(
 								composition.NewEmptyInjectionMainExternalProviderSource().SetExternalProvider(
-									composition.NewEmptyMainExternalProvider().
+									composition.NewEmptyInjectionMainExternalProvider().
 										SetIndex("products").
 										SetConfigurationID("my-rmn-connection").
 										SetConfigurationParams(map[string]any{"campaign_id": "summer-sale", "customer_id": "customer-default"}).
@@ -1001,7 +1001,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 									composition.NewEmptyInjectionMainSearchSource().SetSearch(
-										composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+										composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 								[]composition.InjectionInjectedItem{
 									*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -1029,7 +1029,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 									composition.NewEmptyInjectionMainSearchSource().SetSearch(
-										composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+										composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 								[]composition.InjectionInjectedItem{
 									*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -1063,7 +1063,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 									composition.NewEmptyInjectionMainSearchSource().SetSearch(
-										composition.NewEmptyMainSearch().SetIndex("my-index").SetParams(
+										composition.NewEmptyInjectionMainSearch().SetIndex("my-index").SetParams(
 											composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas")))))).SetInjectedItems(
 								[]composition.InjectionInjectedItem{
 									*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.InjectedItemExternalSourceAsInjectedItemSource(
@@ -1098,7 +1098,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 									composition.NewEmptyInjectionMainSearchSource().SetSearch(
-										composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+										composition.NewEmptyInjectionMainSearch().SetIndex("my-index"))))).SetInjectedItems(
 								[]composition.InjectionInjectedItem{
 									*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemSearchSource().SetSearch(
@@ -1128,7 +1128,7 @@ func TestComposition_PutCompositionRule(t *testing.T) {
 							composition.NewEmptyInjection().SetMain(
 								composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 									composition.NewEmptyInjectionMainSearchSource().SetSearch(
-										composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+										composition.NewEmptyInjectionMainSearch().SetIndex("my-index"))))).SetInjectedItems(
 								[]composition.InjectionInjectedItem{
 									*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-provider-group-from-rule-key").SetSource(composition.InjectedItemExternalProviderSourceAsInjectedItemSource(
 										composition.NewEmptyInjectedItemExternalProviderSource().SetExternalProvider(
@@ -1164,7 +1164,7 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainSearchSource().SetSearch(
-												composition.NewEmptyMainSearch().SetIndex("<YOUR_INDEX_NAME>"))))))))))),
+												composition.NewEmptyInjectionMainSearch().SetIndex("<YOUR_INDEX_NAME>"))))))))))),
 				}),
 		))
 		require.NoError(t, err)
@@ -1188,7 +1188,7 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainSearchSource().SetSearch(
-												composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+												composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
 										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-group-from-rule-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 											composition.NewEmptyInjectedItemSearchSource().SetSearch(
 												composition.NewEmptyInjectedItemSearch().SetIndex("foo").SetParams(
@@ -1220,7 +1220,7 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainSearchSource().SetSearch(
-												composition.NewEmptyMainSearch().SetIndex("my-index").SetParams(
+												composition.NewEmptyInjectionMainSearch().SetIndex("my-index").SetParams(
 													composition.NewEmptyMainInjectionQueryParameters().SetFilters("brand:adidas")))))).SetInjectedItems(
 										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-group-from-rule-key").SetSource(composition.InjectedItemExternalSourceAsInjectedItemSource(
 											composition.NewEmptyInjectedItemExternalSource().SetExternal(
@@ -1249,10 +1249,10 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
-												composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))).SetInjectedItems(
+												composition.NewEmptyInjectionMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))).SetInjectedItems(
 										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
 											composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
-												composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
+												composition.NewEmptyInjectedItemRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(30).SetFallbackParameters(
 													composition.NewEmptyBaseInjectionQueryParameters().SetFilters("category:electronics"))))).SetPosition(2).SetLength(3)}))))))),
 				}),
 		))
@@ -1277,11 +1277,11 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainSearchSource().SetSearch(
-												composition.NewEmptyMainSearch().SetIndex("products").SetParams(
+												composition.NewEmptyInjectionMainSearch().SetIndex("products").SetParams(
 													composition.NewEmptyMainInjectionQueryParameters().SetFilters("category:shoes")))))).SetInjectedItems(
 										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("injected-recommend-from-rule-key").SetSource(composition.InjectedItemRecommendSourceAsInjectedItemSource(
 											composition.NewEmptyInjectedItemRecommendSource().SetRecommend(
-												composition.NewEmptyRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(2)}))))))),
+												composition.NewEmptyInjectedItemRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(40)))).SetPosition(1).SetLength(2)}))))))),
 				}),
 		))
 		require.NoError(t, err)
@@ -1306,7 +1306,7 @@ func TestComposition_SaveRules(t *testing.T) {
 										composition.NewEmptyInjection().SetMain(
 											composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainRecommendSourceAsInjectionMainSource(
 												composition.NewEmptyInjectionMainRecommendSource().SetRecommend(
-													composition.NewEmptyMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).SetFeedsOrder(
+													composition.NewEmptyInjectionMainRecommend().SetIndexName("products").SetModel(composition.Model("trending-items")).SetThreshold(50))))))}).SetFeedsOrder(
 										[]string{"trending"}))))))),
 				}),
 		))
@@ -1331,7 +1331,7 @@ func TestComposition_SaveRules(t *testing.T) {
 									composition.NewEmptyInjection().SetMain(
 										composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
 											composition.NewEmptyInjectionMainSearchSource().SetSearch(
-												composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+												composition.NewEmptyInjectionMainSearch().SetIndex("my-index"))))).SetInjectedItems(
 										[]composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
 											composition.NewEmptyInjectedItemSearchSource().SetSearch(
 												composition.NewEmptyInjectedItemSearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(

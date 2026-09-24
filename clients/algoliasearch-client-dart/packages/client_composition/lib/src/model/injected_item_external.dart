@@ -12,30 +12,30 @@ final class InjectedItemExternal {
   /// Returns a new [InjectedItemExternal] instance.
   const InjectedItemExternal({
     required this.index,
-    this.params,
     this.ordering,
+    this.params,
   });
 
-  /// Composition Index name.
+  /// Algolia index used to retrieve records.
   @JsonKey(name: r'index')
   final String index;
 
-  @JsonKey(name: r'params')
-  final BaseInjectionQueryParameters? params;
-
   @JsonKey(name: r'ordering')
   final ExternalOrdering? ordering;
+
+  @JsonKey(name: r'params')
+  final BaseInjectionQueryParameters? params;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is InjectedItemExternal &&
           other.index == index &&
-          other.params == params &&
-          other.ordering == ordering;
+          other.ordering == ordering &&
+          other.params == params;
 
   @override
-  int get hashCode => index.hashCode + params.hashCode + ordering.hashCode;
+  int get hashCode => index.hashCode + ordering.hashCode + params.hashCode;
 
   factory InjectedItemExternal.fromJson(Map<String, dynamic> json) =>
       _$InjectedItemExternalFromJson(json);

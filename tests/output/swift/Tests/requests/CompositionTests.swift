@@ -894,7 +894,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                             CompositionInjectionBehavior(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainSearchSource(
-                                            InjectionMainSearchSource(search: MainSearch(index: "bar"))
+                                            InjectionMainSearchSource(search: InjectionMainSearch(index: "bar"))
                                         )))
                             )
                         )
@@ -942,7 +942,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-external-group-key",
@@ -950,8 +950,8 @@ final class CompositionClientRequestsTests: XCTestCase {
                                     .injectedItemExternalSource(
                                         InjectedItemExternalSource(external: InjectedItemExternal(
                                             index: "foo",
-                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                            ordering: ExternalOrdering.userDefined
+                                            ordering: ExternalOrdering.userDefined,
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                         ))
                                     ),
                                 position: 2,
@@ -996,7 +996,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "foo",
                                     params: MainInjectionQueryParameters(filters: "brand:adidas")
                                 )))),
@@ -1080,7 +1080,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",
@@ -1130,7 +1130,9 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-key",
                             source: InjectedItemSource
@@ -1178,14 +1180,16 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-external-group-key",
                             source: InjectedItemSource
                                 .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
                                     index: "foo",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
+                                    ordering: ExternalOrdering.userDefined,
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                 ))),
                             position: 2,
                             length: 1
@@ -1228,7 +1232,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "foo",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -1310,7 +1314,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "foo",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -1364,7 +1368,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         CompositionInjectionBehavior(
                             injection: Injection(main: InjectionMain(source: InjectionMainSource
                                     .injectionMainSearchSource(
-                                        InjectionMainSearchSource(search: MainSearch(index: "products"))
+                                        InjectionMainSearchSource(search: InjectionMainSearch(index: "products"))
                                     )))
                         )
                     ),
@@ -1406,20 +1410,26 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
-                                indexName: "products",
-                                model: Model.trendingItems,
-                                threshold: 50
-                            )))),
+                            .injectionMainRecommendSource(
+                                InjectionMainRecommendSource(recommend: InjectionMainRecommend(
+                                    indexName: "products",
+                                    model: Model.trendingItems,
+                                    threshold: 50
+                                ))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "injected-recommend-key",
                             source: InjectedItemSource
-                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                    indexName: "products",
-                                    model: Model.trendingItems,
-                                    threshold: 30,
-                                    fallbackParameters: BaseInjectionQueryParameters(filters: "category:electronics")
-                                ))),
+                                .injectedItemRecommendSource(
+                                    InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 30,
+                                        fallbackParameters: BaseInjectionQueryParameters(
+                                            filters: "category:electronics"
+                                        )
+                                    ))
+                                ),
                             position: 3,
                             length: 2
                         )]
@@ -1461,18 +1471,20 @@ final class CompositionClientRequestsTests: XCTestCase {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "products",
                                 params: MainInjectionQueryParameters(filters: "brand:nike")
                             )))),
                         injectedItems: [InjectionInjectedItem(
                             key: "injected-recommend-key",
                             source: InjectedItemSource
-                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                    indexName: "products",
-                                    model: Model.trendingItems,
-                                    threshold: 40
-                                ))),
+                                .injectedItemRecommendSource(
+                                    InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 40
+                                    ))
+                                ),
                             position: 1,
                             length: 3
                         )]
@@ -1517,7 +1529,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                             "trending": FeedInjection(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainRecommendSource(
-                                            InjectionMainRecommendSource(recommend: MainRecommend(
+                                            InjectionMainRecommendSource(recommend: InjectionMainRecommend(
                                                 indexName: "products",
                                                 model: Model.trendingItems,
                                                 threshold: 50
@@ -1566,7 +1578,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         feeds: [
                             "products": FeedInjection(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "products",
                                         params: MainInjectionQueryParameters(hitsPerPage: 12)
                                     )))),
@@ -1583,7 +1595,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                             )),
                             "articles": FeedInjection(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "articles",
                                         params: MainInjectionQueryParameters(
                                             attributesToRetrieve: ["title", "excerpt", "publishedAt"],
@@ -1602,7 +1614,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                                 )]
                             )),
                             "videos": FeedInjection(injection: Injection(main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "videos",
                                         params: MainInjectionQueryParameters(
                                             attributesToRetrieve: ["title", "thumbnail", "duration"],
@@ -1650,15 +1662,15 @@ final class CompositionClientRequestsTests: XCTestCase {
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
                             .injectionMainExternalProviderSource(
-                                InjectionMainExternalProviderSource(externalProvider: MainExternalProvider(
+                                InjectionMainExternalProviderSource(externalProvider: InjectionMainExternalProvider(
                                     index: "products",
                                     configurationID: "my-rmn-connection",
                                     configurationParams: [
                                         "campaign_id": AnyCodable("summer-sale"),
                                         "customer_id": AnyCodable("customer-default"),
                                     ],
-                                    params: MainInjectionQueryParameters(filters: "instock:true"),
-                                    ordering: ExternalProviderOrdering.providerDefined
+                                    ordering: ExternalProviderOrdering.providerDefined,
+                                    params: MainInjectionQueryParameters(filters: "instock:true")
                                 ))
                             )),
                         injectedItems: [InjectionInjectedItem(
@@ -1713,7 +1725,9 @@ final class CompositionClientRequestsTests: XCTestCase {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource
@@ -1762,7 +1776,9 @@ final class CompositionClientRequestsTests: XCTestCase {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource
@@ -1824,7 +1840,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "my-index",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -1833,8 +1849,8 @@ final class CompositionClientRequestsTests: XCTestCase {
                             source: InjectedItemSource
                                 .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
                                     index: "my-index",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
+                                    ordering: ExternalOrdering.userDefined,
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                 ))),
                             position: 0,
                             length: 3
@@ -1883,7 +1899,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
                             .injectionMainSearchSource(
-                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                             )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-injected-item-key",
@@ -1937,7 +1953,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
                             .injectionMainSearchSource(
-                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                             )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-external-provider-group-from-rule-key",
@@ -1995,7 +2011,9 @@ final class CompositionClientRequestsTests: XCTestCase {
                             CompositionInjectionBehavior(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainSearchSource(
-                                            InjectionMainSearchSource(search: MainSearch(index: "<YOUR_INDEX_NAME>"))
+                                            InjectionMainSearchSource(
+                                                search: InjectionMainSearch(index: "<YOUR_INDEX_NAME>")
+                                            )
                                         )))
                             )
                         ))
@@ -2040,7 +2058,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-group-from-rule-key",
@@ -2105,7 +2123,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "my-index",
                                     params: MainInjectionQueryParameters(filters: "brand:adidas")
                                 )))),
@@ -2115,8 +2133,8 @@ final class CompositionClientRequestsTests: XCTestCase {
                                     .injectedItemExternalSource(
                                         InjectedItemExternalSource(external: InjectedItemExternal(
                                             index: "my-index",
-                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                            ordering: ExternalOrdering.userDefined
+                                            ordering: ExternalOrdering.userDefined,
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                         ))
                                     ),
                                 position: 0,
@@ -2167,22 +2185,26 @@ final class CompositionClientRequestsTests: XCTestCase {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
-                                    indexName: "products",
-                                    model: Model.trendingItems,
-                                    threshold: 50
-                                )))),
+                                .injectionMainRecommendSource(
+                                    InjectionMainRecommendSource(recommend: InjectionMainRecommend(
+                                        indexName: "products",
+                                        model: Model.trendingItems,
+                                        threshold: 50
+                                    ))
+                                )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "injected-recommend-from-rule-key",
                                 source: InjectedItemSource
-                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                        indexName: "products",
-                                        model: Model.trendingItems,
-                                        threshold: 30,
-                                        fallbackParameters: BaseInjectionQueryParameters(
-                                            filters: "category:electronics"
-                                        )
-                                    ))),
+                                    .injectedItemRecommendSource(
+                                        InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                            indexName: "products",
+                                            model: Model.trendingItems,
+                                            threshold: 30,
+                                            fallbackParameters: BaseInjectionQueryParameters(
+                                                filters: "category:electronics"
+                                            )
+                                        ))
+                                    ),
                                 position: 2,
                                 length: 3
                             )]
@@ -2227,18 +2249,20 @@ final class CompositionClientRequestsTests: XCTestCase {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "products",
                                     params: MainInjectionQueryParameters(filters: "category:shoes")
                                 )))),
                             injectedItems: [InjectionInjectedItem(
                                 key: "injected-recommend-from-rule-key",
                                 source: InjectedItemSource
-                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                        indexName: "products",
-                                        model: Model.trendingItems,
-                                        threshold: 40
-                                    ))),
+                                    .injectedItemRecommendSource(
+                                        InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                            indexName: "products",
+                                            model: Model.trendingItems,
+                                            threshold: 40
+                                        ))
+                                    ),
                                 position: 1,
                                 length: 2
                             )]
@@ -2286,7 +2310,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                                 "trending": FeedInjection(
                                     injection: Injection(main: InjectionMain(source: InjectionMainSource
                                             .injectionMainRecommendSource(
-                                                InjectionMainRecommendSource(recommend: MainRecommend(
+                                                InjectionMainRecommendSource(recommend: InjectionMainRecommend(
                                                     indexName: "products",
                                                     model: Model.trendingItems,
                                                     threshold: 50
@@ -2340,7 +2364,7 @@ final class CompositionClientRequestsTests: XCTestCase {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",

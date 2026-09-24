@@ -12,16 +12,16 @@ import java.util.Objects;
 public class InjectedItemRecommendSource implements InjectedItemSource {
 
   @JsonProperty("recommend")
-  private Recommend recommend;
+  private InjectedItemRecommend recommend;
 
-  public InjectedItemRecommendSource setRecommend(Recommend recommend) {
+  public InjectedItemRecommendSource setRecommend(InjectedItemRecommend recommend) {
     this.recommend = recommend;
     return this;
   }
 
   /** Get recommend */
   @javax.annotation.Nonnull
-  public Recommend getRecommend() {
+  public InjectedItemRecommend getRecommend() {
     return recommend;
   }
 

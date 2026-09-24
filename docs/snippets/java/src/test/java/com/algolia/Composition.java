@@ -630,7 +630,7 @@ class SnippetCompositionClient {
               .setBehavior(
                 new CompositionInjectionBehavior().setInjection(
                   new Injection().setMain(
-                    new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("bar")))
+                    new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("bar")))
                   )
                 )
               )
@@ -664,7 +664,9 @@ class SnippetCompositionClient {
               .setBehavior(
                 new CompositionInjectionBehavior().setInjection(
                   new Injection()
-                    .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                    .setMain(
+                      new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                    )
                     .setInjectedItems(
                       Arrays.asList(
                         new InjectionInjectedItem()
@@ -715,7 +717,7 @@ class SnippetCompositionClient {
                     .setMain(
                       new InjectionMain().setSource(
                         new InjectionMainSearchSource().setSearch(
-                          new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                          new InjectionMainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                         )
                       )
                     )
@@ -818,7 +820,9 @@ class SnippetCompositionClient {
               .setBehavior(
                 new CompositionInjectionBehavior().setInjection(
                   new Injection()
-                    .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                    .setMain(
+                      new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                    )
                     .setInjectedItems(
                       Arrays.asList(
                         new InjectionInjectedItem()
@@ -858,7 +862,7 @@ class SnippetCompositionClient {
         .setBehavior(
           new CompositionInjectionBehavior().setInjection(
             new Injection()
-              .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+              .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo"))))
               .setInjectedItems(
                 Arrays.asList(
                   new InjectionInjectedItem()
@@ -894,7 +898,7 @@ class SnippetCompositionClient {
         .setBehavior(
           new CompositionInjectionBehavior().setInjection(
             new Injection()
-              .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+              .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo"))))
               .setInjectedItems(
                 Arrays.asList(
                   new InjectionInjectedItem()
@@ -940,7 +944,7 @@ class SnippetCompositionClient {
               .setMain(
                 new InjectionMain().setSource(
                   new InjectionMainSearchSource().setSearch(
-                    new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                    new InjectionMainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                   )
                 )
               )
@@ -1037,7 +1041,7 @@ class SnippetCompositionClient {
               .setMain(
                 new InjectionMain().setSource(
                   new InjectionMainSearchSource().setSearch(
-                    new MainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                    new InjectionMainSearch().setIndex("foo").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                   )
                 )
               )
@@ -1085,7 +1089,7 @@ class SnippetCompositionClient {
         .setBehavior(
           new CompositionInjectionBehavior().setInjection(
             new Injection().setMain(
-              new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("products")))
+              new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("products")))
             )
           )
         )
@@ -1116,7 +1120,7 @@ class SnippetCompositionClient {
               .setMain(
                 new InjectionMain().setSource(
                   new InjectionMainRecommendSource().setRecommend(
-                    new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                    new InjectionMainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
                   )
                 )
               )
@@ -1126,7 +1130,7 @@ class SnippetCompositionClient {
                     .setKey("injected-recommend-key")
                     .setSource(
                       new InjectedItemRecommendSource().setRecommend(
-                        new Recommend()
+                        new InjectedItemRecommend()
                           .setIndexName("<YOUR_INDEX_NAME>")
                           .setModel(Model.TRENDING_ITEMS)
                           .setThreshold(30)
@@ -1166,7 +1170,7 @@ class SnippetCompositionClient {
               .setMain(
                 new InjectionMain().setSource(
                   new InjectionMainSearchSource().setSearch(
-                    new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("brand:nike"))
+                    new InjectionMainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("brand:nike"))
                   )
                 )
               )
@@ -1176,7 +1180,7 @@ class SnippetCompositionClient {
                     .setKey("injected-recommend-key")
                     .setSource(
                       new InjectedItemRecommendSource().setRecommend(
-                        new Recommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                        new InjectedItemRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(40)
                       )
                     )
                     .setPosition(1)
@@ -1218,7 +1222,7 @@ class SnippetCompositionClient {
                         new Injection().setMain(
                           new InjectionMain().setSource(
                             new InjectionMainRecommendSource().setRecommend(
-                              new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                              new InjectionMainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
                             )
                           )
                         )
@@ -1264,7 +1268,9 @@ class SnippetCompositionClient {
                           .setMain(
                             new InjectionMain().setSource(
                               new InjectionMainSearchSource().setSearch(
-                                new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
+                                new InjectionMainSearch()
+                                  .setIndex("products")
+                                  .setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
                               )
                             )
                           )
@@ -1292,7 +1298,7 @@ class SnippetCompositionClient {
                           .setMain(
                             new InjectionMain().setSource(
                               new InjectionMainSearchSource().setSearch(
-                                new MainSearch()
+                                new InjectionMainSearch()
                                   .setIndex("articles")
                                   .setParams(
                                     new MainInjectionQueryParameters()
@@ -1325,7 +1331,7 @@ class SnippetCompositionClient {
                         new Injection().setMain(
                           new InjectionMain().setSource(
                             new InjectionMainSearchSource().setSearch(
-                              new MainSearch()
+                              new InjectionMainSearch()
                                 .setIndex("videos")
                                 .setParams(
                                   new MainInjectionQueryParameters()
@@ -1370,7 +1376,7 @@ class SnippetCompositionClient {
               .setMain(
                 new InjectionMain().setSource(
                   new InjectionMainExternalProviderSource().setExternalProvider(
-                    new MainExternalProvider()
+                    new InjectionMainExternalProvider()
                       .setIndex("products")
                       .setConfigurationID("my-rmn-connection")
                       .setConfigurationParams(
@@ -1436,7 +1442,9 @@ class SnippetCompositionClient {
           new CompositionRuleConsequence().setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                .setMain(
+                  new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                )
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectionInjectedItem()
@@ -1475,7 +1483,9 @@ class SnippetCompositionClient {
           new CompositionRuleConsequence().setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                .setMain(
+                  new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                )
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectionInjectedItem()
@@ -1551,7 +1561,9 @@ class SnippetCompositionClient {
                 .setMain(
                   new InjectionMain().setSource(
                     new InjectionMainSearchSource().setSearch(
-                      new MainSearch().setIndex("my-index").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                      new InjectionMainSearch()
+                        .setIndex("my-index")
+                        .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                     )
                   )
                 )
@@ -1602,7 +1614,9 @@ class SnippetCompositionClient {
           new CompositionRuleConsequence().setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
+                .setMain(
+                  new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("my-index")))
+                )
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectionInjectedItem()
@@ -1642,7 +1656,9 @@ class SnippetCompositionClient {
           new CompositionRuleConsequence().setBehavior(
             new CompositionInjectionBehavior().setInjection(
               new Injection()
-                .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
+                .setMain(
+                  new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("my-index")))
+                )
                 .setInjectedItems(
                   Arrays.asList(
                     new InjectionInjectedItem()
@@ -1698,7 +1714,7 @@ class SnippetCompositionClient {
                   new CompositionInjectionBehavior().setInjection(
                     new Injection().setMain(
                       new InjectionMain().setSource(
-                        new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("<YOUR_INDEX_NAME>"))
+                        new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("<YOUR_INDEX_NAME>"))
                       )
                     )
                   )
@@ -1735,7 +1751,9 @@ class SnippetCompositionClient {
                 new CompositionRuleConsequence().setBehavior(
                   new CompositionInjectionBehavior().setInjection(
                     new Injection()
-                      .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                      .setMain(
+                        new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                      )
                       .setInjectedItems(
                         Arrays.asList(
                           new InjectionInjectedItem()
@@ -1818,7 +1836,9 @@ class SnippetCompositionClient {
                       .setMain(
                         new InjectionMain().setSource(
                           new InjectionMainSearchSource().setSearch(
-                            new MainSearch().setIndex("my-index").setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
+                            new InjectionMainSearch()
+                              .setIndex("my-index")
+                              .setParams(new MainInjectionQueryParameters().setFilters("brand:adidas"))
                           )
                         )
                       )
@@ -1875,7 +1895,7 @@ class SnippetCompositionClient {
                       .setMain(
                         new InjectionMain().setSource(
                           new InjectionMainRecommendSource().setRecommend(
-                            new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                            new InjectionMainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
                           )
                         )
                       )
@@ -1885,7 +1905,7 @@ class SnippetCompositionClient {
                             .setKey("injected-recommend-from-rule-key")
                             .setSource(
                               new InjectedItemRecommendSource().setRecommend(
-                                new Recommend()
+                                new InjectedItemRecommend()
                                   .setIndexName("<YOUR_INDEX_NAME>")
                                   .setModel(Model.TRENDING_ITEMS)
                                   .setThreshold(30)
@@ -1933,7 +1953,9 @@ class SnippetCompositionClient {
                       .setMain(
                         new InjectionMain().setSource(
                           new InjectionMainSearchSource().setSearch(
-                            new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setFilters("category:shoes"))
+                            new InjectionMainSearch()
+                              .setIndex("products")
+                              .setParams(new MainInjectionQueryParameters().setFilters("category:shoes"))
                           )
                         )
                       )
@@ -1943,7 +1965,10 @@ class SnippetCompositionClient {
                             .setKey("injected-recommend-from-rule-key")
                             .setSource(
                               new InjectedItemRecommendSource().setRecommend(
-                                new Recommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(40)
+                                new InjectedItemRecommend()
+                                  .setIndexName("<YOUR_INDEX_NAME>")
+                                  .setModel(Model.TRENDING_ITEMS)
+                                  .setThreshold(40)
                               )
                             )
                             .setPosition(1)
@@ -1993,7 +2018,10 @@ class SnippetCompositionClient {
                                 new Injection().setMain(
                                   new InjectionMain().setSource(
                                     new InjectionMainRecommendSource().setRecommend(
-                                      new MainRecommend().setIndexName("<YOUR_INDEX_NAME>").setModel(Model.TRENDING_ITEMS).setThreshold(50)
+                                      new InjectionMainRecommend()
+                                        .setIndexName("<YOUR_INDEX_NAME>")
+                                        .setModel(Model.TRENDING_ITEMS)
+                                        .setThreshold(50)
                                     )
                                   )
                                 )
@@ -2045,7 +2073,9 @@ class SnippetCompositionClient {
                   new CompositionInjectionBehavior().setInjection(
                     new Injection()
                       .setMain(
-                        new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index")))
+                        new InjectionMain().setSource(
+                          new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("my-index"))
+                        )
                       )
                       .setInjectedItems(
                         Arrays.asList(

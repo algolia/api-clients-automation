@@ -27,10 +27,10 @@
   */
 package algoliasearch.composition
 
-import algoliasearch.composition.MainSearch
+import algoliasearch.composition.InjectionMainSearch
 
 /** Organic result set will originate from a search request performed on the specified index.
   */
 case class InjectionMainSearchSource(
-    search: MainSearch
+    search: InjectionMainSearch
 ) extends InjectionMainSourceTrait

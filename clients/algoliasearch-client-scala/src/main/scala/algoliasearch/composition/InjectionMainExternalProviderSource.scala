@@ -27,10 +27,10 @@
   */
 package algoliasearch.composition
 
-import algoliasearch.composition.MainExternalProvider
+import algoliasearch.composition.InjectionMainExternalProvider
 
 /** Organic result set will originate from a request to an external provider configuration.
   */
 case class InjectionMainExternalProviderSource(
-    externalProvider: MainExternalProvider
+    externalProvider: InjectionMainExternalProvider
 ) extends InjectionMainSourceTrait

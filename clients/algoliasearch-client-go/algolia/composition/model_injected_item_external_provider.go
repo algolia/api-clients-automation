@@ -14,8 +14,8 @@ type InjectedItemExternalProvider struct {
 	ConfigurationID string `json:"configurationID"`
 	// Default values for the configuration placeholders that are not reserved Composition placeholders.
 	ConfigurationParams map[string]any                `json:"configurationParams,omitempty"`
-	Params              *BaseInjectionQueryParameters `json:"params,omitempty"`
 	Ordering            *ExternalProviderOrdering     `json:"ordering,omitempty"`
+	Params              *BaseInjectionQueryParameters `json:"params,omitempty"`
 }
 
 type InjectedItemExternalProviderOption func(f *InjectedItemExternalProvider)
@@ -26,15 +26,15 @@ func WithInjectedItemExternalProviderConfigurationParams(val map[string]any) Inj
 	}
 }
 
-func WithInjectedItemExternalProviderParams(val BaseInjectionQueryParameters) InjectedItemExternalProviderOption {
-	return func(f *InjectedItemExternalProvider) {
-		f.Params = &val
-	}
-}
-
 func WithInjectedItemExternalProviderOrdering(val ExternalProviderOrdering) InjectedItemExternalProviderOption {
 	return func(f *InjectedItemExternalProvider) {
 		f.Ordering = &val
+	}
+}
+
+func WithInjectedItemExternalProviderParams(val BaseInjectionQueryParameters) InjectedItemExternalProviderOption {
+	return func(f *InjectedItemExternalProvider) {
+		f.Params = &val
 	}
 }
 
@@ -152,43 +152,6 @@ func (o *InjectedItemExternalProvider) SetConfigurationParams(v map[string]any) 
 	return o
 }
 
-// GetParams returns the Params field value if set, zero value otherwise.
-func (o *InjectedItemExternalProvider) GetParams() BaseInjectionQueryParameters {
-	if o == nil || o.Params == nil {
-		var ret BaseInjectionQueryParameters
-
-		return ret
-	}
-
-	return *o.Params
-}
-
-// GetParamsOk returns a tuple with the Params field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InjectedItemExternalProvider) GetParamsOk() (*BaseInjectionQueryParameters, bool) {
-	if o == nil || o.Params == nil {
-		return nil, false
-	}
-
-	return o.Params, true
-}
-
-// HasParams returns a boolean if a field has been set.
-func (o *InjectedItemExternalProvider) HasParams() bool {
-	if o != nil && o.Params != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetParams gets a reference to the given BaseInjectionQueryParameters and assigns it to the Params field.
-func (o *InjectedItemExternalProvider) SetParams(v *BaseInjectionQueryParameters) *InjectedItemExternalProvider {
-	o.Params = v
-
-	return o
-}
-
 // GetOrdering returns the Ordering field value if set, zero value otherwise.
 func (o *InjectedItemExternalProvider) GetOrdering() ExternalProviderOrdering {
 	if o == nil || o.Ordering == nil {
@@ -226,6 +189,43 @@ func (o *InjectedItemExternalProvider) SetOrdering(v ExternalProviderOrdering) *
 	return o
 }
 
+// GetParams returns the Params field value if set, zero value otherwise.
+func (o *InjectedItemExternalProvider) GetParams() BaseInjectionQueryParameters {
+	if o == nil || o.Params == nil {
+		var ret BaseInjectionQueryParameters
+
+		return ret
+	}
+
+	return *o.Params
+}
+
+// GetParamsOk returns a tuple with the Params field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InjectedItemExternalProvider) GetParamsOk() (*BaseInjectionQueryParameters, bool) {
+	if o == nil || o.Params == nil {
+		return nil, false
+	}
+
+	return o.Params, true
+}
+
+// HasParams returns a boolean if a field has been set.
+func (o *InjectedItemExternalProvider) HasParams() bool {
+	if o != nil && o.Params != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetParams gets a reference to the given BaseInjectionQueryParameters and assigns it to the Params field.
+func (o *InjectedItemExternalProvider) SetParams(v *BaseInjectionQueryParameters) *InjectedItemExternalProvider {
+	o.Params = v
+
+	return o
+}
+
 func (o InjectedItemExternalProvider) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	toSerialize["index"] = o.Index
@@ -235,12 +235,12 @@ func (o InjectedItemExternalProvider) MarshalJSON() ([]byte, error) {
 		toSerialize["configurationParams"] = o.ConfigurationParams
 	}
 
-	if o.Params != nil {
-		toSerialize["params"] = o.Params
-	}
-
 	if o.Ordering != nil {
 		toSerialize["ordering"] = o.Ordering
+	}
+
+	if o.Params != nil {
+		toSerialize["params"] = o.Params
 	}
 
 	serialized, err := json.Marshal(toSerialize)
@@ -256,8 +256,8 @@ func (o InjectedItemExternalProvider) String() string {
 	out += fmt.Sprintf("  index=%v\n", o.Index)
 	out += fmt.Sprintf("  configurationID=%v\n", o.ConfigurationID)
 	out += fmt.Sprintf("  configurationParams=%v\n", o.ConfigurationParams)
-	out += fmt.Sprintf("  params=%v\n", o.Params)
 	out += fmt.Sprintf("  ordering=%v\n", o.Ordering)
+	out += fmt.Sprintf("  params=%v\n", o.Params)
 
 	return fmt.Sprintf("InjectedItemExternalProvider {\n%s}", out)
 }

@@ -741,7 +741,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "bar",
                         ),
                       ),
@@ -789,7 +789,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "foo",
                         ),
                       ),
@@ -847,7 +847,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "foo",
                           params: MainInjectionQueryParameters(
                             filters: "brand:adidas",
@@ -946,7 +946,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "foo",
                         ),
                       ),
@@ -1000,7 +1000,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "foo",
                   ),
                 ),
@@ -1048,7 +1048,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "foo",
                   ),
                 ),
@@ -1100,7 +1100,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1193,7 +1193,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "foo",
                     params: MainInjectionQueryParameters(
                       filters: "brand:adidas",
@@ -1251,7 +1251,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "products",
                   ),
                 ),
@@ -1287,7 +1287,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainRecommendSource(
-                  recommend: MainRecommend(
+                  recommend: InjectionMainRecommend(
                     indexName: "products",
                     model: Model.fromJson("trending-items"),
                     threshold: 50,
@@ -1298,7 +1298,7 @@ void main() {
                 InjectionInjectedItem(
                   key: "injected-recommend-key",
                   source: InjectedItemRecommendSource(
-                    recommend: Recommend(
+                    recommend: InjectedItemRecommend(
                       indexName: "products",
                       model: Model.fromJson("trending-items"),
                       threshold: 30,
@@ -1342,7 +1342,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainSearchSource(
-                  search: MainSearch(
+                  search: InjectionMainSearch(
                     index: "products",
                     params: MainInjectionQueryParameters(
                       filters: "brand:nike",
@@ -1354,7 +1354,7 @@ void main() {
                 InjectionInjectedItem(
                   key: "injected-recommend-key",
                   source: InjectedItemRecommendSource(
-                    recommend: Recommend(
+                    recommend: InjectedItemRecommend(
                       indexName: "products",
                       model: Model.fromJson("trending-items"),
                       threshold: 40,
@@ -1399,7 +1399,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainRecommendSource(
-                        recommend: MainRecommend(
+                        recommend: InjectionMainRecommend(
                           indexName: "products",
                           model: Model.fromJson("trending-items"),
                           threshold: 50,
@@ -1447,7 +1447,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "products",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 12,
@@ -1476,7 +1476,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "articles",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 5,
@@ -1510,7 +1510,7 @@ void main() {
                   injection: Injection(
                     main: InjectionMain(
                       source: InjectionMainSearchSource(
-                        search: MainSearch(
+                        search: InjectionMainSearch(
                           index: "videos",
                           params: MainInjectionQueryParameters(
                             hitsPerPage: 3,
@@ -1562,7 +1562,7 @@ void main() {
             injection: Injection(
               main: InjectionMain(
                 source: InjectionMainExternalProviderSource(
-                  externalProvider: MainExternalProvider(
+                  externalProvider: InjectionMainExternalProvider(
                     index: "products",
                     configurationID: "my-rmn-connection",
                     configurationParams: {
@@ -1631,7 +1631,7 @@ void main() {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "foo",
                     ),
                   ),
@@ -1687,7 +1687,7 @@ void main() {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "foo",
                     ),
                   ),
@@ -1776,7 +1776,7 @@ void main() {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "my-index",
                       params: MainInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -1842,7 +1842,7 @@ void main() {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "my-index",
                     ),
                   ),
@@ -1902,7 +1902,7 @@ void main() {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "my-index",
                     ),
                   ),
@@ -1967,7 +1967,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "<YOUR_INDEX_NAME>",
                           ),
                         ),
@@ -2017,7 +2017,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "foo",
                           ),
                         ),
@@ -2112,7 +2112,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "my-index",
                             params: MainInjectionQueryParameters(
                               filters: "brand:adidas",
@@ -2183,7 +2183,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainRecommendSource(
-                          recommend: MainRecommend(
+                          recommend: InjectionMainRecommend(
                             indexName: "products",
                             model: Model.fromJson("trending-items"),
                             threshold: 50,
@@ -2194,7 +2194,7 @@ void main() {
                         InjectionInjectedItem(
                           key: "injected-recommend-from-rule-key",
                           source: InjectedItemRecommendSource(
-                            recommend: Recommend(
+                            recommend: InjectedItemRecommend(
                               indexName: "products",
                               model: Model.fromJson("trending-items"),
                               threshold: 30,
@@ -2253,7 +2253,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "products",
                             params: MainInjectionQueryParameters(
                               filters: "category:shoes",
@@ -2265,7 +2265,7 @@ void main() {
                         InjectionInjectedItem(
                           key: "injected-recommend-from-rule-key",
                           source: InjectedItemRecommendSource(
-                            recommend: Recommend(
+                            recommend: InjectedItemRecommend(
                               indexName: "products",
                               model: Model.fromJson("trending-items"),
                               threshold: 40,
@@ -2324,7 +2324,7 @@ void main() {
                           injection: Injection(
                             main: InjectionMain(
                               source: InjectionMainRecommendSource(
-                                recommend: MainRecommend(
+                                recommend: InjectionMainRecommend(
                                   indexName: "products",
                                   model: Model.fromJson("trending-items"),
                                   threshold: 50,
@@ -2388,7 +2388,7 @@ void main() {
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "my-index",
                           ),
                         ),

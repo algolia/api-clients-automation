@@ -8,9 +8,9 @@ import Foundation
 
 /// Organic result set will originate from a recommend request.
 public struct InjectionMainRecommendSource: Codable, JSONEncodable {
-    public var recommend: MainRecommend
+    public var recommend: InjectionMainRecommend
 
-    public init(recommend: MainRecommend) {
+    public init(recommend: InjectionMainRecommend) {
         self.recommend = recommend
     }
 

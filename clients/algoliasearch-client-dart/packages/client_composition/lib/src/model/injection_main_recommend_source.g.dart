@@ -13,8 +13,10 @@ InjectionMainRecommendSource _$InjectionMainRecommendSourceFromJson(
       json,
       ($checkedConvert) {
         final val = InjectionMainRecommendSource(
-          recommend: $checkedConvert('recommend',
-              (v) => MainRecommend.fromJson(v as Map<String, dynamic>)),
+          recommend: $checkedConvert(
+              'recommend',
+              (v) =>
+                  InjectionMainRecommend.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

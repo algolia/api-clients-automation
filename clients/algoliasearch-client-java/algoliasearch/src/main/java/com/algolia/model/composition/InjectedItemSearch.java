@@ -21,7 +21,7 @@ public class InjectedItemSearch {
     return this;
   }
 
-  /** Composition Index name. */
+  /** Algolia index used to retrieve records. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;

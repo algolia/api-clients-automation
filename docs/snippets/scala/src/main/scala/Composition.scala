@@ -735,7 +735,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "bar"
                           )
                         )
@@ -786,7 +786,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "foo"
                           )
                         )
@@ -851,7 +851,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "foo",
                             params = Some(
                               MainInjectionQueryParameters(
@@ -977,7 +977,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "foo"
                           )
                         )
@@ -1038,7 +1038,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo"
                     )
                   )
@@ -1091,7 +1091,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo"
                     )
                   )
@@ -1150,7 +1150,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo",
                       params = Some(
                         MainInjectionQueryParameters(
@@ -1270,7 +1270,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "foo",
                       params = Some(
                         MainInjectionQueryParameters(
@@ -1334,7 +1334,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "products"
                     )
                   )
@@ -1373,7 +1373,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainRecommendSource(
-                    recommend = MainRecommend(
+                    recommend = InjectionMainRecommend(
                       indexName = "<YOUR_INDEX_NAME>",
                       model = Model.withName("trending-items"),
                       threshold = 50
@@ -1386,7 +1386,7 @@ class SnippetCompositionClient {
                   InjectionInjectedItem(
                     key = "injected-recommend-key",
                     source = InjectedItemRecommendSource(
-                      recommend = Recommend(
+                      recommend = InjectedItemRecommend(
                         indexName = "<YOUR_INDEX_NAME>",
                         model = Model.withName("trending-items"),
                         threshold = 30,
@@ -1435,7 +1435,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainSearchSource(
-                    search = MainSearch(
+                    search = InjectionMainSearch(
                       index = "products",
                       params = Some(
                         MainInjectionQueryParameters(
@@ -1451,7 +1451,7 @@ class SnippetCompositionClient {
                   InjectionInjectedItem(
                     key = "injected-recommend-key",
                     source = InjectedItemRecommendSource(
-                      recommend = Recommend(
+                      recommend = InjectedItemRecommend(
                         indexName = "<YOUR_INDEX_NAME>",
                         model = Model.withName("trending-items"),
                         threshold = 40
@@ -1498,7 +1498,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainRecommendSource(
-                          recommend = MainRecommend(
+                          recommend = InjectionMainRecommend(
                             indexName = "<YOUR_INDEX_NAME>",
                             model = Model.withName("trending-items"),
                             threshold = 50
@@ -1546,7 +1546,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "products",
                             params = Some(
                               MainInjectionQueryParameters(
@@ -1583,7 +1583,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "articles",
                             params = Some(
                               MainInjectionQueryParameters(
@@ -1621,7 +1621,7 @@ class SnippetCompositionClient {
                     main = InjectionMain(
                       source = Some(
                         InjectionMainSearchSource(
-                          search = MainSearch(
+                          search = InjectionMainSearch(
                             index = "videos",
                             params = Some(
                               MainInjectionQueryParameters(
@@ -1670,7 +1670,7 @@ class SnippetCompositionClient {
               main = InjectionMain(
                 source = Some(
                   InjectionMainExternalProviderSource(
-                    externalProvider = MainExternalProvider(
+                    externalProvider = InjectionMainExternalProvider(
                       index = "products",
                       configurationID = "my-rmn-connection",
                       configurationParams =
@@ -1743,7 +1743,7 @@ class SnippetCompositionClient {
                 main = InjectionMain(
                   source = Some(
                     InjectionMainSearchSource(
-                      search = MainSearch(
+                      search = InjectionMainSearch(
                         index = "foo"
                       )
                     )
@@ -1806,7 +1806,7 @@ class SnippetCompositionClient {
                 main = InjectionMain(
                   source = Some(
                     InjectionMainSearchSource(
-                      search = MainSearch(
+                      search = InjectionMainSearch(
                         index = "foo"
                       )
                     )
@@ -1910,7 +1910,7 @@ class SnippetCompositionClient {
                 main = InjectionMain(
                   source = Some(
                     InjectionMainSearchSource(
-                      search = MainSearch(
+                      search = InjectionMainSearch(
                         index = "my-index",
                         params = Some(
                           MainInjectionQueryParameters(
@@ -1986,7 +1986,7 @@ class SnippetCompositionClient {
                 main = InjectionMain(
                   source = Some(
                     InjectionMainSearchSource(
-                      search = MainSearch(
+                      search = InjectionMainSearch(
                         index = "my-index"
                       )
                     )
@@ -2054,7 +2054,7 @@ class SnippetCompositionClient {
                 main = InjectionMain(
                   source = Some(
                     InjectionMainSearchSource(
-                      search = MainSearch(
+                      search = InjectionMainSearch(
                         index = "my-index"
                       )
                     )
@@ -2123,7 +2123,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "<YOUR_INDEX_NAME>"
                               )
                             )
@@ -2180,7 +2180,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "foo"
                               )
                             )
@@ -2292,7 +2292,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "my-index",
                                 params = Some(
                                   MainInjectionQueryParameters(
@@ -2374,7 +2374,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainRecommendSource(
-                              recommend = MainRecommend(
+                              recommend = InjectionMainRecommend(
                                 indexName = "<YOUR_INDEX_NAME>",
                                 model = Model.withName("trending-items"),
                                 threshold = 50
@@ -2387,7 +2387,7 @@ class SnippetCompositionClient {
                             InjectionInjectedItem(
                               key = "injected-recommend-from-rule-key",
                               source = InjectedItemRecommendSource(
-                                recommend = Recommend(
+                                recommend = InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.withName("trending-items"),
                                   threshold = 30,
@@ -2454,7 +2454,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "products",
                                 params = Some(
                                   MainInjectionQueryParameters(
@@ -2470,7 +2470,7 @@ class SnippetCompositionClient {
                             InjectionInjectedItem(
                               key = "injected-recommend-from-rule-key",
                               source = InjectedItemRecommendSource(
-                                recommend = Recommend(
+                                recommend = InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.withName("trending-items"),
                                   threshold = 40
@@ -2535,7 +2535,7 @@ class SnippetCompositionClient {
                               main = InjectionMain(
                                 source = Some(
                                   InjectionMainRecommendSource(
-                                    recommend = MainRecommend(
+                                    recommend = InjectionMainRecommend(
                                       indexName = "<YOUR_INDEX_NAME>",
                                       model = Model.withName("trending-items"),
                                       threshold = 50
@@ -2603,7 +2603,7 @@ class SnippetCompositionClient {
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "my-index"
                               )
                             )
