@@ -9,9 +9,9 @@ import com.algolia.client.model.search.*
 internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
 
   interface Additive {
-    fun restrictSearchableAttributes(block: DSLStrings.() -> Unit)
+    fun restrictSearchableAttributes(block: DSLAttributes.() -> Unit)
 
-    fun attributesToHighlight(block: DSLStrings.() -> Unit)
+    fun attributesToHighlight(block: DSLAttributes.() -> Unit)
 
     fun filters(block: DSLFilters.() -> Unit)
 
@@ -20,8 +20,8 @@ internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
     fun ruleContexts(block: DSLStrings.() -> Unit)
   }
 
-  private val restrict = mutableListOf<DSLStrings.() -> Unit>()
-  private val highlight = mutableListOf<DSLStrings.() -> Unit>()
+  private val restrict = mutableListOf<DSLAttributes.() -> Unit>()
+  private val highlight = mutableListOf<DSLAttributes.() -> Unit>()
   private val hardFilters = mutableListOf<DSLFilters.() -> Unit>()
   private val optional = mutableListOf<DSLFacetFilters.() -> Unit>()
   private val contexts = mutableListOf<DSLStrings.() -> Unit>()
@@ -30,11 +30,11 @@ internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
   fun add(block: Additive.() -> Unit) {
     block(
       object : Additive {
-        override fun restrictSearchableAttributes(block: DSLStrings.() -> Unit) {
+        override fun restrictSearchableAttributes(block: DSLAttributes.() -> Unit) {
           restrict += block
         }
 
-        override fun attributesToHighlight(block: DSLStrings.() -> Unit) {
+        override fun attributesToHighlight(block: DSLAttributes.() -> Unit) {
           highlight += block
         }
 

@@ -77,7 +77,7 @@ internal class MatrixP2LiveTest {
   }
 
   @Test
-  fun C29_responseFieldsWithOtherAndConstant() = live {
+  fun C29_responseFieldsRawStrings() = live {
     fx.assertRow(ServerContract.L22a, wire(RowsP2.c29()))
   }
 
