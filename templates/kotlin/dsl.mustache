@@ -17,10 +17,13 @@ public class {{classname}}Builder {
 {{#filterHelpers}}
 {{> dsl_filter_helper}}
 {{/filterHelpers}}
+{{#listHelpers}}
+{{> dsl_list_helper}}
+{{/listHelpers}}
 
   internal fun build(): {{classname}} = {{classname}}(
 {{#vars}}
-    {{{name}}} = {{{vendorExtensions.x-dsl-build-rhs}}},
+    {{{name}}} = {{#required}}{{^isNullable}}requireNotNull({{{name}}}) { "{{dslModelName}}.{{{name}}} is required" }{{/isNullable}}{{#isNullable}}{{{name}}}{{/isNullable}}{{/required}}{{^required}}{{{name}}}{{/required}},
 {{/vars}}
   )
 }
