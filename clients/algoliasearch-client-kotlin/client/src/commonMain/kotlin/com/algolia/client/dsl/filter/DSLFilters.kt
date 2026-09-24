@@ -12,6 +12,9 @@ import com.algolia.client.dsl.DSLParameters
  * homogeneous OR. A mixed-family OR does not compile. The example encodes as `color:red AND
  * category:shirt AND (price:0 TO 9 OR price = 15)`.
  *
+ * In delete-by filters, a group block that adds no filter throws [IllegalArgumentException] instead
+ * of adding nothing: dropping it would widen the delete.
+ *
  * ```
  * val sql =
  *   filters {
@@ -28,35 +31,50 @@ import com.algolia.client.dsl.DSLParameters
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLFilters private constructor(private val rows: MutableList<List<Filter>>) :
+public class DSLFilters
+private constructor(private val rows: MutableList<List<Filter>>, private val strict: Boolean) :
   DSLFacet by FacetLeafMixin({ rows.add(listOf(it)) }),
   DSLTag by TagLeafMixin({ rows.add(listOf(it)) }),
   DSLNumeric by NumericLeafMixin({ rows.add(listOf(it)) }) {
 
-  internal constructor() : this(mutableListOf())
+  /** [strict]: an empty group block throws instead of adding nothing (delete-by filters). */
+  internal constructor(strict: Boolean = false) : this(mutableListOf(), strict)
 
   /** ANDs the filters in [block] into this block. An empty block adds nothing. */
   public fun and(block: DSLFilters.() -> Unit) {
-    rows.addAll(DSLFilters().apply(block).rows)
+    val added = DSLFilters(strict).apply(block).rows
+    require(!strict || added.isNotEmpty()) { widensDelete("and { }") }
+    rows.addAll(added)
   }
 
   /** Adds `(a OR b …)` of the facet leaves in [block]. An empty block adds nothing. */
   public fun orFacet(block: DSLGroupFacet.() -> Unit) {
-    DSLGroupFacet().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
+    addGroup("orFacet { }", DSLGroupFacet().apply(block).leaves())
   }
 
   /** Adds `(a OR b …)` of the tag leaves in [block]. An empty block adds nothing. */
   public fun orTag(block: DSLGroupTag.() -> Unit) {
-    DSLGroupTag().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
+    addGroup("orTag { }", DSLGroupTag().apply(block).leaves())
   }
 
   /** Adds `(a OR b …)` of the numeric leaves in [block]. An empty block adds nothing. */
   public fun orNumeric(block: DSLGroupNumeric.() -> Unit) {
-    DSLGroupNumeric().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
+    addGroup("orNumeric { }", DSLGroupNumeric().apply(block).leaves())
   }
+
+  private fun addGroup(construct: String, leaves: List<Filter>) {
+    require(!strict || leaves.isNotEmpty()) { widensDelete(construct) }
+    if (leaves.isNotEmpty()) rows.add(leaves)
+  }
+
+  internal fun rowCount(): Int = rows.size
 
   internal fun rows(): List<List<Filter>> = rows.toList()
 }
+
+internal fun widensDelete(construct: String): String =
+  "deleteBy filters: $construct added no filter; dropping it would widen the delete. " +
+    "Skip the delete when there is nothing to match."
 
 /**
  * Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty.
@@ -67,3 +85,13 @@ public class DSLFilters private constructor(private val rows: MutableList<List<F
 @AlgoliaExperimentalDsl
 public fun filters(block: DSLFilters.() -> Unit): String? =
   FiltersEncoder(DSLFilters().apply(block).rows())
+
+/**
+ * [filters] for delete-by: throws [IllegalArgumentException] when the block, or any group block in
+ * it, adds no filter, since dropping it would widen the delete.
+ */
+internal fun deleteByFilters(block: DSLFilters.() -> Unit): String {
+  val rows = DSLFilters(strict = true).apply(block).rows()
+  require(rows.isNotEmpty()) { widensDelete("filters { }") }
+  return checkNotNull(FiltersEncoder(rows))
+}

@@ -67,6 +67,10 @@ public fun browse(block: DSLBrowse.() -> Unit): BrowseParamsObject =
  * Last write wins: a later assignment to the same builder property replaces an earlier one,
  * including values set by [filters]. [DeleteByParams] has no `optionalFilters` field.
  *
+ * Unlike search, `filters { }` throws [IllegalArgumentException] when it, or any `and { }`,
+ * `orFacet { }`, `orTag { }`, or `orNumeric { }` in it, adds no filter: dropping the block would
+ * widen the delete. Skip the delete when there is nothing to match.
+ *
  * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) are set as
  * builder properties.
  *

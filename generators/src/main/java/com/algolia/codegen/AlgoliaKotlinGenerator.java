@@ -256,10 +256,13 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     Map<String, Object> templateData(String name);
   }
 
-  /** `name { }` sets the property to `function { }` evaluated on a fresh `receiver`. */
-  private record DslFilterHelper(String type, String receiver, String function) implements DslHelper {
+  /**
+   * `name { }` sets the property to `function { }` evaluated on a fresh `receiver`. `strict`: the
+   * function throws on an empty block instead of returning null (delete-by).
+   */
+  private record DslFilterHelper(String type, String receiver, String function, boolean strict) implements DslHelper {
     public Map<String, Object> templateData(String name) {
-      return Map.of("name", name, "receiver", receiver, "function", function);
+      return Map.of("name", name, "receiver", receiver, "function", function, "strict", strict);
     }
   }
 
@@ -277,8 +280,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
-  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "filters");
-  private static final DslFilterHelper OPTIONAL = new DslFilterHelper("OptionalFilters", "DSLFacetFilters", "optionalFilters");
+  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "filters", false);
+  private static final DslFilterHelper DELETE_BY_SQL = new DslFilterHelper("String", "DSLFilters", "deleteByFilters", true);
+  private static final DslFilterHelper OPTIONAL = new DslFilterHelper("OptionalFilters", "DSLFacetFilters", "optionalFilters", false);
 
   /**
    * Model → property → filter helper. Exactly the helpers the DSL exposes; a missing or drifted
@@ -292,7 +296,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     "ConsequenceParams",
     Map.of("filters", SQL, "optionalFilters", OPTIONAL),
     "DeleteByParams",
-    Map.of("filters", SQL),
+    Map.of("filters", DELETE_BY_SQL),
     "Condition",
     Map.of("filters", SQL)
   );

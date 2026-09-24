@@ -1,0 +1,121 @@
+@file:OptIn(AlgoliaExperimentalDsl::class)
+
+package com.algolia.client.dsl
+
+import com.algolia.client.dsl.rule.condition
+import com.algolia.client.dsl.rule.consequence
+import com.algolia.client.dsl.rule.rule
+import com.algolia.client.model.search.Condition
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+
+/**
+ * Delete-by filters refuse empty blocks: dropping one would widen the delete. Search, browse, and
+ * rule filters keep dropping them.
+ */
+internal class DeleteByFiltersTest {
+
+  private fun assertWidens(construct: String, block: () -> Unit) {
+    val error = assertFailsWith<IllegalArgumentException> { block() }
+    assertTrue(
+      error.message.orEmpty().startsWith("deleteBy filters: $construct added no filter"),
+      "unexpected message: ${error.message}",
+    )
+  }
+
+  @Test
+  fun emptyOrFacetAmongOtherFiltersThrows() {
+    assertWidens("orFacet { }") {
+      deleteBy {
+        filters {
+          orFacet { emptyList<String>().forEach { facet("entityId", it) } }
+          facet("batchId", "b2", isNegated = true)
+        }
+      }
+    }
+  }
+
+  @Test
+  fun everyEmptyGroupThrows() {
+    assertWidens("orTag { }") { deleteBy { filters { orTag {} } } }
+    assertWidens("orNumeric { }") { deleteBy { filters { orNumeric {} } } }
+    assertWidens("and { }") { deleteBy { filters { and {} } } }
+    assertWidens("orFacet { }") {
+      deleteBy {
+        filters {
+          tag("a")
+          and {
+            tag("b")
+            orFacet {}
+          }
+        }
+      }
+    }
+    assertWidens("and { }") { deleteBy { filters { and { and {} } } } }
+    assertWidens("filters { }") { deleteBy { filters {} } }
+  }
+
+  @Test
+  fun happyPathStillEncodes() {
+    val params = deleteBy {
+      filters {
+        orFacet { listOf("e1", "e2").forEach { facet("entityId", it) } }
+        facet("batchId", "b2", isNegated = true)
+      }
+    }
+    assertEquals("(entityId:e1 OR entityId:e2) AND NOT batchId:b2", params.filters)
+  }
+
+  @Test
+  fun composerRefusesAnEmptyFragment() {
+    val composer = DSLDeleteByComposer()
+    composer.add { filters { facet("locale", "en-US") } }
+    composer.add { filters { emptyList<String>().forEach { facet("entityId", it) } } }
+    assertWidens("filters { } fragment 2") { composer.build() }
+
+    assertWidens("orFacet { }") { composeDeleteBy { add { filters { orFacet {} } } } }
+    assertWidens("orFacet { }") {
+      composeDeleteBy {
+        add { filters { facet("a", "1") } }
+        override { filters { orFacet {} } }
+      }
+    }
+  }
+
+  @Test
+  fun searchAndRuleFiltersStayLenient() {
+    assertNull(query { filters { orFacet {} } }.filters)
+    assertEquals(
+      "a:1",
+      query {
+          filters {
+            orFacet {}
+            facet("a", "1")
+          }
+        }
+        .filters,
+    )
+    assertEquals(
+      "a:1",
+      composeQuery {
+          add { filters { orFacet {} } }
+          add { filters { facet("a", "1") } }
+        }
+        .filters,
+    )
+    assertEquals(
+      Condition(pattern = "p"),
+      rule("r") {
+          condition {
+            pattern = "p"
+            filters { orFacet {} }
+          }
+          consequence {}
+        }
+        .condition,
+    )
+  }
+}

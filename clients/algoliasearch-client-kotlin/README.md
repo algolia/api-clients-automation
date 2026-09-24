@@ -82,6 +82,8 @@ val params = query {
 }
 ```
 
+In `deleteBy { }` (and `DSLDeleteByComposer`), an empty `filters { }`, an empty `and { }`, `orFacet { }`, `orTag { }`, or `orNumeric { }`, or an empty composer `filters` fragment throws `IllegalArgumentException` before any request is sent: on search dropping it only broadens the results, on a delete it would delete more records than intended. Skip the delete when there is nothing to match.
+
 The `filters` string only uses shapes Algolia supports: `NOT` only precedes a single filter (`isNegated`), nested `and { }` blocks are flattened, the top-level `AND` has no parentheses, and each `OR` holds one filter family by construction. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
 
 Store reusable fragments with the stable receiver names `DSLQuery`, `DSLBrowse`, `DSLDeleteBy`, and `DSLSettings`, and the filter receivers `DSLFilters` and `DSLFacetFilters`. The four receiver names are Kotlin typealiases of the generated `DSL<Model>` classes (`DSLSearchParamsObject`, `DSLBrowseParamsObject`, `DSLDeleteByParams`, `DSLIndexSettings`); Java code and JVM signatures show the generated classes:
