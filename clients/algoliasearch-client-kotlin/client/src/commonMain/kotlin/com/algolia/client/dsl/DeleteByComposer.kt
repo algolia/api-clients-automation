@@ -33,33 +33,22 @@ import com.algolia.client.model.search.DeleteByParams
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DeleteByComposer public constructor() {
-  private val additions: MutableList<DeleteByAdditions.() -> Unit> = mutableListOf()
-  private val overrides: MutableList<DeleteByBuilder.() -> Unit> = mutableListOf()
+  private val core =
+    ComposerCore(::DeleteByAdditions, ::DeleteByBuilder, DeleteByAdditions::applyTo)
 
   /**
    * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
    */
-  public fun add(block: DeleteByAdditions.() -> Unit) {
-    additions += block
-  }
+  public fun add(block: DeleteByAdditions.() -> Unit): Unit = core.add(block)
 
   /** Stores [block]. It runs on every [build], after the additive fields. Last write wins. */
-  public fun override(block: DeleteByBuilder.() -> Unit) {
-    overrides += block
-  }
+  public fun override(block: DeleteByBuilder.() -> Unit): Unit = core.override(block)
 
   /**
    * Builds a [DeleteByParams] from fresh state: runs every stored [add] block, writes each filter
    * field once, then runs every stored [override] block in call order.
    */
-  public fun build(): DeleteByParams {
-    val collected = DeleteByAdditions()
-    for (block in additions) collected.block()
-    val builder = DeleteByBuilder()
-    collected.applyTo(builder)
-    for (block in overrides) builder.block()
-    return builder.build()
-  }
+  public fun build(): DeleteByParams = core.build().build()
 }
 
 /**
@@ -70,22 +59,21 @@ public class DeleteByComposer public constructor() {
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DeleteByAdditions internal constructor() {
-  private val filterBlocks: Blocks<DSLFilters> = Blocks()
+  // Not `filters`: `filters(it)` in the lambda must resolve to the builder helper, and a
+  // property must not appear in its own initializer.
+  private val filtersField: Additive<DeleteByBuilder, DSLFilters> = Additive { filters(it) }
+
+  private val fields: List<Additive<DeleteByBuilder, *>> = listOf(filtersField)
 
   /** Records a `filters` fragment. All fragments run inside one [DSLFilters] at build time. */
-  public fun filters(block: DSLFilters.() -> Unit) {
-    filterBlocks.add(block)
-  }
+  public fun filters(block: DSLFilters.() -> Unit): Unit = filtersField.add(block)
 
   /**
    * Writes each field with at least one recorded block once, through the generated
-   * [DeleteByBuilder] member helper, so the helper's rules (empty → `null`) apply unchanged. The
-   * [Blocks] are bound to locals first: the `@DSLParameters` marker hides this receiver inside the
-   * nested filter blocks.
+   * [DeleteByBuilder] member helper, so the helper's rules (empty → `null`) apply unchanged.
    */
   internal fun applyTo(builder: DeleteByBuilder) {
-    val filters = filterBlocks
-    if (!filters.isEmpty()) builder.filters { filters.replay(this) }
+    for (field in fields) field.applyTo(builder)
   }
 }
 

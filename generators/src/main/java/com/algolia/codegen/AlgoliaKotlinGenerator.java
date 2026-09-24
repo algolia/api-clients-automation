@@ -244,15 +244,91 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     "SynonymHit"
   );
 
-  private record DslFilterVar(String type, String receiver, String function) {}
+  /** One generated builder member: the property type it requires and the data `dsl.mustache` renders it from. */
+  private interface DslHelper {
+    String type();
 
-  /** Filter helpers keyed by property name. Emitted only when the property type matches. */
-  private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
-    "filters",
-    new DslFilterVar("String", "DSLFilters", "filters"),
-    "optionalFilters",
-    new DslFilterVar("OptionalFilters", "DSLFacetFilters", "optionalFilters")
+    Map<String, Object> templateData(String name);
+  }
+
+  /** `name { }` sets the property to `function { }` evaluated on a fresh `receiver`. */
+  private record DslFilterHelper(String type, String receiver, String function) implements DslHelper {
+    public Map<String, Object> templateData(String name) {
+      return Map.of("name", name, "receiver", receiver, "function", function);
+    }
+  }
+
+  /** `name { }` sets the property to the list collected on a fresh `receiver`. Empty block → null. `kdocExtra` may be null. */
+  private record DslListHelper(String type, String receiver, String kdocExtra) implements DslHelper {
+    public Map<String, Object> templateData(String name) {
+      Map<String, Object> data = new LinkedHashMap<>(Map.of("name", name, "receiver", receiver));
+      if (kdocExtra != null) {
+        data.put("kdocExtra", kdocExtra);
+      }
+      return data;
+    }
+  }
+
+  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "filters");
+  private static final DslFilterHelper OPTIONAL = new DslFilterHelper("OptionalFilters", "DSLFacetFilters", "optionalFilters");
+
+  /** Model → property → filter helper. Exactly the helpers the DSL exposes; a missing or drifted property throws. */
+  private static final Map<String, Map<String, DslFilterHelper>> DSL_FILTER_HELPERS = Map.of(
+    "SearchParamsObject",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "BrowseParamsObject",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "ConsequenceParams",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "DeleteByParams",
+    Map.of("filters", SQL),
+    "Condition",
+    Map.of("filters", SQL)
   );
+
+  private static final String ATTRIBUTES = "com.algolia.client.dsl.DSLAttributes";
+  private static final String STRINGS = "com.algolia.client.dsl.DSLStrings";
+  private static final String LANGUAGES = "com.algolia.client.dsl.DSLLanguage";
+  private static final String STRIPS = "An empty list sent explicitly strips the response; the empty block omits the field instead.";
+
+  /** Query-shaped list fields: an empty block omits the field. */
+  private static final Map<String, DslListHelper> QUERY_LISTS = Map.ofEntries(
+    Map.entry("restrictSearchableAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("attributesToHighlight", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("attributesToRetrieve", new DslListHelper("List<String>", ATTRIBUTES, STRIPS)),
+    Map.entry("attributesToSnippet", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("ruleContexts", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("analyticsTags", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("facets", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("disableTypoToleranceOnAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("queryLanguages", new DslListHelper("List<SupportedLanguage>", LANGUAGES, null)),
+    Map.entry("naturalLanguages", new DslListHelper("List<SupportedLanguage>", LANGUAGES, null)),
+    Map.entry("responseFields", new DslListHelper("List<String>", STRINGS, STRIPS))
+  );
+
+  /**
+   * Keyed per model on purpose: IndexSettings shares 6 of these properties, but its settings helpers send `[]`
+   * for an empty block, and synonym word lists do too. Never key this table by property alone.
+   */
+  private static final Map<String, Map<String, DslListHelper>> DSL_LIST_HELPERS = Map.of(
+    "SearchParamsObject",
+    QUERY_LISTS,
+    "BrowseParamsObject",
+    QUERY_LISTS,
+    "ConsequenceParams",
+    QUERY_LISTS
+  );
+
+  static {
+    // A helper table keyed by a model the DSL does not build would be silently ignored: fail at class load instead.
+    for (Map<String, ?> table : List.<Map<String, ?>>of(DSL_FILTER_HELPERS, DSL_LIST_HELPERS)) {
+      for (String classname : table.keySet()) {
+        if (!SEARCH_DSL_MODELS.contains(classname)) {
+          throw new IllegalStateException("Search DSL: helper table keyed by " + classname + ", which is not in SEARCH_DSL_MODELS");
+        }
+      }
+    }
+  }
 
   private void collectSearchDslModels(Map<String, ModelsMap> models) {
     if (!"search".equals(additionalProperties.get("client"))) {
@@ -271,34 +347,55 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       }
       Map<String, Object> dslModel = new LinkedHashMap<>();
       dslModel.put("classname", model.classname);
-      for (CodegenProperty var : model.vars) {
-        var.vendorExtensions.put("x-dsl-build-rhs", buildRhs(model.classname, var));
-      }
+      // Read inside `{{#vars}}`, where a CodegenProperty field named `classname` would shadow the model's.
+      dslModel.put("dslModelName", model.classname);
       dslModel.put("vars", model.vars);
-      List<Map<String, Object>> helpers = filterHelpersFor(model);
-      if (!helpers.isEmpty()) {
-        dslModel.put("filterHelpers", helpers);
+      List<Map<String, Object>> filterHelpers = helpersFor(model, DSL_FILTER_HELPERS.getOrDefault(classname, Map.of()));
+      if (!filterHelpers.isEmpty()) {
+        dslModel.put("filterHelpers", filterHelpers);
+      }
+      List<Map<String, Object>> listHelpers = helpersFor(model, DSL_LIST_HELPERS.getOrDefault(classname, Map.of()));
+      if (!listHelpers.isEmpty()) {
+        dslModel.put("listHelpers", listHelpers);
       }
       dslModels.add(dslModel);
     }
     writeSearchDslBuilders(dslModels);
   }
 
-  /**
-   * Right-hand side of one build() argument. A required, non-nullable property must be set;
-   * everything else passes through.
-   */
-  private static String buildRhs(String classname, CodegenProperty var) {
-    if (var.required && !var.isNullable) {
-      return "requireNotNull(" + var.name + ") { \"" + classname + "." + var.name + " is required\" }";
+  /** Template data in `model.vars` order; throws when an allowlisted property is missing or its type drifted. */
+  private static List<Map<String, Object>> helpersFor(CodegenModel model, Map<String, ? extends DslHelper> table) {
+    List<Map<String, Object>> helpers = new ArrayList<>();
+    Set<String> seen = new HashSet<>();
+    for (CodegenProperty var : model.vars) {
+      DslHelper helper = table.get(var.name);
+      if (helper == null) {
+        continue;
+      }
+      if (!helper.type().equals(var.datatypeWithEnum)) {
+        throw new IllegalStateException(
+          "Search DSL: " + model.classname + "." + var.name + " is " + var.datatypeWithEnum + ", the DSL helper expects " + helper.type()
+        );
+      }
+      seen.add(var.name);
+      helpers.add(helper.templateData(var.name));
     }
-    return var.name;
+    for (String name : table.keySet()) {
+      if (!seen.contains(name)) {
+        throw new IllegalStateException("Search DSL: " + model.classname + "." + name + " is allowlisted but missing from the spec");
+      }
+    }
+    return helpers;
   }
 
   /**
-   * One builder per file. A single file with every builder OOMs the Kotlin Native compiler on the
-   * macOS CI job. Deletes every `.kt` in the folder first: `removeExistingCodegen` does not clean
-   * `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder.
+   * Renders `dsl.mustache` once per DSL model into `com.algolia.client.dsl.generated`, bypassing the standard
+   * template pipeline because neither of its mechanisms fits: `modelTemplateFiles` renders every model of the spec
+   * into the model package (it can target neither these 9 models nor another package), and `supportingFiles`
+   * renders one file per template — and one file holding every builder OOMs the Kotlin/Native compiler on the
+   * macOS CI job. So this method owns the folder: it deletes every `.kt` first (`removeExistingCodegen` does not
+   * clean `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder), then writes one file per
+   * model.
    */
   private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
     String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
@@ -333,6 +430,13 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
+  /**
+   * Compiles `dsl.mustache` with a standalone jmustache compiler: the standard pipeline only renders the templates
+   * it registered itself, and {@link #writeSearchDslBuilders} needs one compiled {@link Template} to execute per
+   * model. Partials (`{{> dsl_filter_helper}}`, `{{> dsl_list_helper}}`) resolve against the Kotlin template
+   * directory; HTML escaping is off because the output is Kotlin source; a missing variable renders empty (jmustache
+   * throws by default) so optional data such as `kdocExtra` needs no guard.
+   */
   private Template compileDslTemplate() {
     File root = new File(templateDir());
     Mustache.Compiler compiler = Mustache.compiler()
@@ -349,22 +453,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     } catch (IOException e) {
       throw new RuntimeException("Cannot compile dsl.mustache from " + dsl, e);
     }
-  }
-
-  private static List<Map<String, Object>> filterHelpersFor(CodegenModel model) {
-    List<Map<String, Object>> helpers = new ArrayList<>();
-    for (CodegenProperty var : model.vars) {
-      DslFilterVar expected = DSL_FILTER_VARS.get(var.name);
-      if (expected == null || !expected.type().equals(var.datatypeWithEnum)) {
-        continue;
-      }
-      Map<String, Object> helper = new LinkedHashMap<>();
-      helper.put("name", var.name);
-      helper.put("receiver", expected.receiver());
-      helper.put("function", expected.function());
-      helpers.add(helper);
-    }
-    return helpers;
   }
 
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";

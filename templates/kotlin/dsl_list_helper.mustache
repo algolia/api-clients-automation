@@ -1,0 +1,13 @@
+
+  /**
+   * Sets [{{{name}}}] from [block]. Last write wins: replaces any earlier value. An empty block sets `null`
+   * (omitted); assign `emptyList()` to send `[]`. Unlike the settings helpers (`searchableAttributes { }`
+   * etc.), which send `[]` for an empty block.
+{{#kdocExtra}}
+   *
+   * {{{kdocExtra}}}
+{{/kdocExtra}}
+   */
+  public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
+    this.{{{name}}} = {{{receiver}}}().apply(block).build().takeIf { it.isNotEmpty() }
+  }
