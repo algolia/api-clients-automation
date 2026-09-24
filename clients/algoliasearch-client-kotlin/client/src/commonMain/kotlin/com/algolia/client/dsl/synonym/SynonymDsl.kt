@@ -2,8 +2,8 @@
 
 package com.algolia.client.dsl.synonym
 
-import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLParameters
 import com.algolia.client.dsl.generated.SynonymHitBuilder
 import com.algolia.client.model.search.SynonymHit
 import com.algolia.client.model.search.SynonymType
@@ -136,7 +136,7 @@ public fun SynonymHitBuilder.replacements(block: SynonymWordsDsl.() -> Unit) {
 }
 
 /** Collects synonym, correction, or replacement words. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
 public class SynonymWordsDsl {
   private val values: MutableList<String> = mutableListOf()

@@ -5,7 +5,7 @@ package com.algolia.client.dsl.filter
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
 /**
- * AND-context core behind [FacetFilterDsl]: a mixed [FilterAccumulator], the family `and { }` and
+ * AND-context core behind [DSLFacetFilters]: a mixed [FilterAccumulator], the family `and { }` and
  * `or { }` wrappers, and [root]. The public shell keeps the typed block receivers and hands this
  * class the collected children.
  */

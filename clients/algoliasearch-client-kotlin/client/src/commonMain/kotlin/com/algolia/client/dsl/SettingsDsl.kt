@@ -42,33 +42,33 @@ public fun settings(block: SettingsBuilder.() -> Unit): IndexSettings =
  * Sets [IndexSettingsBuilder.searchableAttributes] from typed helpers.
  *
  * Ordered attributes emit the bare name, matching v2 `SearchableAttribute.Default`. Several
- * attributes in one [SearchableAttributesDsl.ordered] call share priority and join with `", "`.
- * [SearchableAttributesDsl.unordered] emits `unordered(attribute)`.
+ * attributes in one [DSLSearchableAttributes.ordered] call share priority and join with `", "`.
+ * [DSLSearchableAttributes.unordered] emits `unordered(attribute)`.
  */
 @AlgoliaExperimentalDsl
-public fun IndexSettingsBuilder.searchableAttributes(block: SearchableAttributesDsl.() -> Unit) {
-  searchableAttributes = SearchableAttributesDsl().apply(block).build()
+public fun IndexSettingsBuilder.searchableAttributes(block: DSLSearchableAttributes.() -> Unit) {
+  searchableAttributes = DSLSearchableAttributes().apply(block).build()
 }
 
 /**
  * Sets [IndexSettingsBuilder.attributesForFaceting] from typed helpers.
  *
- * A plain attribute emits the bare name. [AttributesForFacetingDsl.filterOnly] emits
- * `filterOnly(attribute)`. [AttributesForFacetingDsl.searchable] emits `searchable(attribute)`.
+ * A plain attribute emits the bare name. [DSLAttributesForFaceting.filterOnly] emits
+ * `filterOnly(attribute)`. [DSLAttributesForFaceting.searchable] emits `searchable(attribute)`.
  */
 @AlgoliaExperimentalDsl
-public fun IndexSettingsBuilder.attributesForFaceting(block: AttributesForFacetingDsl.() -> Unit) {
-  attributesForFaceting = AttributesForFacetingDsl().apply(block).build()
+public fun IndexSettingsBuilder.attributesForFaceting(block: DSLAttributesForFaceting.() -> Unit) {
+  attributesForFaceting = DSLAttributesForFaceting().apply(block).build()
 }
 
 /**
  * Sets [IndexSettingsBuilder.customRanking] from typed helpers.
  *
- * [CustomRankingDsl.asc] emits `asc(attribute)`. [CustomRankingDsl.desc] emits `desc(attribute)`.
+ * [DSLCustomRanking.asc] emits `asc(attribute)`. [DSLCustomRanking.desc] emits `desc(attribute)`.
  */
 @AlgoliaExperimentalDsl
-public fun IndexSettingsBuilder.customRanking(block: CustomRankingDsl.() -> Unit) {
-  customRanking = CustomRankingDsl().apply(block).build()
+public fun IndexSettingsBuilder.customRanking(block: DSLCustomRanking.() -> Unit) {
+  customRanking = DSLCustomRanking().apply(block).build()
 }
 
 /**
@@ -77,14 +77,14 @@ public fun IndexSettingsBuilder.customRanking(block: CustomRankingDsl.() -> Unit
  * `desc(attribute)`.
  */
 @AlgoliaExperimentalDsl
-public fun IndexSettingsBuilder.ranking(block: RankingDsl.() -> Unit) {
-  ranking = RankingDsl().apply(block).build()
+public fun IndexSettingsBuilder.ranking(block: DSLRanking.() -> Unit) {
+  ranking = DSLRanking().apply(block).build()
 }
 
 /** Builds searchable-attribute strings for [IndexSettings.searchableAttributes]. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class SearchableAttributesDsl {
+public class DSLSearchableAttributes {
   private val values: MutableList<String> = mutableListOf()
 
   internal fun build(): List<String> = values.toList()
@@ -112,9 +112,9 @@ public class SearchableAttributesDsl {
 }
 
 /** Builds attribute-for-faceting strings for [IndexSettings.attributesForFaceting]. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class AttributesForFacetingDsl {
+public class DSLAttributesForFaceting {
   private val values: MutableList<String> = mutableListOf()
 
   internal fun build(): List<String> = values.toList()
@@ -141,9 +141,9 @@ public class AttributesForFacetingDsl {
 }
 
 /** Builds custom-ranking strings for [IndexSettings.customRanking]. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class CustomRankingDsl {
+public class DSLCustomRanking {
   private val values: MutableList<String> = mutableListOf()
 
   internal fun build(): List<String> = values.toList()
@@ -160,9 +160,9 @@ public class CustomRankingDsl {
 }
 
 /** Builds ranking-formula strings for [IndexSettings.ranking]. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class RankingDsl {
+public class DSLRanking {
   private val values: MutableList<String> = mutableListOf()
 
   internal fun build(): List<String> = values.toList()

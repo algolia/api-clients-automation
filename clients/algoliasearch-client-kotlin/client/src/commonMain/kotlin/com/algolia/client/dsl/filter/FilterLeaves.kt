@@ -22,9 +22,9 @@ internal class FilterAccumulator<N : FilterGroup> {
     }
 }
 
-/** Facet leaf constructors shared by [FilterDsl], [FacetFilterDsl], and [FacetOrDsl]. */
+/** Facet leaf constructors shared by [DSLFilters], [DSLFacetFilters], and [DSLGroupFacet]. */
 @AlgoliaExperimentalDsl
-public sealed interface FacetLeaves {
+public sealed interface DSLFacet {
   /**
    * Adds a [Filter.Facet] on [attribute] equal to [value].
    *
@@ -58,16 +58,16 @@ public sealed interface FacetLeaves {
   ): Unit
 }
 
-/** Tag leaf constructors shared by [FilterDsl] and [TagOrDsl]. */
+/** Tag leaf constructors shared by [DSLFilters] and [DSLGroupTag]. */
 @AlgoliaExperimentalDsl
-public sealed interface TagLeaves {
+public sealed interface DSLTag {
   /** Adds a [Filter.Tag] for [value]. [isNegated] sets [Filter.negated]. */
   public fun tag(value: String, isNegated: Boolean = false): Unit
 }
 
-/** Numeric leaf constructors shared by [FilterDsl] and [NumericOrDsl]. */
+/** Numeric leaf constructors shared by [DSLFilters] and [DSLGroupNumeric]. */
 @AlgoliaExperimentalDsl
-public sealed interface NumericLeaves {
+public sealed interface DSLNumeric {
   /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
   public fun range(
     attribute: String,
@@ -91,7 +91,7 @@ public sealed interface NumericLeaves {
   ): Unit
 }
 
-internal class FacetLeafMixin(private val sink: (Filter.Facet) -> Unit) : FacetLeaves {
+internal class FacetLeafMixin(private val sink: (Filter.Facet) -> Unit) : DSLFacet {
   override fun facet(attribute: String, value: String, score: Int?, isNegated: Boolean) {
     sink(Filter.Facet(attribute, value, score, isNegated))
   }
@@ -105,13 +105,13 @@ internal class FacetLeafMixin(private val sink: (Filter.Facet) -> Unit) : FacetL
   }
 }
 
-internal class TagLeafMixin(private val sink: (Filter.Tag) -> Unit) : TagLeaves {
+internal class TagLeafMixin(private val sink: (Filter.Tag) -> Unit) : DSLTag {
   override fun tag(value: String, isNegated: Boolean) {
     sink(Filter.Tag(value, isNegated))
   }
 }
 
-internal class NumericLeafMixin(private val sink: (Filter.Numeric) -> Unit) : NumericLeaves {
+internal class NumericLeafMixin(private val sink: (Filter.Numeric) -> Unit) : DSLNumeric {
   override fun range(
     attribute: String,
     lowerBound: Number,

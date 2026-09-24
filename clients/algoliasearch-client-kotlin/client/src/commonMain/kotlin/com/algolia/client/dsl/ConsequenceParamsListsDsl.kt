@@ -11,8 +11,8 @@ import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
  * block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.restrictSearchableAttributes(block: StringListDsl.() -> Unit) {
-  restrictSearchableAttributes = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.restrictSearchableAttributes(block: DSLAttributes.() -> Unit) {
+  restrictSearchableAttributes = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -21,8 +21,8 @@ public fun ConsequenceParamsBuilder.restrictSearchableAttributes(block: StringLi
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.attributesToHighlight(block: StringListDsl.() -> Unit) {
-  attributesToHighlight = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.attributesToHighlight(block: DSLAttributes.() -> Unit) {
+  attributesToHighlight = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -33,8 +33,8 @@ public fun ConsequenceParamsBuilder.attributesToHighlight(block: StringListDsl.(
  * An empty list sent explicitly strips the response; the empty block omits the field instead.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.attributesToRetrieve(block: StringListDsl.() -> Unit) {
-  attributesToRetrieve = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.attributesToRetrieve(block: DSLAttributes.() -> Unit) {
+  attributesToRetrieve = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -43,8 +43,8 @@ public fun ConsequenceParamsBuilder.attributesToRetrieve(block: StringListDsl.()
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.attributesToSnippet(block: StringListDsl.() -> Unit) {
-  attributesToSnippet = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.attributesToSnippet(block: DSLStrings.() -> Unit) {
+  attributesToSnippet = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -53,8 +53,8 @@ public fun ConsequenceParamsBuilder.attributesToSnippet(block: StringListDsl.() 
  * settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.ruleContexts(block: StringListDsl.() -> Unit) {
-  ruleContexts = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.ruleContexts(block: DSLStrings.() -> Unit) {
+  ruleContexts = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -63,8 +63,8 @@ public fun ConsequenceParamsBuilder.ruleContexts(block: StringListDsl.() -> Unit
  * settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.analyticsTags(block: StringListDsl.() -> Unit) {
-  analyticsTags = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.analyticsTags(block: DSLStrings.() -> Unit) {
+  analyticsTags = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -73,8 +73,8 @@ public fun ConsequenceParamsBuilder.analyticsTags(block: StringListDsl.() -> Uni
  * helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.facets(block: StringListDsl.() -> Unit) {
-  facets = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.facets(block: DSLAttributes.() -> Unit) {
+  facets = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -85,9 +85,9 @@ public fun ConsequenceParamsBuilder.facets(block: StringListDsl.() -> Unit) {
  */
 @AlgoliaExperimentalDsl
 public fun ConsequenceParamsBuilder.disableTypoToleranceOnAttributes(
-  block: StringListDsl.() -> Unit
+  block: DSLAttributes.() -> Unit
 ) {
-  disableTypoToleranceOnAttributes = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+  disableTypoToleranceOnAttributes = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -96,8 +96,8 @@ public fun ConsequenceParamsBuilder.disableTypoToleranceOnAttributes(
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.queryLanguages(block: LanguagesDsl.() -> Unit) {
-  queryLanguages = LanguagesDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.queryLanguages(block: DSLLanguage.() -> Unit) {
+  queryLanguages = DSLLanguage().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -106,8 +106,8 @@ public fun ConsequenceParamsBuilder.queryLanguages(block: LanguagesDsl.() -> Uni
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.naturalLanguages(block: LanguagesDsl.() -> Unit) {
-  naturalLanguages = LanguagesDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.naturalLanguages(block: DSLLanguage.() -> Unit) {
+  naturalLanguages = DSLLanguage().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -118,6 +118,6 @@ public fun ConsequenceParamsBuilder.naturalLanguages(block: LanguagesDsl.() -> U
  * An empty list sent explicitly strips the response; the empty block omits the field instead.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.responseFields(block: StringListDsl.() -> Unit) {
-  responseFields = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun ConsequenceParamsBuilder.responseFields(block: DSLStrings.() -> Unit) {
+  responseFields = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }

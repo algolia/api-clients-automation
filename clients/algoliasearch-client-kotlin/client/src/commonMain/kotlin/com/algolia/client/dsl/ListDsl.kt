@@ -5,9 +5,9 @@ package com.algolia.client.dsl
 import com.algolia.client.model.search.SupportedLanguage
 
 /** Builds a `List<String>` parameter: `+"title"`, `+listOf("a", "b")`, `extra.forEach { +it }`. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class StringListDsl {
+public class DSLStrings {
   private val values: MutableList<String> = mutableListOf()
 
   public operator fun String.unaryPlus() {
@@ -21,10 +21,14 @@ public class StringListDsl {
   internal fun build(): List<String> = values.toList()
 }
 
-/** Builds a `List<SupportedLanguage>` parameter: `+SupportedLanguage.En`. */
-@AlgoliaDsl
+/** Receiver of attribute-name lists. Same class as [DSLStrings]; the name matches version 2. */
 @AlgoliaExperimentalDsl
-public class LanguagesDsl {
+public typealias DSLAttributes = DSLStrings
+
+/** Builds a `List<SupportedLanguage>` parameter: `+SupportedLanguage.En`. */
+@DSLParameters
+@AlgoliaExperimentalDsl
+public class DSLLanguage {
   private val values: MutableList<SupportedLanguage> = mutableListOf()
 
   public operator fun SupportedLanguage.unaryPlus() {
