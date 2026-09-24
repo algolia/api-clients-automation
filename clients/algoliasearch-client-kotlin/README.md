@@ -185,7 +185,7 @@ Map version 2 types to version 3 types:
 | `RemoveStopWords.True` | `RemoveStopWords.of(true)` |
 | `UserToken("u")` | `"u"` |
 | `ResponseFields.Hits`, `ResponseFields.Other("x")` | `+"hits"`, `+"x"` |
-| v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — v2's quoted form was ignored by `optionalFilters` (see Phase 1 PR) |
+| v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — the engine ignores v2's quoted form in `optionalFilters` |
 | custom query wrapper | `QueryComposer` / `DeleteByComposer` |
 | `initIndex` | removed; pass the index name to each client method |
 

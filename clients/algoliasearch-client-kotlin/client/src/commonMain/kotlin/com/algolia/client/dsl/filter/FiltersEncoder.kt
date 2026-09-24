@@ -12,10 +12,12 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  * same shape [OptionalFiltersEncoder] takes, so both encoders produce the same AND/OR structure and
  * leaf polarity (leaf text differs: this encoder quotes and writes `NOT <leaf>`, while the
  * optionalFilters encoder never quotes and writes `-` after the colon):
- * - `NOT` only precedes a single leaf whose [Filter.negated] is `true`. Groups are never negated.
- * - The `AND` is flat and never parenthesised. Algolia does not support `(A AND (B OR C))`.
+ * - `NOT` only precedes a single leaf whose [Filter.negated] is `true`. Groups are never negated:
+ *   the engine rejects `NOT (…)`.
+ * - The `AND` is flat and never parenthesised: the engine only allows `(X OR Y) AND Z` and rejects
+ *   nested groups.
  * - A row of two or more filters is parenthesised: `(a OR b)`. Each row holds one filter family by
- *   construction.
+ *   construction: the engine rejects mixed families in one `OR`.
  * - No rows encode as `null`.
  *
  * Attributes and values are quoted when they contain spaces, quotes, or the keywords `AND`, `OR`,
