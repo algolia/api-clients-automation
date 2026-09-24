@@ -3,6 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.dsl.filter.DSLFilters
+import com.algolia.client.dsl.filter.widensDelete
 import com.algolia.client.model.search.DeleteByParams
 
 /**
@@ -15,7 +16,11 @@ import com.algolia.client.model.search.DeleteByParams
  * [DSLFilters] (so they are AND-ed). Then every [override] block runs on the same [DSLDeleteBy], in
  * call order: last write wins, so an override that sets `filters` replaces the accumulated value.
  * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) have no
- * additive form; set them in [override]. Empty fragments leave the field omitted.
+ * additive form; set them in [override].
+ *
+ * [build] throws [IllegalArgumentException] when a `filters { }` fragment, or a group block inside
+ * one, adds no filter: dropping it would widen the delete. Skip the delete when there is nothing to
+ * match.
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
  * mutable list) are read at build time and side effects in a block repeat on each build. [build]
@@ -61,15 +66,27 @@ public class DSLDeleteByAdditions internal constructor() {
   // Not `filters`: `filters(it)` in the lambda must resolve to the builder helper, and a
   // property must not appear in its own initializer.
   private val filtersField: Additive<DSLDeleteBy, DSLFilters> = Additive { filters(it) }
+  private var filtersFragments = 0
 
   private val fields: List<Additive<DSLDeleteBy, *>> = listOf(filtersField)
 
-  /** Records a `filters` fragment. All fragments run inside one [DSLFilters] at build time. */
-  public fun filters(block: DSLFilters.() -> Unit): Unit = filtersField.add(block)
+  /**
+   * Records a `filters` fragment. All fragments run inside one [DSLFilters] at build time. A
+   * fragment that adds no filter makes [DSLDeleteByComposer.build] throw
+   * [IllegalArgumentException], even when other fragments add some.
+   */
+  public fun filters(block: DSLFilters.() -> Unit) {
+    val position = ++filtersFragments
+    filtersField.add {
+      val before = rowCount()
+      block()
+      require(rowCount() > before) { widensDelete("filters { } fragment $position") }
+    }
+  }
 
   /**
    * Writes each field with at least one recorded block once, through the generated [DSLDeleteBy]
-   * member helper, so the helper's rules (empty → `null`) apply unchanged.
+   * member helper, so the helper's rules (an empty block throws) apply unchanged.
    */
   internal fun applyTo(builder: DSLDeleteBy) {
     for (field in fields) field.applyTo(builder)

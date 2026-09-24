@@ -72,7 +72,8 @@ public suspend fun SearchClient.setSettings(
   )
 
 /**
- * Deletes records that match a [deleteBy] DSL block.
+ * Deletes records that match a [deleteBy] DSL block. An empty filter block or group throws
+ * [IllegalArgumentException] before any request is sent.
  *
  * ```
  * client.deleteBy("idx") { filters { facet("brand", "Apple") } }

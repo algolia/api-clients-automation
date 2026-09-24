@@ -3,8 +3,14 @@
    * Sets [DSL{{classname}}.{{{name}}}] from a typed filter block.
    *
    * The block uses [{{{receiver}}}], so it accepts only that family's leaves and groups. Last write
-   * wins: this replaces any earlier `{{{name}}}` value in this builder. An empty filter block
-   * yields `null`, so the field stays omitted.
+   * wins: this replaces any earlier `{{{name}}}` value in this builder.
+{{^strict}}
+   * An empty filter block yields `null`, so the field stays omitted.
+{{/strict}}
+{{#strict}}
+   * Throws [IllegalArgumentException] when the block, or any `and { }`, `orFacet { }`, `orTag { }`,
+   * or `orNumeric { }` in it, adds no filter: dropping it would widen the delete.
+{{/strict}}
    */
   public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
     this.{{{name}}} = com.algolia.client.dsl.filter.{{{function}}}(block)
