@@ -1,6 +1,6 @@
 package com.algolia.client.dsl.filter
 
-/** Shared T5 quoting for SQL `filters` and for legacy numeric / tag leaves. */
+/** Quoting for SQL `filters` leaves. */
 internal object FilterQuote {
   private val KEYWORD: Regex = Regex("(?i)\\b(?:AND|OR|NOT)\\b")
 

@@ -10,9 +10,9 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  * Leaf syntax matches version 2 `FilterConverter.SQL` (`attribute:value`, `_tags:value`, `attribute
  * op number`, `attribute:lower TO upper`, `attribute:value<score=N>`, `NOT <leaf>`). The tree first
  * goes through [conjunctiveRows], the same normal form [FilterLegacyConverter] uses, so both
- * encoders produce the same AND/OR shape and leaf polarity on every tree (leaf text differs: a
- * negated [Filter.Range] stays `NOT attr:lo TO hi` here, while the legacy encoder expands it to
- * `attr < lo` / `attr > hi`):
+ * encoders produce the same AND/OR shape and leaf polarity on every tree (leaf text differs: this
+ * encoder quotes and writes `NOT <leaf>`, while the legacy encoder never quotes and writes `-`
+ * after the colon):
  * - `NOT` only precedes a leaf: `NOT (a OR b)` is `NOT a AND NOT b`, `NOT (a AND b)` is `(NOT a OR
  *   NOT b)`. Algolia does not support negating a group.
  * - Nested [FilterGroup.And]s are flattened and the top-level `AND` is never parenthesised. Algolia

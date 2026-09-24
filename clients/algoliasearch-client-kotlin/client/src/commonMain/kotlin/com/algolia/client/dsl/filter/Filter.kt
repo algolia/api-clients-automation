@@ -31,7 +31,7 @@ public sealed interface Filter : FilterGroup {
    *
    * A non-null [score] is emitted as `<score=N>`, including `0`. The engine takes the maximum score
    * inside an `OR` group and sums scores across `AND`ed filters, in `filters` and in
-   * `optionalFilters`. Its effect in `facetFilters` is undocumented.
+   * `optionalFilters`.
    * [Filter scoring](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#filters-scoring)
    */
   @AlgoliaDsl

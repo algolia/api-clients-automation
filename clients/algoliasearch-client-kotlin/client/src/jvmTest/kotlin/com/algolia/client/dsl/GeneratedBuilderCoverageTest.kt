@@ -57,10 +57,10 @@ internal class GeneratedBuilderCoverageTest {
   /**
    * Drift guard for generated filter helpers.
    *
-   * The generator must emit exactly twenty public `Function1` members (`filters`, `facetFilters`,
-   * `optionalFilters`, `numericFilters`, `tagFilters`) on the nine-builder set, by property name
-   * and type. A helper on a model that does not carry that field, or a helper the generator
-   * silently stops emitting, fails here.
+   * The generator must emit exactly eight public `Function1` members (`filters`, `optionalFilters`)
+   * on the nine-builder set, by property name and type. A helper on a model that does not carry
+   * that field, a helper the generator silently stops emitting, or a reintroduced `facetFilters` /
+   * `numericFilters` / `tagFilters` helper, fails here.
    */
   @Test
   fun filterHelpersOnlyOnAllowlistedBuilders() {
@@ -73,24 +73,12 @@ internal class GeneratedBuilderCoverageTest {
     val expected =
       setOf(
         "SearchParamsObjectBuilder" to "filters",
-        "SearchParamsObjectBuilder" to "facetFilters",
         "SearchParamsObjectBuilder" to "optionalFilters",
-        "SearchParamsObjectBuilder" to "numericFilters",
-        "SearchParamsObjectBuilder" to "tagFilters",
         "BrowseParamsObjectBuilder" to "filters",
-        "BrowseParamsObjectBuilder" to "facetFilters",
         "BrowseParamsObjectBuilder" to "optionalFilters",
-        "BrowseParamsObjectBuilder" to "numericFilters",
-        "BrowseParamsObjectBuilder" to "tagFilters",
         "ConsequenceParamsBuilder" to "filters",
-        "ConsequenceParamsBuilder" to "facetFilters",
         "ConsequenceParamsBuilder" to "optionalFilters",
-        "ConsequenceParamsBuilder" to "numericFilters",
-        "ConsequenceParamsBuilder" to "tagFilters",
         "DeleteByParamsBuilder" to "filters",
-        "DeleteByParamsBuilder" to "facetFilters",
-        "DeleteByParamsBuilder" to "numericFilters",
-        "DeleteByParamsBuilder" to "tagFilters",
         "ConditionBuilder" to "filters",
       )
     assertEquals(

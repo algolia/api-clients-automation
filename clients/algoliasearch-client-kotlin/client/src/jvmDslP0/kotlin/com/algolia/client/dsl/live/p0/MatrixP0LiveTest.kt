@@ -55,11 +55,6 @@ internal class MatrixP0LiveTest {
     }
 
   @Test
-  fun C22_legacyNumericAndTagOrGroups() = live {
-    fx.assertRow(ServerContract.L43, wire(RowsP0.c22()))
-  }
-
-  @Test
   fun C32_scoreOmittedVersusExplicitZeroInSqlOr() = live {
     fx.assertRow(ServerContract.L51, wire(RowsP0.c32()))
   }

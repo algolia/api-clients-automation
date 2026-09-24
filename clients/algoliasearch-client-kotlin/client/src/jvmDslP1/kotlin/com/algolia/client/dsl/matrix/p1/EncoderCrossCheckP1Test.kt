@@ -41,37 +41,6 @@ internal class EncoderCrossCheckP1Test {
   }
 
   @Test
-  fun X09_positiveLeadingDashEscapedAndNumbers() {
-    assertWire(ServerContract.L13c, CrossCheckRowsP1.x09a())
-    assertWire(ServerContract.L16d, CrossCheckRowsP1.x09b())
-    assertWire(ServerContract.L16e, CrossCheckRowsP1.x09c())
-  }
-
-  @Test
-  fun X10_legacyNegationFlagAndNotBlock() {
-    assertWire(ServerContract.L14c, CrossCheckRowsP1.x10a())
-    assertWire(ServerContract.L14c, CrossCheckRowsP1.x10b())
-  }
-
-  @Test
-  fun X11_legacyNegatedDash() {
-    assertWire(ServerContract.L15a, CrossCheckRowsP1.x11())
-  }
-
-  @Test
-  fun X12_legacyRawValuesNoQuoting() {
-    assertWire(ServerContract.L16a, CrossCheckRowsP1.x12a())
-    assertWire(ServerContract.L16b, CrossCheckRowsP1.x12b())
-    assertWire(ServerContract.L16c, CrossCheckRowsP1.x12c())
-  }
-
-  @Test
-  fun X13_legacyTagsLeadingDash() {
-    assertWire(ServerContract.L17a, CrossCheckRowsP1.x13a())
-    assertWire(ServerContract.L17b, CrossCheckRowsP1.x13b())
-  }
-
-  @Test
   fun X14_unquotedOptionalScoreZeroAndNegativeOptional() {
     assertWire(ServerContract.L19a, CrossCheckRowsP1.x14a())
     assertWire(ServerContract.L19b, CrossCheckRowsP1.x14b())

@@ -57,36 +57,6 @@ internal object CrossCheckRowsP1 {
     }
   }
 
-  fun x09a(): SearchParamsObject = query { facetFilters { facet("label", "-Movie") } }
-
-  fun x09b(): SearchParamsObject = query { facetFilters { facet("count", 10) } }
-
-  fun x09c(): SearchParamsObject = query { facetFilters { facet("count", -12) } }
-
-  fun x10a(): SearchParamsObject = query {
-    facetFilters { facet("color", "red", isNegated = true) }
-  }
-
-  fun x10b(): SearchParamsObject = query { facetFilters { not { facet("color", "red") } } }
-
-  fun x11(): SearchParamsObject = query {
-    facetFilters { facet("label", "-Movie", isNegated = true) }
-  }
-
-  fun x12a(): SearchParamsObject = query {
-    facetFilters { facet("provider", "NBC: Universal \"East\"") }
-  }
-
-  fun x12b(): SearchParamsObject = query { facetFilters { facet("color", "navy blue") } }
-
-  fun x12c(): SearchParamsObject = query {
-    facetFilters { facet("color", "navy blue", isNegated = true) }
-  }
-
-  fun x13a(): SearchParamsObject = query { tagFilters { tag("-x") } }
-
-  fun x13b(): SearchParamsObject = query { tagFilters { tag("-x", isNegated = true) } }
-
   private fun optional(block: FacetFilterDsl.() -> Unit): SearchParamsObject = query {
     optionalFilters(block)
     getRankingInfo = true

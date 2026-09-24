@@ -47,12 +47,12 @@ internal class ClientDslTest {
       mockEngine("""{"taskID":1,"updatedAt":"2024-01-01T00:00:00Z"}""") { request ->
         assertEquals("/1/indexes/idx/deleteByQuery", request.url.encodedPath)
         assertEquals(
-          Json.parseToJsonElement("""{"tagFilters":[["old"]]}"""),
+          Json.parseToJsonElement("""{"filters":"_tags:old"}"""),
           Json.parseToJsonElement(request.bodyText()),
         )
       }
     SearchClient("appId", "apiKey", ClientOptions(engine = engine)).use { client ->
-      client.deleteBy("idx") { tagFilters { tag("old") } }
+      client.deleteBy("idx") { filters { tag("old") } }
     }
   }
 

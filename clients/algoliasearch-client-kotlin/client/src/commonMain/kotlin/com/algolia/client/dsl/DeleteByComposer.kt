@@ -2,10 +2,7 @@
 
 package com.algolia.client.dsl
 
-import com.algolia.client.dsl.filter.FacetFilterDsl
 import com.algolia.client.dsl.filter.FilterDsl
-import com.algolia.client.dsl.filter.NumericFilterDsl
-import com.algolia.client.dsl.filter.TagFilterDsl
 import com.algolia.client.model.search.DeleteByParams
 
 /**
@@ -14,11 +11,10 @@ import com.algolia.client.model.search.DeleteByParams
  * Delete-by twin of [QueryComposer]: filters only, since [DeleteByParams] has no list fields.
  *
  * [add] and [override] only store their blocks; nothing runs until [build]. Each [build] runs every
- * stored [add] block, then writes each filter field once: all `filters { }` fragments run inside
- * one [FilterDsl] (so they are AND-ed), all `facetFilters { }` fragments inside one
- * [FacetFilterDsl], and so on. Then every [override] block runs on the same [DeleteByBuilder], in
- * call order: last write wins, so an override that sets `filters` replaces the accumulated value.
- * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) have no
+ * stored [add] block, then writes `filters` once: all `filters { }` fragments run inside one
+ * [FilterDsl] (so they are AND-ed). Then every [override] block runs on the same [DeleteByBuilder],
+ * in call order: last write wins, so an override that sets `filters` replaces the accumulated
+ * value. Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) have no
  * additive form; set them in [override]. Empty fragments leave the field omitted.
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
@@ -75,33 +71,10 @@ public class DeleteByComposer public constructor() {
 @AlgoliaExperimentalDsl
 public class DeleteByAdditions internal constructor() {
   private val filterBlocks: Blocks<FilterDsl> = Blocks()
-  private val facetFilterBlocks: Blocks<FacetFilterDsl> = Blocks()
-  private val numericFilterBlocks: Blocks<NumericFilterDsl> = Blocks()
-  private val tagFilterBlocks: Blocks<TagFilterDsl> = Blocks()
 
   /** Records a `filters` fragment. All fragments run inside one [FilterDsl] at build time. */
   public fun filters(block: FilterDsl.() -> Unit) {
     filterBlocks.add(block)
-  }
-
-  /**
-   * Records a `facetFilters` fragment. All fragments run inside one [FacetFilterDsl] at build time.
-   */
-  public fun facetFilters(block: FacetFilterDsl.() -> Unit) {
-    facetFilterBlocks.add(block)
-  }
-
-  /**
-   * Records a `numericFilters` fragment. All fragments run inside one [NumericFilterDsl] at build
-   * time.
-   */
-  public fun numericFilters(block: NumericFilterDsl.() -> Unit) {
-    numericFilterBlocks.add(block)
-  }
-
-  /** Records a `tagFilters` fragment. All fragments run inside one [TagFilterDsl] at build time. */
-  public fun tagFilters(block: TagFilterDsl.() -> Unit) {
-    tagFilterBlocks.add(block)
   }
 
   /**
@@ -113,12 +86,6 @@ public class DeleteByAdditions internal constructor() {
   internal fun applyTo(builder: DeleteByBuilder) {
     val filters = filterBlocks
     if (!filters.isEmpty()) builder.filters { filters.replay(this) }
-    val facetFilters = facetFilterBlocks
-    if (!facetFilters.isEmpty()) builder.facetFilters { facetFilters.replay(this) }
-    val numericFilters = numericFilterBlocks
-    if (!numericFilters.isEmpty()) builder.numericFilters { numericFilters.replay(this) }
-    val tagFilters = tagFilterBlocks
-    if (!tagFilters.isEmpty()) builder.tagFilters { tagFilters.replay(this) }
   }
 }
 
