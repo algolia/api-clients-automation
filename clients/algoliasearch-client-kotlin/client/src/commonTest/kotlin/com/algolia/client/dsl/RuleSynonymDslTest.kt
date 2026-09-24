@@ -171,41 +171,6 @@ internal class RuleSynonymDslTest {
   }
 
   @Test
-  fun consequenceParamsLegacyFilterHelpersMatchExpectedJson() {
-    val dsl =
-      rule("x") {
-        consequence {
-          params {
-            facetFilters { facet("brand", "Apple") }
-            numericFilters { range("price", 0 until 10) }
-            tagFilters { tag("featured") }
-            optionalFilters { facet("category", "Book") }
-          }
-        }
-      }
-    val expected =
-      json.parseToJsonElement(
-        """
-        {
-          "objectID": "x",
-          "consequence": {
-            "params": {
-              "facetFilters": [["brand:Apple"]],
-              "numericFilters": [["price:0 TO 9"]],
-              "tagFilters": [["featured"]],
-              "optionalFilters": [["category:Book"]]
-            }
-          }
-        }
-        """
-          .trimIndent()
-      )
-    val actual = json.encodeToJsonElement(dsl)
-    assertIs<JsonObject>(actual)
-    assertEquals(expected.jsonObject, actual.jsonObject)
-  }
-
-  @Test
   fun ruleWithoutConsequenceThrows() {
     assertFailsWith<IllegalArgumentException> { rule("x") {} }
   }

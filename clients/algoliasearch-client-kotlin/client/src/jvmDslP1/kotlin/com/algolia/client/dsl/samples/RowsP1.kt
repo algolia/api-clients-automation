@@ -51,7 +51,7 @@ internal object RowsP1 {
   }
 
   fun c16b(): SearchParamsObject = query {
-    facetFilters { facet("genre", "comedy", isNegated = true) }
+    filters { facet("genre", "comedy", isNegated = true) }
   }
 
   fun c17a(): SearchParamsObject = query { filters { and { addFacet(SUGGESTION_TYPE, "show") } } }
@@ -140,10 +140,6 @@ internal object RowsP1 {
 
   fun c31f(): SearchParamsObject = query {
     optionalFilters { or { addFacet("isFeatured", true, score = 500) } }
-  }
-
-  fun c31g(): SearchParamsObject = query {
-    facetFilters { addFacet("genre", "comedy", score = null, isNegated = true) }
   }
 
   fun c33(): SearchParamsObject = query {

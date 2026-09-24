@@ -250,14 +250,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   private static final Map<String, DslFilterVar> DSL_FILTER_VARS = Map.of(
     "filters",
     new DslFilterVar("String", "FilterDsl", "filters"),
-    "facetFilters",
-    new DslFilterVar("FacetFilters", "FacetFilterDsl", "facetFilters"),
     "optionalFilters",
-    new DslFilterVar("OptionalFilters", "FacetFilterDsl", "optionalFilters"),
-    "numericFilters",
-    new DslFilterVar("NumericFilters", "NumericFilterDsl", "numericFilters"),
-    "tagFilters",
-    new DslFilterVar("TagFilters", "TagFilterDsl", "tagFilters")
+    new DslFilterVar("OptionalFilters", "FacetFilterDsl", "optionalFilters")
   );
 
   private void collectSearchDslModels(Map<String, ModelsMap> models) {

@@ -27,13 +27,15 @@ internal object RowsP0 {
       facet("locale", "fr-FR")
     }
   }
-  val counts: NumericFilterDsl.() -> Unit = { range("count", 0..10) }
-  val featured: TagFilterDsl.() -> Unit = { tag("featured") }
+  val counts: FilterDsl.() -> Unit = { range("count", 0..10) }
+  val featured: FilterDsl.() -> Unit = { tag("featured") }
 
   fun c05(): SearchParamsObject = query {
-    filters(locales)
-    numericFilters(counts)
-    tagFilters(featured)
+    filters {
+      locales()
+      counts()
+      featured()
+    }
   }
 
   fun c20(): DeleteByParams = deleteBy {
@@ -50,21 +52,6 @@ internal object RowsP0 {
       orFacet {
         facet("entityId", "e1")
         facet("entityId", "e2")
-      }
-    }
-  }
-
-  fun c22(): SearchParamsObject = query {
-    numericFilters {
-      or {
-        range("count", 0..9)
-        comparison("count", NumericOperator.Equals, 10)
-      }
-    }
-    tagFilters {
-      or {
-        tag("featured")
-        tag("x")
       }
     }
   }

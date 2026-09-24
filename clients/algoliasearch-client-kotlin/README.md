@@ -60,11 +60,11 @@ import com.algolia.client.dsl.*
 val params = query {
   query = "shoes"
   filters { facet("brand", "Apple") }          // SQL string
-  facetFilters { or { facet("color", "red"); facet("color", "blue") } }
+  optionalFilters { or { facet("color", "red"); facet("color", "blue") } }
 }
 ```
 
-`filters { }` sets the SQL `filters` string. `facetFilters { }`, `optionalFilters { }`, `numericFilters { }`, and `tagFilters { }` set the matching typed field. An empty block omits the field.
+`filters { }` sets the SQL `filters` string and `optionalFilters { }` the `optionalFilters` field. For `facetFilters`, `numericFilters`, and `tagFilters`, use `filters { }` (Algolia recommends `filters`) or assign the generated field. An empty block omits the field.
 
 Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`), or a group with `not { }`. `and { }` and `or { }` work in every filter block, including `optionalFilters`:
 
@@ -82,9 +82,9 @@ val params = query {
 }
 ```
 
-The `filters` string only uses shapes Algolia supports: `NOT` applies to single filters (`not { orFacet { a; b } }` encodes as `NOT a AND NOT b`, `not { a; b }` as `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` has no parentheses. A `not { }` that would need an `OR` of `AND`s, or an `OR` across facet, tag, and numeric filters, throws `IllegalArgumentException`. `facetFilters`, `optionalFilters`, and `tagFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
+The `filters` string only uses shapes Algolia supports: `NOT` applies to single filters (`not { orFacet { a; b } }` encodes as `NOT a AND NOT b`, `not { a; b }` as `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` has no parentheses. A `not { }` that would need an `OR` of `AND`s, or an `OR` across facet, tag, and numeric filters, throws `IllegalArgumentException`. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
 
-Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `FilterDsl`, `FacetFilterDsl`, `NumericFilterDsl`, and `TagFilterDsl`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
+Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `FilterDsl` and `FacetFilterDsl`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
@@ -171,6 +171,7 @@ Map version 2 types to version 3 types:
 | `Attribute("x")` | `"x"` |
 | `DSLFilters` | `FilterDsl` (`com.algolia.client.dsl.filter`) |
 | `DSLFacetFilters` (facet / optional filters) | `FacetFilterDsl` |
+| `facetFilters { }`, `numericFilters { }`, `tagFilters { }` | `filters { }` |
 | `DSLAttributes`, `DSLStrings` | `StringListDsl` |
 | `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
 | `Distinct(1)` | `Distinct.of(1)` |
@@ -181,7 +182,7 @@ Map version 2 types to version 3 types:
 | `UserToken("u")` | `"u"` |
 | `ResponseFields.Hits`, `ResponseFields.Other("x")` | `ResponseField.Hits`, `ResponseField.Other("x")` |
 | `ResponseFields.Other("processingTimingsMS")` | `ResponseField.ProcessingTimingsMS` |
-| v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — v2's quoted form was ignored by `optionalFilters` and negation was ignored in `facetFilters` (see Phase 1 PR) |
+| v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — v2's quoted form was ignored by `optionalFilters` (see Phase 1 PR) |
 | custom query wrapper | `QueryComposer` / `DeleteByComposer` |
 | `initIndex` | removed; pass the index name to each client method |
 

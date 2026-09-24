@@ -4,8 +4,6 @@ package com.algolia.client.dsl
 
 import com.algolia.client.dsl.filter.FacetFilterDsl
 import com.algolia.client.dsl.filter.FilterDsl
-import com.algolia.client.dsl.filter.NumericFilterDsl
-import com.algolia.client.dsl.filter.TagFilterDsl
 import com.algolia.client.model.search.SearchParamsObject
 
 /**
@@ -60,10 +58,7 @@ public class QueryComposer public constructor() {
 @AlgoliaExperimentalDsl
 public class QueryAdditions internal constructor() {
   private val filterBlocks = Blocks<FilterDsl>()
-  private val facetFilterBlocks = Blocks<FacetFilterDsl>()
   private val optionalFilterBlocks = Blocks<FacetFilterDsl>()
-  private val numericFilterBlocks = Blocks<NumericFilterDsl>()
-  private val tagFilterBlocks = Blocks<TagFilterDsl>()
   private val restrictSearchableAttributeBlocks = Blocks<StringListDsl>()
   private val attributesToHighlightBlocks = Blocks<StringListDsl>()
   private val attributesToRetrieveBlocks = Blocks<StringListDsl>()
@@ -81,24 +76,9 @@ public class QueryAdditions internal constructor() {
     filterBlocks.add(block)
   }
 
-  /** Records a `facetFilters` fragment. All fragments run inside one [FacetFilterDsl]. */
-  public fun facetFilters(block: FacetFilterDsl.() -> Unit) {
-    facetFilterBlocks.add(block)
-  }
-
   /** Records an `optionalFilters` fragment. All fragments run inside one [FacetFilterDsl]. */
   public fun optionalFilters(block: FacetFilterDsl.() -> Unit) {
     optionalFilterBlocks.add(block)
-  }
-
-  /** Records a `numericFilters` fragment. All fragments run inside one [NumericFilterDsl]. */
-  public fun numericFilters(block: NumericFilterDsl.() -> Unit) {
-    numericFilterBlocks.add(block)
-  }
-
-  /** Records a `tagFilters` fragment. All fragments run inside one [TagFilterDsl]. */
-  public fun tagFilters(block: TagFilterDsl.() -> Unit) {
-    tagFilterBlocks.add(block)
   }
 
   /** Records a `restrictSearchableAttributes` fragment. Fragments concatenate in call order. */
@@ -167,14 +147,8 @@ public class QueryAdditions internal constructor() {
   internal fun applyTo(builder: QueryBuilder) {
     val filters = filterBlocks
     if (!filters.isEmpty()) builder.filters { filters.replay(this) }
-    val facetFilters = facetFilterBlocks
-    if (!facetFilters.isEmpty()) builder.facetFilters { facetFilters.replay(this) }
     val optionalFilters = optionalFilterBlocks
     if (!optionalFilters.isEmpty()) builder.optionalFilters { optionalFilters.replay(this) }
-    val numericFilters = numericFilterBlocks
-    if (!numericFilters.isEmpty()) builder.numericFilters { numericFilters.replay(this) }
-    val tagFilters = tagFilterBlocks
-    if (!tagFilters.isEmpty()) builder.tagFilters { tagFilters.replay(this) }
     val restrictSearchableAttributes = restrictSearchableAttributeBlocks
     if (!restrictSearchableAttributes.isEmpty()) {
       builder.restrictSearchableAttributes { restrictSearchableAttributes.replay(this) }

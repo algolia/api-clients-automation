@@ -65,7 +65,7 @@ internal class MatrixP1LiveTest {
   }
 
   @Test
-  fun C16_isNegatedFlagSqlAndLegacy() = live {
+  fun C16_isNegatedFlag() = live {
     fx.assertRow(ServerContract.L36a, wire(RowsP1.c16a()))
     fx.assertRow(ServerContract.L36b, wire(RowsP1.c16b()))
   }
@@ -143,37 +143,6 @@ internal class MatrixP1LiveTest {
   @Test
   fun X06_andWithOrGroupFlat() = live {
     fx.assertRow(ServerContract.L11a, wire(CrossCheckRowsP1.x06()))
-  }
-
-  @Test
-  fun X09_legacyPositiveLeadingDashAndNumbers() = live {
-    fx.assertRow(ServerContract.L13c, wire(CrossCheckRowsP1.x09a()))
-    fx.assertRow(ServerContract.L16d, wire(CrossCheckRowsP1.x09b()))
-    fx.assertRow(ServerContract.L16e, wire(CrossCheckRowsP1.x09c()))
-  }
-
-  @Test
-  fun X10_legacyNegationFlagAndNot() = live {
-    fx.assertRow(ServerContract.L14c, wire(CrossCheckRowsP1.x10a()))
-    fx.assertRow(ServerContract.L14c, wire(CrossCheckRowsP1.x10b()))
-  }
-
-  @Test
-  fun X11_legacyNegatedDashValue() = live {
-    fx.assertRow(ServerContract.L15a, wire(CrossCheckRowsP1.x11()))
-  }
-
-  @Test
-  fun X12_legacyRawValuesNoQuoting() = live {
-    fx.assertRow(ServerContract.L16a, wire(CrossCheckRowsP1.x12a()))
-    fx.assertRow(ServerContract.L16b, wire(CrossCheckRowsP1.x12b()))
-    fx.assertRow(ServerContract.L16c, wire(CrossCheckRowsP1.x12c()))
-  }
-
-  @Test
-  fun X13_legacyTagDashForms() = live {
-    fx.assertRow(ServerContract.L17a, wire(CrossCheckRowsP1.x13a()))
-    fx.assertRow(ServerContract.L17b, wire(CrossCheckRowsP1.x13b()))
   }
 
   @Test

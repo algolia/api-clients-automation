@@ -30,10 +30,9 @@ public sealed interface FacetLeaves {
    *
    * A non-null [score] is emitted as `<score=N>`, including `0`. With `getRankingInfo`, the engine
    * reports the maximum score inside an `OR` group and the sum across `AND`ed filters, in both
-   * `filters` and `optionalFilters`. The effect in `facetFilters` is undocumented. The DSL never
-   * rejects a score. [isNegated] sets [Filter.negated]; inside an `OR`-context `not { }` it is
-   * toggled again. Pass it by name: `facet("a", "b", isNegated = true)`. The third positional
-   * argument is [score].
+   * `filters` and `optionalFilters`. The DSL never rejects a score. [isNegated] sets
+   * [Filter.negated]; inside an `OR`-context `not { }` it is toggled again. Pass it by name:
+   * `facet("a", "b", isNegated = true)`. The third positional argument is [score].
    */
   public fun facet(
     attribute: String,
@@ -59,14 +58,14 @@ public sealed interface FacetLeaves {
   ): Unit
 }
 
-/** Tag leaf constructors shared by [FilterDsl], [TagFilterDsl], and [TagOrDsl]. */
+/** Tag leaf constructors shared by [FilterDsl] and [TagOrDsl]. */
 @AlgoliaExperimentalDsl
 public sealed interface TagLeaves {
   /** Adds a [Filter.Tag] for [value]. [isNegated] sets [Filter.negated]. */
   public fun tag(value: String, isNegated: Boolean = false): Unit
 }
 
-/** Numeric leaf constructors shared by [FilterDsl], [NumericFilterDsl], and [NumericOrDsl]. */
+/** Numeric leaf constructors shared by [FilterDsl] and [NumericOrDsl]. */
 @AlgoliaExperimentalDsl
 public sealed interface NumericLeaves {
   /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
