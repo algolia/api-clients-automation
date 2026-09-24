@@ -46,7 +46,7 @@ internal class ClientDslTest {
 
   @Test
   fun searchSingleIndexComposerOverload() = runTest {
-    val composer = QueryComposer()
+    val composer = DSLQueryComposer()
     composer.add { filters { facet("brand", "Apple") } }
     composer.override { hitsPerPage = 5 }
     val expected = json.encodeToJsonElement(composer.build())
@@ -78,7 +78,7 @@ internal class ClientDslTest {
 
   @Test
   fun deleteByComposerOverload() = runTest {
-    val composer = DeleteByComposer()
+    val composer = DSLDeleteByComposer()
     composer.add { filters { tag("old") } }
     composer.override { aroundLatLng = "1,2" }
     val expected = json.encodeToJsonElement(composer.build())

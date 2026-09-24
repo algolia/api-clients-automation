@@ -2,15 +2,15 @@
 
 package com.algolia.client.dsl
 
-import com.algolia.client.dsl.generated.BrowseParamsObjectBuilder
-import com.algolia.client.dsl.generated.DeleteByParamsBuilder
-import com.algolia.client.dsl.generated.SearchParamsObjectBuilder
+import com.algolia.client.dsl.generated.DSLBrowseParamsObject
+import com.algolia.client.dsl.generated.DSLDeleteByParams
+import com.algolia.client.dsl.generated.DSLSearchParamsObject
 import com.algolia.client.model.search.BrowseParamsObject
 import com.algolia.client.model.search.DeleteByParams
 import com.algolia.client.model.search.SearchParamsObject
 
 /**
- * Constructs a [SearchParamsObject] from a [QueryBuilder].
+ * Constructs a [SearchParamsObject] from a [DSLQuery].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one. If
  * [query] is non-null, it is written first. The [block] may overwrite it. A later `filters { }` or
@@ -33,9 +33,9 @@ import com.algolia.client.model.search.SearchParamsObject
 @AlgoliaExperimentalDsl
 public fun query(
   query: String? = null,
-  block: QueryBuilder.() -> Unit,
+  block: DSLQuery.() -> Unit,
 ): SearchParamsObject =
-  SearchParamsObjectBuilder()
+  DSLSearchParamsObject()
     .apply {
       if (query != null) {
         this.query = query
@@ -45,7 +45,7 @@ public fun query(
     .build()
 
 /**
- * Constructs a [BrowseParamsObject] from a [BrowseBuilder].
+ * Constructs a [BrowseParamsObject] from a [DSLBrowse].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one. A later
  * `filters { }` or `filters = "..."` assignment replaces an earlier `filters` value. The same rule
@@ -58,11 +58,11 @@ public fun query(
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun browse(block: BrowseBuilder.() -> Unit): BrowseParamsObject =
-  BrowseParamsObjectBuilder().apply(block).build()
+public fun browse(block: DSLBrowse.() -> Unit): BrowseParamsObject =
+  DSLBrowseParamsObject().apply(block).build()
 
 /**
- * Constructs a [DeleteByParams] value from a [DeleteByBuilder].
+ * Constructs a [DeleteByParams] value from a [DSLDeleteBy].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one,
  * including values set by [filters]. [DeleteByParams] has no `optionalFilters` field.
@@ -79,5 +79,5 @@ public fun browse(block: BrowseBuilder.() -> Unit): BrowseParamsObject =
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun deleteBy(block: DeleteByBuilder.() -> Unit): DeleteByParams =
-  DeleteByParamsBuilder().apply(block).build()
+public fun deleteBy(block: DSLDeleteBy.() -> Unit): DeleteByParams =
+  DSLDeleteByParams().apply(block).build()

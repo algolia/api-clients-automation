@@ -15,7 +15,9 @@ import com.algolia.client.dsl.cases.samples.setSuggestionType
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/** [QueryComposer] and the user-side wrapper it replaces: fragments added once, overrides last. */
+/**
+ * [DSLQueryComposer] and the user-side wrapper it replaces: fragments added once, overrides last.
+ */
 internal object ComposerCases {
 
   val queryWrapperPort =
@@ -49,7 +51,7 @@ internal object ComposerCases {
   val addAndOverride =
     LiveCase(
       dsl = {
-        val composer = QueryComposer()
+        val composer = DSLQueryComposer()
         composer.add {
           filters {
             orFacet {
@@ -83,14 +85,14 @@ internal object ComposerCases {
 
   val localeModuleWithoutSecondary =
     LiveCase(
-      dsl = { QueryComposer().also { applyLocale(it, "en-US", null) }.build() },
+      dsl = { DSLQueryComposer().also { applyLocale(it, "en-US", null) }.build() },
       body = """{"filters":"locale:en-US","queryLanguages":["en"]}""",
       expect = listOf(Expect.Hits(setOf("1", "4"))),
     )
 
   val localeModuleWithSecondary =
     LiveCase(
-      dsl = { QueryComposer().also { applyLocale(it, "en-US", "fr-FR") }.build() },
+      dsl = { DSLQueryComposer().also { applyLocale(it, "en-US", "fr-FR") }.build() },
       body = """{"filters":"(locale:en-US OR locale:fr-FR)","queryLanguages":["en","fr"]}""",
       expect = listOf(Expect.Hits(setOf("1", "2", "4", "5"))),
     )
@@ -98,7 +100,7 @@ internal object ComposerCases {
   val searchableTitleModule =
     LiveCase(
       dsl = {
-        QueryComposer()
+        DSLQueryComposer()
           .also {
             applySearchableTitle(it)
             it.override { query = "office" }
@@ -113,7 +115,7 @@ internal object ComposerCases {
   val boostModule =
     LiveCase(
       dsl = {
-        QueryComposer()
+        DSLQueryComposer()
           .also {
             applyBoost(it)
             it.override { getRankingInfo = true }
@@ -133,7 +135,7 @@ internal object ComposerCases {
     LiveCase(
       dsl = {
         assemble(
-          listOf<(QueryComposer) -> Unit>(
+          listOf<(DSLQueryComposer) -> Unit>(
             { applyLocale(it, "en-US", "fr-FR") },
             ::applySearchableTitle,
             ::applyBoost,
@@ -158,7 +160,7 @@ internal object ComposerCases {
   // ── Request-map modules ───────────────────────────────────────────────────────────────────────
 
   private fun fromRequest(request: SearchRequest): SearchParamsObject =
-    QueryComposer()
+    DSLQueryComposer()
       .also {
         it.setSuggestionType(request)
         it.setPriority(request)

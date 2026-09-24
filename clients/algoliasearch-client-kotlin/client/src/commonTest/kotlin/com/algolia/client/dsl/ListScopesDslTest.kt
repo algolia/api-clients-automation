@@ -3,7 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
-import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
+import com.algolia.client.dsl.generated.DSLConsequenceParams
 import com.algolia.client.dsl.rule.consequence
 import com.algolia.client.dsl.rule.params
 import com.algolia.client.dsl.rule.rule
@@ -17,7 +17,7 @@ import kotlinx.serialization.json.encodeToJsonElement
 
 /**
  * The list scopes: eleven `List<String>` / `List<SupportedLanguage>` search parameters exposed as
- * `field { +value }` blocks on [QueryBuilder], [BrowseBuilder], and [ConsequenceParamsBuilder].
+ * `field { +value }` blocks on [DSLQuery], [DSLBrowse], and [DSLConsequenceParams].
  *
  * Contract under test: last write wins, `+Iterable` appends every element, and an empty block sets
  * `null` (field omitted). The settings helpers (`searchableAttributes { }` etc.) keep sending `[]`
@@ -102,6 +102,6 @@ internal class ListScopesDslTest {
   }
 
   /** Builds [ConsequenceParams] the way callers reach it: `rule { consequence { params { } } }`. */
-  private fun consequenceParams(block: ConsequenceParamsBuilder.() -> Unit): ConsequenceParams =
+  private fun consequenceParams(block: DSLConsequenceParams.() -> Unit): ConsequenceParams =
     assertNotNull(rule("r") { consequence { params(block) } }.consequence.params)
 }

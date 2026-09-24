@@ -13,8 +13,8 @@ import com.algolia.client.model.search.SearchParamsObject
  * stored [add] block, then writes each additive field once: all `filters { }` fragments run inside
  * one [DSLFilters] (so they are AND-ed), all `ruleContexts { }` fragments inside one [DSLStrings]
  * (so they concatenate in call order), and so on. Then every [override] block runs on the same
- * [QueryBuilder], in call order: last write wins, so an override that sets `filters` or a list
- * field replaces the accumulated value. Empty fragments leave the field omitted.
+ * [DSLQuery], in call order: last write wins, so an override that sets `filters` or a list field
+ * replaces the accumulated value. Empty fragments leave the field omitted.
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
  * mutable list) are read at build time and side effects in a block repeat on each build. [build]
@@ -22,66 +22,65 @@ import com.algolia.client.model.search.SearchParamsObject
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class QueryComposer public constructor() {
-  private val core = ComposerCore(::QueryAdditions, ::QueryBuilder, QueryAdditions::applyTo)
+public class DSLQueryComposer public constructor() {
+  private val core = ComposerCore(::DSLQueryAdditions, ::DSLQuery, DSLQueryAdditions::applyTo)
 
   /**
    * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
    */
-  public fun add(block: QueryAdditions.() -> Unit): Unit = core.add(block)
+  public fun add(block: DSLQueryAdditions.() -> Unit): Unit = core.add(block)
 
   /** Stores [block]. It runs on every [build], after the additive fields. Last write wins. */
-  public fun override(block: QueryBuilder.() -> Unit): Unit = core.override(block)
+  public fun override(block: DSLQuery.() -> Unit): Unit = core.override(block)
 
   public fun build(): SearchParamsObject = core.build().build()
 }
 
 /**
- * Additive receiver of [QueryComposer.add], created fresh on every [QueryComposer.build]. Each
- * method records its block for that field; the blocks for a field run together, in call order,
+ * Additive receiver of [DSLQueryComposer.add], created fresh on every [DSLQueryComposer.build].
+ * Each method records its block for that field; the blocks for a field run together, in call order,
  * inside one receiver when the field is written.
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class QueryAdditions internal constructor() {
+public class DSLQueryAdditions internal constructor() {
   // Field names differ from the recorder names: `filters(it)` inside the lambda must resolve to the
   // builder helper, and a property must not appear in its own initializer.
-  private val filtersField: Additive<QueryBuilder, DSLFilters> = Additive { filters(it) }
-  private val optionalFiltersField: Additive<QueryBuilder, DSLFacetFilters> = Additive {
+  private val filtersField: Additive<DSLQuery, DSLFilters> = Additive { filters(it) }
+  private val optionalFiltersField: Additive<DSLQuery, DSLFacetFilters> = Additive {
     optionalFilters(it)
   }
-  private val restrictSearchableAttributesField: Additive<QueryBuilder, DSLAttributes> = Additive {
+  private val restrictSearchableAttributesField: Additive<DSLQuery, DSLAttributes> = Additive {
     restrictSearchableAttributes(it)
   }
-  private val attributesToHighlightField: Additive<QueryBuilder, DSLAttributes> = Additive {
+  private val attributesToHighlightField: Additive<DSLQuery, DSLAttributes> = Additive {
     attributesToHighlight(it)
   }
-  private val attributesToRetrieveField: Additive<QueryBuilder, DSLAttributes> = Additive {
+  private val attributesToRetrieveField: Additive<DSLQuery, DSLAttributes> = Additive {
     attributesToRetrieve(it)
   }
-  private val attributesToSnippetField: Additive<QueryBuilder, DSLStrings> = Additive {
+  private val attributesToSnippetField: Additive<DSLQuery, DSLStrings> = Additive {
     attributesToSnippet(it)
   }
-  private val ruleContextsField: Additive<QueryBuilder, DSLStrings> = Additive { ruleContexts(it) }
-  private val analyticsTagsField: Additive<QueryBuilder, DSLStrings> = Additive {
+  private val ruleContextsField: Additive<DSLQuery, DSLStrings> = Additive { ruleContexts(it) }
+  private val analyticsTagsField: Additive<DSLQuery, DSLStrings> = Additive {
     analyticsTags(it)
   }
-  private val facetsField: Additive<QueryBuilder, DSLAttributes> = Additive { facets(it) }
-  private val disableTypoToleranceOnAttributesField: Additive<QueryBuilder, DSLAttributes> =
-    Additive {
-      disableTypoToleranceOnAttributes(it)
-    }
-  private val queryLanguagesField: Additive<QueryBuilder, DSLLanguage> = Additive {
+  private val facetsField: Additive<DSLQuery, DSLAttributes> = Additive { facets(it) }
+  private val disableTypoToleranceOnAttributesField: Additive<DSLQuery, DSLAttributes> = Additive {
+    disableTypoToleranceOnAttributes(it)
+  }
+  private val queryLanguagesField: Additive<DSLQuery, DSLLanguage> = Additive {
     queryLanguages(it)
   }
-  private val naturalLanguagesField: Additive<QueryBuilder, DSLLanguage> = Additive {
+  private val naturalLanguagesField: Additive<DSLQuery, DSLLanguage> = Additive {
     naturalLanguages(it)
   }
-  private val responseFieldsField: Additive<QueryBuilder, DSLStrings> = Additive {
+  private val responseFieldsField: Additive<DSLQuery, DSLStrings> = Additive {
     responseFields(it)
   }
 
-  private val fields: List<Additive<QueryBuilder, *>> =
+  private val fields: List<Additive<DSLQuery, *>> =
     listOf(
       filtersField,
       optionalFiltersField,
@@ -150,13 +149,13 @@ public class QueryAdditions internal constructor() {
    * Writes each field that has at least one recorded block onto [builder], once, through the
    * existing helper for that field. Fields without blocks are left untouched.
    */
-  internal fun applyTo(builder: QueryBuilder) {
+  internal fun applyTo(builder: DSLQuery) {
     for (field in fields) field.applyTo(builder)
   }
 }
 
-/** `QueryComposer().apply(block).build()`. */
+/** `DSLQueryComposer().apply(block).build()`. */
 @AlgoliaExperimentalDsl
-public fun composeQuery(block: QueryComposer.() -> Unit): SearchParamsObject {
-  return QueryComposer().apply(block).build()
+public fun composeQuery(block: DSLQueryComposer.() -> Unit): SearchParamsObject {
+  return DSLQueryComposer().apply(block).build()
 }

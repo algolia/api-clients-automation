@@ -4,10 +4,10 @@ package com.algolia.client.dsl.rule
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.dsl.DSLParameters
-import com.algolia.client.dsl.generated.ConditionBuilder
-import com.algolia.client.dsl.generated.ConsequenceBuilder
-import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
-import com.algolia.client.dsl.generated.RuleBuilder
+import com.algolia.client.dsl.generated.DSLCondition
+import com.algolia.client.dsl.generated.DSLConsequence
+import com.algolia.client.dsl.generated.DSLConsequenceParams
+import com.algolia.client.dsl.generated.DSLRule
 import com.algolia.client.model.search.Condition
 import com.algolia.client.model.search.ConsequenceHide
 import com.algolia.client.model.search.ConsequenceQuery
@@ -18,10 +18,10 @@ import com.algolia.client.model.search.PromoteObjectIDs
 import com.algolia.client.model.search.Rule
 
 /**
- * Constructs a [Rule] from the generated [RuleBuilder].
+ * Constructs a [Rule] from the generated [DSLRule].
  *
  * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. [consequence] is
- * required; [RuleBuilder.build] throws if it is missing. Last write wins on each builder property.
+ * required; [DSLRule.build] throws if it is missing. Last write wins on each builder property.
  *
  * ```
  * val built =
@@ -41,62 +41,62 @@ import com.algolia.client.model.search.Rule
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun rule(block: RuleBuilder.() -> Unit): Rule = RuleBuilder().apply(block).build()
+public fun rule(block: DSLRule.() -> Unit): Rule = DSLRule().apply(block).build()
 
 /**
  * Constructs a [Rule] with [objectID] already set.
  *
- * The [block] may overwrite [RuleBuilder.objectID]. Last write wins.
+ * The [block] may overwrite [DSLRule.objectID]. Last write wins.
  *
  * ```
  * val built = rule("promo-iphone") { consequence { hide { +"object-9" } } }
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun rule(objectID: String, block: RuleBuilder.() -> Unit = {}): Rule = rule {
+public fun rule(objectID: String, block: DSLRule.() -> Unit = {}): Rule = rule {
   this.objectID = objectID
   block()
 }
 
 /**
- * Sets [RuleBuilder.condition] from a [ConditionBuilder] block.
+ * Sets [DSLRule.condition] from a [DSLCondition] block.
  *
- * Last write wins: this replaces any earlier [RuleBuilder.condition] value.
+ * Last write wins: this replaces any earlier [DSLRule.condition] value.
  */
 @AlgoliaExperimentalDsl
-public fun RuleBuilder.condition(block: ConditionBuilder.() -> Unit) {
-  condition = ConditionBuilder().apply(block).build()
+public fun DSLRule.condition(block: DSLCondition.() -> Unit) {
+  condition = DSLCondition().apply(block).build()
 }
 
 /**
- * Sets [RuleBuilder.conditions] from a [ConditionsDsl] block.
+ * Sets [DSLRule.conditions] from a [DSLConditions] block.
  *
- * Last write wins: this replaces any earlier [RuleBuilder.conditions] value.
+ * Last write wins: this replaces any earlier [DSLRule.conditions] value.
  */
 @AlgoliaExperimentalDsl
-public fun RuleBuilder.conditions(block: ConditionsDsl.() -> Unit) {
-  conditions = ConditionsDsl().apply(block).build()
+public fun DSLRule.conditions(block: DSLConditions.() -> Unit) {
+  conditions = DSLConditions().apply(block).build()
 }
 
 /**
- * Sets [RuleBuilder.consequence] from a [ConsequenceBuilder] block.
+ * Sets [DSLRule.consequence] from a [DSLConsequence] block.
  *
- * Last write wins: this replaces any earlier [RuleBuilder.consequence] value.
+ * Last write wins: this replaces any earlier [DSLRule.consequence] value.
  */
 @AlgoliaExperimentalDsl
-public fun RuleBuilder.consequence(block: ConsequenceBuilder.() -> Unit) {
-  consequence = ConsequenceBuilder().apply(block).build()
+public fun DSLRule.consequence(block: DSLConsequence.() -> Unit) {
+  consequence = DSLConsequence().apply(block).build()
 }
 
 /** Builds a [List] of [Condition] values. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class ConditionsDsl {
+public class DSLConditions internal constructor() {
   private val values: MutableList<Condition> = mutableListOf()
 
   /** Adds a [Condition] from [block]. */
-  public fun condition(block: ConditionBuilder.() -> Unit) {
-    values += ConditionBuilder().apply(block).build()
+  public fun condition(block: DSLCondition.() -> Unit) {
+    values += DSLCondition().apply(block).build()
   }
 
   /** Adds [this] condition. */
@@ -107,26 +107,26 @@ public class ConditionsDsl {
   internal fun build(): List<Condition> = values.toList()
 }
 
-/** Sets [ConditionBuilder.pattern] to `{facet:ATTRIBUTE}` for [attribute]. */
+/** Sets [DSLCondition.pattern] to `{facet:ATTRIBUTE}` for [attribute]. */
 @AlgoliaExperimentalDsl
-public fun ConditionBuilder.facetPattern(attribute: String) {
+public fun DSLCondition.facetPattern(attribute: String) {
   pattern = "{facet:$attribute}"
 }
 
 /**
- * Sets [ConsequenceBuilder.params] from the generated [ConsequenceParamsBuilder].
+ * Sets [DSLConsequence.params] from the generated [DSLConsequenceParams].
  *
- * Last write wins: this replaces any earlier [ConsequenceBuilder.params] value.
+ * Last write wins: this replaces any earlier [DSLConsequence.params] value.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.params(block: ConsequenceParamsBuilder.() -> Unit) {
-  params = ConsequenceParamsBuilder().apply(block).build()
+public fun DSLConsequence.params(block: DSLConsequenceParams.() -> Unit) {
+  params = DSLConsequenceParams().apply(block).build()
 }
 
 /** Builds a list of [Promote] values. Last write wins when [promote] is called again. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class PromoteDsl {
+public class DSLPromotions internal constructor() {
   private val values: MutableList<Promote> = mutableListOf()
 
   /** Adds a single-record promotion at [position]. */
@@ -145,7 +145,7 @@ public class PromoteDsl {
 /** Builds a list of hidden records. Last write wins when [hide] is called again. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class HideDsl {
+public class DSLObjectIDs internal constructor() {
   private val values: MutableList<ConsequenceHide> = mutableListOf()
 
   /** Adds [this] object ID to the hide list. */
@@ -156,34 +156,34 @@ public class HideDsl {
   internal fun build(): List<ConsequenceHide> = values.toList()
 }
 
-/** Sets [ConsequenceBuilder.promote] from [block]. A second call replaces the list. */
+/** Sets [DSLConsequence.promote] from [block]. A second call replaces the list. */
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.promote(block: PromoteDsl.() -> Unit) {
-  promote = PromoteDsl().apply(block).build()
+public fun DSLConsequence.promote(block: DSLPromotions.() -> Unit) {
+  promote = DSLPromotions().apply(block).build()
 }
 
-/** Sets [ConsequenceBuilder.hide] from [block]. A second call replaces the list. */
+/** Sets [DSLConsequence.hide] from [block]. A second call replaces the list. */
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.hide(block: HideDsl.() -> Unit) {
-  hide = HideDsl().apply(block).build()
+public fun DSLConsequence.hide(block: DSLObjectIDs.() -> Unit) {
+  hide = DSLObjectIDs().apply(block).build()
 }
 
 /**
- * Sets [ConsequenceBuilder.redirect] to [indexName].
+ * Sets [DSLConsequence.redirect] to [indexName].
  *
- * Last write wins: this replaces any earlier [ConsequenceBuilder.redirect] value.
+ * Last write wins: this replaces any earlier [DSLConsequence.redirect] value.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceBuilder.redirect(indexName: String) {
+public fun DSLConsequence.redirect(indexName: String) {
   redirect = ConsequenceRedirect(indexName)
 }
 
 /**
- * Sets [ConsequenceParamsBuilder.query] to a replacement query string.
+ * Sets [DSLConsequenceParams.query] to a replacement query string.
  *
  * Last write wins: this replaces any earlier `query` value in the same builder.
  */
 @AlgoliaExperimentalDsl
-public fun ConsequenceParamsBuilder.query(value: String) {
+public fun DSLConsequenceParams.query(value: String) {
   query = ConsequenceQuery.of(value)
 }

@@ -11,13 +11,13 @@ import kotlin.test.assertNotNull
 import kotlinx.serialization.json.encodeToJsonElement
 
 /**
- * [QueryComposer]: `add { }` fragments accumulate per field inside one receiver, `override { }`
+ * [DSLQueryComposer]: `add { }` fragments accumulate per field inside one receiver, `override { }`
  * runs after them with last write wins, and nothing runs until `build()`.
  *
  * The documentation modules golden (locale, searchable title, boost, `assemble`) is Phase 0 matrix
  * rows C10–C13 and is not duplicated here.
  */
-internal class QueryComposerTest {
+internal class DSLQueryComposerTest {
 
   private val json = ClientOptions().json
 
@@ -97,7 +97,7 @@ internal class QueryComposerTest {
   @Test
   fun emptyComposerAndEmptyFragmentsOmitFields() {
     val empty = json.parseToJsonElement("{}")
-    assertEquals(empty, json.encodeToJsonElement(QueryComposer().build()))
+    assertEquals(empty, json.encodeToJsonElement(DSLQueryComposer().build()))
 
     val emptyFragments = composeQuery {
       add {
@@ -110,7 +110,7 @@ internal class QueryComposerTest {
 
   @Test
   fun buildIsRepeatable() {
-    val composer = QueryComposer()
+    val composer = DSLQueryComposer()
     composer.add { ruleContexts { +"a" } }
     composer.override { hitsPerPage = 5 }
 
@@ -128,7 +128,7 @@ internal class QueryComposerTest {
   @Test
   fun nothingRunsBeforeBuild() {
     var runs = 0
-    val composer = QueryComposer()
+    val composer = DSLQueryComposer()
     composer.add {
       runs++
       ruleContexts {
@@ -150,7 +150,7 @@ internal class QueryComposerTest {
   fun lateBoundCapturesReadAtBuild() {
     var locale = "en-US"
     val contexts = mutableListOf("a")
-    val composer = QueryComposer()
+    val composer = DSLQueryComposer()
     composer.add { filters { facet("locale", locale) } }
     composer.add { ruleContexts { +contexts } }
 
