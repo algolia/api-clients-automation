@@ -6,12 +6,10 @@ import com.algolia.client.dsl.samples.CrossCheckRowsP1
 import com.algolia.client.dsl.testkit.ServerContract
 import com.algolia.client.dsl.testkit.assertWire
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 /**
  * Offline half of the phase-1 encoder ↔ engine cross-check rows: each [CrossCheckRowsP1] function
- * must serialize to exactly the wire body the engine was proven to accept (X19 must be rejected by
- * the encoder before it reaches the engine).
+ * must serialize to exactly the wire body the engine was proven to accept.
  */
 internal class EncoderCrossCheckP1Test {
 
@@ -65,11 +63,5 @@ internal class EncoderCrossCheckP1Test {
   @Test
   fun X18_andScoresSummedFlat() {
     assertWire(ServerContract.L10, CrossCheckRowsP1.x18())
-  }
-
-  @Test
-  fun X19_encoderRejectsMixedFamilyAndNestedNot() {
-    assertFailsWith<IllegalArgumentException> { CrossCheckRowsP1.x19a() }
-    assertFailsWith<IllegalArgumentException> { CrossCheckRowsP1.x19b() }
   }
 }

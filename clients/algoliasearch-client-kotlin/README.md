@@ -66,7 +66,7 @@ val params = query {
 
 `filters { }` sets the SQL `filters` string and `optionalFilters { }` the `optionalFilters` field. For `facetFilters`, `numericFilters`, and `tagFilters`, use `filters { }` (Algolia recommends `filters`) or assign the generated field. An empty block omits the field.
 
-Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`), or a group with `not { }`. `and { }` and `or { }` work in every filter block, including `optionalFilters`:
+Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`). `and { }` and `or { }` work in every filter block, including `optionalFilters`:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
@@ -82,7 +82,7 @@ val params = query {
 }
 ```
 
-The `filters` string only uses shapes Algolia supports: `NOT` applies to single filters (`not { orFacet { a; b } }` encodes as `NOT a AND NOT b`, `not { a; b }` as `(NOT a OR NOT b)`), nested `and { }` blocks are flattened, and the top-level `AND` has no parentheses. A `not { }` that would need an `OR` of `AND`s, or an `OR` across facet, tag, and numeric filters, throws `IllegalArgumentException`. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
+The `filters` string only uses shapes Algolia supports: `NOT` only precedes a single filter (`isNegated`), nested `and { }` blocks are flattened, the top-level `AND` has no parentheses, and each `OR` holds one filter family by construction. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
 
 Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `FilterDsl` and `FacetFilterDsl`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
 
@@ -153,7 +153,7 @@ val params = composer.build()                         // every lambda above runs
 client.searchSingleIndex(indexName, SearchParams.of(params))
 ```
 
-`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `QueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `QueryBuilder`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws, plus the `IllegalArgumentException` the filter DSL raises for unsupported shapes on the combined tree. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
+`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `QueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `QueryBuilder`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
 
 Compared with a hand-rolled `QueryWrapper` that stored `DSLFilters.() -> Unit`, `DSLFacetFilters.() -> Unit`, and `DSLStrings.() -> Unit` lambdas: fragments are per-field inside one `add { }` (no separate lambda types to declare), and `override { }` runs after all additive fields.
 
@@ -174,6 +174,7 @@ Map version 2 types to version 3 types:
 | `facetFilters { }`, `numericFilters { }`, `tagFilters { }` | `filters { }` |
 | `DSLAttributes`, `DSLStrings` | `StringListDsl` |
 | `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
+| `not { }`, unary `!` | `isNegated = true` on each leaf |
 | `Distinct(1)` | `Distinct.of(1)` |
 | `Language.English` | `SupportedLanguage.En` |
 | `TypoTolerance.Min`, `TypoTolerance.True` | `TypoTolerance.of(TypoToleranceEnum.Min)`, `TypoTolerance.of(true)` |

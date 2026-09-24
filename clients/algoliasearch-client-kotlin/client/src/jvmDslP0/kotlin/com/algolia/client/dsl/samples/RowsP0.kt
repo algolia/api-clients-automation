@@ -89,12 +89,12 @@ internal object RowsP0 {
     filters {
       orFacet {
         facet("color", "red")
-        not { facet("category", "shirt") }
+        facet("category", "shirt", isNegated = true)
       }
     }
   }
 
-  fun x07(): SearchParamsObject = query { filters { not { range("count", 0..9) } } }
+  fun x07(): SearchParamsObject = query { filters { range("count", 0..9, isNegated = true) } }
 
   fun x08a(): SearchParamsObject = query { filters { facet("label", "-Movie") } }
 

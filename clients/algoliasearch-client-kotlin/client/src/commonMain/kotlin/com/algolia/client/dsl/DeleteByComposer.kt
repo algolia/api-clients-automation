@@ -19,8 +19,7 @@ import com.algolia.client.model.search.DeleteByParams
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
  * mutable list) are read at build time and side effects in a block repeat on each build. [build]
- * can be called repeatedly and may throw [IllegalArgumentException] for a filter tree Algolia
- * cannot express (see [DeleteByBuilder.filters]). Not thread-safe.
+ * can be called repeatedly. Not thread-safe.
  *
  * ```
  * val composer = DeleteByComposer()
@@ -79,9 +78,9 @@ public class DeleteByAdditions internal constructor() {
 
   /**
    * Writes each field with at least one recorded block once, through the generated
-   * [DeleteByBuilder] member helper, so the helper's rules (empty → `null`, filter-tree rejects)
-   * apply unchanged. The [Blocks] are bound to locals first: the `@AlgoliaDsl` marker hides this
-   * receiver inside the nested filter blocks.
+   * [DeleteByBuilder] member helper, so the helper's rules (empty → `null`) apply unchanged. The
+   * [Blocks] are bound to locals first: the `@AlgoliaDsl` marker hides this receiver inside the
+   * nested filter blocks.
    */
   internal fun applyTo(builder: DeleteByBuilder) {
     val filters = filterBlocks
