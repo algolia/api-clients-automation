@@ -97,8 +97,6 @@ dslPhases.forEach { phase ->
         compilation.runtimeDependencyFiles +
         compilation.output.allOutputs
     filter.includeTestsMatching("com.algolia.client.dsl.$suite.*")
-    systemProperty("algolia.dsl.phases", dslPhases.joinToString(","))
-    systemProperty("algolia.dsl.sourceRoot", file("src").absolutePath)
     testLogging {
       events("failed", "skipped")
       exceptionFormat = TestExceptionFormat.FULL
