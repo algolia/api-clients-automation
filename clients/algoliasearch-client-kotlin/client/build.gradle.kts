@@ -15,16 +15,15 @@ kotlin {
 
   explicitApi()
   jvm {
-    // One compilation per stacked phase: a phase whose API does not exist yet fails alone.
     val main = compilations.getByName("main")
-    val phases = (0..3).map { compilations.create("dslP$it") }
-    phases.forEachIndexed { index, compilation ->
-      compilation.associateWith(main)
-      phases.take(index).forEach { compilation.associateWith(it) }
-      compilation.defaultSourceSet.dependencies {
+    val test = compilations.getByName("test")
+    compilations.create("dslLive") {
+      associateWith(main)
+      associateWith(test) // live tests reuse the offline cases in jvmTest
+      defaultSourceSet.dependencies {
         implementation(libs.kotlin.test.junit)
         implementation(libs.ktor.client.okhttp)
-        implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
+        implementation(libs.dotenv.kotlin)
       }
     }
   }
@@ -82,50 +81,28 @@ kotlin {
   }
 }
 
-val dslPhases = 0..3
-val repoRoot: String = rootDir.resolve("../..").canonicalPath
+val dslLive = kotlin.jvm().compilations.getByName("dslLive")
 
-dslPhases.forEach { phase ->
-  val compilation = kotlin.jvm().compilations.getByName("dslP$phase")
-  fun Test.dslTest(suite: String) {
-    group = "verification"
-    useJUnit()
-    dependsOn(compilation.compileTaskProvider)
-    testClassesDirs = compilation.output.classesDirs
-    classpath =
-      compilation.compileDependencyFiles +
-        compilation.runtimeDependencyFiles +
-        compilation.output.allOutputs
-    filter.includeTestsMatching("com.algolia.client.dsl.$suite.*")
-    testLogging {
-      events("failed", "skipped")
-      exceptionFormat = TestExceptionFormat.FULL
-    }
-  }
-  tasks.register<Test>("jvmDslP${phase}Test") {
-    description = "Kotlin DSL capability matrix, phase $phase, offline."
-    dslTest("matrix")
-    // Phases 1–3 keep no offline matrix class: their rows are asserted live on the DSL's bytes.
-    filter.isFailOnNoMatchingTests = false
-  }
-  tasks.register<Test>("jvmDslP${phase}LiveTest") {
-    description = "Kotlin DSL capability matrix, phase $phase, against the Algolia API."
-    dslTest("live")
-    systemProperty("algolia.dsl.live", "true")
-    systemProperty("algolia.repoRoot", repoRoot)
-    outputs.upToDateWhen { false }
-    timeout.set(Duration.ofMinutes(15))
-  }
-}
-
-tasks.register("jvmDslTest") {
+tasks.register<Test>("jvmDslLiveTest") {
   group = "verification"
-  description = "Kotlin DSL capability matrix, all phases, offline."
-  dependsOn(dslPhases.map { "jvmDslP${it}Test" })
+  description = "Kotlin DSL live suite against the Algolia API."
+  useJUnit()
+  dependsOn(dslLive.compileTaskProvider)
+  testClassesDirs = dslLive.output.classesDirs
+  classpath =
+    dslLive.compileDependencyFiles +
+      dslLive.runtimeDependencyFiles +
+      dslLive.output.allOutputs +
+      kotlin.jvm().compilations.getByName("test").output.allOutputs
+  systemProperty("algolia.dsl.live", "true")
+  systemProperty("algolia.repoRoot", rootDir.resolve("../..").canonicalPath)
+  outputs.upToDateWhen { false }
+  timeout.set(Duration.ofMinutes(12)) // must fit the 20-min client_gen job (check.yml)
+  testLogging {
+    events("failed", "skipped")
+    exceptionFormat = TestExceptionFormat.FULL
+  }
 }
 
-tasks.register("jvmDslLiveTest") {
-  group = "verification"
-  description = "Kotlin DSL capability matrix, all phases, against the Algolia API."
-  dependsOn(dslPhases.map { "jvmDslP${it}LiveTest" })
-}
+// Fork / [skip-e2e] PRs never run the live task: compile it in the client step instead.
+tasks.named("jvmTest") { dependsOn(dslLive.compileTaskProvider) }

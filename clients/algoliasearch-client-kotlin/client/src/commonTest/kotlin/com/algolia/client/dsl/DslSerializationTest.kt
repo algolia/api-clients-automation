@@ -77,6 +77,15 @@ internal class DslSerializationTest {
     )
   }
 
+  @Test
+  fun secondFiltersBlockReplacesTheFirst() {
+    val dsl = query {
+      filters { facet("genre", "comedy") }
+      filters { facet("genre", "drama") }
+    }
+    assertEncodedJson(dsl, """{"filters":"genre:drama"}""")
+  }
+
   private inline fun <reified T> assertEncodedJson(dsl: T, expectedJson: String) {
     assertEquals(json.parseToJsonElement(expectedJson), json.encodeToJsonElement(dsl))
   }
