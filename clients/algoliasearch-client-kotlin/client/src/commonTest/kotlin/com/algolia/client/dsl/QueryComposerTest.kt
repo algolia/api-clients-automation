@@ -168,7 +168,7 @@ internal class QueryComposerTest {
       add { filters { orFacet { facet("a", "1") } } }
       add { filters { facet("b", "2", isNegated = true) } }
     }
-    // Both fragments ran in one FilterDsl: one top-level AND, never parenthesised.
+    // Both fragments ran in one DSLFilters: one top-level AND, never parenthesised.
     assertEquals("a:1 AND NOT b:2", params.filters)
   }
 }

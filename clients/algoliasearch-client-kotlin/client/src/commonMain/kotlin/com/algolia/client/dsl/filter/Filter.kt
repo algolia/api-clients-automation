@@ -2,8 +2,8 @@
 
 package com.algolia.client.dsl.filter
 
-import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLParameters
 import kotlin.jvm.JvmOverloads
 
 /**
@@ -107,7 +107,7 @@ internal sealed interface Filter : FilterGroup {
 }
 
 /** Operator for [Filter.Comparison]. Mirrors version 2 `NumericOperator`. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
 public enum class NumericOperator(public val raw: String) {
   Less("<"),

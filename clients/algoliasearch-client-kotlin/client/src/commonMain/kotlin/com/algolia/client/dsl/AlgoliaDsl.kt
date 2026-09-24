@@ -11,7 +11,7 @@ package com.algolia.client.dsl
  *
  * Nested DSL receivers cannot access outer receivers that share this marker.
  */
-@DslMarker public annotation class AlgoliaDsl
+@DslMarker public annotation class DSLParameters
 
 /**
  * Marks the Algolia Kotlin DSL as experimental.

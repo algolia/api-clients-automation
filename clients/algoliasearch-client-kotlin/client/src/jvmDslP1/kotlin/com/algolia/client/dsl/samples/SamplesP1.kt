@@ -15,7 +15,7 @@ internal enum class IsPinned(val value: Boolean) {
   FALSE(false),
 }
 
-internal fun FacetLeaves.addFacet(
+internal fun DSLFacet.addFacet(
   name: String,
   value: String,
   score: Int? = 0,
@@ -24,7 +24,7 @@ internal fun FacetLeaves.addFacet(
   facet(name, value, score, isNegated)
 }
 
-internal fun FacetLeaves.addFacet(
+internal fun DSLFacet.addFacet(
   name: String,
   value: Int,
   score: Int? = 0,
@@ -33,7 +33,7 @@ internal fun FacetLeaves.addFacet(
   facet(name, value, score, isNegated)
 }
 
-internal fun FacetLeaves.addFacet(
+internal fun DSLFacet.addFacet(
   name: String,
   value: Boolean,
   score: Int? = 0,
@@ -44,7 +44,7 @@ internal fun FacetLeaves.addFacet(
 
 internal fun lookupById(
   id: String,
-  extraFilters: (FilterDsl.() -> Unit)? = null,
+  extraFilters: (DSLFilters.() -> Unit)? = null,
   extraQuery: (QueryBuilder.() -> Unit)? = null,
 ): SearchParamsObject = query {
   filters {

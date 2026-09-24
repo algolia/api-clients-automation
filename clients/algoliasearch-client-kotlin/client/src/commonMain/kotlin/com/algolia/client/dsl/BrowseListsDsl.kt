@@ -8,8 +8,8 @@ package com.algolia.client.dsl
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.restrictSearchableAttributes(block: StringListDsl.() -> Unit) {
-  restrictSearchableAttributes = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.restrictSearchableAttributes(block: DSLAttributes.() -> Unit) {
+  restrictSearchableAttributes = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -18,8 +18,8 @@ public fun BrowseBuilder.restrictSearchableAttributes(block: StringListDsl.() ->
  * settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.attributesToHighlight(block: StringListDsl.() -> Unit) {
-  attributesToHighlight = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.attributesToHighlight(block: DSLAttributes.() -> Unit) {
+  attributesToHighlight = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -30,8 +30,8 @@ public fun BrowseBuilder.attributesToHighlight(block: StringListDsl.() -> Unit) 
  * An empty list sent explicitly strips the response; the empty block omits the field instead.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.attributesToRetrieve(block: StringListDsl.() -> Unit) {
-  attributesToRetrieve = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.attributesToRetrieve(block: DSLAttributes.() -> Unit) {
+  attributesToRetrieve = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -40,8 +40,8 @@ public fun BrowseBuilder.attributesToRetrieve(block: StringListDsl.() -> Unit) {
  * settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.attributesToSnippet(block: StringListDsl.() -> Unit) {
-  attributesToSnippet = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.attributesToSnippet(block: DSLStrings.() -> Unit) {
+  attributesToSnippet = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -50,8 +50,8 @@ public fun BrowseBuilder.attributesToSnippet(block: StringListDsl.() -> Unit) {
  * (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.ruleContexts(block: StringListDsl.() -> Unit) {
-  ruleContexts = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.ruleContexts(block: DSLStrings.() -> Unit) {
+  ruleContexts = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -60,8 +60,8 @@ public fun BrowseBuilder.ruleContexts(block: StringListDsl.() -> Unit) {
  * (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.analyticsTags(block: StringListDsl.() -> Unit) {
-  analyticsTags = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.analyticsTags(block: DSLStrings.() -> Unit) {
+  analyticsTags = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -70,8 +70,8 @@ public fun BrowseBuilder.analyticsTags(block: StringListDsl.() -> Unit) {
  * (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.facets(block: StringListDsl.() -> Unit) {
-  facets = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.facets(block: DSLAttributes.() -> Unit) {
+  facets = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -80,8 +80,8 @@ public fun BrowseBuilder.facets(block: StringListDsl.() -> Unit) {
  * the settings helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.disableTypoToleranceOnAttributes(block: StringListDsl.() -> Unit) {
-  disableTypoToleranceOnAttributes = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.disableTypoToleranceOnAttributes(block: DSLAttributes.() -> Unit) {
+  disableTypoToleranceOnAttributes = DSLAttributes().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -90,8 +90,8 @@ public fun BrowseBuilder.disableTypoToleranceOnAttributes(block: StringListDsl.(
  * (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.queryLanguages(block: LanguagesDsl.() -> Unit) {
-  queryLanguages = LanguagesDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.queryLanguages(block: DSLLanguage.() -> Unit) {
+  queryLanguages = DSLLanguage().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -100,8 +100,8 @@ public fun BrowseBuilder.queryLanguages(block: LanguagesDsl.() -> Unit) {
  * helpers (`searchableAttributes { }` etc.), which send `[]` for an empty block.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.naturalLanguages(block: LanguagesDsl.() -> Unit) {
-  naturalLanguages = LanguagesDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.naturalLanguages(block: DSLLanguage.() -> Unit) {
+  naturalLanguages = DSLLanguage().apply(block).build().takeIf { it.isNotEmpty() }
 }
 
 /**
@@ -112,6 +112,6 @@ public fun BrowseBuilder.naturalLanguages(block: LanguagesDsl.() -> Unit) {
  * An empty list sent explicitly strips the response; the empty block omits the field instead.
  */
 @AlgoliaExperimentalDsl
-public fun BrowseBuilder.responseFields(block: StringListDsl.() -> Unit) {
-  responseFields = StringListDsl().apply(block).build().takeIf { it.isNotEmpty() }
+public fun BrowseBuilder.responseFields(block: DSLStrings.() -> Unit) {
+  responseFields = DSLStrings().apply(block).build().takeIf { it.isNotEmpty() }
 }

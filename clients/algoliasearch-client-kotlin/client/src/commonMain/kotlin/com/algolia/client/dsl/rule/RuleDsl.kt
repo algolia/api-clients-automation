@@ -2,8 +2,8 @@
 
 package com.algolia.client.dsl.rule
 
-import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLParameters
 import com.algolia.client.dsl.generated.ConditionBuilder
 import com.algolia.client.dsl.generated.ConsequenceBuilder
 import com.algolia.client.dsl.generated.ConsequenceParamsBuilder
@@ -89,7 +89,7 @@ public fun RuleBuilder.consequence(block: ConsequenceBuilder.() -> Unit) {
 }
 
 /** Builds a [List] of [Condition] values. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
 public class ConditionsDsl {
   private val values: MutableList<Condition> = mutableListOf()
@@ -124,7 +124,7 @@ public fun ConsequenceBuilder.params(block: ConsequenceParamsBuilder.() -> Unit)
 }
 
 /** Builds a list of [Promote] values. Last write wins when [promote] is called again. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
 public class PromoteDsl {
   private val values: MutableList<Promote> = mutableListOf()
@@ -143,7 +143,7 @@ public class PromoteDsl {
 }
 
 /** Builds a list of hidden records. Last write wins when [hide] is called again. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
 public class HideDsl {
   private val values: MutableList<ConsequenceHide> = mutableListOf()

@@ -2,15 +2,16 @@
 
 package com.algolia.client.dsl.filter
 
-import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLParameters
 import com.algolia.client.model.search.OptionalFilters
 
 /** AND-context builder for [Filter.Facet] leaves and [FilterGroup.Or.Facet] groups. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class FacetFilterDsl internal constructor(private val core: FamilyAndBuilder<Filter.Facet>) :
-  FacetLeaves by FacetLeafMixin(core::add) {
+public class DSLFacetFilters
+internal constructor(private val core: FamilyAndBuilder<Filter.Facet>) :
+  DSLFacet by FacetLeafMixin(core::add) {
 
   public constructor() : this(FamilyAndBuilder<Filter.Facet> { FilterGroup.Or.Facet(it) })
 
@@ -19,23 +20,24 @@ public class FacetFilterDsl internal constructor(private val core: FamilyAndBuil
    * flatten it into the enclosing `AND`, so `optionalFilters { and { a; b }; or { c; d } }` encodes
    * as `[[a], [b], [c, d]]`.
    */
-  public fun and(block: FacetFilterDsl.() -> Unit) {
-    core.and(FacetFilterDsl().apply(block).core.snapshot())
+  public fun and(block: DSLFacetFilters.() -> Unit) {
+    core.and(DSLFacetFilters().apply(block).core.snapshot())
   }
 
   /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. An empty block adds nothing. */
-  public fun or(block: FacetOrDsl.() -> Unit) {
-    core.or(FacetOrDsl().apply(block).snapshot())
+  public fun or(block: DSLGroupFacet.() -> Unit) {
+    core.or(DSLGroupFacet().apply(block).snapshot())
   }
 
   internal fun root(): FilterGroup = core.root()
 }
 
 /** OR-context builder for [Filter.Facet] children. Exposes only facet leaves. */
-@AlgoliaDsl
+@DSLParameters
 @AlgoliaExperimentalDsl
-public class FacetOrDsl internal constructor(private val leaves: FilterAccumulator<Filter.Facet>) :
-  FacetLeaves by FacetLeafMixin(leaves::add) {
+public class DSLGroupFacet
+internal constructor(private val leaves: FilterAccumulator<Filter.Facet>) :
+  DSLFacet by FacetLeafMixin(leaves::add) {
 
   public constructor() : this(FilterAccumulator())
 
@@ -44,5 +46,5 @@ public class FacetOrDsl internal constructor(private val leaves: FilterAccumulat
 
 /** Constructs [OptionalFilters] from a facet-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl
-public fun optionalFilters(block: FacetFilterDsl.() -> Unit): OptionalFilters? =
-  FilterLegacyConverter.optional(FacetFilterDsl().apply(block).root())
+public fun optionalFilters(block: DSLFacetFilters.() -> Unit): OptionalFilters? =
+  FilterLegacyConverter.optional(DSLFacetFilters().apply(block).root())

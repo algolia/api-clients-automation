@@ -9,14 +9,14 @@ import com.algolia.client.model.search.*
 internal object RowsP1 {
   fun c02(): SearchParamsObject = query { filters { and { facet("locale", "en-US") } } }
 
-  val locales: FilterDsl.() -> Unit = {
+  val locales: DSLFilters.() -> Unit = {
     orFacet {
       facet("locale", "en-US")
       facet("locale", "fr-FR")
     }
   }
-  val notPinned: FilterDsl.() -> Unit = { facet("isPinned", false) }
-  val boost: FacetFilterDsl.() -> Unit = { or { facet("isFeatured", true, score = 500) } }
+  val notPinned: DSLFilters.() -> Unit = { facet("isPinned", false) }
+  val boost: DSLFacetFilters.() -> Unit = { or { facet("isFeatured", true, score = 500) } }
 
   fun c06(): SearchParamsObject = query {
     filters {
@@ -70,7 +70,7 @@ internal object RowsP1 {
     }
   }
 
-  fun c19Filters(entityIds: List<String>, currentBatchId: String): FilterDsl.() -> Unit = {
+  fun c19Filters(entityIds: List<String>, currentBatchId: String): DSLFilters.() -> Unit = {
     orFacet { entityIds.forEach { facet("entityId", it) } }
     and { facet("batchId", currentBatchId, isNegated = true) }
   }
