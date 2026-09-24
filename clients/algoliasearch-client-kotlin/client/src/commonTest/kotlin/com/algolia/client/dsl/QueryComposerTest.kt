@@ -56,13 +56,13 @@ internal class QueryComposerTest {
         ruleContexts { +"desktop" }
         restrictSearchableAttributes { +"title" }
         queryLanguages { +SupportedLanguage.En }
-        responseFields { +ResponseField.Hits }
+        responseFields { +"hits" }
       }
       add {
         ruleContexts { +"eu" }
         restrictSearchableAttributes { +"description" }
         queryLanguages { +SupportedLanguage.Fr }
-        responseFields { +ResponseField.NbHits }
+        responseFields { +"nbHits" }
       }
     }
     assertEquals(listOf("desktop", "eu"), params.ruleContexts)
