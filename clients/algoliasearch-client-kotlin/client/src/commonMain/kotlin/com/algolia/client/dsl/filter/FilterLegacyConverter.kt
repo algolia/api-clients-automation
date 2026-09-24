@@ -3,15 +3,12 @@
 package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.model.search.FacetFilters
-import com.algolia.client.model.search.NumericFilters
 import com.algolia.client.model.search.OptionalFilters
-import com.algolia.client.model.search.TagFilters
 
 /**
- * Converts a typed [FilterGroup] tree to the legacy `List<List<String>>` form, then wraps it with
- * the generated oneOf factories ([FacetFilters.of], [OptionalFilters.of], [NumericFilters.of],
- * [TagFilters.of]). It never builds raw JSON.
+ * Converts a typed [FilterGroup] tree of [Filter.Facet] leaves to the legacy `List<List<String>>`
+ * form of `optionalFilters`, then wraps it with the generated oneOf factory [OptionalFilters.of].
+ * It never builds raw JSON.
  *
  * ## Nested lists
  *
@@ -21,9 +18,7 @@ import com.algolia.client.model.search.TagFilters
  * - [FilterGroup.Or] of leaves `A`, `B` → `[["A", "B"]]` → `A OR B`
  * - [FilterGroup.And] of `Or(A, B)` and leaf `C` → `[["A", "B"], ["C"]]` → `(A OR B) AND C`
  *
- * [FilterGroup.Or] carries its family in the type.
- *
- * Family receivers make a wrong-family leaf unrepresentable. A hand-built tree that still contains
+ * [FacetFilterDsl] makes a non-facet leaf unrepresentable. A hand-built tree that still contains
  * one throws [IllegalArgumentException]. The encoder does not drop other families.
  *
  * ## Empty groups
@@ -33,71 +28,40 @@ import com.algolia.client.model.search.TagFilters
  *
  * ## Reject cases ([IllegalArgumentException])
  *
- * - **Wrong family:** a leaf that does not match the encoder family.
+ * - **Non-facet leaf:** a [Filter.Tag] or [Filter.Numeric] leaf.
  * - **OR of ANDs:** see [conjunctiveRows].
  *
  * ## Encoding
  *
- * Facet (and optional) leaves are `attribute:value` with no quoting and no escaping except a
- * leading `-` in the value (`attr:\-v`). Negation is a `-` right after the colon (`attr:-v`, or
- * `attr:--v` when the value itself starts with `-`). Tags are `v`, `\-v`, `-v`, `--v`. Numeric
- * leaves quote the attribute with the same rule as [FilterSqlConverter].
+ * Every leaf is unquoted `attribute:value`. The only escape is a leading `-` in a positive value
+ * (`attr:\-v`). Negation is a `-` right after the colon: `attr:-v`, or `attr:--v` when the value
+ * itself starts with `-`. A non-null [Filter.Facet.score] is appended as `<score=N>`.
  *
- * Version 2 `FilterConverter.Legacy` with `escape = true` quoted attribute and value. That form is
- * broken on the engine: a quoted `optionalFilters` entry is ignored, `"a":-"v"` matches every
- * record, and `\"` inside quotes never matches. This encoder does not follow it.
+ * Quoted forms are never emitted because the engine does not parse quotes in `optionalFilters`: a
+ * quoted entry is ignored, `"attr":-"v"` matches every record, and `\"` inside quotes never
+ * matches. Version 2 `FilterConverter.Legacy` with `escape = true` emitted those quoted forms; this
+ * encoder does not follow it.
  *
  * Attribute names containing `:` are not supported (the engine's split is unverified).
  *
- * See https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/.
+ * See https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/.
  *
  * ## Shared shape with [FilterSqlConverter]
  *
  * Both encoders share [conjunctiveRows], so they produce the same AND/OR shape and leaf polarity on
- * every tree. Leaf text differs: a negated [Filter.Range] is two comparisons here and `NOT attr:lo
- * TO hi` in [FilterSqlConverter]; a negated [Filter.Comparison] flips its operator here and is `NOT
- * attr op n` there.
- *
- * ## Range negation
- *
- * A negated [Filter.Range] encodes as two comparisons: `attr < lo` and `attr > hi`.
+ * every tree. Leaf text differs: [FilterSqlConverter] quotes with [FilterQuote] and writes negation
+ * as a `NOT` prefix; this encoder never quotes and writes negation as `-` after the colon.
  */
 internal object FilterLegacyConverter {
 
   /**
-   * Legacy [FacetFilters] for [Filter.Facet] leaves in [root].
+   * Legacy [OptionalFilters] for the [Filter.Facet] leaves in [root].
    *
-   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
-   * nested-list format cannot encode. Returns `null` when no Facet leaf remains.
-   */
-  fun facet(root: FilterGroup): FacetFilters? =
-    wrapLegacy(toLegacyRows(root, FilterFamily.Facet), FacetFilters::of, FacetFilters::of)
-
-  /**
-   * Legacy [OptionalFilters] for [Filter.Facet] leaves in [root].
-   *
-   * Same family rule and reject cases as [facet]. Returns `null` when no Facet leaf remains.
+   * Throws [IllegalArgumentException] for a non-facet leaf or a De Morgan OR-of-ANDs that the
+   * nested-list format cannot encode. Returns `null` when no leaf remains.
    */
   fun optional(root: FilterGroup): OptionalFilters? =
     wrapLegacy(toLegacyRows(root, FilterFamily.Facet), OptionalFilters::of, OptionalFilters::of)
-
-  /**
-   * Legacy [NumericFilters] for [Filter.Comparison] and [Filter.Range] leaves in [root].
-   *
-   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
-   * nested-list format cannot encode. Returns `null` when no numeric leaf remains.
-   */
-  fun numeric(root: FilterGroup): NumericFilters? =
-    wrapLegacy(toLegacyRows(root, FilterFamily.Numeric), NumericFilters::of, NumericFilters::of)
-
-  /**
-   * Legacy [TagFilters] for [Filter.Tag] leaves in [root].
-   *
-   * Throws [IllegalArgumentException] for a wrong-family leaf or a De Morgan OR-of-ANDs that the
-   * nested-list format cannot encode. Returns `null` when no Tag leaf remains.
-   */
-  fun tag(root: FilterGroup): TagFilters? =
-    wrapLegacy(toLegacyRows(root, FilterFamily.Tag), TagFilters::of, TagFilters::of)
 }
 
 private fun toLegacyRows(root: FilterGroup, family: FilterFamily): List<List<String>> =
@@ -120,31 +84,10 @@ private fun encodeLeaf(filter: Filter, negated: Boolean): List<String> {
       val score = filter.score?.let { "<score=$it>" }.orEmpty()
       listOf("${filter.attribute}:${legacyValue(filter.value, negated)}$score")
     }
-    is Filter.Tag -> listOf(legacyValue(filter.value, negated))
-    is Filter.Comparison -> {
-      val operator = if (negated) filter.operator.negated() else filter.operator
-      listOf("${FilterQuote.quote(filter.attribute)} ${operator.raw} ${filter.value}")
-    }
-    is Filter.Range -> {
-      val attribute = FilterQuote.quote(filter.attribute)
-      if (negated) {
-        listOf("$attribute < ${filter.lowerBound}", "$attribute > ${filter.upperBound}")
-      } else {
-        listOf("$attribute:${filter.lowerBound} TO ${filter.upperBound}")
-      }
-    }
+    is Filter.Tag,
+    is Filter.Numeric -> error("optionalFilters holds facet leaves only: $filter")
   }
 }
-
-private fun NumericOperator.negated(): NumericOperator =
-  when (this) {
-    NumericOperator.Less -> NumericOperator.GreaterOrEquals
-    NumericOperator.LessOrEquals -> NumericOperator.Greater
-    NumericOperator.Equals -> NumericOperator.NotEquals
-    NumericOperator.NotEquals -> NumericOperator.Equals
-    NumericOperator.Greater -> NumericOperator.LessOrEquals
-    NumericOperator.GreaterOrEquals -> NumericOperator.Less
-  }
 
 /**
  * Legacy value token, never quoted: `v`, `\-v` (a positive value that starts with `-`), `-v`

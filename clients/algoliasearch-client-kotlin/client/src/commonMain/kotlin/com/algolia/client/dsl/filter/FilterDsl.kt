@@ -85,3 +85,47 @@ public class FilterDsl internal constructor(private val nodes: FilterAccumulator
 @AlgoliaExperimentalDsl
 public fun filters(block: FilterDsl.() -> Unit): String? =
   FilterSqlConverter(FilterDsl().apply(block).root())
+
+/**
+ * OR-context builder for [Filter.Numeric] children. Exposes only numeric leaves and [not]. An empty
+ * [not] block appends nothing.
+ */
+@AlgoliaDsl
+@AlgoliaExperimentalDsl
+public class NumericOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Numeric>) :
+  NumericLeaves by NumericLeafMixin(core::add) {
+
+  public constructor() : this(FamilyOrBuilder<Filter.Numeric> { !it })
+
+  /**
+   * Appends each numeric leaf in [block] with [Filter.negated] toggled: `not { a; b }` contributes
+   * `NOT a OR NOT b`. An empty block appends nothing.
+   */
+  public fun not(block: NumericOrDsl.() -> Unit) {
+    core.not(NumericOrDsl().apply(block).snapshot())
+  }
+
+  internal fun snapshot(): List<Filter.Numeric> = core.snapshot()
+}
+
+/**
+ * OR-context builder for [Filter.Tag] children. Exposes only tag leaves and [not]. An empty [not]
+ * block appends nothing.
+ */
+@AlgoliaDsl
+@AlgoliaExperimentalDsl
+public class TagOrDsl internal constructor(private val core: FamilyOrBuilder<Filter.Tag>) :
+  TagLeaves by TagLeafMixin(core::add) {
+
+  public constructor() : this(FamilyOrBuilder<Filter.Tag> { !it })
+
+  /**
+   * Appends each tag leaf in [block] with [Filter.negated] toggled: `not { a; b }` contributes `NOT
+   * a OR NOT b`. An empty block appends nothing.
+   */
+  public fun not(block: TagOrDsl.() -> Unit) {
+    core.not(TagOrDsl().apply(block).snapshot())
+  }
+
+  internal fun snapshot(): List<Filter.Tag> = core.snapshot()
+}

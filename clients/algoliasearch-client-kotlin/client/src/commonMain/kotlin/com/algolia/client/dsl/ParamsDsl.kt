@@ -15,8 +15,7 @@ import com.algolia.client.model.search.SearchParamsObject
  * Last write wins: a later assignment to the same builder property replaces an earlier one. If
  * [query] is non-null, it is written first. The [block] may overwrite it. A later `filters { }` or
  * `filters = "..."` assignment replaces an earlier `filters` value. The same rule applies to
- * `facetFilters`, `optionalFilters`, `numericFilters`, and `tagFilters`. The DSL does not merge
- * filter parameters.
+ * `optionalFilters`. The DSL does not merge filter parameters.
  *
  * ```
  * val params =
@@ -50,8 +49,7 @@ public fun query(
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one. A later
  * `filters { }` or `filters = "..."` assignment replaces an earlier `filters` value. The same rule
- * applies to `facetFilters`, `optionalFilters`, `numericFilters`, and `tagFilters`. The DSL does
- * not merge filter parameters.
+ * applies to `optionalFilters`. The DSL does not merge filter parameters.
  *
  * Pass the result to the generated [com.algolia.client.api.SearchClient.browse] method or to
  * [com.algolia.client.extensions.browseObjects]:
@@ -67,8 +65,7 @@ public fun browse(block: BrowseBuilder.() -> Unit): BrowseParamsObject =
  * Constructs a [DeleteByParams] value from a [DeleteByBuilder].
  *
  * Last write wins: a later assignment to the same builder property replaces an earlier one,
- * including values set by [filters], [facetFilters], [numericFilters], and [tagFilters].
- * [DeleteByParams] has no `optionalFilters` field.
+ * including values set by [filters]. [DeleteByParams] has no `optionalFilters` field.
  *
  * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) are set as
  * builder properties.

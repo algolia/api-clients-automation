@@ -4,7 +4,6 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaDsl
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.model.search.FacetFilters
 import com.algolia.client.model.search.OptionalFilters
 
 /** AND-context builder for [Filter.Facet] leaves and [FilterGroup.Or.Facet] groups. */
@@ -61,11 +60,6 @@ public class FacetOrDsl internal constructor(private val core: FamilyOrBuilder<F
 
   internal fun snapshot(): List<Filter.Facet> = core.snapshot()
 }
-
-/** Constructs [FacetFilters] from a facet-only DSL block, or `null` when the block is empty. */
-@AlgoliaExperimentalDsl
-public fun facetFilters(block: FacetFilterDsl.() -> Unit): FacetFilters? =
-  FilterLegacyConverter.facet(FacetFilterDsl().apply(block).root())
 
 /** Constructs [OptionalFilters] from a facet-only DSL block, or `null` when the block is empty. */
 @AlgoliaExperimentalDsl

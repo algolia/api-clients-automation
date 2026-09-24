@@ -94,57 +94,6 @@ internal class ServerContractLiveTest {
   }
 
   @Test
-  fun L13_legacyFacetLeadingDashNeedsEscape() = live {
-    fx.assertRow(ServerContract.L13a)
-    fx.assertRow(ServerContract.L13b)
-    fx.assertRow(ServerContract.L13c)
-    fx.assertRow(ServerContract.L13d)
-    fx.assertRow(ServerContract.L13e)
-  }
-
-  @Test
-  fun L14_legacyFacetNegationForms() = live {
-    fx.assertRow(ServerContract.L14a)
-    fx.assertRow(ServerContract.L14b)
-    fx.assertRow(ServerContract.L14c)
-    fx.assertRow(ServerContract.L14d)
-    fx.assertRow(ServerContract.L14e)
-  }
-
-  @Test
-  fun L15_legacyFacetNegatedDashValue() = live {
-    fx.assertRow(ServerContract.L15a)
-    fx.assertRow(ServerContract.L15b)
-    fx.assertRow(ServerContract.L15c)
-    fx.assertRow(ServerContract.L15d)
-    fx.assertRow(ServerContract.L15e)
-  }
-
-  @Test
-  fun L16_legacyFacetUnquotedSpecialValues() = live {
-    fx.assertRow(ServerContract.L16a)
-    fx.assertRow(ServerContract.L16b)
-    fx.assertRow(ServerContract.L16c)
-    fx.assertRow(ServerContract.L16d)
-    fx.assertRow(ServerContract.L16e)
-    fx.assertRow(ServerContract.L16f)
-    fx.assertRow(ServerContract.L16g)
-    fx.assertRow(ServerContract.L16h)
-    fx.assertRow(ServerContract.L16i)
-  }
-
-  @Test
-  fun L17_legacyTagDashForms() = live {
-    fx.assertRow(ServerContract.L17a)
-    fx.assertRow(ServerContract.L17b)
-    fx.assertRow(ServerContract.L17c)
-    fx.assertRow(ServerContract.L17d)
-    fx.assertRow(ServerContract.L17e)
-    fx.assertRow(ServerContract.L17f)
-    fx.assertRow(ServerContract.L17g)
-  }
-
-  @Test
   fun L18_optionalFiltersQuotedFormsAreNoOps() = live {
     fx.assertRow(ServerContract.L18a)
     fx.assertRow(ServerContract.L18b)
@@ -188,9 +137,7 @@ internal class ServerContractLiveTest {
   @Test
   fun L23_booleanAndNumberFacetValues() = live {
     fx.assertRow(ServerContract.L23a)
-    fx.assertRow(ServerContract.L23b)
     fx.assertRow(ServerContract.L23c)
-    fx.assertRow(ServerContract.L23d)
   }
 
   @Test fun L24_sqlNotWithScoreZero() = live { fx.assertRow(ServerContract.L24) }
@@ -232,7 +179,7 @@ internal class ServerContractLiveTest {
   @Test fun L35_sqlAndOfThreeTypedFacets() = live { fx.assertRow(ServerContract.L35) }
 
   @Test
-  fun L36_negatedFacetsSqlAndLegacy() = live {
+  fun L36_negatedFacets() = live {
     fx.assertRow(ServerContract.L36a)
     fx.assertRow(ServerContract.L36b)
   }
@@ -258,8 +205,6 @@ internal class ServerContractLiveTest {
   }
 
   @Test fun L42_sqlOrGroupsByFamily() = live { fx.assertRow(ServerContract.L42) }
-
-  @Test fun L43_legacyNumericAndTagOr() = live { fx.assertRow(ServerContract.L43) }
 
   @Test fun L44_optionalAndOrWithScoreAndNegation() = live { fx.assertRow(ServerContract.L44) }
 

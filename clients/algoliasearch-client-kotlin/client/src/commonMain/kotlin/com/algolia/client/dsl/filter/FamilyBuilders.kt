@@ -5,10 +5,9 @@ package com.algolia.client.dsl.filter
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
 /**
- * AND-context core shared by [FacetFilterDsl], [NumericFilterDsl], and [TagFilterDsl]: a mixed
- * [FilterAccumulator], the family `and { }` and `or { }` wrappers, `not { }` through [negate], and
- * [root]. The public shells keep the typed block receivers and hand this class the collected
- * children.
+ * AND-context core behind [FacetFilterDsl]: a mixed [FilterAccumulator], the family `and { }` and
+ * `or { }` wrappers, `not { }` through [negate], and [root]. The public shell keeps the typed block
+ * receivers and hands this class the collected children.
  */
 internal class FamilyAndBuilder<L : Filter>(private val orGroup: (List<L>) -> FilterGroup.Or) {
   private val nodes = FilterAccumulator<FilterGroup>()
@@ -40,7 +39,7 @@ internal class FamilyAndBuilder<L : Filter>(private val orGroup: (List<L>) -> Fi
 /**
  * OR-context core shared by [FacetOrDsl], [NumericOrDsl], and [TagOrDsl]: a leaf-typed
  * [FilterAccumulator] and a `not { }` that toggles [Filter.negated] on each collected leaf. There
- * is no `or { }`; the enclosing AND-context shell builds the family OR group.
+ * is no `or { }`; the enclosing shell ([FacetFilterDsl] or [FilterDsl]) builds the family OR group.
  */
 internal class FamilyOrBuilder<L : Filter>(private val toggle: (L) -> L) {
   private val nodes = FilterAccumulator<L>()

@@ -36,11 +36,6 @@ internal class MatrixP0Test {
   }
 
   @Test
-  fun C22_legacyNumericAndTagOrGroups() {
-    assertWire(ServerContract.L43, RowsP0.c22())
-  }
-
-  @Test
   fun C32_scoreOmittedVersusExplicitZeroInSqlOr() {
     assertWire(ServerContract.L51, RowsP0.c32())
   }

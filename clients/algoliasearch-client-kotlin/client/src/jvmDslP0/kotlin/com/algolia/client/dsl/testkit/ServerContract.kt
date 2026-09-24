@@ -177,228 +177,6 @@ internal object ServerContract {
       json("""{"filters":"NOT _tags:\"-x\""}"""),
       listOf(Expect.Hits(setOf("1", "3", "4", "5"))),
     )
-  // L13a: old output read as NOT.
-  val L13a =
-    ContractRow(
-      "L13a",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"label\":\"-Movie\""]]}"""),
-      listOf(Expect.Hits(setOf("1", "3", "4", "5"))),
-    )
-  val L13b =
-    ContractRow(
-      "L13b",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"count\":\"-12\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L13c =
-    ContractRow(
-      "L13c",
-      Kind.Evidence,
-      json("""{"facetFilters":[["label:\\-Movie"]]}"""),
-      listOf(Expect.Hits(setOf("1"))),
-    )
-  val L13d =
-    ContractRow(
-      "L13d",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"label\":\"\\-Movie\""]]}"""),
-      listOf(Expect.Hits(setOf("1"))),
-    )
-  val L13e =
-    ContractRow(
-      "L13e",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"count\":\"\\-12\""]]}"""),
-      listOf(Expect.Hits(setOf("2"))),
-    )
-  // L14a: v2 negation ignored.
-  val L14a =
-    ContractRow(
-      "L14a",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"color\":-\"red\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L14b =
-    ContractRow(
-      "L14b",
-      Kind.Evidence,
-      json("""{"facetFilters":[["-\"color\":\"red\""]]}"""),
-      listOf(Expect.Hits(emptySet())),
-    )
-  val L14c =
-    ContractRow(
-      "L14c",
-      Kind.Evidence,
-      json("""{"facetFilters":[["color:-red"]]}"""),
-      listOf(Expect.Hits(setOf("2", "4", "5"))),
-    )
-  val L14d =
-    ContractRow(
-      "L14d",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"color\":\"-red\""]]}"""),
-      listOf(Expect.Hits(setOf("2", "4", "5"))),
-    )
-  val L14e =
-    ContractRow(
-      "L14e",
-      Kind.Evidence,
-      json("""{"facetFilters":[["color:\"-red\""]]}"""),
-      listOf(Expect.Hits(setOf("2", "4", "5"))),
-    )
-  val L15a =
-    ContractRow(
-      "L15a",
-      Kind.Evidence,
-      json("""{"facetFilters":[["label:--Movie"]]}"""),
-      listOf(Expect.Hits(setOf("2", "3", "4", "5"))),
-    )
-  val L15b =
-    ContractRow(
-      "L15b",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"label\":\"--Movie\""]]}"""),
-      listOf(Expect.Hits(setOf("2", "3", "4", "5"))),
-    )
-  val L15c =
-    ContractRow(
-      "L15c",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"label\":-\"\\-Movie\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L15d =
-    ContractRow(
-      "L15d",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"label\":\"-\\-Movie\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L15e =
-    ContractRow(
-      "L15e",
-      Kind.Evidence,
-      json("""{"facetFilters":[["label:-\\-Movie"]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L16a =
-    ContractRow(
-      "L16a",
-      Kind.Evidence,
-      json("""{"facetFilters":[["provider:NBC: Universal \"East\""]]}"""),
-      listOf(Expect.Hits(setOf("5"))),
-    )
-  val L16b =
-    ContractRow(
-      "L16b",
-      Kind.Evidence,
-      json("""{"facetFilters":[["color:navy blue"]]}"""),
-      listOf(Expect.Hits(setOf("5"))),
-    )
-  val L16c =
-    ContractRow(
-      "L16c",
-      Kind.Evidence,
-      json("""{"facetFilters":[["color:-navy blue"]]}"""),
-      listOf(Expect.Hits(setOf("1", "2", "3", "4"))),
-    )
-  val L16d =
-    ContractRow(
-      "L16d",
-      Kind.Evidence,
-      json("""{"facetFilters":[["count:10"]]}"""),
-      listOf(Expect.Hits(setOf("1"))),
-    )
-  val L16e =
-    ContractRow(
-      "L16e",
-      Kind.Evidence,
-      json("""{"facetFilters":[["count:\\-12"]]}"""),
-      listOf(Expect.Hits(setOf("2"))),
-    )
-  val L16f =
-    ContractRow(
-      "L16f",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"provider\":\"NBC: Universal \\\"East\\\"\""]]}"""),
-      listOf(Expect.Hits(emptySet())),
-    )
-  val L16g =
-    ContractRow(
-      "L16g",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"provider\":\"NBC: Universal \"East\"\""]]}"""),
-      listOf(Expect.Hits(setOf("5"))),
-    )
-  // L16h: positive quoted form accepted (live_results F1).
-  val L16h =
-    ContractRow(
-      "L16h",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"color\":\"red\""]]}"""),
-      listOf(Expect.Hits(setOf("1", "3"))),
-    )
-  // L16i: quoted attribute, bare value accepted (live_results F4).
-  val L16i =
-    ContractRow(
-      "L16i",
-      Kind.Evidence,
-      json("""{"facetFilters":[["\"color\":red"]]}"""),
-      listOf(Expect.Hits(setOf("1", "3"))),
-    )
-  val L17a =
-    ContractRow(
-      "L17a",
-      Kind.Evidence,
-      json("""{"tagFilters":[["\\-x"]]}"""),
-      listOf(Expect.Hits(setOf("2"))),
-    )
-  val L17b =
-    ContractRow(
-      "L17b",
-      Kind.Evidence,
-      json("""{"tagFilters":[["--x"]]}"""),
-      listOf(Expect.Hits(setOf("1", "3", "4", "5"))),
-    )
-  val L17c =
-    ContractRow(
-      "L17c",
-      Kind.Evidence,
-      json("""{"tagFilters":[["-\\-x"]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L17d =
-    ContractRow(
-      "L17d",
-      Kind.Evidence,
-      json("""{"tagFilters":[["-\"\\-x\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L17e =
-    ContractRow(
-      "L17e",
-      Kind.Evidence,
-      json("""{"tagFilters":[["-\"-x\""]]}"""),
-      listOf(Expect.Hits(ALL)),
-    )
-  val L17f =
-    ContractRow(
-      "L17f",
-      Kind.Evidence,
-      json("""{"tagFilters":[["\"-x\""]]}"""),
-      listOf(Expect.Hits(emptySet())),
-    )
-  // L17g: old `tag("-x")` meant NOT x.
-  val L17g =
-    ContractRow(
-      "L17g",
-      Kind.Evidence,
-      json("""{"tagFilters":[["-x"]]}"""),
-      listOf(Expect.Hits(setOf("1", "2", "3", "5"))),
-    )
   val L18a =
     ContractRow(
       "L18a",
@@ -549,25 +327,11 @@ internal object ServerContract {
       json("""{"filters":"isFeatured:true"}"""),
       listOf(Expect.Hits(setOf("1", "4"))),
     )
-  val L23b =
-    ContractRow(
-      "L23b",
-      Kind.Unproven,
-      json("""{"facetFilters":[["isFeatured:true"]]}"""),
-      listOf(Expect.Hits(setOf("1", "4"))),
-    )
   val L23c =
     ContractRow(
       "L23c",
       Kind.Unproven,
       json("""{"filters":"priority:2"}"""),
-      listOf(Expect.Hits(setOf("2", "3"))),
-    )
-  val L23d =
-    ContractRow(
-      "L23d",
-      Kind.Unproven,
-      json("""{"facetFilters":[["priority:2"]]}"""),
       listOf(Expect.Hits(setOf("2", "3"))),
     )
   val L24 =
@@ -607,9 +371,7 @@ internal object ServerContract {
     ContractRow(
       "L26c",
       Kind.Derived,
-      json(
-        """{"filters":"(locale:en-US OR locale:fr-FR)","numericFilters":[["count:0 TO 10"]],"tagFilters":[["featured"]]}"""
-      ),
+      json("""{"filters":"(locale:en-US OR locale:fr-FR) AND count:0 TO 10 AND _tags:featured"}"""),
       listOf(Expect.Hits(setOf("1"))),
     )
   val L27 =
@@ -736,7 +498,7 @@ internal object ServerContract {
     ContractRow(
       "L36b",
       Kind.Derived,
-      json("""{"facetFilters":[["genre:-comedy"]]}"""),
+      json("""{"filters":"NOT genre:comedy"}"""),
       listOf(Expect.Hits(setOf("2", "4"))),
     )
   val L37a =
@@ -819,15 +581,6 @@ internal object ServerContract {
       "L42",
       Kind.Derived,
       json("""{"filters":"(count:0 TO 9 OR count = 10) AND (_tags:featured OR _tags:x)"}"""),
-      listOf(Expect.Hits(setOf("1"))),
-    )
-  val L43 =
-    ContractRow(
-      "L43",
-      Kind.Derived,
-      json(
-        """{"numericFilters":[["count:0 TO 9","count = 10"]],"tagFilters":[["featured","x"]]}"""
-      ),
       listOf(Expect.Hits(setOf("1"))),
     )
   val L44 =

@@ -36,7 +36,7 @@ internal class MatrixP1Test {
   }
 
   @Test
-  fun C16_isNegatedFlagOnSqlAndLegacy() {
+  fun C16_isNegatedFlag() {
     assertWire(ServerContract.L36a, RowsP1.c16a())
     assertWire(ServerContract.L36b, RowsP1.c16b())
   }
@@ -78,7 +78,6 @@ internal class MatrixP1Test {
     assertWire("""{"filters":"genre:comedy"}""", RowsP1.c31d())
     assertWire("""{"filters":"priority:2<score=0>"}""", RowsP1.c31e())
     assertWire("""{"optionalFilters":[["isFeatured:true<score=500>"]]}""", RowsP1.c31f())
-    assertWire("""{"facetFilters":[["genre:-comedy"]]}""", RowsP1.c31g())
   }
 
   @Test
