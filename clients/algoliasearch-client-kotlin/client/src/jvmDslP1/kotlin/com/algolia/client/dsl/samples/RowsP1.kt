@@ -134,14 +134,6 @@ internal object RowsP1 {
     getRankingInfo = true
   }
 
-  fun c31d(): SearchParamsObject = query { filters { addFacet("genre", "comedy", score = null) } }
-
-  fun c31e(): SearchParamsObject = query { filters { and { addFacet("priority", 2) } } }
-
-  fun c31f(): SearchParamsObject = query {
-    optionalFilters { or { addFacet("isFeatured", true, score = 500) } }
-  }
-
   fun c33(): SearchParamsObject = query {
     optionalFilters {
       facet("genre", "comedy", score = 0)

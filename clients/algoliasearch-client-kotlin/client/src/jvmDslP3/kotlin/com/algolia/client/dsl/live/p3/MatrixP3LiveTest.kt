@@ -6,6 +6,7 @@ import com.algolia.client.dsl.testkit.LiveIndex
 import com.algolia.client.dsl.testkit.ServerContract
 import com.algolia.client.dsl.testkit.assertDelete
 import com.algolia.client.dsl.testkit.assertRow
+import com.algolia.client.dsl.testkit.assertWire
 import com.algolia.client.dsl.testkit.live
 import com.algolia.client.dsl.testkit.wire
 import kotlin.test.Test
@@ -66,6 +67,7 @@ internal class MatrixP3LiveTest {
   @Test
   fun C14_deleteByComposer() =
     live(timeout = DELETE_TIMEOUT) {
+      assertWire(ServerContract.D2, RowsP3.c14())
       fx.assertDelete(ServerContract.D2) { copy ->
         copy.client.deleteBy(copy.name, RowsP3.c14()).taskID
       }
