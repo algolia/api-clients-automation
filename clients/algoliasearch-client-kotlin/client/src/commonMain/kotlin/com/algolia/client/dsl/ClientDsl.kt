@@ -29,7 +29,7 @@ import com.algolia.client.transport.RequestOptions
 public suspend fun SearchClient.searchSingleIndex(
   indexName: String,
   requestOptions: RequestOptions? = null,
-  block: QueryBuilder.() -> Unit,
+  block: DSLQuery.() -> Unit,
 ): SearchResponse =
   searchSingleIndex(
     indexName = indexName,
@@ -44,7 +44,7 @@ public suspend fun SearchClient.searchSingleIndex(
 @AlgoliaExperimentalDsl
 public suspend fun SearchClient.searchSingleIndex(
   indexName: String,
-  composer: QueryComposer,
+  composer: DSLQueryComposer,
   requestOptions: RequestOptions? = null,
 ): SearchResponse = searchSingleIndex(indexName, SearchParams.of(composer.build()), requestOptions)
 
@@ -62,7 +62,7 @@ public suspend fun SearchClient.setSettings(
   indexName: String,
   forwardToReplicas: Boolean? = null,
   requestOptions: RequestOptions? = null,
-  block: SettingsBuilder.() -> Unit,
+  block: DSLSettings.() -> Unit,
 ): UpdatedAtResponse =
   setSettings(
     indexName = indexName,
@@ -82,7 +82,7 @@ public suspend fun SearchClient.setSettings(
 public suspend fun SearchClient.deleteBy(
   indexName: String,
   requestOptions: RequestOptions? = null,
-  block: DeleteByBuilder.() -> Unit,
+  block: DSLDeleteBy.() -> Unit,
 ): UpdatedAtResponse =
   deleteBy(
     indexName = indexName,
@@ -97,6 +97,6 @@ public suspend fun SearchClient.deleteBy(
 @AlgoliaExperimentalDsl
 public suspend fun SearchClient.deleteBy(
   indexName: String,
-  composer: DeleteByComposer,
+  composer: DSLDeleteByComposer,
   requestOptions: RequestOptions? = null,
 ): UpdatedAtResponse = deleteBy(indexName, composer.build(), requestOptions)

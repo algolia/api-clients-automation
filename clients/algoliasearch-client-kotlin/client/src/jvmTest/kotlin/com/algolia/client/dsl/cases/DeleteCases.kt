@@ -48,7 +48,7 @@ internal object DeleteCases {
   val composerFragmentsAnded =
     DeleteCase(
       dsl = {
-        val composer = DeleteByComposer()
+        val composer = DSLDeleteByComposer()
         composer.add {
           filters { orFacet { listOf("e1", "e2", "e3").forEach { facet("entityId", it) } } }
         }

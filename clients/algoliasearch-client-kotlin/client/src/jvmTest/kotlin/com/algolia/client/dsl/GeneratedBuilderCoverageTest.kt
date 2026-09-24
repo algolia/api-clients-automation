@@ -2,7 +2,7 @@
 
 package com.algolia.client.dsl
 
-import com.algolia.client.dsl.generated.SearchParamsObjectBuilder
+import com.algolia.client.dsl.generated.DSLSearchParamsObject
 import java.io.File
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
@@ -22,8 +22,9 @@ import kotlin.test.assertTrue
  * constructor.
  *
  * The generator writes one file per model under `dsl/generated/`, each holding a single
- * `<Model>Builder` class. Regenerating updates the set; this test discovers every `*Builder.class`
- * compiled from that package on the test classpath, so it never walks `.kt` sources.
+ * `DSL<Model>` class. Regenerating updates the set; this test discovers every `DSL*.class` compiled
+ * from that package on the test classpath (skipping `$` nested/synthetic classes), so it never
+ * walks `.kt` sources.
  *
  * Placed under `jvmTest` because constructor and `var` lookup needs JVM [Class] reflection.
  * `kotlin.reflect.full` (`memberProperties` / `primaryConstructor`) is not on the test classpath.
@@ -35,33 +36,36 @@ internal class GeneratedBuilderCoverageTest {
     val builders = generatedBuilderClasses()
     assertEquals(
       setOf(
-        "SearchParamsObjectBuilder",
-        "BrowseParamsObjectBuilder",
-        "DeleteByParamsBuilder",
-        "IndexSettingsBuilder",
-        "RuleBuilder",
-        "ConditionBuilder",
-        "ConsequenceBuilder",
-        "ConsequenceParamsBuilder",
-        "SynonymHitBuilder",
+        "DSLSearchParamsObject",
+        "DSLBrowseParamsObject",
+        "DSLDeleteByParams",
+        "DSLIndexSettings",
+        "DSLRule",
+        "DSLCondition",
+        "DSLConsequence",
+        "DSLConsequenceParams",
+        "DSLSynonymHit",
       ),
       builders.map { it.simpleName }.toSet(),
     )
     for (builder in builders) {
-      val modelName = builder.simpleName.removeSuffix("Builder")
+      val modelName = builder.simpleName.removePrefix("DSL")
       val model = Class.forName("com.algolia.client.model.search.$modelName").kotlin
       assertBuilderVarsMatchConstructor(builder.kotlin, model)
     }
   }
 
   private fun generatedBuilderClasses(): List<Class<*>> {
-    val root =
-      File(SearchParamsObjectBuilder::class.java.protectionDomain.codeSource.location.toURI())
+    val root = File(DSLSearchParamsObject::class.java.protectionDomain.codeSource.location.toURI())
     val prefix = "com/algolia/client/dsl/generated/"
     return root
       .walkTopDown()
       .filter { file ->
-        file.isFile && file.name.endsWith("Builder.class") && file.path.contains(prefix)
+        file.isFile &&
+          file.name.startsWith("DSL") &&
+          file.name.endsWith(".class") &&
+          !file.name.contains('$') &&
+          file.path.contains(prefix)
       }
       .map { file ->
         val qualified =

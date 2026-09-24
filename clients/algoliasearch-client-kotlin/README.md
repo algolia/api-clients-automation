@@ -84,14 +84,14 @@ val params = query {
 
 The `filters` string only uses shapes Algolia supports: `NOT` only precedes a single filter (`isNegated`), nested `and { }` blocks are flattened, the top-level `AND` has no parentheses, and each `OR` holds one filter family by construction. `optionalFilters` entries are written unquoted, exactly as the engine matches them: `category:Book`, negated `category:-Book`, a value starting with `-` as `category:\-Movie` (negated: `category:--Movie`), and values with spaces, colons, or quotes as-is (`provider:NBC: Universal "East"`). Scores are emitted whenever set, including `score = 0`; the engine takes the maximum inside an `OR` group and sums across `AND`ed filters.
 
-Store reusable fragments with the stable receiver names `QueryBuilder`, `BrowseBuilder`, `DeleteByBuilder`, and `SettingsBuilder`, and the filter receivers `DSLFilters` and `DSLFacetFilters`. The four builder names are Kotlin typealiases; Java code and JVM signatures still show the generated `*Builder` classes:
+Store reusable fragments with the stable receiver names `DSLQuery`, `DSLBrowse`, `DSLDeleteBy`, and `DSLSettings`, and the filter receivers `DSLFilters` and `DSLFacetFilters`. The four receiver names are Kotlin typealiases of the generated `DSL<Model>` classes (`DSLSearchParamsObject`, `DSLBrowseParamsObject`, `DSLDeleteByParams`, `DSLIndexSettings`); Java code and JVM signatures show the generated classes:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
 val locale: DSLFilters.() -> Unit = { orFacet { facet("locale", "en-US") } }
 
 @OptIn(AlgoliaExperimentalDsl::class)
-val base: QueryBuilder.() -> Unit = { hitsPerPage = 20; filters(locale) }
+val base: DSLQuery.() -> Unit = { hitsPerPage = 20; filters(locale) }
 ```
 
 ```kotlin
@@ -138,23 +138,23 @@ val params = query {
 
 ### Composing queries
 
-`QueryComposer` assembles one `SearchParamsObject` from fragments contributed by several modules. `add { }` contributes to a field; `override { }` sets a field outright:
+`DSLQueryComposer` assembles one `SearchParamsObject` from fragments contributed by several modules. `add { }` contributes to a field; `override { }` sets a field outright:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
-val composer = QueryComposer()                        // was: QueryWrapper()
+val composer = DSLQueryComposer()                     // was: QueryWrapper()
 composer.add { filters { orFacet { facet("locale", primary); secondary?.let { facet("locale", it) } } } }
 composer.override { queryLanguages { +SupportedLanguage.En } }
 composer.add { optionalFilters { or { facet("isFeatured", true, score = 500) } } }
 composer.override { sumOrFiltersScores = true }
-val extra: QueryAdditions.() -> Unit = { ruleContexts { +"desktop" } }   // stored fragment
+val extra: DSLQueryAdditions.() -> Unit = { ruleContexts { +"desktop" } }   // stored fragment
 composer.add(extra)
 client.searchSingleIndex(indexName, composer)         // every lambda above runs here
 ```
 
-`client.searchSingleIndex(indexName, composer)` calls `composer.build()` and sends the result; `client.deleteBy(indexName, composer)` does the same for a `DeleteByComposer`. `composer.build()` still returns the `SearchParamsObject` when you need the value itself, for example to pass it to `SearchParams.of` or to inspect it.
+`client.searchSingleIndex(indexName, composer)` calls `composer.build()` and sends the result; `client.deleteBy(indexName, composer)` does the same for a `DSLDeleteByComposer`. `composer.build()` still returns the `SearchParamsObject` when you need the value itself, for example to pass it to `SearchParams.of` or to inspect it.
 
-`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `QueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `QueryBuilder`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
+`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `DSLQueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `DSLQuery`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DSLDeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
 
 Compared with a hand-rolled `QueryWrapper` that stored `DSLFilters.() -> Unit`, `DSLFacetFilters.() -> Unit`, and `DSLStrings.() -> Unit` lambdas: fragments are per-field inside one `add { }` (no separate lambda types to declare), and `override { }` runs after all additive fields.
 
@@ -164,11 +164,11 @@ Map version 2 types to version 3 types:
 
 | Version 2 | Version 3 |
 | --- | --- |
-| `Query(...)`, `query { }` | `query { }` → `SearchParamsObject`; receiver `QueryBuilder` |
+| `Query(...)`, `query { }` | `query { }` → `SearchParamsObject`; receiver `DSLQuery` |
 | `index.search(query)` | `client.searchSingleIndex(indexName) { }` |
 | `index.browse(query)` | `client.browse(indexName, browse { })` |
 | `DeleteByQuery().apply { filters { } }` + `index.deleteObjectsBy(q)` | `client.deleteBy(indexName) { filters { } }` |
-| `Settings` | `settings { }` → `IndexSettings`; receiver `SettingsBuilder` |
+| `Settings` | `settings { }` → `IndexSettings`; receiver `DSLSettings` |
 | `Attribute("x")` | `"x"` |
 | `DSLFilters`, `DSLFacetFilters` (facet / optional filters) | same names (`com.algolia.client.dsl.filter`) |
 | `DSLGroupFacet`, `DSLGroupNumeric`, `DSLGroupTag` | same names |
@@ -176,6 +176,7 @@ Map version 2 types to version 3 types:
 | `facetFilters { }`, `numericFilters { }`, `tagFilters { }` | `filters { }` |
 | `DSLAttributes`, `DSLStrings` | same names; `DSLAttributes` is an alias of `DSLStrings` |
 | `DSLLanguage`, `DSLSearchableAttributes`, `DSLAttributesForFaceting`, `DSLCustomRanking`, `DSLRanking`, `@DSLParameters` | same names |
+| `DSLConditions`, `DSLPromotions`, `DSLObjectIDs` | same names; members differ from version 2 (`condition { }`, `objectID(id, position)`/`objectIDs(ids, position)`, `+"objectID"`) |
 | `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
 | `not { }`, unary `!` | `isNegated = true` on each leaf |
 | `Distinct(1)` | `Distinct.of(1)` |
@@ -186,7 +187,7 @@ Map version 2 types to version 3 types:
 | `UserToken("u")` | `"u"` |
 | `ResponseFields.Hits`, `ResponseFields.Other("x")` | `+"hits"`, `+"x"` |
 | v2 legacy strings `"attr":"v"`, `"attr":-"v"` | `attr:v`, `attr:-v` — the engine ignores v2's quoted form in `optionalFilters` |
-| custom query wrapper | `QueryComposer` / `DeleteByComposer` |
+| custom query wrapper | `DSLQueryComposer` / `DSLDeleteByComposer` |
 | `initIndex` | removed; pass the index name to each client method |
 
 `SearchClient.search` is multi-query. Use `searchSingleIndex` for a single index.

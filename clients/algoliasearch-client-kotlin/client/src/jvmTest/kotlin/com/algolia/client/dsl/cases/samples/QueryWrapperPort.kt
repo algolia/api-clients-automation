@@ -10,7 +10,7 @@ import com.algolia.client.model.search.*
  * A version 2 style query wrapper ported to the DSL receivers: fragments are recorded by `add { }`
  * and replayed once into a single builder, overrides run last.
  */
-internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
+internal class QueryWrapper(private val base: DSLQuery.() -> Unit = {}) {
 
   interface Additive {
     fun restrictSearchableAttributes(block: DSLAttributes.() -> Unit)
@@ -29,7 +29,7 @@ internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
   private val hardFilters = mutableListOf<DSLFilters.() -> Unit>()
   private val optional = mutableListOf<DSLFacetFilters.() -> Unit>()
   private val contexts = mutableListOf<DSLStrings.() -> Unit>()
-  private val overrides = mutableListOf<QueryBuilder.() -> Unit>()
+  private val overrides = mutableListOf<DSLQuery.() -> Unit>()
 
   fun add(block: Additive.() -> Unit) {
     block(
@@ -57,7 +57,7 @@ internal class QueryWrapper(private val base: QueryBuilder.() -> Unit = {}) {
     )
   }
 
-  fun override(block: QueryBuilder.() -> Unit) {
+  fun override(block: DSLQuery.() -> Unit) {
     overrides += block
   }
 

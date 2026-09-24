@@ -10,7 +10,7 @@ import kotlinx.serialization.json.*
 
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class {{classname}}Builder {
+public class DSL{{classname}} internal constructor() {
 {{#vars}}
   public var {{{name}}}: {{> data_class_field_type}}? = null
 {{/vars}}

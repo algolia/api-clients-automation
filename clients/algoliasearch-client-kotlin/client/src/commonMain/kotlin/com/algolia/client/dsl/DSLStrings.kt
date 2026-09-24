@@ -7,7 +7,7 @@ import com.algolia.client.model.search.SupportedLanguage
 /** Builds a `List<String>` parameter: `+"title"`, `+listOf("a", "b")`, `extra.forEach { +it }`. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLStrings {
+public class DSLStrings internal constructor() {
   private val values: MutableList<String> = mutableListOf()
 
   public operator fun String.unaryPlus() {
@@ -28,7 +28,7 @@ public typealias DSLAttributes = DSLStrings
 /** Builds a `List<SupportedLanguage>` parameter: `+SupportedLanguage.En`. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLLanguage {
+public class DSLLanguage internal constructor() {
   private val values: MutableList<SupportedLanguage> = mutableListOf()
 
   public operator fun SupportedLanguage.unaryPlus() {

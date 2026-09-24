@@ -13,9 +13,11 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.KotlinClientCodegen;
@@ -388,6 +390,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return helpers;
   }
 
+  /** A hand-written `DSL*` type declaration; the generated `DSL<Model>` classes must not reuse one of these names. */
+  private static final Pattern DSL_TYPE_DECLARATION = Pattern.compile("\\b(?:class|interface|object|typealias)\\s+(DSL\\w+)");
+
   /**
    * Renders `dsl.mustache` once per DSL model into `com.algolia.client.dsl.generated`, bypassing the standard
    * template pipeline because neither of its mechanisms fits: `modelTemplateFiles` renders every model of the spec
@@ -395,11 +400,24 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
    * renders one file per template — and one file holding every builder OOMs the Kotlin/Native compiler on the
    * macOS CI job. So this method owns the folder: it deletes every `.kt` first (`removeExistingCodegen` does not
    * clean `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder), then writes one file per
-   * model.
+   * model, `DSL<Model>.kt`, holding the class `DSL<Model>`. Before touching the folder it refuses to generate a class
+   * whose name a hand-written `DSL*` type under `dsl/` already declares: the two live in different packages, so the
+   * compiler would not object, but every `import com.algolia.client.dsl.DSLX` would then be ambiguous to a reader.
    */
   private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
-    String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl.generated").replace(".", "/");
-    File outDir = new File(getOutputDir(), dslFolder);
+    String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl").replace(".", "/");
+    File dslDir = new File(getOutputDir(), dslFolder);
+    File outDir = new File(dslDir, "generated");
+    Map<String, File> handWritten = handWrittenDslTypes(dslDir, outDir);
+    for (Map<String, Object> dslModel : dslModels) {
+      String generated = "DSL" + dslModel.get("classname");
+      File declaredIn = handWritten.get(generated);
+      if (declaredIn != null) {
+        throw new IllegalStateException(
+          "Search DSL: generated " + generated + " collides with hand-written " + generated + " in " + declaredIn
+        );
+      }
+    }
     try {
       Files.createDirectories(outDir.toPath());
     } catch (IOException e) {
@@ -419,7 +437,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       Map<String, Object> data = new HashMap<>(additionalProperties);
       data.putAll(dslModel);
       String classname = (String) dslModel.get("classname");
-      File out = new File(outDir, classname + "Builder.kt");
+      File out = new File(outDir, "DSL" + classname + ".kt");
       StringWriter rendered = new StringWriter();
       template.execute(data, rendered);
       try {
@@ -428,6 +446,33 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
         throw new RuntimeException("Cannot write DSL builder " + out, e);
       }
     }
+  }
+
+  /**
+   * Every `DSL*` class, interface, object, or typealias declared in a hand-written `.kt` under `dslDir`, mapped to
+   * the file declaring it. `generatedDir` is skipped: it holds the previous generation's output, which is exactly
+   * what is about to be replaced.
+   */
+  private static Map<String, File> handWrittenDslTypes(File dslDir, File generatedDir) {
+    Map<String, File> types = new HashMap<>();
+    if (!dslDir.isDirectory()) {
+      return types;
+    }
+    Path generated = generatedDir.toPath().toAbsolutePath().normalize();
+    try (Stream<Path> paths = Files.walk(dslDir.toPath())) {
+      for (Path path : (Iterable<Path>) paths::iterator) {
+        if (!path.toString().endsWith(".kt") || path.toAbsolutePath().normalize().startsWith(generated)) {
+          continue;
+        }
+        Matcher matcher = DSL_TYPE_DECLARATION.matcher(Files.readString(path, StandardCharsets.UTF_8));
+        while (matcher.find()) {
+          types.putIfAbsent(matcher.group(1), path.toFile());
+        }
+      }
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot scan hand-written DSL sources under " + dslDir, e);
+    }
+    return types;
   }
 
   /**

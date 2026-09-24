@@ -55,7 +55,7 @@ internal object QueryParamCases {
   /**
    * Also sent through the typed `SearchClient.searchSingleIndex(name) { }` path by the live suite.
    */
-  val fullSnippetBlock: QueryBuilder.() -> Unit = {
+  val fullSnippetBlock: DSLQuery.() -> Unit = {
     query = "office"
     hitsPerPage = 10
     distinct = Distinct.of(1)

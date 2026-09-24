@@ -51,7 +51,7 @@ internal fun DSLFacet.addFacet(
 internal fun lookupById(
   id: String,
   extraFilters: (DSLFilters.() -> Unit)? = null,
-  extraQuery: (QueryBuilder.() -> Unit)? = null,
+  extraQuery: (DSLQuery.() -> Unit)? = null,
 ): SearchParamsObject = query {
   filters {
     orFacet { facet("entityId", id) }

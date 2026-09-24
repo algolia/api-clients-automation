@@ -3,13 +3,13 @@
 package com.algolia.client.dsl.synonym
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.dsl.DSLParameters
-import com.algolia.client.dsl.generated.SynonymHitBuilder
+import com.algolia.client.dsl.DSLStrings
+import com.algolia.client.dsl.generated.DSLSynonymHit
 import com.algolia.client.model.search.SynonymHit
 import com.algolia.client.model.search.SynonymType
 
 /**
- * Constructs a [SynonymHit] from the generated [SynonymHitBuilder].
+ * Constructs a [SynonymHit] from the generated [DSLSynonymHit].
  *
  * Prefer the typed helpers ([synonym], [oneWaySynonym], [altCorrection1], [altCorrection2],
  * [placeholder]) so unused variant fields stay unset. Last write wins: a later assignment or helper
@@ -17,16 +17,32 @@ import com.algolia.client.model.search.SynonymType
  *
  * ```
  * val hit =
- *   synonym("syn-1") {
- *     +"car"
- *     +"auto"
- *     +"vehicle"
+ *   synonym {
+ *     objectID = "syn-1"
+ *     type = SynonymType.Synonym
+ *     synonyms {
+ *       +"car"
+ *       +"auto"
+ *     }
  *   }
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun synonym(block: SynonymHitBuilder.() -> Unit): SynonymHit =
-  SynonymHitBuilder().apply(block).build()
+public fun synonym(block: DSLSynonymHit.() -> Unit): SynonymHit =
+  DSLSynonymHit().apply(block).build()
+
+private fun synonymHit(
+  objectID: String,
+  type: SynonymType,
+  configure: DSLSynonymHit.() -> Unit,
+): SynonymHit =
+  DSLSynonymHit()
+    .apply {
+      this.objectID = objectID
+      this.type = type
+      configure()
+    }
+    .build()
 
 /**
  * Constructs a regular ([SynonymType.Synonym]) [SynonymHit].
@@ -39,21 +55,8 @@ public fun synonym(block: SynonymHitBuilder.() -> Unit): SynonymHit =
  * }
  * ```
  */
-private fun synonymHit(
-  objectID: String,
-  type: SynonymType,
-  configure: SynonymHitBuilder.() -> Unit,
-): SynonymHit =
-  SynonymHitBuilder()
-    .apply {
-      this.objectID = objectID
-      this.type = type
-      configure()
-    }
-    .build()
-
 @AlgoliaExperimentalDsl
-public fun synonym(objectID: String, block: SynonymWordsDsl.() -> Unit): SynonymHit =
+public fun synonym(objectID: String, block: DSLStrings.() -> Unit): SynonymHit =
   synonymHit(objectID, SynonymType.Synonym) { synonyms(block) }
 
 /**
@@ -65,7 +68,7 @@ public fun synonym(objectID: String, block: SynonymWordsDsl.() -> Unit): Synonym
 public fun oneWaySynonym(
   objectID: String,
   input: String,
-  block: SynonymWordsDsl.() -> Unit,
+  block: DSLStrings.() -> Unit,
 ): SynonymHit =
   synonymHit(objectID, SynonymType.OneWaySynonym) {
     this.input = input
@@ -77,7 +80,7 @@ public fun oneWaySynonym(
 public fun altCorrection1(
   objectID: String,
   word: String,
-  block: SynonymWordsDsl.() -> Unit,
+  block: DSLStrings.() -> Unit,
 ): SynonymHit =
   synonymHit(objectID, SynonymType.AltCorrection1) {
     this.word = word
@@ -89,7 +92,7 @@ public fun altCorrection1(
 public fun altCorrection2(
   objectID: String,
   word: String,
-  block: SynonymWordsDsl.() -> Unit,
+  block: DSLStrings.() -> Unit,
 ): SynonymHit =
   synonymHit(objectID, SynonymType.AltCorrection2) {
     this.word = word
@@ -101,7 +104,7 @@ public fun altCorrection2(
 public fun placeholder(
   objectID: String,
   placeholder: String,
-  block: SynonymWordsDsl.() -> Unit,
+  block: DSLStrings.() -> Unit,
 ): SynonymHit =
   synonymHit(objectID, SynonymType.Placeholder) {
     this.placeholder = placeholder
@@ -109,42 +112,28 @@ public fun placeholder(
   }
 
 /**
- * Sets [SynonymHitBuilder.synonyms] from [block]. Last write wins if [synonyms] was already set in
- * the same builder.
+ * Sets [DSLSynonymHit.synonyms] from [block]. Last write wins if [synonyms] was already set in the
+ * same builder. An empty block sends `[]`.
  */
 @AlgoliaExperimentalDsl
-public fun SynonymHitBuilder.synonyms(block: SynonymWordsDsl.() -> Unit) {
-  synonyms = SynonymWordsDsl().apply(block).build()
+public fun DSLSynonymHit.synonyms(block: DSLStrings.() -> Unit) {
+  synonyms = DSLStrings().apply(block).build()
 }
 
 /**
- * Sets [SynonymHitBuilder.corrections] from [block]. Last write wins if [corrections] was already
- * set in the same builder.
+ * Sets [DSLSynonymHit.corrections] from [block]. Last write wins if [corrections] was already set
+ * in the same builder. An empty block sends `[]`.
  */
 @AlgoliaExperimentalDsl
-public fun SynonymHitBuilder.corrections(block: SynonymWordsDsl.() -> Unit) {
-  corrections = SynonymWordsDsl().apply(block).build()
+public fun DSLSynonymHit.corrections(block: DSLStrings.() -> Unit) {
+  corrections = DSLStrings().apply(block).build()
 }
 
 /**
- * Sets [SynonymHitBuilder.replacements] from [block]. Last write wins if [replacements] was already
- * set in the same builder.
+ * Sets [DSLSynonymHit.replacements] from [block]. Last write wins if [replacements] was already set
+ * in the same builder. An empty block sends `[]`.
  */
 @AlgoliaExperimentalDsl
-public fun SynonymHitBuilder.replacements(block: SynonymWordsDsl.() -> Unit) {
-  replacements = SynonymWordsDsl().apply(block).build()
-}
-
-/** Collects synonym, correction, or replacement words. */
-@DSLParameters
-@AlgoliaExperimentalDsl
-public class SynonymWordsDsl {
-  private val values: MutableList<String> = mutableListOf()
-
-  /** Adds [this] word or phrase. Matches other DSL `+"word"` helpers. */
-  public operator fun String.unaryPlus() {
-    values += this
-  }
-
-  internal fun build(): List<String> = values.toList()
+public fun DSLSynonymHit.replacements(block: DSLStrings.() -> Unit) {
+  replacements = DSLStrings().apply(block).build()
 }
