@@ -9,6 +9,7 @@ import com.algolia.client.dsl.testkit.LiveIndex
 import com.algolia.client.dsl.testkit.ServerContract
 import com.algolia.client.dsl.testkit.assertDelete
 import com.algolia.client.dsl.testkit.assertRow
+import com.algolia.client.dsl.testkit.assertWire
 import com.algolia.client.dsl.testkit.live
 import com.algolia.client.dsl.testkit.wire
 import kotlin.test.Test
@@ -82,6 +83,7 @@ internal class MatrixP1LiveTest {
   fun C19_deleteByWithFiltersDsl() =
     live(timeout = DELETE_TIMEOUT) {
       fx.assertRow(ServerContract.L38, wire(RowsP1.c19Search()))
+      assertWire(ServerContract.D2, RowsP1.c19())
       fx.assertDelete(ServerContract.D2) { copy ->
         copy.client
           .deleteBy(copy.name) {

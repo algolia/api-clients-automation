@@ -27,11 +27,6 @@ internal fun wire(params: DeleteByParams): JsonObject =
   wireJson.encodeToJsonElement(params).jsonObject
 
 /** Asserts that [actual] serializes to exactly the body of [row]. Key order is not compared. */
-internal fun assertWire(row: ContractRow, actual: SearchParamsObject) {
-  assertEquals(row.params, wire(actual), row.id)
-}
-
-/** Asserts that [actual] serializes to exactly the body of [row]. Key order is not compared. */
 internal fun assertWire(row: DeleteRow, actual: DeleteByParams) {
   assertEquals(row.params, wire(actual), row.id)
 }

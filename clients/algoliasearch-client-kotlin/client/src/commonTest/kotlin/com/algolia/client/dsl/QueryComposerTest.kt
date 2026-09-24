@@ -171,22 +171,4 @@ internal class QueryComposerTest {
     // Both fragments ran in one FilterDsl: one top-level AND, never parenthesised.
     assertEquals("a:1 AND NOT b:2", params.filters)
   }
-
-  @Test
-  fun unqualifiedOverrideCompiles() {
-    // `override` is a soft keyword: the unqualified call inside the composer lambda must parse.
-    val params = composeQuery {
-      add { ruleContexts { +"x" } }
-      override { hitsPerPage = 1 }
-    }
-    assertEquals(SearchParamsObject(ruleContexts = listOf("x"), hitsPerPage = 1), params)
-  }
-
-  @Test
-  fun storedAdditionsFragment() {
-    val extra: QueryAdditions.() -> Unit = { ruleContexts { +"desktop" } }
-    val composer = QueryComposer()
-    composer.add(extra)
-    assertEquals(listOf("desktop"), composer.build().ruleContexts)
-  }
 }

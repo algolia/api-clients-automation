@@ -78,13 +78,6 @@ internal object RowsP0 {
     analytics = false
   }
 
-  fun c34Variants(): SearchParamsObject = query {
-    distinct = Distinct.of(true)
-    typoTolerance = TypoTolerance.of(true)
-    ignorePlurals = IgnorePlurals.of(true)
-    queryLanguages = listOf(SupportedLanguage.En)
-  }
-
   fun x03(): SearchParamsObject = query {
     filters {
       orFacet {

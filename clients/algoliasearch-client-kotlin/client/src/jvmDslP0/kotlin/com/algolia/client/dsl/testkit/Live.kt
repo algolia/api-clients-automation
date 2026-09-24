@@ -234,6 +234,7 @@ internal fun live(timeout: Duration = 60.seconds, block: suspend CoroutineScope.
  * on the same bytes. Every assertion message starts with the row id.
  */
 internal suspend fun LiveIndex.assertRow(row: ContractRow, params: JsonObject = row.params) {
+  assertEquals(row.params, params, "${row.id}: DSL wire differs from the contract body")
   val rejected = row.expect.filterIsInstance<Expect.Rejected>()
   if (rejected.isNotEmpty()) {
     val expected = rejected.single()
