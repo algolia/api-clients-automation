@@ -1,0 +1,109 @@
+injectedItemSearchSource:
+  description: Injected items will originate from a search request performed on the specified index.
+  x-discriminator-fields:
+    - search
+  type: object
+  additionalProperties: false
+  properties:
+    search:
+      $ref: '#/injectedItemSearch'
+  required:
+    - search
+
+# Split out from injectedItemSearchSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectedItemSearch:
+  title: injectedItemSearch
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Search.yml#/baseSearchSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+
+injectedItemExternalSource:
+  description: Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+  x-discriminator-fields:
+    - external
+  type: object
+  additionalProperties: false
+  properties:
+    external:
+      $ref: '#/injectedItemExternal'
+  required:
+    - external
+
+# Split out from injectedItemExternalSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectedItemExternal:
+  title: injectedItemExternal
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/External.yml#/baseExternalSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+
+injectedItemRecommendSource:
+  description: Injected items will originate from a recommendation request performed on the specified index.
+  x-discriminator-fields:
+    - recommend
+  type: object
+  additionalProperties: false
+  properties:
+    recommend:
+      $ref: '#/injectedItemRecommend'
+  required:
+    - recommend
+
+# Split out from injectedItemRecommendSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectedItemRecommend:
+  title: injectedItemRecommend
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Recommend.yml#/baseRecommendSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        queryParameters:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+        fallbackParameters:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'
+
+injectedItemExternalProviderSource:
+  description: Injected items will originate from a request to an external provider configuration.
+  x-discriminator-fields:
+    - externalProvider
+  type: object
+  additionalProperties: false
+  properties:
+    externalProvider:
+      $ref: '#/injectedItemExternalProvider'
+  required:
+    - externalProvider
+
+# Split out from injectedItemExternalProviderSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectedItemExternalProvider:
+  title: injectedItemExternalProvider
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/ExternalProvider.yml#/baseExternalProviderSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/injectedItemsQueryParameters'

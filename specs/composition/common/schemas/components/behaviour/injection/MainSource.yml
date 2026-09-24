@@ -1,0 +1,82 @@
+injectionMainSearchSource:
+  description: Organic result set will originate from a search request performed on the specified index.
+  x-discriminator-fields:
+    - search
+  type: object
+  additionalProperties: false
+  properties:
+    search:
+      $ref: '#/injectionMainSearch'
+  required:
+    - search
+
+# Split out from injectionMainSearchSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainSearch:
+  title: injectionMainSearch
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Search.yml#/baseSearchSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+
+injectionMainRecommendSource:
+  description: Organic result set will originate from a recommend request.
+  x-discriminator-fields:
+    - recommend
+  type: object
+  additionalProperties: false
+  properties:
+    recommend:
+      $ref: '#/injectionMainRecommend'
+  required:
+    - recommend
+
+# Split out from injectionMainRecommendSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainRecommend:
+  title: injectionMainRecommend
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/Recommend.yml#/baseRecommendSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        queryParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+        fallbackParameters:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
+
+injectionMainExternalProviderSource:
+  description: Organic result set will originate from a request to an external provider configuration.
+  x-discriminator-fields:
+    - externalProvider
+  type: object
+  additionalProperties: false
+  properties:
+    externalProvider:
+      $ref: '#/injectionMainExternalProvider'
+  required:
+    - externalProvider
+
+# Split out from injectionMainExternalProviderSource because the custom
+# automation-custom/out-of-line-all-of lint rule requires allOf to be a
+# top-level schema, not nested inside `properties`.
+injectionMainExternalProvider:
+  title: injectionMainExternalProvider
+  type: object
+  additionalProperties: false
+  allOf:
+    - $ref: '../../source/ExternalProvider.yml#/baseExternalProviderSource'
+    - type: object
+      additionalProperties: false
+      properties:
+        params:
+          $ref: './SearchQueryParams.yml#/mainInjectionQueryParameters'
