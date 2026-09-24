@@ -5,34 +5,29 @@ package com.algolia.client.dsl.filter
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
 /**
- * Converts a typed [FilterGroup] tree to an Algolia `filters` SQL string.
+ * Encodes filter rows (outer list `AND`, inner list `OR`) to an Algolia `filters` SQL string.
  *
  * Leaf syntax matches version 2 `FilterConverter.SQL` (`attribute:value`, `_tags:value`, `attribute
- * op number`, `attribute:lower TO upper`, `attribute:value<score=N>`, `NOT <leaf>`). The tree first
- * goes through [conjunctiveRows], the same normal form [FilterLegacyConverter] uses, so both
- * encoders produce the same AND/OR shape and leaf polarity on every tree (leaf text differs: this
- * encoder quotes and writes `NOT <leaf>`, while the legacy encoder never quotes and writes `-`
- * after the colon):
+ * op number`, `attribute:lower TO upper`, `attribute:value<score=N>`, `NOT <leaf>`). Rows are the
+ * same shape [OptionalFiltersEncoder] takes, so both encoders produce the same AND/OR structure and
+ * leaf polarity (leaf text differs: this encoder quotes and writes `NOT <leaf>`, while the
+ * optionalFilters encoder never quotes and writes `-` after the colon):
  * - `NOT` only precedes a single leaf whose [Filter.negated] is `true`. Groups are never negated.
- * - Nested [FilterGroup.And]s are flattened and the top-level `AND` is never parenthesised. Algolia
- *   does not support `(A AND (B OR C))`.
- * - An `OR` of two or more filters is parenthesised: `(a OR b)`. Each [FilterGroup.Or] holds one
- *   filter family by construction.
- * - Empty groups contribute nothing; a tree with no filter encodes as `null`.
+ * - The `AND` is flat and never parenthesised. Algolia does not support `(A AND (B OR C))`.
+ * - A row of two or more filters is parenthesised: `(a OR b)`. Each row holds one filter family by
+ *   construction.
+ * - No rows encode as `null`.
  *
  * Attributes and values are quoted when they contain spaces, quotes, or the keywords `AND`, `OR`,
  * or `NOT`.
  *
  * [Documentation](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/combining-boolean-operators/)
  */
-internal object FilterSqlConverter {
+internal object FiltersEncoder {
 
-  /** Returns the SQL `filters` string for [root], or `null` when [root] holds no filter. */
-  operator fun invoke(root: FilterGroup): String? {
-    val rows = conjunctiveRows(root)
-    if (rows.isEmpty()) return null
-    return rows.joinToString(separator = " AND ") { emitRow(it) }
-  }
+  /** Returns the SQL `filters` string for [rows], or `null` when there is no row. */
+  operator fun invoke(rows: List<List<Filter>>): String? =
+    if (rows.isEmpty()) null else rows.joinToString(" AND ") { emitRow(it) }
 
   private fun emitRow(row: List<Filter>): String {
     if (row.size == 1) return emitLeaf(row.single())

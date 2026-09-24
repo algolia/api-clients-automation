@@ -3,26 +3,24 @@
 package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
-import com.algolia.client.dsl.DSLParameters
-import kotlin.jvm.JvmOverloads
 
 /**
  * A single typed filter leaf.
  *
- * Each [Filter] is also a [FilterGroup], so [FilterGroup.And] and [FilterGroup.Or] can nest leaves
- * and groups in the same tree. Leaves carry a [negated] flag, set through the `isNegated` argument
- * of the DSL leaf helpers; the converters read it as the leaf's polarity.
+ * The DSL receivers collect leaves into rows (outer list `AND`, inner list `OR`); the encoders read
+ * them from there. Leaves carry a [negated] flag, set through the `isNegated` argument of the DSL
+ * leaf helpers; the encoders read it as the leaf's polarity.
  *
  * Attributes and facet values are [String]. This is the v3 shape. Version 2 used an `Attribute`
  * wrapper.
  *
  * [Documentation](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/)
  */
-internal sealed interface Filter : FilterGroup {
+internal sealed interface Filter {
 
   /**
    * `true` when this leaf is negated. Set with the `isNegated` argument of the DSL leaf helpers or
-   * the `negated` constructor parameter. Converters emit it as the leaf's polarity.
+   * the `negated` constructor parameter. Encoders emit it as the leaf's polarity.
    */
   val negated: Boolean
 
@@ -35,7 +33,6 @@ internal sealed interface Filter : FilterGroup {
    * [Filter scoring](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#filters-scoring)
    */
   data class Facet
-  @JvmOverloads
   internal constructor(
     val attribute: String,
     val value: String,
@@ -43,7 +40,6 @@ internal sealed interface Filter : FilterGroup {
     override val negated: Boolean = false,
   ) : Filter {
 
-    @JvmOverloads
     internal constructor(
       attribute: String,
       value: Boolean,
@@ -51,7 +47,6 @@ internal sealed interface Filter : FilterGroup {
       negated: Boolean = false,
     ) : this(attribute, value.toString(), score, negated)
 
-    @JvmOverloads
     internal constructor(
       attribute: String,
       value: Number,
@@ -61,18 +56,14 @@ internal sealed interface Filter : FilterGroup {
   }
 
   /** Filters on a `_tags` value. */
-  data class Tag
-  @JvmOverloads
-  internal constructor(val value: String, override val negated: Boolean = false) : Filter
+  data class Tag internal constructor(val value: String, override val negated: Boolean = false) :
+    Filter
 
-  /**
-   * A numeric leaf: [Comparison] or [Range]. The only legal children of [FilterGroup.Or.Numeric].
-   */
+  /** A numeric leaf: [Comparison] or [Range]. The only leaves a [DSLGroupNumeric] accepts. */
   sealed interface Numeric : Filter
 
   /** Numeric comparison of [attribute] against [value] with [operator]. */
   data class Comparison
-  @JvmOverloads
   internal constructor(
     val attribute: String,
     val operator: NumericOperator,
@@ -82,7 +73,6 @@ internal sealed interface Filter : FilterGroup {
 
   /** Numeric range of [attribute] between [lowerBound] and [upperBound], inclusive. */
   data class Range
-  @JvmOverloads
   internal constructor(
     val attribute: String,
     val lowerBound: Number,
@@ -90,14 +80,12 @@ internal sealed interface Filter : FilterGroup {
     override val negated: Boolean = false,
   ) : Numeric {
 
-    @JvmOverloads
     internal constructor(
       attribute: String,
       range: IntRange,
       negated: Boolean = false,
     ) : this(attribute, range.first, range.last, negated)
 
-    @JvmOverloads
     internal constructor(
       attribute: String,
       range: LongRange,
@@ -107,7 +95,6 @@ internal sealed interface Filter : FilterGroup {
 }
 
 /** Operator for [Filter.Comparison]. Mirrors version 2 `NumericOperator`. */
-@DSLParameters
 @AlgoliaExperimentalDsl
 public enum class NumericOperator(public val raw: String) {
   Less("<"),

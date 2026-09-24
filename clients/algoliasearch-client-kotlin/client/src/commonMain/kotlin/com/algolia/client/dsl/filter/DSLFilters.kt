@@ -6,10 +6,10 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.dsl.DSLParameters
 
 /**
- * Builds a typed [FilterGroup] tree with a Kotlin DSL.
+ * Collects `filters` rows with a Kotlin DSL: the outer list is `AND`, each inner row is `OR`.
  *
- * Top-level children are combined with [FilterGroup.And]. Use [orFacet], [orTag], or [orNumeric]
- * for a homogeneous OR. A mixed-family OR does not compile. The example encodes as `color:red AND
+ * Top-level filters are `AND`ed in call order. Use [orFacet], [orTag], or [orNumeric] for a
+ * homogeneous OR. A mixed-family OR does not compile. The example encodes as `color:red AND
  * category:shirt AND (price:0 TO 9 OR price = 15)`.
  *
  * ```
@@ -28,40 +28,34 @@ import com.algolia.client.dsl.DSLParameters
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLFilters internal constructor(private val nodes: FilterAccumulator<FilterGroup>) :
-  DSLFacet by FacetLeafMixin({ nodes.add(it) }),
-  DSLTag by TagLeafMixin({ nodes.add(it) }),
-  DSLNumeric by NumericLeafMixin({ nodes.add(it) }) {
+public class DSLFilters private constructor(private val rows: MutableList<List<Filter>>) :
+  DSLFacet by FacetLeafMixin({ rows.add(listOf(it)) }),
+  DSLTag by TagLeafMixin({ rows.add(listOf(it)) }),
+  DSLNumeric by NumericLeafMixin({ rows.add(listOf(it)) }) {
 
-  public constructor() : this(FilterAccumulator())
+  internal constructor() : this(mutableListOf())
 
-  /** Adds an [FilterGroup.And] of the children in [block]. An empty block adds nothing. */
+  /** ANDs the filters in [block] into this block. An empty block adds nothing. */
   public fun and(block: DSLFilters.() -> Unit) {
-    val children = DSLFilters().apply(block).nodes.snapshot()
-    if (children.isNotEmpty()) nodes.add(FilterGroup.And(children))
+    rows.addAll(DSLFilters().apply(block).rows)
   }
 
-  /** Adds a [FilterGroup.Or.Facet] of the facet leaves in [block]. An empty block adds nothing. */
+  /** Adds `(a OR b …)` of the facet leaves in [block]. An empty block adds nothing. */
   public fun orFacet(block: DSLGroupFacet.() -> Unit) {
-    val leaves = DSLGroupFacet().apply(block).snapshot()
-    if (leaves.isNotEmpty()) nodes.add(FilterGroup.Or.Facet(leaves))
+    DSLGroupFacet().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
   }
 
-  /** Adds a [FilterGroup.Or.Tag] of the tag leaves in [block]. An empty block adds nothing. */
+  /** Adds `(a OR b …)` of the tag leaves in [block]. An empty block adds nothing. */
   public fun orTag(block: DSLGroupTag.() -> Unit) {
-    val leaves = DSLGroupTag().apply(block).snapshot()
-    if (leaves.isNotEmpty()) nodes.add(FilterGroup.Or.Tag(leaves))
+    DSLGroupTag().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
   }
 
-  /**
-   * Adds a [FilterGroup.Or.Numeric] of the numeric leaves in [block]. An empty block adds nothing.
-   */
+  /** Adds `(a OR b …)` of the numeric leaves in [block]. An empty block adds nothing. */
   public fun orNumeric(block: DSLGroupNumeric.() -> Unit) {
-    val leaves = DSLGroupNumeric().apply(block).snapshot()
-    if (leaves.isNotEmpty()) nodes.add(FilterGroup.Or.Numeric(leaves))
+    DSLGroupNumeric().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
   }
 
-  internal fun root(): FilterGroup = nodes.root()
+  internal fun rows(): List<List<Filter>> = rows.toList()
 }
 
 /**
@@ -72,27 +66,4 @@ public class DSLFilters internal constructor(private val nodes: FilterAccumulato
  */
 @AlgoliaExperimentalDsl
 public fun filters(block: DSLFilters.() -> Unit): String? =
-  FilterSqlConverter(DSLFilters().apply(block).root())
-
-/** OR-context builder for [Filter.Numeric] children. Exposes only numeric leaves. */
-@DSLParameters
-@AlgoliaExperimentalDsl
-public class DSLGroupNumeric
-internal constructor(private val leaves: FilterAccumulator<Filter.Numeric>) :
-  DSLNumeric by NumericLeafMixin(leaves::add) {
-
-  public constructor() : this(FilterAccumulator())
-
-  internal fun snapshot(): List<Filter.Numeric> = leaves.snapshot()
-}
-
-/** OR-context builder for [Filter.Tag] children. Exposes only tag leaves. */
-@DSLParameters
-@AlgoliaExperimentalDsl
-public class DSLGroupTag internal constructor(private val leaves: FilterAccumulator<Filter.Tag>) :
-  DSLTag by TagLeafMixin(leaves::add) {
-
-  public constructor() : this(FilterAccumulator())
-
-  internal fun snapshot(): List<Filter.Tag> = leaves.snapshot()
-}
+  FiltersEncoder(DSLFilters().apply(block).rows())

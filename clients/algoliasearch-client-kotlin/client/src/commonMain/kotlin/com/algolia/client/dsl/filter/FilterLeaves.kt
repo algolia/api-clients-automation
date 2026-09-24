@@ -4,24 +4,6 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
-internal class FilterAccumulator<N : FilterGroup> {
-  private val children: MutableList<N> = mutableListOf()
-
-  fun add(node: N) {
-    children += node
-  }
-
-  fun snapshot(): List<N> = children.toList()
-
-  /** 0 -> And(), 1 -> single, n -> And(list). Only meaningful for N = FilterGroup. */
-  fun root(): FilterGroup =
-    when (children.size) {
-      0 -> FilterGroup.And()
-      1 -> children.single()
-      else -> FilterGroup.And(children.map { it })
-    }
-}
-
 /** Facet leaf constructors shared by [DSLFilters], [DSLFacetFilters], and [DSLGroupFacet]. */
 @AlgoliaExperimentalDsl
 public sealed interface DSLFacet {

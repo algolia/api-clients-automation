@@ -66,7 +66,7 @@ val params = query {
 
 `filters { }` sets the SQL `filters` string and `optionalFilters { }` the `optionalFilters` field. For `facetFilters`, `numericFilters`, and `tagFilters`, use `filters { }` (Algolia recommends `filters`) or assign the generated field. An empty block omits the field.
 
-Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`). `and { }` and `or { }` work in every filter block, including `optionalFilters`:
+Negate a single leaf with `isNegated` (pass it by name: the third positional argument of `facet` is `score`). `and { }` works in every filter block. OR groups are `orFacet { }`, `orTag { }`, `orNumeric { }` in `filters { }`, and `or { }` in `optionalFilters { }` (facets only) — the version 2 names:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
