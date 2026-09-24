@@ -140,11 +140,11 @@ val params = query {
 
 ### Composing queries
 
-`DSLQueryComposer` assembles one `SearchParamsObject` from fragments contributed by several modules. `add { }` contributes to a field; `override { }` sets a field outright:
+`DSLQueryComposer` assembles one `SearchParamsObject` from fragments contributed by several modules. `base` is the starting query, `add { }` contributes to a field, and `override { }` sets a field outright:
 
 ```kotlin
 @OptIn(AlgoliaExperimentalDsl::class)
-val composer = DSLQueryComposer()                     // was: QueryWrapper()
+val composer = DSLQueryComposer(base = { hitsPerPage = 20 })   // was: QueryWrapper(query)
 composer.add { filters { orFacet { facet("locale", primary); secondary?.let { facet("locale", it) } } } }
 composer.override { queryLanguages { +SupportedLanguage.En } }
 composer.add { optionalFilters { or { facet("isFeatured", true, score = 500) } } }
@@ -156,9 +156,9 @@ client.searchSingleIndex(indexName, composer)         // every lambda above runs
 
 `client.searchSingleIndex(indexName, composer)` calls `composer.build()` and sends the result; `client.deleteBy(indexName, composer)` does the same for a `DSLDeleteByComposer`. `composer.build()` still returns the `SearchParamsObject` when you need the value itself, for example to pass it to `SearchParams.of` or to inspect it.
 
-`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `DSLQueryAdditions`, then applies each field once: all fragments for a field run inside one receiver, so `filters` fragments become one `AND` group and `ruleContexts` fragments one list. It then runs every `override` block on the resulting `DSLQuery`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery { add { }; override { } }` builds in one expression; `DSLDeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
+`add { }` and `override { }` only store their blocks; nothing runs until `build()`. `build()` runs every stored `add` block on a fresh `DSLQueryAdditions`, runs `base` on a fresh `DSLQuery`, then merges each field once: all fragments for a field run inside one receiver after what `base` set, so `filters` fragments are `AND`ed with the base filters into one group and `ruleContexts` fragments append to the base list. A `base` that assigns `filters` or `optionalFilters` directly (`filters = "a OR b"`) cannot be merged with fragments for that field: `build()` throws `IllegalStateException`, so set it with `filters { }` in `base`. It then runs every `override` block on the resulting `DSLQuery`, in call order, so the last write wins over anything set additively (including `filters = null`). Because every block re-runs on each `build()`, captured values (a `var locale`, a mutable list) are read at build time, side effects repeat per build, and an `add` or `override` made after a `build()` affects the next one. A field with an empty result keeps its `base` value, or is omitted. `build()` can throw whatever a stored block throws. A composer is not thread-safe. `composeQuery(base = { }) { add { }; override { } }` builds in one expression; `DSLDeleteByComposer` and `composeDeleteBy { }` do the same for `deleteBy`, with the filter fields only.
 
-Compared with a hand-rolled `QueryWrapper` that stored `DSLFilters.() -> Unit`, `DSLFacetFilters.() -> Unit`, and `DSLStrings.() -> Unit` lambdas: fragments are per-field inside one `add { }` (no separate lambda types to declare), and `override { }` runs after all additive fields.
+Compared with a hand-rolled `QueryWrapper` that stored `DSLFilters.() -> Unit`, `DSLFacetFilters.() -> Unit`, and `DSLStrings.() -> Unit` lambdas: fragments are per-field inside one `add { }` (no separate lambda types to declare), and the starting query goes in `base`, not in `override { }`: overrides run after the additive fields and replace them.
 
 ### Migrating from version 2
 

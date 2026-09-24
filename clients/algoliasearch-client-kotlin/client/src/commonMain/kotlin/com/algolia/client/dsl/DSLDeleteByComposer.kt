@@ -12,11 +12,16 @@ import com.algolia.client.model.search.DeleteByParams
  * Delete-by twin of [DSLQueryComposer]: filters only, since [DeleteByParams] has no list fields.
  *
  * [add] and [override] only store their blocks; nothing runs until [build]. Each [build] runs every
- * stored [add] block, then writes `filters` once: all `filters { }` fragments run inside one
- * [DSLFilters] (so they are AND-ed). Then every [override] block runs on the same [DSLDeleteBy], in
- * call order: last write wins, so an override that sets `filters` replaces the accumulated value.
- * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) have no
- * additive form; set them in [override].
+ * stored [add] block, runs [base] on a fresh [DSLDeleteBy], then writes `filters` once: all
+ * `filters { }` fragments run inside one [DSLFilters] after the base rows (so they are AND-ed with
+ * the base). Then every [override] block runs on the same [DSLDeleteBy], in call order: last write
+ * wins, so an override that sets `filters` replaces the merged value. Geo fields (`aroundLatLng`,
+ * `aroundRadius`, `insideBoundingBox`, `insidePolygon`) have no additive form; set them in [base]
+ * or [override].
+ *
+ * Put the starting filters in [base], not in an [override]: an override replaces the fragments. A
+ * base that assigns `filters` directly cannot be merged with fragments, so [build] throws
+ * [IllegalStateException]; set it with `filters { }` in the base instead.
  *
  * [build] throws [IllegalArgumentException] when a `filters { }` fragment, or a group block inside
  * one, adds no filter: dropping it would widen the delete. Skip the delete when there is nothing to
@@ -36,9 +41,9 @@ import com.algolia.client.model.search.DeleteByParams
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLDeleteByComposer public constructor() {
+public class DSLDeleteByComposer public constructor(base: DSLDeleteBy.() -> Unit = {}) {
   private val core =
-    ComposerCore(::DSLDeleteByAdditions, ::DSLDeleteBy, DSLDeleteByAdditions::applyTo)
+    ComposerCore(::DSLDeleteByAdditions, ::DSLDeleteBy, base, DSLDeleteByAdditions::applyTo)
 
   /**
    * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
@@ -49,8 +54,8 @@ public class DSLDeleteByComposer public constructor() {
   public fun override(block: DSLDeleteBy.() -> Unit): Unit = core.override(block)
 
   /**
-   * Builds a [DeleteByParams] from fresh state: runs every stored [add] block, writes each filter
-   * field once, then runs every stored [override] block in call order.
+   * Builds a [DeleteByParams] from fresh state: runs every stored [add] block and [base], merges
+   * each filter field once, then runs every stored [override] block in call order.
    */
   public fun build(): DeleteByParams = core.build().build()
 }
@@ -65,7 +70,8 @@ public class DSLDeleteByComposer public constructor() {
 public class DSLDeleteByAdditions internal constructor() {
   // Not `filters`: `filters(it)` in the lambda must resolve to the builder helper, and a
   // property must not appear in its own initializer.
-  private val filtersField: Additive<DSLDeleteBy, DSLFilters> = Additive { filters(it) }
+  private val filtersField: Additive<DSLDeleteBy, DSLFilters> =
+    filterAdditive("filters", DSLDeleteBy::filtersRows, DSLFilters::addRows) { filters(it) }
   private var filtersFragments = 0
 
   private val fields: List<Additive<DSLDeleteBy, *>> = listOf(filtersField)
@@ -94,17 +100,19 @@ public class DSLDeleteByAdditions internal constructor() {
 }
 
 /**
- * Composes a [DeleteByParams] in one expression: `DSLDeleteByComposer().apply(block).build()`.
+ * Composes a [DeleteByParams] in one expression: `DSLDeleteByComposer(base).apply(block).build()`.
  *
  * ```
  * val params =
- *   composeDeleteBy {
+ *   composeDeleteBy(base = { aroundLatLng = "40.71,-74.01" }) {
  *     add { filters { facet("locale", "en-US") } }
- *     override { aroundLatLng = "40.71,-74.01" }
  *   }
  * ```
  */
 @AlgoliaExperimentalDsl
-public fun composeDeleteBy(block: DSLDeleteByComposer.() -> Unit): DeleteByParams {
-  return DSLDeleteByComposer().apply(block).build()
+public fun composeDeleteBy(
+  base: DSLDeleteBy.() -> Unit = {},
+  block: DSLDeleteByComposer.() -> Unit,
+): DeleteByParams {
+  return DSLDeleteByComposer(base).apply(block).build()
 }
