@@ -4,11 +4,10 @@ package com.algolia.client.dsl
 
 import com.algolia.client.dsl.generated.DSLBrowseParamsObject
 import com.algolia.client.dsl.generated.DSLDeleteByParams
+import com.algolia.client.dsl.generated.DSLDeleteByParamsAdditions
 import com.algolia.client.dsl.generated.DSLIndexSettings
 import com.algolia.client.dsl.generated.DSLSearchParamsObject
-
-// The four aliases below are source-level only: bytecode, Java callers, reflection, and stack
-// traces still see the generated `DSL<Model>` class names.
+import com.algolia.client.dsl.generated.DSLSearchParamsObjectAdditions
 
 /**
  * Receiver of [query] and [com.algolia.client.dsl.searchSingleIndex]. Use this name, not the
@@ -35,3 +34,11 @@ public typealias DSLDeleteBy = DSLDeleteByParams
  */
 @AlgoliaExperimentalDsl
 public typealias DSLSettings = DSLIndexSettings
+
+/** Receiver of [DSLQueryComposer.add]. Kotlin source alias of [DSLSearchParamsObjectAdditions]. */
+@AlgoliaExperimentalDsl
+public typealias DSLQueryAdditions = DSLSearchParamsObjectAdditions
+
+/** Receiver of [DSLDeleteByComposer.add]. Kotlin source alias of [DSLDeleteByParamsAdditions]. */
+@AlgoliaExperimentalDsl
+public typealias DSLDeleteByAdditions = DSLDeleteByParamsAdditions

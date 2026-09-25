@@ -1,0 +1,52 @@
+{{> licenseInfo}}
+package com.algolia.client.dsl.generated
+
+import com.algolia.client.dsl.Additive
+import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLParameters
+import com.algolia.client.dsl.filter.DSLFacetFilters
+import com.algolia.client.dsl.filter.DSLFilters
+import com.algolia.client.dsl.filterAdditive
+import com.algolia.client.dsl.listAdditive
+
+/** Receiver of composer `add { }` blocks for [DSL{{classname}}]. */
+@DSLParameters
+@AlgoliaExperimentalDsl
+public class DSL{{classname}}Additions internal constructor() {
+{{#filterHelpers}}
+  private val {{{name}}}Field: Additive<DSL{{dslModelName}}, {{{receiver}}}> =
+    filterAdditive("{{{name}}}", DSL{{dslModelName}}::{{{name}}}Rows, {{{receiver}}}::addRows, {{{receiver}}}::and) { {{{name}}}(it) }
+{{/filterHelpers}}
+{{#listHelpers}}
+  private val {{{name}}}Field: Additive<DSL{{dslModelName}}, {{{receiver}}}> =
+    listAdditive(DSL{{dslModelName}}::{{{name}}}, { +it }) { {{{name}}}(it) }
+{{/listHelpers}}
+
+  private val fields: List<Additive<DSL{{dslModelName}}, *>> = listOf(
+{{#filterHelpers}}
+    {{{name}}}Field,
+{{/filterHelpers}}
+{{#listHelpers}}
+    {{{name}}}Field,
+{{/listHelpers}}
+  )
+{{#filterHelpers}}
+
+  /**
+   * Records a `{{{name}}}` fragment. Fragments are AND-ed with each other and with the base.
+{{#strict}}
+   * A fragment that adds no filter makes `build()` throw [IllegalArgumentException].
+{{/strict}}
+   */
+  public fun {{{name}}}(block: {{{receiver}}}.() -> Unit): Unit = {{{name}}}Field.add(block)
+{{/filterHelpers}}
+{{#listHelpers}}
+
+  /** Records a `{{{name}}}` fragment. Fragments append to the base list in call order. */
+  public fun {{{name}}}(block: {{{receiver}}}.() -> Unit): Unit = {{{name}}}Field.add(block)
+{{/listHelpers}}
+
+  internal fun applyTo(builder: DSL{{dslModelName}}, merge: Boolean) {
+    for (field in fields) field.applyTo(builder, merge)
+  }
+}
