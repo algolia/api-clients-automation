@@ -81,6 +81,142 @@ internal object ComposerCases {
         listOf(Expect.Hits(setOf("1")), Expect.UserData(jsonArray("""[{"ctx":"desktop"}]"""))),
     )
 
+  // ── Base, source object, empty fragments, overrides ───────────────────────────────────────────
+
+  val baseMergedWithFragments =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(
+            base = {
+              filters { facet("genre", "comedy") }
+              optionalFilters { facet("isFeatured", true, score = 500) }
+              ruleContexts { +"desktop" }
+              getRankingInfo = true
+            }
+          )
+          .apply {
+            add { filters { facet("isPinned", false) } }
+            add { optionalFilters { or { facet("provider", "NBC", score = 3) } } }
+            add { ruleContexts { +"ab-variant-b" } }
+          }
+          .build()
+      },
+      body =
+        """{"filters":"genre:comedy AND isPinned:false","optionalFilters":[["isFeatured:true<score=500>"],["provider:NBC<score=3>"]],"ruleContexts":["desktop","ab-variant-b"],"getRankingInfo":true}""",
+      expect =
+        listOf(
+          Expect.Hits(setOf("1", "3")),
+          Expect.Scores(mapOf("1" to 505, "3" to 2)),
+          Expect.UserData(jsonArray("""[{"ctx":"desktop"}]""")),
+        ),
+    )
+
+  val baseEmptyListKeptByEmptyFragment =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(base = { attributesToRetrieve = emptyList() })
+          .apply { add { attributesToRetrieve {} } }
+          .build()
+      },
+      body = """{"attributesToRetrieve":[]}""",
+      expect = listOf(Expect.HitCount(5), Expect.HitKeys(setOf("objectID"))),
+    )
+
+  val emptyFragmentsOmitFiltersAndSendEmptyLists =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer()
+          .apply {
+            add {
+              filters {}
+              ruleContexts {}
+            }
+          }
+          .build()
+      },
+      body = """{"ruleContexts":[]}""",
+      expect = listOf(Expect.HitCount(5), Expect.Absent("userData")),
+    )
+
+  val overridesRunLastAndReplaceMergedFilters =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(base = { filters { facet("genre", "comedy") } })
+          .apply {
+            override { filters { facet("color", "red") } }
+            add { filters { facet("isPinned", false) } }
+            add { queryLanguages { +SupportedLanguage.Fr } }
+            override { queryLanguages { +SupportedLanguage.En } }
+            override { hitsPerPage = 10 }
+            override { hitsPerPage = 20 }
+          }
+          .build()
+      },
+      body = """{"filters":"color:red","queryLanguages":["en"],"hitsPerPage":20}""",
+      expect = listOf(Expect.Hits(setOf("1", "3"))),
+    )
+
+  val fromKeepsUntouchedFieldsAndReplacesComposedOnes =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(
+            from =
+              SearchParamsObject(
+                query = "office",
+                hitsPerPage = 5,
+                filters = "genre:drama",
+                ruleContexts = listOf("old"),
+                attributesToHighlight = listOf("title"),
+              )
+          )
+          .apply {
+            add { filters { facet("genre", "comedy") } }
+            add { ruleContexts { +"desktop" } }
+            override { hitsPerPage = 10 }
+          }
+          .build()
+      },
+      body =
+        """{"query":"office","hitsPerPage":10,"filters":"genre:comedy","ruleContexts":["desktop"],"attributesToHighlight":["title"]}""",
+      expect =
+        listOf(
+          Expect.Hits(setOf("1", "3")),
+          Expect.HighlightKeys(setOf("title")),
+          Expect.UserData(jsonArray("""[{"ctx":"desktop"}]""")),
+        ),
+    )
+
+  val fromWithoutFragmentsSendsTheSource =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(from = SearchParamsObject(query = "office", filters = "genre:drama"))
+          .build()
+      },
+      body = """{"query":"office","filters":"genre:drama"}""",
+      expect = listOf(Expect.Hits(setOf("2"))),
+    )
+
+  val fromEmptyFragmentsSendEmptyListAndDropFilters =
+    LiveCase(
+      dsl = {
+        DSLQueryComposer(
+            from =
+              SearchParamsObject(
+                query = "office",
+                filters = "genre:drama",
+                attributesToHighlight = listOf("title"),
+              )
+          )
+          .apply {
+            add { attributesToHighlight {} }
+            add { filters {} }
+          }
+          .build()
+      },
+      body = """{"query":"office","attributesToHighlight":[]}""",
+      expect = listOf(Expect.Hits(setOf("1", "2", "3", "4"))),
+    )
+
   // ── Modules contributing to one composer ──────────────────────────────────────────────────────
 
   val localeModuleWithoutSecondary =

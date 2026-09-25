@@ -69,6 +69,11 @@ internal class QueryParamsLiveTest {
   }
 
   @Test
+  fun emptyListBlockSendsEmptyList() = live {
+    fx.assertCase(QueryParamCases.emptyListBlockSendsEmptyList)
+  }
+
+  @Test
   fun queryLanguagesWithoutSecondary() = live {
     fx.assertCase(QueryParamCases.queryLanguagesWithoutSecondary)
   }

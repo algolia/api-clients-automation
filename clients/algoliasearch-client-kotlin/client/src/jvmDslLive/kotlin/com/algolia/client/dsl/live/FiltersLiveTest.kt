@@ -55,6 +55,23 @@ internal class FiltersLiveTest {
   @Test fun entityIdsExcludingBatch() = live { fx.assertCase(FilterCases.entityIdsExcludingBatch) }
 
   @Test
+  fun filtersBlockOverwritesString() = live {
+    fx.assertCase(FilterCases.filtersBlockOverwritesString)
+  }
+
+  @Test
+  fun secondFiltersBlockReplacesFirst() = live {
+    fx.assertCase(FilterCases.secondFiltersBlockReplacesFirst)
+  }
+
+  @Test fun emptyGroupsOmitFields() = live { fx.assertCase(FilterCases.emptyGroupsOmitFields) }
+
+  @Test
+  fun emptyGroupsBesideLeavesDropped() = live {
+    fx.assertCase(FilterCases.emptyGroupsBesideLeavesDropped)
+  }
+
+  @Test
   fun leadingDashValueIsLiteral() = live { fx.assertCase(FilterCases.leadingDashValueIsLiteral) }
 
   @Test
@@ -68,6 +85,14 @@ internal class FiltersLiveTest {
   fun isNegatedOnEveryValueType() = live { fx.assertCase(FilterCases.isNegatedOnEveryValueType) }
 
   @Test fun isNegatedOnSingleFacet() = live { fx.assertCase(FilterCases.isNegatedOnSingleFacet) }
+
+  @Test
+  fun isNegatedOnNumericAndTagLeaves() = live {
+    fx.assertCase(FilterCases.isNegatedOnNumericAndTagLeaves)
+  }
+
+  @Test
+  fun positionalScoreAndNegation() = live { fx.assertCase(FilterCases.positionalScoreAndNegation) }
 
   @Test fun orScoresSummed() = live { fx.assertCase(FilterCases.orScoresSummed) }
 

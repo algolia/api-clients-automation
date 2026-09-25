@@ -57,6 +57,16 @@ internal object OptionalFilterCases {
       expect = listOf(Expect.Scores(mapOf("1" to 1), others = 0)),
     )
 
+  /**
+   * Negation prepends `-` to the raw value; the leading dash of the value itself is not escaped.
+   */
+  val negatedLeadingDashPositional =
+    LiveCase(
+      dsl = { optional { facet("label", "-Movie", 2, true) } },
+      body = """{"optionalFilters":[["label:--Movie<score=2>"]],"getRankingInfo":true}""",
+      expect = listOf(Expect.Scores(mapOf("1" to 0, "2" to 2))),
+    )
+
   // ── Rows: `and { }` sums, `or { }` takes the max ──────────────────────────────────────────────
 
   val andRowsScoresSummed =

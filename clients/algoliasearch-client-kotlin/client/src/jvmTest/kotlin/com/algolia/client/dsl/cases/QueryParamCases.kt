@@ -133,6 +133,14 @@ internal object QueryParamCases {
       expect = listOf(Expect.HitCount(5), Expect.HitKeys(setOf("objectID", "title", "locale"))),
     )
 
+  /** An empty block sends `[]`, not nothing: the engine strips every hit down to `objectID`. */
+  val emptyListBlockSendsEmptyList =
+    LiveCase(
+      dsl = { query { attributesToRetrieve {} } },
+      body = """{"attributesToRetrieve":[]}""",
+      expect = listOf(Expect.HitCount(5), Expect.HitKeys(setOf("objectID"))),
+    )
+
   private fun stopWordsQuery(secondary: SupportedLanguage?): SearchParamsObject = query {
     query = "the office"
     removeStopWords = RemoveStopWords.of(true)

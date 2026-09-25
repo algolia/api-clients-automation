@@ -59,8 +59,28 @@ internal class EscapingLiveTest {
 
   @Test fun dottedValueBare() = live { fx.assertCase(EscapingCases.dottedValueBare) }
 
+  @Test fun whitespaceValueQuoted() = live { fx.assertCase(EscapingCases.whitespaceValueQuoted) }
+
+  @Test fun keywordValuesQuoted() = live { fx.assertCase(EscapingCases.keywordValuesQuoted) }
+
+  @Test fun toKeywordQuoted() = live { fx.assertCase(EscapingCases.toKeywordQuoted) }
+
+  @Test fun nonAsciiQuoted() = live { fx.assertCase(EscapingCases.nonAsciiQuoted) }
+
+  @Test fun safeCharactersBare() = live { fx.assertCase(EscapingCases.safeCharactersBare) }
+
+  @Test fun emptyValueQuoted() = live { fx.assertCase(EscapingCases.emptyValueQuoted) }
+
+  @Test fun tagWithQuotesEscaped() = live { fx.assertCase(EscapingCases.tagWithQuotesEscaped) }
+
   @Test
   fun attributeWithColonQuoted() = live { fx.assertCase(EscapingCases.attributeWithColonQuoted) }
+
+  @Test
+  fun attributeWithSpaceQuoted() = live { fx.assertCase(EscapingCases.attributeWithSpaceQuoted) }
+
+  @Test
+  fun numericAttributesQuoted() = live { fx.assertCase(EscapingCases.numericAttributesQuoted) }
 
   @Test fun tagsQuoted() = live { fx.assertCase(EscapingCases.tagsQuoted) }
 

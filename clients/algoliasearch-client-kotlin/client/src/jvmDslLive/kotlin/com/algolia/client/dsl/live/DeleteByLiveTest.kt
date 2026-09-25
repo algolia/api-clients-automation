@@ -75,6 +75,14 @@ internal class DeleteByLiveTest {
       }
     }
 
+  @Test
+  fun composerBaseMergedWithFragments() =
+    live(timeout = DELETE_TIMEOUT) {
+      fx.assertDelete(DeleteCases.composerBaseMergedWithFragments) { copy ->
+        copy.client.deleteBy(copy.name, DeleteCases.composerBaseMergedWithFragments.dsl()).taskID
+      }
+    }
+
   /**
    * The engine rejects a delete-by with no filter and no geo condition, which is what the DSL's
    * client-side check (`requireDeleteCondition`) mirrors. Sent through the generated method, on a
