@@ -38,22 +38,7 @@ internal sealed interface Filter {
     val value: String,
     val score: Int? = null,
     override val negated: Boolean = false,
-  ) : Filter {
-
-    internal constructor(
-      attribute: String,
-      value: Boolean,
-      score: Int? = null,
-      negated: Boolean = false,
-    ) : this(attribute, value.toString(), score, negated)
-
-    internal constructor(
-      attribute: String,
-      value: Number,
-      score: Int? = null,
-      negated: Boolean = false,
-    ) : this(attribute, value.toString(), score, negated)
-  }
+  ) : Filter
 
   /** Filters on a `_tags` value. */
   data class Tag internal constructor(val value: String, override val negated: Boolean = false) :
@@ -78,20 +63,7 @@ internal sealed interface Filter {
     val lowerBound: Number,
     val upperBound: Number,
     override val negated: Boolean = false,
-  ) : Numeric {
-
-    internal constructor(
-      attribute: String,
-      range: IntRange,
-      negated: Boolean = false,
-    ) : this(attribute, range.first, range.last, negated)
-
-    internal constructor(
-      attribute: String,
-      range: LongRange,
-      negated: Boolean = false,
-    ) : this(attribute, range.first, range.last, negated)
-  }
+  ) : Numeric
 }
 
 /** Operator for [Filter.Comparison]. Mirrors version 2 `NumericOperator`. */
