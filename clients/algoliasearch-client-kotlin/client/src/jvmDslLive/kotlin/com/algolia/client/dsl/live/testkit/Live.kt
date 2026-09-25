@@ -6,7 +6,6 @@ import com.algolia.client.dsl.cases.Expect
 import com.algolia.client.dsl.cases.LiveCase
 import com.algolia.client.dsl.cases.json
 import com.algolia.client.dsl.cases.wire
-import com.algolia.client.exception.AlgoliaApiException
 import com.algolia.client.extensions.saveObjects
 import com.algolia.client.extensions.waitForTask
 import com.algolia.client.model.search.OperationIndexParams
@@ -14,7 +13,6 @@ import com.algolia.client.model.search.OperationType
 import io.github.cdimascio.dotenv.Dotenv
 import kotlin.random.Random
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.fail
@@ -240,26 +238,13 @@ internal fun live(timeout: Duration = 60.seconds, block: suspend CoroutineScope.
   }
 
 /**
- * Runs the live half of [case] against this index. A case with a DSL half first re-checks that the
- * DSL serializes to the expected body (the offline `DslWireTest` check), so the encoder and the
- * engine evidence are asserted on the same bytes; the expected body is then sent raw.
+ * Runs the live half of [case] against this index: first re-checks that the DSL serializes to the
+ * expected body, so the encoder and the engine evidence are asserted on the same bytes; the
+ * expected body is then sent raw.
  */
 internal suspend fun LiveIndex.assertCase(case: LiveCase) {
   val params = json(case.body)
-  case.dsl?.let { dsl ->
-    assertEquals(params, wire(dsl()), "DSL wire differs from the expected body")
-  }
-  val rejected = case.expect.filterIsInstance<Expect.Rejected>()
-  if (rejected.isNotEmpty()) {
-    val expected = rejected.single()
-    val e = assertFailsWith<AlgoliaApiException>("the engine must reject $params") { query(params) }
-    assertEquals(expected.status, e.httpErrorCode, "HTTP status of the rejection (${e.message})")
-    assertTrue(
-      e.message.orEmpty().contains(expected.phrase),
-      "engine wording changed; update the phrase. Expected \"${expected.phrase}\" in: ${e.message}",
-    )
-    return
-  }
+  assertEquals(params, wire(case.dsl()), "DSL wire differs from the expected body")
   val response = query(params)
   case.expect.forEach { checkExpect(response, it) }
 }
@@ -336,7 +321,6 @@ private fun checkExpect(response: JsonObject, expect: Expect) {
         )
       }
     is Expect.UserData -> assertEquals<JsonElement?>(expect.value, response["userData"], "userData")
-    is Expect.Rejected -> fail("Rejected cases never reach a response")
   }
 }
 

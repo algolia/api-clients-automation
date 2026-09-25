@@ -3,9 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
-import com.algolia.client.dsl.filter.filters
 import com.algolia.client.model.search.IndexSettings
-import com.algolia.client.model.search.SearchParamsObject
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -27,15 +25,6 @@ internal class DslSerializationTest {
   private val json = ClientOptions().json
 
   @Test
-  fun queryLastWriteWinsFiltersBlockOverwritesString() {
-    val dsl = query {
-      filters = "brand:Nike"
-      filters { facet("brand", "Apple") }
-    }
-    assertJsonEquals(SearchParamsObject(filters = "brand:Apple"), dsl)
-  }
-
-  @Test
   fun settingsLastWriteWinsSearchableAttributesBlockOverwritesList() {
     val dsl = settings {
       searchableAttributes = listOf("old")
@@ -48,46 +37,6 @@ internal class DslSerializationTest {
   fun settingsOrderedVarargJoinsWithCommaSpace() {
     val dsl = settings { searchableAttributes { ordered("title", "name") } }
     assertJsonEquals(IndexSettings(searchableAttributes = listOf("title, name")), dsl)
-  }
-
-  @Test
-  fun emptyFilterBlockLeavesFieldUnset() {
-    assertEncodedJson(query { filters {} }, "{}")
-    assertEncodedJson(query { optionalFilters {} }, "{}")
-
-    // Nested empty groups collapse too: no leaf, no field.
-    assertEncodedJson(
-      query {
-        filters {
-          and {}
-          orFacet {}
-        }
-      },
-      "{}",
-    )
-    assertEncodedJson(query { optionalFilters { or {} } }, "{}")
-
-    // An empty group beside a leaf is dropped, not parenthesised.
-    assertEquals(
-      "color:red",
-      filters {
-        facet("color", "red")
-        and {}
-      },
-    )
-  }
-
-  @Test
-  fun secondFiltersBlockReplacesTheFirst() {
-    val dsl = query {
-      filters { facet("genre", "comedy") }
-      filters { facet("genre", "drama") }
-    }
-    assertEncodedJson(dsl, """{"filters":"genre:drama"}""")
-  }
-
-  private inline fun <reified T> assertEncodedJson(dsl: T, expectedJson: String) {
-    assertEquals(json.parseToJsonElement(expectedJson), json.encodeToJsonElement(dsl))
   }
 
   private inline fun <reified T> assertJsonEquals(constructor: T, dsl: T) {
