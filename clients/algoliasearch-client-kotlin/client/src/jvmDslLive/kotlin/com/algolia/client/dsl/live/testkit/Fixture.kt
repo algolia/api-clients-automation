@@ -103,7 +103,10 @@ internal val MAIN_FIXTURE: LiveFixture =
  */
 internal val ESCAPING_FIXTURE: LiveFixture =
   LiveFixture(
-    settings = IndexSettings(attributesForFaceting = listOf("v", "my:attr")),
+    settings =
+      IndexSettings(
+        attributesForFaceting = listOf("v", "my:attr", "my attr", "my num", "a:b", "a(b)")
+      ),
     records =
       listOf(
         json("""{"objectID": "1", "v": "Books(Kids)", "_tags": ["a(b)"]}"""),
@@ -117,6 +120,15 @@ internal val ESCAPING_FIXTURE: LiveFixture =
         json("""{"objectID": "9", "v": "trail\\"}"""),
         json("""{"objectID": "10", "v": "a.b", "my:attr": "z"}"""),
         json("""{"objectID": "11", "v": "q\"uote"}"""),
+        json("""{"objectID": "12", "v": "John Doe"}"""),
+        json("""{"objectID": "13", "v": "foo AND bar"}"""),
+        json("""{"objectID": "14", "v": "foo OR bar"}"""),
+        json("""{"objectID": "15", "v": "NOT bar"}"""),
+        json("""{"objectID": "16", "v": "TO"}"""),
+        json("""{"objectID": "17", "v": "café"}"""),
+        json("""{"objectID": "18", "v": "a.b-c_1"}"""),
+        json("""{"objectID": "19", "_tags": ["45\"-50\" tv's"]}"""),
+        json("""{"objectID": "20", "my attr": "red", "my num": 15, "a:b": 2, "a(b)": 1}"""),
       ),
     rule = null,
   )

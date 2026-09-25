@@ -58,4 +58,20 @@ internal object DeleteCases {
       body = """{"filters":"(entityId:e1 OR entityId:e2 OR entityId:e3) AND NOT batchId:b2"}""",
       remaining = setOf("3", "4", "5"),
     )
+
+  /** The `base` filters are merged with the `add` fragments, not replaced by them. */
+  val composerBaseMergedWithFragments =
+    DeleteCase(
+      dsl = {
+        DSLDeleteByComposer(
+            base = {
+              filters { orFacet { listOf("e1", "e2", "e3").forEach { facet("entityId", it) } } }
+            }
+          )
+          .apply { add { filters { facet("batchId", "b2", isNegated = true) } } }
+          .build()
+      },
+      body = """{"filters":"(entityId:e1 OR entityId:e2 OR entityId:e3) AND NOT batchId:b2"}""",
+      remaining = setOf("3", "4", "5"),
+    )
 }

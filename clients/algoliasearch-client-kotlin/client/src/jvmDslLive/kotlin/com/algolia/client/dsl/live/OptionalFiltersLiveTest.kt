@@ -41,6 +41,11 @@ internal class OptionalFiltersLiveTest {
 
   @Test fun leadingDashEscaped() = live { fx.assertCase(OptionalFilterCases.leadingDashEscaped) }
 
+  @Test
+  fun negatedLeadingDashPositional() = live {
+    fx.assertCase(OptionalFilterCases.negatedLeadingDashPositional)
+  }
+
   @Test fun andRowsScoresSummed() = live { fx.assertCase(OptionalFilterCases.andRowsScoresSummed) }
 
   @Test fun orRowScoresMax() = live { fx.assertCase(OptionalFilterCases.orRowScoresMax) }

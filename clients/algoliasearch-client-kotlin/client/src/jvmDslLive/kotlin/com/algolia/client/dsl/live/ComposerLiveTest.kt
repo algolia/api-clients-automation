@@ -35,6 +35,39 @@ internal class ComposerLiveTest {
   @Test fun addAndOverride() = live { fx.assertCase(ComposerCases.addAndOverride) }
 
   @Test
+  fun baseMergedWithFragments() = live { fx.assertCase(ComposerCases.baseMergedWithFragments) }
+
+  @Test
+  fun baseEmptyListKeptByEmptyFragment() = live {
+    fx.assertCase(ComposerCases.baseEmptyListKeptByEmptyFragment)
+  }
+
+  @Test
+  fun emptyFragmentsOmitFiltersAndSendEmptyLists() = live {
+    fx.assertCase(ComposerCases.emptyFragmentsOmitFiltersAndSendEmptyLists)
+  }
+
+  @Test
+  fun overridesRunLastAndReplaceMergedFilters() = live {
+    fx.assertCase(ComposerCases.overridesRunLastAndReplaceMergedFilters)
+  }
+
+  @Test
+  fun fromKeepsUntouchedFieldsAndReplacesComposedOnes() = live {
+    fx.assertCase(ComposerCases.fromKeepsUntouchedFieldsAndReplacesComposedOnes)
+  }
+
+  @Test
+  fun fromWithoutFragmentsSendsTheSource() = live {
+    fx.assertCase(ComposerCases.fromWithoutFragmentsSendsTheSource)
+  }
+
+  @Test
+  fun fromEmptyFragmentsSendEmptyListAndDropFilters() = live {
+    fx.assertCase(ComposerCases.fromEmptyFragmentsSendEmptyListAndDropFilters)
+  }
+
+  @Test
   fun localeModuleWithoutSecondary() = live {
     fx.assertCase(ComposerCases.localeModuleWithoutSecondary)
   }

@@ -176,6 +176,70 @@ internal object FilterCases {
       expect = listOf(Expect.Hits(setOf("1", "2"))),
     )
 
+  // ── Last write wins: a `filters { }` block replaces the string or the earlier block ───────────
+
+  val filtersBlockOverwritesString =
+    LiveCase(
+      dsl = {
+        query {
+          filters = "genre:drama"
+          filters { facet("genre", "comedy") }
+        }
+      },
+      body = """{"filters":"genre:comedy"}""",
+      expect = listOf(Expect.Hits(setOf("1", "3", "5"))),
+    )
+
+  val secondFiltersBlockReplacesFirst =
+    LiveCase(
+      dsl = {
+        query {
+          filters { facet("genre", "comedy") }
+          filters { facet("genre", "drama") }
+        }
+      },
+      body = """{"filters":"genre:drama"}""",
+      expect = listOf(Expect.Hits(setOf("2"))),
+    )
+
+  // ── Empty groups: the encoders drop them, never sending an empty field ────────────────────────
+
+  val emptyGroupsOmitFields =
+    LiveCase(
+      dsl = {
+        query {
+          query = "office"
+          filters {
+            and {}
+            orFacet {}
+          }
+          optionalFilters { or {} }
+        }
+      },
+      body = """{"query":"office"}""",
+      expect = listOf(Expect.Hits(setOf("1", "2", "3", "4"))),
+    )
+
+  val emptyGroupsBesideLeavesDropped =
+    LiveCase(
+      dsl = {
+        query {
+          filters {
+            facet("color", "red")
+            and {}
+            orTag {}
+          }
+          optionalFilters {
+            and {}
+            or {}
+            facet("genre", "comedy")
+          }
+        }
+      },
+      body = """{"filters":"color:red","optionalFilters":[["genre:comedy"]]}""",
+      expect = listOf(Expect.Hits(setOf("1", "3"))),
+    )
+
   // ── Values: literal dashes, typed values, `isNegated` ─────────────────────────────────────────
 
   val leadingDashValueIsLiteral =
@@ -226,6 +290,31 @@ internal object FilterCases {
     LiveCase(
       dsl = { query { filters { facet("genre", "comedy", isNegated = true) } } },
       body = """{"filters":"NOT genre:comedy"}""",
+      expect = listOf(Expect.Hits(setOf("2", "4"))),
+    )
+
+  val isNegatedOnNumericAndTagLeaves =
+    LiveCase(
+      dsl = {
+        query {
+          filters {
+            comparison("priority", NumericOperator.Equals, 1, isNegated = true)
+            range("priority", 3, 3, isNegated = true)
+            range("count", 0L..9L, isNegated = true)
+            tag("featured", isNegated = true)
+          }
+        }
+      },
+      body =
+        """{"filters":"NOT priority = 1 AND NOT priority:3 TO 3 AND NOT count:0 TO 9 AND NOT _tags:featured"}""",
+      expect = listOf(Expect.Hits(setOf("2"))),
+    )
+
+  /** The third positional argument is `score`, the fourth `isNegated`. */
+  val positionalScoreAndNegation =
+    LiveCase(
+      dsl = { query { filters { facet("genre", "comedy", 5, true) } } },
+      body = """{"filters":"NOT genre:comedy<score=5>"}""",
       expect = listOf(Expect.Hits(setOf("2", "4"))),
     )
 
