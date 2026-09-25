@@ -252,6 +252,50 @@ internal class DSLQueryComposerTest {
   }
 
   @Test
+  fun fromKeepsUntouchedFieldsAndReplacesComposedOnes() {
+    val existing =
+      SearchParamsObject(
+        query = "shoes",
+        hitsPerPage = 5,
+        filters = "old:1 OR old:2",
+        ruleContexts = listOf("old"),
+        attributesToHighlight = listOf("title"),
+      )
+    val composer = DSLQueryComposer(from = existing)
+    composer.add { filters { facet("module", "y") } }
+    composer.add { ruleContexts { +"new" } }
+    composer.override { hitsPerPage = 10 }
+
+    assertEquals(
+      existing.copy(filters = "module:y", ruleContexts = listOf("new"), hitsPerPage = 10),
+      composer.build(),
+    )
+    // The source object is never modified, and every build starts from it again.
+    assertEquals("old:1 OR old:2", existing.filters)
+    assertEquals(composer.build(), composer.build())
+  }
+
+  @Test
+  fun fromWithoutFragmentsEqualsTheSource() {
+    val existing = SearchParamsObject(query = "q", optionalFilters = OptionalFilters.of("a:1"))
+    assertEquals(existing, DSLQueryComposer(from = existing).build())
+    assertEquals(existing, composeQuery(from = existing) {})
+  }
+
+  @Test
+  fun fromEmptyFragmentsSendEmptyLists() {
+    val existing = SearchParamsObject(attributesToHighlight = listOf("title"), filters = "a:1")
+    val params =
+      composeQuery(from = existing) {
+        add { attributesToHighlight {} }
+        add { filters {} }
+      }
+    assertEquals(emptyList(), params.attributesToHighlight)
+    // An empty filters fragment replaces the seeded string with nothing, as on a query builder.
+    assertEquals(null, params.filters)
+  }
+
+  @Test
   fun fieldBlocksShareOneReceiver() {
     val params = composeQuery {
       add { filters { orFacet { facet("a", "1") } } }

@@ -43,7 +43,13 @@ import com.algolia.client.model.search.DeleteByParams
 @AlgoliaExperimentalDsl
 public class DSLDeleteByComposer public constructor(base: DSLDeleteBy.() -> Unit = {}) {
   private val core =
-    ComposerCore(::DSLDeleteByAdditions, ::DSLDeleteBy, base, DSLDeleteByAdditions::applyTo)
+    ComposerCore(
+      ::DSLDeleteByAdditions,
+      { DSLDeleteBy() },
+      base,
+      merge = true,
+      DSLDeleteByAdditions::applyTo,
+    )
 
   /**
    * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
@@ -94,8 +100,8 @@ public class DSLDeleteByAdditions internal constructor() {
    * Writes each field with at least one recorded block once, through the generated [DSLDeleteBy]
    * member helper, so the helper's rules (an empty block throws) apply unchanged.
    */
-  internal fun applyTo(builder: DSLDeleteBy) {
-    for (field in fields) field.applyTo(builder)
+  internal fun applyTo(builder: DSLDeleteBy, merge: Boolean) {
+    for (field in fields) field.applyTo(builder, merge)
   }
 }
 
