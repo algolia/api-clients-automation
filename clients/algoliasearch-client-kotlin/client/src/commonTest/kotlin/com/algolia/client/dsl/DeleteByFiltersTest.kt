@@ -79,12 +79,14 @@ internal class DeleteByFiltersTest {
     composer.add { filters { emptyList<String>().forEach { facet("entityId", it) } } }
     assertWidens { composer.build() }
 
-    assertWidens { composeDeleteBy { add { filters { orFacet {} } } } }
+    assertWidens { DSLDeleteByComposer().apply { add { filters { orFacet {} } } }.build() }
     assertWidens {
-      composeDeleteBy {
-        add { filters { facet("a", "1") } }
-        override { filters { orFacet {} } }
-      }
+      DSLDeleteByComposer()
+        .apply {
+          add { filters { facet("a", "1") } }
+          override { filters { orFacet {} } }
+        }
+        .build()
     }
   }
 
@@ -99,18 +101,20 @@ internal class DeleteByFiltersTest {
     assertNoCondition { deleteBy {} }
     assertNoCondition { deleteBy { filters = " " } }
     assertNoCondition { deleteBy { aroundLatLng = "" } }
-    assertNoCondition { composeDeleteBy {} }
+    assertNoCondition { DSLDeleteByComposer().build() }
     assertNoCondition {
-      composeDeleteBy {
-        add { filters { facet("a", "1") } }
-        override { filters = null }
-      }
+      DSLDeleteByComposer()
+        .apply {
+          add { filters { facet("a", "1") } }
+          override { filters = null }
+        }
+        .build()
     }
 
     assertEquals("1,2", deleteBy { aroundLatLng = "1,2" }.aroundLatLng)
     assertEquals(
       DeleteByParams(aroundLatLng = "1,2"),
-      composeDeleteBy(base = { aroundLatLng = "1,2" }) {},
+      DSLDeleteByComposer(base = { aroundLatLng = "1,2" }).build(),
     )
   }
 
@@ -129,10 +133,12 @@ internal class DeleteByFiltersTest {
     )
     assertEquals(
       "a:1",
-      composeQuery {
+      DSLQueryComposer()
+        .apply {
           add { filters { orFacet {} } }
           add { filters { facet("a", "1") } }
         }
+        .build()
         .filters,
     )
     assertEquals(

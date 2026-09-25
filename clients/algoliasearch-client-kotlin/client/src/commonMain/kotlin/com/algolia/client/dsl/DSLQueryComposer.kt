@@ -5,7 +5,6 @@ package com.algolia.client.dsl
 import com.algolia.client.dsl.filter.DSLFilters
 import com.algolia.client.dsl.generated.DSLSearchParamsObjectAdditions
 import com.algolia.client.model.search.SearchParamsObject
-import kotlin.jvm.JvmOverloads
 
 /**
  * Collects query fragments from several modules and builds one [SearchParamsObject].
@@ -50,7 +49,6 @@ public class DSLQueryComposer
 private constructor(private val core: ComposerCore<DSLSearchParamsObjectAdditions, DSLQuery>) {
 
   /** Starts every [build] from [base] run on an empty [DSLQuery]; fragments merge into it. */
-  @JvmOverloads
   public constructor(
     base: DSLQuery.() -> Unit = {}
   ) : this(
@@ -88,22 +86,4 @@ private constructor(private val core: ComposerCore<DSLSearchParamsObjectAddition
   public fun override(block: DSLQuery.() -> Unit): Unit = core.override(block)
 
   public fun build(): SearchParamsObject = core.build().build()
-}
-
-/** `DSLQueryComposer(base).apply(block).build()`. */
-@AlgoliaExperimentalDsl
-public fun composeQuery(
-  base: DSLQuery.() -> Unit = {},
-  block: DSLQueryComposer.() -> Unit,
-): SearchParamsObject {
-  return DSLQueryComposer(base).apply(block).build()
-}
-
-/** `DSLQueryComposer(from).apply(block).build()`. */
-@AlgoliaExperimentalDsl
-public fun composeQuery(
-  from: SearchParamsObject,
-  block: DSLQueryComposer.() -> Unit,
-): SearchParamsObject {
-  return DSLQueryComposer(from).apply(block).build()
 }
