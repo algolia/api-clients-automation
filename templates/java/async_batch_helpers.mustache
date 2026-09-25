@@ -12,7 +12,11 @@
  *
  * <p>The {@code objects} Iterable is consumed one wave at a time — the first wave on the calling
  * thread, subsequent waves on the client's executor. Lazy iterators that touch thread-confined
- * resources may therefore surprise.
+ * resources may therefore surprise; use the synchronous variant, which consumes the Iterable on
+ * the calling thread only.
+ *
+ * <p>Failures, including exceptions thrown by the {@code objects} Iterable, are reported through
+ * the returned future. Only invalid arguments ({@code batchSize < 1}) throw directly.
  *
  * <p>For concurrency semantics (ordering, last-write-wins, failure blast radius), see
  * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
@@ -38,22 +42,36 @@ public <T> CompletableFuture<List<BatchResponse>> chunkedBatchAsync(
   if (batchSize < 1) {
     throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
   }
+  final RequestOptions helperRequestOptions = withRequestId(requestOptions);
   int maxConcurrency = chunkedOptions != null ? chunkedOptions.getMaxConcurrency() : 1;
-  Iterator<T> it = objects.iterator();
   // Waves are strictly sequential: responses.add runs only in the post-allOf continuation;
   // future completion provides happens-before between waves (plain list is safe).
   List<BatchResponse> responses = new ArrayList<>();
-  return chunkedBatchNextWave(indexName, it, action, batchSize, maxConcurrency, requestOptions, responses);
+  Iterator<T> it;
+  List<CompletableFuture<BatchResponse>> firstWave;
+  try {
+    it = objects.iterator();
+    firstWave = buildWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions);
+  } catch (RuntimeException e) {
+    CompletableFuture<List<BatchResponse>> failed = new CompletableFuture<>();
+    failed.completeExceptionally(e);
+    return failed;
+  }
+  return chunkedBatchAwaitWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions, responses, firstWave);
 }
 
-private <T> CompletableFuture<List<BatchResponse>> chunkedBatchNextWave(
+/**
+ * Reads up to {@code maxConcurrency} chunks of up to {@code batchSize} items from {@code it} and
+ * sends one {@code batch} request per chunk. Never blocks; the iterator is consumed on the calling
+ * thread.
+ */
+private <T> List<CompletableFuture<BatchResponse>> buildWave(
   String indexName,
   Iterator<T> it,
   Action action,
   int batchSize,
   int maxConcurrency,
-  RequestOptions requestOptions,
-  List<BatchResponse> responses
+  RequestOptions requestOptions
 ) {
   List<CompletableFuture<BatchResponse>> wave = new ArrayList<>();
   while (wave.size() < maxConcurrency && it.hasNext()) {
@@ -63,6 +81,19 @@ private <T> CompletableFuture<List<BatchResponse>> chunkedBatchNextWave(
     }
     wave.add(batchAsync(indexName, new BatchWriteParams().setRequests(requests), requestOptions));
   }
+  return wave;
+}
+
+private <T> CompletableFuture<List<BatchResponse>> chunkedBatchAwaitWave(
+  String indexName,
+  Iterator<T> it,
+  Action action,
+  int batchSize,
+  int maxConcurrency,
+  RequestOptions requestOptions,
+  List<BatchResponse> responses,
+  List<CompletableFuture<BatchResponse>> wave
+) {
   if (wave.isEmpty()) {
     return CompletableFuture.completedFuture(new ArrayList<>(responses));
   }
@@ -72,7 +103,8 @@ private <T> CompletableFuture<List<BatchResponse>> chunkedBatchNextWave(
       for (CompletableFuture<BatchResponse> f : wave) {
         responses.add(f.join());
       }
-      return chunkedBatchNextWave(indexName, it, action, batchSize, maxConcurrency, requestOptions, responses);
+      List<CompletableFuture<BatchResponse>> nextWave = buildWave(indexName, it, action, batchSize, maxConcurrency, requestOptions);
+      return chunkedBatchAwaitWave(indexName, it, action, batchSize, maxConcurrency, requestOptions, responses, nextWave);
     }, getExecutor());
 }
 

@@ -783,7 +783,8 @@ public <T> List<BatchResponse> chunkedBatch(
  * in `batch` requests.
  *
  * <p>{@code chunkedOptions.maxConcurrency} is honored; see
- * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
+ * {@link ChunkedHelperOptions#setMaxConcurrency(int)}. The {@code objects} Iterable is consumed
+ * on the calling thread only.
  *
  * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
  *     make it fit in `batch` requests.
@@ -810,11 +811,24 @@ public <T> List<BatchResponse> chunkedBatch(
   RequestOptions requestOptions,
   ChunkedHelperOptions chunkedOptions
 ) {
+  if (batchSize < 1) {
+    throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
+  }
   final RequestOptions helperRequestOptions = withRequestId(requestOptions);
   int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
-  List<BatchResponse> responses = LaunderThrowable.await(
-    chunkedBatchAsync(indexName, objects, action, batchSize, helperRequestOptions, chunkedOptions)
-  );
+  int maxConcurrency = chunkedOptions != null ? chunkedOptions.getMaxConcurrency() : 1;
+  Iterator<T> it = objects.iterator();
+  List<BatchResponse> responses = new ArrayList<>();
+  while (true) {
+    List<CompletableFuture<BatchResponse>> wave = buildWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions);
+    if (wave.isEmpty()) {
+      break;
+    }
+    LaunderThrowable.await(CompletableFuture.allOf(wave.toArray(new CompletableFuture[0])));
+    for (CompletableFuture<BatchResponse> f : wave) {
+      responses.add(f.join());
+    }
+  }
   if (waitForTasks) {
     responses.forEach(response ->
       waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions)
