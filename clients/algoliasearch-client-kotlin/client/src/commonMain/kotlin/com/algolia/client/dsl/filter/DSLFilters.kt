@@ -31,20 +31,19 @@ import com.algolia.client.dsl.DSLParameters
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLFilters private constructor(private val rows: MutableList<List<Filter>>) :
+public class DSLFilters private constructor(private val rows: FilterRows<Filter>) :
   DSLFacet by FacetLeafMixin({ rows.add(listOf(it)) }),
   DSLTag by TagLeafMixin({ rows.add(listOf(it)) }),
   DSLNumeric by NumericLeafMixin({ rows.add(listOf(it)) }) {
 
-  internal constructor() : this(mutableListOf())
+  internal constructor() : this(FilterRows())
 
   /**
    * ANDs the filters in [block] into this block. An empty block adds nothing; in delete-by filters
    * it throws.
    */
   public fun and(block: DSLFilters.() -> Unit) {
-    val added = DSLFilters().apply(block).rows
-    if (added.isEmpty()) rows.add(emptyList()) else rows.addAll(added)
+    rows.and(DSLFilters().apply(block).rows)
   }
 
   /**
@@ -75,7 +74,7 @@ public class DSLFilters private constructor(private val rows: MutableList<List<F
     rows.addAll(seed)
   }
 
-  internal fun rows(): List<List<Filter>> = rows.toList()
+  internal fun rows(): List<List<Filter>> = rows.snapshot()
 }
 
 /**

@@ -3,7 +3,9 @@
 package com.algolia.client.dsl.rule
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.DSLList
 import com.algolia.client.dsl.DSLParameters
+import com.algolia.client.dsl.DSLValues
 import com.algolia.client.dsl.generated.DSLCondition
 import com.algolia.client.dsl.generated.DSLConsequence
 import com.algolia.client.dsl.generated.DSLConsequenceParams
@@ -88,23 +90,14 @@ public fun DSLRule.consequence(block: DSLConsequence.() -> Unit) {
   consequence = DSLConsequence().apply(block).build()
 }
 
-/** Builds a [List] of [Condition] values. */
+/** Builds a [List] of [Condition] values: `condition { }` or `+condition`. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLConditions internal constructor() {
-  private val values: MutableList<Condition> = mutableListOf()
-
+public class DSLConditions internal constructor() : DSLValues<Condition>() {
   /** Adds a [Condition] from [block]. */
   public fun condition(block: DSLCondition.() -> Unit) {
     values += DSLCondition().apply(block).build()
   }
-
-  /** Adds [this] condition. */
-  public operator fun Condition.unaryPlus() {
-    values += this
-  }
-
-  internal fun build(): List<Condition> = values.toList()
 }
 
 /** Sets [DSLCondition.pattern] to `{facet:ATTRIBUTE}` for [attribute]. */
@@ -126,9 +119,7 @@ public fun DSLConsequence.params(block: DSLConsequenceParams.() -> Unit) {
 /** Builds a list of [Promote] values. Last write wins when [promote] is called again. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLPromotions internal constructor() {
-  private val values: MutableList<Promote> = mutableListOf()
-
+public class DSLPromotions internal constructor() : DSLList<Promote>() {
   /** Adds a single-record promotion at [position]. */
   public fun objectID(objectID: String, position: Int) {
     values += Promote.of(PromoteObjectID(objectID, position))
@@ -138,22 +129,16 @@ public class DSLPromotions internal constructor() {
   public fun objectIDs(objectIDs: List<String>, position: Int) {
     values += Promote.of(PromoteObjectIDs(objectIDs, position))
   }
-
-  internal fun build(): List<Promote> = values.toList()
 }
 
 /** Builds a list of hidden records. Last write wins when [hide] is called again. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLObjectIDs internal constructor() {
-  private val values: MutableList<ConsequenceHide> = mutableListOf()
-
+public class DSLObjectIDs internal constructor() : DSLList<ConsequenceHide>() {
   /** Adds [this] object ID to the hide list. */
   public operator fun String.unaryPlus() {
     values += ConsequenceHide(this)
   }
-
-  internal fun build(): List<ConsequenceHide> = values.toList()
 }
 
 /** Sets [DSLConsequence.promote] from [block]. A second call replaces the list. */

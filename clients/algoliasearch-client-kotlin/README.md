@@ -178,8 +178,8 @@ Map version 2 types to version 3 types:
 | `DSLGroupFacet`, `DSLGroupNumeric`, `DSLGroupTag` | same names |
 | `DSLFacet`, `DSLNumeric`, `DSLTag` | same names |
 | `facetFilters { }`, `numericFilters { }`, `tagFilters { }` | `filters { }` |
-| `DSLAttributes`, `DSLStrings` | same names; `DSLAttributes` is an alias of `DSLStrings` |
-| `DSLLanguage`, `DSLSearchableAttributes`, `DSLAttributesForFaceting`, `DSLCustomRanking`, `DSLRanking`, `@DSLParameters` | same names |
+| `DSLAttributes`, `DSLStrings`, `DSLLanguage` | same names; typealiases of `DSLValues<String>` / `DSLValues<SupportedLanguage>` |
+| `DSLSearchableAttributes`, `DSLAttributesForFaceting`, `DSLCustomRanking`, `DSLRanking`, `@DSLParameters` | same names |
 | `DSLConditions`, `DSLPromotions`, `DSLObjectIDs` | same names; members differ from version 2 (`condition { }`, `objectID(id, position)`/`objectIDs(ids, position)`, `+"objectID"`) |
 | `facet(attr, value, score, isNegated)` | same, `attr` is `String` |
 | `not { }`, unary `!` | `isNegated = true` on each leaf |
