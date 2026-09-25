@@ -24,7 +24,8 @@ import com.algolia.client.model.search.DeleteByParams
  * [IllegalStateException]; set it with `filters { }` in the base instead.
  *
  * [build] throws [IllegalArgumentException] when a `filters { }` fragment, or a group block inside
- * one, adds no filter: dropping it would widen the delete. Skip the delete when there is nothing to
+ * one, adds no filter: dropping it would widen the delete. It also throws when the result has no
+ * filter and no geo condition, which the engine rejects. Skip the delete when there is nothing to
  * match.
  *
  * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
@@ -61,9 +62,10 @@ public class DSLDeleteByComposer public constructor(base: DSLDeleteBy.() -> Unit
 
   /**
    * Builds a [DeleteByParams] from fresh state: runs every stored [add] block and [base], merges
-   * each filter field once, then runs every stored [override] block in call order.
+   * each filter field once, then runs every stored [override] block in call order. Throws
+   * [IllegalArgumentException] when the result has no filter and no geo condition.
    */
-  public fun build(): DeleteByParams = core.build().build()
+  public fun build(): DeleteByParams = core.build().build().requireDeleteCondition()
 }
 
 /**
@@ -103,6 +105,29 @@ public class DSLDeleteByAdditions internal constructor() {
   internal fun applyTo(builder: DSLDeleteBy, merge: Boolean) {
     for (field in fields) field.applyTo(builder, merge)
   }
+}
+
+/**
+ * Returns this when it sets a filter or a geo condition. The engine rejects a delete-by without one
+ * (`{}`, a blank `filters`) with HTTP 400, so this fails before the request instead. An assigned
+ * `facetFilters`, `numericFilters`, or `tagFilters` counts as set even when empty; the engine
+ * rejects the empty ones itself.
+ */
+internal fun DeleteByParams.requireDeleteCondition(): DeleteByParams {
+  val hasCondition =
+    !filters.isNullOrBlank() ||
+      facetFilters != null ||
+      numericFilters != null ||
+      tagFilters != null ||
+      !aroundLatLng.isNullOrBlank() ||
+      aroundRadius != null ||
+      insideBoundingBox != null ||
+      insidePolygon != null
+  require(hasCondition) {
+    "deleteBy: no filter and no geo condition; the engine rejects an empty delete-by. " +
+      "Skip the delete when there is nothing to match."
+  }
+  return this
 }
 
 /**

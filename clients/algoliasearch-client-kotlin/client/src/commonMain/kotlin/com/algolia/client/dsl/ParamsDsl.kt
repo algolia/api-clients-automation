@@ -69,7 +69,8 @@ public fun browse(block: DSLBrowse.() -> Unit): BrowseParamsObject =
  *
  * Unlike search, `filters { }` throws [IllegalArgumentException] when it, or any `and { }`,
  * `orFacet { }`, `orTag { }`, or `orNumeric { }` in it, adds no filter: dropping the block would
- * widen the delete. Skip the delete when there is nothing to match.
+ * widen the delete. It also throws when the result has no filter and no geo condition, which the
+ * engine rejects. Skip the delete when there is nothing to match.
  *
  * Geo fields (`aroundLatLng`, `aroundRadius`, `insideBoundingBox`, `insidePolygon`) are set as
  * builder properties.
@@ -84,4 +85,4 @@ public fun browse(block: DSLBrowse.() -> Unit): BrowseParamsObject =
  */
 @AlgoliaExperimentalDsl
 public fun deleteBy(block: DSLDeleteBy.() -> Unit): DeleteByParams =
-  DSLDeleteByParams().apply(block).build()
+  DSLDeleteByParams().apply(block).build().requireDeleteCondition()

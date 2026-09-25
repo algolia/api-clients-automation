@@ -6,6 +6,7 @@ import com.algolia.client.dsl.rule.condition
 import com.algolia.client.dsl.rule.consequence
 import com.algolia.client.dsl.rule.rule
 import com.algolia.client.model.search.Condition
+import com.algolia.client.model.search.DeleteByParams
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -83,6 +84,32 @@ internal class DeleteByFiltersTest {
         override { filters { orFacet {} } }
       }
     }
+  }
+
+  @Test
+  fun noFilterAndNoGeoConditionThrows() {
+    val noCondition = "deleteBy: no filter and no geo condition"
+    fun assertNoCondition(build: () -> Unit) {
+      val error = assertFailsWith<IllegalArgumentException> { build() }
+      assertTrue(error.message.orEmpty().startsWith(noCondition), error.message)
+    }
+
+    assertNoCondition { deleteBy {} }
+    assertNoCondition { deleteBy { filters = " " } }
+    assertNoCondition { deleteBy { aroundLatLng = "" } }
+    assertNoCondition { composeDeleteBy {} }
+    assertNoCondition {
+      composeDeleteBy {
+        add { filters { facet("a", "1") } }
+        override { filters = null }
+      }
+    }
+
+    assertEquals("1,2", deleteBy { aroundLatLng = "1,2" }.aroundLatLng)
+    assertEquals(
+      DeleteByParams(aroundLatLng = "1,2"),
+      composeDeleteBy(base = { aroundLatLng = "1,2" }) {},
+    )
   }
 
   @Test
