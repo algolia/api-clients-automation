@@ -3,6 +3,7 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.dsl.filter.DSLFilters
+import com.algolia.client.dsl.generated.DSLDeleteByParamsAdditions
 import com.algolia.client.model.search.DeleteByParams
 
 /**
@@ -44,11 +45,11 @@ import com.algolia.client.model.search.DeleteByParams
 public class DSLDeleteByComposer public constructor(base: DSLDeleteBy.() -> Unit = {}) {
   private val core =
     ComposerCore(
-      ::DSLDeleteByAdditions,
+      ::DSLDeleteByParamsAdditions,
       { DSLDeleteBy() },
       base,
       merge = true,
-      DSLDeleteByAdditions::applyTo,
+      DSLDeleteByParamsAdditions::applyTo,
     )
 
   /**
@@ -65,39 +66,6 @@ public class DSLDeleteByComposer public constructor(base: DSLDeleteBy.() -> Unit
    * [IllegalArgumentException] when the result has no filter and no geo condition.
    */
   public fun build(): DeleteByParams = core.build().build().requireDeleteCondition()
-}
-
-/**
- * Additive receiver of [DSLDeleteByComposer.add], created fresh on every
- * [DSLDeleteByComposer.build]. Each method records its block for that field; the blocks for a field
- * run together, in call order, inside one receiver when the field is written.
- */
-@DSLParameters
-@AlgoliaExperimentalDsl
-public class DSLDeleteByAdditions internal constructor() {
-  // Not `filters`: `filters(it)` in the lambda must resolve to the builder helper, and a
-  // property must not appear in its own initializer.
-  private val filtersField: Additive<DSLDeleteBy, DSLFilters> =
-    filterAdditive("filters", DSLDeleteBy::filtersRows, DSLFilters::addRows, DSLFilters::and) {
-      filters(it)
-    }
-
-  private val fields: List<Additive<DSLDeleteBy, *>> = listOf(filtersField)
-
-  /**
-   * Records a `filters` fragment. All fragments run inside one [DSLFilters] at build time. A
-   * fragment that adds no filter makes [DSLDeleteByComposer.build] throw
-   * [IllegalArgumentException], even when other fragments add some.
-   */
-  public fun filters(block: DSLFilters.() -> Unit): Unit = filtersField.add(block)
-
-  /**
-   * Writes each field with at least one recorded block once, through the generated [DSLDeleteBy]
-   * member helper, so the helper's rules (an empty block throws) apply unchanged.
-   */
-  internal fun applyTo(builder: DSLDeleteBy, merge: Boolean) {
-    for (field in fields) field.applyTo(builder, merge)
-  }
 }
 
 /**

@@ -341,11 +341,14 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     QUERY_LISTS
   );
 
+  /** Models that also get a composer additions receiver, `DSL<Model>Additions`. */
+  private static final Set<String> DSL_ADDITIONS = Set.of("SearchParamsObject", "DeleteByParams");
+
   static {
     // A helper table keyed by a model the DSL does not build would be silently ignored: fail at
     // class load instead.
-    for (Map<String, ?> table : List.<Map<String, ?>>of(DSL_FILTER_HELPERS, DSL_LIST_HELPERS)) {
-      for (String classname : table.keySet()) {
+    for (Collection<String> keys : List.<Collection<String>>of(DSL_FILTER_HELPERS.keySet(), DSL_LIST_HELPERS.keySet(), DSL_ADDITIONS)) {
+      for (String classname : keys) {
         if (!SEARCH_DSL_MODELS.contains(classname)) {
           throw new IllegalStateException("Search DSL: helper table keyed by " + classname + ", which is not in SEARCH_DSL_MODELS");
         }
@@ -382,6 +385,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       if (!listHelpers.isEmpty()) {
         dslModel.put("listHelpers", listHelpers);
       }
+      dslModel.put("additions", DSL_ADDITIONS.contains(classname));
       dslModels.add(dslModel);
     }
     writeSearchDslBuilders(dslModels);
@@ -429,10 +433,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
    * holding every builder OOMs the Kotlin/Native compiler on the macOS CI job. So this method owns
    * the folder: it deletes every `.kt` first (`removeExistingCodegen` does not clean
    * `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder), then writes one
-   * file per model, `DSL<Model>.kt`, holding the class `DSL<Model>`. Before touching the folder it
-   * refuses to generate a class whose name a hand-written `DSL*` type under `dsl/` already
-   * declares: the two live in different packages, so the compiler would not object, but every
-   * `import com.algolia.client.dsl.DSLX` would then be ambiguous to a reader.
+   * file per model, `DSL<Model>.kt`, holding the class `DSL<Model>`, plus `DSL<Model>Additions.kt`
+   * (from `dsl_additions.mustache`) for the models in {@link #DSL_ADDITIONS}. Before touching the
+   * folder it refuses to generate a class whose name a hand-written `DSL*` type under `dsl/`
+   * already declares: the two live in different packages, so the compiler would not object, but
+   * every `import com.algolia.client.dsl.DSLX` would then be ambiguous to a reader.
    */
   private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
     String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl").replace(".", "/");
@@ -440,12 +445,17 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     File outDir = new File(dslDir, "generated");
     Map<String, File> handWritten = handWrittenDslTypes(dslDir, outDir);
     for (Map<String, Object> dslModel : dslModels) {
-      String generated = "DSL" + dslModel.get("classname");
-      File declaredIn = handWritten.get(generated);
-      if (declaredIn != null) {
-        throw new IllegalStateException(
-          "Search DSL: generated " + generated + " collides with hand-written " + generated + " in " + declaredIn
-        );
+      String builder = "DSL" + dslModel.get("classname");
+      List<String> generatedNames = Boolean.TRUE.equals(dslModel.get("additions"))
+        ? List.of(builder, builder + "Additions")
+        : List.of(builder);
+      for (String generated : generatedNames) {
+        File declaredIn = handWritten.get(generated);
+        if (declaredIn != null) {
+          throw new IllegalStateException(
+            "Search DSL: generated " + generated + " collides with hand-written " + generated + " in " + declaredIn
+          );
+        }
       }
     }
     try {
@@ -462,19 +472,26 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       }
     }
 
-    Template template = compileDslTemplate();
+    Template builder = compileDslTemplate("dsl.mustache");
+    Template additions = compileDslTemplate("dsl_additions.mustache");
     for (Map<String, Object> dslModel : dslModels) {
       Map<String, Object> data = new HashMap<>(additionalProperties);
       data.putAll(dslModel);
       String classname = (String) dslModel.get("classname");
-      File out = new File(outDir, "DSL" + classname + ".kt");
-      StringWriter rendered = new StringWriter();
-      template.execute(data, rendered);
-      try {
-        Files.writeString(out.toPath(), rendered.toString(), StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        throw new RuntimeException("Cannot write DSL builder " + out, e);
+      writeDslFile(builder, data, new File(outDir, "DSL" + classname + ".kt"));
+      if (Boolean.TRUE.equals(dslModel.get("additions"))) {
+        writeDslFile(additions, data, new File(outDir, "DSL" + classname + "Additions.kt"));
       }
+    }
+  }
+
+  private static void writeDslFile(Template template, Map<String, Object> data, File out) {
+    StringWriter rendered = new StringWriter();
+    template.execute(data, rendered);
+    try {
+      Files.writeString(out.toPath(), rendered.toString(), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot write DSL builder " + out, e);
     }
   }
 
@@ -506,28 +523,29 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   /**
-   * Compiles `dsl.mustache` with a standalone jmustache compiler: the standard pipeline only
-   * renders the templates it registered itself, and {@link #writeSearchDslBuilders} needs one
-   * compiled {@link Template} to execute per model. Partials (`{{> dsl_filter_helper}}`, `{{>
-   * dsl_list_helper}}`) resolve against the Kotlin template directory; HTML escaping is off because
-   * the output is Kotlin source; a missing variable renders empty (jmustache throws by default) so
-   * optional data such as `kdocExtra` needs no guard.
+   * Compiles the DSL template `fileName` (`dsl.mustache`, `dsl_additions.mustache`) with a
+   * standalone jmustache compiler: the standard pipeline only renders the templates it registered
+   * itself, and {@link #writeSearchDslBuilders} needs one compiled {@link Template} to execute per
+   * model. Partials (`{{> dsl_filter_helper}}`, `{{> dsl_list_helper}}`) resolve against the Kotlin
+   * template directory; HTML escaping is off because the output is Kotlin source; a missing
+   * variable renders empty (jmustache throws by default) so optional data such as `kdocExtra` needs
+   * no guard.
    */
-  private Template compileDslTemplate() {
+  private Template compileDslTemplate(String fileName) {
     File root = new File(templateDir());
     Mustache.Compiler compiler = Mustache.compiler()
       .defaultValue("")
       .escapeHTML(false)
       .withLoader(name -> {
-        String fileName = name.endsWith(".mustache") ? name : name + ".mustache";
-        File partial = new File(root, fileName);
+        String partialName = name.endsWith(".mustache") ? name : name + ".mustache";
+        File partial = new File(root, partialName);
         return new InputStreamReader(Files.newInputStream(partial.toPath()), StandardCharsets.UTF_8);
       });
-    File dsl = new File(root, "dsl.mustache");
+    File dsl = new File(root, fileName);
     try (Reader reader = new InputStreamReader(Files.newInputStream(dsl.toPath()), StandardCharsets.UTF_8)) {
       return compiler.compile(reader);
     } catch (IOException e) {
-      throw new RuntimeException("Cannot compile dsl.mustache from " + dsl, e);
+      throw new RuntimeException("Cannot compile " + fileName + " from " + dsl, e);
     }
   }
 
