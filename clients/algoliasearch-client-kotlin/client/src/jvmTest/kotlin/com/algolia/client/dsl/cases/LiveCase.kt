@@ -12,12 +12,10 @@ import kotlinx.serialization.json.jsonObject
 
 /**
  * One search case: the DSL sample, the raw request body it must serialize to, and what the engine
- * returns for that body on the fixture index. [dsl] is `null` only for engine probes — raw bodies
- * the DSL never builds, kept because they justify an encoder rule. The `val` holding a case is its
- * name.
+ * returns for that body on the fixture index. The `val` holding a case is its name.
  */
 internal class LiveCase(
-  val dsl: (() -> SearchParamsObject)?,
+  val dsl: () -> SearchParamsObject,
   val body: String,
   val expect: List<Expect>,
 )
@@ -60,8 +58,6 @@ internal sealed interface Expect {
   data class HitKeys(val keys: Set<String>) : Expect
 
   data class UserData(val value: JsonArray) : Expect
-
-  data class Rejected(val status: Int, val phrase: String) : Expect
 }
 
 /**

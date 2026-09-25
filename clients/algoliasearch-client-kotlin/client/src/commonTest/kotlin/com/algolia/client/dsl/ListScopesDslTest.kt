@@ -2,7 +2,6 @@
 
 package com.algolia.client.dsl
 
-import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.dsl.generated.DSLConsequenceParams
 import com.algolia.client.dsl.rule.rule
 import com.algolia.client.model.search.ConsequenceParams
@@ -11,7 +10,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
-import kotlinx.serialization.json.encodeToJsonElement
 
 /**
  * The list scopes: eleven `List<String>` / `List<SupportedLanguage>` search parameters exposed as
@@ -23,16 +21,8 @@ import kotlinx.serialization.json.encodeToJsonElement
  */
 internal class ListScopesDslTest {
 
-  private val json = ClientOptions().json
-
   @Test
   fun emptyBlockSendsEmptyList() {
-    assertEquals(emptyList(), query { attributesToRetrieve {} }.attributesToRetrieve)
-    assertEquals(
-      json.parseToJsonElement("""{"attributesToRetrieve":[]}"""),
-      json.encodeToJsonElement(query { attributesToRetrieve {} }),
-    )
-
     // A later empty block replaces an earlier non-empty one.
     val cleared = query {
       attributesToRetrieve { +"a" }

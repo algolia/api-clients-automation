@@ -9,8 +9,7 @@ import kotlinx.serialization.json.put
 
 /**
  * `filters` values and attributes the encoder must quote or escape, run by the live suite on the
- * escaping fixture (one record per value). The unquoted forms the engine rejects are pinned in
- * [EngineProbes].
+ * escaping fixture (one record per value).
  */
 internal object EscapingCases {
 

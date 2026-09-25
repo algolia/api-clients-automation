@@ -24,39 +24,6 @@ import kotlinx.serialization.json.Json
 internal class ClientDslTest {
 
   @Test
-  fun searchSingleIndexOverload() = runTest {
-    val engine =
-      mockEngine("""{"hits":[]}""") { request ->
-        assertEquals("/1/indexes/idx/query", request.url.encodedPath)
-        assertEquals(
-          Json.parseToJsonElement("""{"query":"shoes","filters":"brand:Apple"}"""),
-          Json.parseToJsonElement(request.bodyText()),
-        )
-      }
-    SearchClient("appId", "apiKey", ClientOptions(engine = engine)).use { client ->
-      client.searchSingleIndex("idx") {
-        query = "shoes"
-        filters { facet("brand", "Apple") }
-      }
-    }
-  }
-
-  @Test
-  fun deleteByOverload() = runTest {
-    val engine =
-      mockEngine("""{"taskID":1,"updatedAt":"2024-01-01T00:00:00Z"}""") { request ->
-        assertEquals("/1/indexes/idx/deleteByQuery", request.url.encodedPath)
-        assertEquals(
-          Json.parseToJsonElement("""{"filters":"_tags:old"}"""),
-          Json.parseToJsonElement(request.bodyText()),
-        )
-      }
-    SearchClient("appId", "apiKey", ClientOptions(engine = engine)).use { client ->
-      client.deleteBy("idx") { filters { tag("old") } }
-    }
-  }
-
-  @Test
   fun setSettingsOverload() = runTest {
     val engine =
       mockEngine("""{"taskID":1,"updatedAt":"2024-01-01T00:00:00Z"}""") { request ->

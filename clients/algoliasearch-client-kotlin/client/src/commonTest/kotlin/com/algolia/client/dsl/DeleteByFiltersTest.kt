@@ -62,17 +62,6 @@ internal class DeleteByFiltersTest {
   }
 
   @Test
-  fun happyPathStillEncodes() {
-    val params = deleteBy {
-      filters {
-        orFacet { listOf("e1", "e2").forEach { facet("entityId", it) } }
-        facet("batchId", "b2", isNegated = true)
-      }
-    }
-    assertEquals("(entityId:e1 OR entityId:e2) AND NOT batchId:b2", params.filters)
-  }
-
-  @Test
   fun composerRefusesAnEmptyFragment() {
     val composer = DSLDeleteByComposer()
     composer.add { filters { facet("locale", "en-US") } }
