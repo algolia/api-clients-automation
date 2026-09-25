@@ -18,7 +18,6 @@ public class DSL{{classname}} internal constructor() {
   public var {{{name}}}: {{> data_class_field_type}}? = null
 {{/vars}}
 
-  /** A builder holding every value of [source]. */
   internal constructor(source: {{classname}}) : this() {
 {{#vars}}
     this.{{{name}}} = source.{{{name}}}

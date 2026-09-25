@@ -6,12 +6,6 @@ import com.algolia.client.dsl.*
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/*
- * Application modules that each contribute one concern to a shared [DSLQueryComposer]: locale
- * filtering with matching query languages, searchable-title restriction, a featured boost, and
- * request-map driven facets.
- */
-
 internal fun languageOf(locale: String): SupportedLanguage =
   when (locale.substringBefore('-')) {
     "en" -> SupportedLanguage.En

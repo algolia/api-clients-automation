@@ -37,7 +37,6 @@ suspend fun main() {
     val hits = result.hits
     println(hits)
 
-    // search index (DSL)
     val dslResult = client.searchSingleIndex(indexName) {
         query = "a"
     }

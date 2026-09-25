@@ -19,10 +19,6 @@ import kotlin.time.Duration.Companion.seconds
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [DeleteCases]: each deletion goes through the typed `SearchClient.deleteBy` on a
- * per-test copy of the fixture, and the objectIDs left in the copy must be the case's `remaining`.
- */
 internal class DeleteByLiveTest {
 
   companion object {
@@ -49,7 +45,6 @@ internal class DeleteByLiveTest {
       }
     }
 
-  /** The block path `deleteBy(name) { filters(…) }`, with the fragment [FilterCases] shares. */
   @Test
   fun entityIdsExcludingBatch() =
     live(timeout = DELETE_TIMEOUT) {
@@ -83,11 +78,6 @@ internal class DeleteByLiveTest {
       }
     }
 
-  /**
-   * The engine rejects a delete-by with no filter and no geo condition, which is what the DSL's
-   * client-side check (`requireDeleteCondition`) mirrors. Sent through the generated method, on a
-   * copy, and nothing is deleted.
-   */
   @Test
   fun emptyDeleteByRejectedByEngine() =
     live(timeout = DELETE_TIMEOUT) {
@@ -105,5 +95,4 @@ internal class DeleteByLiveTest {
     }
 }
 
-/** Copy + deleteBy + two waits: more than one query round-trip. */
 private val DELETE_TIMEOUT = 180.seconds

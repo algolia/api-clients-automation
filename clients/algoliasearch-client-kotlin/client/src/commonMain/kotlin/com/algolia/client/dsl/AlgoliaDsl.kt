@@ -1,24 +1,9 @@
-/**
- * Optional, additive Kotlin DSL for the Algolia client.
- *
- * This package is experimental on the first 3.x minor. It is not source compatible with version 2.
- * Data-class constructors stay the default.
- */
 package com.algolia.client.dsl
 
-/**
- * Marks types that belong to the Algolia Kotlin DSL.
- *
- * Nested DSL receivers cannot access outer receivers that share this marker.
- */
+/** Marks types that belong to the Algolia Kotlin DSL. */
 @DslMarker public annotation class DSLParameters
 
-/**
- * Marks the Algolia Kotlin DSL as experimental.
- *
- * The DSL is optional and additive. It is not source compatible with version 2. The first 3.x minor
- * may change the shape.
- */
+/** Marks the Algolia Kotlin DSL as experimental. */
 @RequiresOptIn(
   level = RequiresOptIn.Level.ERROR,
   message =

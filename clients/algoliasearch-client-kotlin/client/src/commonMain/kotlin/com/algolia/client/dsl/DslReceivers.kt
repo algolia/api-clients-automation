@@ -9,36 +9,26 @@ import com.algolia.client.dsl.generated.DSLIndexSettings
 import com.algolia.client.dsl.generated.DSLSearchParamsObject
 import com.algolia.client.dsl.generated.DSLSearchParamsObjectAdditions
 
-/**
- * Receiver of [query] and [com.algolia.client.dsl.searchSingleIndex]. Use this name, not the
- * generated one, in stored fragments such as `val extra: DSLQuery.() -> Unit`. This is a Kotlin
- * source alias; Java and JVM signatures still use [DSLSearchParamsObject].
- */
+/** Receiver of [query] and [searchSingleIndex]; Kotlin source alias of [DSLSearchParamsObject]. */
 @AlgoliaExperimentalDsl
 public typealias DSLQuery = DSLSearchParamsObject
 
-/** Receiver of [browse]. Kotlin source alias of [DSLBrowseParamsObject]. */
+/** Receiver of [browse]; Kotlin source alias of [DSLBrowseParamsObject]. */
 @AlgoliaExperimentalDsl
 public typealias DSLBrowse = DSLBrowseParamsObject
 
-/**
- * Receiver of [deleteBy] and [com.algolia.client.dsl.deleteBy] on the search client. Kotlin source
- * alias of [DSLDeleteByParams].
- */
+/** Receiver of [deleteBy]; Kotlin source alias of [DSLDeleteByParams]. */
 @AlgoliaExperimentalDsl
 public typealias DSLDeleteBy = DSLDeleteByParams
 
-/**
- * Receiver of [settings] and [com.algolia.client.dsl.setSettings]. Kotlin source alias of
- * [DSLIndexSettings].
- */
+/** Receiver of [settings] and [setSettings]; Kotlin source alias of [DSLIndexSettings]. */
 @AlgoliaExperimentalDsl
 public typealias DSLSettings = DSLIndexSettings
 
-/** Receiver of [DSLQueryComposer.add]. Kotlin source alias of [DSLSearchParamsObjectAdditions]. */
+/** Receiver of [DSLQueryComposer.add]; Kotlin source alias of [DSLSearchParamsObjectAdditions]. */
 @AlgoliaExperimentalDsl
 public typealias DSLQueryAdditions = DSLSearchParamsObjectAdditions
 
-/** Receiver of [DSLDeleteByComposer.add]. Kotlin source alias of [DSLDeleteByParamsAdditions]. */
+/** Receiver of [DSLDeleteByComposer.add]; Kotlin source alias of [DSLDeleteByParamsAdditions]. */
 @AlgoliaExperimentalDsl
 public typealias DSLDeleteByAdditions = DSLDeleteByParamsAdditions

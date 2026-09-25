@@ -3,79 +3,30 @@ package com.algolia.client.dsl
 import com.algolia.client.dsl.generated.DSLIndexSettings
 import com.algolia.client.model.search.IndexSettings
 
-/**
- * Constructs an [IndexSettings] value from a [DSLSettings].
- *
- * Last write wins: a later assignment to the same builder property replaces an earlier one,
- * including values set by the typed helpers.
- *
- * ```
- * val settings = settings {
- *   searchableAttributes {
- *     ordered("name")
- *     unordered("description")
- *   }
- *   attributesForFaceting {
- *     +"brand"
- *     filterOnly("internalSku")
- *     searchable("category")
- *   }
- *   customRanking { desc("followers") }
- *   ranking {
- *     typo()
- *     geo()
- *     words()
- *     filters()
- *     proximity()
- *     attribute()
- *     exact()
- *     custom()
- *   }
- * }
- * ```
- */
+/** Constructs an [IndexSettings] from a [DSLSettings] block. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun settings(block: DSLSettings.() -> Unit): IndexSettings =
   DSLIndexSettings().apply(block).build()
 
-/**
- * Sets [DSLIndexSettings.searchableAttributes] from typed helpers.
- *
- * Ordered attributes emit the bare name, matching v2 `SearchableAttribute.Default`. Several
- * attributes in one [DSLSearchableAttributes.ordered] call share priority and join with `", "`.
- * [DSLSearchableAttributes.unordered] emits `unordered(attribute)`.
- */
+/** Sets [DSLIndexSettings.searchableAttributes] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLIndexSettings.searchableAttributes(block: DSLSearchableAttributes.() -> Unit) {
   searchableAttributes = DSLSearchableAttributes().apply(block).build()
 }
 
-/**
- * Sets [DSLIndexSettings.attributesForFaceting] from typed helpers.
- *
- * A plain attribute emits the bare name. [DSLAttributesForFaceting.filterOnly] emits
- * `filterOnly(attribute)`. [DSLAttributesForFaceting.searchable] emits `searchable(attribute)`.
- */
+/** Sets [DSLIndexSettings.attributesForFaceting] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLIndexSettings.attributesForFaceting(block: DSLAttributesForFaceting.() -> Unit) {
   attributesForFaceting = DSLAttributesForFaceting().apply(block).build()
 }
 
-/**
- * Sets [DSLIndexSettings.customRanking] from typed helpers.
- *
- * [DSLCustomRanking.asc] emits `asc(attribute)`. [DSLCustomRanking.desc] emits `desc(attribute)`.
- */
+/** Sets [DSLIndexSettings.customRanking] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLIndexSettings.customRanking(block: DSLCustomRanking.() -> Unit) {
   customRanking = DSLCustomRanking().apply(block).build()
 }
 
-/**
- * Sets [DSLIndexSettings.ranking] from the same modifiers version 2 exposed: `typo`, `geo`,
- * `words`, `filters`, `proximity`, `attribute`, `exact`, `custom`, plus `asc(attribute)` and
- * `desc(attribute)`.
- */
+/** Sets [DSLIndexSettings.ranking] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLIndexSettings.ranking(block: DSLRanking.() -> Unit) {
   ranking = DSLRanking().apply(block).build()
@@ -85,12 +36,7 @@ public fun DSLIndexSettings.ranking(block: DSLRanking.() -> Unit) {
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLSearchableAttributes internal constructor() : DSLValues<String>() {
-  /**
-   * Adds an ordered searchable attribute, or several attributes that share the same priority.
-   *
-   * One attribute emits the bare name. Several attributes emit a comma-separated string, matching
-   * v2 `SearchableAttribute.Default`.
-   */
+  /** Adds an ordered searchable attribute; several attributes share one priority as `a, b`. */
   public fun ordered(attribute: String, vararg more: String) {
     values +=
       if (more.isEmpty()) attribute else listOf(attribute, *more).joinToString(separator = ", ")

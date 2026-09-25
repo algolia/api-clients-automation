@@ -6,7 +6,6 @@ import com.algolia.client.dsl.*
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/** Scalars, typed companions and the list helpers of `query { }`. */
 internal object QueryParamCases {
 
   val queryScalars =
@@ -52,9 +51,6 @@ internal object QueryParamCases {
       expect = listOf(Expect.NbHits(5)),
     )
 
-  /**
-   * Also sent through the typed `SearchClient.searchSingleIndex(name) { }` path by the live suite.
-   */
   val fullSnippetBlock: DSLQuery.() -> Unit = {
     query = "office"
     hitsPerPage = 10
@@ -78,8 +74,6 @@ internal object QueryParamCases {
         """{"query":"office","hitsPerPage":10,"distinct":1,"getRankingInfo":true,"restrictHighlightAndSnippetArrays":true,"clickAnalytics":true,"filters":"locale:en-US","restrictSearchableAttributes":["title","alternateTitles"]}""",
       expect = listOf(Expect.Hits(setOf("1"))),
     )
-
-  // ── List helpers ──────────────────────────────────────────────────────────────────────────────
 
   private fun restrictSearchable(extraFields: List<String>): SearchParamsObject = query {
     query = "office"
@@ -133,7 +127,6 @@ internal object QueryParamCases {
       expect = listOf(Expect.HitCount(5), Expect.HitKeys(setOf("objectID", "title", "locale"))),
     )
 
-  /** An empty block sends `[]`, not nothing: the engine strips every hit down to `objectID`. */
   val emptyListBlockSendsEmptyList =
     LiveCase(
       dsl = { query { attributesToRetrieve {} } },

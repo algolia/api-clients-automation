@@ -7,48 +7,20 @@ import com.algolia.client.dsl.generated.DSLSearchParamsObjectAdditions
 import com.algolia.client.model.search.SearchParamsObject
 
 /**
- * Collects query fragments from several modules and builds one [SearchParamsObject].
- *
- * [add] and [override] only store their blocks; nothing runs until [build]. Each [build] runs every
- * stored [add] block, runs [base] on a fresh [DSLQuery], then merges each additive field into it
- * once: all `filters { }` fragments run inside one [DSLFilters] after the base rows (so they are
- * AND-ed with the base), all `ruleContexts { }` fragments inside one [DSLStrings] after the base
- * list (so they concatenate in call order), and so on. Then every [override] block runs on the same
- * [DSLQuery], in call order: last write wins, so an override that sets `filters` or a list field
- * replaces the merged value. A list field whose fragments add nothing is sent as `[]`; empty
- * `filters { }` / `optionalFilters { }` fragments leave the field as the base set it, or omitted.
- *
- * Put the starting query in [base], not in an [override]: an override replaces the fragments. A
- * base that assigns `filters` or `optionalFilters` directly (`filters = "a OR b"`) cannot be merged
- * with fragments for that field, so [build] throws [IllegalStateException]. Use the `filters { }`
- * block in the base instead.
- *
- * To start from an existing [SearchParamsObject], pass it as `from`: each [build] copies its values
- * into a fresh [DSLQuery] (the object itself is never modified), then every field that has `add {
- * }` fragments is replaced by those fragments, and every [override] runs last. Fields without
- * fragments keep the object's value. This is the version 2 `QueryWrapper(query).build()` behaviour,
- * without mutating the query.
- *
- * Every [build] re-evaluates every stored block, so values captured by reference (a `var`, a
- * mutable list) are read at build time and side effects in a block repeat on each build. [build]
- * can be called repeatedly. Not thread-safe.
- *
- * ```
- * val composer = DSLQueryComposer(base = { hitsPerPage = 10; filters { facet("base", "x") } })
- * composer.add { filters { facet("module", "y") } }
- * val params = composer.build() // filters = "base:x AND module:y"
- *
- * val seeded = DSLQueryComposer(from = existing) // existing.filters = "old:1", hitsPerPage = 5
- * seeded.add { filters { facet("module", "y") } }
- * seeded.build() // filters = "module:y", hitsPerPage = 5
- * ```
+ * Collects query fragments and builds one [SearchParamsObject]. Nothing runs until [build]: every
+ * [add] fragment merges into the [base] value of its field (filter fragments AND-ed inside one
+ * [DSLFilters], list fragments appended in call order), then every [override] runs in call order
+ * (last write wins). A list field whose fragments add nothing is sent as `[]`; empty filter
+ * fragments leave the field as the base set it, or omitted. [build] throws [IllegalStateException]
+ * when a fragment merges into a `filters` or `optionalFilters` value that [base] assigned directly.
+ * Every [build] re-runs every stored block. Not thread-safe.
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLQueryComposer
 private constructor(private val core: ComposerCore<DSLSearchParamsObjectAdditions, DSLQuery>) {
 
-  /** Starts every [build] from [base] run on an empty [DSLQuery]; fragments merge into it. */
+  /** Starts every [build] from [base]; fragments merge into it. */
   public constructor(
     base: DSLQuery.() -> Unit = {}
   ) : this(
@@ -62,8 +34,8 @@ private constructor(private val core: ComposerCore<DSLSearchParamsObjectAddition
   )
 
   /**
-   * Starts every [build] from a copy of [from]; a field with `add { }` fragments is replaced by
-   * them.
+   * Starts every [build] from a copy of [from] (never modified); a field with [add] fragments is
+   * replaced by them, other fields keep the object's value.
    */
   public constructor(
     from: SearchParamsObject
@@ -77,12 +49,10 @@ private constructor(private val core: ComposerCore<DSLSearchParamsObjectAddition
     )
   )
 
-  /**
-   * Stores [block]. It runs on every [build], before the overrides; captured values are read then.
-   */
+  /** Stores [block]; it runs on every [build], before the overrides. */
   public fun add(block: DSLQueryAdditions.() -> Unit): Unit = core.add(block)
 
-  /** Stores [block]. It runs on every [build], after the additive fields. Last write wins. */
+  /** Stores [block]; it runs on every [build], after the fragments. Last write wins. */
   public fun override(block: DSLQuery.() -> Unit): Unit = core.override(block)
 
   public fun build(): SearchParamsObject = core.build().build()

@@ -8,10 +8,6 @@ import kotlin.test.Test
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [OptionalFilterCases]: every expected `optionalFilters` body is sent to the fixture
- * index and the `_rankingInfo.filters` scores checked against the case's expectations.
- */
 internal class OptionalFiltersLiveTest {
 
   companion object {

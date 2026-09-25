@@ -41,23 +41,12 @@ private const val JANITOR_HITS_PER_PAGE = 100
 private const val JANITOR_MAX_PAGES = 1_000
 private const val JANITOR_MAX_AGE_SECONDS: Long = 24 * 60 * 60
 
-/** Matches every index this kit creates; group 1 is the creation epoch in seconds. */
 private val INDEX_EPOCH = Regex("^kotlin_dsl_live_(\\d+)_")
 
 private val WRITE_TIMEOUT: Duration = 60.seconds
 private val SETUP_TIMEOUT: Duration = 180.seconds
 private val CLOSE_TIMEOUT: Duration = 30.seconds
 
-/**
- * Resolves the application id and admin key the live tests run with.
- * - With `CI=true`: from the process environment only, like the generated e2e tests.
- * - Otherwise: from the repo-root `.env` file (the root is passed by the live Gradle task as
- *   `algolia.repoRoot`). A key declared in the file wins over an exported environment variable of
- *   the same name; the environment is only read for keys the file does not declare (or when the
- *   file is missing).
- *
- * Values are never logged.
- */
 internal object LiveCredentials {
   fun load(): Pair<String, String> {
     val repoRoot: String? = System.getProperty(REPO_ROOT_PROPERTY)
@@ -92,11 +81,6 @@ internal object LiveCredentials {
   }
 }
 
-/**
- * One uniquely named fixture index on the live application, filled with a [LiveFixture]
- * ([MAIN_FIXTURE] unless stated). Test classes create it in `@BeforeClass` and [close] it in
- * `@AfterClass`. Delete-by cases run on a per-test copy ([withCopy]).
- */
 internal class LiveIndex
 private constructor(
   val client: SearchClient,
@@ -105,11 +89,6 @@ private constructor(
 ) : AutoCloseable {
 
   companion object {
-    /**
-     * Blocking. Refuses to start unless the live Gradle task set `algolia.dsl.live`, loads the
-     * credentials, deletes stale `kotlin_dsl_live_*` indices, then creates and fills the index. If
-     * any step fails the index is deleted before the error propagates.
-     */
     fun create(purpose: String, fixture: LiveFixture = MAIN_FIXTURE): LiveIndex {
       check(System.getProperty(LIVE_PROPERTY) == "true") {
         "Kotlin DSL live tests only run through the Gradle live task (jvmDslLiveTest): " +
@@ -134,18 +113,12 @@ private constructor(
       return index
     }
 
-    /** `kotlin_dsl_live_<epochSeconds>_<6 random hex>_<purpose>`: unique per run and per retry. */
     private fun indexName(purpose: String): String {
       val epoch = System.currentTimeMillis() / 1000
       val hex = Random.nextInt(0, 0x1000000).toString(16).padStart(6, '0')
       return "$INDEX_PREFIX${epoch}_${hex}_$purpose"
     }
 
-    /**
-     * Deletes indices of this kit older than 24 h (leaked by killed JVMs). Every page is listed
-     * before the first deletion: deleting while paging shifts later indices onto pages already
-     * read. Errors are logged.
-     */
     private suspend fun janitor(client: SearchClient) {
       val cutoff = System.currentTimeMillis() / 1000 - JANITOR_MAX_AGE_SECONDS
       logged("janitor") {
@@ -186,14 +159,9 @@ private constructor(
     }
   }
 
-  /** Raw query: the response keeps every field the engine returned. */
   suspend fun query(params: JsonObject): JsonObject =
     client.customPost("1/indexes/$name/query", body = params)
 
-  /**
-   * Copies this index (records, settings, rule) to a fresh `kotlin_dsl_live_*_<purpose>` index,
-   * runs [block] on the copy and deletes the copy afterwards, whatever happened.
-   */
   suspend fun <T> withCopy(purpose: String, block: suspend (LiveIndex) -> T): T {
     val copy = LiveIndex(client, indexName(purpose), fixture)
     println("$LOG_PREFIX copying $name to ${copy.name}")
@@ -210,11 +178,9 @@ private constructor(
     }
   }
 
-  /** The objectIDs currently in the index, read with a raw `{"hitsPerPage":100}` query. */
   suspend fun remainingIds(): Set<String> =
     query(json("""{"hitsPerPage":100}""")).hits().map { it.objectID() }.toSet()
 
-  /** Blocking. Deletes the index and waits for the deletion; errors are logged, never thrown. */
   override fun close() {
     runBlocking { delete() }
   }
@@ -228,20 +194,11 @@ private constructor(
   }
 }
 
-/**
- * Runs a live test body: `runBlocking` + `withTimeout`, never `runTest`, because `runTest` skips
- * `delay` and would turn `waitForTask`'s backoff into a hot loop.
- */
 internal fun live(timeout: Duration = 60.seconds, block: suspend CoroutineScope.() -> Unit): Unit =
   runBlocking {
     withTimeout(timeout) { block() }
   }
 
-/**
- * Runs the live half of [case] against this index: first re-checks that the DSL serializes to the
- * expected body, so the encoder and the engine evidence are asserted on the same bytes; the
- * expected body is then sent raw.
- */
 internal suspend fun LiveIndex.assertCase(case: LiveCase) {
   val params = json(case.body)
   assertEquals(params, wire(case.dsl()), "DSL wire differs from the expected body")
@@ -249,11 +206,6 @@ internal suspend fun LiveIndex.assertCase(case: LiveCase) {
   case.expect.forEach { checkExpect(response, it) }
 }
 
-/**
- * Runs a delete-by [case] on a copy of this index: the DSL half must serialize to the expected
- * body, then [delete] performs the deletion on the copy and returns its task id; the objectIDs left
- * in the copy must equal the case's `remaining`.
- */
 internal suspend fun LiveIndex.assertDelete(
   case: DeleteCase,
   delete: suspend (copy: LiveIndex) -> Long,
@@ -333,7 +285,6 @@ private fun JsonObject.objectID(): String =
 private fun JsonObject.rankingFilters(): Int? =
   this["_rankingInfo"]?.jsonObject?.get("filters")?.jsonPrimitive?.int
 
-/** Runs [block]; logs any failure instead of throwing it. Cancellation still propagates. */
 private inline fun logged(what: String, block: () -> Unit) {
   try {
     block()

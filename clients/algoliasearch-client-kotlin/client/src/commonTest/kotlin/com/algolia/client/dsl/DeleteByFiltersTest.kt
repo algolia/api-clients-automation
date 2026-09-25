@@ -13,10 +13,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlinx.serialization.json.encodeToJsonElement
 
-/**
- * Delete-by filters refuse empty blocks: dropping one would widen the delete. Search, browse, and
- * rule filters keep dropping them.
- */
 internal class DeleteByFiltersTest {
 
   private val json = ClientOptions().json
@@ -142,8 +138,6 @@ internal class DeleteByFiltersTest {
         .condition,
     )
 
-    // Empty optionalFilters rows are dropped too: all-empty leaves the field unset, an empty row
-    // beside a leaf is skipped.
     assertNull(
       query {
           optionalFilters {

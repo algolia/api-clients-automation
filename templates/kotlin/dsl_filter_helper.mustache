@@ -2,16 +2,12 @@
   private var {{{name}}}Write: FilterWrite<{{{type}}}, {{{leaf}}}>? = null
 
   /**
-   * Sets [DSL{{classname}}.{{{name}}}] from a typed filter block.
-   *
-   * The block uses [{{{receiver}}}], so it accepts only that family's leaves and groups. Last write
-   * wins: this replaces any earlier `{{{name}}}` value in this builder.
+   * Sets [{{{name}}}] from a [{{{receiver}}}] block. Last write wins.
 {{^strict}}
-   * An empty filter block yields `null`, so the field stays omitted.
+   * An empty block leaves the field omitted.
 {{/strict}}
 {{#strict}}
-   * Throws [IllegalArgumentException] when the block, or any `and { }`, `orFacet { }`, `orTag { }`,
-   * or `orNumeric { }` in it, adds no filter: dropping it would widen the delete.
+   * Throws [IllegalArgumentException] when the block, or any group in it, adds no filter.
 {{/strict}}
    */
   public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {

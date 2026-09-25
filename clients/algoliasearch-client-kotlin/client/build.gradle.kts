@@ -19,7 +19,7 @@ kotlin {
     val test = compilations.getByName("test")
     compilations.create("dslLive") {
       associateWith(main)
-      associateWith(test) // live tests reuse the offline cases in jvmTest
+      associateWith(test)
       defaultSourceSet.dependencies {
         implementation(libs.kotlin.test.junit)
         implementation(libs.ktor.client.okhttp)
@@ -97,12 +97,11 @@ tasks.register<Test>("jvmDslLiveTest") {
   systemProperty("algolia.dsl.live", "true")
   systemProperty("algolia.repoRoot", rootDir.resolve("../..").canonicalPath)
   outputs.upToDateWhen { false }
-  timeout.set(Duration.ofMinutes(12)) // must fit the 20-min client_gen job (check.yml)
+  timeout.set(Duration.ofMinutes(12))
   testLogging {
     events("failed", "skipped")
     exceptionFormat = TestExceptionFormat.FULL
   }
 }
 
-// Fork / [skip-e2e] PRs never run the live task: compile it in the client step instead.
 tasks.named("jvmTest") { dependsOn(dslLive.compileTaskProvider) }

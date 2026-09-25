@@ -8,25 +8,7 @@ import com.algolia.client.dsl.generated.DSLSynonymHit
 import com.algolia.client.model.search.SynonymHit
 import com.algolia.client.model.search.SynonymType
 
-/**
- * Constructs a [SynonymHit] from the generated [DSLSynonymHit].
- *
- * Prefer the typed helpers ([synonym], [oneWaySynonym], [altCorrection1], [altCorrection2],
- * [placeholder]) so unused variant fields stay unset. Last write wins: a later assignment or helper
- * call replaces earlier values for the same field.
- *
- * ```
- * val hit =
- *   synonym {
- *     objectID = "syn-1"
- *     type = SynonymType.Synonym
- *     synonyms {
- *       +"car"
- *       +"auto"
- *     }
- *   }
- * ```
- */
+/** Constructs a [SynonymHit] from a [DSLSynonymHit] block. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun synonym(block: DSLSynonymHit.() -> Unit): SynonymHit =
   DSLSynonymHit().apply(block).build()
@@ -44,26 +26,12 @@ private fun synonymHit(
     }
     .build()
 
-/**
- * Constructs a regular ([SynonymType.Synonym]) [SynonymHit].
- *
- * ```
- * val hit = synonym("syn-1") {
- *   +"car"
- *   +"auto"
- *   +"vehicle"
- * }
- * ```
- */
+/** Constructs a regular ([SynonymType.Synonym]) [SynonymHit] whose `synonyms` are [block]. */
 @AlgoliaExperimentalDsl
 public fun synonym(objectID: String, block: DSLStrings.() -> Unit): SynonymHit =
   synonymHit(objectID, SynonymType.Synonym) { synonyms(block) }
 
-/**
- * Constructs a one-way ([SynonymType.OneWaySynonym]) [SynonymHit].
- *
- * A query for [input] matches [block] words. The reverse does not apply.
- */
+/** Constructs a one-way ([SynonymType.OneWaySynonym]) [SynonymHit] from [input] to [block]. */
 @AlgoliaExperimentalDsl
 public fun oneWaySynonym(
   objectID: String,

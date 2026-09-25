@@ -7,16 +7,12 @@ import com.algolia.client.dsl.cases.samples.addFacet
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/** `optionalFilters { }`: the nested arrays the encoder emits and the scores the engine returns. */
 internal object OptionalFilterCases {
 
-  /** Every case reads `_rankingInfo.filters`, so ranking info is always requested. */
   private fun optional(block: DSLFacetFilters.() -> Unit): SearchParamsObject = query {
     optionalFilters(block)
     getRankingInfo = true
   }
-
-  // ── Single leaf: unquoted value, score, negation, leading dash ────────────────────────────────
 
   val unquotedFacet =
     LiveCase(
@@ -57,17 +53,12 @@ internal object OptionalFilterCases {
       expect = listOf(Expect.Scores(mapOf("1" to 1), others = 0)),
     )
 
-  /**
-   * Negation prepends `-` to the raw value; the leading dash of the value itself is not escaped.
-   */
   val negatedLeadingDashPositional =
     LiveCase(
       dsl = { optional { facet("label", "-Movie", 2, true) } },
       body = """{"optionalFilters":[["label:--Movie<score=2>"]],"getRankingInfo":true}""",
       expect = listOf(Expect.Scores(mapOf("1" to 0, "2" to 2))),
     )
-
-  // ── Rows: `and { }` sums, `or { }` takes the max ──────────────────────────────────────────────
 
   val andRowsScoresSummed =
     LiveCase(
@@ -109,7 +100,7 @@ internal object OptionalFilterCases {
             }
           }
           sumOrFiltersScores = true
-          getRankingInfo = true // test addition: needed to read the scores
+          getRankingInfo = true
         }
       },
       body =
@@ -144,8 +135,6 @@ internal object OptionalFilterCases {
         ),
     )
 
-  // ── Raw values: spaces, colons and quotes are sent as-is ──────────────────────────────────────
-
   val rawValueWithSpace =
     LiveCase(
       dsl = { optional { facet("color", "navy blue") } },
@@ -166,8 +155,6 @@ internal object OptionalFilterCases {
       body = """{"optionalFilters":[["color:-navy blue<score=2>"]],"getRankingInfo":true}""",
       expect = listOf(Expect.Scores(mapOf("1" to 2, "2" to 2, "3" to 2, "4" to 2, "5" to 0))),
     )
-
-  // ── Explicit `<score=0>` ──────────────────────────────────────────────────────────────────────
 
   val addFacetDefaultScoreZero =
     LiveCase(

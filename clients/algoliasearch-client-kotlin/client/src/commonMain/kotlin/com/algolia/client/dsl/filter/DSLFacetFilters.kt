@@ -6,10 +6,7 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.dsl.DSLParameters
 import com.algolia.client.model.search.OptionalFilters
 
-/**
- * Collects `optionalFilters` rows of [Filter.Facet] leaves: the outer list is `AND`, each inner row
- * is `OR`. Facet-typed rows make a tag or numeric leaf unrepresentable.
- */
+/** Collects `optionalFilters` rows of facet leaves: the outer list is `AND`, each row is `OR`. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLFacetFilters private constructor(private val rows: FilterRows<Filter.Facet>) :
@@ -17,11 +14,7 @@ public class DSLFacetFilters private constructor(private val rows: FilterRows<Fi
 
   internal constructor() : this(FilterRows())
 
-  /**
-   * ANDs the filters in [block] into this block. An empty block adds nothing. Nested `and { }`
-   * blocks flatten into the enclosing `AND`, so `optionalFilters { and { a; b }; or { c; d } }`
-   * encodes as `[[a], [b], [c, d]]`.
-   */
+  /** ANDs the filters in [block] into this block. An empty block adds nothing. */
   public fun and(block: DSLFacetFilters.() -> Unit) {
     rows.and(DSLFacetFilters().apply(block).rows)
   }

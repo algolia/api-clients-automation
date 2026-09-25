@@ -6,10 +6,6 @@ import com.algolia.client.dsl.*
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/**
- * `deleteBy { }` bodies: the same filter DSL as search, run by the live suite on a copy of the
- * fixture. `remaining` lists the objectIDs that survive the deletion.
- */
 internal object DeleteCases {
 
   val orFacetOfTwoValues =
@@ -28,7 +24,6 @@ internal object DeleteCases {
       remaining = setOf("3", "4", "5"),
     )
 
-  /** Record 3 survives only because of the negated batch. */
   val entityIdsExcludingBatch =
     DeleteCase(
       dsl = {
@@ -59,7 +54,6 @@ internal object DeleteCases {
       remaining = setOf("3", "4", "5"),
     )
 
-  /** The `base` filters are merged with the `add` fragments, not replaced by them. */
   val composerBaseMergedWithFragments =
     DeleteCase(
       dsl = {

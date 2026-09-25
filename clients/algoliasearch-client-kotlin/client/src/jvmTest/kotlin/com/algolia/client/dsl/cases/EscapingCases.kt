@@ -7,10 +7,6 @@ import com.algolia.client.dsl.filter.NumericOperator
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
-/**
- * `filters` values and attributes the encoder must quote or escape, run by the live suite on the
- * escaping fixture (one record per value).
- */
 internal object EscapingCases {
 
   val parenthesesQuoted = facetCase("Books(Kids)", """v:"Books(Kids)"""", "1")
@@ -155,7 +151,6 @@ internal object EscapingCases {
         ),
     )
 
-  /** `filters { facet("v", value) }`, its body with [sql], matching only [objectID]. */
   private fun facetCase(value: String, sql: String, objectID: String): LiveCase =
     LiveCase(
       dsl = { query { filters { facet("v", value) } } },
@@ -163,6 +158,5 @@ internal object EscapingCases {
       expect = listOf(Expect.Hits(setOf(objectID))),
     )
 
-  /** `{"filters": sql}` as JSON text, so [sql] is written once, unescaped for JSON. */
   private fun filtersBody(sql: String): String = buildJsonObject { put("filters", sql) }.toString()
 }

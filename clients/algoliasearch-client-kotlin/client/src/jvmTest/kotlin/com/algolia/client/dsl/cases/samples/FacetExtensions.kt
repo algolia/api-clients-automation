@@ -6,12 +6,6 @@ import com.algolia.client.dsl.*
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/*
- * User-side extensions of the filter DSL, as an application would write them: typed attribute
- * constants, an `addFacet` overload set that defaults `score` to 0, and a lookup helper that
- * injects caller filters into a fixed shape.
- */
-
 internal const val SUGGESTION_TYPE: String = "suggestionType"
 internal const val PRIORITY: String = "priority"
 internal const val IS_PINNED: String = "isPinned"

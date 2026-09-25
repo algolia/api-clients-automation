@@ -12,10 +12,7 @@ import com.algolia.client.dsl.cases.samples.lookupById
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/** `filters { }`: the SQL string the encoder emits and what the engine does with it. */
 internal object FilterCases {
-
-  // ── Structure: AND rows, OR groups, negation ──────────────────────────────────────────────────
 
   val rootAndNoParens =
     LiveCase(
@@ -157,7 +154,6 @@ internal object FilterCases {
       expect = listOf(Expect.Hits(setOf("1", "2"))),
     )
 
-  /** Shared with [DeleteCases.entityIdsExcludingBatch] and the typed `deleteBy(name) { }` path. */
   fun entityIdsExcludingBatchFilters(
     entityIds: List<String>,
     currentBatchId: String,
@@ -175,8 +171,6 @@ internal object FilterCases {
       body = """{"filters":"(entityId:e1 OR entityId:e2 OR entityId:e3) AND NOT batchId:b2"}""",
       expect = listOf(Expect.Hits(setOf("1", "2"))),
     )
-
-  // ── Last write wins: a `filters { }` block replaces the string or the earlier block ───────────
 
   val filtersBlockOverwritesString =
     LiveCase(
@@ -201,8 +195,6 @@ internal object FilterCases {
       body = """{"filters":"genre:drama"}""",
       expect = listOf(Expect.Hits(setOf("2"))),
     )
-
-  // ── Empty groups: the encoders drop them, never sending an empty field ────────────────────────
 
   val emptyGroupsOmitFields =
     LiveCase(
@@ -239,8 +231,6 @@ internal object FilterCases {
       body = """{"filters":"color:red","optionalFilters":[["genre:comedy"]]}""",
       expect = listOf(Expect.Hits(setOf("1", "3"))),
     )
-
-  // ── Values: literal dashes, typed values, `isNegated` ─────────────────────────────────────────
 
   val leadingDashValueIsLiteral =
     LiveCase(
@@ -310,15 +300,12 @@ internal object FilterCases {
       expect = listOf(Expect.Hits(setOf("2"))),
     )
 
-  /** The third positional argument is `score`, the fourth `isNegated`. */
   val positionalScoreAndNegation =
     LiveCase(
       dsl = { query { filters { facet("genre", "comedy", 5, true) } } },
       body = """{"filters":"NOT genre:comedy<score=5>"}""",
       expect = listOf(Expect.Hits(setOf("2", "4"))),
     )
-
-  // ── Scores in `filters` ───────────────────────────────────────────────────────────────────────
 
   val orScoresSummed =
     LiveCase(
@@ -400,8 +387,6 @@ internal object FilterCases {
         ),
     )
 
-  // ── `and { }` blocks and stored fragments ─────────────────────────────────────────────────────
-
   val andBlockWithSingleFacet =
     LiveCase(
       dsl = { query { filters { and { facet("locale", "en-US") } } } },
@@ -451,12 +436,8 @@ internal object FilterCases {
       },
       body =
         """{"filters":"(locale:en-US OR locale:fr-FR) AND isPinned:false","optionalFilters":[["isFeatured:true<score=500>"]],"getRankingInfo":true}""",
-      // Mandatory `filters` clauses count in `_rankingInfo.filters` too ([andScoresSummedFlat]):
-      // matched locale 1 + isPinned 1 + optional 500. Observed live 2026-09-23.
       expect = listOf(Expect.Hits(setOf("1", "4")), Expect.Scores(mapOf("1" to 502, "4" to 502))),
     )
-
-  // ── Filter injection through a user helper ────────────────────────────────────────────────────
 
   val lookupById =
     LiveCase(
@@ -486,8 +467,6 @@ internal object FilterCases {
         """{"filters":"entityId:e1 AND locale:fr-FR","attributesToHighlight":[],"getRankingInfo":false}""",
       expect = listOf(Expect.Hits(emptySet())),
     )
-
-  // ── User `addFacet` extension (defaults `score` to 0) ─────────────────────────────────────────
 
   val addFacetNegatedKeepsDefaultScore =
     LiveCase(
