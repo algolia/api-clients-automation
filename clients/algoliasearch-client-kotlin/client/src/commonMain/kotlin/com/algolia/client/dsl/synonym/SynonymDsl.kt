@@ -110,30 +110,3 @@ public fun placeholder(
     this.placeholder = placeholder
     replacements(block)
   }
-
-/**
- * Sets [DSLSynonymHit.synonyms] from [block]. Last write wins if [synonyms] was already set in the
- * same builder. An empty block sends `[]`.
- */
-@AlgoliaExperimentalDsl
-public fun DSLSynonymHit.synonyms(block: DSLStrings.() -> Unit) {
-  synonyms = DSLStrings().apply(block).build()
-}
-
-/**
- * Sets [DSLSynonymHit.corrections] from [block]. Last write wins if [corrections] was already set
- * in the same builder. An empty block sends `[]`.
- */
-@AlgoliaExperimentalDsl
-public fun DSLSynonymHit.corrections(block: DSLStrings.() -> Unit) {
-  corrections = DSLStrings().apply(block).build()
-}
-
-/**
- * Sets [DSLSynonymHit.replacements] from [block]. Last write wins if [replacements] was already set
- * in the same builder. An empty block sends `[]`.
- */
-@AlgoliaExperimentalDsl
-public fun DSLSynonymHit.replacements(block: DSLStrings.() -> Unit) {
-  replacements = DSLStrings().apply(block).build()
-}

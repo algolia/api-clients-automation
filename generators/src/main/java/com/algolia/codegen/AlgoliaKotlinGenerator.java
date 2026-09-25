@@ -328,6 +328,16 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     Map.entry("responseFields", new DslListHelper("List<String>", STRINGS, STRIPS))
   );
 
+  /** Synonym word lists: an empty block sends `[]`. */
+  private static final Map<String, DslListHelper> SYNONYM_LISTS = Map.of(
+    "synonyms",
+    new DslListHelper("List<String>", STRINGS, null),
+    "corrections",
+    new DslListHelper("List<String>", STRINGS, null),
+    "replacements",
+    new DslListHelper("List<String>", STRINGS, null)
+  );
+
   /**
    * Keyed per model on purpose: IndexSettings shares 6 of these properties but has its own
    * hand-written settings helpers. Never key this table by property alone.
@@ -338,11 +348,19 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     "BrowseParamsObject",
     QUERY_LISTS,
     "ConsequenceParams",
-    QUERY_LISTS
+    QUERY_LISTS,
+    "SynonymHit",
+    SYNONYM_LISTS
   );
 
   /** Models that also get a composer additions receiver, `DSL<Model>Additions`. */
   private static final Set<String> DSL_ADDITIONS = Set.of("SearchParamsObject", "DeleteByParams");
+
+  /**
+   * `Model.property` pairs whose property type is itself a DSL model: each gets a `property { }`
+   * member building it from the nested `DSL<Type>`. Derived from the spec; a drift throws.
+   */
+  private static final Set<String> DSL_NESTED_HELPERS = Set.of("Rule.condition", "Rule.consequence", "Consequence.params");
 
   static {
     // A helper table keyed by a model the DSL does not build would be silently ignored: fail at
@@ -366,6 +384,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       byClassname.put(model.classname, model);
     }
     List<Map<String, Object>> dslModels = new ArrayList<>();
+    Set<String> nested = new TreeSet<>();
     for (String classname : SEARCH_DSL_MODELS) {
       CodegenModel model = byClassname.get(classname);
       if (model == null) {
@@ -385,8 +404,21 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       if (!listHelpers.isEmpty()) {
         dslModel.put("listHelpers", listHelpers);
       }
+      List<Map<String, Object>> nestedHelpers = new ArrayList<>();
+      for (CodegenProperty var : model.vars) {
+        if (SEARCH_DSL_MODELS.contains(var.datatypeWithEnum)) {
+          nestedHelpers.add(Map.of("name", var.name, "builder", "DSL" + var.datatypeWithEnum));
+          nested.add(model.classname + "." + var.name);
+        }
+      }
+      if (!nestedHelpers.isEmpty()) {
+        dslModel.put("nestedHelpers", nestedHelpers);
+      }
       dslModel.put("additions", DSL_ADDITIONS.contains(classname));
       dslModels.add(dslModel);
+    }
+    if (!nested.equals(DSL_NESTED_HELPERS)) {
+      throw new IllegalStateException("Search DSL: nested builder helpers are " + nested + ", expected " + DSL_NESTED_HELPERS);
     }
     writeSearchDslBuilders(dslModels);
   }
@@ -526,10 +558,10 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
    * Compiles the DSL template `fileName` (`dsl.mustache`, `dsl_additions.mustache`) with a
    * standalone jmustache compiler: the standard pipeline only renders the templates it registered
    * itself, and {@link #writeSearchDslBuilders} needs one compiled {@link Template} to execute per
-   * model. Partials (`{{> dsl_filter_helper}}`, `{{> dsl_list_helper}}`) resolve against the Kotlin
-   * template directory; HTML escaping is off because the output is Kotlin source; a missing
-   * variable renders empty (jmustache throws by default) so optional data such as `kdocExtra` needs
-   * no guard.
+   * model. Partials (`{{> dsl_filter_helper}}`, `{{> dsl_list_helper}}`, `{{> dsl_nested_helper}}`)
+   * resolve against the Kotlin template directory; HTML escaping is off because the output is
+   * Kotlin source; a missing variable renders empty (jmustache throws by default) so optional data
+   * such as `kdocExtra` needs no guard.
    */
   private Template compileDslTemplate(String fileName) {
     File root = new File(templateDir());
