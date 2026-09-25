@@ -5,7 +5,7 @@ package com.algolia.client.dsl.filter
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 import com.algolia.client.dsl.DSLParameters
 
-/** OR-context builder for [Filter.Facet] leaves. Exposes only facet leaves. */
+/** `OR` group of facet leaves. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLGroupFacet private constructor(private val leaves: MutableList<Filter.Facet>) :
@@ -16,7 +16,7 @@ public class DSLGroupFacet private constructor(private val leaves: MutableList<F
   internal fun leaves(): List<Filter.Facet> = leaves.toList()
 }
 
-/** OR-context builder for [Filter.Tag] leaves. Exposes only tag leaves. */
+/** `OR` group of tag leaves. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLGroupTag private constructor(private val leaves: MutableList<Filter.Tag>) :
@@ -27,7 +27,7 @@ public class DSLGroupTag private constructor(private val leaves: MutableList<Fil
   internal fun leaves(): List<Filter.Tag> = leaves.toList()
 }
 
-/** OR-context builder for [Filter.Numeric] leaves. Exposes only numeric leaves. */
+/** `OR` group of numeric leaves. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLGroupNumeric private constructor(private val leaves: MutableList<Filter.Numeric>) :

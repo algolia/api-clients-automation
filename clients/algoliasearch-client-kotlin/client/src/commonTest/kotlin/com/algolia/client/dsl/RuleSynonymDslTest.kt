@@ -23,15 +23,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonObject
 
-/**
- * Rule/synonym DSL semantics a constructor-equivalence golden cannot pin: the required
- * `consequence` guard, block replacement on a second call, the `objectIDs` promote variant, and
- * synonym factories leaving the other variants' fields unset.
- *
- * Uses [ClientOptions.json], the same [kotlinx.serialization.json.Json] the client sends on
- * requests. That instance leaves `encodeDefaults` off (kotlinx default), so unset null properties
- * are omitted. Comparison is on parsed [JsonObject], never on encoded strings.
- */
 internal class RuleSynonymDslTest {
 
   private val json = ClientOptions().json

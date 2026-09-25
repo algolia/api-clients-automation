@@ -8,13 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-/**
- * [DSLQueryComposer]: `add { }` fragments accumulate per field inside one receiver, `override { }`
- * runs after them with last write wins, and nothing runs until `build()`.
- *
- * The documentation modules golden (locale, searchable title, boost, `assemble`) is Phase 0 matrix
- * rows C10–C13 and is not duplicated here.
- */
 internal class DSLQueryComposerTest {
 
   @Test
@@ -30,7 +23,6 @@ internal class DSLQueryComposerTest {
     val second = composer.build()
     assertEquals(listOf("a", "b"), second.ruleContexts)
     assertEquals(5, second.hitsPerPage)
-    // The earlier result is a value; the later add does not reach into it.
     assertEquals(listOf("a"), first.ruleContexts)
   }
 

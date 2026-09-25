@@ -13,11 +13,6 @@ import kotlin.test.assertEquals
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [QueryParamCases]: scalars, typed companions and list helpers sent to the fixture
- * index. [fullSnippetWithSearchableRestriction] additionally exercises the typed DSL path
- * `SearchClient.searchSingleIndex(name) { }` once.
- */
 internal class QueryParamsLiveTest {
 
   companion object {

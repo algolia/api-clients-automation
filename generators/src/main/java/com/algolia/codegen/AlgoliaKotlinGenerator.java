@@ -233,7 +233,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return models;
   }
 
-  /** Models the hand-written DSL builds. Order is the file order. */
   private static final List<String> SEARCH_DSL_MODELS = List.of(
     "SearchParamsObject",
     "BrowseParamsObject",
@@ -246,31 +245,18 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     "SynonymHit"
   );
 
-  /**
-   * One generated builder member: the property type it requires and the data `dsl.mustache` renders
-   * it from.
-   */
   private interface DslHelper {
     String type();
 
     Map<String, Object> templateData(String name);
   }
 
-  /**
-   * `name { }` sets the property to the value `function { }` writes on a fresh `receiver`, and
-   * keeps the `leaf` rows behind it for the composers. `strict`: the function throws on an empty
-   * block instead of writing null (delete-by).
-   */
   private record DslFilterHelper(String type, String receiver, String function, String leaf, boolean strict) implements DslHelper {
     public Map<String, Object> templateData(String name) {
       return Map.of("name", name, "type", type, "receiver", receiver, "function", function, "leaf", leaf, "strict", strict);
     }
   }
 
-  /**
-   * `name { }` sets the property to the list collected on a fresh `receiver`. Empty block → `[]`.
-   * `kdocExtra` may be null.
-   */
   private record DslListHelper(String type, String receiver, String kdocExtra) implements DslHelper {
     public Map<String, Object> templateData(String name) {
       Map<String, Object> data = new LinkedHashMap<>(Map.of("name", name, "receiver", receiver));
@@ -291,10 +277,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     false
   );
 
-  /**
-   * Model → property → filter helper. Exactly the helpers the DSL exposes; a missing or drifted
-   * property throws.
-   */
   private static final Map<String, Map<String, DslFilterHelper>> DSL_FILTER_HELPERS = Map.of(
     "SearchParamsObject",
     Map.of("filters", SQL, "optionalFilters", OPTIONAL),
@@ -311,9 +293,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   private static final String ATTRIBUTES = "com.algolia.client.dsl.DSLAttributes";
   private static final String STRINGS = "com.algolia.client.dsl.DSLStrings";
   private static final String LANGUAGES = "com.algolia.client.dsl.DSLLanguage";
-  private static final String STRIPS = "An empty block sends `[]`, which strips the response; leave the field unset to keep it.";
+  private static final String STRIPS = "Sending `[]` strips the response; leave the field unset to keep it.";
 
-  /** Query-shaped list fields: an empty block sends `[]`. */
   private static final Map<String, DslListHelper> QUERY_LISTS = Map.ofEntries(
     Map.entry("restrictSearchableAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
     Map.entry("attributesToHighlight", new DslListHelper("List<String>", ATTRIBUTES, null)),
@@ -328,7 +309,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     Map.entry("responseFields", new DslListHelper("List<String>", STRINGS, STRIPS))
   );
 
-  /** Synonym word lists: an empty block sends `[]`. */
   private static final Map<String, DslListHelper> SYNONYM_LISTS = Map.of(
     "synonyms",
     new DslListHelper("List<String>", STRINGS, null),
@@ -338,10 +318,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     new DslListHelper("List<String>", STRINGS, null)
   );
 
-  /**
-   * Keyed per model on purpose: IndexSettings shares 6 of these properties but has its own
-   * hand-written settings helpers. Never key this table by property alone.
-   */
   private static final Map<String, Map<String, DslListHelper>> DSL_LIST_HELPERS = Map.of(
     "SearchParamsObject",
     QUERY_LISTS,
@@ -353,18 +329,11 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     SYNONYM_LISTS
   );
 
-  /** Models that also get a composer additions receiver, `DSL<Model>Additions`. */
   private static final Set<String> DSL_ADDITIONS = Set.of("SearchParamsObject", "DeleteByParams");
 
-  /**
-   * `Model.property` pairs whose property type is itself a DSL model: each gets a `property { }`
-   * member building it from the nested `DSL<Type>`. Derived from the spec; a drift throws.
-   */
   private static final Set<String> DSL_NESTED_HELPERS = Set.of("Rule.condition", "Rule.consequence", "Consequence.params");
 
   static {
-    // A helper table keyed by a model the DSL does not build would be silently ignored: fail at
-    // class load instead.
     for (Collection<String> keys : List.<Collection<String>>of(DSL_FILTER_HELPERS.keySet(), DSL_LIST_HELPERS.keySet(), DSL_ADDITIONS)) {
       for (String classname : keys) {
         if (!SEARCH_DSL_MODELS.contains(classname)) {
@@ -392,8 +361,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
       }
       Map<String, Object> dslModel = new LinkedHashMap<>();
       dslModel.put("classname", model.classname);
-      // Read inside `{{#vars}}`, where a CodegenProperty field named `classname` would shadow the
-      // model's.
       dslModel.put("dslModelName", model.classname);
       dslModel.put("vars", model.vars);
       List<Map<String, Object>> filterHelpers = helpersFor(model, DSL_FILTER_HELPERS.getOrDefault(classname, Map.of()));
@@ -423,10 +390,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     writeSearchDslBuilders(dslModels);
   }
 
-  /**
-   * Template data in `model.vars` order; throws when an allowlisted property is missing or its type
-   * drifted.
-   */
   private static List<Map<String, Object>> helpersFor(CodegenModel model, Map<String, ? extends DslHelper> table) {
     List<Map<String, Object>> helpers = new ArrayList<>();
     Set<String> seen = new HashSet<>();
@@ -451,26 +414,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return helpers;
   }
 
-  /**
-   * A hand-written `DSL*` type declaration; the generated `DSL<Model>` classes must not reuse one
-   * of these names.
-   */
   private static final Pattern DSL_TYPE_DECLARATION = Pattern.compile("\\b(?:class|interface|object|typealias)\\s+(DSL\\w+)");
 
-  /**
-   * Renders `dsl.mustache` once per DSL model into `com.algolia.client.dsl.generated`, bypassing
-   * the standard template pipeline because neither of its mechanisms fits: `modelTemplateFiles`
-   * renders every model of the spec into the model package (it can target neither these 9 models
-   * nor another package), and `supportingFiles` renders one file per template — and one file
-   * holding every builder OOMs the Kotlin/Native compiler on the macOS CI job. So this method owns
-   * the folder: it deletes every `.kt` first (`removeExistingCodegen` does not clean
-   * `dsl/generated/`, and a leftover `SearchDsl.kt` would redeclare every builder), then writes one
-   * file per model, `DSL<Model>.kt`, holding the class `DSL<Model>`, plus `DSL<Model>Additions.kt`
-   * (from `dsl_additions.mustache`) for the models in {@link #DSL_ADDITIONS}. Before touching the
-   * folder it refuses to generate a class whose name a hand-written `DSL*` type under `dsl/`
-   * already declares: the two live in different packages, so the compiler would not object, but
-   * every `import com.algolia.client.dsl.DSLX` would then be ambiguous to a reader.
-   */
   private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
     String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl").replace(".", "/");
     File dslDir = new File(getOutputDir(), dslFolder);
@@ -527,11 +472,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
   }
 
-  /**
-   * Every `DSL*` class, interface, object, or typealias declared in a hand-written `.kt` under
-   * `dslDir`, mapped to the file declaring it. `generatedDir` is skipped: it holds the previous
-   * generation's output, which is exactly what is about to be replaced.
-   */
   private static Map<String, File> handWrittenDslTypes(File dslDir, File generatedDir) {
     Map<String, File> types = new HashMap<>();
     if (!dslDir.isDirectory()) {
@@ -554,15 +494,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return types;
   }
 
-  /**
-   * Compiles the DSL template `fileName` (`dsl.mustache`, `dsl_additions.mustache`) with a
-   * standalone jmustache compiler: the standard pipeline only renders the templates it registered
-   * itself, and {@link #writeSearchDslBuilders} needs one compiled {@link Template} to execute per
-   * model. Partials (`{{> dsl_filter_helper}}`, `{{> dsl_list_helper}}`, `{{> dsl_nested_helper}}`)
-   * resolve against the Kotlin template directory; HTML escaping is off because the output is
-   * Kotlin source; a missing variable renders empty (jmustache throws by default) so optional data
-   * such as `kdocExtra` needs no guard.
-   */
   private Template compileDslTemplate(String fileName) {
     File root = new File(templateDir());
     Mustache.Compiler compiler = Mustache.compiler()

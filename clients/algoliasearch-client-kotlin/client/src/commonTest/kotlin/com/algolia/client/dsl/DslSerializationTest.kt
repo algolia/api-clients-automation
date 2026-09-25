@@ -11,15 +11,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonObject
 
-/**
- * Wire-level semantics of the DSL builders that a constructor-equivalence golden cannot pin: block
- * helpers overwrite the property they target (last write wins), and empty blocks leave the field
- * unset.
- *
- * Uses [ClientOptions.json], the same [kotlinx.serialization.json.Json] the client sends on
- * requests. That instance leaves `encodeDefaults` off (kotlinx default), so unset null properties
- * are omitted. Comparison is on parsed [JsonObject], never on encoded strings.
- */
 internal class DslSerializationTest {
 
   private val json = ClientOptions().json

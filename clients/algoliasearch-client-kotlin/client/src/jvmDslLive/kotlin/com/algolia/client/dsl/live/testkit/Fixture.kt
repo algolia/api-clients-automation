@@ -7,17 +7,6 @@ import com.algolia.client.model.search.IndexSettings
 import com.algolia.client.model.search.Rule
 import kotlinx.serialization.json.JsonObject
 
-/*
- * The fixture index is frozen: every case's expected body and expectations were computed against
- * exactly these settings, records and rule. Changing any of them requires recomputing every case.
- *
- * Handy facts: query `office` matches 1 (title), 2 (alternateTitles), 3 (title, tags), 4
- * (description), not 5; the word `the` occurs only in 2 and 3; comedy = {1,3,5}; featured = {1,4};
- * pinned = {2,5}; locale en-US = {1,4}, fr-FR = {2,5}; batch b2 = {3,4}; provider exactly `NBC` =
- * {1}.
- */
-
-/** Settings of the fixture index. */
 internal val FIXTURE_SETTINGS: IndexSettings =
   IndexSettings(
     attributesForFaceting =
@@ -39,7 +28,6 @@ internal val FIXTURE_SETTINGS: IndexSettings =
     searchableAttributes = listOf("title", "alternateTitles", "tags", "description"),
   )
 
-/** The five records of the fixture index (probe values unchanged, doc attributes appended). */
 internal val FIXTURE_RECORDS: List<JsonObject> =
   listOf(
     json(
@@ -74,10 +62,6 @@ internal val FIXTURE_RECORDS: List<JsonObject> =
     ),
   )
 
-/**
- * The only rule of the fixture index. It fires only when a request carries the rule context
- * `desktop`, so it cannot affect any other case.
- */
 internal val FIXTURE_RULE: Rule =
   Rule(
     objectID = "ctx-desktop",
@@ -85,22 +69,15 @@ internal val FIXTURE_RULE: Rule =
     consequence = Consequence(userData = json("""{"ctx":"desktop"}""")),
   )
 
-/** The data one live index is filled with. */
 internal class LiveFixture(
   val settings: IndexSettings,
   val records: List<JsonObject>,
   val rule: Rule?,
 )
 
-/** The frozen fixture most suites run on. */
 internal val MAIN_FIXTURE: LiveFixture =
   LiveFixture(FIXTURE_SETTINGS, FIXTURE_RECORDS, FIXTURE_RULE)
 
-/**
- * Values and attributes the `filters` encoder must quote or escape, one record each, so every case
- * matches exactly the records holding its values (`OR` cases match several, the empty value none).
- * Separate from [MAIN_FIXTURE] so it cannot change the hit sets of the frozen cases.
- */
 internal val ESCAPING_FIXTURE: LiveFixture =
   LiveFixture(
     settings =

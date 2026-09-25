@@ -4,17 +4,12 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
-/** Facet leaf constructors shared by [DSLFilters], [DSLFacetFilters], and [DSLGroupFacet]. */
+/** Facet leaf helpers of the filter receivers. */
 @AlgoliaExperimentalDsl
 public sealed interface DSLFacet {
   /**
-   * Adds a [Filter.Facet] on [attribute] equal to [value].
-   *
-   * A non-null [score] is emitted as `<score=N>`, including `0`. With `getRankingInfo`, the engine
-   * reports the maximum score inside an `OR` group and the sum across `AND`ed filters, in both
-   * `filters` and `optionalFilters`. The DSL never rejects a score. [isNegated] sets
-   * [Filter.negated]. Pass it by name: `facet("a", "b", isNegated = true)`. The third positional
-   * argument is [score].
+   * Adds a facet filter on [attribute] equal to [value]. A non-null [score] is emitted as
+   * `<score=N>`, including `0`. Pass [isNegated] by name: the third positional argument is [score].
    */
   public fun facet(
     attribute: String,
@@ -23,7 +18,7 @@ public sealed interface DSLFacet {
     isNegated: Boolean = false,
   ): Unit
 
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. Same [score] / [isNegated] rules. */
+  /** Adds a facet filter on [attribute] equal to [value]; same [score] and [isNegated] rules. */
   public fun facet(
     attribute: String,
     value: Boolean,
@@ -31,7 +26,7 @@ public sealed interface DSLFacet {
     isNegated: Boolean = false,
   ): Unit
 
-  /** Adds a [Filter.Facet] on [attribute] equal to [value]. Same [score] / [isNegated] rules. */
+  /** Adds a facet filter on [attribute] equal to [value]; same [score] and [isNegated] rules. */
   public fun facet(
     attribute: String,
     value: Number,
@@ -40,17 +35,17 @@ public sealed interface DSLFacet {
   ): Unit
 }
 
-/** Tag leaf constructors shared by [DSLFilters] and [DSLGroupTag]. */
+/** Tag leaf helpers of the filter receivers. */
 @AlgoliaExperimentalDsl
 public sealed interface DSLTag {
-  /** Adds a [Filter.Tag] for [value]. [isNegated] sets [Filter.negated]. */
+  /** Adds a `_tags` filter for [value]. */
   public fun tag(value: String, isNegated: Boolean = false): Unit
 }
 
-/** Numeric leaf constructors shared by [DSLFilters] and [DSLGroupNumeric]. */
+/** Numeric leaf helpers of the filter receivers. */
 @AlgoliaExperimentalDsl
 public sealed interface DSLNumeric {
-  /** Adds a [Filter.Range] on [attribute] between [lowerBound] and [upperBound], inclusive. */
+  /** Adds a range filter on [attribute] between [lowerBound] and [upperBound], inclusive. */
   public fun range(
     attribute: String,
     lowerBound: Number,
@@ -58,13 +53,13 @@ public sealed interface DSLNumeric {
     isNegated: Boolean = false,
   ): Unit
 
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
+  /** Adds a range filter on [attribute] covering [range], inclusive. */
   public fun range(attribute: String, range: IntRange, isNegated: Boolean = false): Unit
 
-  /** Adds a [Filter.Range] on [attribute] covering [range], inclusive. */
+  /** Adds a range filter on [attribute] covering [range], inclusive. */
   public fun range(attribute: String, range: LongRange, isNegated: Boolean = false): Unit
 
-  /** Adds a [Filter.Comparison] of [attribute] against [value] with [operator]. */
+  /** Adds a numeric comparison of [attribute] against [value] with [operator]. */
   public fun comparison(
     attribute: String,
     operator: NumericOperator,

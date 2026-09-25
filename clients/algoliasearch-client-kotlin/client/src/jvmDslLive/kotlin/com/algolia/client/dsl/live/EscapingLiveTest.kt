@@ -11,10 +11,6 @@ import kotlin.time.Duration.Companion.seconds
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [EscapingCases] on [ESCAPING_FIXTURE]: every quoted or escaped `filters` body
- * matches exactly the record holding that value.
- */
 internal class EscapingLiveTest {
 
   companion object {

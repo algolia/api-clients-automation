@@ -8,11 +8,6 @@ import kotlin.test.Test
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [FilterCases]: every expected `filters` body is sent to the fixture index and the
- * response checked against the case's expectations, after the DSL half is re-checked on the same
- * bytes.
- */
 internal class FiltersLiveTest {
 
   companion object {

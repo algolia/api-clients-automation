@@ -15,9 +15,6 @@ import com.algolia.client.dsl.cases.samples.setSuggestionType
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/**
- * [DSLQueryComposer] and the user-side wrapper it replaces: fragments added once, overrides last.
- */
 internal object ComposerCases {
 
   val queryWrapperPort =
@@ -80,8 +77,6 @@ internal object ComposerCases {
       expect =
         listOf(Expect.Hits(setOf("1")), Expect.UserData(jsonArray("""[{"ctx":"desktop"}]"""))),
     )
-
-  // ── Base, source object, empty fragments, overrides ───────────────────────────────────────────
 
   val baseMergedWithFragments =
     LiveCase(
@@ -217,8 +212,6 @@ internal object ComposerCases {
       expect = listOf(Expect.Hits(setOf("1", "2", "3", "4"))),
     )
 
-  // ── Modules contributing to one composer ──────────────────────────────────────────────────────
-
   val localeModuleWithoutSecondary =
     LiveCase(
       dsl = { DSLQueryComposer().also { applyLocale(it, "en-US", null) }.build() },
@@ -281,9 +274,6 @@ internal object ComposerCases {
       },
       body =
         """{"filters":"(locale:en-US OR locale:fr-FR)","queryLanguages":["en","fr"],"restrictSearchableAttributes":["title"],"attributesToHighlight":["title"],"optionalFilters":[["isFeatured:true<score=500>"]],"sumOrFiltersScores":true,"getRankingInfo":true}""",
-      // Mandatory `filters` clauses count in `_rankingInfo.filters` too
-      // ([FilterCases.andScoresSummedFlat]): matched locale 1 + optional 500 for the featured
-      // records, 1 alone for the others. Observed live 2026-09-23.
       expect =
         listOf(
           Expect.Hits(setOf("1", "2", "4", "5")),
@@ -292,8 +282,6 @@ internal object ComposerCases {
           Expect.HighlightKeys(setOf("title")),
         ),
     )
-
-  // ── Request-map modules ───────────────────────────────────────────────────────────────────────
 
   private fun fromRequest(request: SearchRequest): SearchParamsObject =
     DSLQueryComposer()

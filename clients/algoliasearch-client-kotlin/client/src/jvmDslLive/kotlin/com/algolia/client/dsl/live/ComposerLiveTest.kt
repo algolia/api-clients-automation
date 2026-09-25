@@ -8,10 +8,6 @@ import kotlin.test.Test
 import org.junit.AfterClass
 import org.junit.BeforeClass
 
-/**
- * Live half of [ComposerCases]: the bodies the composer and the user-side wrapper build are sent to
- * the fixture index and checked against the case's expectations.
- */
 internal class ComposerLiveTest {
 
   companion object {

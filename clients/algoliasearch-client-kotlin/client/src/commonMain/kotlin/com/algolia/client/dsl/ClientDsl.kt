@@ -9,22 +9,7 @@ import com.algolia.client.model.search.SearchResponse
 import com.algolia.client.model.search.UpdatedAtResponse
 import com.algolia.client.transport.RequestOptions
 
-/**
- * Searches a single index with a [query] DSL block.
- *
- * Wraps [query] with [SearchParams.of] for symmetry with the generated method. [SearchParamsObject]
- * is a [SearchParams].
- *
- * Do not use [SearchClient.search] for this: that method is multi-query.
- *
- * ```
- * val response =
- *   client.searchSingleIndex("idx") {
- *     query = "shoes"
- *     filters { facet("brand", "Apple") }
- *   }
- * ```
- */
+/** Searches a single index with a [query] DSL block. */
 @AlgoliaExperimentalDsl
 public suspend fun SearchClient.searchSingleIndex(
   indexName: String,
@@ -37,15 +22,7 @@ public suspend fun SearchClient.searchSingleIndex(
     requestOptions = requestOptions,
   )
 
-/**
- * Updates index settings with a [settings] DSL block.
- *
- * ```
- * client.setSettings("idx") {
- *   searchableAttributes { ordered("name") }
- * }
- * ```
- */
+/** Updates index settings with a [settings] DSL block. */
 @AlgoliaExperimentalDsl
 public suspend fun SearchClient.setSettings(
   indexName: String,
@@ -61,13 +38,9 @@ public suspend fun SearchClient.setSettings(
   )
 
 /**
- * Deletes records that match a [deleteBy] DSL block. An empty filter block or group, or a block
- * with no filter and no geo condition, throws [IllegalArgumentException] before any request is
- * sent.
- *
- * ```
- * client.deleteBy("idx") { filters { facet("brand", "Apple") } }
- * ```
+ * Deletes records that match a [deleteBy] DSL block. Throws [IllegalArgumentException] before any
+ * request when a filter block or group adds no filter, or when there is no filter and no geo
+ * condition.
  */
 @AlgoliaExperimentalDsl
 public suspend fun SearchClient.deleteBy(

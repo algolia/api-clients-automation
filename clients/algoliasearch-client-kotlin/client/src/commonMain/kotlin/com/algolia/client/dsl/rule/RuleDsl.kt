@@ -20,51 +20,20 @@ import com.algolia.client.model.search.PromoteObjectIDs
 import com.algolia.client.model.search.Rule
 
 /**
- * Constructs a [Rule] from the generated [DSLRule].
- *
- * [Rule.objectID] is required. Set it in the block, or pass it to [rule]. [consequence] is
- * required; [DSLRule.build] throws if it is missing. Last write wins on each builder property.
- *
- * ```
- * val built =
- *   rule("promo-iphone") {
- *     condition {
- *       pattern = "smartphone"
- *       anchoring = Anchoring.Is
- *     }
- *     consequence {
- *       params {
- *         query("iphone")
- *         filters { facet("brand", "Apple") }
- *       }
- *       promote { objectID("object-1", position = 0) }
- *     }
- *   }
- * ```
+ * Constructs a [Rule] from a [DSLRule] block. Throws [IllegalArgumentException] when `objectID` or
+ * `consequence` is missing. Last write wins.
  */
 @AlgoliaExperimentalDsl
 public fun rule(block: DSLRule.() -> Unit): Rule = DSLRule().apply(block).build()
 
-/**
- * Constructs a [Rule] with [objectID] already set.
- *
- * The [block] may overwrite [DSLRule.objectID]. Last write wins.
- *
- * ```
- * val built = rule("promo-iphone") { consequence { hide { +"object-9" } } }
- * ```
- */
+/** Constructs a [Rule] with [objectID] set before [block] runs. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun rule(objectID: String, block: DSLRule.() -> Unit = {}): Rule = rule {
   this.objectID = objectID
   block()
 }
 
-/**
- * Sets [DSLRule.conditions] from a [DSLConditions] block.
- *
- * Last write wins: this replaces any earlier [DSLRule.conditions] value.
- */
+/** Sets [DSLRule.conditions] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLRule.conditions(block: DSLConditions.() -> Unit) {
   conditions = DSLConditions().apply(block).build()
@@ -86,7 +55,7 @@ public fun DSLCondition.facetPattern(attribute: String) {
   pattern = "{facet:$attribute}"
 }
 
-/** Builds a list of [Promote] values. Last write wins when [promote] is called again. */
+/** Builds a list of [Promote] values. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLPromotions internal constructor() : DSLList<Promote>() {
@@ -101,43 +70,35 @@ public class DSLPromotions internal constructor() : DSLList<Promote>() {
   }
 }
 
-/** Builds a list of hidden records. Last write wins when [hide] is called again. */
+/** Builds a list of hidden records: `+objectID`. */
 @DSLParameters
 @AlgoliaExperimentalDsl
 public class DSLObjectIDs internal constructor() : DSLList<ConsequenceHide>() {
-  /** Adds [this] object ID to the hide list. */
+  /** Adds this object ID to the hide list. */
   public operator fun String.unaryPlus() {
     values += ConsequenceHide(this)
   }
 }
 
-/** Sets [DSLConsequence.promote] from [block]. A second call replaces the list. */
+/** Sets [DSLConsequence.promote] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLConsequence.promote(block: DSLPromotions.() -> Unit) {
   promote = DSLPromotions().apply(block).build()
 }
 
-/** Sets [DSLConsequence.hide] from [block]. A second call replaces the list. */
+/** Sets [DSLConsequence.hide] from [block]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLConsequence.hide(block: DSLObjectIDs.() -> Unit) {
   hide = DSLObjectIDs().apply(block).build()
 }
 
-/**
- * Sets [DSLConsequence.redirect] to [indexName].
- *
- * Last write wins: this replaces any earlier [DSLConsequence.redirect] value.
- */
+/** Sets [DSLConsequence.redirect] to [indexName]. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLConsequence.redirect(indexName: String) {
   redirect = ConsequenceRedirect(indexName)
 }
 
-/**
- * Sets [DSLConsequenceParams.query] to a replacement query string.
- *
- * Last write wins: this replaces any earlier `query` value in the same builder.
- */
+/** Sets [DSLConsequenceParams.query] to a replacement query string. Last write wins. */
 @AlgoliaExperimentalDsl
 public fun DSLConsequenceParams.query(value: String) {
   query = ConsequenceQuery.of(value)

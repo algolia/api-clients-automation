@@ -17,10 +17,6 @@ import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 
-/**
- * HTTP-level coverage for the [SearchClient] DSL overloads: the three block overloads. Browse stays
- * on the generated method and is not covered here.
- */
 internal class ClientDslTest {
 
   @Test

@@ -6,10 +6,6 @@ import com.algolia.client.dsl.*
 import com.algolia.client.dsl.filter.*
 import com.algolia.client.model.search.*
 
-/**
- * A version 2 style query wrapper ported to the DSL receivers: fragments are recorded by `add { }`
- * and replayed once into a single builder, overrides run last.
- */
 internal class QueryWrapper(private val base: DSLQuery.() -> Unit = {}) {
 
   interface Additive {
