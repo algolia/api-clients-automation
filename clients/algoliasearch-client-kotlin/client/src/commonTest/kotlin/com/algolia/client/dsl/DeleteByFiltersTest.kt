@@ -2,6 +2,7 @@
 
 package com.algolia.client.dsl
 
+import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.dsl.rule.condition
 import com.algolia.client.dsl.rule.consequence
 import com.algolia.client.dsl.rule.rule
@@ -12,6 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlinx.serialization.json.encodeToJsonElement
 
 /**
  * Delete-by filters refuse empty blocks: dropping one would widen the delete. Search, browse, and
@@ -19,17 +21,19 @@ import kotlin.test.assertTrue
  */
 internal class DeleteByFiltersTest {
 
-  private fun assertWidens(construct: String, block: () -> Unit) {
+  private val json = ClientOptions().json
+
+  private fun assertWidens(block: () -> Unit) {
     val error = assertFailsWith<IllegalArgumentException> { block() }
     assertTrue(
-      error.message.orEmpty().startsWith("deleteBy filters: $construct added no filter"),
+      error.message.orEmpty().startsWith("deleteBy filters:"),
       "unexpected message: ${error.message}",
     )
   }
 
   @Test
   fun emptyOrFacetAmongOtherFiltersThrows() {
-    assertWidens("orFacet { }") {
+    assertWidens {
       deleteBy {
         filters {
           orFacet { emptyList<String>().forEach { facet("entityId", it) } }
@@ -41,10 +45,10 @@ internal class DeleteByFiltersTest {
 
   @Test
   fun everyEmptyGroupThrows() {
-    assertWidens("orTag { }") { deleteBy { filters { orTag {} } } }
-    assertWidens("orNumeric { }") { deleteBy { filters { orNumeric {} } } }
-    assertWidens("and { }") { deleteBy { filters { and {} } } }
-    assertWidens("orFacet { }") {
+    assertWidens { deleteBy { filters { orTag {} } } }
+    assertWidens { deleteBy { filters { orNumeric {} } } }
+    assertWidens { deleteBy { filters { and {} } } }
+    assertWidens {
       deleteBy {
         filters {
           tag("a")
@@ -55,8 +59,8 @@ internal class DeleteByFiltersTest {
         }
       }
     }
-    assertWidens("and { }") { deleteBy { filters { and { and {} } } } }
-    assertWidens("filters { }") { deleteBy { filters {} } }
+    assertWidens { deleteBy { filters { and { and {} } } } }
+    assertWidens { deleteBy { filters {} } }
   }
 
   @Test
@@ -75,10 +79,10 @@ internal class DeleteByFiltersTest {
     val composer = DSLDeleteByComposer()
     composer.add { filters { facet("locale", "en-US") } }
     composer.add { filters { emptyList<String>().forEach { facet("entityId", it) } } }
-    assertWidens("filters { } fragment 2") { composer.build() }
+    assertWidens { composer.build() }
 
-    assertWidens("orFacet { }") { composeDeleteBy { add { filters { orFacet {} } } } }
-    assertWidens("orFacet { }") {
+    assertWidens { composeDeleteBy { add { filters { orFacet {} } } } }
+    assertWidens {
       composeDeleteBy {
         add { filters { facet("a", "1") } }
         override { filters { orFacet {} } }
@@ -143,6 +147,29 @@ internal class DeleteByFiltersTest {
           consequence {}
         }
         .condition,
+    )
+
+    // Empty optionalFilters rows are dropped too: all-empty leaves the field unset, an empty row
+    // beside a leaf is skipped.
+    assertNull(
+      query {
+          optionalFilters {
+            and {}
+            or {}
+          }
+        }
+        .optionalFilters
+    )
+    assertEquals(
+      json.parseToJsonElement("""{"optionalFilters":[["a:1"]]}"""),
+      json.encodeToJsonElement(
+        query {
+          optionalFilters {
+            or {}
+            facet("a", "1")
+          }
+        }
+      ),
     )
   }
 }

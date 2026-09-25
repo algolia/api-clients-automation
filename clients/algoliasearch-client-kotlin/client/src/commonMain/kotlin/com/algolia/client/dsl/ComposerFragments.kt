@@ -9,12 +9,15 @@ import kotlin.reflect.KMutableProperty1
  */
 internal class Additive<B, R>(
   private val seed: (B) -> (R.() -> Unit)? = { null },
+  private val wrap: R.(R.() -> Unit) -> Unit = { it() },
   private val write: B.(R.() -> Unit) -> Unit,
 ) {
   private val blocks: MutableList<R.() -> Unit> = mutableListOf()
 
   fun add(block: R.() -> Unit) {
-    blocks += block
+    val wrap = wrap
+    val wrapped: R.() -> Unit = { wrap(block) }
+    blocks += wrapped
   }
 
   /**
@@ -55,6 +58,7 @@ internal fun <B, R, L> filterAdditive(
   field: String,
   baseRows: (B) -> List<List<L>>?,
   addRows: R.(List<List<L>>) -> Unit,
+  wrap: R.(R.() -> Unit) -> Unit,
   write: B.(R.() -> Unit) -> Unit,
 ): Additive<B, R> =
   Additive(
@@ -67,6 +71,7 @@ internal fun <B, R, L> filterAdditive(
       val seed: R.() -> Unit = { addRows(rows) }
       seed
     },
+    wrap = wrap,
     write = write,
   )
 

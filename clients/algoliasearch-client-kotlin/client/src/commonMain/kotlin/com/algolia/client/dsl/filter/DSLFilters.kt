@@ -31,23 +31,20 @@ import com.algolia.client.dsl.DSLParameters
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLFilters
-private constructor(private val rows: MutableList<List<Filter>>, private val strict: Boolean) :
+public class DSLFilters private constructor(private val rows: MutableList<List<Filter>>) :
   DSLFacet by FacetLeafMixin({ rows.add(listOf(it)) }),
   DSLTag by TagLeafMixin({ rows.add(listOf(it)) }),
   DSLNumeric by NumericLeafMixin({ rows.add(listOf(it)) }) {
 
-  /** [strict]: an empty group block throws instead of adding nothing (delete-by filters). */
-  internal constructor(strict: Boolean = false) : this(mutableListOf(), strict)
+  internal constructor() : this(mutableListOf())
 
   /**
    * ANDs the filters in [block] into this block. An empty block adds nothing; in delete-by filters
    * it throws.
    */
   public fun and(block: DSLFilters.() -> Unit) {
-    val added = DSLFilters(strict).apply(block).rows
-    require(!strict || added.isNotEmpty()) { widensDelete("and { }") }
-    rows.addAll(added)
+    val added = DSLFilters().apply(block).rows
+    if (added.isEmpty()) rows.add(emptyList()) else rows.addAll(added)
   }
 
   /**
@@ -55,7 +52,7 @@ private constructor(private val rows: MutableList<List<Filter>>, private val str
    * filters it throws.
    */
   public fun orFacet(block: DSLGroupFacet.() -> Unit) {
-    addGroup("orFacet { }", DSLGroupFacet().apply(block).leaves())
+    rows.add(DSLGroupFacet().apply(block).leaves())
   }
 
   /**
@@ -63,7 +60,7 @@ private constructor(private val rows: MutableList<List<Filter>>, private val str
    * filters it throws.
    */
   public fun orTag(block: DSLGroupTag.() -> Unit) {
-    addGroup("orTag { }", DSLGroupTag().apply(block).leaves())
+    rows.add(DSLGroupTag().apply(block).leaves())
   }
 
   /**
@@ -71,26 +68,15 @@ private constructor(private val rows: MutableList<List<Filter>>, private val str
    * filters it throws.
    */
   public fun orNumeric(block: DSLGroupNumeric.() -> Unit) {
-    addGroup("orNumeric { }", DSLGroupNumeric().apply(block).leaves())
-  }
-
-  private fun addGroup(construct: String, leaves: List<Filter>) {
-    require(!strict || leaves.isNotEmpty()) { widensDelete(construct) }
-    if (leaves.isNotEmpty()) rows.add(leaves)
+    rows.add(DSLGroupNumeric().apply(block).leaves())
   }
 
   internal fun addRows(seed: List<List<Filter>>) {
     rows.addAll(seed)
   }
 
-  internal fun rowCount(): Int = rows.size
-
   internal fun rows(): List<List<Filter>> = rows.toList()
 }
-
-internal fun widensDelete(construct: String): String =
-  "deleteBy filters: $construct added no filter; dropping it would widen the delete. " +
-    "Skip the delete when there is nothing to match."
 
 /**
  * Constructs a SQL `filters` string from the DSL block, or `null` when the block is empty.
@@ -111,7 +97,10 @@ internal fun writeFilters(block: DSLFilters.() -> Unit): FilterWrite<String, Fil
  * block in it, adds no filter, since dropping it would widen the delete.
  */
 internal fun writeDeleteByFilters(block: DSLFilters.() -> Unit): FilterWrite<String, Filter> {
-  val rows = DSLFilters(strict = true).apply(block).rows()
-  require(rows.isNotEmpty()) { widensDelete("filters { }") }
+  val rows = DSLFilters().apply(block).rows()
+  require(rows.isNotEmpty() && rows.none { it.isEmpty() }) {
+    "deleteBy filters: a filters { } block or group adds no filter; dropping it would widen " +
+      "the delete. Skip the delete when there is nothing to match."
+  }
   return FilterWrite(FiltersEncoder(rows), rows)
 }

@@ -27,9 +27,12 @@ import com.algolia.client.dsl.AlgoliaExperimentalDsl
  */
 internal object FiltersEncoder {
 
-  /** Returns the SQL `filters` string for [rows], or `null` when there is no row. */
+  /** Returns the SQL `filters` string for [rows], or `null` when there is no non-empty row. */
   operator fun invoke(rows: List<List<Filter>>): String? =
-    if (rows.isEmpty()) null else rows.joinToString(" AND ") { emitRow(it) }
+    rows
+      .filter { it.isNotEmpty() }
+      .takeIf { it.isNotEmpty() }
+      ?.joinToString(" AND ") { emitRow(it) }
 
   private fun emitRow(row: List<Filter>): String {
     if (row.size == 1) return emitLeaf(row.single())

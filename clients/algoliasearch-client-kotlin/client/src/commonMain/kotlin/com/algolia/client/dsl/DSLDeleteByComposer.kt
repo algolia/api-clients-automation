@@ -3,7 +3,6 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.dsl.filter.DSLFilters
-import com.algolia.client.dsl.filter.widensDelete
 import com.algolia.client.model.search.DeleteByParams
 
 /**
@@ -79,8 +78,9 @@ public class DSLDeleteByAdditions internal constructor() {
   // Not `filters`: `filters(it)` in the lambda must resolve to the builder helper, and a
   // property must not appear in its own initializer.
   private val filtersField: Additive<DSLDeleteBy, DSLFilters> =
-    filterAdditive("filters", DSLDeleteBy::filtersRows, DSLFilters::addRows) { filters(it) }
-  private var filtersFragments = 0
+    filterAdditive("filters", DSLDeleteBy::filtersRows, DSLFilters::addRows, DSLFilters::and) {
+      filters(it)
+    }
 
   private val fields: List<Additive<DSLDeleteBy, *>> = listOf(filtersField)
 
@@ -89,14 +89,7 @@ public class DSLDeleteByAdditions internal constructor() {
    * fragment that adds no filter makes [DSLDeleteByComposer.build] throw
    * [IllegalArgumentException], even when other fragments add some.
    */
-  public fun filters(block: DSLFilters.() -> Unit) {
-    val position = ++filtersFragments
-    filtersField.add {
-      val before = rowCount()
-      block()
-      require(rowCount() > before) { widensDelete("filters { } fragment $position") }
-    }
-  }
+  public fun filters(block: DSLFilters.() -> Unit): Unit = filtersField.add(block)
 
   /**
    * Writes each field with at least one recorded block once, through the generated [DSLDeleteBy]
