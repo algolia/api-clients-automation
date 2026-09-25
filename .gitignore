@@ -57,6 +57,9 @@ pubspec.lock
 
 swiftformat
 
+# agent working files
+.agents/plans/
+
 foo
 
 # reports saved by the api-clients-review skill
