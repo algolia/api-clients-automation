@@ -19,40 +19,36 @@ import kotlinx.serialization.json.encodeToJsonElement
  * The list scopes: eleven `List<String>` / `List<SupportedLanguage>` search parameters exposed as
  * `field { +value }` blocks on [DSLQuery], [DSLBrowse], and [DSLConsequenceParams].
  *
- * Contract under test: last write wins, `+Iterable` appends every element, and an empty block sets
- * `null` (field omitted). The settings helpers (`searchableAttributes { }` etc.) keep sending `[]`
- * for an empty block; that contrast is pinned here so a change on either side shows up.
+ * Contract under test: last write wins, `+Iterable` appends every element, and an empty block sends
+ * `[]`, like version 2 and the settings helpers (`searchableAttributes { }` etc.). Leaving the
+ * field unset omits it.
  */
 internal class ListScopesDslTest {
 
   private val json = ClientOptions().json
 
   @Test
-  fun emptyBlockOmitsField() {
-    assertNull(query { attributesToRetrieve {} }.attributesToRetrieve)
+  fun emptyBlockSendsEmptyList() {
+    assertEquals(emptyList(), query { attributesToRetrieve {} }.attributesToRetrieve)
     assertEquals(
-      json.parseToJsonElement("{}"),
+      json.parseToJsonElement("""{"attributesToRetrieve":[]}"""),
       json.encodeToJsonElement(query { attributesToRetrieve {} }),
     )
 
-    // A later empty block clears an earlier non-empty one.
+    // A later empty block replaces an earlier non-empty one.
     val cleared = query {
       attributesToRetrieve { +"a" }
       attributesToRetrieve {}
     }
-    assertNull(cleared.attributesToRetrieve)
+    assertEquals(emptyList(), cleared.attributesToRetrieve)
 
     // Same rule on the other receivers and element types.
-    assertNull(browse { queryLanguages {} }.queryLanguages)
-    assertNull(consequenceParams { responseFields {} }.responseFields)
+    assertEquals(emptyList(), browse { queryLanguages {} }.queryLanguages)
+    assertEquals(emptyList(), consequenceParams { responseFields {} }.responseFields)
 
-    // Escape hatch: assign emptyList() to send [] explicitly.
-    assertEquals(
-      json.parseToJsonElement("""{"attributesToRetrieve":[]}"""),
-      json.encodeToJsonElement(query { attributesToRetrieve = emptyList() }),
-    )
+    // An unset field is omitted.
+    assertNull(query { query = "x" }.attributesToRetrieve)
 
-    // Contrast pinned: settings helpers keep sending [] for an empty block.
     assertEquals(emptyList(), settings { searchableAttributes {} }.searchableAttributes)
   }
 

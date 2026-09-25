@@ -257,9 +257,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   /**
-   * `name { }` sets the property to the value `function { }` writes on a fresh `receiver`, and keeps
-   * the `leaf` rows behind it for the composers. `strict`: the function throws on an empty block
-   * instead of writing null (delete-by).
+   * `name { }` sets the property to the value `function { }` writes on a fresh `receiver`, and
+   * keeps the `leaf` rows behind it for the composers. `strict`: the function throws on an empty
+   * block instead of writing null (delete-by).
    */
   private record DslFilterHelper(String type, String receiver, String function, String leaf, boolean strict) implements DslHelper {
     public Map<String, Object> templateData(String name) {
@@ -268,7 +268,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   /**
-   * `name { }` sets the property to the list collected on a fresh `receiver`. Empty block → null.
+   * `name { }` sets the property to the list collected on a fresh `receiver`. Empty block → `[]`.
    * `kdocExtra` may be null.
    */
   private record DslListHelper(String type, String receiver, String kdocExtra) implements DslHelper {
@@ -311,9 +311,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   private static final String ATTRIBUTES = "com.algolia.client.dsl.DSLAttributes";
   private static final String STRINGS = "com.algolia.client.dsl.DSLStrings";
   private static final String LANGUAGES = "com.algolia.client.dsl.DSLLanguage";
-  private static final String STRIPS = "An empty list sent explicitly strips the response; the empty block omits the field instead.";
+  private static final String STRIPS = "An empty block sends `[]`, which strips the response; leave the field unset to keep it.";
 
-  /** Query-shaped list fields: an empty block omits the field. */
+  /** Query-shaped list fields: an empty block sends `[]`. */
   private static final Map<String, DslListHelper> QUERY_LISTS = Map.ofEntries(
     Map.entry("restrictSearchableAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
     Map.entry("attributesToHighlight", new DslListHelper("List<String>", ATTRIBUTES, null)),
@@ -329,9 +329,8 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   );
 
   /**
-   * Keyed per model on purpose: IndexSettings shares 6 of these properties, but its settings
-   * helpers send `[]` for an empty block, and synonym word lists do too. Never key this table by
-   * property alone.
+   * Keyed per model on purpose: IndexSettings shares 6 of these properties but has its own
+   * hand-written settings helpers. Never key this table by property alone.
    */
   private static final Map<String, Map<String, DslListHelper>> DSL_LIST_HELPERS = Map.of(
     "SearchParamsObject",

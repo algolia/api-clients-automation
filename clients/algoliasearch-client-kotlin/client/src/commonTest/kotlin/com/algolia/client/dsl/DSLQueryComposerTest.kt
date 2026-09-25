@@ -98,7 +98,7 @@ internal class DSLQueryComposerTest {
   }
 
   @Test
-  fun emptyComposerAndEmptyFragmentsOmitFields() {
+  fun emptyComposerOmitsFieldsAndEmptyListFragmentsSendEmptyLists() {
     val empty = json.parseToJsonElement("{}")
     assertEquals(empty, json.encodeToJsonElement(DSLQueryComposer().build()))
 
@@ -108,7 +108,10 @@ internal class DSLQueryComposerTest {
         ruleContexts {}
       }
     }
-    assertEquals(empty, json.encodeToJsonElement(emptyFragments))
+    assertEquals(
+      json.parseToJsonElement("""{"ruleContexts":[]}"""),
+      json.encodeToJsonElement(emptyFragments),
+    )
   }
 
   @Test
