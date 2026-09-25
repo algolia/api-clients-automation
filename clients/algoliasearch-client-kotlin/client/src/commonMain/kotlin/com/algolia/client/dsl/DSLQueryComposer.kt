@@ -101,9 +101,16 @@ public class DSLQueryAdditions internal constructor() {
   // Field names differ from the recorder names: `filters(it)` inside the lambda must resolve to the
   // builder helper, and a property must not appear in its own initializer.
   private val filtersField: Additive<DSLQuery, DSLFilters> =
-    filterAdditive("filters", DSLQuery::filtersRows, DSLFilters::addRows) { filters(it) }
+    filterAdditive("filters", DSLQuery::filtersRows, DSLFilters::addRows, DSLFilters::and) {
+      filters(it)
+    }
   private val optionalFiltersField: Additive<DSLQuery, DSLFacetFilters> =
-    filterAdditive("optionalFilters", DSLQuery::optionalFiltersRows, DSLFacetFilters::addRows) {
+    filterAdditive(
+      "optionalFilters",
+      DSLQuery::optionalFiltersRows,
+      DSLFacetFilters::addRows,
+      DSLFacetFilters::and,
+    ) {
       optionalFilters(it)
     }
   private val restrictSearchableAttributesField: Additive<DSLQuery, DSLAttributes> =

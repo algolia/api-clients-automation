@@ -24,12 +24,13 @@ private constructor(private val rows: MutableList<List<Filter.Facet>>) :
    * encodes as `[[a], [b], [c, d]]`.
    */
   public fun and(block: DSLFacetFilters.() -> Unit) {
-    rows.addAll(DSLFacetFilters().apply(block).rows)
+    val added = DSLFacetFilters().apply(block).rows
+    if (added.isEmpty()) rows.add(emptyList()) else rows.addAll(added)
   }
 
   /** Adds the facet leaves in [block] as one `OR` row. An empty block adds nothing. */
   public fun or(block: DSLGroupFacet.() -> Unit) {
-    DSLGroupFacet().apply(block).leaves().takeIf { it.isNotEmpty() }?.let { rows.add(it) }
+    rows.add(DSLGroupFacet().apply(block).leaves())
   }
 
   internal fun addRows(seed: List<List<Filter.Facet>>) {

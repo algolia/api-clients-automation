@@ -22,11 +22,14 @@ import com.algolia.client.model.search.OptionalFilters
  */
 internal object OptionalFiltersEncoder {
   operator fun invoke(rows: List<List<Filter.Facet>>): OptionalFilters? =
-    if (rows.isEmpty()) null
-    else
-      OptionalFilters.of(
-        rows.map { row -> OptionalFilters.of(row.map { OptionalFilters.of(encode(it)) }) }
-      )
+    rows
+      .filter { it.isNotEmpty() }
+      .takeIf { it.isNotEmpty() }
+      ?.let { kept ->
+        OptionalFilters.of(
+          kept.map { row -> OptionalFilters.of(row.map { OptionalFilters.of(encode(it)) }) }
+        )
+      }
 
   private fun encode(facet: Filter.Facet): String {
     val value =
