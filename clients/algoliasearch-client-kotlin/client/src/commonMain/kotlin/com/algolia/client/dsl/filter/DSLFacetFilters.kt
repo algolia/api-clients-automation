@@ -12,11 +12,10 @@ import com.algolia.client.model.search.OptionalFilters
  */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLFacetFilters
-private constructor(private val rows: MutableList<List<Filter.Facet>>) :
+public class DSLFacetFilters private constructor(private val rows: FilterRows<Filter.Facet>) :
   DSLFacet by FacetLeafMixin({ rows.add(listOf(it)) }) {
 
-  internal constructor() : this(mutableListOf())
+  internal constructor() : this(FilterRows())
 
   /**
    * ANDs the filters in [block] into this block. An empty block adds nothing. Nested `and { }`
@@ -24,8 +23,7 @@ private constructor(private val rows: MutableList<List<Filter.Facet>>) :
    * encodes as `[[a], [b], [c, d]]`.
    */
   public fun and(block: DSLFacetFilters.() -> Unit) {
-    val added = DSLFacetFilters().apply(block).rows
-    if (added.isEmpty()) rows.add(emptyList()) else rows.addAll(added)
+    rows.and(DSLFacetFilters().apply(block).rows)
   }
 
   /** Adds the facet leaves in [block] as one `OR` row. An empty block adds nothing. */
@@ -37,7 +35,7 @@ private constructor(private val rows: MutableList<List<Filter.Facet>>) :
     rows.addAll(seed)
   }
 
-  internal fun rows(): List<List<Filter.Facet>> = rows.toList()
+  internal fun rows(): List<List<Filter.Facet>> = rows.snapshot()
 }
 
 /** Constructs [OptionalFilters] from a facet-only DSL block, or `null` when the block is empty. */

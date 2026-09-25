@@ -84,11 +84,7 @@ public fun DSLIndexSettings.ranking(block: DSLRanking.() -> Unit) {
 /** Builds searchable-attribute strings for [IndexSettings.searchableAttributes]. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLSearchableAttributes internal constructor() {
-  private val values: MutableList<String> = mutableListOf()
-
-  internal fun build(): List<String> = values.toList()
-
+public class DSLSearchableAttributes internal constructor() : DSLValues<String>() {
   /**
    * Adds an ordered searchable attribute, or several attributes that share the same priority.
    *
@@ -104,21 +100,12 @@ public class DSLSearchableAttributes internal constructor() {
   public fun unordered(attribute: String) {
     values += "unordered($attribute)"
   }
-
-  /** Adds [this] as an ordered searchable attribute. Matches v2 `+"name"`. */
-  public operator fun String.unaryPlus() {
-    ordered(this)
-  }
 }
 
 /** Builds attribute-for-faceting strings for [IndexSettings.attributesForFaceting]. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLAttributesForFaceting internal constructor() {
-  private val values: MutableList<String> = mutableListOf()
-
-  internal fun build(): List<String> = values.toList()
-
+public class DSLAttributesForFaceting internal constructor() : DSLValues<String>() {
   /** Adds a facet attribute with no modifier. */
   public fun attribute(attribute: String) {
     values += attribute
@@ -133,21 +120,12 @@ public class DSLAttributesForFaceting internal constructor() {
   public fun searchable(attribute: String) {
     values += "searchable($attribute)"
   }
-
-  /** Adds [this] as a facet attribute with no modifier. Matches v2 `+"brand"`. */
-  public operator fun String.unaryPlus() {
-    attribute(this)
-  }
 }
 
 /** Builds custom-ranking strings for [IndexSettings.customRanking]. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLCustomRanking internal constructor() {
-  private val values: MutableList<String> = mutableListOf()
-
-  internal fun build(): List<String> = values.toList()
-
+public class DSLCustomRanking internal constructor() : DSLList<String>() {
   /** Adds an ascending custom-ranking criterion as `asc(attribute)`. */
   public fun asc(attribute: String) {
     values += "asc($attribute)"
@@ -162,11 +140,7 @@ public class DSLCustomRanking internal constructor() {
 /** Builds ranking-formula strings for [IndexSettings.ranking]. */
 @DSLParameters
 @AlgoliaExperimentalDsl
-public class DSLRanking internal constructor() {
-  private val values: MutableList<String> = mutableListOf()
-
-  internal fun build(): List<String> = values.toList()
-
+public class DSLRanking internal constructor() : DSLList<String>() {
   /** Adds the `typo` ranking criterion. */
   public fun typo() {
     values += "typo"
