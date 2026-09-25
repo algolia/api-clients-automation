@@ -26,26 +26,32 @@ internal class DSLQueryComposerTest {
 
   @Test
   fun filtersFromSeveralFragmentsAreAnded() {
-    val params = composeQuery {
-      add {
-        filters {
-          orFacet {
-            facet("locale", "en-US")
-            facet("locale", "en-GB")
+    val params =
+      DSLQueryComposer()
+        .apply {
+          add {
+            filters {
+              orFacet {
+                facet("locale", "en-US")
+                facet("locale", "en-GB")
+              }
+            }
           }
+          add { filters { facet("entityId", "x") } }
         }
-      }
-      add { filters { facet("entityId", "x") } }
-    }
+        .build()
     assertEquals("(locale:en-US OR locale:en-GB) AND entityId:x", params.filters)
   }
 
   @Test
   fun optionalFragmentsConcatenateRows() {
-    val params = composeQuery {
-      add { optionalFilters { or { facet("isFeatured", true, score = 500) } } }
-      add { optionalFilters { facet("genre", "comedy", score = 0) } }
-    }
+    val params =
+      DSLQueryComposer()
+        .apply {
+          add { optionalFilters { or { facet("isFeatured", true, score = 500) } } }
+          add { optionalFilters { facet("genre", "comedy", score = 0) } }
+        }
+        .build()
     assertEquals(
       listOf(listOf("isFeatured:true<score=500>"), listOf("genre:comedy<score=0>")),
       assertNotNull(params.optionalFilters).rows(),
@@ -54,20 +60,23 @@ internal class DSLQueryComposerTest {
 
   @Test
   fun listFragmentsConcatenateInCallOrder() {
-    val params = composeQuery {
-      add {
-        ruleContexts { +"desktop" }
-        restrictSearchableAttributes { +"title" }
-        queryLanguages { +SupportedLanguage.En }
-        responseFields { +"hits" }
-      }
-      add {
-        ruleContexts { +"eu" }
-        restrictSearchableAttributes { +"description" }
-        queryLanguages { +SupportedLanguage.Fr }
-        responseFields { +"nbHits" }
-      }
-    }
+    val params =
+      DSLQueryComposer()
+        .apply {
+          add {
+            ruleContexts { +"desktop" }
+            restrictSearchableAttributes { +"title" }
+            queryLanguages { +SupportedLanguage.En }
+            responseFields { +"hits" }
+          }
+          add {
+            ruleContexts { +"eu" }
+            restrictSearchableAttributes { +"description" }
+            queryLanguages { +SupportedLanguage.Fr }
+            responseFields { +"nbHits" }
+          }
+        }
+        .build()
     assertEquals(listOf("desktop", "eu"), params.ruleContexts)
     assertEquals(listOf("title", "description"), params.restrictSearchableAttributes)
     assertEquals(listOf(SupportedLanguage.En, SupportedLanguage.Fr), params.queryLanguages)
@@ -76,16 +85,19 @@ internal class DSLQueryComposerTest {
 
   @Test
   fun overridesRunAfterAdditionsLastWriteWins() {
-    val params = composeQuery {
-      // Declared before the additions on purpose: overrides still run after them.
-      override { filters = "x:y" }
-      add { filters { facet("a", "b") } }
-      add { queryLanguages { +SupportedLanguage.Fr } }
-      override { hitsPerPage = 10 }
-      override { hitsPerPage = 20 }
-      override { queryLanguages { +SupportedLanguage.En } }
-      override { sumOrFiltersScores = true }
-    }
+    val params =
+      DSLQueryComposer()
+        .apply {
+          // Declared before the additions on purpose: overrides still run after them.
+          override { filters = "x:y" }
+          add { filters { facet("a", "b") } }
+          add { queryLanguages { +SupportedLanguage.Fr } }
+          override { hitsPerPage = 10 }
+          override { hitsPerPage = 20 }
+          override { queryLanguages { +SupportedLanguage.En } }
+          override { sumOrFiltersScores = true }
+        }
+        .build()
     assertEquals(
       SearchParamsObject(
         filters = "x:y",
@@ -102,12 +114,15 @@ internal class DSLQueryComposerTest {
     val empty = json.parseToJsonElement("{}")
     assertEquals(empty, json.encodeToJsonElement(DSLQueryComposer().build()))
 
-    val emptyFragments = composeQuery {
-      add {
-        filters {}
-        ruleContexts {}
-      }
-    }
+    val emptyFragments =
+      DSLQueryComposer()
+        .apply {
+          add {
+            filters {}
+            ruleContexts {}
+          }
+        }
+        .build()
     assertEquals(
       json.parseToJsonElement("""{"ruleContexts":[]}"""),
       json.encodeToJsonElement(emptyFragments),
@@ -186,9 +201,9 @@ internal class DSLQueryComposerTest {
   @Test
   fun baseOptionalFiltersMergeWithFragments() {
     val params =
-      composeQuery(base = { optionalFilters { facet("genre", "comedy") } }) {
-        add { optionalFilters { or { facet("isFeatured", true) } } }
-      }
+      DSLQueryComposer(base = { optionalFilters { facet("genre", "comedy") } })
+        .apply { add { optionalFilters { or { facet("isFeatured", true) } } } }
+        .build()
     assertEquals(
       listOf(listOf("genre:comedy"), listOf("isFeatured:true")),
       assertNotNull(params.optionalFilters).rows(),
@@ -198,16 +213,18 @@ internal class DSLQueryComposerTest {
   @Test
   fun baseListsPrecedeFragments() {
     val params =
-      composeQuery(base = { ruleContexts { +"base" } }) {
-        add { ruleContexts { +"a" } }
-        add { ruleContexts { +"b" } }
-      }
+      DSLQueryComposer(base = { ruleContexts { +"base" } })
+        .apply {
+          add { ruleContexts { +"a" } }
+          add { ruleContexts { +"b" } }
+        }
+        .build()
     assertEquals(listOf("base", "a", "b"), params.ruleContexts)
 
     val explicitEmpty =
-      composeQuery(base = { attributesToRetrieve = emptyList() }) {
-        add { attributesToRetrieve {} }
-      }
+      DSLQueryComposer(base = { attributesToRetrieve = emptyList() })
+        .apply { add { attributesToRetrieve {} } }
+        .build()
     assertEquals(emptyList(), explicitEmpty.attributesToRetrieve)
   }
 
@@ -215,28 +232,34 @@ internal class DSLQueryComposerTest {
   fun rawBaseFilterCannotMergeWithFragments() {
     val error =
       assertFailsWith<IllegalStateException> {
-        composeQuery(base = { filters = "a:1 OR b:2" }) { add { filters { facet("c", "3") } } }
+        DSLQueryComposer(base = { filters = "a:1 OR b:2" })
+          .apply { add { filters { facet("c", "3") } } }
+          .build()
       }
     assertTrue(error.message.orEmpty().contains("filters { } in the base"))
 
     assertFailsWith<IllegalStateException> {
-      composeQuery(base = { optionalFilters = OptionalFilters.of("a:1") }) {
-        add { optionalFilters { facet("b", "2") } }
-      }
+      DSLQueryComposer(base = { optionalFilters = OptionalFilters.of("a:1") })
+        .apply { add { optionalFilters { facet("b", "2") } } }
+        .build()
     }
 
     val untouched =
-      composeQuery(base = { filters = "a:1 OR b:2" }) { add { ruleContexts { +"x" } } }
+      DSLQueryComposer(base = { filters = "a:1 OR b:2" })
+        .apply { add { ruleContexts { +"x" } } }
+        .build()
     assertEquals("a:1 OR b:2", untouched.filters)
   }
 
   @Test
   fun overrideStillWinsOverTheMergedValue() {
     val params =
-      composeQuery(base = { filters { facet("base", "x") } }) {
-        add { filters { facet("module", "y") } }
-        override { filters { facet("final", "z") } }
-      }
+      DSLQueryComposer(base = { filters { facet("base", "x") } })
+        .apply {
+          add { filters { facet("module", "y") } }
+          override { filters { facet("final", "z") } }
+        }
+        .build()
     assertEquals("final:z", params.filters)
   }
 
@@ -248,7 +271,6 @@ internal class DSLQueryComposerTest {
       ruleContexts { +"c" }
     }
     assertEquals(query(block = base), DSLQueryComposer(base).build())
-    assertEquals(query(block = base), composeQuery(base) {})
   }
 
   @Test
@@ -279,17 +301,18 @@ internal class DSLQueryComposerTest {
   fun fromWithoutFragmentsEqualsTheSource() {
     val existing = SearchParamsObject(query = "q", optionalFilters = OptionalFilters.of("a:1"))
     assertEquals(existing, DSLQueryComposer(from = existing).build())
-    assertEquals(existing, composeQuery(from = existing) {})
   }
 
   @Test
   fun fromEmptyFragmentsSendEmptyLists() {
     val existing = SearchParamsObject(attributesToHighlight = listOf("title"), filters = "a:1")
     val params =
-      composeQuery(from = existing) {
-        add { attributesToHighlight {} }
-        add { filters {} }
-      }
+      DSLQueryComposer(from = existing)
+        .apply {
+          add { attributesToHighlight {} }
+          add { filters {} }
+        }
+        .build()
     assertEquals(emptyList(), params.attributesToHighlight)
     // An empty filters fragment replaces the seeded string with nothing, as on a query builder.
     assertEquals(null, params.filters)
@@ -297,10 +320,13 @@ internal class DSLQueryComposerTest {
 
   @Test
   fun fieldBlocksShareOneReceiver() {
-    val params = composeQuery {
-      add { filters { orFacet { facet("a", "1") } } }
-      add { filters { facet("b", "2", isNegated = true) } }
-    }
+    val params =
+      DSLQueryComposer()
+        .apply {
+          add { filters { orFacet { facet("a", "1") } } }
+          add { filters { facet("b", "2", isNegated = true) } }
+        }
+        .build()
     // Both fragments ran in one DSLFilters: one top-level AND, never parenthesised.
     assertEquals("a:1 AND NOT b:2", params.filters)
   }

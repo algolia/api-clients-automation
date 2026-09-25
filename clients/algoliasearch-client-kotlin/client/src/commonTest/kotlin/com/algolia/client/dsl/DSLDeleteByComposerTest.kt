@@ -26,27 +26,29 @@ internal class DSLDeleteByComposerTest {
       composer.build(),
     )
 
-    assertFailsWith<IllegalArgumentException> { composeDeleteBy {} }
+    assertFailsWith<IllegalArgumentException> { DSLDeleteByComposer().build() }
   }
 
   @Test
   fun baseFiltersMergeWithFragments() {
     val params =
-      composeDeleteBy(
-        base = {
-          aroundLatLng = "1,2"
-          filters { facet("locale", "en-US") }
-        }
-      ) {
-        add { filters { facet("entityId", "x", isNegated = true) } }
-      }
+      DSLDeleteByComposer(
+          base = {
+            aroundLatLng = "1,2"
+            filters { facet("locale", "en-US") }
+          }
+        )
+        .apply { add { filters { facet("entityId", "x", isNegated = true) } } }
+        .build()
     assertEquals(
       DeleteByParams(filters = "locale:en-US AND NOT entityId:x", aroundLatLng = "1,2"),
       params,
     )
 
     assertFailsWith<IllegalStateException> {
-      composeDeleteBy(base = { filters = "a:1 OR b:2" }) { add { filters { facet("c", "3") } } }
+      DSLDeleteByComposer(base = { filters = "a:1 OR b:2" })
+        .apply { add { filters { facet("c", "3") } } }
+        .build()
     }
   }
 }

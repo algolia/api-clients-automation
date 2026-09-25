@@ -90,21 +90,3 @@ internal fun DeleteByParams.requireDeleteCondition(): DeleteByParams {
   }
   return this
 }
-
-/**
- * Composes a [DeleteByParams] in one expression: `DSLDeleteByComposer(base).apply(block).build()`.
- *
- * ```
- * val params =
- *   composeDeleteBy(base = { aroundLatLng = "40.71,-74.01" }) {
- *     add { filters { facet("locale", "en-US") } }
- *   }
- * ```
- */
-@AlgoliaExperimentalDsl
-public fun composeDeleteBy(
-  base: DSLDeleteBy.() -> Unit = {},
-  block: DSLDeleteByComposer.() -> Unit,
-): DeleteByParams {
-  return DSLDeleteByComposer(base).apply(block).build()
-}
