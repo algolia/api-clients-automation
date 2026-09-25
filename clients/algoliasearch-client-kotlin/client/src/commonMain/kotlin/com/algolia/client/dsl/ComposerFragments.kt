@@ -4,8 +4,8 @@ import kotlin.reflect.KMutableProperty1
 
 /**
  * One additive composer field: blocks recorded by [add], replayed in call order on one [R] through
- * [write] on [B]. Nothing runs at [add] time. [seed] reads what the base left on [B] and returns a
- * block that runs first on [R], or `null` when there is nothing to merge.
+ * [write] on [B]. Nothing runs at [add] time. When merging, [seed] reads what the base left on [B]
+ * and returns a block that runs first on [R], or `null` when there is nothing to merge.
  */
 internal class Additive<B, R>(
   private val seed: (B) -> (R.() -> Unit)? = { null },
@@ -17,12 +17,16 @@ internal class Additive<B, R>(
     blocks += block
   }
 
-  /** Writes the field once when at least one block was recorded; otherwise leaves it untouched. */
-  fun applyTo(builder: B) {
+  /**
+   * Writes the field once when at least one block was recorded; otherwise leaves it untouched.
+   * [merge]: the recorded blocks run after the value already on [builder]; otherwise they replace
+   * it.
+   */
+  fun applyTo(builder: B, merge: Boolean) {
     if (blocks.isEmpty()) return
     // Bound to locals: inside the DSL-marked receiver lambda this instance must not be reached
     // implicitly, and the base must be read before the write replaces it.
-    val seeded = seed(builder)
+    val seeded = if (merge) seed(builder) else null
     val recorded = blocks
     builder.write {
       seeded?.invoke(this)
@@ -31,10 +35,7 @@ internal class Additive<B, R>(
   }
 }
 
-/**
- * A list field whose fragments append to the base value of [property]. When the merged list is
- * empty, the base value is kept, so a base `emptyList()` still sends `[]`.
- */
+/** A list field whose fragments append to the base value of [property]. */
 internal fun <B, R, T> listAdditive(
   property: KMutableProperty1<B, List<T>?>,
   append: R.(List<T>) -> Unit,
@@ -42,11 +43,7 @@ internal fun <B, R, T> listAdditive(
 ): Additive<B, R> =
   Additive(
     seed = { builder -> property.get(builder)?.let { base -> { append(base) } } },
-    write = { block ->
-      val base = property.get(this)
-      writeList(block)
-      if (property.get(this) == null) property.set(this, base)
-    },
+    write = writeList,
   )
 
 /**
@@ -75,15 +72,17 @@ internal fun <B, R, L> filterAdditive(
 
 /**
  * add/override/build shell shared by the composers. Every [build] creates a fresh [A], runs every
- * stored [add] block on it, creates a fresh [B] and runs [base] on it, merges the collected
- * additions into that [B], then runs every stored [override] block on it in call order. Not
- * thread-safe; every build replays every block.
+ * stored [add] block on it, creates a fresh [B] with [newBuilder] and runs [base] on it, writes the
+ * collected additions into that [B] (merged into what is already there when [merge], replacing it
+ * otherwise), then runs every stored [override] block on it in call order. Not thread-safe; every
+ * build replays every block.
  */
 internal class ComposerCore<A, B>(
   private val newAdditions: () -> A,
   private val newBuilder: () -> B,
   private val base: B.() -> Unit,
-  private val applyAdditions: A.(B) -> Unit,
+  private val merge: Boolean,
+  private val applyAdditions: A.(B, Boolean) -> Unit,
 ) {
   private val additions: MutableList<A.() -> Unit> = mutableListOf()
   private val overrides: MutableList<B.() -> Unit> = mutableListOf()
@@ -101,7 +100,7 @@ internal class ComposerCore<A, B>(
     for (block in additions) collected.block()
     val builder = newBuilder()
     builder.base()
-    collected.applyAdditions(builder)
+    collected.applyAdditions(builder, merge)
     for (block in overrides) builder.block()
     return builder
   }
