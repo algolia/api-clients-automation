@@ -10,8 +10,8 @@ import kotlin.test.assertFailsWith
 /**
  * [DSLDeleteByComposer] collects `filters { }` fragments from several [DSLDeleteByComposer.add]
  * blocks into one [DeleteByParams]. All fragments run inside one filter receiver (so they are
- * AND-ed), then every [DSLDeleteByComposer.override] block runs on the same builder. An empty
- * composer builds an empty [DeleteByParams].
+ * AND-ed), then every [DSLDeleteByComposer.override] block runs on the same builder. A composer
+ * whose result has no filter and no geo condition throws: the engine rejects it.
  */
 internal class DSLDeleteByComposerTest {
 
@@ -26,7 +26,7 @@ internal class DSLDeleteByComposerTest {
       composer.build(),
     )
 
-    assertEquals(DeleteByParams(), composeDeleteBy {})
+    assertFailsWith<IllegalArgumentException> { composeDeleteBy {} }
   }
 
   @Test
