@@ -42,6 +42,41 @@ internal class EngineProbesLiveTest {
   fun mixedFamiliesInOrRejected() = live { fx.assertCase(EngineProbes.mixedFamiliesInOrRejected) }
 
   @Test
+  fun unquotedParenthesisRejected() = live {
+    fx.assertCase(EngineProbes.unquotedParenthesisRejected)
+  }
+
+  @Test
+  fun unquotedColonInValueRejected() = live {
+    fx.assertCase(EngineProbes.unquotedColonInValueRejected)
+  }
+
+  @Test
+  fun unquotedColonInAttributeRejected() = live {
+    fx.assertCase(EngineProbes.unquotedColonInAttributeRejected)
+  }
+
+  @Test
+  fun unquotedLessThanRejected() = live { fx.assertCase(EngineProbes.unquotedLessThanRejected) }
+
+  @Test
+  fun unquotedGreaterThanRejected() = live {
+    fx.assertCase(EngineProbes.unquotedGreaterThanRejected)
+  }
+
+  @Test fun unquotedEqualsRejected() = live { fx.assertCase(EngineProbes.unquotedEqualsRejected) }
+
+  @Test
+  fun unquotedExclamationRejected() = live {
+    fx.assertCase(EngineProbes.unquotedExclamationRejected)
+  }
+
+  @Test
+  fun unescapedTrailingBackslashRejected() = live {
+    fx.assertCase(EngineProbes.unescapedTrailingBackslashRejected)
+  }
+
+  @Test
   fun quotedAttributeAndValueIgnored() = live {
     fx.assertCase(EngineProbes.quotedAttributeAndValueIgnored)
   }

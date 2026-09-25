@@ -84,3 +84,39 @@ internal val FIXTURE_RULE: Rule =
     conditions = listOf(Condition(context = "desktop")),
     consequence = Consequence(userData = json("""{"ctx":"desktop"}""")),
   )
+
+/** The data one live index is filled with. */
+internal class LiveFixture(
+  val settings: IndexSettings,
+  val records: List<JsonObject>,
+  val rule: Rule?,
+)
+
+/** The frozen fixture most suites run on. */
+internal val MAIN_FIXTURE: LiveFixture =
+  LiveFixture(FIXTURE_SETTINGS, FIXTURE_RECORDS, FIXTURE_RULE)
+
+/**
+ * Values the `filters` encoder must quote or escape, one record each, so every case matches exactly
+ * one objectID (the `_tags` cases match two). Separate from [MAIN_FIXTURE] so it cannot change the
+ * hit sets of the frozen cases.
+ */
+internal val ESCAPING_FIXTURE: LiveFixture =
+  LiveFixture(
+    settings = IndexSettings(attributesForFaceting = listOf("v", "my:attr")),
+    records =
+      listOf(
+        json("""{"objectID": "1", "v": "Books(Kids)", "_tags": ["a(b)"]}"""),
+        json("""{"objectID": "2", "v": "a:b", "_tags": ["x:y"]}"""),
+        json("""{"objectID": "3", "v": "a<b"}"""),
+        json("""{"objectID": "4", "v": "C:\\ dir\\"}"""),
+        json("""{"objectID": "5", "v": "back\\slash"}"""),
+        json("""{"objectID": "6", "v": "a=b"}"""),
+        json("""{"objectID": "7", "v": "a!b"}"""),
+        json("""{"objectID": "8", "v": "a>b"}"""),
+        json("""{"objectID": "9", "v": "trail\\"}"""),
+        json("""{"objectID": "10", "v": "a.b", "my:attr": "z"}"""),
+        json("""{"objectID": "11", "v": "q\"uote"}"""),
+      ),
+    rule = null,
+  )
