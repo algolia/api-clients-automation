@@ -95,12 +95,16 @@ internal object LiveCredentials {
 }
 
 /**
- * One uniquely named fixture index on the live application, filled with [FIXTURE_SETTINGS],
- * [FIXTURE_RECORDS] and [FIXTURE_RULE]. Test classes create it in `@BeforeClass` and [close] it in
+ * One uniquely named fixture index on the live application, filled with a [LiveFixture]
+ * ([MAIN_FIXTURE] unless stated). Test classes create it in `@BeforeClass` and [close] it in
  * `@AfterClass`. Delete-by cases run on a per-test copy ([withCopy]).
  */
-internal class LiveIndex private constructor(val client: SearchClient, val name: String) :
-  AutoCloseable {
+internal class LiveIndex
+private constructor(
+  val client: SearchClient,
+  val name: String,
+  private val fixture: LiveFixture = MAIN_FIXTURE,
+) : AutoCloseable {
 
   companion object {
     /**
@@ -108,14 +112,14 @@ internal class LiveIndex private constructor(val client: SearchClient, val name:
      * credentials, deletes stale `kotlin_dsl_live_*` indices, then creates and fills the index. If
      * any step fails the index is deleted before the error propagates.
      */
-    fun create(purpose: String): LiveIndex {
+    fun create(purpose: String, fixture: LiveFixture = MAIN_FIXTURE): LiveIndex {
       check(System.getProperty(LIVE_PROPERTY) == "true") {
         "Kotlin DSL live tests only run through the Gradle live task (jvmDslLiveTest): " +
           "system property `$LIVE_PROPERTY` is not \"true\"."
       }
       val (appId, apiKey) = LiveCredentials.load()
       val client = SearchClient(appId = appId, apiKey = apiKey)
-      val index = LiveIndex(client, indexName(purpose))
+      val index = LiveIndex(client, indexName(purpose), fixture)
       println("$LOG_PREFIX creating ${index.name}")
       try {
         runBlocking {
@@ -175,11 +179,13 @@ internal class LiveIndex private constructor(val client: SearchClient, val name:
   }
 
   private suspend fun populate() {
-    val settings = client.setSettings(name, FIXTURE_SETTINGS)
+    val settings = client.setSettings(name, fixture.settings)
     client.waitForTask(name, settings.taskID, timeout = WRITE_TIMEOUT)
-    client.saveObjects(name, FIXTURE_RECORDS, waitForTasks = true)
-    val rule = client.saveRule(name, FIXTURE_RULE.objectID, FIXTURE_RULE)
-    client.waitForTask(name, rule.taskID, timeout = WRITE_TIMEOUT)
+    client.saveObjects(name, fixture.records, waitForTasks = true)
+    fixture.rule?.let { rule ->
+      val saved = client.saveRule(name, rule.objectID, rule)
+      client.waitForTask(name, saved.taskID, timeout = WRITE_TIMEOUT)
+    }
   }
 
   /** Raw query: the response keeps every field the engine returned. */
@@ -191,7 +197,7 @@ internal class LiveIndex private constructor(val client: SearchClient, val name:
    * runs [block] on the copy and deletes the copy afterwards, whatever happened.
    */
   suspend fun <T> withCopy(purpose: String, block: suspend (LiveIndex) -> T): T {
-    val copy = LiveIndex(client, indexName(purpose))
+    val copy = LiveIndex(client, indexName(purpose), fixture)
     println("$LOG_PREFIX copying $name to ${copy.name}")
     try {
       val task =

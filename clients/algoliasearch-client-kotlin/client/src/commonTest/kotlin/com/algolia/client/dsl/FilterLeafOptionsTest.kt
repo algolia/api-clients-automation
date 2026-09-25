@@ -59,6 +59,15 @@ internal class FilterLeafOptionsTest {
       filters { comparison("my attr", NumericOperator.Equals, 15) },
     )
 
+    // Anything outside ASCII letters, digits, `_`, `.`, `-` is quoted; `\` and `"` are escaped.
+    assertEquals("v:a.b-c_1", filters { facet("v", "a.b-c_1") })
+    assertEquals("v:\"\"", filters { facet("v", "") })
+    assertEquals("v:\"TO\"", filters { facet("v", "TO") })
+    assertEquals("v:\"café\"", filters { facet("v", "café") })
+    assertEquals("v:\"trail\\\\\"", filters { facet("v", "trail\\") })
+    assertEquals("\"a:b\" > 1", filters { comparison("a:b", NumericOperator.Greater, 1) })
+    assertEquals("\"a(b)\":0 TO 1", filters { range("a(b)", 0..1) })
+
     // `optionalFilters` never quotes: a negated value that itself starts with `-` doubles the dash.
     assertEquals(
       listOf(listOf("category:--Movie")),

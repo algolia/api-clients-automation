@@ -24,6 +24,7 @@ internal class DslWireTest {
       QueryParamCases,
       ComposerCases,
       DeleteCases,
+      EscapingCases,
       EngineProbes,
     )
 
