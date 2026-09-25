@@ -30,6 +30,9 @@ public class DSL{{classname}} internal constructor() {
 {{#listHelpers}}
 {{> dsl_list_helper}}
 {{/listHelpers}}
+{{#nestedHelpers}}
+{{> dsl_nested_helper}}
+{{/nestedHelpers}}
 
   internal fun build(): {{classname}} = {{classname}}(
 {{#vars}}

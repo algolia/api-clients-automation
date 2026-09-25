@@ -61,16 +61,6 @@ public fun rule(objectID: String, block: DSLRule.() -> Unit = {}): Rule = rule {
 }
 
 /**
- * Sets [DSLRule.condition] from a [DSLCondition] block.
- *
- * Last write wins: this replaces any earlier [DSLRule.condition] value.
- */
-@AlgoliaExperimentalDsl
-public fun DSLRule.condition(block: DSLCondition.() -> Unit) {
-  condition = DSLCondition().apply(block).build()
-}
-
-/**
  * Sets [DSLRule.conditions] from a [DSLConditions] block.
  *
  * Last write wins: this replaces any earlier [DSLRule.conditions] value.
@@ -78,16 +68,6 @@ public fun DSLRule.condition(block: DSLCondition.() -> Unit) {
 @AlgoliaExperimentalDsl
 public fun DSLRule.conditions(block: DSLConditions.() -> Unit) {
   conditions = DSLConditions().apply(block).build()
-}
-
-/**
- * Sets [DSLRule.consequence] from a [DSLConsequence] block.
- *
- * Last write wins: this replaces any earlier [DSLRule.consequence] value.
- */
-@AlgoliaExperimentalDsl
-public fun DSLRule.consequence(block: DSLConsequence.() -> Unit) {
-  consequence = DSLConsequence().apply(block).build()
 }
 
 /** Builds a [List] of [Condition] values: `condition { }` or `+condition`. */
@@ -104,16 +84,6 @@ public class DSLConditions internal constructor() : DSLValues<Condition>() {
 @AlgoliaExperimentalDsl
 public fun DSLCondition.facetPattern(attribute: String) {
   pattern = "{facet:$attribute}"
-}
-
-/**
- * Sets [DSLConsequence.params] from the generated [DSLConsequenceParams].
- *
- * Last write wins: this replaces any earlier [DSLConsequence.params] value.
- */
-@AlgoliaExperimentalDsl
-public fun DSLConsequence.params(block: DSLConsequenceParams.() -> Unit) {
-  params = DSLConsequenceParams().apply(block).build()
 }
 
 /** Builds a list of [Promote] values. Last write wins when [promote] is called again. */

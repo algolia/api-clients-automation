@@ -4,8 +4,6 @@ package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.dsl.generated.DSLConsequenceParams
-import com.algolia.client.dsl.rule.consequence
-import com.algolia.client.dsl.rule.params
 import com.algolia.client.dsl.rule.rule
 import com.algolia.client.model.search.ConsequenceParams
 import com.algolia.client.model.search.SupportedLanguage

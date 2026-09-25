@@ -3,8 +3,6 @@
 package com.algolia.client.dsl
 
 import com.algolia.client.configuration.ClientOptions
-import com.algolia.client.dsl.rule.condition
-import com.algolia.client.dsl.rule.consequence
 import com.algolia.client.dsl.rule.rule
 import com.algolia.client.model.search.Condition
 import com.algolia.client.model.search.DeleteByParams
