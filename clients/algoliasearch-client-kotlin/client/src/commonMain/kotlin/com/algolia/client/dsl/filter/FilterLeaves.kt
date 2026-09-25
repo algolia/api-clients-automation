@@ -79,11 +79,11 @@ internal class FacetLeafMixin(private val sink: (Filter.Facet) -> Unit) : DSLFac
   }
 
   override fun facet(attribute: String, value: Boolean, score: Int?, isNegated: Boolean) {
-    sink(Filter.Facet(attribute, value, score, isNegated))
+    sink(Filter.Facet(attribute, value.toString(), score, isNegated))
   }
 
   override fun facet(attribute: String, value: Number, score: Int?, isNegated: Boolean) {
-    sink(Filter.Facet(attribute, value, score, isNegated))
+    sink(Filter.Facet(attribute, value.toString(), score, isNegated))
   }
 }
 
@@ -104,11 +104,11 @@ internal class NumericLeafMixin(private val sink: (Filter.Numeric) -> Unit) : DS
   }
 
   override fun range(attribute: String, range: IntRange, isNegated: Boolean) {
-    sink(Filter.Range(attribute, range, isNegated))
+    sink(Filter.Range(attribute, range.first, range.last, isNegated))
   }
 
   override fun range(attribute: String, range: LongRange, isNegated: Boolean) {
-    sink(Filter.Range(attribute, range, isNegated))
+    sink(Filter.Range(attribute, range.first, range.last, isNegated))
   }
 
   override fun comparison(
