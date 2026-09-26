@@ -56,13 +56,6 @@ internal object EscapingCases {
 
   val safeCharactersBare = facetCase("a.b-c_1", "v:a.b-c_1", "18")
 
-  val emptyValueQuoted =
-    LiveCase(
-      dsl = { query { filters { facet("v", "") } } },
-      body = filtersBody("""v:"""""),
-      expect = listOf(Expect.Hits(emptySet())),
-    )
-
   val tagWithQuotesEscaped =
     LiveCase(
       dsl = { query { filters { tag("45\"-50\" tv's") } } },

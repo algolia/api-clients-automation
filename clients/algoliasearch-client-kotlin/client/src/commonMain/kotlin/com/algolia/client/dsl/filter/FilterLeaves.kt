@@ -4,7 +4,10 @@ package com.algolia.client.dsl.filter
 
 import com.algolia.client.dsl.AlgoliaExperimentalDsl
 
-/** Facet leaf helpers of the filter receivers. */
+/**
+ * Facet leaf helpers of the filter receivers. Throws [IllegalArgumentException] when the attribute
+ * or value is empty.
+ */
 @AlgoliaExperimentalDsl
 public sealed interface DSLFacet {
   /**
@@ -35,14 +38,20 @@ public sealed interface DSLFacet {
   ): Unit
 }
 
-/** Tag leaf helpers of the filter receivers. */
+/**
+ * Tag leaf helpers of the filter receivers. Throws [IllegalArgumentException] when the value is
+ * empty.
+ */
 @AlgoliaExperimentalDsl
 public sealed interface DSLTag {
   /** Adds a `_tags` filter for [value]. */
   public fun tag(value: String, isNegated: Boolean = false): Unit
 }
 
-/** Numeric leaf helpers of the filter receivers. */
+/**
+ * Numeric leaf helpers of the filter receivers. Throws [IllegalArgumentException] when the
+ * attribute is empty.
+ */
 @AlgoliaExperimentalDsl
 public sealed interface DSLNumeric {
   /** Adds a range filter on [attribute] between [lowerBound] and [upperBound], inclusive. */
