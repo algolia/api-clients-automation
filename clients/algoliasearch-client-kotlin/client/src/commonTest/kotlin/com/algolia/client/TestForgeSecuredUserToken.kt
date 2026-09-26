@@ -14,8 +14,8 @@ import kotlinx.serialization.json.jsonPrimitive
 class TestForgeSecuredUserToken {
 
   /**
-   * JWT parts are base64url without `=`. Default [Base64.UrlSafe] requires padding and rejects those
-   * parts. Java's `Base64.getUrlDecoder()` accepts missing padding; this matches that.
+   * JWT parts are base64url without `=`. Default [Base64.UrlSafe] requires padding and rejects
+   * those parts. Java's `Base64.getUrlDecoder()` accepts missing padding; this matches that.
    */
   private val jwtBase64 = Base64.UrlSafe.withPadding(Base64.PaddingOption.PRESENT_OPTIONAL)
 
