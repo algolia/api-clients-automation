@@ -104,6 +104,15 @@ internal class DeleteByFiltersTest {
   }
 
   @Test
+  fun emptyAttributeOrValueThrows() {
+    assertFailsWith<IllegalArgumentException> { query { filters { facet("v", "") } } }
+    assertFailsWith<IllegalArgumentException> { query { filters { facet("", "v") } } }
+    assertFailsWith<IllegalArgumentException> { query { filters { tag("") } } }
+    assertFailsWith<IllegalArgumentException> { query { filters { range("", 0, 1) } } }
+    assertFailsWith<IllegalArgumentException> { query { optionalFilters { facet("v", "") } } }
+  }
+
+  @Test
   fun searchAndRuleFiltersStayLenient() {
     assertNull(query { filters { orFacet {} } }.filters)
     assertEquals(

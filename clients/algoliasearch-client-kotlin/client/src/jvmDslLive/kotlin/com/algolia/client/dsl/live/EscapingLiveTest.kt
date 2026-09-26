@@ -65,8 +65,6 @@ internal class EscapingLiveTest {
 
   @Test fun safeCharactersBare() = live { fx.assertCase(EscapingCases.safeCharactersBare) }
 
-  @Test fun emptyValueQuoted() = live { fx.assertCase(EscapingCases.emptyValueQuoted) }
-
   @Test fun tagWithQuotesEscaped() = live { fx.assertCase(EscapingCases.tagWithQuotesEscaped) }
 
   @Test
