@@ -1,0 +1,10 @@
+
+  /**
+   * Sets [{{{name}}}] from [block]. Last write wins; an empty block sends `[]`.
+{{#kdocExtra}}
+   * {{{kdocExtra}}}
+{{/kdocExtra}}
+   */
+  public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
+    this.{{{name}}} = {{{receiver}}}().apply(block).build()
+  }

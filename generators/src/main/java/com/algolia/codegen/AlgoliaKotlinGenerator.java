@@ -2,13 +2,22 @@ package com.algolia.codegen;
 
 import com.algolia.codegen.utils.*;
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.KotlinClientCodegen;
@@ -220,7 +229,287 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     GenericPropagator.propagateGenericsToModels(models, true);
     OneOf.addOneOfMetadata(models);
     jsonParent(models);
+    collectSearchDslModels(models);
     return models;
+  }
+
+  private static final List<String> SEARCH_DSL_MODELS = List.of(
+    "SearchParamsObject",
+    "BrowseParamsObject",
+    "DeleteByParams",
+    "IndexSettings",
+    "Rule",
+    "Condition",
+    "Consequence",
+    "ConsequenceParams",
+    "SynonymHit"
+  );
+
+  private interface DslHelper {
+    String type();
+
+    Map<String, Object> templateData(String name);
+  }
+
+  private record DslFilterHelper(String type, String receiver, String function, String leaf, boolean strict) implements DslHelper {
+    public Map<String, Object> templateData(String name) {
+      return Map.of("name", name, "type", type, "receiver", receiver, "function", function, "leaf", leaf, "strict", strict);
+    }
+  }
+
+  private record DslListHelper(String type, String receiver, String kdocExtra) implements DslHelper {
+    public Map<String, Object> templateData(String name) {
+      Map<String, Object> data = new LinkedHashMap<>(Map.of("name", name, "receiver", receiver));
+      if (kdocExtra != null) {
+        data.put("kdocExtra", kdocExtra);
+      }
+      return data;
+    }
+  }
+
+  private static final DslFilterHelper SQL = new DslFilterHelper("String", "DSLFilters", "writeFilters", "Filter", false);
+  private static final DslFilterHelper DELETE_BY_SQL = new DslFilterHelper("String", "DSLFilters", "writeDeleteByFilters", "Filter", true);
+  private static final DslFilterHelper OPTIONAL = new DslFilterHelper(
+    "OptionalFilters",
+    "DSLFacetFilters",
+    "writeOptionalFilters",
+    "Filter.Facet",
+    false
+  );
+
+  private static final Map<String, Map<String, DslFilterHelper>> DSL_FILTER_HELPERS = Map.of(
+    "SearchParamsObject",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "BrowseParamsObject",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "ConsequenceParams",
+    Map.of("filters", SQL, "optionalFilters", OPTIONAL),
+    "DeleteByParams",
+    Map.of("filters", DELETE_BY_SQL),
+    "Condition",
+    Map.of("filters", SQL)
+  );
+
+  private static final String ATTRIBUTES = "com.algolia.client.dsl.DSLAttributes";
+  private static final String STRINGS = "com.algolia.client.dsl.DSLStrings";
+  private static final String LANGUAGES = "com.algolia.client.dsl.DSLLanguage";
+  private static final String STRIPS = "Sending `[]` strips the response; leave the field unset to keep it.";
+
+  private static final Map<String, DslListHelper> QUERY_LISTS = Map.ofEntries(
+    Map.entry("restrictSearchableAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("attributesToHighlight", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("attributesToRetrieve", new DslListHelper("List<String>", ATTRIBUTES, STRIPS)),
+    Map.entry("attributesToSnippet", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("ruleContexts", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("analyticsTags", new DslListHelper("List<String>", STRINGS, null)),
+    Map.entry("facets", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("disableTypoToleranceOnAttributes", new DslListHelper("List<String>", ATTRIBUTES, null)),
+    Map.entry("queryLanguages", new DslListHelper("List<SupportedLanguage>", LANGUAGES, null)),
+    Map.entry("naturalLanguages", new DslListHelper("List<SupportedLanguage>", LANGUAGES, null)),
+    Map.entry("responseFields", new DslListHelper("List<String>", STRINGS, STRIPS))
+  );
+
+  private static final Map<String, DslListHelper> SYNONYM_LISTS = Map.of(
+    "synonyms",
+    new DslListHelper("List<String>", STRINGS, null),
+    "corrections",
+    new DslListHelper("List<String>", STRINGS, null),
+    "replacements",
+    new DslListHelper("List<String>", STRINGS, null)
+  );
+
+  private static final Map<String, Map<String, DslListHelper>> DSL_LIST_HELPERS = Map.of(
+    "SearchParamsObject",
+    QUERY_LISTS,
+    "BrowseParamsObject",
+    QUERY_LISTS,
+    "ConsequenceParams",
+    QUERY_LISTS,
+    "SynonymHit",
+    SYNONYM_LISTS
+  );
+
+  private static final Set<String> DSL_ADDITIONS = Set.of("SearchParamsObject", "DeleteByParams");
+
+  private static final Set<String> DSL_NESTED_HELPERS = Set.of("Rule.condition", "Rule.consequence", "Consequence.params");
+
+  static {
+    for (Collection<String> keys : List.<Collection<String>>of(DSL_FILTER_HELPERS.keySet(), DSL_LIST_HELPERS.keySet(), DSL_ADDITIONS)) {
+      for (String classname : keys) {
+        if (!SEARCH_DSL_MODELS.contains(classname)) {
+          throw new IllegalStateException("Search DSL: helper table keyed by " + classname + ", which is not in SEARCH_DSL_MODELS");
+        }
+      }
+    }
+  }
+
+  private void collectSearchDslModels(Map<String, ModelsMap> models) {
+    if (!"search".equals(additionalProperties.get("client"))) {
+      return;
+    }
+    Map<String, CodegenModel> byClassname = new HashMap<>();
+    for (ModelsMap container : models.values()) {
+      CodegenModel model = container.getModels().get(0).getModel();
+      byClassname.put(model.classname, model);
+    }
+    List<Map<String, Object>> dslModels = new ArrayList<>();
+    Set<String> nested = new TreeSet<>();
+    for (String classname : SEARCH_DSL_MODELS) {
+      CodegenModel model = byClassname.get(classname);
+      if (model == null) {
+        throw new IllegalStateException("Search DSL model missing from spec: " + classname);
+      }
+      Map<String, Object> dslModel = new LinkedHashMap<>();
+      dslModel.put("classname", model.classname);
+      dslModel.put("dslModelName", model.classname);
+      dslModel.put("vars", model.vars);
+      List<Map<String, Object>> filterHelpers = helpersFor(model, DSL_FILTER_HELPERS.getOrDefault(classname, Map.of()));
+      if (!filterHelpers.isEmpty()) {
+        dslModel.put("filterHelpers", filterHelpers);
+      }
+      List<Map<String, Object>> listHelpers = helpersFor(model, DSL_LIST_HELPERS.getOrDefault(classname, Map.of()));
+      if (!listHelpers.isEmpty()) {
+        dslModel.put("listHelpers", listHelpers);
+      }
+      List<Map<String, Object>> nestedHelpers = new ArrayList<>();
+      for (CodegenProperty var : model.vars) {
+        if (SEARCH_DSL_MODELS.contains(var.datatypeWithEnum)) {
+          nestedHelpers.add(Map.of("name", var.name, "builder", "DSL" + var.datatypeWithEnum));
+          nested.add(model.classname + "." + var.name);
+        }
+      }
+      if (!nestedHelpers.isEmpty()) {
+        dslModel.put("nestedHelpers", nestedHelpers);
+      }
+      dslModel.put("additions", DSL_ADDITIONS.contains(classname));
+      dslModels.add(dslModel);
+    }
+    if (!nested.equals(DSL_NESTED_HELPERS)) {
+      throw new IllegalStateException("Search DSL: nested builder helpers are " + nested + ", expected " + DSL_NESTED_HELPERS);
+    }
+    writeSearchDslBuilders(dslModels);
+  }
+
+  private static List<Map<String, Object>> helpersFor(CodegenModel model, Map<String, ? extends DslHelper> table) {
+    List<Map<String, Object>> helpers = new ArrayList<>();
+    Set<String> seen = new HashSet<>();
+    for (CodegenProperty var : model.vars) {
+      DslHelper helper = table.get(var.name);
+      if (helper == null) {
+        continue;
+      }
+      if (!helper.type().equals(var.datatypeWithEnum)) {
+        throw new IllegalStateException(
+          "Search DSL: " + model.classname + "." + var.name + " is " + var.datatypeWithEnum + ", the DSL helper expects " + helper.type()
+        );
+      }
+      seen.add(var.name);
+      helpers.add(helper.templateData(var.name));
+    }
+    for (String name : table.keySet()) {
+      if (!seen.contains(name)) {
+        throw new IllegalStateException("Search DSL: " + model.classname + "." + name + " is allowlisted but missing from the spec");
+      }
+    }
+    return helpers;
+  }
+
+  private static final Pattern DSL_TYPE_DECLARATION = Pattern.compile("\\b(?:class|interface|object|typealias)\\s+(DSL\\w+)");
+
+  private void writeSearchDslBuilders(List<Map<String, Object>> dslModels) {
+    String dslFolder = (sourceFolder + File.separator + "com.algolia.client.dsl").replace(".", "/");
+    File dslDir = new File(getOutputDir(), dslFolder);
+    File outDir = new File(dslDir, "generated");
+    Map<String, File> handWritten = handWrittenDslTypes(dslDir, outDir);
+    for (Map<String, Object> dslModel : dslModels) {
+      String builder = "DSL" + dslModel.get("classname");
+      List<String> generatedNames = Boolean.TRUE.equals(dslModel.get("additions"))
+        ? List.of(builder, builder + "Additions")
+        : List.of(builder);
+      for (String generated : generatedNames) {
+        File declaredIn = handWritten.get(generated);
+        if (declaredIn != null) {
+          throw new IllegalStateException(
+            "Search DSL: generated " + generated + " collides with hand-written " + generated + " in " + declaredIn
+          );
+        }
+      }
+    }
+    try {
+      Files.createDirectories(outDir.toPath());
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot create DSL builder directory " + outDir, e);
+    }
+    File[] stale = outDir.listFiles((dir, name) -> name.endsWith(".kt"));
+    if (stale != null) {
+      for (File file : stale) {
+        if (!file.delete()) {
+          throw new RuntimeException("Cannot delete stale DSL builder " + file);
+        }
+      }
+    }
+
+    Template builder = compileDslTemplate("dsl.mustache");
+    Template additions = compileDslTemplate("dsl_additions.mustache");
+    for (Map<String, Object> dslModel : dslModels) {
+      Map<String, Object> data = new HashMap<>(additionalProperties);
+      data.putAll(dslModel);
+      String classname = (String) dslModel.get("classname");
+      writeDslFile(builder, data, new File(outDir, "DSL" + classname + ".kt"));
+      if (Boolean.TRUE.equals(dslModel.get("additions"))) {
+        writeDslFile(additions, data, new File(outDir, "DSL" + classname + "Additions.kt"));
+      }
+    }
+  }
+
+  private static void writeDslFile(Template template, Map<String, Object> data, File out) {
+    StringWriter rendered = new StringWriter();
+    template.execute(data, rendered);
+    try {
+      Files.writeString(out.toPath(), rendered.toString(), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot write DSL builder " + out, e);
+    }
+  }
+
+  private static Map<String, File> handWrittenDslTypes(File dslDir, File generatedDir) {
+    Map<String, File> types = new HashMap<>();
+    if (!dslDir.isDirectory()) {
+      return types;
+    }
+    Path generated = generatedDir.toPath().toAbsolutePath().normalize();
+    try (Stream<Path> paths = Files.walk(dslDir.toPath())) {
+      for (Path path : (Iterable<Path>) paths::iterator) {
+        if (!path.toString().endsWith(".kt") || path.toAbsolutePath().normalize().startsWith(generated)) {
+          continue;
+        }
+        Matcher matcher = DSL_TYPE_DECLARATION.matcher(Files.readString(path, StandardCharsets.UTF_8));
+        while (matcher.find()) {
+          types.putIfAbsent(matcher.group(1), path.toFile());
+        }
+      }
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot scan hand-written DSL sources under " + dslDir, e);
+    }
+    return types;
+  }
+
+  private Template compileDslTemplate(String fileName) {
+    File root = new File(templateDir());
+    Mustache.Compiler compiler = Mustache.compiler()
+      .defaultValue("")
+      .escapeHTML(false)
+      .withLoader(name -> {
+        String partialName = name.endsWith(".mustache") ? name : name + ".mustache";
+        File partial = new File(root, partialName);
+        return new InputStreamReader(Files.newInputStream(partial.toPath()), StandardCharsets.UTF_8);
+      });
+    File dsl = new File(root, fileName);
+    try (Reader reader = new InputStreamReader(Files.newInputStream(dsl.toPath()), StandardCharsets.UTF_8)) {
+      return compiler.compile(reader);
+    } catch (IOException e) {
+      throw new RuntimeException("Cannot compile " + fileName + " from " + dsl, e);
+    }
   }
 
   private static final String FREE_FORM_MAP = "Map<kotlin.String, Any>";
