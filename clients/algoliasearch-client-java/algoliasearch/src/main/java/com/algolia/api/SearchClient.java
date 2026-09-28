@@ -23,6 +23,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -13071,6 +13072,10 @@ public class SearchClient extends ApiClient {
    * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
    * in `batch` requests.
    *
+   * <p>{@code chunkedOptions.maxConcurrency} is honored; see {@link
+   * ChunkedHelperOptions#setMaxConcurrency(int)}. The {@code objects} Iterable is consumed on the
+   * calling thread only.
+   *
    * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
    *     make it fit in `batch` requests.
    * @param indexName - The `indexName` to replace `objects` in.
@@ -13096,32 +13101,29 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
+    if (batchSize < 1) {
+      throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
+    }
     final RequestOptions helperRequestOptions = withRequestId(requestOptions);
     int maxRetries = chunkedOptions != null ? chunkedOptions.getMaxRetries() : TaskUtils.DEFAULT_MAX_RETRIES;
+    int maxConcurrency = chunkedOptions != null ? chunkedOptions.getMaxConcurrency() : 1;
+    Iterator<T> it = objects.iterator();
     List<BatchResponse> responses = new ArrayList<>();
-    List<BatchRequest> requests = new ArrayList<>();
-
-    for (T item : objects) {
-      if (requests.size() == batchSize) {
-        BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), helperRequestOptions);
-        responses.add(batch);
-        requests.clear();
+    while (true) {
+      List<CompletableFuture<BatchResponse>> wave = buildWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions);
+      if (wave.isEmpty()) {
+        break;
       }
-
-      requests.add(new BatchRequest().setAction(action).setBody(item));
+      LaunderThrowable.await(CompletableFuture.allOf(wave.toArray(new CompletableFuture[0])));
+      for (CompletableFuture<BatchResponse> f : wave) {
+        responses.add(f.join());
+      }
     }
-
-    if (requests.size() > 0) {
-      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), helperRequestOptions);
-      responses.add(batch);
-    }
-
     if (waitForTasks) {
       responses.forEach(response ->
         waitForTask(indexName, response.getTaskID(), maxRetries, TaskUtils.DEFAULT_TIMEOUT, helperRequestOptions)
       );
     }
-
     return responses;
   }
 
@@ -13418,7 +13420,7 @@ public class SearchClient extends ApiClient {
    *     the transporter requestOptions. (optional)
    */
   public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, RequestOptions requestOptions) {
-    return deleteObjects(indexName, objectIDs, false, null);
+    return deleteObjects(indexName, objectIDs, false, requestOptions);
   }
 
   /**
@@ -13484,15 +13486,25 @@ public class SearchClient extends ApiClient {
     RequestOptions requestOptions,
     ChunkedHelperOptions chunkedOptions
   ) {
-    List<Map<String, String>> objects = new ArrayList<>();
+    return chunkedBatch(
+      indexName,
+      objectIDsToDeleteRequests(objectIDs),
+      Action.DELETE_OBJECT,
+      waitForTasks,
+      batchSize,
+      requestOptions,
+      chunkedOptions
+    );
+  }
 
+  private static List<Map<String, String>> objectIDsToDeleteRequests(List<String> objectIDs) {
+    List<Map<String, String>> objects = new ArrayList<>();
     for (String id : objectIDs) {
       Map<String, String> obj = new HashMap<>();
       obj.put("objectID", id);
       objects.add(obj);
     }
-
-    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, waitForTasks, batchSize, requestOptions, chunkedOptions);
+    return objects;
   }
 
   /**
@@ -14311,5 +14323,284 @@ public class SearchClient extends ApiClient {
       throw e;
     }
     return true;
+  }
+
+  /**
+   * Helper: Asynchronously chunks the given {@code objects} list into batches of at most {@code
+   * batchSize} elements for {@code batch} requests.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>Do not call {@code close()} on the client while the returned future is pending — the
+   * executor shuts down and remaining work fails with {@code RejectedExecutionException} while
+   * earlier chunks are already indexed. All continuations run on the client's executor.
+   *
+   * <p>The {@code objects} Iterable is consumed one wave at a time — the first wave on the calling
+   * thread, subsequent waves on the client's executor. Lazy iterators that touch thread-confined
+   * resources may therefore surprise; use the synchronous variant, which consumes the Iterable on
+   * the calling thread only.
+   *
+   * <p>Failures, including exceptions thrown by the {@code objects} Iterable, are reported through
+   * the returned future. Only invalid arguments ({@code batchSize < 1}) throw directly.
+   *
+   * <p>For concurrency semantics (ordering, last-write-wins, failure blast radius), see {@link
+   * ChunkedHelperOptions#setMaxConcurrency(int)}.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param action The `batch` `action` to perform on the given array of `objects`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`. Defaults to 1000.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxConcurrency). (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> CompletableFuture<List<BatchResponse>> chunkedBatchAsync(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    if (batchSize < 1) {
+      throw new AlgoliaRuntimeException("`batchSize` must be greater than 0");
+    }
+    final RequestOptions helperRequestOptions = withRequestId(requestOptions);
+    int maxConcurrency = chunkedOptions != null ? chunkedOptions.getMaxConcurrency() : 1;
+    // Waves are strictly sequential: responses.add runs only in the post-allOf continuation;
+    // future completion provides happens-before between waves (plain list is safe).
+    List<BatchResponse> responses = new ArrayList<>();
+    Iterator<T> it;
+    List<CompletableFuture<BatchResponse>> firstWave;
+    try {
+      it = objects.iterator();
+      firstWave = buildWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions);
+    } catch (RuntimeException e) {
+      CompletableFuture<List<BatchResponse>> failed = new CompletableFuture<>();
+      failed.completeExceptionally(e);
+      return failed;
+    }
+    return chunkedBatchAwaitWave(indexName, it, action, batchSize, maxConcurrency, helperRequestOptions, responses, firstWave);
+  }
+
+  /**
+   * Reads up to {@code maxConcurrency} chunks of up to {@code batchSize} items from {@code it} and
+   * sends one {@code batch} request per chunk. Never blocks; the iterator is consumed on the
+   * calling thread.
+   */
+  private <T> List<CompletableFuture<BatchResponse>> buildWave(
+    String indexName,
+    Iterator<T> it,
+    Action action,
+    int batchSize,
+    int maxConcurrency,
+    RequestOptions requestOptions
+  ) {
+    List<CompletableFuture<BatchResponse>> wave = new ArrayList<>();
+    while (wave.size() < maxConcurrency && it.hasNext()) {
+      List<BatchRequest> requests = new ArrayList<>();
+      while (requests.size() < batchSize && it.hasNext()) {
+        requests.add(new BatchRequest().setAction(action).setBody(it.next()));
+      }
+      wave.add(batchAsync(indexName, new BatchWriteParams().setRequests(requests), requestOptions));
+    }
+    return wave;
+  }
+
+  private <T> CompletableFuture<List<BatchResponse>> chunkedBatchAwaitWave(
+    String indexName,
+    Iterator<T> it,
+    Action action,
+    int batchSize,
+    int maxConcurrency,
+    RequestOptions requestOptions,
+    List<BatchResponse> responses,
+    List<CompletableFuture<BatchResponse>> wave
+  ) {
+    if (wave.isEmpty()) {
+      return CompletableFuture.completedFuture(new ArrayList<>(responses));
+    }
+    return CompletableFuture.allOf(wave.toArray(new CompletableFuture[0])).thenComposeAsync(ignored -> {
+      for (CompletableFuture<BatchResponse> f : wave) {
+        responses.add(f.join());
+      }
+      List<CompletableFuture<BatchResponse>> nextWave = buildWave(indexName, it, action, batchSize, maxConcurrency, requestOptions);
+      return chunkedBatchAwaitWave(indexName, it, action, batchSize, maxConcurrency, requestOptions, responses, nextWave);
+    }, getExecutor());
+  }
+
+  /**
+   * Helper: Asynchronously saves the given array of objects in the given index. The {@code
+   * chunkedBatchAsync} helper is used under the hood, which creates {@code batch} requests with at
+   * most 1000 objects in each.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   */
+  public <T> CompletableFuture<List<BatchResponse>> saveObjectsAsync(String indexName, Iterable<T> objects) {
+    return saveObjectsAsync(indexName, objects, 1000, null, null);
+  }
+
+  /**
+   * Helper: Asynchronously saves the given array of objects in the given index. The {@code
+   * chunkedBatchAsync} helper is used under the hood, which creates {@code batch} requests with at
+   * most {@code batchSize} objects in each.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats. For concurrency semantics, see
+   * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxConcurrency). (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> CompletableFuture<List<BatchResponse>> saveObjectsAsync(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    return chunkedBatchAsync(indexName, objects, Action.ADD_OBJECT, batchSize, requestOptions, chunkedOptions);
+  }
+
+  /**
+   * Helper: Asynchronously deletes every record for the given objectIDs. The {@code
+   * chunkedBatchAsync} helper is used under the hood, which creates {@code batch} requests with at
+   * most 1000 objectIDs in each. ObjectIDs are materialized into request maps before batching
+   * begins.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   */
+  public CompletableFuture<List<BatchResponse>> deleteObjectsAsync(String indexName, List<String> objectIDs) {
+    return deleteObjectsAsync(indexName, objectIDs, 1000, null, null);
+  }
+
+  /**
+   * Helper: Asynchronously deletes every record for the given objectIDs. The {@code
+   * chunkedBatchAsync} helper is used under the hood, which creates {@code batch} requests with at
+   * most {@code batchSize} objectIDs in each. ObjectIDs are materialized into request maps before
+   * batching begins.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats. For concurrency semantics, see
+   * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxConcurrency). (optional)
+   * @see ChunkedHelperOptions
+   */
+  public CompletableFuture<List<BatchResponse>> deleteObjectsAsync(
+    String indexName,
+    List<String> objectIDs,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    return chunkedBatchAsync(
+      indexName,
+      objectIDsToDeleteRequests(objectIDs),
+      Action.DELETE_OBJECT,
+      batchSize,
+      requestOptions,
+      chunkedOptions
+    );
+  }
+
+  /**
+   * Helper: Asynchronously replaces object content of all the given objects according to their
+   * respective {@code objectID} field. The {@code chunkedBatchAsync} helper is used under the hood,
+   * which creates {@code batch} requests with at most 1000 objects in each.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   */
+  public <T> CompletableFuture<List<BatchResponse>> partialUpdateObjectsAsync(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists
+  ) {
+    return partialUpdateObjectsAsync(indexName, objects, createIfNotExists, 1000, null, null);
+  }
+
+  /**
+   * Helper: Asynchronously replaces object content of all the given objects according to their
+   * respective {@code objectID} field. The {@code chunkedBatchAsync} helper is used under the hood,
+   * which creates {@code batch} requests with at most {@code batchSize} objects in each.
+   *
+   * <p>Does not wait for tasks; call {@code waitForTask(indexName, taskID)} on each returned {@code
+   * taskID}, or use the synchronous variant with {@code waitForTasks=true}.
+   *
+   * <p>See {@link #chunkedBatchAsync(String, Iterable, Action, int, RequestOptions,
+   * ChunkedHelperOptions)} for threading and lifecycle caveats. For concurrency semantics, see
+   * {@link ChunkedHelperOptions#setMaxConcurrency(int)}.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @param chunkedOptions Optional configuration for the helper (e.g. maxConcurrency). (optional)
+   * @see ChunkedHelperOptions
+   */
+  public <T> CompletableFuture<List<BatchResponse>> partialUpdateObjectsAsync(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    int batchSize,
+    RequestOptions requestOptions,
+    ChunkedHelperOptions chunkedOptions
+  ) {
+    return chunkedBatchAsync(
+      indexName,
+      objects,
+      createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+      batchSize,
+      requestOptions,
+      chunkedOptions
+    );
   }
 }
