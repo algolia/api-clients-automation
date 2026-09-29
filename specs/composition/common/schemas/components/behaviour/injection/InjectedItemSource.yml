@@ -14,7 +14,6 @@ injectedItemSearchSource:
 # automation-custom/out-of-line-all-of lint rule requires allOf to be a
 # top-level schema, not nested inside `properties`.
 injectedItemSearch:
-  title: injectedItemSearch
   type: object
   additionalProperties: false
   allOf:
@@ -41,7 +40,6 @@ injectedItemExternalSource:
 # automation-custom/out-of-line-all-of lint rule requires allOf to be a
 # top-level schema, not nested inside `properties`.
 injectedItemExternal:
-  title: injectedItemExternal
   type: object
   additionalProperties: false
   allOf:
@@ -68,7 +66,6 @@ injectedItemRecommendSource:
 # automation-custom/out-of-line-all-of lint rule requires allOf to be a
 # top-level schema, not nested inside `properties`.
 injectedItemRecommend:
-  title: injectedItemRecommend
   type: object
   additionalProperties: false
   allOf:
@@ -97,7 +94,6 @@ injectedItemExternalProviderSource:
 # automation-custom/out-of-line-all-of lint rule requires allOf to be a
 # top-level schema, not nested inside `properties`.
 injectedItemExternalProvider:
-  title: injectedItemExternalProvider
   type: object
   additionalProperties: false
   allOf:
