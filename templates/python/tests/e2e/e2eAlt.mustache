@@ -1,0 +1,51 @@
+# {{generationBanner}}
+from time import time
+from os import environ
+from json import loads
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
+from algoliasearch.search.models import (
+  BatchResponse,
+  UpdatedAtResponse,
+  GetTaskResponse,
+)
+from ..helpers import Helpers
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
+
+{{#modes}}
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}{{#isSyncClient}}Sync{{/isSyncClient}}E2EAlt:
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("METIS_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception("please provide an `METIS_APPLICATION_ID` env var for e2e tests")
+
+    _e2e_api_key = environ.get("METIS_API_KEY")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `METIS_API_KEY` env var for e2e tests")
+
+    {{#blocksE2E}}
+    {{#tests}}
+    {{^isSyncClient}}async {{/isSyncClient}}def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        """
+        {{{testName}}}
+        """
+        raw_resp = {{^isSyncClient}}await {{/isSyncClient}}{{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        {{#response}}
+        {{#statusCode}}
+        assert raw_resp.status_code == {{statusCode}}
+        {{/statusCode}}
+
+
+        {{#body}}
+        resp = {{^isSyncClient}}await {{/isSyncClient}}{{#lambda.pascalcase}}{{{client}}}{{#isSyncClient}}Sync{{/isSyncClient}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _expected_body = loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, self._helpers.unwrap(resp)) == _expected_body
+        {{/body}}
+        {{/response}}
+
+    {{/tests}}
+    {{/blocksE2E}}
+{{/modes}}

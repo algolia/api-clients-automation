@@ -1,0 +1,38 @@
+# {{generationBanner}}
+require 'algolia'
+require 'test/unit'
+require 'dotenv'
+require_relative '../helpers'
+
+Dotenv.load('../../.env')
+
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2EAlt < Test::Unit::TestCase
+  def setup
+    @client = Algolia::{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}.create(
+      ENV.fetch('METIS_APPLICATION_ID', nil),
+      ENV.fetch('METIS_API_KEY', nil){{#hasRegionalHost}},
+      '{{{defaultRegion}}}'{{/hasRegionalHost}}
+    )
+  end
+
+  {{#blocksE2E}}
+  {{#tests}}
+  # {{{testName}}}
+  def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
+    res = @{{> tests/method}}
+
+    {{#response}}
+    {{#statusCode}}
+    assert_equal(res.status, {{statusCode}})
+    {{/statusCode}}
+    {{#body}}
+    res = @client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}{ {{#requestOptions.headers.parameters}}:header_params => JSON.parse('{{{.}}}', :symbolize_names => true),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}:query_params => JSON.parse('{{{.}}}', :symbolize_names => true){{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    expected_body = JSON.parse(%q({{{.}}}))
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+    {{/body}}
+    {{/response}}
+  end
+
+  {{/tests}}
+  {{/blocksE2E}}
+end
