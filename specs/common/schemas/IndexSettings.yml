@@ -1006,6 +1006,17 @@ widgets:
   properties:
     banners:
       $ref: '#/banners'
+    resultCard:
+      $ref: '#/resultCard'
+
+resultCard:
+  description: Agent Studio Result Card to display for a given search.
+  type: object
+  additionalProperties: false
+  properties:
+    enabled:
+      type: boolean
+      description: Whether to show the Result Card for the current search.
 
 banners:
   description: Banners defined in the Merchandising Studio for a given search.
