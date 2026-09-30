@@ -83,6 +83,7 @@ export 'src/model/related_query.dart';
 export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
 export 'src/model/response_extensions.dart';
+export 'src/model/result_card.dart';
 export 'src/model/search_extensions.dart';
 export 'src/model/search_extensions_query_categorization.dart';
 export 'src/model/search_for_facet_values_response.dart';

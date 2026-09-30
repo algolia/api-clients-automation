@@ -1706,7 +1706,10 @@ paths:
                               "url": "lorem"
                             }
                           }
-                        ]
+                        ],
+                        "resultCard": {
+                          "enabled": true
+                        }
                       }
                     },
                     "enableReRanking": true,
@@ -1961,7 +1964,10 @@ paths:
                               "url": "lorem"
                             }
                           }
-                        ]
+                        ],
+                        "resultCard": {
+                          "enabled": true
+                        }
                       }
                     },
                     "enableReRanking": true,
@@ -5578,6 +5584,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/banner'
+    resultCard:
+      description: Agent Studio Result Card to display for a given search.
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Whether to show the Result Card for the current search.
     widgets:
       description: Widgets returned from any rules that are applied to the current search.
       type: object
@@ -5585,6 +5599,8 @@ components:
       properties:
         banners:
           $ref: '#/components/schemas/banners'
+        resultCard:
+          $ref: '#/components/schemas/resultCard'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.

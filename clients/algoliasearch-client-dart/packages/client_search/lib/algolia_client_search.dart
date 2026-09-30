@@ -126,6 +126,7 @@ export 'src/model/replace_all_objects_response.dart';
 export 'src/model/replace_all_objects_with_transformation_response.dart';
 export 'src/model/replace_source_response.dart';
 export 'src/model/response_extensions.dart';
+export 'src/model/result_card.dart';
 export 'src/model/rule.dart';
 export 'src/model/save_object_response.dart';
 export 'src/model/save_synonym_response.dart';

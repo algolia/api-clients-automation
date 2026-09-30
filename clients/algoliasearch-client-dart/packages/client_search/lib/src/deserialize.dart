@@ -119,6 +119,7 @@ import 'package:algolia_client_search/src/model/replace_all_objects_response.dar
 import 'package:algolia_client_search/src/model/replace_all_objects_with_transformation_response.dart';
 import 'package:algolia_client_search/src/model/replace_source_response.dart';
 import 'package:algolia_client_search/src/model/response_extensions.dart';
+import 'package:algolia_client_search/src/model/result_card.dart';
 import 'package:algolia_client_search/src/model/rule.dart';
 import 'package:algolia_client_search/src/model/save_object_response.dart';
 import 'package:algolia_client_search/src/model/save_synonym_response.dart';
@@ -505,6 +506,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ResponseExtensions':
       return ResponseExtensions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Rule':
       return Rule.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SaveObjectResponse':
