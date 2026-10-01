@@ -137,26 +137,6 @@ suspend fun myFunction() {
 }
 ```
 
-### Nullability
-
-```kotlin
-// Kotlin null safety
-val hits = response.hits ?: emptyList()
-val first = response.hits?.firstOrNull()
-
-// Smart cast after null check
-if (response.hits != null) {
-    response.hits.forEach { /* ... */ }
-}
-```
-
-### Data Classes
-
-```kotlin
-// Use copy for immutable updates
-val updated = params.copy(hitsPerPage = 20)
-```
-
 ### Platform Differences
 
 ```kotlin
