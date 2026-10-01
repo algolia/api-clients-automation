@@ -80,7 +80,7 @@ Keep entries short — one or two lines each. The value is the deviation log, no
 - **NEVER** bypass pre-commit hooks as they ensure consistency, formatting, code quality
 - **DO NOT** add language-specific logic to `scripts/` - use templates instead
 - **NEVER** make clients set default values for API parameters — defaults are handled by the engine; CTS asserts the exact number of query parameters to enforce this (see `website/docs/testing/common-test-suite.md`)
-- **NEVER** run Gradle directly — use `yarn cli ...` (`generate`, `build`, `cts`), which builds the custom generators through the scripts and Docker (`yarn docker:setup`)
+- **NEVER** run Gradle directly — use `yarn cli ...` (e.g. `generate`, `cts generate`), which builds the custom generators through the scripts and Docker (`yarn docker:setup`)
 
 ## UNIQUE STYLES
 
