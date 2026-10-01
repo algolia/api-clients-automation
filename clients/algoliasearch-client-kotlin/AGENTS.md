@@ -168,9 +168,6 @@ yarn cli cts run kotlin                        # Run CTS tests
 yarn cli playground kotlin search              # Interactive playground
 yarn cli format kotlin clients/algoliasearch-client-kotlin
 
-# From client directory
-cd clients/algoliasearch-client-kotlin
-./gradlew build                                # Build all targets
-./gradlew jvmTest                              # Run JVM tests
-./gradlew spotlessApply                        # Apply formatting
+# Client unit tests (client/src/commonTest, jvmTest), not covered by cts run
+yarn cli exec kotlin ./gradle/gradlew -p clients/algoliasearch-client-kotlin jvmTest
 ```

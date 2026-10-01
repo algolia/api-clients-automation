@@ -160,7 +160,7 @@ public void method(@Nonnull String required, @Nullable String optional)
 
 - Project uses Gradle
 - Check `build.gradle` for dependencies
-- Use `./gradlew` wrapper for builds
+- Don't call Gradle directly; use the `yarn cli` commands below (they run `./gradle/gradlew` inside Docker)
 
 ## Build & Test Commands
 
@@ -172,9 +172,6 @@ yarn cli cts run java                          # Run CTS tests
 yarn cli playground java search                # Interactive playground
 yarn cli format java clients/algoliasearch-client-java
 
-# From client directory
-cd clients/algoliasearch-client-java
-./gradlew build                                # Build with Gradle
-./gradlew test                                 # Run tests
-./gradlew spotlessApply                        # Apply formatting
+# Gradle tasks with no yarn cli equivalent (runs in the apic_base Docker image)
+yarn cli exec java ./gradle/gradlew -p clients/algoliasearch-client-java <task>
 ```

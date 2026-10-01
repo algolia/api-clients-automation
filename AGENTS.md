@@ -54,16 +54,6 @@ Multi-language API client generator for Algolia. Generates 11 language clients (
 
 Be careful to check for glob patterns!
 
-### Implementation Notes (non-trivial branches)
-
-When working on a non-trivial task (multi-file, multi-language, or anything with a plan), maintain an `implementation-notes.md` at the repo root (gitignored, local-only):
-
-- **On start**: record the task, the plan, and any blindspot findings or open questions.
-- **During work**: every time you deviate from the plan, log one entry: what changed, why it was forced (constraint discovered, wrong assumption, etc.).
-- **On completion**: the notes are input for the `audit` skill (which checks deviations were deliberate) and for handoffs to other agents.
-
-Keep entries short — one or two lines each. The value is the deviation log, not prose.
-
 ### Code Generation Flow
 
 1. Edit OpenAPI spec in `specs/{api}/`
@@ -188,7 +178,7 @@ Removing a field from a published spec is a breaking change (breaks the user/API
 
 ### Failed Release
 
-Monitor Slack channel #notif-api-clients-issues (C07DD1T7QLD) for the release message saying which language failed; for each failed language, check the release CI on the public repo `algolia/algoliasearch-client-{language}` and report findings to the operator. **NEVER** re-release or re-trigger without the operator's explicit approval. Normal flow: `website/docs/release-process.md`.
+The `notify failures` step in `.github/workflows/check.yml` posts ":alert: Some clients failed during release" to the internal release-alerts Slack channel, listing the failed languages; for each failed language, check the release CI on the public repo `algolia/algoliasearch-client-{language}` and report findings to the operator. **NEVER** re-release or re-trigger without the operator's explicit approval. Normal flow: `website/docs/release-process.md`.
 
 ### Docker Required
 
