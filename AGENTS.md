@@ -82,6 +82,16 @@ Scopes: `specs`, `javascript`, `python`, language names, or `deps`
 
 Be careful to check for glob patterns!
 
+### Implementation Notes (non-trivial branches)
+
+When working on a non-trivial task (multi-file, multi-language, or anything with a plan), maintain an `implementation-notes.md` at the repo root (gitignored, local-only):
+
+- **On start**: record the task, the plan, and any blindspot findings or open questions.
+- **During work**: every time you deviate from the plan, log one entry: what changed, why it was forced (constraint discovered, wrong assumption, etc.).
+- **On completion**: the notes are input for the `audit` skill (which checks deviations were deliberate) and for handoffs to other agents.
+
+Keep entries short — one or two lines each. The value is the deviation log, not prose.
+
 ### Code Generation Flow
 
 1. Edit OpenAPI spec in `specs/{api}/`
@@ -145,6 +155,14 @@ yarn cli release --dry-run         # Test release without pushing
 ### API Documentation Guidelines
 
 When writing or editing API specs, follow `website/docs/add-a-new-api/api-documentation-guidelines.md`.
+
+### Never Remove Spec Fields
+
+Removing a field from a published spec is a breaking change (breaks the user/API contract), even if the API ignores it — mark it `x-deprecated: true` (or explain in `description`) instead; genuine breaking changes must be called out as `BREAKING CHANGE` entries in the affected client changelogs.
+
+### Backfilling a Missed GitHub Release
+
+`scripts/ci/codegen/createGitHubReleases.ts` only runs when HEAD's commit message starts with `chore: release` (the CI gate), so it silently skips on a `main` that has moved past the release commit. To backfill a missed release, run it from a temporary git worktree checked out at the release commit (with `GITHUB_TOKEN` and `RUNNER_TEMP` set).
 
 ### Docker Required
 

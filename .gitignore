@@ -64,3 +64,6 @@ foo
 
 # reports saved by the api-clients-review skill
 .agents/reviews/
+
+# Agent implementation notes (local working file, see AGENTS.md)
+implementation-notes.md
