@@ -1,15 +1,16 @@
 TextParam:
+  description: A text search parameter with exposure control.
   properties:
     exposed:
-      type: boolean
       title: exposed
+      type: boolean
     default:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
+      default: null
       title: default
-  type: object
   required:
-    - exposed
+  - exposed
   title: textParam
-  description: A text search parameter with exposure control.
+  type: object

@@ -1,0 +1,15 @@
+TextPartAGUI:
+  properties:
+    type:
+      const: text
+      default: text
+      title: type
+      type: string
+    content:
+      title: content
+      type: string
+  required:
+  - type
+  - content
+  title: textPartAGUI
+  type: object

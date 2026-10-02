@@ -1,0 +1,6 @@
+ResumeUnion:
+  oneOf:
+  - items:
+      $ref: AguiResume.yml#/AguiResume
+    type: array
+  - type: 'null'

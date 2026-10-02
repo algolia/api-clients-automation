@@ -1,4 +1,2 @@
 ToolConfig:
-  oneOf:
-    - $ref: 'McpToolConfig.yml#/McpToolConfig'
-    - type: boolean
+  $ref: ToolConfigInput.yml#/ToolConfigInput
