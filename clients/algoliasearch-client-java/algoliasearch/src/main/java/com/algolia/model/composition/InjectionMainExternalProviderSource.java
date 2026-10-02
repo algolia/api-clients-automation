@@ -12,16 +12,16 @@ import java.util.Objects;
 public class InjectionMainExternalProviderSource implements InjectionMainSource {
 
   @JsonProperty("externalProvider")
-  private MainExternalProvider externalProvider;
+  private InjectionMainExternalProvider externalProvider;
 
-  public InjectionMainExternalProviderSource setExternalProvider(MainExternalProvider externalProvider) {
+  public InjectionMainExternalProviderSource setExternalProvider(InjectionMainExternalProvider externalProvider) {
     this.externalProvider = externalProvider;
     return this;
   }
 
   /** Get externalProvider */
   @javax.annotation.Nonnull
-  public MainExternalProvider getExternalProvider() {
+  public InjectionMainExternalProvider getExternalProvider() {
     return externalProvider;
   }
 

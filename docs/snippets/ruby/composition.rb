@@ -542,7 +542,7 @@ def snippet_for_multiple_batch
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(index: "bar")
+                    search: Algolia::Composition::InjectionMainSearch.new(index: "bar")
                   )
                 )
               )
@@ -584,7 +584,7 @@ def snippet_for_multiple_batch1
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(index: "foo")
+                    search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                   )
                 ),
                 injected_items: [
@@ -636,7 +636,7 @@ def snippet_for_multiple_batch2
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(
+                    search: Algolia::Composition::InjectionMainSearch.new(
                       index: "foo",
                       params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                     )
@@ -723,7 +723,7 @@ def snippet_for_multiple_batch3
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(index: "foo")
+                    search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                   )
                 ),
                 injected_items: [
@@ -769,7 +769,7 @@ def snippet_for_put_composition
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(index: "foo")
+              search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
             )
           ),
           injected_items: [
@@ -811,7 +811,7 @@ def snippet_for_put_composition1
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(index: "foo")
+              search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
             )
           ),
           injected_items: [
@@ -857,7 +857,7 @@ def snippet_for_put_composition2
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(
+              search: Algolia::Composition::InjectionMainSearch.new(
                 index: "foo",
                 params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
               )
@@ -938,7 +938,7 @@ def snippet_for_put_composition3
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(
+              search: Algolia::Composition::InjectionMainSearch.new(
                 index: "foo",
                 params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
               )
@@ -985,7 +985,7 @@ def snippet_for_put_composition4
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(index: "products")
+              search: Algolia::Composition::InjectionMainSearch.new(index: "products")
             )
           )
         )
@@ -1017,7 +1017,7 @@ def snippet_for_put_composition5
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainRecommendSource.new(
-              recommend: Algolia::Composition::MainRecommend.new(
+              recommend: Algolia::Composition::InjectionMainRecommend.new(
                 index_name: "<YOUR_INDEX_NAME>",
                 model: "trending-items",
                 threshold: 50
@@ -1028,7 +1028,7 @@ def snippet_for_put_composition5
             Algolia::Composition::InjectionInjectedItem.new(
               key: "injected-recommend-key",
               source: Algolia::Composition::InjectedItemRecommendSource.new(
-                recommend: Algolia::Composition::Recommend.new(
+                recommend: Algolia::Composition::InjectedItemRecommend.new(
                   index_name: "<YOUR_INDEX_NAME>",
                   model: "trending-items",
                   threshold: 30,
@@ -1070,7 +1070,7 @@ def snippet_for_put_composition6
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainSearchSource.new(
-              search: Algolia::Composition::MainSearch.new(
+              search: Algolia::Composition::InjectionMainSearch.new(
                 index: "products",
                 params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:nike")
               )
@@ -1080,7 +1080,7 @@ def snippet_for_put_composition6
             Algolia::Composition::InjectionInjectedItem.new(
               key: "injected-recommend-key",
               source: Algolia::Composition::InjectedItemRecommendSource.new(
-                recommend: Algolia::Composition::Recommend.new(
+                recommend: Algolia::Composition::InjectedItemRecommend.new(
                   index_name: "<YOUR_INDEX_NAME>",
                   model: "trending-items",
                   threshold: 40
@@ -1122,7 +1122,7 @@ def snippet_for_put_composition7
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainRecommendSource.new(
-                    recommend: Algolia::Composition::MainRecommend.new(
+                    recommend: Algolia::Composition::InjectionMainRecommend.new(
                       index_name: "<YOUR_INDEX_NAME>",
                       model: "trending-items",
                       threshold: 50
@@ -1165,7 +1165,7 @@ def snippet_for_put_composition8
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(
+                    search: Algolia::Composition::InjectionMainSearch.new(
                       index: "products",
                       params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
                     )
@@ -1190,7 +1190,7 @@ def snippet_for_put_composition8
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(
+                    search: Algolia::Composition::InjectionMainSearch.new(
                       index: "articles",
                       params: Algolia::Composition::MainInjectionQueryParameters.new(
                         hits_per_page: 5,
@@ -1218,7 +1218,7 @@ def snippet_for_put_composition8
               injection: Algolia::Composition::Injection.new(
                 main: Algolia::Composition::InjectionMain.new(
                   source: Algolia::Composition::InjectionMainSearchSource.new(
-                    search: Algolia::Composition::MainSearch.new(
+                    search: Algolia::Composition::InjectionMainSearch.new(
                       index: "videos",
                       params: Algolia::Composition::MainInjectionQueryParameters.new(
                         hits_per_page: 3,
@@ -1260,7 +1260,7 @@ def snippet_for_put_composition9
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
             source: Algolia::Composition::InjectionMainExternalProviderSource.new(
-              external_provider: Algolia::Composition::MainExternalProvider.new(
+              external_provider: Algolia::Composition::InjectionMainExternalProvider.new(
                 index: "products",
                 configuration_id: "my-rmn-connection",
                 configuration_params: {campaign_id: "summer-sale", customer_id: "customer-default"},
@@ -1314,7 +1314,7 @@ def snippet_for_put_composition_rule
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "foo")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
               )
             ),
             injected_items: [
@@ -1359,7 +1359,7 @@ def snippet_for_put_composition_rule1
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "foo")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
               )
             ),
             injected_items: [
@@ -1425,7 +1425,7 @@ def snippet_for_put_composition_rule2
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(
+                search: Algolia::Composition::InjectionMainSearch.new(
                   index: "my-index",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                 )
@@ -1479,7 +1479,7 @@ def snippet_for_put_composition_rule3
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "my-index")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
               )
             ),
             injected_items: [
@@ -1525,7 +1525,7 @@ def snippet_for_put_composition_rule4
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "my-index")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
               )
             ),
             injected_items: [
@@ -1578,7 +1578,7 @@ def snippet_for_save_rules
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "<YOUR_INDEX_NAME>")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "<YOUR_INDEX_NAME>")
                     )
                   )
                 )
@@ -1619,7 +1619,7 @@ def snippet_for_save_rules1
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "foo")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                     )
                   ),
                   injected_items: [
@@ -1691,7 +1691,7 @@ def snippet_for_save_rules2
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "my-index",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                       )
@@ -1749,7 +1749,7 @@ def snippet_for_save_rules3
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainRecommendSource.new(
-                      recommend: Algolia::Composition::MainRecommend.new(
+                      recommend: Algolia::Composition::InjectionMainRecommend.new(
                         index_name: "<YOUR_INDEX_NAME>",
                         model: "trending-items",
                         threshold: 50
@@ -1760,7 +1760,7 @@ def snippet_for_save_rules3
                     Algolia::Composition::InjectionInjectedItem.new(
                       key: "injected-recommend-from-rule-key",
                       source: Algolia::Composition::InjectedItemRecommendSource.new(
-                        recommend: Algolia::Composition::Recommend.new(
+                        recommend: Algolia::Composition::InjectedItemRecommend.new(
                           index_name: "<YOUR_INDEX_NAME>",
                           model: "trending-items",
                           threshold: 30,
@@ -1811,7 +1811,7 @@ def snippet_for_save_rules4
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "products",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "category:shoes")
                       )
@@ -1821,7 +1821,7 @@ def snippet_for_save_rules4
                     Algolia::Composition::InjectionInjectedItem.new(
                       key: "injected-recommend-from-rule-key",
                       source: Algolia::Composition::InjectedItemRecommendSource.new(
-                        recommend: Algolia::Composition::Recommend.new(
+                        recommend: Algolia::Composition::InjectedItemRecommend.new(
                           index_name: "<YOUR_INDEX_NAME>",
                           model: "trending-items",
                           threshold: 40
@@ -1872,7 +1872,7 @@ def snippet_for_save_rules5
                       injection: Algolia::Composition::Injection.new(
                         main: Algolia::Composition::InjectionMain.new(
                           source: Algolia::Composition::InjectionMainRecommendSource.new(
-                            recommend: Algolia::Composition::MainRecommend.new(
+                            recommend: Algolia::Composition::InjectionMainRecommend.new(
                               index_name: "<YOUR_INDEX_NAME>",
                               model: "trending-items",
                               threshold: 50
@@ -1926,7 +1926,7 @@ def snippet_for_save_rules6
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "my-index")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                     )
                   ),
                   injected_items: [

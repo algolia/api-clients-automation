@@ -14,8 +14,8 @@ final class InjectedItemExternalProvider {
     required this.index,
     required this.configurationID,
     this.configurationParams,
-    this.params,
     this.ordering,
+    this.params,
   });
 
   /// Algolia index used to fetch the records.
@@ -30,11 +30,11 @@ final class InjectedItemExternalProvider {
   @JsonKey(name: r'configurationParams')
   final Map<String, Object>? configurationParams;
 
-  @JsonKey(name: r'params')
-  final BaseInjectionQueryParameters? params;
-
   @JsonKey(name: r'ordering')
   final ExternalProviderOrdering? ordering;
+
+  @JsonKey(name: r'params')
+  final BaseInjectionQueryParameters? params;
 
   @override
   bool operator ==(Object other) =>
@@ -43,16 +43,16 @@ final class InjectedItemExternalProvider {
           other.index == index &&
           other.configurationID == configurationID &&
           other.configurationParams == configurationParams &&
-          other.params == params &&
-          other.ordering == ordering;
+          other.ordering == ordering &&
+          other.params == params;
 
   @override
   int get hashCode =>
       index.hashCode +
       configurationID.hashCode +
       configurationParams.hashCode +
-      params.hashCode +
-      ordering.hashCode;
+      ordering.hashCode +
+      params.hashCode;
 
   factory InjectedItemExternalProvider.fromJson(Map<String, dynamic> json) =>
       _$InjectedItemExternalProviderFromJson(json);

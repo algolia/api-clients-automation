@@ -21,11 +21,11 @@ public class InjectedItemExternalProvider {
   @JsonProperty("configurationParams")
   private Map<String, Object> configurationParams;
 
-  @JsonProperty("params")
-  private BaseInjectionQueryParameters params;
-
   @JsonProperty("ordering")
   private ExternalProviderOrdering ordering;
+
+  @JsonProperty("params")
+  private BaseInjectionQueryParameters params;
 
   public InjectedItemExternalProvider setIndex(String index) {
     this.index = index;
@@ -71,17 +71,6 @@ public class InjectedItemExternalProvider {
     return configurationParams;
   }
 
-  public InjectedItemExternalProvider setParams(BaseInjectionQueryParameters params) {
-    this.params = params;
-    return this;
-  }
-
-  /** Get params */
-  @javax.annotation.Nullable
-  public BaseInjectionQueryParameters getParams() {
-    return params;
-  }
-
   public InjectedItemExternalProvider setOrdering(ExternalProviderOrdering ordering) {
     this.ordering = ordering;
     return this;
@@ -91,6 +80,17 @@ public class InjectedItemExternalProvider {
   @javax.annotation.Nullable
   public ExternalProviderOrdering getOrdering() {
     return ordering;
+  }
+
+  public InjectedItemExternalProvider setParams(BaseInjectionQueryParameters params) {
+    this.params = params;
+    return this;
+  }
+
+  /** Get params */
+  @javax.annotation.Nullable
+  public BaseInjectionQueryParameters getParams() {
+    return params;
   }
 
   @Override
@@ -106,14 +106,14 @@ public class InjectedItemExternalProvider {
       Objects.equals(this.index, injectedItemExternalProvider.index) &&
       Objects.equals(this.configurationID, injectedItemExternalProvider.configurationID) &&
       Objects.equals(this.configurationParams, injectedItemExternalProvider.configurationParams) &&
-      Objects.equals(this.params, injectedItemExternalProvider.params) &&
-      Objects.equals(this.ordering, injectedItemExternalProvider.ordering)
+      Objects.equals(this.ordering, injectedItemExternalProvider.ordering) &&
+      Objects.equals(this.params, injectedItemExternalProvider.params)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(index, configurationID, configurationParams, params, ordering);
+    return Objects.hash(index, configurationID, configurationParams, ordering, params);
   }
 
   @Override
@@ -123,8 +123,8 @@ public class InjectedItemExternalProvider {
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    configurationID: ").append(toIndentedString(configurationID)).append("\n");
     sb.append("    configurationParams: ").append(toIndentedString(configurationParams)).append("\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("    ordering: ").append(toIndentedString(ordering)).append("\n");
+    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();
   }

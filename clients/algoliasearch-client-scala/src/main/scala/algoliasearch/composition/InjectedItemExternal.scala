@@ -32,10 +32,10 @@ import algoliasearch.composition.ExternalOrdering._
 /** InjectedItemExternal
   *
   * @param index
-  *   Composition Index name.
+  *   Algolia index used to retrieve records.
   */
 case class InjectedItemExternal(
     index: String,
-    params: Option[BaseInjectionQueryParameters] = scala.None,
-    ordering: Option[ExternalOrdering] = scala.None
+    ordering: Option[ExternalOrdering] = scala.None,
+    params: Option[BaseInjectionQueryParameters] = scala.None
 )
