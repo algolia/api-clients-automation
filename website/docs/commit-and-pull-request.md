@@ -10,7 +10,7 @@ If you accidentally include generated files in your commit, the `pre-commit` hoo
 
 We create commits on the CI as well, and in that case, we skip this unstaging behavior with the environment variable `CI=true` given.
 
-If you want to change the patterns of generated file paths, see [config/generation.config.js](https://github.com/algolia/api-clients-automation/blob/main/config/generation.config.js).
+If you want to change the patterns of generated file paths, see [config/generation.config.mjs](https://github.com/algolia/api-clients-automation/blob/main/config/generation.config.mjs).
 
 ## Pull-request
 
