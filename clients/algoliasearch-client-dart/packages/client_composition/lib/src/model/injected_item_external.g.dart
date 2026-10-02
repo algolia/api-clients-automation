@@ -14,14 +14,14 @@ InjectedItemExternal _$InjectedItemExternalFromJson(
       ($checkedConvert) {
         final val = InjectedItemExternal(
           index: $checkedConvert('index', (v) => v as String),
+          ordering: $checkedConvert('ordering',
+              (v) => $enumDecodeNullable(_$ExternalOrderingEnumMap, v)),
           params: $checkedConvert(
               'params',
               (v) => v == null
                   ? null
                   : BaseInjectionQueryParameters.fromJson(
                       v as Map<String, dynamic>)),
-          ordering: $checkedConvert('ordering',
-              (v) => $enumDecodeNullable(_$ExternalOrderingEnumMap, v)),
         );
         return val;
       },
@@ -39,8 +39,8 @@ Map<String, dynamic> _$InjectedItemExternalToJson(
     }
   }
 
-  writeNotNull('params', instance.params?.toJson());
   writeNotNull('ordering', instance.ordering?.toJson());
+  writeNotNull('params', instance.params?.toJson());
   return val;
 }
 

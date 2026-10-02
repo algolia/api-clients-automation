@@ -14,7 +14,7 @@ InjectedItemRecommendSource _$InjectedItemRecommendSourceFromJson(
       ($checkedConvert) {
         final val = InjectedItemRecommendSource(
           recommend: $checkedConvert('recommend',
-              (v) => Recommend.fromJson(v as Map<String, dynamic>)),
+              (v) => InjectedItemRecommend.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

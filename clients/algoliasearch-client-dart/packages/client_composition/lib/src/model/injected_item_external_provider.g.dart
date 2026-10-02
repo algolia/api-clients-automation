@@ -21,14 +21,14 @@ InjectedItemExternalProvider _$InjectedItemExternalProviderFromJson(
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(k, e as Object),
                   )),
+          ordering: $checkedConvert('ordering',
+              (v) => $enumDecodeNullable(_$ExternalProviderOrderingEnumMap, v)),
           params: $checkedConvert(
               'params',
               (v) => v == null
                   ? null
                   : BaseInjectionQueryParameters.fromJson(
                       v as Map<String, dynamic>)),
-          ordering: $checkedConvert('ordering',
-              (v) => $enumDecodeNullable(_$ExternalProviderOrderingEnumMap, v)),
         );
         return val;
       },
@@ -48,8 +48,8 @@ Map<String, dynamic> _$InjectedItemExternalProviderToJson(
   }
 
   writeNotNull('configurationParams', instance.configurationParams);
-  writeNotNull('params', instance.params?.toJson());
   writeNotNull('ordering', instance.ordering?.toJson());
+  writeNotNull('params', instance.params?.toJson());
   return val;
 }
 

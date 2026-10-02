@@ -699,7 +699,9 @@ class CompositionTest {
                                 main =
                                   InjectionMain(
                                     source =
-                                      InjectionMainSearchSource(search = MainSearch(index = "bar"))
+                                      InjectionMainSearchSource(
+                                        search = InjectionMainSearch(index = "bar")
+                                      )
                                   )
                               )
                           ),
@@ -742,7 +744,8 @@ class CompositionTest {
                     Injection(
                       main =
                         InjectionMain(
-                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                          source =
+                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
@@ -786,7 +789,8 @@ class CompositionTest {
                     Injection(
                       main =
                         InjectionMain(
-                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                          source =
+                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
@@ -844,7 +848,7 @@ class CompositionTest {
                           source =
                             InjectionMainSearchSource(
                               search =
-                                MainSearch(
+                                InjectionMainSearch(
                                   index = "foo",
                                   params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                 )
@@ -902,7 +906,9 @@ class CompositionTest {
                       main =
                         InjectionMain(
                           source =
-                            InjectionMainSearchSource(search = MainSearch(index = "products"))
+                            InjectionMainSearchSource(
+                              search = InjectionMainSearch(index = "products")
+                            )
                         )
                     )
                 ),
@@ -939,7 +945,7 @@ class CompositionTest {
                           source =
                             InjectionMainRecommendSource(
                               recommend =
-                                MainRecommend(
+                                InjectionMainRecommend(
                                   indexName = "products",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 50,
@@ -953,7 +959,7 @@ class CompositionTest {
                             source =
                               InjectedItemRecommendSource(
                                 recommend =
-                                  Recommend(
+                                  InjectedItemRecommend(
                                     indexName = "products",
                                     model = Model.entries.first { it.value == "trending-items" },
                                     threshold = 30,
@@ -1002,7 +1008,7 @@ class CompositionTest {
                           source =
                             InjectionMainSearchSource(
                               search =
-                                MainSearch(
+                                InjectionMainSearch(
                                   index = "products",
                                   params = MainInjectionQueryParameters(filters = "brand:nike"),
                                 )
@@ -1015,7 +1021,7 @@ class CompositionTest {
                             source =
                               InjectedItemRecommendSource(
                                 recommend =
-                                  Recommend(
+                                  InjectedItemRecommend(
                                     indexName = "products",
                                     model = Model.entries.first { it.value == "trending-items" },
                                     threshold = 40,
@@ -1069,7 +1075,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainRecommendSource(
                                           recommend =
-                                            MainRecommend(
+                                            InjectionMainRecommend(
                                               indexName = "products",
                                               model =
                                                 Model.entries.first {
@@ -1127,7 +1133,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "products",
                                               params =
                                                 MainInjectionQueryParameters(hitsPerPage = 12),
@@ -1164,7 +1170,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "articles",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1205,7 +1211,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "videos",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1255,7 +1261,7 @@ class CompositionTest {
                           source =
                             InjectionMainExternalProviderSource(
                               externalProvider =
-                                MainExternalProvider(
+                                InjectionMainExternalProvider(
                                   index = "products",
                                   configurationID = "my-rmn-connection",
                                   configurationParams =
@@ -1346,7 +1352,10 @@ class CompositionTest {
                         Injection(
                           main =
                             InjectionMain(
-                              source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                              source =
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "foo")
+                                )
                             ),
                           injectedItems =
                             listOf(
@@ -1422,7 +1431,7 @@ class CompositionTest {
                               source =
                                 InjectionMainSearchSource(
                                   search =
-                                    MainSearch(
+                                    InjectionMainSearch(
                                       index = "my-index",
                                       params =
                                         MainInjectionQueryParameters(filters = "brand:adidas"),
@@ -1498,7 +1507,9 @@ class CompositionTest {
                           main =
                             InjectionMain(
                               source =
-                                InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "my-index")
+                                )
                             ),
                           injectedItems =
                             listOf(
@@ -1563,7 +1574,9 @@ class CompositionTest {
                           main =
                             InjectionMain(
                               source =
-                                InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "my-index")
+                                )
                             ),
                           injectedItems =
                             listOf(
@@ -1640,7 +1653,8 @@ class CompositionTest {
                                       InjectionMain(
                                         source =
                                           InjectionMainSearchSource(
-                                            search = MainSearch(index = "<YOUR_INDEX_NAME>")
+                                            search =
+                                              InjectionMainSearch(index = "<YOUR_INDEX_NAME>")
                                           )
                                       )
                                   )
@@ -1710,7 +1724,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainSearchSource(
                                             search =
-                                              MainSearch(
+                                              InjectionMainSearch(
                                                 index = "my-index",
                                                 params =
                                                   MainInjectionQueryParameters(
@@ -1798,7 +1812,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainRecommendSource(
                                             recommend =
-                                              MainRecommend(
+                                              InjectionMainRecommend(
                                                 indexName = "products",
                                                 model =
                                                   Model.entries.first {
@@ -1815,7 +1829,7 @@ class CompositionTest {
                                           source =
                                             InjectedItemRecommendSource(
                                               recommend =
-                                                Recommend(
+                                                InjectedItemRecommend(
                                                   indexName = "products",
                                                   model =
                                                     Model.entries.first {
@@ -1888,7 +1902,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainSearchSource(
                                             search =
-                                              MainSearch(
+                                              InjectionMainSearch(
                                                 index = "products",
                                                 params =
                                                   MainInjectionQueryParameters(
@@ -1904,7 +1918,7 @@ class CompositionTest {
                                           source =
                                             InjectedItemRecommendSource(
                                               recommend =
-                                                Recommend(
+                                                InjectedItemRecommend(
                                                   indexName = "products",
                                                   model =
                                                     Model.entries.first {
@@ -1979,7 +1993,7 @@ class CompositionTest {
                                                     source =
                                                       InjectionMainRecommendSource(
                                                         recommend =
-                                                          MainRecommend(
+                                                          InjectionMainRecommend(
                                                             indexName = "products",
                                                             model =
                                                               Model.entries.first {
@@ -2051,7 +2065,7 @@ class CompositionTest {
                                       InjectionMain(
                                         source =
                                           InjectionMainSearchSource(
-                                            search = MainSearch(index = "my-index")
+                                            search = InjectionMainSearch(index = "my-index")
                                           )
                                       ),
                                     injectedItems =

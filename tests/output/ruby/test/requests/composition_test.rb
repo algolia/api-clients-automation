@@ -411,7 +411,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "bar")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "bar")
                     )
                   )
                 )
@@ -452,7 +452,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "foo")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                     )
                   ),
                   injected_items: [
@@ -503,7 +503,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "foo",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                       )
@@ -589,7 +589,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(index: "foo")
+                      search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                     )
                   ),
                   injected_items: [
@@ -634,7 +634,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "foo")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
               )
             ),
             injected_items: [
@@ -675,7 +675,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "foo")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
               )
             ),
             injected_items: [
@@ -720,7 +720,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(
+                search: Algolia::Composition::InjectionMainSearch.new(
                   index: "foo",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                 )
@@ -800,7 +800,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(
+                search: Algolia::Composition::InjectionMainSearch.new(
                   index: "foo",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                 )
@@ -846,7 +846,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(index: "products")
+                search: Algolia::Composition::InjectionMainSearch.new(index: "products")
               )
             )
           )
@@ -877,7 +877,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainRecommendSource.new(
-                recommend: Algolia::Composition::MainRecommend.new(
+                recommend: Algolia::Composition::InjectionMainRecommend.new(
                   index_name: "products",
                   model: "trending-items",
                   threshold: 50
@@ -888,7 +888,7 @@ class TestCompositionClient < Test::Unit::TestCase
               Algolia::Composition::InjectionInjectedItem.new(
                 key: "injected-recommend-key",
                 source: Algolia::Composition::InjectedItemRecommendSource.new(
-                  recommend: Algolia::Composition::Recommend.new(
+                  recommend: Algolia::Composition::InjectedItemRecommend.new(
                     index_name: "products",
                     model: "trending-items",
                     threshold: 30,
@@ -929,7 +929,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainSearchSource.new(
-                search: Algolia::Composition::MainSearch.new(
+                search: Algolia::Composition::InjectionMainSearch.new(
                   index: "products",
                   params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:nike")
                 )
@@ -939,7 +939,7 @@ class TestCompositionClient < Test::Unit::TestCase
               Algolia::Composition::InjectionInjectedItem.new(
                 key: "injected-recommend-key",
                 source: Algolia::Composition::InjectedItemRecommendSource.new(
-                  recommend: Algolia::Composition::Recommend.new(
+                  recommend: Algolia::Composition::InjectedItemRecommend.new(
                     index_name: "products",
                     model: "trending-items",
                     threshold: 40
@@ -980,7 +980,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainRecommendSource.new(
-                      recommend: Algolia::Composition::MainRecommend.new(
+                      recommend: Algolia::Composition::InjectionMainRecommend.new(
                         index_name: "products",
                         model: "trending-items",
                         threshold: 50
@@ -1022,7 +1022,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "products",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
                       )
@@ -1047,7 +1047,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "articles",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(
                           hits_per_page: 5,
@@ -1075,7 +1075,7 @@ class TestCompositionClient < Test::Unit::TestCase
                 injection: Algolia::Composition::Injection.new(
                   main: Algolia::Composition::InjectionMain.new(
                     source: Algolia::Composition::InjectionMainSearchSource.new(
-                      search: Algolia::Composition::MainSearch.new(
+                      search: Algolia::Composition::InjectionMainSearch.new(
                         index: "videos",
                         params: Algolia::Composition::MainInjectionQueryParameters.new(
                           hits_per_page: 3,
@@ -1116,7 +1116,7 @@ class TestCompositionClient < Test::Unit::TestCase
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
               source: Algolia::Composition::InjectionMainExternalProviderSource.new(
-                external_provider: Algolia::Composition::MainExternalProvider.new(
+                external_provider: Algolia::Composition::InjectionMainExternalProvider.new(
                   index: "products",
                   configuration_id: "my-rmn-connection",
                   configuration_params: {campaign_id: "summer-sale", customer_id: "customer-default"},
@@ -1169,7 +1169,7 @@ class TestCompositionClient < Test::Unit::TestCase
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::InjectionMain.new(
                 source: Algolia::Composition::InjectionMainSearchSource.new(
-                  search: Algolia::Composition::MainSearch.new(index: "foo")
+                  search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                 )
               ),
               injected_items: [
@@ -1213,7 +1213,7 @@ class TestCompositionClient < Test::Unit::TestCase
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::InjectionMain.new(
                 source: Algolia::Composition::InjectionMainSearchSource.new(
-                  search: Algolia::Composition::MainSearch.new(index: "foo")
+                  search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                 )
               ),
               injected_items: [
@@ -1278,7 +1278,7 @@ class TestCompositionClient < Test::Unit::TestCase
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::InjectionMain.new(
                 source: Algolia::Composition::InjectionMainSearchSource.new(
-                  search: Algolia::Composition::MainSearch.new(
+                  search: Algolia::Composition::InjectionMainSearch.new(
                     index: "my-index",
                     params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                   )
@@ -1331,7 +1331,7 @@ class TestCompositionClient < Test::Unit::TestCase
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::InjectionMain.new(
                 source: Algolia::Composition::InjectionMainSearchSource.new(
-                  search: Algolia::Composition::MainSearch.new(index: "my-index")
+                  search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                 )
               ),
               injected_items: [
@@ -1376,7 +1376,7 @@ class TestCompositionClient < Test::Unit::TestCase
             injection: Algolia::Composition::Injection.new(
               main: Algolia::Composition::InjectionMain.new(
                 source: Algolia::Composition::InjectionMainSearchSource.new(
-                  search: Algolia::Composition::MainSearch.new(index: "my-index")
+                  search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                 )
               ),
               injected_items: [
@@ -1428,7 +1428,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainSearchSource.new(
-                        search: Algolia::Composition::MainSearch.new(index: "<YOUR_INDEX_NAME>")
+                        search: Algolia::Composition::InjectionMainSearch.new(index: "<YOUR_INDEX_NAME>")
                       )
                     )
                   )
@@ -1468,7 +1468,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainSearchSource.new(
-                        search: Algolia::Composition::MainSearch.new(index: "foo")
+                        search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                       )
                     ),
                     injected_items: [
@@ -1539,7 +1539,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainSearchSource.new(
-                        search: Algolia::Composition::MainSearch.new(
+                        search: Algolia::Composition::InjectionMainSearch.new(
                           index: "my-index",
                           params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "brand:adidas")
                         )
@@ -1596,7 +1596,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainRecommendSource.new(
-                        recommend: Algolia::Composition::MainRecommend.new(
+                        recommend: Algolia::Composition::InjectionMainRecommend.new(
                           index_name: "products",
                           model: "trending-items",
                           threshold: 50
@@ -1607,7 +1607,7 @@ class TestCompositionClient < Test::Unit::TestCase
                       Algolia::Composition::InjectionInjectedItem.new(
                         key: "injected-recommend-from-rule-key",
                         source: Algolia::Composition::InjectedItemRecommendSource.new(
-                          recommend: Algolia::Composition::Recommend.new(
+                          recommend: Algolia::Composition::InjectedItemRecommend.new(
                             index_name: "products",
                             model: "trending-items",
                             threshold: 30,
@@ -1657,7 +1657,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainSearchSource.new(
-                        search: Algolia::Composition::MainSearch.new(
+                        search: Algolia::Composition::InjectionMainSearch.new(
                           index: "products",
                           params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "category:shoes")
                         )
@@ -1667,7 +1667,7 @@ class TestCompositionClient < Test::Unit::TestCase
                       Algolia::Composition::InjectionInjectedItem.new(
                         key: "injected-recommend-from-rule-key",
                         source: Algolia::Composition::InjectedItemRecommendSource.new(
-                          recommend: Algolia::Composition::Recommend.new(
+                          recommend: Algolia::Composition::InjectedItemRecommend.new(
                             index_name: "products",
                             model: "trending-items",
                             threshold: 40
@@ -1717,7 +1717,7 @@ class TestCompositionClient < Test::Unit::TestCase
                         injection: Algolia::Composition::Injection.new(
                           main: Algolia::Composition::InjectionMain.new(
                             source: Algolia::Composition::InjectionMainRecommendSource.new(
-                              recommend: Algolia::Composition::MainRecommend.new(
+                              recommend: Algolia::Composition::InjectionMainRecommend.new(
                                 index_name: "products",
                                 model: "trending-items",
                                 threshold: 50
@@ -1770,7 +1770,7 @@ class TestCompositionClient < Test::Unit::TestCase
                   injection: Algolia::Composition::Injection.new(
                     main: Algolia::Composition::InjectionMain.new(
                       source: Algolia::Composition::InjectionMainSearchSource.new(
-                        search: Algolia::Composition::MainSearch.new(index: "my-index")
+                        search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                       )
                     ),
                     injected_items: [
