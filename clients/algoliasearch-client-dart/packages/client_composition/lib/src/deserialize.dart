@@ -86,6 +86,7 @@ import 'package:algolia_client_composition/src/model/redirect_url.dart';
 import 'package:algolia_client_composition/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_composition/src/model/rendering_content.dart';
 import 'package:algolia_client_composition/src/model/request_body.dart';
+import 'package:algolia_client_composition/src/model/result_card.dart';
 import 'package:algolia_client_composition/src/model/results_composition_info_response.dart';
 import 'package:algolia_client_composition/src/model/results_compositions_response.dart';
 import 'package:algolia_client_composition/src/model/results_injected_item_applied_rules_info_response.dart';
@@ -359,6 +360,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'RequestBody':
       return RequestBody.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ResultsCompositionInfoResponse':
       return ResultsCompositionInfoResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;

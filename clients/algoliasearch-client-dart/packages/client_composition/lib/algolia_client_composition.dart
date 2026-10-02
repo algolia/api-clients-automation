@@ -93,6 +93,7 @@ export 'src/model/redirect_url.dart';
 export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
 export 'src/model/request_body.dart';
+export 'src/model/result_card.dart';
 export 'src/model/results_composition_info_response.dart';
 export 'src/model/results_compositions_response.dart';
 export 'src/model/results_injected_item_applied_rules_info_response.dart';

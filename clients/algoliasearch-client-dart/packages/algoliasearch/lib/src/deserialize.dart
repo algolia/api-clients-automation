@@ -76,6 +76,7 @@ import 'package:algoliasearch/src/model/related_query.dart';
 import 'package:algoliasearch/src/model/remove_words_if_no_results.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/response_extensions.dart';
+import 'package:algoliasearch/src/model/result_card.dart';
 import 'package:algoliasearch/src/model/search_extensions.dart';
 import 'package:algoliasearch/src/model/search_extensions_query_categorization.dart';
 import 'package:algoliasearch/src/model/search_for_facet_values_response.dart';
@@ -330,6 +331,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ResponseExtensions':
       return ResponseExtensions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchExtensions':
       return SearchExtensions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
