@@ -1,0 +1,19 @@
+ItemsUnion:
+  oneOf:
+  - $ref: ClientSideToolConfig.yml#/ClientSideToolConfig
+  - $ref: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+  - $ref: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+  - $ref: AlgoliaGroupedResultsToolConfig.yml#/AlgoliaGroupedResultsToolConfig
+  - $ref: AlgoliaGroupedResultsCompatToolConfig.yml#/AlgoliaGroupedResultsCompatToolConfig
+  - $ref: McpServerToolConfig.yml#/McpServerToolConfig
+  - $ref: UnknownToolConfig.yml#/UnknownToolConfig
+  discriminator:
+    mapping:
+      algolia_display_results: AlgoliaGroupedResultsCompatToolConfig.yml#/AlgoliaGroupedResultsCompatToolConfig
+      algolia_grouped_results: AlgoliaGroupedResultsToolConfig.yml#/AlgoliaGroupedResultsToolConfig
+      algolia_recommend: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+      algolia_search_index: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+      client_side: ClientSideToolConfig.yml#/ClientSideToolConfig
+      mcp_tools: McpServerToolConfig.yml#/McpServerToolConfig
+      unknown: UnknownToolConfig.yml#/UnknownToolConfig
+    propertyName: type

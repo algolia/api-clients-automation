@@ -5,6 +5,6 @@ BaseProviderInput:
       title: apikey
   type: object
   required:
-    - apiKey
+  - apiKey
   title: baseProviderInput
   description: Base input that all providers must have.

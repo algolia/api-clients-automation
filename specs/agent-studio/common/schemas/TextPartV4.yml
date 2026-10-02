@@ -1,14 +1,14 @@
 TextPartV4:
   properties:
     type:
-      type: string
       const: text
-      title: type
       default: text
-    text:
+      title: type
       type: string
+    text:
       title: text
-  type: object
+      type: string
   required:
-    - text
+  - text
   title: textPartV4
+  type: object

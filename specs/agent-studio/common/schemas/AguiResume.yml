@@ -1,0 +1,20 @@
+AguiResume:
+  description: A response to an interrupt emitted by a preceding AG-UI run.
+  properties:
+    interruptId:
+      maxLength: 256
+      minLength: 1
+      title: interruptid
+      type: string
+    status:
+      $ref: StatusEnum.yml#/StatusEnum
+    payload:
+      type: object
+      additionalProperties: true
+      default: null
+      title: payload
+  required:
+  - interruptId
+  - status
+  title: aguiResume
+  type: object
