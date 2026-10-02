@@ -170,7 +170,7 @@ When writing or editing API specs, follow `website/docs/add-a-new-api/api-docume
 
 ### Never Remove Spec Fields
 
-Removing a field from a published spec is a breaking change (breaks the user/API contract), even if the API ignores it — mark it `x-deprecated: true` (or explain in `description`) instead; genuine breaking changes must be called out as `BREAKING CHANGE` entries in the affected client changelogs.
+Removing a field from a published spec is a breaking change (breaks the user/API contract), even if the API ignores it — mark it `deprecated: true` (or explain in `description`) instead; genuine breaking changes must be called out as `BREAKING CHANGE` entries in the affected client changelogs.
 
 ### Backfilling a Missed GitHub Release
 
