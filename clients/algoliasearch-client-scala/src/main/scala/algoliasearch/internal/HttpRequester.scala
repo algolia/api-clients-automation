@@ -36,8 +36,6 @@ private[algoliasearch] class HttpRequester private (
       .readTimeout(config.readTimeout.toMillis, TimeUnit.MILLISECONDS)
       .writeTimeout(config.writeTimeout.toMillis, TimeUnit.MILLISECONDS)
       .addInterceptor(new HeaderInterceptor(config.defaultHeaders))
-      // OkHttp leaves Nagle's algorithm on, which delays requests multiplexed on a shared HTTP/2
-      // connection behind unacknowledged writes, adding up to a round trip under concurrent load.
       .addNetworkInterceptor { chain =>
         chain.connection().socket().setTcpNoDelay(true)
         chain.proceed(chain.request())
