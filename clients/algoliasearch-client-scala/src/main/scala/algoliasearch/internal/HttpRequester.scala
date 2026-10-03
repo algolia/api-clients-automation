@@ -8,11 +8,12 @@ import algoliasearch.internal.util.CorrelationIdHeader
 import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
+import okio.BufferedSink
 import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
 
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, IOException}
+import java.io.{ByteArrayInputStream, IOException}
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -85,11 +86,13 @@ private[algoliasearch] class HttpRequester private (
     }
   }
 
-  /** Serializes the request body into JSON and returns a fixed-length request body. */
-  private def buildRequestBody(requestBody: AnyRef): RequestBody = {
-    val stream = new ByteArrayOutputStream()
-    jsonSerializer.serialize(stream, requestBody)
-    RequestBody.create(stream.toByteArray, jsonMediaType)
+  /** Serializes the request body into JSON format. */
+  private def buildRequestBody(requestBody: AnyRef) = new RequestBody() {
+    override def contentType: MediaType = jsonMediaType
+
+    override def writeTo(bufferedSink: BufferedSink): Unit = {
+      jsonSerializer.serialize(bufferedSink.outputStream, requestBody)
+    }
   }
 
   /** Constructs the headers for the HTTP request. */
