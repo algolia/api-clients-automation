@@ -37,8 +37,6 @@ public final class HttpRequester implements Requester {
       .connectTimeout(config.getConnectTimeout() == Duration.ZERO ? builder.connectTimeout : config.getConnectTimeout())
       .readTimeout(config.getReadTimeout() == Duration.ZERO ? builder.readTimeout : config.getReadTimeout())
       .writeTimeout(config.getWriteTimeout() == Duration.ZERO ? builder.writeTimeout : config.getWriteTimeout())
-      // OkHttp leaves Nagle's algorithm on, which delays requests multiplexed on a shared HTTP/2
-      // connection behind unacknowledged writes, adding up to a round trip under concurrent load.
       .addNetworkInterceptor(chain -> {
         chain.connection().socket().setTcpNoDelay(true);
         return chain.proceed(chain.request());
