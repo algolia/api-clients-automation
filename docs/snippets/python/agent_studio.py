@@ -59,6 +59,75 @@ def snippet_for_bulk_delete_allowed_domains():
     # SEPARATOR<
 
 
+def snippet_for_compact_context():
+    """
+    Snippet for the compactContext method.
+
+    compactContext with required parameters
+    """
+    # >SEPARATOR compactContext compactContext with required parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.compact_context(
+        context_compact_request={
+            "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+            "model": "gpt-4o-mini",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_compact_context1():
+    """
+    Snippet for the compactContext method.
+
+    compactContext with all parameters
+    """
+    # >SEPARATOR compactContext compactContext with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.compact_context(
+        context_compact_request={
+            "providerID": "c2905529-b933-4b69-87ec-75f9829d5f59",
+            "model": "gpt-4o-mini",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                },
+                {
+                    "role": "assistant",
+                    "content": "I am well.",
+                },
+            ],
+            "keepLastMessages": 2,
+            "instructions": "keep every product reference",
+            "targetTokensEstimate": 128,
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_create_agent():
     """
     Snippet for the createAgent method.
@@ -111,7 +180,12 @@ def snippet_for_create_agent1():
             },
             "tools": [
                 {
-                    "type": "start",
+                    "type": "client_side",
+                    "name": "start",
+                    "description": "Start a conversation",
+                    "inputSchema": {
+                        "type": "object",
+                    },
                 },
             ],
         },
@@ -273,7 +347,12 @@ def snippet_for_create_agent_completion3():
                 },
                 "tools": [
                     {
-                        "type": "start",
+                        "type": "client_side",
+                        "name": "start",
+                        "description": "Start a conversation",
+                        "inputSchema": {
+                            "type": "object",
+                        },
                     },
                 ],
             },
@@ -307,6 +386,63 @@ def snippet_for_create_agent_completion4():
                 },
             ],
         },
+    ):
+        # >LOG
+        print(event.data)
+    # SEPARATOR<
+
+
+def snippet_for_create_agent_task():
+    """
+    Snippet for the createAgentTask method.
+
+    createAgentTask with required parameters
+    """
+    # >SEPARATOR createAgentTask createAgentTask with required parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Use the streaming variant to iterate over events
+    for event in client.create_agent_task_stream(
+        agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+        task_request={
+            "input": {
+                "pageType": "pdp",
+                "title": "acmePhone128Gb",
+            },
+        },
+    ):
+        # >LOG
+        print(event.data)
+    # SEPARATOR<
+
+
+def snippet_for_create_agent_task1():
+    """
+    Snippet for the createAgentTask method.
+
+    createAgentTask with all parameters
+    """
+    # >SEPARATOR createAgentTask createAgentTask with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Use the streaming variant to iterate over events
+    for event in client.create_agent_task_stream(
+        agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+        task_request={
+            "task": "algolia_on_page_suggestions",
+            "kind": "prompt_suggestions",
+            "input": {
+                "pageType": "pdp",
+                "title": "acmePhone128Gb",
+            },
+        },
+        stream=False,
+        cache=False,
+        analytics=False,
     ):
         # >LOG
         print(event.data)
@@ -1605,7 +1741,11 @@ def snippet_for_list_agent_conversations1():
         feedback_vote=1,
         page=2,
         limit=10,
-        x_algolia_secure_user_token=None,
+        include_impact_analytics=True,
+        clicked=True,
+        converted=False,
+        has_algolia_search=True,
+        x_algolia_secure_user_token="secure-user-token",
     )
 
     # >LOG
@@ -1962,6 +2102,71 @@ def snippet_for_set_client_api_key():
     # SEPARATOR<
 
 
+def snippet_for_trim_context():
+    """
+    Snippet for the trimContext method.
+
+    trimContext with required parameters
+    """
+    # >SEPARATOR trimContext trimContext with required parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.trim_context(
+        context_trim_request={
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_trim_context1():
+    """
+    Snippet for the trimContext method.
+
+    trimContext with all parameters
+    """
+    # >SEPARATOR trimContext trimContext with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.trim_context(
+        context_trim_request={
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                },
+                {
+                    "role": "assistant",
+                    "content": "I am well.",
+                },
+            ],
+            "keepLastMessages": 1,
+            "maxTokensEstimate": 256,
+            "dropToolParts": True,
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_unpublish_agent():
     """
     Snippet for the unpublishAgent method.
@@ -2034,7 +2239,12 @@ def snippet_for_update_agent1():
             },
             "tools": [
                 {
-                    "type": "start",
+                    "type": "client_side",
+                    "name": "start",
+                    "description": "Start a conversation",
+                    "inputSchema": {
+                        "type": "object",
+                    },
                 },
             ],
         },
@@ -2061,6 +2271,62 @@ def snippet_for_update_configuration():
     response = client.update_configuration(
         application_config_patch={
             "maxRetentionDays": 30,
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_update_feedback():
+    """
+    Snippet for the updateFeedback method.
+
+    updateFeedback with required parameters
+    """
+    # >SEPARATOR updateFeedback updateFeedback with required parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.update_feedback(
+        feedback_update_request={
+            "messageId": "msg-abc123",
+            "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_update_feedback1():
+    """
+    Snippet for the updateFeedback method.
+
+    updateFeedback with all parameters
+    """
+    # >SEPARATOR updateFeedback updateFeedback with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.update_feedback(
+        feedback_update_request={
+            "messageId": "msg-abc123",
+            "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            "vote": 0,
+            "tags": [
+                "unhelpful",
+                "off-topic",
+            ],
+            "notes": "The response did not address my question.",
         },
     )
 

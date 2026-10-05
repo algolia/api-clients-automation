@@ -5,5 +5,5 @@ ApplicationConfigResponse:
       title: maxretentiondays
   type: object
   required:
-  - maxRetentionDays
+    - maxRetentionDays
   title: applicationConfigResponse

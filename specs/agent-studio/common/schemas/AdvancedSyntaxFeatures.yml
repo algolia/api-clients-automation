@@ -1,7 +1,7 @@
 AdvancedSyntaxFeatures:
   description: AdvancedSyntaxFeatures.
   enum:
-  - exactPhrase
-  - excludeWords
+    - exactPhrase
+    - excludeWords
   title: advancedSyntaxFeatures
   type: string

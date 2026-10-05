@@ -15,6 +15,10 @@ final class ToolResultPart {
     required this.toolName,
     required this.output,
     this.providerOptions,
+    this.mcpConfigId,
+    this.mcpConfigName,
+    this.isTerminal,
+    this.outputMetadata,
   });
 
   @JsonKey(name: r'type')
@@ -32,6 +36,18 @@ final class ToolResultPart {
   @JsonKey(name: r'providerOptions')
   final Map<String, Object>? providerOptions;
 
+  @JsonKey(name: r'mcpConfigId')
+  final String? mcpConfigId;
+
+  @JsonKey(name: r'mcpConfigName')
+  final String? mcpConfigName;
+
+  @JsonKey(name: r'isTerminal')
+  final bool? isTerminal;
+
+  @JsonKey(name: r'outputMetadata')
+  final Map<String, Object>? outputMetadata;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -40,7 +56,11 @@ final class ToolResultPart {
           other.toolCallId == toolCallId &&
           other.toolName == toolName &&
           other.output == output &&
-          other.providerOptions == providerOptions;
+          other.providerOptions == providerOptions &&
+          other.mcpConfigId == mcpConfigId &&
+          other.mcpConfigName == mcpConfigName &&
+          other.isTerminal == isTerminal &&
+          other.outputMetadata == outputMetadata;
 
   @override
   int get hashCode =>
@@ -48,7 +68,11 @@ final class ToolResultPart {
       toolCallId.hashCode +
       toolName.hashCode +
       output.hashCode +
-      (providerOptions == null ? 0 : providerOptions.hashCode);
+      (providerOptions == null ? 0 : providerOptions.hashCode) +
+      (mcpConfigId == null ? 0 : mcpConfigId.hashCode) +
+      (mcpConfigName == null ? 0 : mcpConfigName.hashCode) +
+      (isTerminal == null ? 0 : isTerminal.hashCode) +
+      (outputMetadata == null ? 0 : outputMetadata.hashCode);
 
   factory ToolResultPart.fromJson(Map<String, dynamic> json) =>
       _$ToolResultPartFromJson(json);

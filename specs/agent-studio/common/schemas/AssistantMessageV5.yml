@@ -2,8 +2,8 @@ AssistantMessageV5:
   properties:
     id:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: id
     role:
@@ -13,10 +13,10 @@ AssistantMessageV5:
       type: string
     parts:
       items:
-        $ref: AssistantPartV5.yml#/AssistantPartV5
+        $ref: 'AssistantPartV5.yml#/AssistantPartV5'
       title: parts
       type: array
   title: assistantMessageV5
   type: object
   required:
-  - role
+    - role

@@ -12,6 +12,7 @@ final class AgentCompletionAlgoliaParams {
   const AgentCompletionAlgoliaParams({
     this.mcpServers,
     this.searchParameters,
+    this.indices,
   });
 
   @JsonKey(name: r'mcpServers')
@@ -20,17 +21,23 @@ final class AgentCompletionAlgoliaParams {
   @JsonKey(name: r'searchParameters')
   final Map<String, SearchParametersOverrides>? searchParameters;
 
+  /// Per-request override for the Algolia Search tool's indices, honored only when the tool is configured with `mode=\"dynamic\"`. A list of index names; the API looks up each name in the agent's static `tool.indices` and reuses that entry, including its description and access-control fields. A name the agent configuration does not list is rejected with HTTP 422 (`index_not_listed_on_tool`) unless the tool sets `allowUnlistedIndices`, in which case the API synthesizes a minimal entry carrying the index name only. Capped at 10 entries. Sending this field against an agent whose tool is in `mode=\"static\"` (the default) is rejected with HTTP 422 — change the tool's `mode` in the agent configuration first. Defaults to `null`, which preserves the existing static behavior.
+  @JsonKey(name: r'indices')
+  final List<String>? indices;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AgentCompletionAlgoliaParams &&
           other.mcpServers == mcpServers &&
-          other.searchParameters == searchParameters;
+          other.searchParameters == searchParameters &&
+          other.indices == indices;
 
   @override
   int get hashCode =>
       mcpServers.hashCode +
-      (searchParameters == null ? 0 : searchParameters.hashCode);
+      (searchParameters == null ? 0 : searchParameters.hashCode) +
+      indices.hashCode;
 
   factory AgentCompletionAlgoliaParams.fromJson(Map<String, dynamic> json) =>
       _$AgentCompletionAlgoliaParamsFromJson(json);

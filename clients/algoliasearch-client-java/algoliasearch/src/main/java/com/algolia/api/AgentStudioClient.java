@@ -360,6 +360,214 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
+   * Summarize the older part of a conversation into a single user message via the caller's LLM.
+   * Everything except the trailing `keepLastMessages` messages is summarized; the summary is
+   * returned as a user-role message followed by the kept tail verbatim. Your provider runs the
+   * summary, so the provider adds the cost to your account. A conversation too large for the
+   * summarizer's context window is split into chunks that each fit, summarized concurrently, then
+   * merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ContextResponse compactContext(@Nonnull ContextCompactRequest contextCompactRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(compactContextAsync(contextCompactRequest, requestOptions));
+  }
+
+  /**
+   * Summarize the older part of a conversation into a single user message via the caller's LLM.
+   * Everything except the trailing `keepLastMessages` messages is summarized; the summary is
+   * returned as a user-role message followed by the kept tail verbatim. Your provider runs the
+   * summary, so the provider adds the cost to your account. A conversation too large for the
+   * summarizer's context window is split into chunks that each fit, summarized concurrently, then
+   * merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response compactContextWithHTTPInfo(@Nonnull ContextCompactRequest contextCompactRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(compactContextWithHTTPInfoAsync(contextCompactRequest, requestOptions));
+  }
+
+  /**
+   * Summarize the older part of a conversation into a single user message via the caller's LLM.
+   * Everything except the trailing `keepLastMessages` messages is summarized; the summary is
+   * returned as a user-role message followed by the kept tail verbatim. Your provider runs the
+   * summary, so the provider adds the cost to your account. A conversation too large for the
+   * summarizer's context window is split into chunks that each fit, summarized concurrently, then
+   * merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ContextResponse compactContext(@Nonnull ContextCompactRequest contextCompactRequest) throws AlgoliaRuntimeException {
+    return this.compactContext(contextCompactRequest, null);
+  }
+
+  /**
+   * Summarize the older part of a conversation into a single user message via the caller's LLM.
+   * Everything except the trailing `keepLastMessages` messages is summarized; the summary is
+   * returned as a user-role message followed by the kept tail verbatim. Your provider runs the
+   * summary, so the provider adds the cost to your account. A conversation too large for the
+   * summarizer's context window is split into chunks that each fit, summarized concurrently, then
+   * merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response compactContextWithHTTPInfo(@Nonnull ContextCompactRequest contextCompactRequest) throws AlgoliaRuntimeException {
+    return this.compactContextWithHTTPInfo(contextCompactRequest, null);
+  }
+
+  /**
+   * (asynchronously) Summarize the older part of a conversation into a single user message via the
+   * caller's LLM. Everything except the trailing `keepLastMessages` messages is summarized; the
+   * summary is returned as a user-role message followed by the kept tail verbatim. Your provider
+   * runs the summary, so the provider adds the cost to your account. A conversation too large for
+   * the summarizer's context window is split into chunks that each fit, summarized concurrently,
+   * then merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ContextResponse> compactContextAsync(
+    @Nonnull ContextCompactRequest contextCompactRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(contextCompactRequest, "Parameter `contextCompactRequest` is required when calling `compactContext`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/unstable/context/compact")
+      .setMethod("POST")
+      .setBody(contextCompactRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ContextResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Summarize the older part of a conversation into a single user message via the
+   * caller's LLM. Everything except the trailing `keepLastMessages` messages is summarized; the
+   * summary is returned as a user-role message followed by the kept tail verbatim. Your provider
+   * runs the summary, so the provider adds the cost to your account. A conversation too large for
+   * the summarizer's context window is split into chunks that each fit, summarized concurrently,
+   * then merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> compactContextWithHTTPInfoAsync(
+    @Nonnull ContextCompactRequest contextCompactRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(contextCompactRequest, "Parameter `contextCompactRequest` is required when calling `compactContext`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/unstable/context/compact")
+      .setMethod("POST")
+      .setBody(contextCompactRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Summarize the older part of a conversation into a single user message via the
+   * caller's LLM. Everything except the trailing `keepLastMessages` messages is summarized; the
+   * summary is returned as a user-role message followed by the kept tail verbatim. Your provider
+   * runs the summary, so the provider adds the cost to your account. A conversation too large for
+   * the summarizer's context window is split into chunks that each fit, summarized concurrently,
+   * then merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ContextResponse> compactContextAsync(@Nonnull ContextCompactRequest contextCompactRequest)
+    throws AlgoliaRuntimeException {
+    return this.compactContextAsync(contextCompactRequest, null);
+  }
+
+  /**
+   * (asynchronously) Summarize the older part of a conversation into a single user message via the
+   * caller's LLM. Everything except the trailing `keepLastMessages` messages is summarized; the
+   * summary is returned as a user-role message followed by the kept tail verbatim. Your provider
+   * runs the summary, so the provider adds the cost to your account. A conversation too large for
+   * the summarizer's context window is split into chunks that each fit, summarized concurrently,
+   * then merged in a reduce pass - so payload size alone does not fail the request. When the
+   * conversation still cannot be summarized (it needs more chunks than the server allows, or the
+   * chunk summaries will not converge), the response is a `400`, not a `500`. Two optional controls
+   * shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so
+   * it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a
+   * desired summary size, translated into word-count guidance. The `compaction` block reports what
+   * happened: `compacted` is `false` when the payload passed through untouched (nothing older than
+   * the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+   *
+   * @param contextCompactRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> compactContextWithHTTPInfoAsync(@Nonnull ContextCompactRequest contextCompactRequest)
+    throws AlgoliaRuntimeException {
+    return this.compactContextWithHTTPInfoAsync(contextCompactRequest, null);
+  }
+
+  /**
    * Create a new agent.
    *
    * @param agentConfigCreate (required)
@@ -612,7 +820,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -631,7 +839,7 @@ public class AgentStudioClient extends ApiClient {
   public Map<String, Object> createAgentCompletion(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -659,7 +867,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -678,7 +886,7 @@ public class AgentStudioClient extends ApiClient {
   public Response createAgentCompletionWithHTTPInfo(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -706,7 +914,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -723,7 +931,7 @@ public class AgentStudioClient extends ApiClient {
   public Map<String, Object> createAgentCompletion(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -748,7 +956,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -765,7 +973,7 @@ public class AgentStudioClient extends ApiClient {
   public Response createAgentCompletionWithHTTPInfo(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -790,7 +998,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -802,7 +1010,7 @@ public class AgentStudioClient extends ApiClient {
   public Map<String, Object> createAgentCompletion(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, requestOptions);
@@ -813,7 +1021,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -825,7 +1033,7 @@ public class AgentStudioClient extends ApiClient {
   public Response createAgentCompletionWithHTTPInfo(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfo(
@@ -846,7 +1054,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -856,7 +1064,7 @@ public class AgentStudioClient extends ApiClient {
   public Map<String, Object> createAgentCompletion(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
   }
@@ -866,7 +1074,7 @@ public class AgentStudioClient extends ApiClient {
    * Normal completion request: User message -> Agent response 2. Tool approval response: User
    * approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools with
    * requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return
-   * approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+   * approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
    *
    * @param agentId The agentId. (required)
    * @param compatibilityMode Compatibility mode for the completion API. (required)
@@ -876,7 +1084,7 @@ public class AgentStudioClient extends ApiClient {
   public Response createAgentCompletionWithHTTPInfo(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfo(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
   }
@@ -886,7 +1094,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -906,7 +1114,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -943,7 +1151,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -963,7 +1171,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -1000,7 +1208,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1018,7 +1226,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -1043,7 +1251,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1061,7 +1269,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     Boolean stream,
     Boolean cache,
     Boolean memory,
@@ -1086,7 +1294,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1099,7 +1307,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionAsync(
@@ -1120,7 +1328,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1133,7 +1341,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest,
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfoAsync(
@@ -1154,7 +1362,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1165,7 +1373,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionAsync(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
   }
@@ -1175,7 +1383,7 @@ public class AgentStudioClient extends ApiClient {
    * of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval
    * response: User approval -> Execute tool -> Agent response Tool Approval Flow (for MCP tools
    * with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call ->
-   * Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with
+   * Return approval request - Request 2: User approves -> Execute tool -> Agent continues with
    * result.
    *
    * @param agentId The agentId. (required)
@@ -1186,7 +1394,7 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
     @Nonnull String agentId,
     @Nonnull CompatibilityMode compatibilityMode,
-    @Nonnull AgentCompletionRequest agentCompletionRequest
+    @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfoAsync(
       agentId,
@@ -1199,6 +1407,363 @@ public class AgentStudioClient extends ApiClient {
       null,
       null
     );
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskResponse createAgentTask(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createAgentTaskAsync(agentId, taskRequest, stream, cache, analytics, requestOptions));
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAgentTaskWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createAgentTaskWithHTTPInfoAsync(agentId, taskRequest, stream, cache, analytics, requestOptions));
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskResponse createAgentTask(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTask(agentId, taskRequest, stream, cache, analytics, null);
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAgentTaskWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfo(agentId, taskRequest, stream, cache, analytics, null);
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskResponse createAgentTask(@Nonnull String agentId, @Nonnull TaskRequest taskRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.createAgentTask(agentId, taskRequest, null, null, null, requestOptions);
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAgentTaskWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfo(agentId, taskRequest, null, null, null, requestOptions);
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public TaskResponse createAgentTask(@Nonnull String agentId, @Nonnull TaskRequest taskRequest) throws AlgoliaRuntimeException {
+    return this.createAgentTask(agentId, taskRequest, null, null, null, null);
+  }
+
+  /**
+   * Run a configured task and return the generated object as ``{ output }``. With ``?stream=true``,
+   * returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON
+   * is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response createAgentTaskWithHTTPInfo(@Nonnull String agentId, @Nonnull TaskRequest taskRequest) throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfo(agentId, taskRequest, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskResponse> createAgentTaskAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentTask`.");
+    Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `createAgentTask`.");
+
+    Parameters.requireNonNull(taskRequest, "Parameter `taskRequest` is required when calling `createAgentTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/agents/{agentId}/tasks", agentId)
+      .setMethod("POST")
+      .setBody(taskRequest)
+      .addQueryParameter("stream", stream)
+      .addQueryParameter("cache", cache)
+      .addQueryParameter("analytics", analytics)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<TaskResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentTask`.");
+    Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `createAgentTask`.");
+
+    Parameters.requireNonNull(taskRequest, "Parameter `taskRequest` is required when calling `createAgentTask`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/agents/{agentId}/tasks", agentId)
+      .setMethod("POST")
+      .setBody(taskRequest)
+      .addQueryParameter("stream", stream)
+      .addQueryParameter("cache", cache)
+      .addQueryParameter("analytics", analytics)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskResponse> createAgentTaskAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskAsync(agentId, taskRequest, stream, cache, analytics, null);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param stream Whether to stream the response or not. (optional, default to false)
+   * @param cache Use cached responses if available. (optional, default to true)
+   * @param analytics Set to false to skip endpoint-specific analytics for this task call (default:
+   *     true). Disables the task analytics event; operational metrics and traces are always
+   *     emitted. (optional, default to true)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    Boolean stream,
+    Boolean cache,
+    Boolean analytics
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfoAsync(agentId, taskRequest, stream, cache, analytics, null);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskResponse> createAgentTaskAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskAsync(agentId, taskRequest, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfoAsync(agentId, taskRequest, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<TaskResponse> createAgentTaskAsync(@Nonnull String agentId, @Nonnull TaskRequest taskRequest)
+    throws AlgoliaRuntimeException {
+    return this.createAgentTaskAsync(agentId, taskRequest, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Run a configured task and return the generated object as ``{ output }``. With
+   * ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``.
+   * The streamed JSON is the task output itself.
+   *
+   * @param agentId The agentId. (required)
+   * @param taskRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(@Nonnull String agentId, @Nonnull TaskRequest taskRequest)
+    throws AlgoliaRuntimeException {
+    return this.createAgentTaskWithHTTPInfoAsync(agentId, taskRequest, null, null, null, null);
   }
 
   /**
@@ -2530,7 +3095,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2546,7 +3111,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2565,7 +3130,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2577,7 +3142,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2590,7 +3155,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2602,7 +3167,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2615,7 +3180,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2625,7 +3190,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Deletes the conversations matching the given filers.
+   * Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2635,7 +3200,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2663,7 +3228,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2691,7 +3256,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2704,7 +3269,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
@@ -2717,7 +3282,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2730,7 +3295,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2745,7 +3310,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2755,7 +3320,7 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Deletes the conversations matching the given filers.
+   * (asynchronously) Deletes the conversations matching the given filters.
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3901,6 +4466,10 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3910,32 +4479,21 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
-    String xAlgoliaSecureUserToken,
-    @Nullable RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getConversationAsync(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, requestOptions));
-  }
-
-  /**
-   * Retrieves the conversation and its messages for the given ID.
-   *
-   * @param conversationId The conversationId. (required)
-   * @param agentId The agentId. (required)
-   * @param includeFeedback Include feedback for the conversation. (optional, default to false)
-   * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Response getConversationWithHTTPInfo(
-    @Nonnull String conversationId,
-    @Nonnull String agentId,
-    Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
-      getConversationWithHTTPInfoAsync(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, requestOptions)
+      getConversationAsync(
+        conversationId,
+        agentId,
+        includeFeedback,
+        includeMessageEvents,
+        includeImpactAnalytics,
+        xAlgoliaSecureUserToken,
+        requestOptions
+      )
     );
   }
 
@@ -3945,16 +4503,35 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ConversationFullResponse getConversation(
+  public Response getConversationWithHTTPInfo(
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
-    String xAlgoliaSecureUserToken
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
+    String xAlgoliaSecureUserToken,
+    @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.getConversation(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, null);
+    return LaunderThrowable.await(
+      getConversationWithHTTPInfoAsync(
+        conversationId,
+        agentId,
+        includeFeedback,
+        includeMessageEvents,
+        includeImpactAnalytics,
+        xAlgoliaSecureUserToken,
+        requestOptions
+      )
+    );
   }
 
   /**
@@ -3963,6 +4540,42 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
+   * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ConversationFullResponse getConversation(
+    @Nonnull String conversationId,
+    @Nonnull String agentId,
+    Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
+    String xAlgoliaSecureUserToken
+  ) throws AlgoliaRuntimeException {
+    return this.getConversation(
+      conversationId,
+      agentId,
+      includeFeedback,
+      includeMessageEvents,
+      includeImpactAnalytics,
+      xAlgoliaSecureUserToken,
+      null
+    );
+  }
+
+  /**
+   * Retrieves the conversation and its messages for the given ID.
+   *
+   * @param conversationId The conversationId. (required)
+   * @param agentId The agentId. (required)
+   * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3970,9 +4583,19 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfo(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, null);
+    return this.getConversationWithHTTPInfo(
+      conversationId,
+      agentId,
+      includeFeedback,
+      includeMessageEvents,
+      includeImpactAnalytics,
+      xAlgoliaSecureUserToken,
+      null
+    );
   }
 
   /**
@@ -3989,7 +4612,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.getConversation(conversationId, agentId, null, null, requestOptions);
+    return this.getConversation(conversationId, agentId, null, null, null, null, requestOptions);
   }
 
   /**
@@ -4006,7 +4629,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfo(conversationId, agentId, null, null, requestOptions);
+    return this.getConversationWithHTTPInfo(conversationId, agentId, null, null, null, null, requestOptions);
   }
 
   /**
@@ -4017,7 +4640,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ConversationFullResponse getConversation(@Nonnull String conversationId, @Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.getConversation(conversationId, agentId, null, null, null);
+    return this.getConversation(conversationId, agentId, null, null, null, null, null);
   }
 
   /**
@@ -4028,7 +4651,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response getConversationWithHTTPInfo(@Nonnull String conversationId, @Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfo(conversationId, agentId, null, null, null);
+    return this.getConversationWithHTTPInfo(conversationId, agentId, null, null, null, null, null);
   }
 
   /**
@@ -4037,6 +4660,10 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4046,6 +4673,8 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -4060,6 +4689,8 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addHeader("X-Algolia-Secure-User-Token", xAlgoliaSecureUserToken)
       .addQueryParameter("includeFeedback", includeFeedback)
+      .addQueryParameter("includeMessageEvents", includeMessageEvents)
+      .addQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<ConversationFullResponse>() {});
   }
@@ -4070,6 +4701,10 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4079,6 +4714,8 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -4093,6 +4730,8 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addHeader("X-Algolia-Secure-User-Token", xAlgoliaSecureUserToken)
       .addQueryParameter("includeFeedback", includeFeedback)
+      .addQueryParameter("includeMessageEvents", includeMessageEvents)
+      .addQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -4103,6 +4742,10 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4110,9 +4753,19 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
-    return this.getConversationAsync(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, null);
+    return this.getConversationAsync(
+      conversationId,
+      agentId,
+      includeFeedback,
+      includeMessageEvents,
+      includeImpactAnalytics,
+      xAlgoliaSecureUserToken,
+      null
+    );
   }
 
   /**
@@ -4121,6 +4774,10 @@ public class AgentStudioClient extends ApiClient {
    * @param conversationId The conversationId. (required)
    * @param agentId The agentId. (required)
    * @param includeFeedback Include feedback for the conversation. (optional, default to false)
+   * @param includeMessageEvents Include Insights events attributed to each assistant message.
+   *     (optional, default to false)
+   * @param includeImpactAnalytics Include outcome signals (hasView, hasClick, hasConversion) for
+   *     the conversation. (optional, default to false)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4128,9 +4785,19 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String conversationId,
     @Nonnull String agentId,
     Boolean includeFeedback,
+    Boolean includeMessageEvents,
+    Boolean includeImpactAnalytics,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfoAsync(conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken, null);
+    return this.getConversationWithHTTPInfoAsync(
+      conversationId,
+      agentId,
+      includeFeedback,
+      includeMessageEvents,
+      includeImpactAnalytics,
+      xAlgoliaSecureUserToken,
+      null
+    );
   }
 
   /**
@@ -4147,7 +4814,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.getConversationAsync(conversationId, agentId, null, null, requestOptions);
+    return this.getConversationAsync(conversationId, agentId, null, null, null, null, requestOptions);
   }
 
   /**
@@ -4164,7 +4831,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfoAsync(conversationId, agentId, null, null, requestOptions);
+    return this.getConversationWithHTTPInfoAsync(conversationId, agentId, null, null, null, null, requestOptions);
   }
 
   /**
@@ -4176,7 +4843,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<ConversationFullResponse> getConversationAsync(@Nonnull String conversationId, @Nonnull String agentId)
     throws AlgoliaRuntimeException {
-    return this.getConversationAsync(conversationId, agentId, null, null, null);
+    return this.getConversationAsync(conversationId, agentId, null, null, null, null, null);
   }
 
   /**
@@ -4188,7 +4855,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<Response> getConversationWithHTTPInfoAsync(@Nonnull String conversationId, @Nonnull String agentId)
     throws AlgoliaRuntimeException {
-    return this.getConversationWithHTTPInfoAsync(conversationId, agentId, null, null, null);
+    return this.getConversationWithHTTPInfoAsync(conversationId, agentId, null, null, null, null, null);
   }
 
   /**
@@ -4497,7 +5164,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4512,7 +5180,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4526,7 +5195,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4537,7 +5207,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4548,7 +5219,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4560,7 +5232,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4573,7 +5246,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4583,7 +5257,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+   * Invalidate cached completions and task outputs for this agent. Filter with `before`
+   * (exclusive).
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4593,8 +5268,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4616,8 +5291,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4642,8 +5317,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4654,8 +5329,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
@@ -4667,8 +5342,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4681,8 +5356,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4695,8 +5370,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4706,8 +5381,8 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Invalidate cached completions for this agent. Filter with `before`
-   * (exclusive).
+   * (asynchronously) Invalidate cached completions and task outputs for this agent. Filter with
+   * `before` (exclusive).
    *
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4836,6 +5511,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4849,6 +5529,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -4861,6 +5545,10 @@ public class AgentStudioClient extends ApiClient {
         feedbackVote,
         page,
         limit,
+        includeImpactAnalytics,
+        clicked,
+        converted,
+        hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
         requestOptions
       )
@@ -4877,6 +5565,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4890,6 +5583,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -4902,6 +5599,10 @@ public class AgentStudioClient extends ApiClient {
         feedbackVote,
         page,
         limit,
+        includeImpactAnalytics,
+        clicked,
+        converted,
+        hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
         requestOptions
       )
@@ -4918,6 +5619,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4929,6 +5635,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversations(
@@ -4939,6 +5649,10 @@ public class AgentStudioClient extends ApiClient {
       feedbackVote,
       page,
       limit,
+      includeImpactAnalytics,
+      clicked,
+      converted,
+      hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
       null
     );
@@ -4954,6 +5668,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4965,6 +5684,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfo(
@@ -4975,6 +5698,10 @@ public class AgentStudioClient extends ApiClient {
       feedbackVote,
       page,
       limit,
+      includeImpactAnalytics,
+      clicked,
+      converted,
+      hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
       null
     );
@@ -4990,7 +5717,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -5003,7 +5730,21 @@ public class AgentStudioClient extends ApiClient {
    */
   public Response listAgentConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversationsWithHTTPInfo(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -5013,7 +5754,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null);
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5023,7 +5764,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listAgentConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5036,6 +5777,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5049,6 +5795,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -5065,6 +5815,10 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("feedbackVote", feedbackVote)
       .addQueryParameter("page", page)
       .addQueryParameter("limit", limit)
+      .addQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
+      .addQueryParameter("clicked", clicked)
+      .addQueryParameter("converted", converted)
+      .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<PaginatedConversationsResponse>() {});
   }
@@ -5079,6 +5833,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5092,6 +5851,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
@@ -5108,6 +5871,10 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("feedbackVote", feedbackVote)
       .addQueryParameter("page", page)
       .addQueryParameter("limit", limit)
+      .addQueryParameter("includeImpactAnalytics", includeImpactAnalytics)
+      .addQueryParameter("clicked", clicked)
+      .addQueryParameter("converted", converted)
+      .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -5122,6 +5889,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5133,6 +5905,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsAsync(
@@ -5143,6 +5919,10 @@ public class AgentStudioClient extends ApiClient {
       feedbackVote,
       page,
       limit,
+      includeImpactAnalytics,
+      clicked,
+      converted,
+      hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
       null
     );
@@ -5158,6 +5938,11 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackVote Filter by feedback value (requires includeFeedback=true). (optional)
    * @param page Page number. (optional, default to 1)
    * @param limit Items per page. (optional, default to 20)
+   * @param includeImpactAnalytics Include impact analytics (hasView, hasClick, hasConversion) per
+   *     conversation. (optional)
+   * @param clicked Filter by conversations with at least one item click. (optional)
+   * @param converted Filter by conversations with at least one conversion. (optional)
+   * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5169,6 +5954,10 @@ public class AgentStudioClient extends ApiClient {
     Integer feedbackVote,
     Integer page,
     Integer limit,
+    Boolean includeImpactAnalytics,
+    Boolean clicked,
+    Boolean converted,
+    Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfoAsync(
@@ -5179,6 +5968,10 @@ public class AgentStudioClient extends ApiClient {
       feedbackVote,
       page,
       limit,
+      includeImpactAnalytics,
+      clicked,
+      converted,
+      hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
       null
     );
@@ -5196,7 +5989,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -5211,7 +6004,21 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversationsWithHTTPInfoAsync(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -5222,7 +6029,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(@Nonnull String agentId)
     throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5232,7 +6039,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -6137,6 +6944,154 @@ public class AgentStudioClient extends ApiClient {
   }
 
   /**
+   * Deterministically trim a conversation payload (no LLM calls). Keep the last N messages and/or
+   * fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are
+   * stripped before the budget is applied). Returns the trimmed messages plus before/after stats.
+   * With no constraints set, the messages are returned unchanged and only the stats are computed -
+   * a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ContextResponse trimContext(@Nonnull ContextTrimRequest contextTrimRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(trimContextAsync(contextTrimRequest, requestOptions));
+  }
+
+  /**
+   * Deterministically trim a conversation payload (no LLM calls). Keep the last N messages and/or
+   * fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are
+   * stripped before the budget is applied). Returns the trimmed messages plus before/after stats.
+   * With no constraints set, the messages are returned unchanged and only the stats are computed -
+   * a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response trimContextWithHTTPInfo(@Nonnull ContextTrimRequest contextTrimRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(trimContextWithHTTPInfoAsync(contextTrimRequest, requestOptions));
+  }
+
+  /**
+   * Deterministically trim a conversation payload (no LLM calls). Keep the last N messages and/or
+   * fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are
+   * stripped before the budget is applied). Returns the trimmed messages plus before/after stats.
+   * With no constraints set, the messages are returned unchanged and only the stats are computed -
+   * a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ContextResponse trimContext(@Nonnull ContextTrimRequest contextTrimRequest) throws AlgoliaRuntimeException {
+    return this.trimContext(contextTrimRequest, null);
+  }
+
+  /**
+   * Deterministically trim a conversation payload (no LLM calls). Keep the last N messages and/or
+   * fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are
+   * stripped before the budget is applied). Returns the trimmed messages plus before/after stats.
+   * With no constraints set, the messages are returned unchanged and only the stats are computed -
+   * a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response trimContextWithHTTPInfo(@Nonnull ContextTrimRequest contextTrimRequest) throws AlgoliaRuntimeException {
+    return this.trimContextWithHTTPInfo(contextTrimRequest, null);
+  }
+
+  /**
+   * (asynchronously) Deterministically trim a conversation payload (no LLM calls). Keep the last N
+   * messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept
+   * (tool parts are stripped before the budget is applied). Returns the trimmed messages plus
+   * before/after stats. With no constraints set, the messages are returned unchanged and only the
+   * stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no
+   * mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ContextResponse> trimContextAsync(
+    @Nonnull ContextTrimRequest contextTrimRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(contextTrimRequest, "Parameter `contextTrimRequest` is required when calling `trimContext`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/unstable/context/trim")
+      .setMethod("POST")
+      .setBody(contextTrimRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<ContextResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Deterministically trim a conversation payload (no LLM calls). Keep the last N
+   * messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept
+   * (tool parts are stripped before the budget is applied). Returns the trimmed messages plus
+   * before/after stats. With no constraints set, the messages are returned unchanged and only the
+   * stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no
+   * mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> trimContextWithHTTPInfoAsync(
+    @Nonnull ContextTrimRequest contextTrimRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(contextTrimRequest, "Parameter `contextTrimRequest` is required when calling `trimContext`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/unstable/context/trim")
+      .setMethod("POST")
+      .setBody(contextTrimRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Deterministically trim a conversation payload (no LLM calls). Keep the last N
+   * messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept
+   * (tool parts are stripped before the budget is applied). Returns the trimmed messages plus
+   * before/after stats. With no constraints set, the messages are returned unchanged and only the
+   * stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no
+   * mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ContextResponse> trimContextAsync(@Nonnull ContextTrimRequest contextTrimRequest)
+    throws AlgoliaRuntimeException {
+    return this.trimContextAsync(contextTrimRequest, null);
+  }
+
+  /**
+   * (asynchronously) Deterministically trim a conversation payload (no LLM calls). Keep the last N
+   * messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept
+   * (tool parts are stripped before the budget is applied). Returns the trimmed messages plus
+   * before/after stats. With no constraints set, the messages are returned unchanged and only the
+   * stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no
+   * mutation).
+   *
+   * @param contextTrimRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> trimContextWithHTTPInfoAsync(@Nonnull ContextTrimRequest contextTrimRequest)
+    throws AlgoliaRuntimeException {
+    return this.trimContextWithHTTPInfoAsync(contextTrimRequest, null);
+  }
+
+  /**
    * Unpublish the specified agent.
    *
    * @param agentId The agentId. (required)
@@ -6487,6 +7442,118 @@ public class AgentStudioClient extends ApiClient {
   public CompletableFuture<Response> updateConfigurationWithHTTPInfoAsync(@Nonnull ApplicationConfigPatch applicationConfigPatch)
     throws AlgoliaRuntimeException {
     return this.updateConfigurationWithHTTPInfoAsync(applicationConfigPatch, null);
+  }
+
+  /**
+   * Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public FeedbackResponse updateFeedback(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateFeedbackAsync(feedbackUpdateRequest, requestOptions));
+  }
+
+  /**
+   * Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateFeedbackWithHTTPInfo(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest, @Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateFeedbackWithHTTPInfoAsync(feedbackUpdateRequest, requestOptions));
+  }
+
+  /**
+   * Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public FeedbackResponse updateFeedback(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest) throws AlgoliaRuntimeException {
+    return this.updateFeedback(feedbackUpdateRequest, null);
+  }
+
+  /**
+   * Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response updateFeedbackWithHTTPInfo(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest) throws AlgoliaRuntimeException {
+    return this.updateFeedbackWithHTTPInfo(feedbackUpdateRequest, null);
+  }
+
+  /**
+   * (asynchronously) Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<FeedbackResponse> updateFeedbackAsync(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(feedbackUpdateRequest, "Parameter `feedbackUpdateRequest` is required when calling `updateFeedback`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/feedback")
+      .setMethod("PATCH")
+      .setBody(feedbackUpdateRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<FeedbackResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateFeedbackWithHTTPInfoAsync(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(feedbackUpdateRequest, "Parameter `feedbackUpdateRequest` is required when calling `updateFeedback`.");
+
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/agent-studio/1/feedback")
+      .setMethod("PATCH")
+      .setBody(feedbackUpdateRequest)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<FeedbackResponse> updateFeedbackAsync(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest)
+    throws AlgoliaRuntimeException {
+    return this.updateFeedbackAsync(feedbackUpdateRequest, null);
+  }
+
+  /**
+   * (asynchronously) Update an existing feedback entry.
+   *
+   * @param feedbackUpdateRequest (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> updateFeedbackWithHTTPInfoAsync(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest)
+    throws AlgoliaRuntimeException {
+    return this.updateFeedbackWithHTTPInfoAsync(feedbackUpdateRequest, null);
   }
 
   /**

@@ -1,9 +1,9 @@
 post:
   tags:
-  - Context
+    - Context
   operationId: trimContext
   x-acl:
-  - search
+    - search
   summary: Trim Context
   description: |-
     Deterministically trim a conversation payload (no LLM calls).
@@ -19,17 +19,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../../common/schemas/ContextTrimRequest.yml#/ContextTrimRequest
+          $ref: '../../common/schemas/ContextTrimRequest.yml#/ContextTrimRequest'
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ContextResponse.yml#/ContextResponse
+            $ref: '../../common/schemas/ContextResponse.yml#/ContextResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

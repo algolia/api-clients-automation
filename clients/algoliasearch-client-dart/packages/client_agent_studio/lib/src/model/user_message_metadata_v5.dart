@@ -26,7 +26,8 @@ final class UserMessageMetadataV5 extends DelegatingMap<String, dynamic> {
 
   @override
   int get hashCode =>
-      turnContext.hashCode + const MapEquality<String, dynamic>().hash(this);
+      (turnContext == null ? 0 : turnContext.hashCode) +
+      const MapEquality<String, dynamic>().hash(this);
 
   factory UserMessageMetadataV5.fromJson(Map<String, dynamic> json) {
     final instance = _$UserMessageMetadataV5FromJson(json);

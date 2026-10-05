@@ -11,7 +11,7 @@ AgentCompletionAlgoliaParams:
       default: null
       title: mcpservers
     searchParameters:
-      $ref: SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable
+      $ref: 'SearchParametersOverridesMapNullable.yml#/SearchParametersOverridesMapNullable'
     indices:
       items:
         maxLength: 100
@@ -32,8 +32,9 @@ AgentCompletionAlgoliaParams:
         is rejected with HTTP 422 — change the tool's `mode` in the agent configuration
         first. Defaults to `null`, which preserves the existing static behavior.
       examples:
-      - - docs_v9
-        - docs_v10
+        -
+          - docs_v9
+          - docs_v10
       title: indices
   title: agentCompletionAlgoliaParams
   type: object

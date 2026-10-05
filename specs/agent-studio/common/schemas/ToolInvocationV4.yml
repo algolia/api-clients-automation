@@ -13,50 +13,50 @@ ToolInvocationV4:
       type: object
     result:
       oneOf:
-      - type: object
-        additionalProperties: true
-      - type: 'null'
+        - type: object
+          additionalProperties: true
+        - type: 'null'
       default: null
       title: result
     step:
       oneOf:
-      - type: integer
-      - type: 'null'
+        - type: integer
+        - type: 'null'
       default: null
       title: step
     state:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: state
     providerOptions:
       oneOf:
-      - additionalProperties: true
-        type: object
-      - type: 'null'
+        - additionalProperties: true
+          type: object
+        - type: 'null'
       default: null
       title: provideroptions
     requiresApproval:
       oneOf:
-      - type: boolean
-      - type: 'null'
+        - type: boolean
+        - type: 'null'
       default: null
       title: requiresapproval
     description:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: description
     argsHash:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: argshash
   required:
-  - toolCallId
-  - toolName
+    - toolCallId
+    - toolName
   title: toolInvocationV4
   type: object

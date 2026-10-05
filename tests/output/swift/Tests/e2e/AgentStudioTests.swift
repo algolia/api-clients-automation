@@ -158,31 +158,6 @@ final class AgentStudioClientRequestsTestsE2E: XCTestCase {
         XCTAssertEqual(response.statusCode, 200)
     }
 
-    /// listAgentConversations with all parameters
-    func testListAgentConversationsTest1() async throws {
-        guard let client = AgentStudioClientRequestsTestsE2E.client else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let response = try await client.listAgentConversationsWithHTTPInfo(
-            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
-            startDate: "2024-01-01",
-            endDate: "2024-12-31",
-            includeFeedback: true,
-            feedbackVote: 1,
-            page: 2,
-            limit: 10,
-            xAlgoliaSecureUserToken: nil
-        )
-        try XCTLenientAssertEqual(
-            received: XCTUnwrap(response.body),
-            expected: "{\"data\":[],\"pagination\":{\"page\":2,\"limit\":10,\"totalCount\":0,\"totalPages\":0}}"
-        )
-
-        XCTAssertEqual(response.statusCode, 200)
-    }
-
     /// e2e list agent conversations
     func testListAgentConversationsTest2() async throws {
         guard let client = AgentStudioClientRequestsTestsE2E.client else {

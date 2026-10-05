@@ -44,6 +44,54 @@ export async function snippetForBulkDeleteAllowedDomains(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the compactContext method.
+//
+// compactContext with required parameters
+export async function snippetForCompactContext(): Promise<void> {
+  // >SEPARATOR compactContext compactContext with required parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.compactContext({
+    providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+    model: 'gpt-4o-mini',
+    messages: [{ role: 'user', content: 'Hello, how are you?' }],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the compactContext method.
+//
+// compactContext with all parameters
+export async function snippetForCompactContext1(): Promise<void> {
+  // >SEPARATOR compactContext compactContext with all parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.compactContext({
+    providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'user', content: 'Hello, how are you?' },
+      { role: 'assistant', content: 'I am well.' },
+    ],
+    keepLastMessages: 2,
+    instructions: 'keep every product reference',
+    targetTokensEstimate: 128,
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createAgent method.
 //
 // createAgent with minimal parameters
@@ -77,7 +125,9 @@ export async function snippetForCreateAgent1(): Promise<void> {
     model: 'gpt-4',
     instructions: 'You are a helpful assistant.',
     config: { sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500 },
-    tools: [{ type: 'start' }],
+    tools: [
+      { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+    ],
   });
 
   // >LOG
@@ -186,7 +236,9 @@ export async function snippetForCreateAgentCompletion3(): Promise<void> {
       configuration: {
         instructions: 'Test instructions override',
         config: { temperature: 0.2 },
-        tools: [{ type: 'start' }],
+        tools: [
+          { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+        ],
       },
     },
   })) {
@@ -208,6 +260,49 @@ export async function snippetForCreateAgentCompletion4(): Promise<void> {
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
     compatibilityMode: 'ai-sdk-5',
     agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },
+  })) {
+    console.log(event.data);
+  }
+  // SEPARATOR<
+}
+
+// Snippet for the createAgentTask method.
+//
+// createAgentTask with required parameters
+export async function snippetForCreateAgentTask(): Promise<void> {
+  // >SEPARATOR createAgentTask createAgentTask with required parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Use the streaming variant to iterate over events
+  for await (const event of client.createAgentTaskStream({
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    taskRequest: { input: { pageType: 'pdp', title: 'acmePhone128Gb' } },
+  })) {
+    console.log(event.data);
+  }
+  // SEPARATOR<
+}
+
+// Snippet for the createAgentTask method.
+//
+// createAgentTask with all parameters
+export async function snippetForCreateAgentTask1(): Promise<void> {
+  // >SEPARATOR createAgentTask createAgentTask with all parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Use the streaming variant to iterate over events
+  for await (const event of client.createAgentTaskStream({
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    stream: false,
+    cache: false,
+    analytics: false,
+    taskRequest: {
+      task: 'algolia_on_page_suggestions',
+      kind: 'prompt_suggestions',
+      input: { pageType: 'pdp', title: 'acmePhone128Gb' },
+    },
   })) {
     console.log(event.data);
   }
@@ -1202,6 +1297,11 @@ export async function snippetForListAgentConversations1(): Promise<void> {
     feedbackVote: 1,
     page: 2,
     limit: 10,
+    includeImpactAnalytics: true,
+    clicked: true,
+    converted: false,
+    hasAlgoliaSearch: true,
+    xAlgoliaSecureUserToken: 'secure-user-token',
   });
 
   // >LOG
@@ -1480,6 +1580,48 @@ export function snippetForSetClientApiKey(): void {
   // SEPARATOR<
 }
 
+// Snippet for the trimContext method.
+//
+// trimContext with required parameters
+export async function snippetForTrimContext(): Promise<void> {
+  // >SEPARATOR trimContext trimContext with required parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.trimContext({ messages: [{ role: 'user', content: 'Hello, how are you?' }] });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the trimContext method.
+//
+// trimContext with all parameters
+export async function snippetForTrimContext1(): Promise<void> {
+  // >SEPARATOR trimContext trimContext with all parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.trimContext({
+    messages: [
+      { role: 'user', content: 'Hello, how are you?' },
+      { role: 'assistant', content: 'I am well.' },
+    ],
+    keepLastMessages: 1,
+    maxTokensEstimate: 256,
+    dropToolParts: true,
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the unpublishAgent method.
 //
 // unpublishAgent
@@ -1535,7 +1677,9 @@ export async function snippetForUpdateAgent1(): Promise<void> {
       model: 'gpt-4o',
       instructions: 'Updated instructions.',
       config: { temperature: 0.5 },
-      tools: [{ type: 'start' }],
+      tools: [
+        { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+      ],
     },
   });
 
@@ -1555,6 +1699,49 @@ export async function snippetForUpdateConfiguration(): Promise<void> {
 
   // Call the API
   const response = await client.updateConfiguration({ maxRetentionDays: 30 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateFeedback method.
+//
+// updateFeedback with required parameters
+export async function snippetForUpdateFeedback(): Promise<void> {
+  // >SEPARATOR updateFeedback updateFeedback with required parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.updateFeedback({
+    messageId: 'msg-abc123',
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateFeedback method.
+//
+// updateFeedback with all parameters
+export async function snippetForUpdateFeedback1(): Promise<void> {
+  // >SEPARATOR updateFeedback updateFeedback with all parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.updateFeedback({
+    messageId: 'msg-abc123',
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    vote: 0,
+    tags: ['unhelpful', 'off-topic'],
+    notes: 'The response did not address my question.',
+  });
 
   // >LOG
   // print the response

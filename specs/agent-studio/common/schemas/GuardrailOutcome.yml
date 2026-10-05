@@ -8,13 +8,13 @@ GuardrailOutcome:
       title: category
     guardrailType:
       oneOf:
-      - $ref: OneOfEnum.yml#/OneOfEnum
-      - type: 'null'
+        - $ref: 'OneOfEnum.yml#/OneOfEnum'
+        - type: 'null'
       title: guardrailtype
   type: object
   required:
-  - blocked
-  - category
+    - blocked
+    - category
   title: guardrailOutcome
   description: |-
     Minimal record of a guardrail decision, persisted on a blocked assistant message.

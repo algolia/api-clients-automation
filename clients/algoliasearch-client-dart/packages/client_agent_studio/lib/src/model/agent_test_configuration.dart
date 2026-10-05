@@ -37,11 +37,12 @@ final class AgentTestConfiguration {
   final Map<String, Object> config;
 
   /// One of types:
-  /// - [AlgoliaDisplayResultsToolConfig]
+  /// - [AlgoliaGroupedResultsCompatToolConfig]
+  /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaSearchToolConfig]
-  /// - [AlgoliaRecommendToolConfigInput]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
+  /// - [AlgoliaGroupedResultsToolConfig]
   /// - [UnknownToolConfig]
   @JsonKey(name: r'tools')
   final Iterable<dynamic> tools;

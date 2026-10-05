@@ -8,6 +8,6 @@ AllowedDomainBulkInsert:
       description: List of domain patterns to add.
   type: object
   required:
-  - domains
+    - domains
   title: allowedDomainBulkInsert
   description: Request body for bulk insert.

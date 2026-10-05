@@ -1,9 +1,9 @@
 post:
   tags:
-  - Context
+    - Context
   operationId: compactContext
   x-acl:
-  - search
+    - search
   summary: Compact Context
   description: |-
     Summarize the older part of a conversation into a single user message via the caller's LLM.
@@ -29,17 +29,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../../common/schemas/ContextCompactRequest.yml#/ContextCompactRequest
+          $ref: '../../common/schemas/ContextCompactRequest.yml#/ContextCompactRequest'
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ContextResponse.yml#/ContextResponse
+            $ref: '../../common/schemas/ContextResponse.yml#/ContextResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

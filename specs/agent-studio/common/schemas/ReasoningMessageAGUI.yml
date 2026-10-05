@@ -16,8 +16,8 @@ ReasoningMessageAGUI:
       default: null
       title: encryptedvalue
   required:
-  - role
-  - id
-  - content
+    - role
+    - id
+    - content
   title: reasoningMessageAGUI
   type: object

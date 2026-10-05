@@ -12,18 +12,18 @@ AlgoliaSearchToolConfig:
       type: string
     indices:
       items:
-        $ref: AlgoliaSearchToolIndexConfig.yml#/AlgoliaSearchToolIndexConfig
+        $ref: 'AlgoliaSearchToolIndexConfig.yml#/AlgoliaSearchToolIndexConfig'
       title: indices
       type: array
     mode:
-      $ref: ModeEnum.yml#/ModeEnum
+      $ref: 'ModeEnum.yml#/ModeEnum'
     allowUnlistedIndices:
       default: false
       title: allowunlistedindices
       type: boolean
   required:
-  - type
-  - name
-  - indices
+    - type
+    - name
+    - indices
   title: algoliaSearchToolConfig
   type: object

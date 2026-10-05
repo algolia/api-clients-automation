@@ -54,8 +54,14 @@ public class ConversationFullResponse {
   @JsonProperty("feedback")
   private List<FeedbackResponse> feedback;
 
+  @JsonProperty("impactAnalytics")
+  private ImpactAnalytics impactAnalytics;
+
   @JsonProperty("messages")
   private List<MessageResponse> messages = new ArrayList<>();
+
+  @JsonProperty("analyticsDegraded")
+  private Boolean analyticsDegraded;
 
   public ConversationFullResponse setId(String id) {
     this.id = id;
@@ -219,6 +225,17 @@ public class ConversationFullResponse {
     return feedback;
   }
 
+  public ConversationFullResponse setImpactAnalytics(ImpactAnalytics impactAnalytics) {
+    this.impactAnalytics = impactAnalytics;
+    return this;
+  }
+
+  /** Get impactAnalytics */
+  @javax.annotation.Nullable
+  public ImpactAnalytics getImpactAnalytics() {
+    return impactAnalytics;
+  }
+
   public ConversationFullResponse setMessages(List<MessageResponse> messages) {
     this.messages = messages;
     return this;
@@ -233,6 +250,17 @@ public class ConversationFullResponse {
   @javax.annotation.Nonnull
   public List<MessageResponse> getMessages() {
     return messages;
+  }
+
+  public ConversationFullResponse setAnalyticsDegraded(Boolean analyticsDegraded) {
+    this.analyticsDegraded = analyticsDegraded;
+    return this;
+  }
+
+  /** Get analyticsDegraded */
+  @javax.annotation.Nullable
+  public Boolean getAnalyticsDegraded() {
+    return analyticsDegraded;
   }
 
   @Override
@@ -259,7 +287,9 @@ public class ConversationFullResponse {
       Objects.equals(this.totalTokens, conversationFullResponse.totalTokens) &&
       Objects.equals(this.conversationMetadata, conversationFullResponse.conversationMetadata) &&
       Objects.equals(this.feedback, conversationFullResponse.feedback) &&
-      Objects.equals(this.messages, conversationFullResponse.messages)
+      Objects.equals(this.impactAnalytics, conversationFullResponse.impactAnalytics) &&
+      Objects.equals(this.messages, conversationFullResponse.messages) &&
+      Objects.equals(this.analyticsDegraded, conversationFullResponse.analyticsDegraded)
     );
   }
 
@@ -280,7 +310,9 @@ public class ConversationFullResponse {
       totalTokens,
       conversationMetadata,
       feedback,
-      messages
+      impactAnalytics,
+      messages,
+      analyticsDegraded
     );
   }
 
@@ -302,7 +334,9 @@ public class ConversationFullResponse {
     sb.append("    totalTokens: ").append(toIndentedString(totalTokens)).append("\n");
     sb.append("    conversationMetadata: ").append(toIndentedString(conversationMetadata)).append("\n");
     sb.append("    feedback: ").append(toIndentedString(feedback)).append("\n");
+    sb.append("    impactAnalytics: ").append(toIndentedString(impactAnalytics)).append("\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
+    sb.append("    analyticsDegraded: ").append(toIndentedString(analyticsDegraded)).append("\n");
     sb.append("}");
     return sb.toString();
   }

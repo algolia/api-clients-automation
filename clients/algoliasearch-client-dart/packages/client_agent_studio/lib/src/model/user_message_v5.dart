@@ -40,7 +40,10 @@ final class UserMessageV5 {
 
   @override
   int get hashCode =>
-      id.hashCode + role.hashCode + parts.hashCode + metadata.hashCode;
+      (id == null ? 0 : id.hashCode) +
+      role.hashCode +
+      parts.hashCode +
+      (metadata == null ? 0 : metadata.hashCode);
 
   factory UserMessageV5.fromJson(Map<String, dynamic> json) =>
       _$UserMessageV5FromJson(json);

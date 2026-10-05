@@ -37,6 +37,9 @@ public class ToolApprovalRequestPart implements MessagePart {
   @JsonProperty("appId")
   private String appId;
 
+  @JsonProperty("conversationId")
+  private String conversationId;
+
   public ToolApprovalRequestPart setType(String type) {
     this.type = type;
     return this;
@@ -133,6 +136,17 @@ public class ToolApprovalRequestPart implements MessagePart {
     return appId;
   }
 
+  public ToolApprovalRequestPart setConversationId(String conversationId) {
+    this.conversationId = conversationId;
+    return this;
+  }
+
+  /** Get conversationId */
+  @javax.annotation.Nullable
+  public String getConversationId() {
+    return conversationId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -150,13 +164,14 @@ public class ToolApprovalRequestPart implements MessagePart {
       Objects.equals(this.description, toolApprovalRequestPart.description) &&
       Objects.equals(this.providerOptions, toolApprovalRequestPart.providerOptions) &&
       Objects.equals(this.argsHash, toolApprovalRequestPart.argsHash) &&
-      Objects.equals(this.appId, toolApprovalRequestPart.appId)
+      Objects.equals(this.appId, toolApprovalRequestPart.appId) &&
+      Objects.equals(this.conversationId, toolApprovalRequestPart.conversationId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, toolCallId, toolName, args, description, providerOptions, argsHash, appId);
+    return Objects.hash(type, toolCallId, toolName, args, description, providerOptions, argsHash, appId, conversationId);
   }
 
   @Override
@@ -171,6 +186,7 @@ public class ToolApprovalRequestPart implements MessagePart {
     sb.append("    providerOptions: ").append(toIndentedString(providerOptions)).append("\n");
     sb.append("    argsHash: ").append(toIndentedString(argsHash)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
+    sb.append("    conversationId: ").append(toIndentedString(conversationId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

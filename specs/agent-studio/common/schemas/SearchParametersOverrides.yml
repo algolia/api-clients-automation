@@ -23,7 +23,7 @@ SearchParametersOverrides:
       default: null
       title: restrictsearchableattributes
     distinct:
-      $ref: DistinctUnion.yml#/DistinctUnion
+      $ref: 'DistinctUnion.yml#/DistinctUnion'
     userToken:
       type: string
       default: null
@@ -37,6 +37,6 @@ SearchParametersOverrides:
       default: null
       title: personalizationimpact
     optionalFilters:
-      $ref: OptionalFiltersUnion.yml#/OptionalFiltersUnion
+      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
   title: searchParametersOverrides
   type: object

@@ -44,11 +44,11 @@ final class UserMessageV4 {
 
   @override
   int get hashCode =>
-      id.hashCode +
+      (id == null ? 0 : id.hashCode) +
       role.hashCode +
       content.hashCode +
       parts.hashCode +
-      annotations.hashCode;
+      (annotations == null ? 0 : annotations.hashCode);
 
   factory UserMessageV4.fromJson(Map<String, dynamic> json) =>
       _$UserMessageV4FromJson(json);
