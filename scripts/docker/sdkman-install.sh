@@ -16,7 +16,7 @@
 #
 
 
-# install:- channel: stable; cliVersion: 5.23.0; cliNativeVersion: 0.7.34; api: https://api.sdkman.io/2
+# install:- channel: stable; cliVersion: 5.23.1; cliNativeVersion: 0.7.34; api: https://api.sdkman.io/2
 
 # Refuse to install on Cygwin
 if [[ "$(uname -s)" == CYGWIN_NT* ]]; then
@@ -58,7 +58,7 @@ trap echo_failed_command EXIT
 
 # Global variables
 export SDKMAN_SERVICE="https://api.sdkman.io/2"
-export SDKMAN_VERSION="5.23.0"
+export SDKMAN_VERSION="5.23.1"
 export SDKMAN_NATIVE_VERSION="0.7.34"
 
 # vendored addition: the broker redirects to the sdkman GitHub release assets, which are immutable per
