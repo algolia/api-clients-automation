@@ -54,6 +54,19 @@ public interface InjectedItemSource {
           );
         }
       }
+      // deserialize InjectedItemExternalProviderSource
+      if (tree.isObject() && tree.has("externalProvider")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(InjectedItemExternalProviderSource.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf InjectedItemExternalProviderSource (error: " +
+              e.getMessage() +
+              ") (type: InjectedItemExternalProviderSource)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

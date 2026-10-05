@@ -34,13 +34,45 @@ MessageResponse:
         - type: integer
         - type: 'null'
       title: outputtokens
-    turnContext:
+    reasoningTokens:
+      oneOf:
+        - type: integer
+        - type: 'null'
+      title: reasoningtokens
+    inputTokenDetails:
       oneOf:
         - additionalProperties:
-            type: string
+            type: integer
+          type: object
+        - type: 'null'
+      title: inputtokendetails
+    outputTokenDetails:
+      oneOf:
+        - additionalProperties:
+            type: integer
+          type: object
+        - type: 'null'
+      title: outputtokendetails
+    isCacheHit:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: iscachehit
+    turnContext:
+      oneOf:
+        - additionalProperties: true
           type: object
         - type: 'null'
       title: turncontext
+    events:
+      items:
+        $ref: 'MessageEvent.yml#/MessageEvent'
+      type: array
+      title: events
+    guardrail:
+      oneOf:
+        - $ref: 'GuardrailOutcome.yml#/GuardrailOutcome'
+        - type: 'null'
   type: object
   required:
     - id

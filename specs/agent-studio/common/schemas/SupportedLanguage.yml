@@ -1,5 +1,5 @@
 SupportedLanguage:
-  type: string
+  description: ISO code for a supported language.
   enum:
     - af
     - ar
@@ -70,4 +70,4 @@ SupportedLanguage:
     - uz
     - zh
   title: supportedLanguage
-  description: ISO code for a supported language.
+  type: string

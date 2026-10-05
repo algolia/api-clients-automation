@@ -111,27 +111,6 @@ class AgentStudioClientRequestsTestsE2E {
   }
 
   @Test
-  @DisplayName("listAgentConversations with all parameters")
-  void listAgentConversationsTest1() {
-    PaginatedConversationsResponse res = client.listAgentConversations(
-      "76710f1b-8231-42e5-b0d1-f43aac618e15",
-      "2024-01-01",
-      "2024-12-31",
-      true,
-      1,
-      2,
-      10,
-      null
-    );
-    assertDoesNotThrow(() ->
-      TestHelpers.lenientJsonAssert(
-        "{\"data\":[],\"pagination\":{\"page\":2,\"limit\":10,\"totalCount\":0,\"totalPages\":0}}",
-        json.writeValueAsString(res)
-      )
-    );
-  }
-
-  @Test
   @DisplayName("e2e list agent conversations")
   void listAgentConversationsTest2() {
     PaginatedConversationsResponse res = client.listAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15");

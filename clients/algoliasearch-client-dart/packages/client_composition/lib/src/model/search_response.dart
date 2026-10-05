@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_composition/src/model/compositions_search_response.dart';
 import 'package:algolia_client_composition/src/model/search_results_item.dart';
+import 'package:algolia_client_composition/src/model/processing_error.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,6 +14,7 @@ final class SearchResponse {
   const SearchResponse({
     this.compositions,
     required this.results,
+    this.errors,
   });
 
   @JsonKey(name: r'compositions')
@@ -22,15 +24,21 @@ final class SearchResponse {
   @JsonKey(name: r'results')
   final List<SearchResultsItem> results;
 
+  /// Non-critical errors encountered while processing the request that may have affected the returned results (for example, an external provider failure that fell back to another result set).
+  @JsonKey(name: r'errors')
+  final List<ProcessingError>? errors;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SearchResponse &&
           other.compositions == compositions &&
-          other.results == results;
+          other.results == results &&
+          other.errors == errors;
 
   @override
-  int get hashCode => compositions.hashCode + results.hashCode;
+  int get hashCode =>
+      compositions.hashCode + results.hashCode + errors.hashCode;
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchResponseFromJson(json);

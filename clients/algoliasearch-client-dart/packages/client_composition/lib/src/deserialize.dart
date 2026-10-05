@@ -7,8 +7,12 @@ import 'package:algolia_client_composition/src/model/banner.dart';
 import 'package:algolia_client_composition/src/model/banner_image.dart';
 import 'package:algolia_client_composition/src/model/banner_image_url.dart';
 import 'package:algolia_client_composition/src/model/banner_link.dart';
+import 'package:algolia_client_composition/src/model/base_external_provider_source.dart';
+import 'package:algolia_client_composition/src/model/base_external_source.dart';
 import 'package:algolia_client_composition/src/model/base_injection_query_parameters.dart';
+import 'package:algolia_client_composition/src/model/base_recommend_source.dart';
 import 'package:algolia_client_composition/src/model/base_search_response.dart';
+import 'package:algolia_client_composition/src/model/base_search_source.dart';
 import 'package:algolia_client_composition/src/model/batch_params.dart';
 import 'package:algolia_client_composition/src/model/boolean_string.dart';
 import 'package:algolia_client_composition/src/model/composition.dart';
@@ -34,6 +38,8 @@ import 'package:algolia_client_composition/src/model/exhaustive.dart';
 import 'package:algolia_client_composition/src/model/external_injected_item.dart';
 import 'package:algolia_client_composition/src/model/external_injection.dart';
 import 'package:algolia_client_composition/src/model/external_ordering.dart';
+import 'package:algolia_client_composition/src/model/external_provider.dart';
+import 'package:algolia_client_composition/src/model/external_provider_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
@@ -45,21 +51,26 @@ import 'package:algolia_client_composition/src/model/hit_metadata.dart';
 import 'package:algolia_client_composition/src/model/hit_ranking_info.dart';
 import 'package:algolia_client_composition/src/model/index_settings_facets.dart';
 import 'package:algolia_client_composition/src/model/injected_item_external.dart';
+import 'package:algolia_client_composition/src/model/injected_item_external_provider.dart';
+import 'package:algolia_client_composition/src/model/injected_item_external_provider_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_external_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_hits_metadata.dart';
 import 'package:algolia_client_composition/src/model/injected_item_metadata.dart';
+import 'package:algolia_client_composition/src/model/injected_item_recommend.dart';
 import 'package:algolia_client_composition/src/model/injected_item_recommend_source.dart';
 import 'package:algolia_client_composition/src/model/injected_item_search.dart';
 import 'package:algolia_client_composition/src/model/injected_item_search_source.dart';
 import 'package:algolia_client_composition/src/model/injection.dart';
 import 'package:algolia_client_composition/src/model/injection_injected_item.dart';
 import 'package:algolia_client_composition/src/model/injection_main.dart';
+import 'package:algolia_client_composition/src/model/injection_main_external_provider.dart';
+import 'package:algolia_client_composition/src/model/injection_main_external_provider_source.dart';
+import 'package:algolia_client_composition/src/model/injection_main_recommend.dart';
 import 'package:algolia_client_composition/src/model/injection_main_recommend_source.dart';
+import 'package:algolia_client_composition/src/model/injection_main_search.dart';
 import 'package:algolia_client_composition/src/model/injection_main_search_source.dart';
 import 'package:algolia_client_composition/src/model/list_compositions_response.dart';
 import 'package:algolia_client_composition/src/model/main_injection_query_parameters.dart';
-import 'package:algolia_client_composition/src/model/main_recommend.dart';
-import 'package:algolia_client_composition/src/model/main_search.dart';
 import 'package:algolia_client_composition/src/model/match_level.dart';
 import 'package:algolia_client_composition/src/model/matched_geo_location.dart';
 import 'package:algolia_client_composition/src/model/model.dart';
@@ -68,10 +79,10 @@ import 'package:algolia_client_composition/src/model/multiple_batch_request.dart
 import 'package:algolia_client_composition/src/model/multiple_batch_response.dart';
 import 'package:algolia_client_composition/src/model/params.dart';
 import 'package:algolia_client_composition/src/model/personalization.dart';
+import 'package:algolia_client_composition/src/model/processing_error.dart';
 import 'package:algolia_client_composition/src/model/query_type.dart';
 import 'package:algolia_client_composition/src/model/range.dart';
 import 'package:algolia_client_composition/src/model/ranking_info.dart';
-import 'package:algolia_client_composition/src/model/recommend.dart';
 import 'package:algolia_client_composition/src/model/redirect.dart';
 import 'package:algolia_client_composition/src/model/redirect_rule_index_data.dart';
 import 'package:algolia_client_composition/src/model/redirect_rule_index_metadata.dart';
@@ -79,6 +90,7 @@ import 'package:algolia_client_composition/src/model/redirect_url.dart';
 import 'package:algolia_client_composition/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_composition/src/model/rendering_content.dart';
 import 'package:algolia_client_composition/src/model/request_body.dart';
+import 'package:algolia_client_composition/src/model/result_card.dart';
 import 'package:algolia_client_composition/src/model/results_composition_info_response.dart';
 import 'package:algolia_client_composition/src/model/results_compositions_response.dart';
 import 'package:algolia_client_composition/src/model/results_injected_item_applied_rules_info_response.dart';
@@ -143,11 +155,23 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BannerLink':
       return BannerLink.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'BaseExternalProviderSource':
+      return BaseExternalProviderSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BaseExternalSource':
+      return BaseExternalSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'BaseInjectionQueryParameters':
       return BaseInjectionQueryParameters.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'BaseRecommendSource':
+      return BaseRecommendSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'BaseSearchResponse':
       return BaseSearchResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BaseSearchSource':
+      return BaseSearchSource.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BatchParams':
       return BatchParams.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -215,6 +239,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ExternalOrdering':
       return ExternalOrdering.fromJson(value) as ReturnType;
+    case 'ExternalProvider':
+      return ExternalProvider.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ExternalProviderOrdering':
+      return ExternalProviderOrdering.fromJson(value) as ReturnType;
     case 'FacetHits':
       return FacetHits.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FacetOrdering':
@@ -244,6 +273,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InjectedItemExternal':
       return InjectedItemExternal.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InjectedItemExternalProvider':
+      return InjectedItemExternalProvider.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'InjectedItemExternalProviderSource':
+      return InjectedItemExternalProviderSource.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'InjectedItemExternalSource':
       return InjectedItemExternalSource.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -252,6 +287,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'InjectedItemMetadata':
       return InjectedItemMetadata.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InjectedItemRecommend':
+      return InjectedItemRecommend.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'InjectedItemRecommendSource':
       return InjectedItemRecommendSource.fromJson(value as Map<String, dynamic>)
@@ -270,9 +308,21 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InjectionMain':
       return InjectionMain.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InjectionMainExternalProvider':
+      return InjectionMainExternalProvider.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'InjectionMainExternalProviderSource':
+      return InjectionMainExternalProviderSource.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'InjectionMainRecommend':
+      return InjectionMainRecommend.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'InjectionMainRecommendSource':
       return InjectionMainRecommendSource.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'InjectionMainSearch':
+      return InjectionMainSearch.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'InjectionMainSearchSource':
       return InjectionMainSearchSource.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -282,11 +332,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MainInjectionQueryParameters':
       return MainInjectionQueryParameters.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'MainRecommend':
-      return MainRecommend.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'MainSearch':
-      return MainSearch.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MatchLevel':
       return MatchLevel.fromJson(value) as ReturnType;
     case 'MatchedGeoLocation':
@@ -307,14 +352,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'Personalization':
       return Personalization.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ProcessingError':
+      return ProcessingError.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'QueryType':
       return QueryType.fromJson(value) as ReturnType;
     case 'Range':
       return Range.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RankingInfo':
       return RankingInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'Recommend':
-      return Recommend.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'Redirect':
       return Redirect.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RedirectRuleIndexData':
@@ -332,6 +378,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'RequestBody':
       return RequestBody.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ResultsCompositionInfoResponse':
       return ResultsCompositionInfoResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;

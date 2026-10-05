@@ -371,7 +371,7 @@ class SearchTest {
           indexName = "cts_e2e_settings",
           indexSettings =
             IndexSettings(
-              paginationLimitedTo = 10,
+              paginationLimitedTo = 10L,
               typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
             ),
           forwardToReplicas = true,

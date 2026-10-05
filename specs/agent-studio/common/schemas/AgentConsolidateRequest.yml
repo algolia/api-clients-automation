@@ -9,7 +9,7 @@ AgentConsolidateRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: 'MessagesUnionAgentConsolidateRequest.yml#/MessagesUnionAgentConsolidateRequest'
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     targetMemories:
       type: integer
       maximum: 50.0

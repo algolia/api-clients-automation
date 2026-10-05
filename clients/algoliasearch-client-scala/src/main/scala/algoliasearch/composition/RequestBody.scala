@@ -37,5 +37,6 @@ package algoliasearch.composition
   */
 case class RequestBody(
     params: Option[Params] = scala.None,
-    feedsOrder: Option[Seq[String]] = scala.None
+    feedsOrder: Option[Seq[String]] = scala.None,
+    externalProvider: Option[ExternalProvider] = scala.None
 )

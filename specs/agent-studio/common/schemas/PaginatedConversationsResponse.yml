@@ -7,6 +7,10 @@ PaginatedConversationsResponse:
       title: data
     pagination:
       $ref: 'PaginationMetadata.yml#/PaginationMetadata'
+    analyticsDegraded:
+      type: boolean
+      title: analyticsdegraded
+      default: false
   type: object
   required:
     - data

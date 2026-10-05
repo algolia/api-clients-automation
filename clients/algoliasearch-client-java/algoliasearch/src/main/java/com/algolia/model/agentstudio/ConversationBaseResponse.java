@@ -54,6 +54,9 @@ public class ConversationBaseResponse {
   @JsonProperty("feedback")
   private List<FeedbackResponse> feedback;
 
+  @JsonProperty("impactAnalytics")
+  private ImpactAnalytics impactAnalytics;
+
   public ConversationBaseResponse setId(String id) {
     this.id = id;
     return this;
@@ -216,6 +219,17 @@ public class ConversationBaseResponse {
     return feedback;
   }
 
+  public ConversationBaseResponse setImpactAnalytics(ImpactAnalytics impactAnalytics) {
+    this.impactAnalytics = impactAnalytics;
+    return this;
+  }
+
+  /** Get impactAnalytics */
+  @javax.annotation.Nullable
+  public ImpactAnalytics getImpactAnalytics() {
+    return impactAnalytics;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -239,7 +253,8 @@ public class ConversationBaseResponse {
       Objects.equals(this.totalOutputTokens, conversationBaseResponse.totalOutputTokens) &&
       Objects.equals(this.totalTokens, conversationBaseResponse.totalTokens) &&
       Objects.equals(this.conversationMetadata, conversationBaseResponse.conversationMetadata) &&
-      Objects.equals(this.feedback, conversationBaseResponse.feedback)
+      Objects.equals(this.feedback, conversationBaseResponse.feedback) &&
+      Objects.equals(this.impactAnalytics, conversationBaseResponse.impactAnalytics)
     );
   }
 
@@ -259,7 +274,8 @@ public class ConversationBaseResponse {
       totalOutputTokens,
       totalTokens,
       conversationMetadata,
-      feedback
+      feedback,
+      impactAnalytics
     );
   }
 
@@ -281,6 +297,7 @@ public class ConversationBaseResponse {
     sb.append("    totalTokens: ").append(toIndentedString(totalTokens)).append("\n");
     sb.append("    conversationMetadata: ").append(toIndentedString(conversationMetadata)).append("\n");
     sb.append("    feedback: ").append(toIndentedString(feedback)).append("\n");
+    sb.append("    impactAnalytics: ").append(toIndentedString(impactAnalytics)).append("\n");
     sb.append("}");
     return sb.toString();
   }

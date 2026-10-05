@@ -47,9 +47,8 @@ final class AgentConfigCreate {
   final Map<String, Object>? config;
 
   /// One of types:
-  /// - [AlgoliaDisplayResultsToolConfig]
+  /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaSearchToolConfig]
-  /// - [AlgoliaRecommendToolConfigInput]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
   /// - [UnknownToolConfig]

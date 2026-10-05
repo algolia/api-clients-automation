@@ -18,6 +18,9 @@ public class RequestBody {
   @JsonProperty("feedsOrder")
   private List<String> feedsOrder;
 
+  @JsonProperty("externalProvider")
+  private ExternalProvider externalProvider;
+
   public RequestBody setParams(Params params) {
     this.params = params;
     return this;
@@ -54,6 +57,17 @@ public class RequestBody {
     return feedsOrder;
   }
 
+  public RequestBody setExternalProvider(ExternalProvider externalProvider) {
+    this.externalProvider = externalProvider;
+    return this;
+  }
+
+  /** Get externalProvider */
+  @javax.annotation.Nullable
+  public ExternalProvider getExternalProvider() {
+    return externalProvider;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -63,12 +77,16 @@ public class RequestBody {
       return false;
     }
     RequestBody requestBody = (RequestBody) o;
-    return Objects.equals(this.params, requestBody.params) && Objects.equals(this.feedsOrder, requestBody.feedsOrder);
+    return (
+      Objects.equals(this.params, requestBody.params) &&
+      Objects.equals(this.feedsOrder, requestBody.feedsOrder) &&
+      Objects.equals(this.externalProvider, requestBody.externalProvider)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(params, feedsOrder);
+    return Objects.hash(params, feedsOrder, externalProvider);
   }
 
   @Override
@@ -77,6 +95,7 @@ public class RequestBody {
     sb.append("class RequestBody {\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("    feedsOrder: ").append(toIndentedString(feedsOrder)).append("\n");
+    sb.append("    externalProvider: ").append(toIndentedString(externalProvider)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -13,7 +13,7 @@ import kotlinx.serialization.json.*
 
 class SnippetAbtestingV3Client {
   suspend fun snippetForAddABTests() {
-    // >SEPARATOR addABTests default
+    // >SEPARATOR addABTests addABTests with minimal parameters
     // Initialize the client
     val client =
       AbtestingV3Client(
@@ -34,6 +34,45 @@ class SnippetAbtestingV3Client {
               listOf(
                 AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
                 AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+              ),
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForAddABTests1() {
+    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response =
+      client.addABTests(
+        addABTestsRequest =
+          AddABTestsRequest(
+            endAt = "2022-12-31T00:00:00.000Z",
+            name = "myABTest",
+            metrics = listOf(CreateMetric(name = "conversionRate")),
+            variants =
+              listOf(
+                AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
+                AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+              ),
+            configuration =
+              ABTestConfiguration(
+                method = AnalysisMethod.entries.first { it.value == "bayesian" },
+                primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
               ),
           )
       )
@@ -589,7 +628,7 @@ class SnippetAbtestingV3Client {
   }
 
   suspend fun snippetForGetABTest() {
-    // >SEPARATOR getABTest default
+    // >SEPARATOR getABTest getABTest
     // Initialize the client
     val client =
       AbtestingV3Client(
@@ -600,6 +639,35 @@ class SnippetAbtestingV3Client {
 
     // Call the API
     var response = client.getABTest(id = 42)
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetABTest1() {
+    // >SEPARATOR getABTest getABTest with both inference methods
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response =
+      client.getABTest(
+        id = 42,
+        methods =
+          listOf(
+            AnalysisMethod.entries.first { it.value == "frequentist" },
+            AnalysisMethod.entries.first { it.value == "bayesian" },
+          ),
+      )
 
     // >LOG
     // print the response
@@ -631,7 +699,7 @@ class SnippetAbtestingV3Client {
   }
 
   suspend fun snippetForGetTimeseries() {
-    // >SEPARATOR getTimeseries default
+    // >SEPARATOR getTimeseries getTimeseries
     // Initialize the client
     val client =
       AbtestingV3Client(
@@ -642,6 +710,34 @@ class SnippetAbtestingV3Client {
 
     // Call the API
     var response = client.getTimeseries(id = 42)
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetTimeseries1() {
+    // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response =
+      client.getTimeseries(
+        id = 42,
+        startDate = "1999-09-19",
+        endDate = "2001-01-01",
+        metric = listOf(MetricName.entries.first { it.value == "revenue_per_search" }),
+        methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+      )
 
     // >LOG
     // print the response
@@ -690,6 +786,11 @@ class SnippetAbtestingV3Client {
         indexPrefix = "cts_e2e ab",
         indexSuffix = "t",
         direction = Direction.entries.first { it.value == "asc" },
+        methods =
+          listOf(
+            AnalysisMethod.entries.first { it.value == "frequentist" },
+            AnalysisMethod.entries.first { it.value == "bayesian" },
+          ),
       )
 
     // >LOG

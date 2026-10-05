@@ -10,7 +10,9 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum CompatibilityMode {
   AI_SDK_4("ai-sdk-4"),
 
-  AI_SDK_5("ai-sdk-5");
+  AI_SDK_5("ai-sdk-5"),
+
+  AG_UI("ag-ui");
 
   private final String value;
 

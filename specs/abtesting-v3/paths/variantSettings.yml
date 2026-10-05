@@ -42,7 +42,11 @@ post:
     '403':
       $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: '../../common/responses/IndexNotFound.yml'
+      description: A/B test, variant, or index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/ErrorBase.yml'
     '409':
       $ref: '../../common/responses/Conflict.yml'
     '422':

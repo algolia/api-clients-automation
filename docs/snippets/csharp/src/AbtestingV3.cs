@@ -15,7 +15,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientAddABTests()
   {
-    // >SEPARATOR addABTests default
+    // >SEPARATOR addABTests addABTests with minimal parameters
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -36,6 +36,48 @@ public class SnippetAbtestingV3Client
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the AddABTests method.
+  ///
+  /// addABTests with Bayesian configuration
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientAddABTests1()
+  {
+    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.AddABTestsAsync(
+      new AddABTestsRequest
+      {
+        EndAt = "2022-12-31T00:00:00.000Z",
+        Name = "myABTest",
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "conversionRate" } },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+        Configuration = new ABTestConfiguration
+        {
+          Method = Enum.Parse<AnalysisMethod>("Bayesian"),
+          PrimaryMetric = Enum.Parse<PrimaryMetric>("ConversionRate"),
         },
       }
     );
@@ -673,7 +715,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientGetABTest()
   {
-    // >SEPARATOR getABTest default
+    // >SEPARATOR getABTest getABTest
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -685,6 +727,38 @@ public class SnippetAbtestingV3Client
 
     // Call the API
     var response = await client.GetABTestAsync(42);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetABTest method.
+  ///
+  /// getABTest with both inference methods
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetABTest1()
+  {
+    // >SEPARATOR getABTest getABTest with both inference methods
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetABTestAsync(
+      42,
+      new List<AnalysisMethod>
+      {
+        Enum.Parse<AnalysisMethod>("Frequentist"),
+        Enum.Parse<AnalysisMethod>("Bayesian"),
+      }
+    );
     // >LOG
     // print the response
     Console.WriteLine(response);
@@ -723,7 +797,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientGetTimeseries()
   {
-    // >SEPARATOR getTimeseries default
+    // >SEPARATOR getTimeseries getTimeseries
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -735,6 +809,37 @@ public class SnippetAbtestingV3Client
 
     // Call the API
     var response = await client.GetTimeseriesAsync(42);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTimeseries method.
+  ///
+  /// getTimeseries with Bayesian revenue per search
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetTimeseries1()
+  {
+    // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetTimeseriesAsync(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      new List<MetricName> { Enum.Parse<MetricName>("RevenuePerSearch") },
+      new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
+    );
     // >LOG
     // print the response
     Console.WriteLine(response);
@@ -789,7 +894,12 @@ public class SnippetAbtestingV3Client
       21,
       "cts_e2e ab",
       "t",
-      Enum.Parse<Direction>("Asc")
+      Enum.Parse<Direction>("Asc"),
+      new List<AnalysisMethod>
+      {
+        Enum.Parse<AnalysisMethod>("Frequentist"),
+        Enum.Parse<AnalysisMethod>("Bayesian"),
+      }
     );
     // >LOG
     // print the response

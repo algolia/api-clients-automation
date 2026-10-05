@@ -1295,7 +1295,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.deleteObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objectIDs = Seq("1", "2")
@@ -2583,7 +2583,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2610,7 +2610,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2890,7 +2890,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2920,7 +2920,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2950,7 +2950,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -2976,7 +2976,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -3002,7 +3002,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -3035,7 +3035,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    val response = Await.result(
+    val response: Seq[BatchResponse] = Await.result(
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects = Seq(
@@ -9562,7 +9562,7 @@ class SnippetSearchClient {
       client.setSettings(
         indexName = "<YOUR_INDEX_NAME>",
         indexSettings = IndexSettings(
-          paginationLimitedTo = Some(10),
+          paginationLimitedTo = Some(10L),
           typoTolerance = Some(TypoToleranceEnum.withName("false"))
         ),
         forwardToReplicas = Some(true)
@@ -11002,7 +11002,7 @@ class SnippetSearchClient {
           mode = Some(Mode.withName("neuralSearch")),
           numericAttributesForFiltering = Some(Seq("algolia")),
           optionalWords = Some(OptionalWords(Seq("myspace"))),
-          paginationLimitedTo = Some(0),
+          paginationLimitedTo = Some(0L),
           queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
           queryType = Some(QueryType.withName("prefixLast")),
           ranking = Some(Seq("geo")),
@@ -11890,7 +11890,7 @@ class SnippetSearchClient {
       client.setSettings(
         indexName = "<YOUR_INDEX_NAME>",
         indexSettings = IndexSettings(
-          paginationLimitedTo = Some(1000)
+          paginationLimitedTo = Some(1000L)
         )
       ),
       Duration(100, "sec")

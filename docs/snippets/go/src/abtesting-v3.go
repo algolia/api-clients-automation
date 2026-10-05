@@ -13,7 +13,7 @@ func SnippetForAddABTestsOfAbtestingV3() {
 	   addABTests with minimal parameters
 	*/
 
-	// >SEPARATOR addABTests default
+	// >SEPARATOR addABTests addABTests with minimal parameters
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -29,6 +29,45 @@ func SnippetForAddABTestsOfAbtestingV3() {
 			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForAddABTestsOfAbtestingV31() {
+	/*
+	   Snippet for the addABTests method.
+
+	   addABTests with Bayesian configuration
+	*/
+
+	// >SEPARATOR addABTests addABTests with Bayesian configuration
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.AddABTests(client.NewApiAddABTestsRequest(
+
+		abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
+			[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("conversionRate")}).SetVariants(
+			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}).SetConfiguration(
+			abtestingV3.NewEmptyABTestConfiguration().
+				SetMethod(abtestingV3.AnalysisMethod("bayesian")).
+				SetPrimaryMetric(abtestingV3.PrimaryMetric("conversion_rate")),
+		),
+	))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -674,7 +713,7 @@ func SnippetForGetABTestOfAbtestingV3() {
 	   getABTest
 	*/
 
-	// >SEPARATOR getABTest default
+	// >SEPARATOR getABTest getABTest
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -685,6 +724,36 @@ func SnippetForGetABTestOfAbtestingV3() {
 	// Call the API
 	response, err := client.GetABTest(client.NewApiGetABTestRequest(
 		42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetABTestOfAbtestingV31() {
+	/*
+	   Snippet for the getABTest method.
+
+	   getABTest with both inference methods
+	*/
+
+	// >SEPARATOR getABTest getABTest with both inference methods
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetABTest(client.NewApiGetABTestRequest(
+		42).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -732,7 +801,7 @@ func SnippetForGetTimeseriesOfAbtestingV3() {
 	   getTimeseries
 	*/
 
-	// >SEPARATOR getTimeseries default
+	// >SEPARATOR getTimeseries getTimeseries
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -743,6 +812,37 @@ func SnippetForGetTimeseriesOfAbtestingV3() {
 	// Call the API
 	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
 		42))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetTimeseriesOfAbtestingV31() {
+	/*
+	   Snippet for the getTimeseries method.
+
+	   getTimeseries with Bayesian revenue per search
+	*/
+
+	// >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+		[]abtestingV3.MetricName{abtestingV3.MetricName("revenue_per_search")}).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -804,7 +904,9 @@ func SnippetForListABTestsOfAbtestingV31() {
 			WithLimit(21).
 			WithIndexPrefix("cts_e2e ab").
 			WithIndexSuffix("t").
-			WithDirection(abtestingV3.Direction("asc")),
+			WithDirection(abtestingV3.Direction("asc")).
+			WithMethods(
+				[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("frequentist"), abtestingV3.AnalysisMethod("bayesian")}),
 	)
 	if err != nil {
 		// handle the eventual error

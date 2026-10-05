@@ -89,7 +89,6 @@ import {
 
 - **NEVER** hardcode language paths - use `getLanguageFolder(language)`
 - **NEVER** skip Docker for language builds - breaks CI consistency
-- **NEVER** add language-specific logic here - put in templates instead
 - **DO NOT** import from `clients/` - scripts are language-agnostic
 
 ## KEY EXPORTS (common.ts)

@@ -93,7 +93,7 @@ class RecommendClient(
       requestIdSupport = true
     ) {
 
-  /** Create or update a batch of Recommend Rules Each Recommend Rule is created or updated, depending on whether a
+  /** Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated, depending on whether a
     * Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in
     * which case the batch will atomically replace all the existing Recommend Rules. Recommend Rules are similar to
     * Search Rules, except that the conditions and consequences apply to a [source
@@ -162,7 +162,7 @@ class RecommendClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/batch")
-      .withBody(recommendRule)
+      .withBody(recommendRule.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 
@@ -305,7 +305,7 @@ class RecommendClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -360,7 +360,7 @@ class RecommendClient(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -685,7 +685,7 @@ class RecommendClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/search")
-      .withBody(searchRecommendRulesParams)
+      .withBody(searchRecommendRulesParams.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }

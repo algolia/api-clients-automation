@@ -53,6 +53,10 @@ ConversationBaseResponse:
         - type: 'null'
     feedback:
       $ref: 'FeedbackUnion.yml#/FeedbackUnion'
+    impactAnalytics:
+      oneOf:
+        - $ref: 'ImpactAnalytics.yml#/ImpactAnalytics'
+        - type: 'null'
   type: object
   required:
     - id

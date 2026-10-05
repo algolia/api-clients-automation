@@ -41,11 +41,11 @@ final class MemoryRecord {
   @JsonKey(name: r'rawExtract')
   final String rawExtract;
 
-  /// 5-20 free-form keywords: entities, context, search terms (any words).
+  /// Keywords for retrieval: entities, context, search terms.
   @JsonKey(name: r'keywords')
   final List<String>? keywords;
 
-  /// 2-4 topics ONLY from this list: [complaints, entertainment, family, feedback, finance, food, goals, health, history, hobbies, learning, praise, preferences, schedule, shopping, technical, travel, work].
+  /// Topics that classify the memory. Each must be one of: [complaints, entertainment, family, feedback, finance, food, goals, health, history, hobbies, learning, praise, preferences, schedule, shopping, technical, travel, work].
   @JsonKey(name: r'topics')
   final List<String>? topics;
 
@@ -53,7 +53,7 @@ final class MemoryRecord {
   @JsonKey(name: r'_tags')
   final List<String>? tags;
 
-  /// 3-5 natural phrases that should trigger this memory.
+  /// Phrases that cause the API to recall this memory.
   @JsonKey(name: r'recallTriggers')
   final List<String>? recallTriggers;
 

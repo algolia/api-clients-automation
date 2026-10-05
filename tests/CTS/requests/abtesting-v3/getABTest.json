@@ -8,5 +8,14 @@
       "path": "/3/abtests/42",
       "method": "GET"
     }
+  },
+  {
+    "testName": "getABTest with both inference methods",
+    "parameters": { "id": 42, "methods": ["frequentist", "bayesian"] },
+    "request": {
+      "path": "/3/abtests/42",
+      "method": "GET",
+      "queryParameters": { "methods": "frequentist%2Cbayesian" }
+    }
   }
 ]

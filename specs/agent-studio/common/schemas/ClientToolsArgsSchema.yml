@@ -1,18 +1,18 @@
 ClientToolsArgsSchema:
   properties:
     type:
-      type: string
       const: object
-      title: type
       default: object
+      title: type
+      type: string
     properties:
-      additionalProperties: true
       type: object
+      additionalProperties: true
       title: properties
     required:
       items:
         type: string
-      type: array
       title: required
-  type: object
+      type: array
   title: clientToolsArgsSchema
+  type: object

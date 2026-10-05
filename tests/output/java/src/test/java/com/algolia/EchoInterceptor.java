@@ -57,7 +57,7 @@ public class EchoInterceptor implements Interceptor {
     try {
       final Request copy = request.newBuilder().build();
       final Buffer buffer = new Buffer();
-      if (copy.body() == null) {
+      if (copy.body() == null || copy.body().contentLength() == 0L) {
         return null;
       }
       copy.body().writeTo(buffer);

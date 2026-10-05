@@ -21,7 +21,7 @@ final class AzureOpenAIProviderInput {
   @JsonKey(name: r'azureEndpoint')
   final String azureEndpoint;
 
-  /// Azure model deployment name is required.
+  /// Azure model deployment name.
   @JsonKey(name: r'azureDeployment')
   final String azureDeployment;
 

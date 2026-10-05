@@ -425,7 +425,7 @@ namespace Algolia.Search.Clients;
           {{/required}}
           {{/formParams}}
           {{#bodyParam}}
-          requestOptions.Data = {{paramName}};
+          requestOptions.Data = {{paramName}}{{^required}} ?? new object(){{/required}};
           {{/bodyParam}}
           {{#vendorExtensions}}
           {{#x-use-read-transporter}}
@@ -518,7 +518,7 @@ namespace Algolia.Search.Clients;
           {{/required}}
           {{/formParams}}
           {{#bodyParam}}
-          requestOptions.Data = {{paramName}};
+          requestOptions.Data = {{paramName}}{{^required}} ?? new object(){{/required}};
           {{/bodyParam}}
           {{#vendorExtensions}}
           {{#x-use-read-transporter}}

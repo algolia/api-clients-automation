@@ -1323,9 +1323,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
@@ -1347,9 +1345,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
@@ -1371,9 +1367,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
@@ -1395,9 +1389,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
@@ -2455,9 +2447,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponseBodyData, "{}".data(using: .utf8))
+        XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)

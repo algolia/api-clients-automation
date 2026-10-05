@@ -241,6 +241,8 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/name'
+                hypothesis:
+                  $ref: '#/components/schemas/hypothesis'
                 variants:
                   type: array
                   description: A/B test variants.
@@ -285,6 +287,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
     get:
       tags:
         - abtesting-v3
@@ -335,6 +339,7 @@ paths:
           example: desc
           schema:
             $ref: '#/components/schemas/direction'
+        - $ref: '#/components/parameters/Methods'
       responses:
         '200':
           description: OK
@@ -374,6 +379,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
   /3/abtests/{id}:
     get:
       tags:
@@ -385,6 +392,7 @@ paths:
       description: Retrieves the details for an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
+        - $ref: '#/components/parameters/Methods'
       responses:
         '200':
           description: OK
@@ -407,6 +415,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
     delete:
       tags:
         - abtesting-v3
@@ -562,6 +572,7 @@ paths:
             type: array
             items:
               $ref: '#/components/schemas/MetricName'
+        - $ref: '#/components/parameters/Methods'
       responses:
         '200':
           description: OK
@@ -692,7 +703,11 @@ paths:
         '403':
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
-          $ref: '#/components/responses/IndexNotFound'
+          description: A/B test, variant, or index not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBase'
         '409':
           $ref: '#/components/responses/Conflict'
         '422':
@@ -745,7 +760,11 @@ paths:
         '403':
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
-          $ref: '#/components/responses/IndexNotFound'
+          description: A/B test, variant, or index not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBase'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
   /setClientApiKey:
@@ -804,6 +823,26 @@ components:
       schema:
         type: object
         additionalProperties: true
+    Methods:
+      in: query
+      name: methods
+      description: >
+        Statistical analysis results to include, as a comma-separated list.
+
+        When omitted, each test uses its configured method, or `frequentist` if
+        no method is configured.
+
+        Request both methods to include both sets of available results. This
+        doesn't change the test configuration or compute missing results.
+
+        Duplicate values aren't allowed.
+      style: form
+      explode: false
+      schema:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/components/schemas/AnalysisMethod'
     ID:
       in: path
       name: id
@@ -854,6 +893,16 @@ components:
         - asc
         - desc
       example: desc
+    AnalysisMethod:
+      type: string
+      description: >
+        A/B test statistical analysis method.
+
+        When omitted, the test is treated as `frequentist`. The server doesn't
+        write a default value back to the configuration.
+      enum:
+        - bayesian
+        - frequentist
     abTestID:
       type: integer
       description: Unique A/B test identifier.
@@ -879,6 +928,10 @@ components:
       type: string
       description: A/B test name.
       example: Custom ranking sales rank test
+    hypothesis:
+      type: string
+      description: Expected outcome of the A/B test.
+      example: Enabling the feature increases conversion rate
     Status:
       type: string
       description: >
@@ -923,7 +976,7 @@ components:
           type: number
           format: double
           description: >
-            Only present in case the metric is 'revenue'.
+            Only present for `revenue` metrics.
 
             It is the amount exceeding the 95th percentile of global revenue
             transactions involved in the AB Test. This amount is not considered
@@ -940,17 +993,95 @@ components:
       example:
         winsorizedValue: 888.8
         mean: 53.7
+    evidenceStatus:
+      type: string
+      description: >
+        Whether this variant metric's result is trustworthy yet.
+
+        This doesn't mean the A/B test has ended, and it doesn't declare a
+        winning variant.
+
+
+        - `enough`. Enough evidence has accumulated to trust this metric's
+        result for this variant.
+
+        - `not_enough`. Evidence was computed but hasn't reached the threshold
+        yet.
+
+        - `collecting`. Evidence is still accumulating, so it's too early to
+        report a verdict.
+
+        - `no_data`. No usable data for this variant metric, and none is
+        expected for it.
+
+        - `unavailable`. Evidence can't be computed for this variant metric's
+        comparison.
+      example: not_enough
+      enum:
+        - enough
+        - not_enough
+        - collecting
+        - no_data
+        - unavailable
+    metricEvidence:
+      type: object
+      description: >
+        Evidence status for this variant metric's comparison with the control.
+
+        Only present when the API has an evidence status for the comparison.
+        Omitted when evidence isn't applicable or no status exists.
+      properties:
+        status:
+          $ref: '#/components/schemas/evidenceStatus'
+      required:
+        - status
+    bayesianMetricResult:
+      type: object
+      description: >
+        Bayesian inference results for this variant metric.
+
+        Omitted when Bayesian results aren't requested or no Bayesian result is
+        available for this metric.
+
+        Individual inference fields can be omitted when their values aren't
+        available.
+      properties:
+        probabilityToBeBetter:
+          type: number
+          format: double
+          description: Probability that this variant is better than the control.
+          example: 0.991
+        relativeEffectCILow:
+          type: number
+          format: double
+          description: >-
+            Lower bound of the 95% credible interval for the relative effect
+            (variant/control minus 1).
+          example: 0.04
+        relativeEffectCIHigh:
+          type: number
+          format: double
+          description: >-
+            Upper bound of the 95% credible interval for the relative effect
+            (variant/control minus 1).
+          example: 0.39
+        evidence:
+          $ref: '#/components/schemas/metricEvidence'
     metricResult:
       type: object
       properties:
         name:
           type: string
+          description: Metric name. Revenue per search results use `revenue_per_search`.
         updatedAt:
           type: string
           description: Date and time when the metric was last updated, in RFC 3339 format.
         value:
           type: number
           format: double
+          description: >-
+            Metric value. For `revenue_per_search`, this is the winsorized mean
+            revenue per search in the specified currency.
         valueCIHigh:
           type: number
           format: double
@@ -984,13 +1115,14 @@ components:
         pValue:
           type: number
           format: double
-          description: >-
-            PValue for the first variant (control) will always be 0. For the
-            other variants, pValue is calculated for the current variant based
-            on the control.
+          description: |
+            P-value for this variant compared to the control.
+            Omitted when no p-value is available for this metric.
         dimension:
           type: string
-          description: Dimension defined during test creation.
+          description: >-
+            Dimension defined during test creation. For revenue metrics,
+            including `revenue_per_search`, this is the currency.
         metadata:
           $ref: '#/components/schemas/metricMetadata'
         criticalValue:
@@ -1009,20 +1141,24 @@ components:
           description: >
             Whether the pValue is significant or not based on the critical value
             and the error correction algorithm used.
+        bayesian:
+          $ref: '#/components/schemas/bayesianMetricResult'
       required:
         - name
         - updatedAt
         - value
-        - pValue
       example:
         - name: addToCartCount
           updatedAt: '2025-06-15T15:06:44.400601Z'
           value: 5
-          pValue: 0.01
         - name: clickThroughRate
           updatedAt: '2025-05-15T17:52:15.644906Z'
           value: 0.20869847452125934
           pValue: 0.004
+          bayesian:
+            probabilityToBeBetter: 0.991
+            evidence:
+              status: enough
         - name: revenue
           dimension: USD
           updatedAt: '2025-05-15T17:52:15.644906Z'
@@ -1037,6 +1173,18 @@ components:
           pValue: 0.04
           metadata:
             winsorizedValue: 888.8
+        - name: revenue_per_search
+          dimension: USD
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 12.45
+          metadata:
+            mean: 12.45
+          bayesian:
+            probabilityToBeBetter: 0.991
+            relativeEffectCILow: 0.04
+            relativeEffectCIHigh: 0.39
+            evidence:
+              status: unavailable
     metrics:
       type: array
       description: All ABTest metrics that were defined during test creation.
@@ -1154,7 +1302,7 @@ components:
       type: object
       description: >-
         Configuration for the smallest difference between test variants you want
-        to detect.
+        to detect, used to estimate the required sample size.
       properties:
         size:
           type: number
@@ -1211,6 +1359,23 @@ components:
       enum:
         - bonferroni
         - benjamini-hochberg
+    PrimaryMetric:
+      type: string
+      description: >
+        Primary metric for Bayesian analysis. Required when `method` is
+        `bayesian`.
+
+        If the request includes a non-empty `metrics` list, this metric must be
+        in that list.
+
+        Revenue per search requires access to revenue analytics.
+      example: conversion_rate
+      enum:
+        - add_to_cart_rate
+        - click_through_rate
+        - conversion_rate
+        - purchase_rate
+        - revenue_per_search
     ABTestConfiguration:
       title: configuration
       type: object
@@ -1222,6 +1387,10 @@ components:
           $ref: '#/components/schemas/MetricsFilters'
         errorCorrection:
           $ref: '#/components/schemas/ErrorCorrectionType'
+        method:
+          $ref: '#/components/schemas/AnalysisMethod'
+        primaryMetric:
+          $ref: '#/components/schemas/PrimaryMetric'
     Decision:
       type: object
       additionalProperties: false
@@ -1262,6 +1431,8 @@ components:
           $ref: '#/components/schemas/stoppedAt'
         name:
           $ref: '#/components/schemas/name'
+        hypothesis:
+          $ref: '#/components/schemas/hypothesis'
         status:
           $ref: '#/components/schemas/Status'
         variants:
@@ -1273,6 +1444,7 @@ components:
       required:
         - status
         - name
+        - hypothesis
         - createdAt
         - endAt
         - updatedAt
@@ -1407,6 +1579,7 @@ components:
         - user_count
         - tracked_user_count
         - no_result_count
+        - tracked_no_result_count
         - add_to_cart_count
         - purchase_count
         - clicked_search_count
@@ -1417,6 +1590,8 @@ components:
         - purchase_rate
         - average_click_position
         - revenue
+        - revenue_per_search
+        - average_order_value
     metricDate:
       type: object
       properties:
@@ -1467,7 +1642,7 @@ components:
         name:
           type: string
           description: Name of the feature the settings belong to.
-          example: reranking
+          example: drr
         settings:
           description: Feature settings payload. The shape depends on the feature.
       required:

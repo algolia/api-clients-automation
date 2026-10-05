@@ -336,7 +336,7 @@ public class {{classname}} extends ApiClient {
     HttpRequest request = HttpRequest.builder()
         {{#vendorExtensions}}{{#x-is-custom-request}}.setPathEncoded("{{{serverPathSuffix}}}{{{path}}}", path){{/x-is-custom-request}}{{^x-is-custom-request}}.setPath("{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}, {{{paramName}}}{{/pathParams}}){{/x-is-custom-request}}{{/vendorExtensions}}
         .setMethod("{{httpMethod}}")
-        {{#bodyParam}}.setBody({{paramName}}){{/bodyParam}}
+        {{#bodyParam}}.setBody({{^required}}{{paramName}} != null ? {{paramName}} : Collections.emptyMap(){{/required}}{{#required}}{{paramName}}{{/required}}){{/bodyParam}}
         {{#vendorExtensions.x-use-read-transporter}}.setRead(true){{/vendorExtensions.x-use-read-transporter}}
         {{#headerParams}}.addHeader("{{baseName}}", {{paramName}}){{/headerParams}}
           {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.addQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.addQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
@@ -362,7 +362,7 @@ public class {{classname}} extends ApiClient {
     HttpRequest request = HttpRequest.builder()
         {{#vendorExtensions}}{{#x-is-custom-request}}.setPathEncoded("{{{serverPathSuffix}}}{{{path}}}", path){{/x-is-custom-request}}{{^x-is-custom-request}}.setPath("{{{serverPathSuffix}}}{{{path}}}"{{#pathParams}}, {{{paramName}}}{{/pathParams}}){{/x-is-custom-request}}{{/vendorExtensions}}
         .setMethod("{{httpMethod}}")
-        {{#bodyParam}}.setBody({{paramName}}){{/bodyParam}}
+        {{#bodyParam}}.setBody({{^required}}{{paramName}} != null ? {{paramName}} : Collections.emptyMap(){{/required}}{{#required}}{{paramName}}{{/required}}){{/bodyParam}}
         {{#vendorExtensions.x-use-read-transporter}}.setRead(true){{/vendorExtensions.x-use-read-transporter}}
         {{#headerParams}}.addHeader("{{baseName}}", {{paramName}}){{/headerParams}}
           {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.addQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.addQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}

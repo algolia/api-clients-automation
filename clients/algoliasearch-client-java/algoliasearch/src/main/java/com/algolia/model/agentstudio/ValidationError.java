@@ -21,12 +21,6 @@ public class ValidationError {
   @JsonProperty("type")
   private String type;
 
-  @JsonProperty("input")
-  private Object input;
-
-  @JsonProperty("ctx")
-  private Object ctx;
-
   public ValidationError setLoc(List<LocationItemUnion> loc) {
     this.loc = loc;
     return this;
@@ -65,28 +59,6 @@ public class ValidationError {
     return type;
   }
 
-  public ValidationError setInput(Object input) {
-    this.input = input;
-    return this;
-  }
-
-  /** Get input */
-  @javax.annotation.Nullable
-  public Object getInput() {
-    return input;
-  }
-
-  public ValidationError setCtx(Object ctx) {
-    this.ctx = ctx;
-    return this;
-  }
-
-  /** Get ctx */
-  @javax.annotation.Nullable
-  public Object getCtx() {
-    return ctx;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -99,15 +71,13 @@ public class ValidationError {
     return (
       Objects.equals(this.loc, validationError.loc) &&
       Objects.equals(this.msg, validationError.msg) &&
-      Objects.equals(this.type, validationError.type) &&
-      Objects.equals(this.input, validationError.input) &&
-      Objects.equals(this.ctx, validationError.ctx)
+      Objects.equals(this.type, validationError.type)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(loc, msg, type, input, ctx);
+    return Objects.hash(loc, msg, type);
   }
 
   @Override
@@ -117,8 +87,6 @@ public class ValidationError {
     sb.append("    loc: ").append(toIndentedString(loc)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    input: ").append(toIndentedString(input)).append("\n");
-    sb.append("    ctx: ").append(toIndentedString(ctx)).append("\n");
     sb.append("}");
     return sb.toString();
   }

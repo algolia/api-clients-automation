@@ -44,6 +44,54 @@ describe('bulkDeleteAllowedDomains', () => {
   });
 });
 
+describe('compactContext', () => {
+  test('compactContext with required parameters', async () => {
+    const req = (await client.compactContext({
+      providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: 'Hello, how are you?' }],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/unstable/context/compact');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: 'Hello, how are you?' }],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('compactContext with all parameters', async () => {
+    const req = (await client.compactContext({
+      providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'user', content: 'Hello, how are you?' },
+        { role: 'assistant', content: 'I am well.' },
+      ],
+      keepLastMessages: 2,
+      instructions: 'keep every product reference',
+      targetTokensEstimate: 128,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/unstable/context/compact');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      providerID: 'c2905529-b933-4b69-87ec-75f9829d5f59',
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'user', content: 'Hello, how are you?' },
+        { role: 'assistant', content: 'I am well.' },
+      ],
+      keepLastMessages: 2,
+      instructions: 'keep every product reference',
+      targetTokensEstimate: 128,
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('createAgent', () => {
   test('createAgent with minimal parameters', async () => {
     const req = (await client.createAgent({
@@ -65,7 +113,9 @@ describe('createAgent', () => {
       model: 'gpt-4',
       instructions: 'You are a helpful assistant.',
       config: { sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500 },
-      tools: [{ type: 'start' }],
+      tools: [
+        { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+      ],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/agent-studio/1/agents');
@@ -77,7 +127,9 @@ describe('createAgent', () => {
       model: 'gpt-4',
       instructions: 'You are a helpful assistant.',
       config: { sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500 },
-      tools: [{ type: 'start' }],
+      tools: [
+        { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+      ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -171,7 +223,14 @@ describe('createAgentCompletion', () => {
         configuration: {
           instructions: 'Test instructions override',
           config: { temperature: 0.2 },
-          tools: [{ type: 'start' }],
+          tools: [
+            {
+              type: 'client_side',
+              name: 'start',
+              description: 'Start a conversation',
+              inputSchema: { type: 'object' },
+            },
+          ],
         },
       },
     })) {
@@ -187,7 +246,9 @@ describe('createAgentCompletion', () => {
       configuration: {
         instructions: 'Test instructions override',
         config: { temperature: 0.2 },
-        tools: [{ type: 'start' }],
+        tools: [
+          { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+        ],
       },
     });
     expect(req.searchParams).toStrictEqual({ compatibilityMode: 'ai-sdk-5' });
@@ -209,6 +270,43 @@ describe('createAgentCompletion', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ messages: [{ role: 'user', content: 'Hello, how are you?' }] });
     expect(req.searchParams).toStrictEqual({ compatibilityMode: 'ai-sdk-5' });
+  });
+});
+
+describe('createAgentTask', () => {
+  test('createAgentTask with required parameters', async () => {
+    const req = (await client.createAgentTask({
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      taskRequest: { input: { pageType: 'pdp', title: 'acmePhone128Gb' } },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ input: { pageType: 'pdp', title: 'acmePhone128Gb' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('createAgentTask with all parameters', async () => {
+    const req = (await client.createAgentTask({
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      stream: false,
+      cache: false,
+      analytics: false,
+      taskRequest: {
+        task: 'algolia_on_page_suggestions',
+        kind: 'prompt_suggestions',
+        input: { pageType: 'pdp', title: 'acmePhone128Gb' },
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      task: 'algolia_on_page_suggestions',
+      kind: 'prompt_suggestions',
+      input: { pageType: 'pdp', title: 'acmePhone128Gb' },
+    });
+    expect(req.searchParams).toStrictEqual({ stream: 'false', cache: 'false', analytics: 'false' });
   });
 });
 
@@ -916,6 +1014,11 @@ describe('listAgentConversations', () => {
       feedbackVote: 1,
       page: 2,
       limit: 10,
+      includeImpactAnalytics: true,
+      clicked: true,
+      converted: false,
+      hasAlgoliaSearch: true,
+      xAlgoliaSecureUserToken: 'secure-user-token',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations');
@@ -928,7 +1031,12 @@ describe('listAgentConversations', () => {
       feedbackVote: '1',
       page: '2',
       limit: '10',
+      includeImpactAnalytics: 'true',
+      clicked: 'true',
+      converted: 'false',
+      hasAlgoliaSearch: 'true',
     });
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-secure-user-token': 'secure-user-token' }));
   });
 
   test('e2e list agent conversations', async () => {
@@ -1095,6 +1203,44 @@ describe('publishAgent', () => {
   });
 });
 
+describe('trimContext', () => {
+  test('trimContext with required parameters', async () => {
+    const req = (await client.trimContext({
+      messages: [{ role: 'user', content: 'Hello, how are you?' }],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/unstable/context/trim');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ messages: [{ role: 'user', content: 'Hello, how are you?' }] });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('trimContext with all parameters', async () => {
+    const req = (await client.trimContext({
+      messages: [
+        { role: 'user', content: 'Hello, how are you?' },
+        { role: 'assistant', content: 'I am well.' },
+      ],
+      keepLastMessages: 1,
+      maxTokensEstimate: 256,
+      dropToolParts: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/unstable/context/trim');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      messages: [
+        { role: 'user', content: 'Hello, how are you?' },
+        { role: 'assistant', content: 'I am well.' },
+      ],
+      keepLastMessages: 1,
+      maxTokensEstimate: 256,
+      dropToolParts: true,
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('unpublishAgent', () => {
   test('unpublishAgent', async () => {
     const req = (await client.unpublishAgent({
@@ -1131,7 +1277,9 @@ describe('updateAgent', () => {
         model: 'gpt-4o',
         instructions: 'Updated instructions.',
         config: { temperature: 0.5 },
-        tools: [{ type: 'start' }],
+        tools: [
+          { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+        ],
       },
     })) as unknown as EchoResponse;
 
@@ -1144,7 +1292,9 @@ describe('updateAgent', () => {
       model: 'gpt-4o',
       instructions: 'Updated instructions.',
       config: { temperature: 0.5 },
-      tools: [{ type: 'start' }],
+      tools: [
+        { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },
+      ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
@@ -1157,6 +1307,41 @@ describe('updateConfiguration', () => {
     expect(req.path).toEqual('/agent-studio/1/configuration');
     expect(req.method).toEqual('PATCH');
     expect(req.data).toEqual({ maxRetentionDays: 30 });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('updateFeedback', () => {
+  test('updateFeedback with required parameters', async () => {
+    const req = (await client.updateFeedback({
+      messageId: 'msg-abc123',
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/feedback');
+    expect(req.method).toEqual('PATCH');
+    expect(req.data).toEqual({ messageId: 'msg-abc123', agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('updateFeedback with all parameters', async () => {
+    const req = (await client.updateFeedback({
+      messageId: 'msg-abc123',
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      vote: 0,
+      tags: ['unhelpful', 'off-topic'],
+      notes: 'The response did not address my question.',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/feedback');
+    expect(req.method).toEqual('PATCH');
+    expect(req.data).toEqual({
+      messageId: 'msg-abc123',
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      vote: 0,
+      tags: ['unhelpful', 'off-topic'],
+      notes: 'The response did not address my question.',
+    });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

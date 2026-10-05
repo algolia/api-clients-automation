@@ -13,8 +13,8 @@ InjectionMainSearchSource _$InjectionMainSearchSourceFromJson(
       json,
       ($checkedConvert) {
         final val = InjectionMainSearchSource(
-          search: $checkedConvert(
-              'search', (v) => MainSearch.fromJson(v as Map<String, dynamic>)),
+          search: $checkedConvert('search',
+              (v) => InjectionMainSearch.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },

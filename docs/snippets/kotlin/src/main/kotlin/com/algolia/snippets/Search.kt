@@ -1089,7 +1089,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.deleteObjects(indexName = "<YOUR_INDEX_NAME>", objectIDs = listOf("1", "2"))
 
     // >LOG
@@ -2165,7 +2165,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2196,7 +2196,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.partialUpdateObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2528,7 +2528,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2568,7 +2568,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2608,7 +2608,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2638,7 +2638,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2668,7 +2668,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -2697,7 +2697,7 @@ class SnippetSearchClient {
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
     // Call the API
-    var response =
+    var response: List<BatchResponse> =
       client.saveObjects(
         indexName = "<YOUR_INDEX_NAME>",
         objects =
@@ -8159,7 +8159,7 @@ class SnippetSearchClient {
         indexName = "<YOUR_INDEX_NAME>",
         indexSettings =
           IndexSettings(
-            paginationLimitedTo = 10,
+            paginationLimitedTo = 10L,
             typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
           ),
         forwardToReplicas = true,
@@ -9394,7 +9394,7 @@ class SnippetSearchClient {
             mode = Mode.entries.first { it.value == "neuralSearch" },
             numericAttributesForFiltering = listOf("algolia"),
             optionalWords = OptionalWords.of(listOf("myspace")),
-            paginationLimitedTo = 0,
+            paginationLimitedTo = 0L,
             queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
             queryType = QueryType.entries.first { it.value == "prefixLast" },
             ranking = listOf("geo"),
@@ -10151,7 +10151,7 @@ class SnippetSearchClient {
     var response =
       client.setSettings(
         indexName = "<YOUR_INDEX_NAME>",
-        indexSettings = IndexSettings(paginationLimitedTo = 1000),
+        indexSettings = IndexSettings(paginationLimitedTo = 1000L),
       )
 
     // >LOG

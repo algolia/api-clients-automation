@@ -63,6 +63,41 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('addABTests with Bayesian configuration')]
+    public function testAddABTests1(): void
+    {
+        $client = $this->getClient();
+        $client->addABTests(
+            ['endAt' => '2022-12-31T00:00:00.000Z',
+                'name' => 'myABTest',
+                'metrics' => [
+                    ['name' => 'conversionRate',
+                    ],
+                ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 30,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+                'configuration' => ['method' => 'bayesian',
+                    'primaryMetric' => 'conversion_rate',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests',
+                'method' => 'POST',
+                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('applyVariantSettings')]
     public function testApplyVariantSettings(): void
     {
@@ -76,7 +111,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/settings/2/apply',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -93,7 +128,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -112,7 +147,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -130,7 +165,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -149,7 +184,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -179,7 +214,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -517,7 +552,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -564,7 +599,30 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
+            ],
+        ]);
+    }
+
+    #[TestDox('getABTest with both inference methods')]
+    public function testGetABTest1(): void
+    {
+        $client = $this->getClient();
+        $client->getABTest(
+            42,
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"methods":"frequentist%2Cbayesian"}', true),
             ],
         ]);
     }
@@ -581,7 +639,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/settings',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -598,7 +656,33 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/timeseries',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
+            ],
+        ]);
+    }
+
+    #[TestDox('getTimeseries with Bayesian revenue per search')]
+    public function testGetTimeseries1(): void
+    {
+        $client = $this->getClient();
+        $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/timeseries',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}', true),
             ],
         ]);
     }
@@ -613,7 +697,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -628,14 +712,19 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             'cts_e2e ab',
             't',
             'asc',
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         $this->assertRequests([
             [
                 'path' => '/3/abtests',
                 'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}', true),
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}', true),
             ],
         ]);
     }
@@ -691,7 +780,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests/42/stop',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -708,10 +797,16 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

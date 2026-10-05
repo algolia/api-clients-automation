@@ -101,6 +101,8 @@ public class SnippetsGenerator extends TestsGenerator {
     }
 
     List<Object> blocks = new ArrayList<>();
+    // model names of list-returning helpers, so import templates can bring the types in scope
+    Set<String> listReturnTypes = new TreeSet<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client, true);
     boolean hasStreamingSnippets = false;
 
@@ -128,6 +130,9 @@ public class SnippetsGenerator extends TestsGenerator {
         test.put("testIndex", i == 0 ? "" : i);
         snippet.addMethodCall(test, paramsType, ope);
         addRequestOptions(paramsType, snippet.requestOptions, test);
+        if (test.get("listReturnType") != null) {
+          listReturnTypes.add((String) test.get("listReturnType"));
+        }
         tests.add(test);
         if ((boolean) ope.vendorExtensions.getOrDefault("x-streaming", false)) {
           hasStreamingSnippets = true;
@@ -139,5 +144,6 @@ public class SnippetsGenerator extends TestsGenerator {
     }
     bundle.put("blocksRequests", blocks);
     bundle.put("hasStreamingSnippets", hasStreamingSnippets);
+    bundle.put("listReturnTypes", new ArrayList<>(listReturnTypes));
   }
 }

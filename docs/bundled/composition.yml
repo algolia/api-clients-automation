@@ -1102,6 +1102,8 @@ paths:
               type: object
               additionalProperties: false
               properties:
+                externalProvider:
+                  $ref: '#/components/schemas/externalProvider'
                 feedsOrder:
                   $ref: '#/components/schemas/feedsOrder'
                 params:
@@ -1109,6 +1111,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -1136,7 +1141,10 @@ paths:
               new RequestBody
               {
                 Params = new Params { Query = "batman" },
-                FeedsOrder = new List<string> { "feed-movies", "feed-comics" },
+                ExternalProvider = new ExternalProvider
+                {
+                  ConfigurationParams = new Dictionary<string, object> { { "customer_id", "customer123" } },
+                },
               }
             );
 
@@ -1156,10 +1164,11 @@ paths:
                 params: Params(
                   query: "batman",
                 ),
-                feedsOrder: [
-                  "feed-movies",
-                  "feed-comics",
-                ],
+                externalProvider: ExternalProvider(
+                  configurationParams: {
+                    'customer_id': "customer123",
+                  },
+                ),
               ),
             );
 
@@ -1184,8 +1193,8 @@ paths:
             response, err := client.Search(client.NewApiSearchRequest(
               "foo",
               composition.NewEmptyRequestBody().SetParams(
-                composition.NewEmptyParams().SetQuery("batman")).SetFeedsOrder(
-                []string{"feed-movies", "feed-comics"})))
+                composition.NewEmptyParams().SetQuery("batman")).SetExternalProvider(
+                composition.NewEmptyExternalProvider().SetConfigurationParams(map[string]any{"customer_id": "customer123"}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1209,7 +1218,15 @@ paths:
 
             SearchResponse response = client.search(
               "foo",
-              new RequestBody().setParams(new Params().setQuery("batman")).setFeedsOrder(Arrays.asList("feed-movies", "feed-comics")),
+              new RequestBody().setParams(new Params().setQuery("batman")).setExternalProvider(
+                new ExternalProvider().setConfigurationParams(
+                  new HashMap() {
+                    {
+                      put("customer_id", "customer123");
+                    }
+                  }
+                )
+              ),
               Hit.class
             );
 
@@ -1230,7 +1247,10 @@ paths:
 
             const response = await client.search({
               compositionID: 'foo',
-              requestBody: { params: { query: 'batman' }, feedsOrder: ['feed-movies', 'feed-comics'] },
+              requestBody: {
+                params: { query: 'batman' },
+                externalProvider: { configurationParams: { customer_id: 'customer123' } },
+              },
             });
 
 
@@ -1255,7 +1275,11 @@ paths:
                 requestBody =
                   RequestBody(
                     params = Params(query = "batman"),
-                    feedsOrder = listOf("feed-movies", "feed-comics"),
+                    externalProvider =
+                      ExternalProvider(
+                        configurationParams =
+                          buildJsonObject { put("customer_id", JsonPrimitive("customer123")) }
+                      ),
                   ),
               )
 
@@ -1278,10 +1302,8 @@ paths:
                 'foo',
                 ['params' => ['query' => 'batman',
                 ],
-                    'feedsOrder' => [
-                        'feed-movies',
-
-                        'feed-comics',
+                    'externalProvider' => ['configurationParams' => ['customer_id' => 'customer123',
+                    ],
                     ],
                 ],
             );
@@ -1311,10 +1333,11 @@ paths:
                     "params": {
                         "query": "batman",
                     },
-                    "feedsOrder": [
-                        "feed-movies",
-                        "feed-comics",
-                    ],
+                    "externalProvider": {
+                        "configurationParams": {
+                            "customer_id": "customer123",
+                        },
+                    },
                 },
             )
 
@@ -1338,7 +1361,7 @@ paths:
               "foo",
               Algolia::Composition::RequestBody.new(
                 params: Algolia::Composition::Params.new(query: "batman"),
-                feeds_order: ["feed-movies", "feed-comics"]
+                external_provider: Algolia::Composition::ExternalProvider.new(configuration_params: {customer_id: "customer123"})
               )
             )
 
@@ -1367,7 +1390,11 @@ paths:
                       query = Some("batman")
                     )
                   ),
-                  feedsOrder = Some(Seq("feed-movies", "feed-comics"))
+                  externalProvider = Some(
+                    ExternalProvider(
+                      configurationParams = Some(Map("customer_id" -> "customer123"))
+                    )
+                  )
                 )
               ),
               Duration(100, "sec")
@@ -1393,7 +1420,7 @@ paths:
                 compositionID: "foo",
                 requestBody: RequestBody(
                     params: CompositionParams(query: "batman"),
-                    feedsOrder: ["feed-movies", "feed-comics"]
+                    externalProvider: ExternalProvider(configurationParams: ["customer_id": AnyCodable("customer123")])
                 )
             )
 
@@ -1514,7 +1541,12 @@ paths:
               "feedsOrder": [
                 "feed-1",
                 "feed-3"
-              ]
+              ],
+              "externalProvider": {
+                "configurationParams": {
+                  "customer_id": "customer123"
+                }
+              }
             }
             '
   /1/compositions/{compositionID}/facets/{facetName}/query:
@@ -1570,6 +1602,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -1985,6 +2020,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -2224,6 +2262,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -2475,6 +2516,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -2505,148 +2549,59 @@ paths:
 
             // Call the API
             var response = await client.PutCompositionAsync(
-              "my-compo",
+              "my-external-provider-compo",
               new Composition
               {
-                ObjectID = "my-compo",
-                Name = "my composition",
+                ObjectID = "my-external-provider-compo",
+                Name = "my external provider composition",
                 Behavior = new CompositionBehavior(
-                  new CompositionMultifeedBehavior
+                  new CompositionInjectionBehavior
                   {
-                    Multifeed = new Multifeed
+                    Injection = new Injection
                     {
-                      Feeds = new Dictionary<string, FeedInjection>
+                      Main = new InjectionMain
                       {
-                        {
-                          "products",
-                          new FeedInjection
+                        Source = new InjectionMainSource(
+                          new InjectionMainExternalProviderSource
                           {
-                            Injection = new Injection
+                            ExternalProvider = new InjectionMainExternalProvider
                             {
-                              Main = new InjectionMain
+                              Index = "products",
+                              ConfigurationID = "my-rmn-connection",
+                              ConfigurationParams = new Dictionary<string, object>
                               {
-                                Source = new InjectionMainSource(
-                                  new InjectionMainSearchSource
-                                  {
-                                    Search = new MainSearch
-                                    {
-                                      Index = "products",
-                                      Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
-                                    },
-                                  }
-                                ),
+                                { "campaign_id", "summer-sale" },
+                                { "customer_id", "customer-default" },
                               },
-                              InjectedItems = new List<InjectionInjectedItem>
+                              Params = new MainInjectionQueryParameters { Filters = "instock:true" },
+                              Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                            },
+                          }
+                        ),
+                      },
+                      InjectedItems = new List<InjectionInjectedItem>
+                      {
+                        new InjectionInjectedItem
+                        {
+                          Key = "sponsored",
+                          Source = new InjectedItemSource(
+                            new InjectedItemExternalProviderSource
+                            {
+                              ExternalProvider = new InjectedItemExternalProvider
                               {
-                                new InjectionInjectedItem
+                                Index = "products",
+                                ConfigurationID = "my-rmn-connection",
+                                ConfigurationParams = new Dictionary<string, object>
                                 {
-                                  Key = "featured-products",
-                                  Source = new InjectedItemSource(
-                                    new InjectedItemSearchSource
-                                    {
-                                      Search = new InjectedItemSearch
-                                      {
-                                        Index = "products",
-                                        Params = new BaseInjectionQueryParameters
-                                        {
-                                          Filters = "featured:true",
-                                        },
-                                      },
-                                    }
-                                  ),
-                                  Position = 0,
-                                  Length = 2,
+                                  { "campaign_id", "summer-sale" },
                                 },
                               },
-                            },
-                          }
-                        },
-                        {
-                          "articles",
-                          new FeedInjection
-                          {
-                            Injection = new Injection
-                            {
-                              Main = new InjectionMain
-                              {
-                                Source = new InjectionMainSource(
-                                  new InjectionMainSearchSource
-                                  {
-                                    Search = new MainSearch
-                                    {
-                                      Index = "articles",
-                                      Params = new MainInjectionQueryParameters
-                                      {
-                                        HitsPerPage = 5,
-                                        AttributesToRetrieve = new List<string>
-                                        {
-                                          "title",
-                                          "excerpt",
-                                          "publishedAt",
-                                        },
-                                      },
-                                    },
-                                  }
-                                ),
-                              },
-                              InjectedItems = new List<InjectionInjectedItem>
-                              {
-                                new InjectionInjectedItem
-                                {
-                                  Key = "editorial-picks",
-                                  Source = new InjectedItemSource(
-                                    new InjectedItemSearchSource
-                                    {
-                                      Search = new InjectedItemSearch
-                                      {
-                                        Index = "articles",
-                                        Params = new BaseInjectionQueryParameters
-                                        {
-                                          Filters = "editorial_pick:true",
-                                        },
-                                      },
-                                    }
-                                  ),
-                                  Position = 0,
-                                  Length = 1,
-                                },
-                              },
-                            },
-                          }
-                        },
-                        {
-                          "videos",
-                          new FeedInjection
-                          {
-                            Injection = new Injection
-                            {
-                              Main = new InjectionMain
-                              {
-                                Source = new InjectionMainSource(
-                                  new InjectionMainSearchSource
-                                  {
-                                    Search = new MainSearch
-                                    {
-                                      Index = "videos",
-                                      Params = new MainInjectionQueryParameters
-                                      {
-                                        HitsPerPage = 3,
-                                        AttributesToRetrieve = new List<string>
-                                        {
-                                          "title",
-                                          "thumbnail",
-                                          "duration",
-                                        },
-                                      },
-                                    },
-                                  }
-                                ),
-                              },
-                            },
-                          }
+                            }
+                          ),
+                          Position = 0,
+                          Length = 2,
                         },
                       },
-                      FeedsOrder = new List<string> { "products", "articles", "videos" },
                     },
                   }
                 ),
@@ -2664,100 +2619,43 @@ paths:
 
             // Call the API
             final response = await client.putComposition(
-              compositionID: "my-compo",
+              compositionID: "my-external-provider-compo",
               composition: Composition(
-                objectID: "my-compo",
-                name: "my composition",
-                behavior: CompositionMultifeedBehavior(
-                  multifeed: Multifeed(
-                    feeds: {
-                      'products': FeedInjection(
-                        injection: Injection(
-                          main: InjectionMain(
-                            source: InjectionMainSearchSource(
-                              search: MainSearch(
-                                index: "products",
-                                params: MainInjectionQueryParameters(
-                                  hitsPerPage: 12,
-                                ),
-                              ),
-                            ),
+                objectID: "my-external-provider-compo",
+                name: "my external provider composition",
+                behavior: CompositionInjectionBehavior(
+                  injection: Injection(
+                    main: InjectionMain(
+                      source: InjectionMainExternalProviderSource(
+                        externalProvider: InjectionMainExternalProvider(
+                          index: "products",
+                          configurationID: "my-rmn-connection",
+                          configurationParams: {
+                            'campaign_id': "summer-sale",
+                            'customer_id': "customer-default",
+                          },
+                          params: MainInjectionQueryParameters(
+                            filters: "instock:true",
                           ),
-                          injectedItems: [
-                            InjectionInjectedItem(
-                              key: "featured-products",
-                              source: InjectedItemSearchSource(
-                                search: InjectedItemSearch(
-                                  index: "products",
-                                  params: BaseInjectionQueryParameters(
-                                    filters: "featured:true",
-                                  ),
-                                ),
-                              ),
-                              position: 0,
-                              length: 2,
-                            ),
-                          ],
+                          ordering: ExternalProviderOrdering.fromJson("providerDefined"),
                         ),
                       ),
-                      'articles': FeedInjection(
-                        injection: Injection(
-                          main: InjectionMain(
-                            source: InjectionMainSearchSource(
-                              search: MainSearch(
-                                index: "articles",
-                                params: MainInjectionQueryParameters(
-                                  hitsPerPage: 5,
-                                  attributesToRetrieve: [
-                                    "title",
-                                    "excerpt",
-                                    "publishedAt",
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          injectedItems: [
-                            InjectionInjectedItem(
-                              key: "editorial-picks",
-                              source: InjectedItemSearchSource(
-                                search: InjectedItemSearch(
-                                  index: "articles",
-                                  params: BaseInjectionQueryParameters(
-                                    filters: "editorial_pick:true",
-                                  ),
-                                ),
-                              ),
-                              position: 0,
-                              length: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      'videos': FeedInjection(
-                        injection: Injection(
-                          main: InjectionMain(
-                            source: InjectionMainSearchSource(
-                              search: MainSearch(
-                                index: "videos",
-                                params: MainInjectionQueryParameters(
-                                  hitsPerPage: 3,
-                                  attributesToRetrieve: [
-                                    "title",
-                                    "thumbnail",
-                                    "duration",
-                                  ],
-                                ),
-                              ),
-                            ),
+                    ),
+                    injectedItems: [
+                      InjectionInjectedItem(
+                        key: "sponsored",
+                        source: InjectedItemExternalProviderSource(
+                          externalProvider: InjectedItemExternalProvider(
+                            index: "products",
+                            configurationID: "my-rmn-connection",
+                            configurationParams: {
+                              'campaign_id': "summer-sale",
+                            },
                           ),
                         ),
+                        position: 0,
+                        length: 2,
                       ),
-                    },
-                    feedsOrder: [
-                      "products",
-                      "articles",
-                      "videos",
                     ],
                   ),
                 ),
@@ -2784,43 +2682,32 @@ paths:
 
             response, err :=
             client.PutComposition(client.NewApiPutCompositionRequest(
-              "my-compo",
+              "my-external-provider-compo",
               composition.NewEmptyComposition().
-                SetObjectID("my-compo").
-                SetName("my composition").
-                SetBehavior(composition.CompositionMultifeedBehaviorAsCompositionBehavior(
-                  composition.NewEmptyCompositionMultifeedBehavior().SetMultifeed(
-                    composition.NewEmptyMultifeed().
-                      SetFeeds(map[string]composition.FeedInjection{"products": *composition.NewEmptyFeedInjection().SetInjection(
-                        composition.NewEmptyInjection().SetMain(
-                          composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
-                            composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                              composition.NewEmptyMainSearch().SetIndex("products").SetParams(
-                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(12)))))).SetInjectedItems(
-                          []composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("featured-products").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
-                            composition.NewEmptyInjectedItemSearchSource().SetSearch(
-                              composition.NewEmptyInjectedItemSearch().SetIndex("products").SetParams(
-                                composition.NewEmptyBaseInjectionQueryParameters().SetFilters("featured:true"))))).SetPosition(0).SetLength(2)})), "articles": *composition.NewEmptyFeedInjection().SetInjection(
-                        composition.NewEmptyInjection().SetMain(
-                          composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
-                            composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                              composition.NewEmptyMainSearch().SetIndex("articles").SetParams(
-                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(5).SetAttributesToRetrieve(
-                                  []string{"title", "excerpt", "publishedAt"})))))).SetInjectedItems(
-                          []composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("editorial-picks").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
-                            composition.NewEmptyInjectedItemSearchSource().SetSearch(
-                              composition.NewEmptyInjectedItemSearch().SetIndex("articles").SetParams(
-                                composition.NewEmptyBaseInjectionQueryParameters().SetFilters("editorial_pick:true"))))).SetPosition(0).SetLength(1)})), "videos": *composition.NewEmptyFeedInjection().SetInjection(
-                        composition.NewEmptyInjection().SetMain(
-                          composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
-                            composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                              composition.NewEmptyMainSearch().SetIndex("videos").SetParams(
-                                composition.NewEmptyMainInjectionQueryParameters().SetHitsPerPage(3).SetAttributesToRetrieve(
-                                  []string{"title", "thumbnail", "duration"})))))))}).
-                      SetFeedsOrder(
-                        []string{"products", "articles", "videos"}),
-                  ),
-                )),
+                SetObjectID("my-external-provider-compo").
+                SetName("my external provider composition").
+                SetBehavior(composition.CompositionInjectionBehaviorAsCompositionBehavior(
+                  composition.NewEmptyCompositionInjectionBehavior().SetInjection(
+                    composition.NewEmptyInjection().SetMain(
+                      composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainExternalProviderSourceAsInjectionMainSource(
+                        composition.NewEmptyInjectionMainExternalProviderSource().SetExternalProvider(
+                          composition.NewEmptyInjectionMainExternalProvider().
+                            SetIndex("products").
+                            SetConfigurationID("my-rmn-connection").
+                            SetConfigurationParams(map[string]any{"campaign_id": "summer-sale", "customer_id": "customer-default"}).
+                            SetParams(
+                              composition.NewEmptyMainInjectionQueryParameters().
+                                SetFilters("instock:true"),
+                            ).
+                            SetOrdering(composition.ExternalProviderOrdering("providerDefined")),
+                        ),
+                      ))).SetInjectedItems(
+                      []composition.InjectionInjectedItem{
+                        *composition.NewEmptyInjectionInjectedItem().SetKey("sponsored").SetSource(composition.InjectedItemExternalProviderSourceAsInjectedItemSource(
+                          composition.NewEmptyInjectedItemExternalProviderSource().SetExternalProvider(
+                            composition.NewEmptyInjectedItemExternalProvider().SetIndex("products").SetConfigurationID("my-rmn-connection").SetConfigurationParams(map[string]any{"campaign_id": "summer-sale"})))).SetPosition(0).SetLength(2),
+                      }),
+                  ))),
             ))
 
             if err != nil {
@@ -2845,100 +2732,54 @@ paths:
             // Call the API
 
             TaskIDResponse response = client.putComposition(
-              "my-compo",
+              "my-external-provider-compo",
               new Composition()
-                .setObjectID("my-compo")
-                .setName("my composition")
+                .setObjectID("my-external-provider-compo")
+                .setName("my external provider composition")
                 .setBehavior(
-                  new CompositionMultifeedBehavior().setMultifeed(
-                    new Multifeed()
-                      .setFeeds(
-                        new HashMap() {
-                          {
-                            put(
-                              "products",
-                              new FeedInjection().setInjection(
-                                new Injection()
-                                  .setMain(
-                                    new InjectionMain().setSource(
-                                      new InjectionMainSearchSource().setSearch(
-                                        new MainSearch().setIndex("products").setParams(new MainInjectionQueryParameters().setHitsPerPage(12))
-                                      )
-                                    )
-                                  )
-                                  .setInjectedItems(
-                                    Arrays.asList(
-                                      new InjectionInjectedItem()
-                                        .setKey("featured-products")
-                                        .setSource(
-                                          new InjectedItemSearchSource().setSearch(
-                                            new InjectedItemSearch()
-                                              .setIndex("products")
-                                              .setParams(new BaseInjectionQueryParameters().setFilters("featured:true"))
-                                          )
-                                        )
-                                        .setPosition(0)
-                                        .setLength(2)
-                                    )
-                                  )
+                  new CompositionInjectionBehavior().setInjection(
+                    new Injection()
+                      .setMain(
+                        new InjectionMain().setSource(
+                          new InjectionMainExternalProviderSource().setExternalProvider(
+                            new InjectionMainExternalProvider()
+                              .setIndex("products")
+                              .setConfigurationID("my-rmn-connection")
+                              .setConfigurationParams(
+                                new HashMap() {
+                                  {
+                                    put("campaign_id", "summer-sale");
+                                    put("customer_id", "customer-default");
+                                  }
+                                }
                               )
-                            );
-                            put(
-                              "articles",
-                              new FeedInjection().setInjection(
-                                new Injection()
-                                  .setMain(
-                                    new InjectionMain().setSource(
-                                      new InjectionMainSearchSource().setSearch(
-                                        new MainSearch()
-                                          .setIndex("articles")
-                                          .setParams(
-                                            new MainInjectionQueryParameters()
-                                              .setHitsPerPage(5)
-                                              .setAttributesToRetrieve(Arrays.asList("title", "excerpt", "publishedAt"))
-                                          )
-                                      )
-                                    )
-                                  )
-                                  .setInjectedItems(
-                                    Arrays.asList(
-                                      new InjectionInjectedItem()
-                                        .setKey("editorial-picks")
-                                        .setSource(
-                                          new InjectedItemSearchSource().setSearch(
-                                            new InjectedItemSearch()
-                                              .setIndex("articles")
-                                              .setParams(new BaseInjectionQueryParameters().setFilters("editorial_pick:true"))
-                                          )
-                                        )
-                                        .setPosition(0)
-                                        .setLength(1)
-                                    )
-                                  )
-                              )
-                            );
-                            put(
-                              "videos",
-                              new FeedInjection().setInjection(
-                                new Injection().setMain(
-                                  new InjectionMain().setSource(
-                                    new InjectionMainSearchSource().setSearch(
-                                      new MainSearch()
-                                        .setIndex("videos")
-                                        .setParams(
-                                          new MainInjectionQueryParameters()
-                                            .setHitsPerPage(3)
-                                            .setAttributesToRetrieve(Arrays.asList("title", "thumbnail", "duration"))
-                                        )
-                                    )
-                                  )
-                                )
-                              )
-                            );
-                          }
-                        }
+                              .setParams(new MainInjectionQueryParameters().setFilters("instock:true"))
+                              .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                          )
+                        )
                       )
-                      .setFeedsOrder(Arrays.asList("products", "articles", "videos"))
+                      .setInjectedItems(
+                        Arrays.asList(
+                          new InjectionInjectedItem()
+                            .setKey("sponsored")
+                            .setSource(
+                              new InjectedItemExternalProviderSource().setExternalProvider(
+                                new InjectedItemExternalProvider()
+                                  .setIndex("products")
+                                  .setConfigurationID("my-rmn-connection")
+                                  .setConfigurationParams(
+                                    new HashMap() {
+                                      {
+                                        put("campaign_id", "summer-sale");
+                                      }
+                                    }
+                                  )
+                              )
+                            )
+                            .setPosition(0)
+                            .setLength(2)
+                        )
+                      )
                   )
                 )
             );
@@ -2959,60 +2800,37 @@ paths:
             // Call the API
 
             const response = await client.putComposition({
-              compositionID: 'my-compo',
+              compositionID: 'my-external-provider-compo',
               composition: {
-                objectID: 'my-compo',
-                name: 'my composition',
+                objectID: 'my-external-provider-compo',
+                name: 'my external provider composition',
                 behavior: {
-                  multifeed: {
-                    feeds: {
-                      products: {
-                        injection: {
-                          main: { source: { search: { index: 'products', params: { hitsPerPage: 12 } } } },
-                          injectedItems: [
-                            {
-                              key: 'featured-products',
-                              source: { search: { index: 'products', params: { filters: 'featured:true' } } },
-                              position: 0,
-                              length: 2,
-                            },
-                          ],
-                        },
-                      },
-                      articles: {
-                        injection: {
-                          main: {
-                            source: {
-                              search: {
-                                index: 'articles',
-                                params: { hitsPerPage: 5, attributesToRetrieve: ['title', 'excerpt', 'publishedAt'] },
-                              },
-                            },
-                          },
-                          injectedItems: [
-                            {
-                              key: 'editorial-picks',
-                              source: { search: { index: 'articles', params: { filters: 'editorial_pick:true' } } },
-                              position: 0,
-                              length: 1,
-                            },
-                          ],
-                        },
-                      },
-                      videos: {
-                        injection: {
-                          main: {
-                            source: {
-                              search: {
-                                index: 'videos',
-                                params: { hitsPerPage: 3, attributesToRetrieve: ['title', 'thumbnail', 'duration'] },
-                              },
-                            },
-                          },
+                  injection: {
+                    main: {
+                      source: {
+                        externalProvider: {
+                          index: 'products',
+                          configurationID: 'my-rmn-connection',
+                          configurationParams: { campaign_id: 'summer-sale', customer_id: 'customer-default' },
+                          params: { filters: 'instock:true' },
+                          ordering: 'providerDefined',
                         },
                       },
                     },
-                    feedsOrder: ['products', 'articles', 'videos'],
+                    injectedItems: [
+                      {
+                        key: 'sponsored',
+                        source: {
+                          externalProvider: {
+                            index: 'products',
+                            configurationID: 'my-rmn-connection',
+                            configurationParams: { campaign_id: 'summer-sale' },
+                          },
+                        },
+                        position: 0,
+                        length: 2,
+                      },
+                    ],
                   },
                 },
               },
@@ -3036,118 +2854,56 @@ paths:
 
             var response =
               client.putComposition(
-                compositionID = "my-compo",
+                compositionID = "my-external-provider-compo",
                 composition =
                   Composition(
-                    objectID = "my-compo",
-                    name = "my composition",
+                    objectID = "my-external-provider-compo",
+                    name = "my external provider composition",
                     behavior =
-                      CompositionMultifeedBehavior(
-                        multifeed =
-                          Multifeed(
-                            feeds =
-                              mapOf(
-                                "products" to
-                                  FeedInjection(
-                                    injection =
-                                      Injection(
-                                        main =
-                                          InjectionMain(
-                                            source =
-                                              InjectionMainSearchSource(
-                                                search =
-                                                  MainSearch(
-                                                    index = "products",
-                                                    params = MainInjectionQueryParameters(hitsPerPage = 12),
-                                                  )
-                                              )
-                                          ),
-                                        injectedItems =
-                                          listOf(
-                                            InjectionInjectedItem(
-                                              key = "featured-products",
-                                              source =
-                                                InjectedItemSearchSource(
-                                                  search =
-                                                    InjectedItemSearch(
-                                                      index = "products",
-                                                      params =
-                                                        BaseInjectionQueryParameters(
-                                                          filters = "featured:true"
-                                                        ),
-                                                    )
-                                                ),
-                                              position = 0,
-                                              length = 2,
-                                            )
-                                          ),
+                      CompositionInjectionBehavior(
+                        injection =
+                          Injection(
+                            main =
+                              InjectionMain(
+                                source =
+                                  InjectionMainExternalProviderSource(
+                                    externalProvider =
+                                      InjectionMainExternalProvider(
+                                        index = "products",
+                                        configurationID = "my-rmn-connection",
+                                        configurationParams =
+                                          buildJsonObject {
+                                            put("campaign_id", JsonPrimitive("summer-sale"))
+                                            put("customer_id", JsonPrimitive("customer-default"))
+                                          },
+                                        params = MainInjectionQueryParameters(filters = "instock:true"),
+                                        ordering =
+                                          ExternalProviderOrdering.entries.first {
+                                            it.value == "providerDefined"
+                                          },
                                       )
-                                  ),
-                                "articles" to
-                                  FeedInjection(
-                                    injection =
-                                      Injection(
-                                        main =
-                                          InjectionMain(
-                                            source =
-                                              InjectionMainSearchSource(
-                                                search =
-                                                  MainSearch(
-                                                    index = "articles",
-                                                    params =
-                                                      MainInjectionQueryParameters(
-                                                        hitsPerPage = 5,
-                                                        attributesToRetrieve =
-                                                          listOf("title", "excerpt", "publishedAt"),
-                                                      ),
-                                                  )
-                                              )
-                                          ),
-                                        injectedItems =
-                                          listOf(
-                                            InjectionInjectedItem(
-                                              key = "editorial-picks",
-                                              source =
-                                                InjectedItemSearchSource(
-                                                  search =
-                                                    InjectedItemSearch(
-                                                      index = "articles",
-                                                      params =
-                                                        BaseInjectionQueryParameters(
-                                                          filters = "editorial_pick:true"
-                                                        ),
-                                                    )
-                                                ),
-                                              position = 0,
-                                              length = 1,
-                                            )
-                                          ),
-                                      )
-                                  ),
-                                "videos" to
-                                  FeedInjection(
-                                    injection =
-                                      Injection(
-                                        main =
-                                          InjectionMain(
-                                            source =
-                                              InjectionMainSearchSource(
-                                                search =
-                                                  MainSearch(
-                                                    index = "videos",
-                                                    params =
-                                                      MainInjectionQueryParameters(
-                                                        hitsPerPage = 3,
-                                                        attributesToRetrieve =
-                                                          listOf("title", "thumbnail", "duration"),
-                                                      ),
-                                                  )
-                                              )
-                                          )
-                                      )
-                                  ),
+                                  )
                               ),
-                            feedsOrder = listOf("products", "articles", "videos"),
+                            injectedItems =
+                              listOf(
+                                InjectionInjectedItem(
+                                  key = "sponsored",
+                                  source =
+                                    InjectedItemExternalProviderSource(
+                                      externalProvider =
+                                        InjectedItemExternalProvider(
+                                          index = "products",
+                                          configurationID = "my-rmn-connection",
+                                          configurationParams =
+                                            buildJsonObject {
+                                              put("campaign_id", JsonPrimitive("summer-sale"))
+                                            },
+                                        )
+                                    ),
+                                  position = 0,
+                                  length = 2,
+                                )
+                              ),
                           )
                       ),
                   ),
@@ -3169,76 +2925,31 @@ paths:
             // Call the API
 
             $response = $client->putComposition(
-                'my-compo',
-                ['objectID' => 'my-compo',
-                    'name' => 'my composition',
-                    'behavior' => ['multifeed' => ['feeds' => ['products' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'products',
-                        'params' => ['hitsPerPage' => 12,
+                'my-external-provider-compo',
+                ['objectID' => 'my-external-provider-compo',
+                    'name' => 'my external provider composition',
+                    'behavior' => ['injection' => ['main' => ['source' => ['externalProvider' => ['index' => 'products',
+                        'configurationID' => 'my-rmn-connection',
+                        'configurationParams' => ['campaign_id' => 'summer-sale',
+                            'customer_id' => 'customer-default',
                         ],
+                        'params' => ['filters' => 'instock:true',
+                        ],
+                        'ordering' => 'providerDefined',
                     ],
                     ],
                     ],
                         'injectedItems' => [
-                            ['key' => 'featured-products',
-                                'source' => ['search' => ['index' => 'products',
-                                    'params' => ['filters' => 'featured:true',
+                            ['key' => 'sponsored',
+                                'source' => ['externalProvider' => ['index' => 'products',
+                                    'configurationID' => 'my-rmn-connection',
+                                    'configurationParams' => ['campaign_id' => 'summer-sale',
                                     ],
                                 ],
                                 ],
                                 'position' => 0,
                                 'length' => 2,
                             ],
-                        ],
-                    ],
-                    ],
-                        'articles' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'articles',
-                            'params' => ['hitsPerPage' => 5,
-                                'attributesToRetrieve' => [
-                                    'title',
-
-                                    'excerpt',
-
-                                    'publishedAt',
-                                ],
-                            ],
-                        ],
-                        ],
-                        ],
-                            'injectedItems' => [
-                                ['key' => 'editorial-picks',
-                                    'source' => ['search' => ['index' => 'articles',
-                                        'params' => ['filters' => 'editorial_pick:true',
-                                        ],
-                                    ],
-                                    ],
-                                    'position' => 0,
-                                    'length' => 1,
-                                ],
-                            ],
-                        ],
-                        ],
-                        'videos' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'videos',
-                            'params' => ['hitsPerPage' => 3,
-                                'attributesToRetrieve' => [
-                                    'title',
-
-                                    'thumbnail',
-
-                                    'duration',
-                                ],
-                            ],
-                        ],
-                        ],
-                        ],
-                        ],
-                        ],
-                    ],
-                        'feedsOrder' => [
-                            'products',
-
-                            'articles',
-
-                            'videos',
                         ],
                     ],
                     ],
@@ -3265,100 +2976,43 @@ paths:
             # Call the API
 
             response = client.put_composition(
-                composition_id="my-compo",
+                composition_id="my-external-provider-compo",
                 composition={
-                    "objectID": "my-compo",
-                    "name": "my composition",
+                    "objectID": "my-external-provider-compo",
+                    "name": "my external provider composition",
                     "behavior": {
-                        "multifeed": {
-                            "feeds": {
-                                "products": {
-                                    "injection": {
-                                        "main": {
-                                            "source": {
-                                                "search": {
-                                                    "index": "products",
-                                                    "params": {
-                                                        "hitsPerPage": 12,
-                                                    },
-                                                },
-                                            },
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "externalProvider": {
+                                        "index": "products",
+                                        "configurationID": "my-rmn-connection",
+                                        "configurationParams": {
+                                            "campaign_id": "summer-sale",
+                                            "customer_id": "customer-default",
                                         },
-                                        "injectedItems": [
-                                            {
-                                                "key": "featured-products",
-                                                "source": {
-                                                    "search": {
-                                                        "index": "products",
-                                                        "params": {
-                                                            "filters": "featured:true",
-                                                        },
-                                                    },
-                                                },
-                                                "position": 0,
-                                                "length": 2,
-                                            },
-                                        ],
-                                    },
-                                },
-                                "articles": {
-                                    "injection": {
-                                        "main": {
-                                            "source": {
-                                                "search": {
-                                                    "index": "articles",
-                                                    "params": {
-                                                        "hitsPerPage": 5,
-                                                        "attributesToRetrieve": [
-                                                            "title",
-                                                            "excerpt",
-                                                            "publishedAt",
-                                                        ],
-                                                    },
-                                                },
-                                            },
+                                        "params": {
+                                            "filters": "instock:true",
                                         },
-                                        "injectedItems": [
-                                            {
-                                                "key": "editorial-picks",
-                                                "source": {
-                                                    "search": {
-                                                        "index": "articles",
-                                                        "params": {
-                                                            "filters": "editorial_pick:true",
-                                                        },
-                                                    },
-                                                },
-                                                "position": 0,
-                                                "length": 1,
-                                            },
-                                        ],
-                                    },
-                                },
-                                "videos": {
-                                    "injection": {
-                                        "main": {
-                                            "source": {
-                                                "search": {
-                                                    "index": "videos",
-                                                    "params": {
-                                                        "hitsPerPage": 3,
-                                                        "attributesToRetrieve": [
-                                                            "title",
-                                                            "thumbnail",
-                                                            "duration",
-                                                        ],
-                                                    },
-                                                },
-                                            },
-                                        },
+                                        "ordering": "providerDefined",
                                     },
                                 },
                             },
-                            "feedsOrder": [
-                                "products",
-                                "articles",
-                                "videos",
+                            "injectedItems": [
+                                {
+                                    "key": "sponsored",
+                                    "source": {
+                                        "externalProvider": {
+                                            "index": "products",
+                                            "configurationID": "my-rmn-connection",
+                                            "configurationParams": {
+                                                "campaign_id": "summer-sale",
+                                            },
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 2,
+                                },
                             ],
                         },
                     },
@@ -3382,83 +3036,37 @@ paths:
             # Call the API
 
             response = client.put_composition(
-              "my-compo",
+              "my-external-provider-compo",
               Algolia::Composition::Composition.new(
-                algolia_object_id: "my-compo",
-                name: "my composition",
-                behavior: Algolia::Composition::CompositionMultifeedBehavior.new(
-                  multifeed: Algolia::Composition::Multifeed.new(
-                    feeds: {
-                      products: Algolia::Composition::FeedInjection.new(
-                        injection: Algolia::Composition::Injection.new(
-                          main: Algolia::Composition::InjectionMain.new(
-                            source: Algolia::Composition::InjectionMainSearchSource.new(
-                              search: Algolia::Composition::MainSearch.new(
-                                index: "products",
-                                params: Algolia::Composition::MainInjectionQueryParameters.new(hits_per_page: 12)
-                              )
-                            )
-                          ),
-                          injected_items: [
-                            Algolia::Composition::InjectionInjectedItem.new(
-                              key: "featured-products",
-                              source: Algolia::Composition::InjectedItemSearchSource.new(
-                                search: Algolia::Composition::InjectedItemSearch.new(
-                                  index: "products",
-                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "featured:true")
-                                )
-                              ),
-                              position: 0,
-                              length: 2
-                            )
-                          ]
-                        )
-                      ),
-                      articles: Algolia::Composition::FeedInjection.new(
-                        injection: Algolia::Composition::Injection.new(
-                          main: Algolia::Composition::InjectionMain.new(
-                            source: Algolia::Composition::InjectionMainSearchSource.new(
-                              search: Algolia::Composition::MainSearch.new(
-                                index: "articles",
-                                params: Algolia::Composition::MainInjectionQueryParameters.new(
-                                  hits_per_page: 5,
-                                  attributes_to_retrieve: ["title", "excerpt", "publishedAt"]
-                                )
-                              )
-                            )
-                          ),
-                          injected_items: [
-                            Algolia::Composition::InjectionInjectedItem.new(
-                              key: "editorial-picks",
-                              source: Algolia::Composition::InjectedItemSearchSource.new(
-                                search: Algolia::Composition::InjectedItemSearch.new(
-                                  index: "articles",
-                                  params: Algolia::Composition::BaseInjectionQueryParameters.new(filters: "editorial_pick:true")
-                                )
-                              ),
-                              position: 0,
-                              length: 1
-                            )
-                          ]
-                        )
-                      ),
-                      videos: Algolia::Composition::FeedInjection.new(
-                        injection: Algolia::Composition::Injection.new(
-                          main: Algolia::Composition::InjectionMain.new(
-                            source: Algolia::Composition::InjectionMainSearchSource.new(
-                              search: Algolia::Composition::MainSearch.new(
-                                index: "videos",
-                                params: Algolia::Composition::MainInjectionQueryParameters.new(
-                                  hits_per_page: 3,
-                                  attributes_to_retrieve: ["title", "thumbnail", "duration"]
-                                )
-                              )
-                            )
-                          )
+                algolia_object_id: "my-external-provider-compo",
+                name: "my external provider composition",
+                behavior: Algolia::Composition::CompositionInjectionBehavior.new(
+                  injection: Algolia::Composition::Injection.new(
+                    main: Algolia::Composition::InjectionMain.new(
+                      source: Algolia::Composition::InjectionMainExternalProviderSource.new(
+                        external_provider: Algolia::Composition::InjectionMainExternalProvider.new(
+                          index: "products",
+                          configuration_id: "my-rmn-connection",
+                          configuration_params: {campaign_id: "summer-sale", customer_id: "customer-default"},
+                          params: Algolia::Composition::MainInjectionQueryParameters.new(filters: "instock:true"),
+                          ordering: "providerDefined"
                         )
                       )
-                    },
-                    feeds_order: ["products", "articles", "videos"]
+                    ),
+                    injected_items: [
+                      Algolia::Composition::InjectionInjectedItem.new(
+                        key: "sponsored",
+                        source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                          external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                            index: "products",
+                            configuration_id: "my-rmn-connection",
+                            configuration_params: {campaign_id: "summer-sale"}
+                          )
+                        ),
+                        position: 0,
+                        length: 2
+                      )
+                    ]
                   )
                 )
               )
@@ -3482,109 +3090,46 @@ paths:
 
             val response = Await.result(
               client.putComposition(
-                compositionID = "my-compo",
+                compositionID = "my-external-provider-compo",
                 composition = Composition(
-                  objectID = "my-compo",
-                  name = "my composition",
-                  behavior = CompositionMultifeedBehavior(
-                    multifeed = Multifeed(
-                      feeds = Map(
-                        "products" -> FeedInjection(
-                          injection = Injection(
-                            main = InjectionMain(
-                              source = Some(
-                                InjectionMainSearchSource(
-                                  search = MainSearch(
-                                    index = "products",
-                                    params = Some(
-                                      MainInjectionQueryParameters(
-                                        hitsPerPage = Some(12)
-                                      )
-                                    )
-                                  )
+                  objectID = "my-external-provider-compo",
+                  name = "my external provider composition",
+                  behavior = CompositionInjectionBehavior(
+                    injection = Injection(
+                      main = InjectionMain(
+                        source = Some(
+                          InjectionMainExternalProviderSource(
+                            externalProvider = InjectionMainExternalProvider(
+                              index = "products",
+                              configurationID = "my-rmn-connection",
+                              configurationParams =
+                                Some(Map("campaign_id" -> "summer-sale", "customer_id" -> "customer-default")),
+                              params = Some(
+                                MainInjectionQueryParameters(
+                                  filters = Some("instock:true")
                                 )
-                              )
-                            ),
-                            injectedItems = Some(
-                              Seq(
-                                InjectionInjectedItem(
-                                  key = "featured-products",
-                                  source = InjectedItemSearchSource(
-                                    search = InjectedItemSearch(
-                                      index = "products",
-                                      params = Some(
-                                        BaseInjectionQueryParameters(
-                                          filters = Some("featured:true")
-                                        )
-                                      )
-                                    )
-                                  ),
-                                  position = 0,
-                                  length = 2
-                                )
-                              )
-                            )
-                          )
-                        ),
-                        "articles" -> FeedInjection(
-                          injection = Injection(
-                            main = InjectionMain(
-                              source = Some(
-                                InjectionMainSearchSource(
-                                  search = MainSearch(
-                                    index = "articles",
-                                    params = Some(
-                                      MainInjectionQueryParameters(
-                                        hitsPerPage = Some(5),
-                                        attributesToRetrieve = Some(Seq("title", "excerpt", "publishedAt"))
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            ),
-                            injectedItems = Some(
-                              Seq(
-                                InjectionInjectedItem(
-                                  key = "editorial-picks",
-                                  source = InjectedItemSearchSource(
-                                    search = InjectedItemSearch(
-                                      index = "articles",
-                                      params = Some(
-                                        BaseInjectionQueryParameters(
-                                          filters = Some("editorial_pick:true")
-                                        )
-                                      )
-                                    )
-                                  ),
-                                  position = 0,
-                                  length = 1
-                                )
-                              )
-                            )
-                          )
-                        ),
-                        "videos" -> FeedInjection(
-                          injection = Injection(
-                            main = InjectionMain(
-                              source = Some(
-                                InjectionMainSearchSource(
-                                  search = MainSearch(
-                                    index = "videos",
-                                    params = Some(
-                                      MainInjectionQueryParameters(
-                                        hitsPerPage = Some(3),
-                                        attributesToRetrieve = Some(Seq("title", "thumbnail", "duration"))
-                                      )
-                                    )
-                                  )
-                                )
-                              )
+                              ),
+                              ordering = Some(ExternalProviderOrdering.withName("providerDefined"))
                             )
                           )
                         )
                       ),
-                      feedsOrder = Some(Seq("products", "articles", "videos"))
+                      injectedItems = Some(
+                        Seq(
+                          InjectionInjectedItem(
+                            key = "sponsored",
+                            source = InjectedItemExternalProviderSource(
+                              externalProvider = InjectedItemExternalProvider(
+                                index = "products",
+                                configurationID = "my-rmn-connection",
+                                configurationParams = Some(Map("campaign_id" -> "summer-sale"))
+                              )
+                            ),
+                            position = 0,
+                            length = 2
+                          )
+                        )
+                      )
                     )
                   )
                 )
@@ -3608,60 +3153,38 @@ paths:
             // Call the API
 
             let response = try await client.putComposition(
-                compositionID: "my-compo",
+                compositionID: "my-external-provider-compo",
                 composition: Composition(
-                    objectID: "my-compo",
-                    name: "my composition",
+                    objectID: "my-external-provider-compo",
+                    name: "my external provider composition",
                     behavior: CompositionBehavior
-                        .compositionMultifeedBehavior(CompositionMultifeedBehavior(multifeed: Multifeed(
-                            feeds: [
-                                "products": FeedInjection(injection: Injection(
-                                    main: InjectionMain(source: InjectionMainSource
-                                        .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                        .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                            main: InjectionMain(source: InjectionMainSource
+                                .injectionMainExternalProviderSource(
+                                    InjectionMainExternalProviderSource(externalProvider: InjectionMainExternalProvider(
+                                        index: "products",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: [
+                                            "campaign_id": AnyCodable("summer-sale"),
+                                            "customer_id": AnyCodable("customer-default"),
+                                        ],
+                                        ordering: ExternalProviderOrdering.providerDefined,
+                                        params: MainInjectionQueryParameters(filters: "instock:true")
+                                    ))
+                                )),
+                            injectedItems: [InjectionInjectedItem(
+                                key: "sponsored",
+                                source: InjectedItemSource
+                                    .injectedItemExternalProviderSource(
+                                        InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
                                             index: "products",
-                                            params: MainInjectionQueryParameters(hitsPerPage: 12)
-                                        )))),
-                                    injectedItems: [InjectionInjectedItem(
-                                        key: "featured-products",
-                                        source: InjectedItemSource
-                                            .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
-                                                index: "products",
-                                                params: BaseInjectionQueryParameters(filters: "featured:true")
-                                            ))),
-                                        position: 0,
-                                        length: 2
-                                    )]
-                                )),
-                                "articles": FeedInjection(injection: Injection(
-                                    main: InjectionMain(source: InjectionMainSource
-                                        .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
-                                            index: "articles",
-                                            params: MainInjectionQueryParameters(
-                                                attributesToRetrieve: ["title", "excerpt", "publishedAt"],
-                                                hitsPerPage: 5
-                                            )
-                                        )))),
-                                    injectedItems: [InjectionInjectedItem(
-                                        key: "editorial-picks",
-                                        source: InjectedItemSource
-                                            .injectedItemSearchSource(InjectedItemSearchSource(search: InjectedItemSearch(
-                                                index: "articles",
-                                                params: BaseInjectionQueryParameters(filters: "editorial_pick:true")
-                                            ))),
-                                        position: 0,
-                                        length: 1
-                                    )]
-                                )),
-                                "videos": FeedInjection(injection: Injection(main: InjectionMain(source: InjectionMainSource
-                                        .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
-                                            index: "videos",
-                                            params: MainInjectionQueryParameters(
-                                                attributesToRetrieve: ["title", "thumbnail", "duration"],
-                                                hitsPerPage: 3
-                                            )
-                                        )))))),
-                            ],
-                            feedsOrder: ["products", "articles", "videos"]
+                                            configurationID: "my-rmn-connection",
+                                            configurationParams: ["campaign_id": AnyCodable("summer-sale")]
+                                        ))
+                                    ),
+                                position: 0,
+                                length: 2
+                            )]
                         )))
                 )
             )
@@ -3841,7 +3364,10 @@ paths:
                                     "url": "lorem"
                                   }
                                 }
-                              ]
+                              ],
+                              "resultCard": {
+                                "enabled": true
+                              }
                             }
                           },
                           "sortFacetValuesBy": "count",
@@ -3991,6 +3517,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -4267,6 +3796,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -4322,7 +3854,7 @@ paths:
                                 Source = new InjectionMainSource(
                                   new InjectionMainSearchSource
                                   {
-                                    Search = new MainSearch { Index = "foo" },
+                                    Search = new InjectionMainSearch { Index = "foo" },
                                   }
                                 ),
                               },
@@ -4377,7 +3909,7 @@ paths:
                         injection: Injection(
                           main: InjectionMain(
                             source: InjectionMainSearchSource(
-                              search: MainSearch(
+                              search: InjectionMainSearch(
                                 index: "foo",
                               ),
                             ),
@@ -4434,7 +3966,7 @@ paths:
                         composition.NewEmptyInjection().SetMain(
                           composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
                             composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                              composition.NewEmptyMainSearch().SetIndex("foo"))))).SetInjectedItems(
+                              composition.NewEmptyInjectionMainSearch().SetIndex("foo"))))).SetInjectedItems(
                           []composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
                             composition.NewEmptyInjectedItemSearchSource().SetSearch(
                               composition.NewEmptyInjectedItemSearch().SetIndex("foo")))).SetPosition(2).SetLength(1)}).SetDeduplication(
@@ -4473,7 +4005,9 @@ paths:
                       .setBehavior(
                         new CompositionInjectionBehavior().setInjection(
                           new Injection()
-                            .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("foo"))))
+                            .setMain(
+                              new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("foo")))
+                            )
                             .setInjectedItems(
                               Arrays.asList(
                                 new InjectionInjectedItem()
@@ -4562,7 +4096,9 @@ paths:
                                       main =
                                         InjectionMain(
                                           source =
-                                            InjectionMainSearchSource(search = MainSearch(index = "bar"))
+                                            InjectionMainSearchSource(
+                                              search = InjectionMainSearch(index = "bar")
+                                            )
                                         )
                                     )
                                 ),
@@ -4706,7 +4242,7 @@ paths:
                         injection: Algolia::Composition::Injection.new(
                           main: Algolia::Composition::InjectionMain.new(
                             source: Algolia::Composition::InjectionMainSearchSource.new(
-                              search: Algolia::Composition::MainSearch.new(index: "foo")
+                              search: Algolia::Composition::InjectionMainSearch.new(index: "foo")
                             )
                           ),
                           injected_items: [
@@ -4758,7 +4294,7 @@ paths:
                             main = InjectionMain(
                               source = Some(
                                 InjectionMainSearchSource(
-                                  search = MainSearch(
+                                  search = InjectionMainSearch(
                                     index = "foo"
                                   )
                                 )
@@ -4818,7 +4354,7 @@ paths:
                             .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
                                     .injectionMainSearchSource(
-                                        InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                        InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                     )),
                                 injectedItems: [InjectionInjectedItem(
                                     key: "my-unique-injected-item-key",
@@ -5012,7 +4548,10 @@ paths:
                                           "url": "lorem"
                                         }
                                       }
-                                    ]
+                                    ],
+                                    "resultCard": {
+                                      "enabled": true
+                                    }
                                   }
                                 },
                                 "sortFacetValuesBy": "count",
@@ -5191,6 +4730,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -5496,6 +5038,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -5754,6 +5299,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -5787,12 +5335,10 @@ paths:
             // Call the API
             var response = await client.PutCompositionRuleAsync(
               "compositionID",
-              "rule-with-deduplication",
+              "rule-with-external-provider-source",
               new CompositionRule
               {
-                ObjectID = "rule-with-deduplication",
-                Description = "my description",
-                Enabled = true,
+                ObjectID = "rule-with-external-provider-source",
                 Conditions = new List<Condition>
                 {
                   new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
@@ -5807,27 +5353,35 @@ paths:
                         Main = new InjectionMain
                         {
                           Source = new InjectionMainSource(
-                            new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                            new InjectionMainSearchSource
+                            {
+                              Search = new InjectionMainSearch { Index = "my-index" },
+                            }
                           ),
                         },
                         InjectedItems = new List<InjectionInjectedItem>
                         {
                           new InjectionInjectedItem
                           {
-                            Key = "my-unique-injected-item-key",
+                            Key = "my-unique-external-provider-group-from-rule-key",
                             Source = new InjectedItemSource(
-                              new InjectedItemSearchSource
+                              new InjectedItemExternalProviderSource
                               {
-                                Search = new InjectedItemSearch { Index = "my-index" },
+                                ExternalProvider = new InjectedItemExternalProvider
+                                {
+                                  Index = "my-index",
+                                  ConfigurationID = "my-rmn-connection",
+                                  ConfigurationParams = new Dictionary<string, object>
+                                  {
+                                    { "campaign_id", "summer-sale" },
+                                  },
+                                  Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                                },
                               }
                             ),
                             Position = 0,
                             Length = 3,
                           },
-                        },
-                        Deduplication = new Deduplication
-                        {
-                          Positioning = Enum.Parse<DedupPositioning>("HighestInjected"),
                         },
                       },
                     }
@@ -5848,11 +5402,9 @@ paths:
             // Call the API
             final response = await client.putCompositionRule(
               compositionID: "compositionID",
-              objectID: "rule-with-deduplication",
+              objectID: "rule-with-external-provider-source",
               compositionRule: CompositionRule(
-                objectID: "rule-with-deduplication",
-                description: "my description",
-                enabled: true,
+                objectID: "rule-with-external-provider-source",
                 conditions: [
                   Condition(
                     anchoring: Anchoring.fromJson("contains"),
@@ -5864,26 +5416,29 @@ paths:
                     injection: Injection(
                       main: InjectionMain(
                         source: InjectionMainSearchSource(
-                          search: MainSearch(
+                          search: InjectionMainSearch(
                             index: "my-index",
                           ),
                         ),
                       ),
                       injectedItems: [
                         InjectionInjectedItem(
-                          key: "my-unique-injected-item-key",
-                          source: InjectedItemSearchSource(
-                            search: InjectedItemSearch(
+                          key: "my-unique-external-provider-group-from-rule-key",
+                          source: InjectedItemExternalProviderSource(
+                            externalProvider: InjectedItemExternalProvider(
                               index: "my-index",
+                              configurationID: "my-rmn-connection",
+                              configurationParams: {
+                                'campaign_id': "summer-sale",
+                              },
+                              ordering:
+                                  ExternalProviderOrdering.fromJson("providerDefined"),
                             ),
                           ),
                           position: 0,
                           length: 3,
                         ),
                       ],
-                      deduplication: Deduplication(
-                        positioning: DedupPositioning.fromJson("highestInjected"),
-                      ),
                     ),
                   ),
                 ),
@@ -5910,8 +5465,8 @@ paths:
 
             response, err :=
             client.PutCompositionRule(client.NewApiPutCompositionRuleRequest(
-              "compositionID", "rule-with-deduplication",
-              composition.NewEmptyCompositionRule().SetObjectID("rule-with-deduplication").SetDescription("my description").SetEnabled(true).SetConditions(
+              "compositionID", "rule-with-external-provider-source",
+              composition.NewEmptyCompositionRule().SetObjectID("rule-with-external-provider-source").SetConditions(
                 []composition.Condition{
                   *composition.NewEmptyCondition().SetAnchoring(composition.Anchoring("contains")).SetPattern("harry"),
                 }).
@@ -5921,14 +5476,13 @@ paths:
                       composition.NewEmptyInjection().SetMain(
                         composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
                           composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                            composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+                            composition.NewEmptyInjectionMainSearch().SetIndex("my-index"))))).SetInjectedItems(
                         []composition.InjectionInjectedItem{
-                          *composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
-                            composition.NewEmptyInjectedItemSearchSource().SetSearch(
-                              composition.NewEmptyInjectedItemSearch().SetIndex("my-index")))).SetPosition(0).SetLength(3),
-                        }).
-                        SetDeduplication(
-                          composition.NewEmptyDeduplication().SetPositioning(composition.DedupPositioning("highestInjected")))))))))
+                          *composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-external-provider-group-from-rule-key").SetSource(composition.InjectedItemExternalProviderSourceAsInjectedItemSource(
+                            composition.NewEmptyInjectedItemExternalProviderSource().SetExternalProvider(
+                              composition.NewEmptyInjectedItemExternalProvider().SetIndex("my-index").SetConfigurationID("my-rmn-connection").SetConfigurationParams(map[string]any{"campaign_id": "summer-sale"}).SetOrdering(composition.ExternalProviderOrdering("providerDefined"))))).SetPosition(0).SetLength(3),
+                        }),
+                    ))))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -5952,27 +5506,40 @@ paths:
 
             TaskIDResponse response = client.putCompositionRule(
               "compositionID",
-              "rule-with-deduplication",
+              "rule-with-external-provider-source",
               new CompositionRule()
-                .setObjectID("rule-with-deduplication")
-                .setDescription("my description")
-                .setEnabled(true)
+                .setObjectID("rule-with-external-provider-source")
                 .setConditions(Arrays.asList(new Condition().setAnchoring(Anchoring.CONTAINS).setPattern("harry")))
                 .setConsequence(
                   new CompositionRuleConsequence().setBehavior(
                     new CompositionInjectionBehavior().setInjection(
                       new Injection()
-                        .setMain(new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index"))))
+                        .setMain(
+                          new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("my-index")))
+                        )
                         .setInjectedItems(
                           Arrays.asList(
                             new InjectionInjectedItem()
-                              .setKey("my-unique-injected-item-key")
-                              .setSource(new InjectedItemSearchSource().setSearch(new InjectedItemSearch().setIndex("my-index")))
+                              .setKey("my-unique-external-provider-group-from-rule-key")
+                              .setSource(
+                                new InjectedItemExternalProviderSource().setExternalProvider(
+                                  new InjectedItemExternalProvider()
+                                    .setIndex("my-index")
+                                    .setConfigurationID("my-rmn-connection")
+                                    .setConfigurationParams(
+                                      new HashMap() {
+                                        {
+                                          put("campaign_id", "summer-sale");
+                                        }
+                                      }
+                                    )
+                                    .setOrdering(ExternalProviderOrdering.PROVIDER_DEFINED)
+                                )
+                              )
                               .setPosition(0)
                               .setLength(3)
                           )
                         )
-                        .setDeduplication(new Deduplication().setPositioning(DedupPositioning.HIGHEST_INJECTED))
                     )
                   )
                 )
@@ -5995,20 +5562,29 @@ paths:
 
             const response = await client.putCompositionRule({
               compositionID: 'compositionID',
-              objectID: 'rule-with-deduplication',
+              objectID: 'rule-with-external-provider-source',
               compositionRule: {
-                objectID: 'rule-with-deduplication',
-                description: 'my description',
-                enabled: true,
+                objectID: 'rule-with-external-provider-source',
                 conditions: [{ anchoring: 'contains', pattern: 'harry' }],
                 consequence: {
                   behavior: {
                     injection: {
                       main: { source: { search: { index: 'my-index' } } },
                       injectedItems: [
-                        { key: 'my-unique-injected-item-key', source: { search: { index: 'my-index' } }, position: 0, length: 3 },
+                        {
+                          key: 'my-unique-external-provider-group-from-rule-key',
+                          source: {
+                            externalProvider: {
+                              index: 'my-index',
+                              configurationID: 'my-rmn-connection',
+                              configurationParams: { campaign_id: 'summer-sale' },
+                              ordering: 'providerDefined',
+                            },
+                          },
+                          position: 0,
+                          length: 3,
+                        },
                       ],
-                      deduplication: { positioning: 'highestInjected' },
                     },
                   },
                 },
@@ -6034,12 +5610,10 @@ paths:
             var response =
               client.putCompositionRule(
                 compositionID = "compositionID",
-                objectID = "rule-with-deduplication",
+                objectID = "rule-with-external-provider-source",
                 compositionRule =
                   CompositionRule(
-                    objectID = "rule-with-deduplication",
-                    description = "my description",
-                    enabled = true,
+                    objectID = "rule-with-external-provider-source",
                     conditions =
                       listOf(
                         Condition(
@@ -6056,24 +5630,33 @@ paths:
                                 main =
                                   InjectionMain(
                                     source =
-                                      InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                                      InjectionMainSearchSource(
+                                        search = InjectionMainSearch(index = "my-index")
+                                      )
                                   ),
                                 injectedItems =
                                   listOf(
                                     InjectionInjectedItem(
-                                      key = "my-unique-injected-item-key",
+                                      key = "my-unique-external-provider-group-from-rule-key",
                                       source =
-                                        InjectedItemSearchSource(
-                                          search = InjectedItemSearch(index = "my-index")
+                                        InjectedItemExternalProviderSource(
+                                          externalProvider =
+                                            InjectedItemExternalProvider(
+                                              index = "my-index",
+                                              configurationID = "my-rmn-connection",
+                                              configurationParams =
+                                                buildJsonObject {
+                                                  put("campaign_id", JsonPrimitive("summer-sale"))
+                                                },
+                                              ordering =
+                                                ExternalProviderOrdering.entries.first {
+                                                  it.value == "providerDefined"
+                                                },
+                                            )
                                         ),
                                       position = 0,
                                       length = 3,
                                     )
-                                  ),
-                                deduplication =
-                                  Deduplication(
-                                    positioning =
-                                      DedupPositioning.entries.first { it.value == "highestInjected" }
                                   ),
                               )
                           )
@@ -6098,10 +5681,8 @@ paths:
 
             $response = $client->putCompositionRule(
                 'compositionID',
-                'rule-with-deduplication',
-                ['objectID' => 'rule-with-deduplication',
-                    'description' => 'my description',
-                    'enabled' => true,
+                'rule-with-external-provider-source',
+                ['objectID' => 'rule-with-external-provider-source',
                     'conditions' => [
                         ['anchoring' => 'contains',
                             'pattern' => 'harry',
@@ -6112,15 +5693,17 @@ paths:
                     ],
                     ],
                         'injectedItems' => [
-                            ['key' => 'my-unique-injected-item-key',
-                                'source' => ['search' => ['index' => 'my-index',
+                            ['key' => 'my-unique-external-provider-group-from-rule-key',
+                                'source' => ['externalProvider' => ['index' => 'my-index',
+                                    'configurationID' => 'my-rmn-connection',
+                                    'configurationParams' => ['campaign_id' => 'summer-sale',
+                                    ],
+                                    'ordering' => 'providerDefined',
                                 ],
                                 ],
                                 'position' => 0,
                                 'length' => 3,
                             ],
-                        ],
-                        'deduplication' => ['positioning' => 'highestInjected',
                         ],
                     ],
                     ],
@@ -6149,11 +5732,9 @@ paths:
 
             response = client.put_composition_rule(
                 composition_id="compositionID",
-                object_id="rule-with-deduplication",
+                object_id="rule-with-external-provider-source",
                 composition_rule={
-                    "objectID": "rule-with-deduplication",
-                    "description": "my description",
-                    "enabled": True,
+                    "objectID": "rule-with-external-provider-source",
                     "conditions": [
                         {
                             "anchoring": "contains",
@@ -6172,19 +5753,21 @@ paths:
                                 },
                                 "injectedItems": [
                                     {
-                                        "key": "my-unique-injected-item-key",
+                                        "key": "my-unique-external-provider-group-from-rule-key",
                                         "source": {
-                                            "search": {
+                                            "externalProvider": {
                                                 "index": "my-index",
+                                                "configurationID": "my-rmn-connection",
+                                                "configurationParams": {
+                                                    "campaign_id": "summer-sale",
+                                                },
+                                                "ordering": "providerDefined",
                                             },
                                         },
                                         "position": 0,
                                         "length": 3,
                                     },
                                 ],
-                                "deduplication": {
-                                    "positioning": "highestInjected",
-                                },
                             },
                         },
                     },
@@ -6209,31 +5792,33 @@ paths:
 
             response = client.put_composition_rule(
               "compositionID",
-              "rule-with-deduplication",
+              "rule-with-external-provider-source",
               Algolia::Composition::CompositionRule.new(
-                algolia_object_id: "rule-with-deduplication",
-                description: "my description",
-                enabled: true,
+                algolia_object_id: "rule-with-external-provider-source",
                 conditions: [Algolia::Composition::Condition.new(anchoring: "contains", pattern: "harry")],
                 consequence: Algolia::Composition::CompositionRuleConsequence.new(
                   behavior: Algolia::Composition::CompositionInjectionBehavior.new(
                     injection: Algolia::Composition::Injection.new(
                       main: Algolia::Composition::InjectionMain.new(
                         source: Algolia::Composition::InjectionMainSearchSource.new(
-                          search: Algolia::Composition::MainSearch.new(index: "my-index")
+                          search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                         )
                       ),
                       injected_items: [
                         Algolia::Composition::InjectionInjectedItem.new(
-                          key: "my-unique-injected-item-key",
-                          source: Algolia::Composition::InjectedItemSearchSource.new(
-                            search: Algolia::Composition::InjectedItemSearch.new(index: "my-index")
+                          key: "my-unique-external-provider-group-from-rule-key",
+                          source: Algolia::Composition::InjectedItemExternalProviderSource.new(
+                            external_provider: Algolia::Composition::InjectedItemExternalProvider.new(
+                              index: "my-index",
+                              configuration_id: "my-rmn-connection",
+                              configuration_params: {campaign_id: "summer-sale"},
+                              ordering: "providerDefined"
+                            )
                           ),
                           position: 0,
                           length: 3
                         )
-                      ],
-                      deduplication: Algolia::Composition::Deduplication.new(positioning: "highestInjected")
+                      ]
                     )
                   )
                 )
@@ -6259,11 +5844,9 @@ paths:
             val response = Await.result(
               client.putCompositionRule(
                 compositionID = "compositionID",
-                objectID = "rule-with-deduplication",
+                objectID = "rule-with-external-provider-source",
                 compositionRule = CompositionRule(
-                  objectID = "rule-with-deduplication",
-                  description = Some("my description"),
-                  enabled = Some(true),
+                  objectID = "rule-with-external-provider-source",
                   conditions = Some(
                     Seq(
                       Condition(
@@ -6278,7 +5861,7 @@ paths:
                         main = InjectionMain(
                           source = Some(
                             InjectionMainSearchSource(
-                              search = MainSearch(
+                              search = InjectionMainSearch(
                                 index = "my-index"
                               )
                             )
@@ -6287,20 +5870,18 @@ paths:
                         injectedItems = Some(
                           Seq(
                             InjectionInjectedItem(
-                              key = "my-unique-injected-item-key",
-                              source = InjectedItemSearchSource(
-                                search = InjectedItemSearch(
-                                  index = "my-index"
+                              key = "my-unique-external-provider-group-from-rule-key",
+                              source = InjectedItemExternalProviderSource(
+                                externalProvider = InjectedItemExternalProvider(
+                                  index = "my-index",
+                                  configurationID = "my-rmn-connection",
+                                  configurationParams = Some(Map("campaign_id" -> "summer-sale")),
+                                  ordering = Some(ExternalProviderOrdering.withName("providerDefined"))
                                 )
                               ),
                               position = 0,
                               length = 3
                             )
-                          )
-                        ),
-                        deduplication = Some(
-                          Deduplication(
-                            positioning = DedupPositioning.withName("highestInjected")
                           )
                         )
                       )
@@ -6328,29 +5909,31 @@ paths:
 
             let response = try await client.putCompositionRule(
                 compositionID: "compositionID",
-                objectID: "rule-with-deduplication",
+                objectID: "rule-with-external-provider-source",
                 compositionRule: CompositionRule(
-                    objectID: "rule-with-deduplication",
+                    objectID: "rule-with-external-provider-source",
                     conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
-                                key: "my-unique-injected-item-key",
+                                key: "my-unique-external-provider-group-from-rule-key",
                                 source: InjectedItemSource
-                                    .injectedItemSearchSource(
-                                        InjectedItemSearchSource(search: InjectedItemSearch(index: "my-index"))
+                                    .injectedItemExternalProviderSource(
+                                        InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                            index: "my-index",
+                                            configurationID: "my-rmn-connection",
+                                            configurationParams: ["campaign_id": AnyCodable("summer-sale")],
+                                            ordering: ExternalProviderOrdering.providerDefined
+                                        ))
                                     ),
                                 position: 0,
                                 length: 3
-                            )],
-                            deduplication: Deduplication(positioning: DedupPositioning.highestInjected)
-                        )))),
-                    description: "my description",
-                    enabled: true
+                            )]
+                        ))))
                 )
             )
 
@@ -6537,7 +6120,10 @@ paths:
                                       "url": "lorem"
                                     }
                                   }
-                                ]
+                                ],
+                                "resultCard": {
+                                  "enabled": true
+                                }
                               }
                             },
                             "sortFacetValuesBy": "count",
@@ -6696,6 +6282,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -6987,6 +6576,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -7052,7 +6644,7 @@ paths:
                                   Source = new InjectionMainSource(
                                     new InjectionMainSearchSource
                                     {
-                                      Search = new MainSearch { Index = "my-index" },
+                                      Search = new InjectionMainSearch { Index = "my-index" },
                                     }
                                   ),
                                 },
@@ -7120,7 +6712,7 @@ paths:
                           injection: Injection(
                             main: InjectionMain(
                               source: InjectionMainSearchSource(
-                                search: MainSearch(
+                                search: InjectionMainSearch(
                                   index: "my-index",
                                 ),
                               ),
@@ -7179,7 +6771,7 @@ paths:
                           composition.NewEmptyInjection().SetMain(
                             composition.NewEmptyInjectionMain().SetSource(composition.InjectionMainSearchSourceAsInjectionMainSource(
                               composition.NewEmptyInjectionMainSearchSource().SetSearch(
-                                composition.NewEmptyMainSearch().SetIndex("my-index"))))).SetInjectedItems(
+                                composition.NewEmptyInjectionMainSearch().SetIndex("my-index"))))).SetInjectedItems(
                             []composition.InjectionInjectedItem{*composition.NewEmptyInjectionInjectedItem().SetKey("my-unique-injected-item-key").SetSource(composition.InjectedItemSearchSourceAsInjectedItemSource(
                               composition.NewEmptyInjectedItemSearchSource().SetSearch(
                                 composition.NewEmptyInjectedItemSearch().SetIndex("my-index")))).SetPosition(0).SetLength(3)}).SetDeduplication(
@@ -7228,7 +6820,9 @@ paths:
                           new CompositionInjectionBehavior().setInjection(
                             new Injection()
                               .setMain(
-                                new InjectionMain().setSource(new InjectionMainSearchSource().setSearch(new MainSearch().setIndex("my-index")))
+                                new InjectionMain().setSource(
+                                  new InjectionMainSearchSource().setSearch(new InjectionMainSearch().setIndex("my-index"))
+                                )
                               )
                               .setInjectedItems(
                                 Arrays.asList(
@@ -7344,7 +6938,7 @@ paths:
                                             InjectionMain(
                                               source =
                                                 InjectionMainSearchSource(
-                                                  search = MainSearch(index = "my-index")
+                                                  search = InjectionMainSearch(index = "my-index")
                                                 )
                                             ),
                                           injectedItems =
@@ -7536,7 +7130,7 @@ paths:
                           injection: Algolia::Composition::Injection.new(
                             main: Algolia::Composition::InjectionMain.new(
                               source: Algolia::Composition::InjectionMainSearchSource.new(
-                                search: Algolia::Composition::MainSearch.new(index: "my-index")
+                                search: Algolia::Composition::InjectionMainSearch.new(index: "my-index")
                               )
                             ),
                             injected_items: [
@@ -7604,7 +7198,7 @@ paths:
                                 main = InjectionMain(
                                   source = Some(
                                     InjectionMainSearchSource(
-                                      search = MainSearch(
+                                      search = InjectionMainSearch(
                                         index = "my-index"
                                       )
                                     )
@@ -7670,7 +7264,7 @@ paths:
                             .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
                                     .injectionMainSearchSource(
-                                        InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                        InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                                     )),
                                 injectedItems: [InjectionInjectedItem(
                                     key: "my-unique-injected-item-key",
@@ -7876,7 +7470,10 @@ paths:
                                             "url": "lorem"
                                           }
                                         }
-                                      ]
+                                      ],
+                                      "resultCard": {
+                                        "enabled": true
+                                      }
                                     }
                                   },
                                   "sortFacetValuesBy": "count",
@@ -8069,6 +7666,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -8392,6 +7992,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -8825,7 +8428,7 @@ components:
     clickAnalytics:
       type: boolean
       description: >
-        Whether to include a `queryID` attribute in the response
+        Whether to include a `queryID` attribute in the response.
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
@@ -8851,7 +8454,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking).
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -8904,7 +8507,7 @@ components:
         type: string
       description: >
         Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
+        and the number of matching facet values.
 
         To retrieve all facets, use the wildcard character `*`.
 
@@ -9220,7 +8823,7 @@ components:
         $ref: '#/components/schemas/supportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
-        natural language queries (as opposed to keyword searches)
+        natural language queries (as opposed to keyword searches).
 
         - Sets `removeStopWords` and `ignorePlurals` to the list of provided
         languages.
@@ -9352,7 +8955,7 @@ components:
       example: 90
       description: >
         Relevancy threshold below which less relevant results aren't included in
-        the results
+        the results.
 
         You can only set `relevancyStrictness` on [virtual replica
         indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -9367,7 +8970,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the run query
+        Assigns a rule context to the run query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -9497,6 +9100,20 @@ components:
       example:
         - feed-1
         - feed-3
+    externalProvider:
+      title: Run composition external provider parameters as object
+      type: object
+      additionalProperties: false
+      properties:
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Values for non-prefixed configuration placeholders, overriding the
+            composition source's `configurationParams` and the configuration's
+            `defaults`.
+          example:
+            customer_id: customer123
     compositionRunAppliedRules:
       type: object
       properties:
@@ -9686,6 +9303,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/banner'
+    resultCard:
+      description: Agent Studio Result Card to display for a given search.
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Whether to show the Result Card for the current search.
     widgets:
       description: Widgets returned from any rules that are applied to the current search.
       type: object
@@ -9693,6 +9318,8 @@ components:
       properties:
         banners:
           $ref: '#/components/schemas/banners'
+        resultCard:
+          $ref: '#/components/schemas/resultCard'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -10368,6 +9995,15 @@ components:
         - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/SearchFields'
         - $ref: '#/components/schemas/resultsCompositionsResponse'
+    processingError:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          description: Description of the non-critical error.
+      required:
+        - message
     searchResults:
       type: object
       additionalProperties: false
@@ -10377,6 +10013,14 @@ components:
           description: Search results.
           items:
             $ref: '#/components/schemas/searchResultsItem'
+        errors:
+          type: array
+          description: >-
+            Non-critical errors encountered while processing the request that
+            may have affected the returned results (for example, an external
+            provider failure that fell back to another result set).
+          items:
+            $ref: '#/components/schemas/processingError'
       required:
         - results
     searchResponse:
@@ -10446,11 +10090,21 @@ components:
           description: Search for facet values results.
           items:
             $ref: '#/components/schemas/searchForFacetValuesResults'
+    baseSearchSource:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+      required:
+        - index
     advancedSyntax:
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
-        queries
+        queries.
 
         Use the `advancedSyntaxFeatures` parameter to control which feature is
         supported.
@@ -10469,13 +10123,13 @@ components:
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
       description: |
-        Advanced search syntax features you want to support
+        Advanced search syntax features you want to support.
         - `exactPhrase`.
           Phrases in quotes must match exactly.
-          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
         - `excludeWords`.
           Query words prefixed with a `-` must not occur in a record.
-          For example, `search -engine` matches records that contain "search" but not "engine"
+          For example, `search -engine` matches records that contain "search" but not "engine".
         This setting only has an effect if `advancedSyntax` is true.
       default:
         - exactPhrase
@@ -10485,7 +10139,7 @@ components:
     allowTyposOnNumericTokens:
       type: boolean
       description: |
-        Whether to allow typos on numbers in the search query
+        Whether to allow typos on numbers in the search query.
         Turn off this setting to reduce the number of irrelevant matches
         when searching in large sets of similar numbers.
       default: true
@@ -10506,24 +10160,24 @@ components:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
-        matches
+        matches.
 
         By default, Algolia treats singular and plural forms of a word, and
         single-word synonyms, as
         [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
         matches when searching.
 
-        For example
+        For example:
 
-        - "swimsuit" and "swimsuits" are treated the same
+        - "swimsuit" and "swimsuits" are treated the same.
 
         - "swimsuit" and "swimwear" are treated the same (if they are
-        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
         - `ignorePlurals`.
-          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY" = "NYC", are considered exact matches
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
         - `multiWordsSynonym`.
           Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
@@ -10535,7 +10189,7 @@ components:
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
-        proximity
+        proximity.
 
         This setting only affects ranking if the Attribute ranking criterion
         comes before Proximity in the `ranking` setting.
@@ -10545,6 +10199,12 @@ components:
 
         Otherwise, the best matching attribute is determined by the order in the
         `searchableAttributes` setting.
+
+
+        Prefer `attributeCriteriaComputedBy`, which expresses the same two
+        behaviors and adds the `sum` strategy.
+
+        If you set both, `attributeCriteriaComputedBy` takes precedence.
       default: false
       x-categories:
         - Advanced
@@ -10558,7 +10218,7 @@ components:
         - conten
         - content
       description: >
-        Attributes to highlight
+        Attributes to highlight.
 
         By default, all searchable attributes are highlighted.
 
@@ -10586,7 +10246,7 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response
+        Attributes to include in the API response.
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
@@ -10673,7 +10333,7 @@ components:
         attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
-          This can happen with attributes that are long blocks of text, such as product descriptions
+          This can happen with attributes that are long blocks of text, such as product descriptions.
         Consider alternatives such as `disableTypoToleranceOnWords` or adding
         synonyms if your attributes have intentional unusual spellings that
         might look like typos.
@@ -10818,7 +10478,7 @@ components:
       minimum: 1
       maximum: 7
       description: >
-        Minimum proximity score for two matching words
+        Minimum proximity score for two matching words.
 
         This adjusts the [Proximity ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -10914,7 +10574,7 @@ components:
     personalizationImpact:
       type: integer
       description: >
-        Impact that Personalization should have on this search
+        Impact that Personalization should have on this search.
 
         The higher this value is, the more Personalization determines the
         ranking compared to other factors.
@@ -11021,7 +10681,7 @@ components:
     replaceSynonymsInHighlight:
       type: boolean
       description: >
-        Whether to replace a highlighted word with the matched synonym
+        Whether to replace a highlighted word with the matched synonym.
 
         By default, the original words are highlighted even if a synonym
         matches.
@@ -11047,7 +10707,7 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of search and browse requests
+        Properties to include in the API response of search and browse requests.
 
         By default, all response properties are included.
 
@@ -11103,7 +10763,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the search query
+        Assigns a rule context to the search query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -11256,7 +10916,7 @@ components:
     facetingAfterDistinct:
       type: boolean
       description: >
-        Whether faceting should be applied after deduplication with `distinct`
+        Whether faceting should be applied after deduplication with `distinct`.
 
         This leads to accurate facet counts when using faceting in combination
         with `distinct`.
@@ -11279,13 +10939,13 @@ components:
     sortFacetValuesBy:
       type: string
       description: >
-        Order in which to retrieve facet values
+        Order in which to retrieve facet values.
 
         - `count`.
           Facet values are retrieved by decreasing count.
-          The count is the number of matching records containing this facet value
+          The count is the number of matching records containing this facet value.
         - `alpha`.
-          Retrieve facet values alphabetically
+          Retrieve facet values alphabetically.
         This setting doesn't influence how facet values are displayed in your UI
         (see `renderingContent`).
 
@@ -11297,7 +10957,7 @@ components:
     sumOrFiltersScores:
       type: boolean
       description: >
-        Whether to sum all filter scores
+        Whether to sum all filter scores.
 
         If true, all filter scores are summed.
 
@@ -11331,6 +10991,18 @@ components:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
               $ref: '#/components/schemas/sumOrFiltersScores'
+    injectionMainSearch:
+      type: object
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+        params:
+          $ref: '#/components/schemas/mainInjectionQueryParameters'
+      required:
+        - index
+      additionalProperties: false
     injectionMainSearchSource:
       description: >-
         Organic result set will originate from a search request performed on the
@@ -11341,18 +11013,7 @@ components:
       additionalProperties: false
       properties:
         search:
-          title: mainSearch
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Index to retrieve search results from.
-              example: Products
-            params:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-          required:
-            - index
+          $ref: '#/components/schemas/injectionMainSearch'
       required:
         - search
     model:
@@ -11361,6 +11022,48 @@ components:
         - trending-items
       description: Recommendation model to use for retrieving recommendations.
       example: trending-items
+    baseRecommendSource:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: '#/components/schemas/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+      required:
+        - indexName
+        - model
+        - threshold
+    injectionMainRecommend:
+      type: object
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: '#/components/schemas/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+        fallbackParameters:
+          $ref: '#/components/schemas/mainInjectionQueryParameters'
+        queryParameters:
+          $ref: '#/components/schemas/mainInjectionQueryParameters'
+      required:
+        - indexName
+        - model
+        - threshold
+      additionalProperties: false
     injectionMainRecommendSource:
       description: Organic result set will originate from a recommend request.
       x-discriminator-fields:
@@ -11369,36 +11072,92 @@ components:
       additionalProperties: false
       properties:
         recommend:
-          title: mainRecommend
-          type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              type: string
-              description: Index to retrieve recommendations from.
-              example: Products
-            model:
-              $ref: '#/components/schemas/model'
-            threshold:
-              type: integer
-              minimum: 0
-              maximum: 100
-              description: Minimum score a recommendation must have to be included.
-            fallbackParameters:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-            queryParameters:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-          required:
-            - indexName
-            - model
-            - threshold
+          $ref: '#/components/schemas/injectionMainRecommend'
       required:
         - recommend
+    externalProviderOrdering:
+      type: string
+      description: >
+        Ordering to apply on the items retrieved from the external provider.
+        'default' uses the relevance ranking from the Algolia retrieval step.
+        'providerDefined' uses the ordering returned by the external provider.
+      enum:
+        - default
+        - providerDefined
+      default: providerDefined
+    baseExternalProviderSource:
+      type: object
+      additionalProperties: false
+      properties:
+        configurationID:
+          type: string
+          description: Identifier of the external provider configuration.
+          example: my-rmn-connection
+        index:
+          type: string
+          description: Algolia index used to fetch the records.
+          example: Products
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Default values for the configuration placeholders that are not
+            reserved Composition placeholders.
+          example:
+            campaign_id: winter-sale
+            customer_id: user123
+        ordering:
+          $ref: '#/components/schemas/externalProviderOrdering'
+      required:
+        - index
+        - configurationID
+    injectionMainExternalProvider:
+      type: object
+      properties:
+        configurationID:
+          type: string
+          description: Identifier of the external provider configuration.
+          example: my-rmn-connection
+        index:
+          type: string
+          description: Algolia index used to fetch the records.
+          example: Products
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Default values for the configuration placeholders that are not
+            reserved Composition placeholders.
+          example:
+            campaign_id: winter-sale
+            customer_id: user123
+        ordering:
+          $ref: '#/components/schemas/externalProviderOrdering'
+        params:
+          $ref: '#/components/schemas/mainInjectionQueryParameters'
+      required:
+        - index
+        - configurationID
+      additionalProperties: false
+    injectionMainExternalProviderSource:
+      description: >-
+        Organic result set will originate from a request to an external provider
+        configuration.
+      x-discriminator-fields:
+        - externalProvider
+      type: object
+      additionalProperties: false
+      properties:
+        externalProvider:
+          $ref: '#/components/schemas/injectionMainExternalProvider'
+      required:
+        - externalProvider
     injectionMainSource:
       description: Source to be used to retrieve organic result set.
       oneOf:
         - $ref: '#/components/schemas/injectionMainSearchSource'
         - $ref: '#/components/schemas/injectionMainRecommendSource'
+        - $ref: '#/components/schemas/injectionMainExternalProviderSource'
     injectionMain:
       type: object
       additionalProperties: false
@@ -11406,6 +11165,18 @@ components:
       properties:
         source:
           $ref: '#/components/schemas/injectionMainSource'
+    injectedItemSearch:
+      type: object
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+        params:
+          $ref: '#/components/schemas/baseInjectionQueryParameters'
+      required:
+        - index
+      additionalProperties: false
     injectedItemSearchSource:
       description: >-
         Injected items will originate from a search request performed on the
@@ -11416,18 +11187,7 @@ components:
       additionalProperties: false
       properties:
         search:
-          title: injectedItemSearch
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Composition Index name.
-              example: Products
-            params:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-          required:
-            - index
+          $ref: '#/components/schemas/injectedItemSearch'
       required:
         - search
     externalOrdering:
@@ -11441,6 +11201,32 @@ components:
         - default
         - userDefined
       default: default
+    baseExternalSource:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+        ordering:
+          $ref: '#/components/schemas/externalOrdering'
+      required:
+        - index
+    injectedItemExternal:
+      type: object
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+        ordering:
+          $ref: '#/components/schemas/externalOrdering'
+        params:
+          $ref: '#/components/schemas/baseInjectionQueryParameters'
+      required:
+        - index
+      additionalProperties: false
     injectedItemExternalSource:
       description: >-
         Injected items will originate from externally provided objectIDs (that
@@ -11451,22 +11237,32 @@ components:
       additionalProperties: false
       properties:
         external:
-          title: injectedItemExternal
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Composition Index name.
-              example: Products
-            ordering:
-              $ref: '#/components/schemas/externalOrdering'
-            params:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-          required:
-            - index
+          $ref: '#/components/schemas/injectedItemExternal'
       required:
         - external
+    injectedItemRecommend:
+      type: object
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: '#/components/schemas/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+        fallbackParameters:
+          $ref: '#/components/schemas/baseInjectionQueryParameters'
+        queryParameters:
+          $ref: '#/components/schemas/baseInjectionQueryParameters'
+      required:
+        - indexName
+        - model
+        - threshold
+      additionalProperties: false
     injectedItemRecommendSource:
       description: >-
         Injected items will originate from a recommendation request performed on
@@ -11477,36 +11273,56 @@ components:
       additionalProperties: false
       properties:
         recommend:
-          title: recommend
-          type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              type: string
-              description: Index to retrieve recommendations from.
-              example: Products
-            model:
-              $ref: '#/components/schemas/model'
-            threshold:
-              type: integer
-              minimum: 0
-              maximum: 100
-              description: Minimum score a recommendation must have to be included.
-            fallbackParameters:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-            queryParameters:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-          required:
-            - indexName
-            - model
-            - threshold
+          $ref: '#/components/schemas/injectedItemRecommend'
       required:
         - recommend
+    injectedItemExternalProvider:
+      type: object
+      properties:
+        configurationID:
+          type: string
+          description: Identifier of the external provider configuration.
+          example: my-rmn-connection
+        index:
+          type: string
+          description: Algolia index used to fetch the records.
+          example: Products
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Default values for the configuration placeholders that are not
+            reserved Composition placeholders.
+          example:
+            campaign_id: winter-sale
+            customer_id: user123
+        ordering:
+          $ref: '#/components/schemas/externalProviderOrdering'
+        params:
+          $ref: '#/components/schemas/baseInjectionQueryParameters'
+      required:
+        - index
+        - configurationID
+      additionalProperties: false
+    injectedItemExternalProviderSource:
+      description: >-
+        Injected items will originate from a request to an external provider
+        configuration.
+      x-discriminator-fields:
+        - externalProvider
+      type: object
+      additionalProperties: false
+      properties:
+        externalProvider:
+          $ref: '#/components/schemas/injectedItemExternalProvider'
+      required:
+        - externalProvider
     injectedItemSource:
       oneOf:
         - $ref: '#/components/schemas/injectedItemSearchSource'
         - $ref: '#/components/schemas/injectedItemExternalSource'
         - $ref: '#/components/schemas/injectedItemRecommendSource'
+        - $ref: '#/components/schemas/injectedItemExternalProviderSource'
     injectionInjectedItem:
       type: object
       additionalProperties: false
@@ -12073,6 +11889,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    Correlation-ID:
+      description: >
+        Identifies the request in Algolia's logs, where it's the `cid` property
+        of a log entry.
+
+        Include it when you contact the Algolia support team about a specific
+        request.
+
+        Retried requests can share an identifier, so don't use it as a unique
+        key.
+      example: MyAppl-1tMcE-a7BqLm2Pd0Z
+      schema:
+        type: string
 x-tagGroups:
   - name: Composition
     tags:

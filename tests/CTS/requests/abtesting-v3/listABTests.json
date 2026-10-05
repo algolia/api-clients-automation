@@ -14,7 +14,8 @@
       "limit": 21,
       "indexPrefix": "cts_e2e ab",
       "indexSuffix": "t",
-      "direction": "asc"
+      "direction": "asc",
+      "methods": ["frequentist", "bayesian"]
     },
     "request": {
       "path": "/3/abtests",
@@ -24,7 +25,8 @@
         "limit": "21",
         "indexPrefix": "cts_e2e%20ab",
         "indexSuffix": "t",
-        "direction": "asc"
+        "direction": "asc",
+        "methods": "frequentist%2Cbayesian"
       }
     }
   }

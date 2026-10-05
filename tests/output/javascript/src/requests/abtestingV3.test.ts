@@ -37,6 +37,33 @@ describe('addABTests', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('addABTests with Bayesian configuration', async () => {
+    const req = (await client.addABTests({
+      endAt: '2022-12-31T00:00:00.000Z',
+      name: 'myABTest',
+      metrics: [{ name: 'conversionRate' }],
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 30 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+      configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      endAt: '2022-12-31T00:00:00.000Z',
+      name: 'myABTest',
+      metrics: [{ name: 'conversionRate' }],
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 30 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+      configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('applyVariantSettings', () => {
@@ -334,6 +361,15 @@ describe('getABTest', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('getABTest with both inference methods', async () => {
+    const req = (await client.getABTest({ id: 42, methods: ['frequentist', 'bayesian'] })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ methods: 'frequentist%2Cbayesian' });
+  });
 });
 
 describe('getABTestSettings', () => {
@@ -356,6 +392,26 @@ describe('getTimeseries', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('getTimeseries with Bayesian revenue per search', async () => {
+    const req = (await client.getTimeseries({
+      id: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: ['revenue_per_search'],
+      methods: ['bayesian'],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/timeseries');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: 'revenue_per_search',
+      methods: 'bayesian',
+    });
+  });
 });
 
 describe('listABTests', () => {
@@ -375,6 +431,7 @@ describe('listABTests', () => {
       indexPrefix: 'cts_e2e ab',
       indexSuffix: 't',
       direction: 'asc',
+      methods: ['frequentist', 'bayesian'],
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/3/abtests');
@@ -386,6 +443,7 @@ describe('listABTests', () => {
       indexPrefix: 'cts_e2e%20ab',
       indexSuffix: 't',
       direction: 'asc',
+      methods: 'frequentist%2Cbayesian',
     });
   });
 });

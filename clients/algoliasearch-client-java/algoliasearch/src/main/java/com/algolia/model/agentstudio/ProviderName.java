@@ -18,6 +18,8 @@ public enum ProviderName {
 
   OPENAI_COMPATIBLE("openai_compatible"),
 
+  XAI("xai"),
+
   ANTHROPIC("anthropic");
 
   private final String value;

@@ -25,6 +25,9 @@ public class ToolCallPart implements MessagePart {
   @JsonProperty("args")
   private Object args;
 
+  @JsonProperty("rawArgs")
+  private Map<String, Object> rawArgs;
+
   @JsonProperty("requiresApproval")
   private Boolean requiresApproval;
 
@@ -75,6 +78,25 @@ public class ToolCallPart implements MessagePart {
     return args;
   }
 
+  public ToolCallPart setRawArgs(Map<String, Object> rawArgs) {
+    this.rawArgs = rawArgs;
+    return this;
+  }
+
+  public ToolCallPart putRawArgs(String key, Object rawArgsItem) {
+    if (this.rawArgs == null) {
+      this.rawArgs = new HashMap<>();
+    }
+    this.rawArgs.put(key, rawArgsItem);
+    return this;
+  }
+
+  /** Get rawArgs */
+  @javax.annotation.Nullable
+  public Map<String, Object> getRawArgs() {
+    return rawArgs;
+  }
+
   public ToolCallPart setRequiresApproval(Boolean requiresApproval) {
     this.requiresApproval = requiresApproval;
     return this;
@@ -119,6 +141,7 @@ public class ToolCallPart implements MessagePart {
       Objects.equals(this.toolCallId, toolCallPart.toolCallId) &&
       Objects.equals(this.toolName, toolCallPart.toolName) &&
       Objects.equals(this.args, toolCallPart.args) &&
+      Objects.equals(this.rawArgs, toolCallPart.rawArgs) &&
       Objects.equals(this.requiresApproval, toolCallPart.requiresApproval) &&
       Objects.equals(this.providerOptions, toolCallPart.providerOptions)
     );
@@ -126,7 +149,7 @@ public class ToolCallPart implements MessagePart {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, toolCallId, toolName, args, requiresApproval, providerOptions);
+    return Objects.hash(type, toolCallId, toolName, args, rawArgs, requiresApproval, providerOptions);
   }
 
   @Override
@@ -137,6 +160,7 @@ public class ToolCallPart implements MessagePart {
     sb.append("    toolCallId: ").append(toIndentedString(toolCallId)).append("\n");
     sb.append("    toolName: ").append(toIndentedString(toolName)).append("\n");
     sb.append("    args: ").append(toIndentedString(args)).append("\n");
+    sb.append("    rawArgs: ").append(toIndentedString(rawArgs)).append("\n");
     sb.append("    requiresApproval: ").append(toIndentedString(requiresApproval)).append("\n");
     sb.append("    providerOptions: ").append(toIndentedString(providerOptions)).append("\n");
     sb.append("}");

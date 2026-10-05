@@ -285,7 +285,7 @@ class SearchClientRequestsTestsE2E {
   void setSettingsTest() {
     UpdatedAtResponse res = client.setSettings(
       "cts_e2e_settings",
-      new IndexSettings().setPaginationLimitedTo(10).setTypoTolerance(TypoToleranceEnum.FALSE),
+      new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
       true
     );
   }

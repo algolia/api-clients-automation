@@ -3,6 +3,7 @@ import 'package:algoliasearch/src/model/advanced_syntax_features.dart';
 import 'package:algoliasearch/src/model/alternatives_as_exact.dart';
 import 'package:algoliasearch/src/model/api_key.dart';
 import 'package:algoliasearch/src/model/around_radius_all.dart';
+import 'package:algoliasearch/src/model/attribute_criteria_computed_by.dart';
 import 'package:algoliasearch/src/model/auto_filtering_result.dart';
 import 'package:algoliasearch/src/model/automatic_facet_filter.dart';
 import 'package:algoliasearch/src/model/banner.dart';
@@ -75,6 +76,7 @@ import 'package:algoliasearch/src/model/related_query.dart';
 import 'package:algoliasearch/src/model/remove_words_if_no_results.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/response_extensions.dart';
+import 'package:algoliasearch/src/model/result_card.dart';
 import 'package:algoliasearch/src/model/search_extensions.dart';
 import 'package:algoliasearch/src/model/search_extensions_query_categorization.dart';
 import 'package:algoliasearch/src/model/search_for_facet_values_response.dart';
@@ -140,6 +142,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ApiKey.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'AroundRadiusAll':
       return AroundRadiusAll.fromJson(value) as ReturnType;
+    case 'AttributeCriteriaComputedBy':
+      return AttributeCriteriaComputedBy.fromJson(value) as ReturnType;
     case 'AutoFilteringResult':
       return AutoFilteringResult.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -327,6 +331,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ResponseExtensions':
       return ResponseExtensions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchExtensions':
       return SearchExtensions.fromJson(value as Map<String, dynamic>)
           as ReturnType;

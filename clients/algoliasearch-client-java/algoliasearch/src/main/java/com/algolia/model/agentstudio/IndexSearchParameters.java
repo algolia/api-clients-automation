@@ -30,6 +30,9 @@ public class IndexSearchParameters {
   @JsonProperty("responseFields")
   private StringArrayParam responseFields;
 
+  @JsonProperty("distinct")
+  private BooleanParam distinct;
+
   @JsonProperty("facets")
   private FacetsParam facets;
 
@@ -91,6 +94,17 @@ public class IndexSearchParameters {
     return responseFields;
   }
 
+  public IndexSearchParameters setDistinct(BooleanParam distinct) {
+    this.distinct = distinct;
+    return this;
+  }
+
+  /** Get distinct */
+  @javax.annotation.Nullable
+  public BooleanParam getDistinct() {
+    return distinct;
+  }
+
   public IndexSearchParameters setFacets(FacetsParam facets) {
     this.facets = facets;
     return this;
@@ -136,6 +150,7 @@ public class IndexSearchParameters {
       Objects.equals(this.page, indexSearchParameters.page) &&
       Objects.equals(this.attributesToRetrieve, indexSearchParameters.attributesToRetrieve) &&
       Objects.equals(this.responseFields, indexSearchParameters.responseFields) &&
+      Objects.equals(this.distinct, indexSearchParameters.distinct) &&
       Objects.equals(this.facets, indexSearchParameters.facets) &&
       Objects.equals(this.custom, indexSearchParameters.custom)
     );
@@ -143,7 +158,7 @@ public class IndexSearchParameters {
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, hitsPerPage, page, attributesToRetrieve, responseFields, facets, custom);
+    return Objects.hash(query, hitsPerPage, page, attributesToRetrieve, responseFields, distinct, facets, custom);
   }
 
   @Override
@@ -155,6 +170,7 @@ public class IndexSearchParameters {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    responseFields: ").append(toIndentedString(responseFields)).append("\n");
+    sb.append("    distinct: ").append(toIndentedString(distinct)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    custom: ").append(toIndentedString(custom)).append("\n");
     sb.append("}");

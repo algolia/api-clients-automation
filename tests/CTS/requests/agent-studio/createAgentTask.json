@@ -1,0 +1,58 @@
+[
+  {
+    "testName": "createAgentTask with required parameters",
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "taskRequest": {
+        "input": {
+          "pageType": "pdp",
+          "title": "acmePhone128Gb"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks",
+      "method": "POST",
+      "body": {
+        "input": {
+          "pageType": "pdp",
+          "title": "acmePhone128Gb"
+        }
+      }
+    }
+  },
+  {
+    "testName": "createAgentTask with all parameters",
+    "parameters": {
+      "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "stream": false,
+      "cache": false,
+      "analytics": false,
+      "taskRequest": {
+        "task": "algolia_on_page_suggestions",
+        "kind": "prompt_suggestions",
+        "input": {
+          "pageType": "pdp",
+          "title": "acmePhone128Gb"
+        }
+      }
+    },
+    "request": {
+      "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks",
+      "method": "POST",
+      "queryParameters": {
+        "stream": "false",
+        "cache": "false",
+        "analytics": "false"
+      },
+      "body": {
+        "task": "algolia_on_page_suggestions",
+        "kind": "prompt_suggestions",
+        "input": {
+          "pageType": "pdp",
+          "title": "acmePhone128Gb"
+        }
+      }
+    }
+  }
+]

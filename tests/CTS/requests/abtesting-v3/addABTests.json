@@ -35,5 +35,50 @@
         ]
       }
     }
+  },
+  {
+    "testName": "addABTests with Bayesian configuration",
+    "parameters": {
+      "endAt": "2022-12-31T00:00:00.000Z",
+      "name": "myABTest",
+      "metrics": [{"name": "conversionRate"}],
+      "variants": [
+        {
+          "index": "AB_TEST_1",
+          "trafficPercentage": 30
+        },
+        {
+          "index": "AB_TEST_2",
+          "trafficPercentage": 50
+        }
+      ],
+      "configuration": {
+        "method": "bayesian",
+        "primaryMetric": "conversion_rate"
+      }
+    },
+    "request": {
+      "path": "/3/abtests",
+      "method": "POST",
+      "body": {
+        "endAt": "2022-12-31T00:00:00.000Z",
+        "name": "myABTest",
+        "metrics": [{"name": "conversionRate"}],
+        "variants": [
+          {
+            "index": "AB_TEST_1",
+            "trafficPercentage": 30
+          },
+          {
+            "index": "AB_TEST_2",
+            "trafficPercentage": 50
+          }
+        ],
+        "configuration": {
+          "method": "bayesian",
+          "primaryMetric": "conversion_rate"
+        }
+      }
+    }
   }
 ]

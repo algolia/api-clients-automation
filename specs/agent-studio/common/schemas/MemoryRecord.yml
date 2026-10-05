@@ -23,16 +23,15 @@ MemoryRecord:
         type: string
       type: array
       title: keywords
-      description: '5-20 free-form keywords: entities, context, search terms (any
-        words).'
+      description: 'Keywords for retrieval: entities, context, search terms.'
     topics:
       items:
         type: string
       type: array
       title: topics
-      description: '2-4 topics ONLY from this list: [complaints, entertainment, family,
-        feedback, finance, food, goals, health, history, hobbies, learning, praise,
-        preferences, schedule, shopping, technical, travel, work].'
+      description: 'Topics that classify the memory. Each must be one of: [complaints,
+        entertainment, family, feedback, finance, food, goals, health, history, hobbies,
+        learning, praise, preferences, schedule, shopping, technical, travel, work].'
     _tags:
       items:
         type: string
@@ -45,7 +44,7 @@ MemoryRecord:
         type: string
       type: array
       title: recalltriggers
-      description: 3-5 natural phrases that should trigger this memory.
+      description: Phrases that cause the API to recall this memory.
     objectID:
       oneOf:
         - type: string
@@ -84,10 +83,4 @@ MemoryRecord:
     - text
     - rawExtract
   title: memoryRecord
-  description: |-
-    Universal storage model for all memory types (semantic, episodic).
-
-    This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory, EpisodicMemory)
-    are used for LLM extraction and converted to MemoryRecord before saving.
-
-    See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types for memory type definitions.
+  description: A stored memory record.

@@ -11,7 +11,7 @@ def snippet_for_add_ab_tests():
 
     addABTests with minimal parameters
     """
-    # >SEPARATOR addABTests default
+    # >SEPARATOR addABTests addABTests with minimal parameters
     # Initialize the client
     # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
     client = AbtestingV3ClientSync(
@@ -38,6 +38,52 @@ def snippet_for_add_ab_tests():
                     "trafficPercentage": 50,
                 },
             ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_add_ab_tests1():
+    """
+    Snippet for the addABTests method.
+
+    addABTests with Bayesian configuration
+    """
+    # >SEPARATOR addABTests addABTests with Bayesian configuration
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.add_ab_tests(
+        add_ab_tests_request={
+            "endAt": "2022-12-31T00:00:00.000Z",
+            "name": "myABTest",
+            "metrics": [
+                {
+                    "name": "conversionRate",
+                },
+            ],
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 30,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+            "configuration": {
+                "method": "bayesian",
+                "primaryMetric": "conversion_rate",
+            },
         },
     )
 
@@ -681,7 +727,7 @@ def snippet_for_get_ab_test():
 
     getABTest
     """
-    # >SEPARATOR getABTest default
+    # >SEPARATOR getABTest getABTest
     # Initialize the client
     # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
     client = AbtestingV3ClientSync(
@@ -691,6 +737,34 @@ def snippet_for_get_ab_test():
     # Call the API
     response = client.get_ab_test(
         id=42,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_ab_test1():
+    """
+    Snippet for the getABTest method.
+
+    getABTest with both inference methods
+    """
+    # >SEPARATOR getABTest getABTest with both inference methods
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_ab_test(
+        id=42,
+        methods=[
+            "frequentist",
+            "bayesian",
+        ],
     )
 
     # >LOG
@@ -729,7 +803,7 @@ def snippet_for_get_timeseries():
 
     getTimeseries
     """
-    # >SEPARATOR getTimeseries default
+    # >SEPARATOR getTimeseries getTimeseries
     # Initialize the client
     # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
     client = AbtestingV3ClientSync(
@@ -739,6 +813,38 @@ def snippet_for_get_timeseries():
     # Call the API
     response = client.get_timeseries(
         id=42,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_timeseries1():
+    """
+    Snippet for the getTimeseries method.
+
+    getTimeseries with Bayesian revenue per search
+    """
+    # >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_timeseries(
+        id=42,
+        start_date="1999-09-19",
+        end_date="2001-01-01",
+        metric=[
+            "revenue_per_search",
+        ],
+        methods=[
+            "bayesian",
+        ],
     )
 
     # >LOG
@@ -789,6 +895,10 @@ def snippet_for_list_ab_tests1():
         index_prefix="cts_e2e ab",
         index_suffix="t",
         direction="asc",
+        methods=[
+            "frequentist",
+            "bayesian",
+        ],
     )
 
     # >LOG

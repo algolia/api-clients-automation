@@ -9,7 +9,7 @@ AgentMemorizeRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: 'MessagesUnionAgentMemorizeRequest.yml#/MessagesUnionAgentMemorizeRequest'
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     targetMemories:
       type: integer
       maximum: 50.0

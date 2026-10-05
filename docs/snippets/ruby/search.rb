@@ -966,6 +966,7 @@ def snippet_for_delete_objects
 
   # Call the API
   response = client.delete_objects("<YOUR_INDEX_NAME>", ["1", "2"])
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -1981,6 +1982,7 @@ def snippet_for_partial_update_objects
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
     true
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2002,6 +2004,7 @@ def snippet_for_partial_update_objects1
     [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
     false
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2233,6 +2236,7 @@ def snippet_for_save_objects
     true,
     2
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2260,6 +2264,7 @@ def snippet_for_save_objects1
     true,
     2
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2280,6 +2285,7 @@ def snippet_for_save_objects2
     "<YOUR_INDEX_NAME>",
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2300,6 +2306,7 @@ def snippet_for_save_objects3
     "<YOUR_INDEX_NAME>",
     [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2328,6 +2335,7 @@ def snippet_for_save_objects4
       }
     ]
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response
@@ -2359,6 +2367,7 @@ def snippet_for_save_objects5
     1000,
     {:header_params => {"X-Algolia-User-ID" => "*"}}
   )
+  # response is an array of BatchResponse objects
 
   # >LOG
   # print the response

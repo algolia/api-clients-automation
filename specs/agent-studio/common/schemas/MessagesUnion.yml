@@ -6,4 +6,3 @@ MessagesUnion:
     - items:
         $ref: 'MessageV5.yml#/MessageV5'
       type: array
-    - type: 'null'

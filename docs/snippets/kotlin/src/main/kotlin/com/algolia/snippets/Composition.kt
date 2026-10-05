@@ -565,7 +565,9 @@ class SnippetCompositionClient {
                               main =
                                 InjectionMain(
                                   source =
-                                    InjectionMainSearchSource(search = MainSearch(index = "bar"))
+                                    InjectionMainSearchSource(
+                                      search = InjectionMainSearch(index = "bar")
+                                    )
                                 )
                             )
                         ),
@@ -606,7 +608,8 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                        source =
+                          InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
@@ -650,7 +653,8 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                        source =
+                          InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                       ),
                     injectedItems =
                       listOf(
@@ -705,7 +709,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainSearchSource(
                             search =
-                              MainSearch(
+                              InjectionMainSearch(
                                 index = "foo",
                                 params = MainInjectionQueryParameters(filters = "brand:adidas"),
                               )
@@ -759,7 +763,10 @@ class SnippetCompositionClient {
                   Injection(
                     main =
                       InjectionMain(
-                        source = InjectionMainSearchSource(search = MainSearch(index = "products"))
+                        source =
+                          InjectionMainSearchSource(
+                            search = InjectionMainSearch(index = "products")
+                          )
                       )
                   )
               ),
@@ -796,7 +803,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainRecommendSource(
                             recommend =
-                              MainRecommend(
+                              InjectionMainRecommend(
                                 indexName = "<YOUR_INDEX_NAME>",
                                 model = Model.entries.first { it.value == "trending-items" },
                                 threshold = 50,
@@ -810,7 +817,7 @@ class SnippetCompositionClient {
                           source =
                             InjectedItemRecommendSource(
                               recommend =
-                                Recommend(
+                                InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 30,
@@ -857,7 +864,7 @@ class SnippetCompositionClient {
                         source =
                           InjectionMainSearchSource(
                             search =
-                              MainSearch(
+                              InjectionMainSearch(
                                 index = "products",
                                 params = MainInjectionQueryParameters(filters = "brand:nike"),
                               )
@@ -870,7 +877,7 @@ class SnippetCompositionClient {
                           source =
                             InjectedItemRecommendSource(
                               recommend =
-                                Recommend(
+                                InjectedItemRecommend(
                                   indexName = "<YOUR_INDEX_NAME>",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 40,
@@ -921,7 +928,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainRecommendSource(
                                         recommend =
-                                          MainRecommend(
+                                          InjectionMainRecommend(
                                             indexName = "<YOUR_INDEX_NAME>",
                                             model =
                                               Model.entries.first { it.value == "trending-items" },
@@ -974,7 +981,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "products",
                                             params = MainInjectionQueryParameters(hitsPerPage = 12),
                                           )
@@ -1010,7 +1017,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "articles",
                                             params =
                                               MainInjectionQueryParameters(
@@ -1051,7 +1058,7 @@ class SnippetCompositionClient {
                                     source =
                                       InjectionMainSearchSource(
                                         search =
-                                          MainSearch(
+                                          InjectionMainSearch(
                                             index = "videos",
                                             params =
                                               MainInjectionQueryParameters(
@@ -1066,6 +1073,77 @@ class SnippetCompositionClient {
                           ),
                       ),
                     feedsOrder = listOf("products", "articles", "videos"),
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutComposition9() {
+    // >SEPARATOR putComposition putComposition
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putComposition(
+        compositionID = "my-external-provider-compo",
+        composition =
+          Composition(
+            objectID = "my-external-provider-compo",
+            name = "my external provider composition",
+            behavior =
+              CompositionInjectionBehavior(
+                injection =
+                  Injection(
+                    main =
+                      InjectionMain(
+                        source =
+                          InjectionMainExternalProviderSource(
+                            externalProvider =
+                              InjectionMainExternalProvider(
+                                index = "products",
+                                configurationID = "my-rmn-connection",
+                                configurationParams =
+                                  buildJsonObject {
+                                    put("campaign_id", JsonPrimitive("summer-sale"))
+                                    put("customer_id", JsonPrimitive("customer-default"))
+                                  },
+                                params = MainInjectionQueryParameters(filters = "instock:true"),
+                                ordering =
+                                  ExternalProviderOrdering.entries.first {
+                                    it.value == "providerDefined"
+                                  },
+                              )
+                          )
+                      ),
+                    injectedItems =
+                      listOf(
+                        InjectionInjectedItem(
+                          key = "sponsored",
+                          source =
+                            InjectedItemExternalProviderSource(
+                              externalProvider =
+                                InjectedItemExternalProvider(
+                                  index = "products",
+                                  configurationID = "my-rmn-connection",
+                                  configurationParams =
+                                    buildJsonObject {
+                                      put("campaign_id", JsonPrimitive("summer-sale"))
+                                    },
+                                )
+                            ),
+                          position = 0,
+                          length = 2,
+                        )
+                      ),
                   )
               ),
           ),
@@ -1107,7 +1185,8 @@ class SnippetCompositionClient {
                       Injection(
                         main =
                           InjectionMain(
-                            source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                            source =
+                              InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                           ),
                         injectedItems =
                           listOf(
@@ -1174,7 +1253,7 @@ class SnippetCompositionClient {
                             source =
                               InjectionMainSearchSource(
                                 search =
-                                  MainSearch(
+                                  InjectionMainSearch(
                                     index = "my-index",
                                     params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                   )
@@ -1244,7 +1323,9 @@ class SnippetCompositionClient {
                         main =
                           InjectionMain(
                             source =
-                              InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                              InjectionMainSearchSource(
+                                search = InjectionMainSearch(index = "my-index")
+                              )
                           ),
                         injectedItems =
                           listOf(
@@ -1262,6 +1343,77 @@ class SnippetCompositionClient {
                           Deduplication(
                             positioning =
                               DedupPositioning.entries.first { it.value == "highestInjected" }
+                          ),
+                      )
+                  )
+              ),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForPutCompositionRule4() {
+    // >SEPARATOR putCompositionRule putCompositionRule
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.putCompositionRule(
+        compositionID = "compositionID",
+        objectID = "rule-with-external-provider-source",
+        compositionRule =
+          CompositionRule(
+            objectID = "rule-with-external-provider-source",
+            conditions =
+              listOf(
+                Condition(
+                  anchoring = Anchoring.entries.first { it.value == "contains" },
+                  pattern = "harry",
+                )
+              ),
+            consequence =
+              CompositionRuleConsequence(
+                behavior =
+                  CompositionInjectionBehavior(
+                    injection =
+                      Injection(
+                        main =
+                          InjectionMain(
+                            source =
+                              InjectionMainSearchSource(
+                                search = InjectionMainSearch(index = "my-index")
+                              )
+                          ),
+                        injectedItems =
+                          listOf(
+                            InjectionInjectedItem(
+                              key = "my-unique-external-provider-group-from-rule-key",
+                              source =
+                                InjectedItemExternalProviderSource(
+                                  externalProvider =
+                                    InjectedItemExternalProvider(
+                                      index = "my-index",
+                                      configurationID = "my-rmn-connection",
+                                      configurationParams =
+                                        buildJsonObject {
+                                          put("campaign_id", JsonPrimitive("summer-sale"))
+                                        },
+                                      ordering =
+                                        ExternalProviderOrdering.entries.first {
+                                          it.value == "providerDefined"
+                                        },
+                                    )
+                                ),
+                              position = 0,
+                              length = 3,
+                            )
                           ),
                       )
                   )
@@ -1306,7 +1458,7 @@ class SnippetCompositionClient {
                                     InjectionMain(
                                       source =
                                         InjectionMainSearchSource(
-                                          search = MainSearch(index = "<YOUR_INDEX_NAME>")
+                                          search = InjectionMainSearch(index = "<YOUR_INDEX_NAME>")
                                         )
                                     )
                                 )
@@ -1370,7 +1522,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "my-index",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1455,7 +1607,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainRecommendSource(
                                           recommend =
-                                            MainRecommend(
+                                            InjectionMainRecommend(
                                               indexName = "<YOUR_INDEX_NAME>",
                                               model =
                                                 Model.entries.first {
@@ -1472,7 +1624,7 @@ class SnippetCompositionClient {
                                         source =
                                           InjectedItemRecommendSource(
                                             recommend =
-                                              Recommend(
+                                              InjectedItemRecommend(
                                                 indexName = "<YOUR_INDEX_NAME>",
                                                 model =
                                                   Model.entries.first {
@@ -1542,7 +1694,7 @@ class SnippetCompositionClient {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "products",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1558,7 +1710,7 @@ class SnippetCompositionClient {
                                         source =
                                           InjectedItemRecommendSource(
                                             recommend =
-                                              Recommend(
+                                              InjectedItemRecommend(
                                                 indexName = "<YOUR_INDEX_NAME>",
                                                 model =
                                                   Model.entries.first {
@@ -1630,7 +1782,7 @@ class SnippetCompositionClient {
                                                   source =
                                                     InjectionMainRecommendSource(
                                                       recommend =
-                                                        MainRecommend(
+                                                        InjectionMainRecommend(
                                                           indexName = "<YOUR_INDEX_NAME>",
                                                           model =
                                                             Model.entries.first {
@@ -1699,7 +1851,7 @@ class SnippetCompositionClient {
                                     InjectionMain(
                                       source =
                                         InjectionMainSearchSource(
-                                          search = MainSearch(index = "my-index")
+                                          search = InjectionMainSearch(index = "my-index")
                                         )
                                     ),
                                   injectedItems =
@@ -1791,6 +1943,34 @@ class SnippetCompositionClient {
           RequestBody(
             params = Params(query = "batman"),
             feedsOrder = listOf("feed-movies", "feed-comics"),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForSearch4() {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        compositionID = "foo",
+        requestBody =
+          RequestBody(
+            params = Params(query = "batman"),
+            externalProvider =
+              ExternalProvider(
+                configurationParams =
+                  buildJsonObject { put("customer_id", JsonPrimitive("customer123")) }
+              ),
           ),
       )
 
