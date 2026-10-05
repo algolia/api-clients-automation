@@ -129,7 +129,12 @@
           "config": {
             "temperature": 0.2
           },
-          "tools": [{ "type": "start" }]
+          "tools": [{
+            "type": "client_side",
+            "name": "start",
+            "description": "Start a conversation",
+            "inputSchema": { "type": "object" }
+          }]
         }
       }
     },
@@ -151,7 +156,12 @@
           "config": {
             "temperature": 0.2
           },
-          "tools": [{ "type": "start" }]
+          "tools": [{
+            "type": "client_side",
+            "name": "start",
+            "description": "Start a conversation",
+            "inputSchema": { "type": "object" }
+          }]
         }
       }
     },
