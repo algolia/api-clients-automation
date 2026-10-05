@@ -42,6 +42,6 @@ case class InjectedItemExternalProvider(
     index: String,
     configurationID: String,
     configurationParams: Option[Map[String, Any]] = scala.None,
-    params: Option[BaseInjectionQueryParameters] = scala.None,
-    ordering: Option[ExternalProviderOrdering] = scala.None
+    ordering: Option[ExternalProviderOrdering] = scala.None,
+    params: Option[BaseInjectionQueryParameters] = scala.None
 )

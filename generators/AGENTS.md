@@ -54,16 +54,9 @@ public class Algolia{Lang}Generator extends {Lang}ClientCodegen {
 }
 ```
 
-### Build Commands
+### Building
 
-```bash
-# From repo root
-./gradlew -p generators build          # Build generators
-./gradlew -p generators clean build    # Clean rebuild
-
-# JAR output
-generators/build/libs/algolia-java-openapi-generator-1.0.0.jar
-```
+Never run Gradle directly: `yarn cli generate` and `yarn cli cts generate` rebuild the generators through the scripts and Docker (`yarn docker:setup`). The JAR they use is `generators/build/libs/algolia-java-openapi-generator-1.0.0.jar`.
 
 ## ANTI-PATTERNS
 
@@ -73,6 +66,5 @@ generators/build/libs/algolia-java-openapi-generator-1.0.0.jar
 
 ## NOTES
 
-- Generators auto-rebuild during `yarn cli generate` if source changed
 - Debug mode: `yarn cli generate {lang} --debugger` (attach Java debugger)
 - Generator names registered in `META-INF/services/org.openapitools.codegen.CodegenConfig`

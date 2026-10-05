@@ -1,0 +1,14 @@
+# Base shape of a search source. Incomplete on its own — a consumer (e.g. a
+# behaviour's main/injected-item wrapper) MUST allOf-merge this with its own
+# `params` property (the query-parameter allowlist for its context) to form
+# a complete, usable source schema.
+baseSearchSource:
+  type: object
+  additionalProperties: false
+  properties:
+    index:
+      type: string
+      description: Algolia index used to retrieve records.
+      example: Products
+  required:
+    - index

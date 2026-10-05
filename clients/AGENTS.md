@@ -27,12 +27,7 @@ clients/
 
 **Before editing any file in `clients/`, verify it's not auto-generated.**
 
-Check `config/generation.config.mjs` for glob patterns:
-
-- Patterns **without** `!` prefix → **generated** (DO NOT EDIT - will be overwritten)
-- Patterns **with** `!` prefix → **hand-written** (safe to edit)
-
-Example from the config:
+Rules: see [Generated vs Hand-Written](../AGENTS.md#generated-vs-hand-written) in the root `AGENTS.md`. Example from `config/generation.config.mjs`:
 
 ```javascript
 'clients/algoliasearch-client-go/algolia/**',     // Generated
@@ -69,30 +64,20 @@ Each client has consistent API structure:
 
 - CTS (Common Test Suite) in `tests/output/{lang}/`
 - E2E tests require credentials in `.env`
-- Run: `yarn cli cts run {lang}`
+- Commands: see [COMMANDS](../AGENTS.md#commands) in the root `AGENTS.md`
 
 ## ANTI-PATTERNS
 
-- **NEVER** manually edit generated directories
 - **NEVER** commit without regenerating after spec changes
 - **DO NOT** add language-specific API logic - use templates
 - **DO NOT** bypass transport layer for HTTP calls
 
 ## COMMANDS
 
-```bash
-# Generate
-yarn cli generate javascript         # All JS clients
-yarn cli generate python search      # Python search only
+Generate, test, playground and format commands: see [COMMANDS](../AGENTS.md#commands) in the root `AGENTS.md`. Client-specific:
 
-# Build
+```bash
 yarn cli build clients javascript    # Build JS clients
 yarn cli build playground go search  # Build Go playground
-
-# Test
-yarn cli cts run javascript          # Run JS CTS tests
-yarn cli playground python search    # Interactive playground
-
-# Format
 yarn cli format javascript clients/algoliasearch-client-javascript
 ```

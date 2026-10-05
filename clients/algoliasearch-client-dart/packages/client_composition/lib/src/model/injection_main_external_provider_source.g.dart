@@ -15,8 +15,8 @@ InjectionMainExternalProviderSource
             final val = InjectionMainExternalProviderSource(
               externalProvider: $checkedConvert(
                   'externalProvider',
-                  (v) =>
-                      MainExternalProvider.fromJson(v as Map<String, dynamic>)),
+                  (v) => InjectionMainExternalProvider.fromJson(
+                      v as Map<String, dynamic>)),
             );
             return val;
           },

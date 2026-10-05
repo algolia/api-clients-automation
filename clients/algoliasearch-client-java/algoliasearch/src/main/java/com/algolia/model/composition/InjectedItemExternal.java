@@ -13,32 +13,21 @@ public class InjectedItemExternal {
   @JsonProperty("index")
   private String index;
 
-  @JsonProperty("params")
-  private BaseInjectionQueryParameters params;
-
   @JsonProperty("ordering")
   private ExternalOrdering ordering;
+
+  @JsonProperty("params")
+  private BaseInjectionQueryParameters params;
 
   public InjectedItemExternal setIndex(String index) {
     this.index = index;
     return this;
   }
 
-  /** Composition Index name. */
+  /** Algolia index used to retrieve records. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
-  }
-
-  public InjectedItemExternal setParams(BaseInjectionQueryParameters params) {
-    this.params = params;
-    return this;
-  }
-
-  /** Get params */
-  @javax.annotation.Nullable
-  public BaseInjectionQueryParameters getParams() {
-    return params;
   }
 
   public InjectedItemExternal setOrdering(ExternalOrdering ordering) {
@@ -52,6 +41,17 @@ public class InjectedItemExternal {
     return ordering;
   }
 
+  public InjectedItemExternal setParams(BaseInjectionQueryParameters params) {
+    this.params = params;
+    return this;
+  }
+
+  /** Get params */
+  @javax.annotation.Nullable
+  public BaseInjectionQueryParameters getParams() {
+    return params;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -63,14 +63,14 @@ public class InjectedItemExternal {
     InjectedItemExternal injectedItemExternal = (InjectedItemExternal) o;
     return (
       Objects.equals(this.index, injectedItemExternal.index) &&
-      Objects.equals(this.params, injectedItemExternal.params) &&
-      Objects.equals(this.ordering, injectedItemExternal.ordering)
+      Objects.equals(this.ordering, injectedItemExternal.ordering) &&
+      Objects.equals(this.params, injectedItemExternal.params)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(index, params, ordering);
+    return Objects.hash(index, ordering, params);
   }
 
   @Override
@@ -78,8 +78,8 @@ public class InjectedItemExternal {
     StringBuilder sb = new StringBuilder();
     sb.append("class InjectedItemExternal {\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("    ordering: ").append(toIndentedString(ordering)).append("\n");
+    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();
   }
