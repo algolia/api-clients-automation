@@ -1,0 +1,77 @@
+// {{generationBanner}}
+import XCTest
+
+import Utils
+import DotEnv
+
+@testable import Core
+@testable import {{import}}
+
+final class {{client}}RequestsTestsE2EAlt: XCTestCase {
+
+  static var APPLICATION_ID = "my_application_id"
+  static var API_KEY = "my_api_key"
+  static var client: {{client}}?
+
+  override class func setUp() {
+      if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
+          do {
+              let currentFileURL = try XCTUnwrap(URL(string: #file))
+
+              let packageDirectoryURL = currentFileURL
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+
+              let dotEnvURL = packageDirectoryURL
+                  .appendingPathComponent(".env")
+              dump(dotEnvURL.absoluteString)
+              try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
+          } catch {
+              XCTFail("Unable to load .env file")
+          }
+      }
+
+      do {
+          APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["METIS_APPLICATION_ID"])
+      } catch {
+          XCTFail("Please provide an `METIS_APPLICATION_ID` env var for e2e tests")
+      }
+
+      do {
+          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["METIS_API_KEY"])
+      } catch {
+          XCTFail("Please provide an `METIS_API_KEY` env var for e2e tests")
+      }
+
+      client = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+    }
+
+  {{#blocksE2E}}
+    {{#tests}}
+      /**
+      {{{testName}}}
+      */
+      func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
+        guard let client = {{client}}RequestsTestsE2E.client else {
+          XCTFail("E2E client is not initialized")
+          return
+        }
+
+        {{#response}}
+          let response{{#isGeneric}}: Response<{{#lambda.prefix}}{{{returnType}}}{{/lambda.prefix}}<{{#lambda.prefix}}Hit{{/lambda.prefix}}>>{{/isGeneric}} = {{> tests/method}}
+          {{#body}}
+            try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{{#lambda.escapeJSON}}{{{body}}}{{/lambda.escapeJSON}}")
+          {{/body}}
+
+          {{#statusCode}}
+            XCTAssertEqual(response.statusCode, {{statusCode}})
+          {{/statusCode}}
+        {{/response}}
+      }
+    {{/tests}}
+
+  {{/blocksE2E}}
+}
