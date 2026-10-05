@@ -108,5 +108,4 @@ Specs validated by:
 ## NOTES
 
 - Breaking changes: Update `major-breaking-changes-rename.json` for migration
-- Docs build includes snippets: `yarn cli build specs --docs`
 - JSON output for API explorer: `yarn cli build specs --json`

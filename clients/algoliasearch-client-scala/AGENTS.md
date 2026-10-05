@@ -131,29 +131,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 implicit val ec: ExecutionContext = myExecutionContext
 ```
 
-### Option Handling
-
-```scala
-// Use pattern matching or combinators
-response.hits match {
-  case Some(hits) => process(hits)
-  case None => defaultValue
-}
-
-// Or use getOrElse
-val hits = response.hits.getOrElse(Seq.empty)
-
-// For chaining
-response.hits.map(_.head).flatMap(_.objectId)
-```
-
-### Case Class Copies
-
-```scala
-// Immutable updates with copy
-val updated = params.copy(hitsPerPage = Some(20))
-```
-
 ### Implicit Conversions
 
 ```scala
@@ -165,16 +142,6 @@ implicit class SearchResponseOps(response: SearchResponse) {
 // Import to use
 import algoliasearch.extension._
 response.firstHit
-```
-
-### Type Inference
-
-```scala
-// Scala infers types, but be explicit in public APIs
-def search(params: SearchParams): Future[SearchResponse] // Explicit
-
-// Local vals can use inference
-val response = client.search(params) // Type inferred
 ```
 
 ## Build & Test Commands
