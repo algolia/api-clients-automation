@@ -1,0 +1,27 @@
+ImpactAnalytics:
+  properties:
+    hasView:
+      type: boolean
+      title: hasview
+    hasClick:
+      type: boolean
+      title: hasclick
+    hasConversion:
+      type: boolean
+      title: hasconversion
+    hasAlgoliaSearch:
+      type: boolean
+      title: hasalgoliasearch
+  type: object
+  required:
+  - hasView
+  - hasClick
+  - hasConversion
+  - hasAlgoliaSearch
+  title: impactAnalytics
+  description: |-
+    Views, clicks, and conversions attributed to the conversation.
+
+    Returned only when ``includeImpactAnalytics=true``. ``null`` means the API could not supply
+    the data -- NOT that there are zero outcomes -- and the response sets ``analyticsDegraded``
+    to ``true``. Render that case as a data-load error rather than as zero-value badges.

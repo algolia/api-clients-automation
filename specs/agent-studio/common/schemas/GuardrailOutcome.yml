@@ -1,0 +1,24 @@
+GuardrailOutcome:
+  properties:
+    blocked:
+      type: boolean
+      title: blocked
+    category:
+      type: string
+      title: category
+    guardrailType:
+      oneOf:
+      - $ref: OneOfEnum.yml#/OneOfEnum
+      - type: 'null'
+      title: guardrailtype
+  type: object
+  required:
+  - blocked
+  - category
+  title: guardrailOutcome
+  description: |-
+    Minimal record of a guardrail decision, persisted on a blocked assistant message.
+
+    Present only when a guardrail blocks a turn (the persisted parts are then just the
+    fallback text); ``null`` on ordinary messages. Lets a blocked turn be told apart from a
+    short reply using conversation data alone.

@@ -19,7 +19,11 @@
       "feedbackVote": 1,
       "page": 2,
       "limit": 10,
-      "xAlgoliaSecureUserToken": null
+      "includeImpactAnalytics": true,
+      "clicked": true,
+      "converted": false,
+      "hasAlgoliaSearch": true,
+      "xAlgoliaSecureUserToken": "secure-user-token"
     },
     "request": {
       "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
@@ -30,19 +34,14 @@
         "includeFeedback": "true",
         "feedbackVote": "1",
         "page": "2",
-        "limit": "10"
-      }
-    },
-    "response": {
-      "statusCode": 200,
-      "body": {
-        "data": [],
-        "pagination": {
-          "page": 2,
-          "limit": 10,
-          "totalCount": 0,
-          "totalPages": 0
-        }
+        "limit": "10",
+        "includeImpactAnalytics": "true",
+        "clicked": "true",
+        "converted": "false",
+        "hasAlgoliaSearch": "true"
+      },
+      "headers": {
+        "x-algolia-secure-user-token": "secure-user-token"
       }
     }
   },
