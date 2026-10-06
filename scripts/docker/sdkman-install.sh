@@ -63,7 +63,7 @@ export SDKMAN_SERVICE="https://api.sdkman.io/2"
 # version, so the archives are pinned here and verified after download. The cli zip is the same for
 # every platform, the native zip is per platform. Each pin is <release tag>@<sha256 of the release asset>
 # on one line so renovate (github-release-attachments) moves the tag and the checksum together; the
-# native pins must all carry the same tag. scripts/docker/update-pins.sh prints the checksums by hand.
+# native pins must all carry the same tag. scripts/docker/update-pins.sh prints them for a manual refresh.
 SDKMAN_CLI_PIN="5.23.0@7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
 declare -A SDKMAN_NATIVE_PINS=(
 	[linuxx64]="v0.7.34@d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
