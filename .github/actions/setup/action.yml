@@ -35,9 +35,13 @@ runs:
     - name: Download Java formatter
       if: inputs.type != 'minimal'
       shell: bash
+      env:
+        # <release tag>@<sha256 of the jar>, same pin as scripts/docker/Dockerfile.base
+        JAVA_FORMATTER_PIN: v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
       run: |
-        curl -f --retry 3 -L "https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar" -o /tmp/java-formatter.jar
-        echo "25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4  /tmp/java-formatter.jar" | shasum -a 256 -c -
+        version="${JAVA_FORMATTER_PIN%@*}"
+        curl -f --retry 3 -L "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" -o /tmp/java-formatter.jar
+        echo "${JAVA_FORMATTER_PIN#*@}  /tmp/java-formatter.jar" | shasum -a 256 -c -
 
     # JavaScript for monorepo and tooling
     - name: Install Node
@@ -81,10 +85,12 @@ runs:
     - name: Install golangci-lint
       if: ${{ inputs.language == 'go' }}
       shell: bash
+      env:
+        # <release tag>@<commit of that tag>, same pin as scripts/docker/Dockerfile.base
+        GOLANGCI_LINT_PIN: v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
       run: |
-        curl --retry 3 -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v2.10.1/install.sh -o /tmp/golangci-install.sh
-        echo "edfa587f31bde70db161d1e5b783e086a1627d7e2f7c91de5f7cca79bcdf8631  /tmp/golangci-install.sh" | shasum -a 256 -c -
-        sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin v2.10.1
+        curl --retry 3 -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" -o /tmp/golangci-install.sh
+        sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}"
         go install golang.org/x/tools/cmd/goimports@v0.22.0
         echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
@@ -157,11 +163,15 @@ runs:
     - name: Install Ruby formatter
       if: ${{ inputs.language == 'ruby' }}
       shell: bash
+      env:
+        # <release tag>@<sha256 of the Linux-x86_64 archive>, same pin as scripts/docker/Dockerfile.ruby
+        RUBYFMT_PIN_X86_64: v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
       run: |
-        curl -f --retry 3 -L https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-x86_64.tar.gz -o rubyfmt.tar.gz
-        echo "c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17  rubyfmt.tar.gz" | shasum -a 256 -c -
+        version="${RUBYFMT_PIN_X86_64%@*}"
+        curl -f --retry 3 -L "https://github.com/fables-tales/rubyfmt/releases/download/${version}/rubyfmt-${version}-Linux-x86_64.tar.gz" -o rubyfmt.tar.gz
+        echo "${RUBYFMT_PIN_X86_64#*@}  rubyfmt.tar.gz" | shasum -a 256 -c -
         tar -xzf rubyfmt.tar.gz
-        mv tmp/releases/v0.10.0-Linux/rubyfmt /usr/local/bin
+        mv "tmp/releases/${version}-Linux/rubyfmt" /usr/local/bin
         rm -rf rubyfmt.tar.gz tmp
 
     # Scala

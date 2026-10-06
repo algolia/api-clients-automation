@@ -1,12 +1,13 @@
 #!/bin/bash
 # always fails when a pinned FROM line is missing its digest, when a shared tool pin in the
-# docker images diverges from the CI setup action, or when the sdkman pins are malformed.
+# docker images diverges from the CI setup action, or when the sdkman or tool pins are malformed.
 # With DRIFT_CHECK_TAGS=1 it also fails when a pinned FROM tag diverges from its
 # config/.*-version file. With DRIFT_CHECK_LIVE=1 it resolves every pinned ref against its
 # registry: a tag that does not exist fails, a digest that no longer matches the tag only warns,
 # because upstream rebuilds under an unchanged tag and the renovate pinDigests rule is what
-# refreshes the pin, not the PR that happens to be open; it also hashes the sdkman archives, which
-# are immutable release assets, so a mismatch there fails. Both extras run only in the docker jobs.
+# refreshes the pin, not the PR that happens to be open; it also hashes the sdkman archives and the
+# tool release assets, which are immutable, and resolves the tool tags to their commits, so a
+# mismatch there fails. Both extras run only in the docker jobs.
 set -euo pipefail
 
 get_from() {
@@ -198,6 +199,72 @@ native/install/${native_version}/linuxarm64 ${native_arm64#*@}
 EOF
 }
 
+# the tool pins are <release tag>@<commit of that tag> (installer scripts fetched by commit) or
+# <release tag>@<sha256 of a release asset>; renovate moves both halves together, so parse them here
+# so a mangled pin fails setup, and (when live) resolve them so a stale commit or checksum fails the
+# cheap job instead of the image build or a language job
+check_tool_pins() {
+  local name file repo kind asset digest_re pin tag want got tmp
+  while read -r name file repo kind asset; do
+    if [[ "$kind" == "commit" ]]; then digest_re='[a-f0-9]{40}'; else digest_re='[a-f0-9]{64}'; fi
+    pin=$(extract_ver "$file" "${name}[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@${digest_re})")
+    if [[ -z "$pin" ]]; then
+      echo "$file: expected ${name} as <tag>@<${kind}>"
+      fail=1
+      continue
+    fi
+    if [[ "$check_live" != "1" ]]; then
+      continue
+    fi
+    tag="${pin%@*}"
+    want="${pin#*@}"
+    if [[ "$kind" == "commit" ]]; then
+      # an annotated tag lists its commit on the peeled ^{} line, a lightweight tag only has the plain line;
+      # retried like the curl downloads so a network blip does not fail the job
+      got=""
+      for _ in 1 2 3; do
+        got=$(git ls-remote "https://github.com/${repo}" "refs/tags/${tag}" "refs/tags/${tag}^{}" 2>/dev/null \
+          | awk '$2 ~ /\^\{\}$/ {peeled=$1} $2 !~ /\^\{\}$/ {plain=$1} END {print (peeled ? peeled : plain)}') || true
+        [[ -n "$got" ]] && break
+        sleep 2
+      done
+      if [[ -z "$got" ]]; then
+        echo "$file: could not resolve ${repo} tag ${tag}"
+        fail=1
+      elif [[ "$got" != "$want" ]]; then
+        echo "$file: ${name} ${tag} points at ${got} but the pin says ${want}"
+        echo "  -> refresh the pin (scripts/docker/update-pins.sh prints it)"
+        fail=1
+      fi
+      continue
+    fi
+    asset="${asset//\{tag\}/$tag}"
+    asset="${asset//\{version\}/${tag#v}}"
+    tmp=$(mktemp)
+    if curl -sfL --retry 3 -o "$tmp" "https://github.com/${repo}/releases/download/${tag}/${asset}" && [[ -s "$tmp" ]]; then
+      got=$(sha256sum "$tmp" | awk '{print $1}')
+      if [[ "$got" != "$want" ]]; then
+        echo "$file: ${asset} hashes to ${got} but the pin says ${want}"
+        echo "  -> refresh the pin (scripts/docker/update-pins.sh prints it)"
+        fail=1
+      fi
+    else
+      echo "$file: could not download ${repo} ${tag} ${asset}"
+      fail=1
+    fi
+    rm -f "$tmp"
+  done <<'EOF'
+NVM_PIN scripts/docker/Dockerfile.base nvm-sh/nvm commit -
+GOLANGCI_LINT_PIN scripts/docker/Dockerfile.base golangci/golangci-lint commit -
+GOLANGCI_LINT_PIN .github/actions/setup/action.yml golangci/golangci-lint commit -
+JAVA_FORMATTER_PIN scripts/docker/Dockerfile.base google/google-java-format sha256 google-java-format-{version}-all-deps.jar
+JAVA_FORMATTER_PIN .github/actions/setup/action.yml google/google-java-format sha256 google-java-format-{version}-all-deps.jar
+RUBYFMT_PIN_X86_64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-x86_64.tar.gz
+RUBYFMT_PIN_AARCH64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-aarch64.tar.gz
+RUBYFMT_PIN_X86_64 .github/actions/setup/action.yml fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-x86_64.tar.gz
+EOF
+}
+
 check Dockerfile.base dart .dart-version
 check Dockerfile.base mcr.microsoft.com/dotnet/sdk .csharp-version
 check Dockerfile.base golang .go-version
@@ -210,13 +277,16 @@ check Dockerfile.swift swift .swift-version
 check_digest Dockerfile.base composer
 check_digest Dockerfile.swift ghcr.io/nicklockwood/swiftformat
 
-check_shared_pin golangci-lint 'golangci-lint/v([0-9]+\.[0-9]+\.[0-9]+)/install\.sh'
-check_shared_pin google-java-format 'google-java-format/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/'
-check_shared_pin rubyfmt 'rubyfmt/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/' scripts/docker/Dockerfile.ruby
+check_shared_pin golangci-lint 'GOLANGCI_LINT_PIN[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{40})'
+check_shared_pin google-java-format 'JAVA_FORMATTER_PIN[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{64})'
+check_shared_pin rubyfmt 'RUBYFMT_PIN_X86_64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{64})' scripts/docker/Dockerfile.ruby
+# the aarch64 archive is only used by the image, its own checksum differs, so only the tag has to agree
+check_shared_pin rubyfmt-aarch64 'RUBYFMT_PIN_X86_64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+)@' scripts/docker/Dockerfile.ruby 'RUBYFMT_PIN_AARCH64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+)@'
 # the ARG that used to keep these two in one renovate manager is gone, and the docker tag and
 # the CI source build now resolve from different datasources, so compare them explicitly
 check_shared_pin swiftformat 'SWIFTFORMAT_VERSION=([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.swift 'swiftformat:([0-9]+\.[0-9]+\.[0-9]+)@'
 
 check_sdkman_pins
+check_tool_pins
 
 exit $fail

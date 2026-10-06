@@ -18,8 +18,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY .nvmrc .nvmrc
-RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh \
-  && echo "8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643  /tmp/nvm-install.sh" | sha256sum -c - \
+# <release tag>@<commit of that tag>: the installer is fetched by commit, which cannot change under it, and renovate
+# (github-tags) moves the tag and the commit together
+ARG NVM_PIN=v0.39.7@bab86d5de571015b63fd8fc30b47bbe072a1290e
+RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_PIN#*@}/install.sh" \
   && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
   && npm install -g yarn
@@ -32,8 +34,12 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install java ${JAVA_VERSION}-zulu \
   && sdk install sbt
 
-# Java formatter
-ADD --checksum=sha256:25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4 https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar /tmp/java-formatter.jar
+# Java formatter, <release tag>@<sha256 of the jar> on one line so renovate (github-release-attachments) moves the tag
+# and the checksum together; keep it equal to JAVA_FORMATTER_PIN in .github/actions/setup/action.yml
+ARG JAVA_FORMATTER_PIN=v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+RUN version="${JAVA_FORMATTER_PIN%@*}" \
+  && curl -sSfL --retry 3 -o /tmp/java-formatter.jar "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" \
+  && echo "${JAVA_FORMATTER_PIN#*@}  /tmp/java-formatter.jar" | sha256sum -c -
 
 
 # Python
@@ -49,10 +55,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
+# pinned like NVM_PIN above, the installer then checks the release archive against the release checksums;
+# keep it equal to GOLANGCI_LINT_PIN in .github/actions/setup/action.yml
+ARG GOLANGCI_LINT_PIN=v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
-  && curl -sSfL --retry 3 -o /tmp/golangci-install.sh https://raw.githubusercontent.com/golangci/golangci-lint/v2.10.1/install.sh \
-  && echo "edfa587f31bde70db161d1e5b783e086a1627d7e2f7c91de5f7cca79bcdf8631  /tmp/golangci-install.sh" | sha256sum -c - \
-  && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin v2.10.1 && rm /tmp/golangci-install.sh \
+  && curl -sSfL --retry 3 -o /tmp/golangci-install.sh "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" \
+  && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}" && rm /tmp/golangci-install.sh \
   && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 # Dart
