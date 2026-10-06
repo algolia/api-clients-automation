@@ -16,7 +16,7 @@
 #
 
 
-# install:- channel: stable; cliVersion: 5.23.0; cliNativeVersion: 0.7.34; api: https://api.sdkman.io/2
+# install:- channel: stable; api: https://api.sdkman.io/2 (versions: see SDKMAN_CLI_PIN and SDKMAN_NATIVE_PINS)
 
 # Refuse to install on Cygwin
 if [[ "$(uname -s)" == CYGWIN_NT* ]]; then
@@ -58,17 +58,32 @@ trap echo_failed_command EXIT
 
 # Global variables
 export SDKMAN_SERVICE="https://api.sdkman.io/2"
-export SDKMAN_VERSION="5.23.0"
-export SDKMAN_NATIVE_VERSION="0.7.34"
 
 # vendored addition: the broker redirects to the sdkman GitHub release assets, which are immutable per
 # version, so the archives are pinned here and verified after download. The cli zip is the same for
-# every platform, the native zip is per platform. Refresh with scripts/docker/update-pins.sh after a bump.
-export SDKMAN_CLI_SHA256="7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
-declare -A SDKMAN_NATIVE_SHA256=(
-	[linuxx64]="d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
-	[linuxarm64]="79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
+# every platform, the native zip is per platform. Each pin is <release tag>@<sha256 of the release asset>
+# on one line so renovate (github-release-attachments) moves the tag and the checksum together; the
+# native pins must all carry the same tag. scripts/docker/update-pins.sh prints them for a manual refresh.
+SDKMAN_CLI_PIN="5.23.0@7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
+declare -A SDKMAN_NATIVE_PINS=(
+	[linuxx64]="v0.7.34@d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
+	[linuxarm64]="v0.7.34@79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
 )
+
+export SDKMAN_VERSION="${SDKMAN_CLI_PIN%%@*}"
+export SDKMAN_CLI_SHA256="${SDKMAN_CLI_PIN#*@}"
+SDKMAN_NATIVE_TAG="${SDKMAN_NATIVE_PINS[linuxx64]%%@*}"
+declare -A SDKMAN_NATIVE_SHA256=()
+for sdkman_pin_platform in "${!SDKMAN_NATIVE_PINS[@]}"; do
+	sdkman_pin="${SDKMAN_NATIVE_PINS[$sdkman_pin_platform]}"
+	if [[ "${sdkman_pin%%@*}" != "$SDKMAN_NATIVE_TAG" ]]; then
+		echo "The ${sdkman_pin_platform} native pin is on ${sdkman_pin%%@*} but linuxx64 is on ${SDKMAN_NATIVE_TAG}, keep every native pin on the same release"
+		exit 1
+	fi
+	SDKMAN_NATIVE_SHA256[$sdkman_pin_platform]="${sdkman_pin#*@}"
+done
+unset sdkman_pin sdkman_pin_platform
+export SDKMAN_NATIVE_VERSION="${SDKMAN_NATIVE_TAG#v}"
 
 function verify_sha256() {
 	local file=$1
