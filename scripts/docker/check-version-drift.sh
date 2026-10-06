@@ -1,11 +1,12 @@
 #!/bin/bash
-# always fails when a pinned FROM line is missing its digest, or when a shared tool pin in the
-# docker images diverges from the CI setup action.
+# always fails when a pinned FROM line is missing its digest, when a shared tool pin in the
+# docker images diverges from the CI setup action, or when the sdkman pins are malformed.
 # With DRIFT_CHECK_TAGS=1 it also fails when a pinned FROM tag diverges from its
 # config/.*-version file. With DRIFT_CHECK_LIVE=1 it resolves every pinned ref against its
 # registry: a tag that does not exist fails, a digest that no longer matches the tag only warns,
 # because upstream rebuilds under an unchanged tag and the renovate pinDigests rule is what
-# refreshes the pin, not the PR that happens to be open. Both extras run only in the docker jobs.
+# refreshes the pin, not the PR that happens to be open; it also hashes the sdkman archives, which
+# are immutable release assets, so a mismatch there fails. Both extras run only in the docker jobs.
 set -euo pipefail
 
 get_from() {
@@ -102,6 +103,7 @@ check() {
     if [[ "$tag" != "$expected" ]]; then
       echo "$1: $2 is pinned to $tag but config/$3 says $expected"
       echo "  -> update the FROM line in scripts/docker/$1 (scripts/docker/update-pins.sh prints the new digest)"
+      echo "  -> on a renovate PR this is a half group: tick its rebase box on the Dependency Dashboard instead of pushing to the branch"
       fail=1
     fi
   fi
@@ -147,8 +149,53 @@ check_shared_pin() {
   if [[ "$action_ver" != "$docker_ver" ]]; then
     echo "$name: .github/actions/setup/action.yml has $action_ver but $docker_file has $docker_ver"
     echo "  -> keep the same version in both (scripts/docker/update-pins.sh prints checksums after a bump)"
+    echo "  -> on a renovate PR this is a half group: tick its rebase box on the Dependency Dashboard instead of pushing to the branch"
     fail=1
   fi
+}
+
+# the installer verifies these at build time, deep inside the base image build; parse them here so a
+# mangled pin fails setup, and (when live) hash the archives so a stale checksum fails the cheap job
+check_sdkman_pins() {
+  local file=scripts/docker/sdkman-install.sh
+  local cli native_x64 native_arm64 native_version target expected tmp sum
+  cli=$(sed -nE 's/^SDKMAN_CLI_PIN="([0-9.]+@[a-f0-9]{64})"$/\1/p' "$file")
+  native_x64=$(sed -nE 's/^[[:space:]]*\[linuxx64\]="(v[0-9.]+@[a-f0-9]{64})"$/\1/p' "$file")
+  native_arm64=$(sed -nE 's/^[[:space:]]*\[linuxarm64\]="(v[0-9.]+@[a-f0-9]{64})"$/\1/p' "$file")
+  if [[ -z "$cli" || -z "$native_x64" || -z "$native_arm64" ]]; then
+    echo "$file: expected SDKMAN_CLI_PIN and the linuxx64/linuxarm64 native pins as <tag>@<sha256>"
+    fail=1
+    return
+  fi
+  if [[ "${native_x64%%@*}" != "${native_arm64%%@*}" ]]; then
+    echo "$file: the native pins disagree (linuxx64 ${native_x64%%@*}, linuxarm64 ${native_arm64%%@*})"
+    fail=1
+    return
+  fi
+  if [[ "$check_live" != "1" ]]; then
+    return
+  fi
+  native_version="${native_x64%%@*}"
+  native_version="${native_version#v}"
+  while read -r target expected; do
+    tmp=$(mktemp)
+    if curl -sfL --retry 3 -o "$tmp" "https://api.sdkman.io/2/broker/download/${target}" && [[ -s "$tmp" ]]; then
+      sum=$(sha256sum "$tmp" | awk '{print $1}')
+      if [[ "$sum" != "$expected" ]]; then
+        echo "$file: ${target} hashes to ${sum} but the pin says ${expected}"
+        echo "  -> refresh the pin (scripts/docker/update-pins.sh prints it)"
+        fail=1
+      fi
+    else
+      echo "$file: could not download ${target}"
+      fail=1
+    fi
+    rm -f "$tmp"
+  done <<EOF
+sdkman/install/${cli%%@*}/linuxx64 ${cli#*@}
+native/install/${native_version}/linuxx64 ${native_x64#*@}
+native/install/${native_version}/linuxarm64 ${native_arm64#*@}
+EOF
 }
 
 check Dockerfile.base dart .dart-version
@@ -169,5 +216,7 @@ check_shared_pin rubyfmt 'rubyfmt/releases/download/v([0-9]+\.[0-9]+\.[0-9]+)/' 
 # the ARG that used to keep these two in one renovate manager is gone, and the docker tag and
 # the CI source build now resolve from different datasources, so compare them explicitly
 check_shared_pin swiftformat 'SWIFTFORMAT_VERSION=([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.swift 'swiftformat:([0-9]+\.[0-9]+\.[0-9]+)@'
+
+check_sdkman_pins
 
 exit $fail

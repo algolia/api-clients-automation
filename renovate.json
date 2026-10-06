@@ -112,6 +112,47 @@
       ]
     },
     {
+      "description": "Renovate drops pending updates from a group, so an image held by its own age gate leaves the PR with only the version half and check-version-drift.sh fails. The version half keeps the age gate; the image half must not add its own, because ghcr tags carry no release timestamp (pending forever) and Docker Hub tags reset their age on every rebuild",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "scripts/docker/**"
+      ],
+      "matchDepNames": [
+        "dart",
+        "golang",
+        "mcr.microsoft.com/dotnet/sdk",
+        "php",
+        "ruby",
+        "swift"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "ghcr tags carry no release timestamp, so any age gate keeps swiftformat pending forever, digests included",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchDepNames": [
+        "ghcr.io/nicklockwood/swiftformat"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "Both sdkman pins live in scripts/docker/sdkman-install.sh, one PR avoids conflicting rebases",
+      "groupName": "sdkman",
+      "matchDepNames": [
+        "sdkman/sdkman-cli",
+        "sdkman/sdkman-cli-native"
+      ]
+    },
+    {
       "matchDepTypes": [
         "required_provider"
       ],
@@ -395,29 +436,27 @@
     },
     {
       "customType": "regex",
-      "description": "Update the vendored sdkman CLI version in scripts/docker/sdkman-install.sh, the archive checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "description": "Update the vendored sdkman CLI in scripts/docker/sdkman-install.sh, the release asset digest moves with the tag",
       "managerFilePatterns": [
         "/sdkman-install.sh/"
       ],
       "matchStrings": [
-        "SDKMAN_VERSION=\"(?<currentValue>[0-9.]+)\"",
-        "cliVersion: (?<currentValue>[0-9.]+);"
+        "SDKMAN_CLI_PIN=\"(?<currentValue>[0-9.]+)@(?<currentDigest>[a-f0-9]{64})\""
       ],
       "depNameTemplate": "sdkman/sdkman-cli",
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-release-attachments"
     },
     {
       "customType": "regex",
-      "description": "Update the vendored sdkman native CLI version in scripts/docker/sdkman-install.sh, the per platform archive checksums next to it must be refreshed with scripts/docker/update-pins.sh",
+      "description": "Update the vendored sdkman native CLI in scripts/docker/sdkman-install.sh, one dependency per platform so each release asset digest moves with the tag",
       "managerFilePatterns": [
         "/sdkman-install.sh/"
       ],
       "matchStrings": [
-        "SDKMAN_NATIVE_VERSION=\"(?<currentValue>[0-9.]+)\"",
-        "cliNativeVersion: (?<currentValue>[0-9.]+);"
+        "\\[linux[a-z0-9]+\\]=\"(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{64})\""
       ],
       "depNameTemplate": "sdkman/sdkman-cli-native",
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-release-attachments"
     }
   ],
   "github-actions": {
