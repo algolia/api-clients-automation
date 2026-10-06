@@ -40,6 +40,24 @@ public class SearchParametersOverrides {
   @JsonProperty("optionalFilters")
   private OptionalFiltersUnion optionalFilters;
 
+  @JsonProperty("aroundLatLng")
+  private String aroundLatLng;
+
+  @JsonProperty("aroundRadius")
+  private AroundRadiusUnion aroundRadius;
+
+  @JsonProperty("aroundPrecision")
+  private AroundPrecisionUnion aroundPrecision;
+
+  @JsonProperty("minimumAroundRadius")
+  private Integer minimumAroundRadius;
+
+  @JsonProperty("insideBoundingBox")
+  private InsideBoundingBoxUnion insideBoundingBox;
+
+  @JsonProperty("insidePolygon")
+  private InsidePolygonUnion insidePolygon;
+
   public SearchParametersOverrides setFilters(String filters) {
     this.filters = filters;
     return this;
@@ -144,6 +162,72 @@ public class SearchParametersOverrides {
     return optionalFilters;
   }
 
+  public SearchParametersOverrides setAroundLatLng(String aroundLatLng) {
+    this.aroundLatLng = aroundLatLng;
+    return this;
+  }
+
+  /** Get aroundLatLng */
+  @javax.annotation.Nullable
+  public String getAroundLatLng() {
+    return aroundLatLng;
+  }
+
+  public SearchParametersOverrides setAroundRadius(AroundRadiusUnion aroundRadius) {
+    this.aroundRadius = aroundRadius;
+    return this;
+  }
+
+  /** Get aroundRadius */
+  @javax.annotation.Nullable
+  public AroundRadiusUnion getAroundRadius() {
+    return aroundRadius;
+  }
+
+  public SearchParametersOverrides setAroundPrecision(AroundPrecisionUnion aroundPrecision) {
+    this.aroundPrecision = aroundPrecision;
+    return this;
+  }
+
+  /** Get aroundPrecision */
+  @javax.annotation.Nullable
+  public AroundPrecisionUnion getAroundPrecision() {
+    return aroundPrecision;
+  }
+
+  public SearchParametersOverrides setMinimumAroundRadius(Integer minimumAroundRadius) {
+    this.minimumAroundRadius = minimumAroundRadius;
+    return this;
+  }
+
+  /** Get minimumAroundRadius */
+  @javax.annotation.Nullable
+  public Integer getMinimumAroundRadius() {
+    return minimumAroundRadius;
+  }
+
+  public SearchParametersOverrides setInsideBoundingBox(InsideBoundingBoxUnion insideBoundingBox) {
+    this.insideBoundingBox = insideBoundingBox;
+    return this;
+  }
+
+  /** Get insideBoundingBox */
+  @javax.annotation.Nullable
+  public InsideBoundingBoxUnion getInsideBoundingBox() {
+    return insideBoundingBox;
+  }
+
+  public SearchParametersOverrides setInsidePolygon(InsidePolygonUnion insidePolygon) {
+    this.insidePolygon = insidePolygon;
+    return this;
+  }
+
+  /** Get insidePolygon */
+  @javax.annotation.Nullable
+  public InsidePolygonUnion getInsidePolygon() {
+    return insidePolygon;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -161,7 +245,13 @@ public class SearchParametersOverrides {
       Objects.equals(this.userToken, searchParametersOverrides.userToken) &&
       Objects.equals(this.enablePersonalization, searchParametersOverrides.enablePersonalization) &&
       Objects.equals(this.personalizationImpact, searchParametersOverrides.personalizationImpact) &&
-      Objects.equals(this.optionalFilters, searchParametersOverrides.optionalFilters)
+      Objects.equals(this.optionalFilters, searchParametersOverrides.optionalFilters) &&
+      Objects.equals(this.aroundLatLng, searchParametersOverrides.aroundLatLng) &&
+      Objects.equals(this.aroundRadius, searchParametersOverrides.aroundRadius) &&
+      Objects.equals(this.aroundPrecision, searchParametersOverrides.aroundPrecision) &&
+      Objects.equals(this.minimumAroundRadius, searchParametersOverrides.minimumAroundRadius) &&
+      Objects.equals(this.insideBoundingBox, searchParametersOverrides.insideBoundingBox) &&
+      Objects.equals(this.insidePolygon, searchParametersOverrides.insidePolygon)
     );
   }
 
@@ -175,7 +265,13 @@ public class SearchParametersOverrides {
       userToken,
       enablePersonalization,
       personalizationImpact,
-      optionalFilters
+      optionalFilters,
+      aroundLatLng,
+      aroundRadius,
+      aroundPrecision,
+      minimumAroundRadius,
+      insideBoundingBox,
+      insidePolygon
     );
   }
 
@@ -191,6 +287,12 @@ public class SearchParametersOverrides {
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    personalizationImpact: ").append(toIndentedString(personalizationImpact)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
+    sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
+    sb.append("    aroundRadius: ").append(toIndentedString(aroundRadius)).append("\n");
+    sb.append("    aroundPrecision: ").append(toIndentedString(aroundPrecision)).append("\n");
+    sb.append("    minimumAroundRadius: ").append(toIndentedString(minimumAroundRadius)).append("\n");
+    sb.append("    insideBoundingBox: ").append(toIndentedString(insideBoundingBox)).append("\n");
+    sb.append("    insidePolygon: ").append(toIndentedString(insidePolygon)).append("\n");
     sb.append("}");
     return sb.toString();
   }

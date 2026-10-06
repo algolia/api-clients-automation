@@ -4161,6 +4161,22 @@ components:
           title: personalizationimpact
         optionalFilters:
           $ref: '#/components/schemas/OptionalFiltersUnion'
+        aroundLatLng:
+          type: string
+          default: null
+          title: aroundlatlng
+        aroundRadius:
+          $ref: '#/components/schemas/AroundRadiusUnion'
+        aroundPrecision:
+          $ref: '#/components/schemas/AroundPrecisionUnion'
+        minimumAroundRadius:
+          type: integer
+          default: null
+          title: minimumaroundradius
+        insideBoundingBox:
+          $ref: '#/components/schemas/InsideBoundingBoxUnion'
+        insidePolygon:
+          $ref: '#/components/schemas/InsidePolygonUnion'
       title: searchParametersOverrides
       type: object
     SearchParametersOverridesMapNullable:

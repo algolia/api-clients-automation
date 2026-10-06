@@ -9,13 +9,13 @@ ToolCallAGUI:
       title: type
       type: string
     function:
-      $ref: FunctionCallAGUI.yml#/FunctionCallAGUI
+      $ref: 'FunctionCallAGUI.yml#/FunctionCallAGUI'
     encryptedValue:
       type: string
       default: null
       title: encryptedvalue
   required:
-  - id
-  - function
+    - id
+    - function
   title: toolCallAGUI
   type: object

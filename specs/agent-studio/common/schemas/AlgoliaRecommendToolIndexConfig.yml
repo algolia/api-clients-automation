@@ -15,7 +15,7 @@ AlgoliaRecommendToolIndexConfig:
       title: description
       type: string
   required:
-  - index
-  - modelName
+    - index
+    - modelName
   title: algoliaRecommendToolIndexConfig
   type: object

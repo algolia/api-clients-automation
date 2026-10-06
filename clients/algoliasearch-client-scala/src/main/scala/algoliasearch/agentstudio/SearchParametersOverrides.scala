@@ -47,5 +47,11 @@ case class SearchParametersOverrides(
     userToken: Option[String] = scala.None,
     enablePersonalization: Option[Boolean] = scala.None,
     personalizationImpact: Option[Int] = scala.None,
-    optionalFilters: Option[OptionalFiltersUnion] = scala.None
+    optionalFilters: Option[OptionalFiltersUnion] = scala.None,
+    aroundLatLng: Option[String] = scala.None,
+    aroundRadius: Option[AroundRadiusUnion] = scala.None,
+    aroundPrecision: Option[AroundPrecisionUnion] = scala.None,
+    minimumAroundRadius: Option[Int] = scala.None,
+    insideBoundingBox: Option[InsideBoundingBoxUnion] = scala.None,
+    insidePolygon: Option[InsidePolygonUnion] = scala.None
 )

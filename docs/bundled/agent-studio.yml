@@ -3798,7 +3798,13 @@ paths:
                     "userToken": null,
                     "enablePersonalization": null,
                     "personalizationImpact": null,
-                    "optionalFilters": "lorem"
+                    "optionalFilters": "lorem",
+                    "aroundLatLng": null,
+                    "aroundRadius": 42,
+                    "aroundPrecision": 42,
+                    "minimumAroundRadius": null,
+                    "insideBoundingBox": "lorem",
+                    "insidePolygon": "lorem"
                   },
                   "property2": {
                     "filters": null,
@@ -3808,7 +3814,13 @@ paths:
                     "userToken": null,
                     "enablePersonalization": null,
                     "personalizationImpact": null,
-                    "optionalFilters": "lorem"
+                    "optionalFilters": "lorem",
+                    "aroundLatLng": null,
+                    "aroundRadius": 42,
+                    "aroundPrecision": 42,
+                    "minimumAroundRadius": null,
+                    "insideBoundingBox": "lorem",
+                    "insidePolygon": "lorem"
                   }
                 },
                 "indices": [
@@ -14578,6 +14590,14 @@ components:
         A subset of SearchParameters of specific params we allow for runtime
         override.
       properties:
+        aroundLatLng:
+          type: string
+          default: null
+          title: aroundlatlng
+        aroundPrecision:
+          $ref: '#/components/schemas/AroundPrecisionUnion'
+        aroundRadius:
+          $ref: '#/components/schemas/AroundRadiusUnion'
         attributesToRetrieve:
           items:
             type: string
@@ -14594,6 +14614,14 @@ components:
           type: string
           default: null
           title: filters
+        insideBoundingBox:
+          $ref: '#/components/schemas/InsideBoundingBoxUnion'
+        insidePolygon:
+          $ref: '#/components/schemas/InsidePolygonUnion'
+        minimumAroundRadius:
+          type: integer
+          default: null
+          title: minimumaroundradius
         optionalFilters:
           $ref: '#/components/schemas/OptionalFiltersUnion'
         personalizationImpact:

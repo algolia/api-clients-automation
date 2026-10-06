@@ -26,6 +26,13 @@ SearchParametersOverrides _$SearchParametersOverridesFromJson(
           personalizationImpact: $checkedConvert(
               'personalizationImpact', (v) => (v as num?)?.toInt()),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
+          aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
+          aroundRadius: $checkedConvert('aroundRadius', (v) => v),
+          aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
+          insideBoundingBox: $checkedConvert('insideBoundingBox', (v) => v),
+          insidePolygon: $checkedConvert('insidePolygon', (v) => v),
         );
         return val;
       },
@@ -50,5 +57,11 @@ Map<String, dynamic> _$SearchParametersOverridesToJson(
   writeNotNull('enablePersonalization', instance.enablePersonalization);
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('aroundLatLng', instance.aroundLatLng);
+  writeNotNull('aroundRadius', instance.aroundRadius);
+  writeNotNull('aroundPrecision', instance.aroundPrecision);
+  writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
+  writeNotNull('insideBoundingBox', instance.insideBoundingBox);
+  writeNotNull('insidePolygon', instance.insidePolygon);
   return val;
 }

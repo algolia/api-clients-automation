@@ -2,7 +2,7 @@ AgentConsolidateResponse:
   properties:
     savedMemories:
       items:
-        $ref: MemoryRecord.yml#/MemoryRecord
+        $ref: 'MemoryRecord.yml#/MemoryRecord'
       type: array
       title: savedmemories
       description: Memories saved/updated.
@@ -14,8 +14,8 @@ AgentConsolidateResponse:
       description: Memory object IDs deleted during consolidation.
     saveTaskId:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       title: savetaskid
       description: Algolia task ID for save batch.
     deleteTaskIds:
@@ -30,6 +30,6 @@ AgentConsolidateResponse:
       description: Summary message of consolidation results.
   type: object
   required:
-  - message
+    - message
   title: agentConsolidateResponse
   description: Response model for agent consolidate endpoint.

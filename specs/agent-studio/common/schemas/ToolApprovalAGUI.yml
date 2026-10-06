@@ -11,7 +11,7 @@ ToolApprovalAGUI:
       default: null
       title: approved
   required:
-  - id
-  - needsApproval
+    - id
+    - needsApproval
   title: toolApprovalAGUI
   type: object
