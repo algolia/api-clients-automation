@@ -5410,6 +5410,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:11.4.1":
+  version: 11.4.1
+  resolution: "fs-extra@npm:11.4.1"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 10/8805c7413442ed9e94fb25eeafd28d705e2a732deba3eeb7b43cf687ce60c94e8a298b882de38249034ca84db7d21a0e4a237a041e8141f8f24f0d5ac2c6056a
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^3.0.0":
   version: 3.0.3
   resolution: "fs-minipass@npm:3.0.3"
@@ -8283,7 +8294,7 @@ __metadata:
     execa: "npm:10.0.1"
     express: "npm:5.2.1"
     folder-hash: "npm:4.1.3"
-    fs-extra: "npm:11.4.0"
+    fs-extra: "npm:11.4.1"
     js-yaml: "npm:5.4.2"
     knip: "npm:6.35.1"
     micromatch: "npm:4.0.8"
