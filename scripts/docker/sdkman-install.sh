@@ -66,8 +66,8 @@ export SDKMAN_SERVICE="https://api.sdkman.io/2"
 # native pins must all carry the same tag. scripts/docker/update-pins.sh prints them for a manual refresh.
 SDKMAN_CLI_PIN="5.23.0@7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
 declare -A SDKMAN_NATIVE_PINS=(
-	[linuxx64]="v0.7.34@d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
-	[linuxarm64]="v0.7.34@79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
+	[linuxx64]="v0.7.35@d5130a98a6bfbda78dbfe50515996c40f53fce99c5d62748a80ca901d81163b3"
+	[linuxarm64]="v0.7.35@5f8645c47e06ddf34f8925fe799f1d87c382689893dca839145051a30c462fa5"
 )
 
 export SDKMAN_VERSION="${SDKMAN_CLI_PIN%%@*}"

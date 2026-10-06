@@ -141,7 +141,7 @@ __metadata:
     husky: "npm:9.1.7"
     lint-staged: "npm:17.5.1"
     oxlint: "npm:1.82.0"
-    prettier: "npm:3.9.6"
+    prettier: "npm:3.9.9"
     prettier-plugin-java: "npm:2.10.3"
     prettier-plugin-organize-imports: "npm:4.3.0"
     renovate-config-algolia: "npm:2.2.0"
@@ -3750,14 +3750,14 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.19.0":
-  version: 1.19.0
-  resolution: "axios@npm:1.19.0"
+  version: 1.20.0
+  resolution: "axios@npm:1.20.0"
   dependencies:
     follow-redirects: "npm:^1.16.0"
     form-data: "npm:^4.0.6"
     https-proxy-agent: "npm:^5.0.1"
     proxy-from-env: "npm:^2.1.0"
-  checksum: 10/d27e263b003f2dc1e6d0e2ab062dbc7c2b15668c25723e1e2072f139505c1fbd1f8cffef77d5ec05bb8e3cefa6fc5325c6446e747669fd95d85519529fa0db0b
+  checksum: 10/0376b6178baecbe0f5d36088f5b5f6c21362ce301e0731f77172f9c89be740bdee20d8ae6ab186340d7cb752020c6a4f1381290e5a5cd10f6f9003941615ac77
   languageName: node
   linkType: hard
 
@@ -4066,10 +4066,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:6.0.0":
-  version: 6.0.0
-  resolution: "chalk@npm:6.0.0"
-  checksum: 10/bdcb895b9c848ddbce38f38df5a10a3e272d6c04d759161789c4a2fa5a1fa78bf9eecf4eef73433a2a3be7324d6da96c3c9baf5c80862f37683cc0b890597831
+"chalk@npm:6.0.1":
+  version: 6.0.1
+  resolution: "chalk@npm:6.0.1"
+  checksum: 10/1457692e6327f299da7d7cd6a7774fe1de25bda6c0e33791901d6762a6c0f2409bd3d92bf7695519825c2fbb405c104a0a73fd489e4e9f88af3ef2a1d97455c9
   languageName: node
   linkType: hard
 
@@ -4509,14 +4509,14 @@ __metadata:
   linkType: hard
 
 "dompurify@npm:^3.2.4":
-  version: 3.4.13
-  resolution: "dompurify@npm:3.4.13"
+  version: 3.4.16
+  resolution: "dompurify@npm:3.4.16"
   dependencies:
     "@types/trusted-types": "npm:^2.0.7"
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10/0db0a309a868a38aca042f606b37446977c35ee4501850a8c1bf2781337d79871daf1f4344bbf5b545f2a8c62e4d4e192c8fd6f1ff49ecec7c865c55a0aefee3
+  checksum: 10/a571d0e2bede4f739666afd640398a86854abd27c71ce0724910249e2fd2ca7ddb8098a9ab579d3a5b39058419af694421f8fe859a81fd6d8acda16019a8ab9d
   languageName: node
   linkType: hard
 
@@ -4850,12 +4850,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:0.5.6":
-  version: 0.5.6
-  resolution: "eslint-plugin-react-refresh@npm:0.5.6"
+"eslint-plugin-react-refresh@npm:0.5.7":
+  version: 0.5.7
+  resolution: "eslint-plugin-react-refresh@npm:0.5.7"
   peerDependencies:
     eslint: ^9 || ^10
-  checksum: 10/eb4e1bece1cf848c5ee349959537ce9b2dc666c1c09b4d006746afee837e6bdc905a7bb47336ad599bf5514d91ad105398b3e9cbf23547a0763fdb883f0aed2a
+  checksum: 10/6a3945df8f4319973388bd55c62cbf14c9b5f2a3b5fc3ea66b484b2066e344d8598902e2e2b93f27f84c0d41a929db28e4e76549e8b83c9868e4755e1250e30a
   languageName: node
   linkType: hard
 
@@ -5407,6 +5407,17 @@ __metadata:
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
   checksum: 10/a1bd91076fe9de9114bd037a433f1f498857eb3f0cf778e647fd00dc5984374dee5e088854de3d6ca77cd9f11554a85f6f016a6004d0838bbc7cd722e33601ce
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:11.4.1":
+  version: 11.4.1
+  resolution: "fs-extra@npm:11.4.1"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 10/8805c7413442ed9e94fb25eeafd28d705e2a732deba3eeb7b43cf687ce60c94e8a298b882de38249034ca84db7d21a0e4a237a041e8141f8f24f0d5ac2c6056a
   languageName: node
   linkType: hard
 
@@ -6096,7 +6107,7 @@ __metadata:
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     eslint: "npm:10.10.0"
     eslint-plugin-react-hooks: "npm:7.1.1"
-    eslint-plugin-react-refresh: "npm:0.5.6"
+    eslint-plugin-react-refresh: "npm:0.5.7"
     globals: "npm:17.12.0"
     instantsearch.css: "npm:8.22.0"
     react: "npm:^19.0.0"
@@ -6104,7 +6115,7 @@ __metadata:
     react-instantsearch: "npm:7.49.0"
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:8.70.0"
-    vite: "npm:8.3.0"
+    vite: "npm:8.3.2"
   languageName: unknown
   linkType: soft
 
@@ -6166,14 +6177,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:5.4.1":
-  version: 5.4.1
-  resolution: "js-yaml@npm:5.4.1"
+"js-yaml@npm:5.4.2":
+  version: 5.4.2
+  resolution: "js-yaml@npm:5.4.2"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.mjs
-  checksum: 10/6fff9ee00bd59aeb7e1484b4281f5e927b117cbfbf3ffa6c0fef0c58519317eb61527e93c4aa70f417709229bc1eeed63cba773913577a64405975a72fba7180
+  checksum: 10/f2461abd1d6268fb226733f0a0e0aa48004bb824116e3dfa75f1a1279001936343b672066dfecdb852ac3ca883452706c383a760aa90430cb68ba395aa2cbc84
   languageName: node
   linkType: hard
 
@@ -7705,12 +7716,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.9.6":
-  version: 3.9.6
-  resolution: "prettier@npm:3.9.6"
+"prettier@npm:3.9.9":
+  version: 3.9.9
+  resolution: "prettier@npm:3.9.9"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/1dd1a1e0e40ec3b91cda9d294c4a95022aef61880ca3f441aad99b1252279f58a766c4cece81132c01550dcff1fd445efbd8812ea4a2374313e7fc6c8136f11f
+  checksum: 10/3d11a8095a7db50f0fbc8086ad96be676401154b63a2e9023e1274893457dccab19a9c211f4fb2cae7244e800bea2d5185d9bb6fc510f48a53017815e47d4e6d
   languageName: node
   linkType: hard
 
@@ -8276,15 +8287,15 @@ __metadata:
     "@types/spinnies": "npm:0.5.3"
     algoliasearch: "npm:5.59.0"
     chai: "npm:6.2.2"
-    chalk: "npm:6.0.0"
+    chalk: "npm:6.0.1"
     commander: "npm:15.0.0"
     crc: "npm:4.3.2"
     esbuild: "npm:0.28.2"
     execa: "npm:10.0.1"
     express: "npm:5.2.1"
     folder-hash: "npm:4.1.3"
-    fs-extra: "npm:11.4.0"
-    js-yaml: "npm:5.4.1"
+    fs-extra: "npm:11.4.1"
+    js-yaml: "npm:5.4.2"
     knip: "npm:6.35.1"
     micromatch: "npm:4.0.8"
     semver: "npm:7.8.5"

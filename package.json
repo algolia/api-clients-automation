@@ -39,7 +39,7 @@
     "husky": "9.1.7",
     "lint-staged": "17.5.1",
     "oxlint": "1.82.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.9",
     "prettier-plugin-java": "2.10.3",
     "prettier-plugin-organize-imports": "4.3.0",
     "renovate-config-algolia": "2.2.0",
