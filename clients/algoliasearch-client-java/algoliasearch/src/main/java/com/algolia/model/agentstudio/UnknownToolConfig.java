@@ -9,12 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays
- * valid.
- */
+/** A tool configuration that this version of the API does not recognize. */
 @JsonDeserialize(as = UnknownToolConfig.class)
-public class UnknownToolConfig implements ToolConfigInput {
+public class UnknownToolConfig implements ToolConfigOutput, ItemsUnion, ToolConfigInput {
 
   @JsonProperty("name")
   private String name;

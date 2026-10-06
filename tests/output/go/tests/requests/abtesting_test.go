@@ -523,6 +523,6 @@ func TestAbtesting_StopABTest(t *testing.T) {
 		require.Equal(t, "/2/abtests/42/stop", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
-		require.Empty(t, echo.Body)
+		require.Nil(t, echo.Body)
 	})
 }

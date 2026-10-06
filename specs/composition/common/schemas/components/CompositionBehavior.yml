@@ -12,7 +12,7 @@ compositionInjectionBehavior:
   description: An object containing an `injection` behavior.
   properties:
     injection:
-      $ref: './injection/Behaviour.yml#/injection'
+      $ref: './behaviour/injection/Behaviour.yml#/injection'
   required:
     - injection
 
@@ -22,6 +22,6 @@ compositionMultifeedBehavior:
   description: An object containing a `multifeed` behavior.
   properties:
     multifeed:
-      $ref: './multifeed/Behaviour.yml#/multifeed'
+      $ref: './behaviour/multifeed/Behaviour.yml#/multifeed'
   required:
     - multifeed

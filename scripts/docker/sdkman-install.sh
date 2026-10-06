@@ -16,7 +16,7 @@
 #
 
 
-# install:- channel: stable; cliVersion: 5.23.1; cliNativeVersion: 0.7.34; api: https://api.sdkman.io/2
+# install:- channel: stable; cliVersion: 5.23.1; cliNativeVersion: 0.7.35; api: https://api.sdkman.io/2
 
 # Refuse to install on Cygwin
 if [[ "$(uname -s)" == CYGWIN_NT* ]]; then
@@ -59,15 +59,15 @@ trap echo_failed_command EXIT
 # Global variables
 export SDKMAN_SERVICE="https://api.sdkman.io/2"
 export SDKMAN_VERSION="5.23.1"
-export SDKMAN_NATIVE_VERSION="0.7.34"
+export SDKMAN_NATIVE_VERSION="0.7.35"
 
 # vendored addition: the broker redirects to the sdkman GitHub release assets, which are immutable per
 # version, so the archives are pinned here and verified after download. The cli zip is the same for
 # every platform, the native zip is per platform. Refresh with scripts/docker/update-pins.sh after a bump.
 export SDKMAN_CLI_SHA256="d6a746388a4bf1dfd9254fd5ad160b51fb987daacecba93bffe27761928e5350"
 declare -A SDKMAN_NATIVE_SHA256=(
-	[linuxx64]="d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
-	[linuxarm64]="79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
+	[linuxx64]="d5130a98a6bfbda78dbfe50515996c40f53fce99c5d62748a80ca901d81163b3"
+	[linuxarm64]="5f8645c47e06ddf34f8925fe799f1d87c382689893dca839145051a30c462fa5"
 )
 
 function verify_sha256() {

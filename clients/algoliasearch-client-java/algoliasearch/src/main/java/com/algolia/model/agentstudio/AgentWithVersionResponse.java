@@ -42,7 +42,7 @@ public class AgentWithVersionResponse {
   private Map<String, Object> config = new HashMap<>();
 
   @JsonProperty("tools")
-  private List<ToolConfigInput> tools;
+  private List<ToolConfigOutput> tools;
 
   @JsonProperty("templateType")
   private String templateType;
@@ -160,12 +160,12 @@ public class AgentWithVersionResponse {
     return config;
   }
 
-  public AgentWithVersionResponse setTools(List<ToolConfigInput> tools) {
+  public AgentWithVersionResponse setTools(List<ToolConfigOutput> tools) {
     this.tools = tools;
     return this;
   }
 
-  public AgentWithVersionResponse addTools(ToolConfigInput toolsItem) {
+  public AgentWithVersionResponse addTools(ToolConfigOutput toolsItem) {
     if (this.tools == null) {
       this.tools = new ArrayList<>();
     }
@@ -175,7 +175,7 @@ public class AgentWithVersionResponse {
 
   /** Get tools */
   @javax.annotation.Nullable
-  public List<ToolConfigInput> getTools() {
+  public List<ToolConfigOutput> getTools() {
     return tools;
   }
 

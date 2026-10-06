@@ -13,6 +13,12 @@ ToolCallPart:
       title: toolname
     args:
       title: args
+    rawArgs:
+      oneOf:
+        - type: object
+          additionalProperties: true
+        - type: 'null'
+      title: rawargs
     requiresApproval:
       oneOf:
         - type: boolean

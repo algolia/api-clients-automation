@@ -132,7 +132,7 @@ When writing your template, here is a list of variables accessible from `mustach
           "testName": "the descriptive name test (default to `method`)",
           "testIndex": "the index of the test to avoid duplicate function name",
           "hasParams": "true if the method has parameters, useful for `GET` requests",
-          "assertNullBody": "true if the method does not have a body, useful to assert if `GET` and `DELETE` requests are correctly parsed",
+          "assertNullBody": "true if the operation has no request body in the spec (all `GET`/`DELETE`, and `POST`/`PUT`/`PATCH` without `requestBody`); the test asserts that no JSON object is sent",
           "parameters": {
             // Object of all parameters with their name, to be used for languages that require the parameter name
             "parameterName": "value"

@@ -5,8 +5,8 @@ delete:
   x-acl:
     - editSettings
   summary: Invalidate Agent Cache
-  description: Invalidate cached completions for this agent. Filter with `before`
-    (exclusive).
+  description: Invalidate cached completions and task outputs for this agent. Filter
+    with `before` (exclusive).
   parameters:
     - name: agentId
       in: path

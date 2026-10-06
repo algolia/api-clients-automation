@@ -6,7 +6,8 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonEnum(valueField: 'raw')
 enum CompatibilityMode {
   aiSdk4(r'ai-sdk-4'),
-  aiSdk5(r'ai-sdk-5');
+  aiSdk5(r'ai-sdk-5'),
+  agUi(r'ag-ui');
 
   const CompatibilityMode(this.raw);
   final dynamic raw;

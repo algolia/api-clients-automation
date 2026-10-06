@@ -45,6 +45,9 @@ object MetricName {
   case object NoResultCount extends MetricName {
     override def toString = "no_result_count"
   }
+  case object TrackedNoResultCount extends MetricName {
+    override def toString = "tracked_no_result_count"
+  }
   case object AddToCartCount extends MetricName {
     override def toString = "add_to_cart_count"
   }
@@ -75,12 +78,19 @@ object MetricName {
   case object Revenue extends MetricName {
     override def toString = "revenue"
   }
+  case object RevenuePerSearch extends MetricName {
+    override def toString = "revenue_per_search"
+  }
+  case object AverageOrderValue extends MetricName {
+    override def toString = "average_order_value"
+  }
   val values: Seq[MetricName] = Seq(
     SearchCount,
     TrackedSearchCount,
     UserCount,
     TrackedUserCount,
     NoResultCount,
+    TrackedNoResultCount,
     AddToCartCount,
     PurchaseCount,
     ClickedSearchCount,
@@ -90,7 +100,9 @@ object MetricName {
     AddToCartRate,
     PurchaseRate,
     AverageClickPosition,
-    Revenue
+    Revenue,
+    RevenuePerSearch,
+    AverageOrderValue
   )
 
   def withName(name: String): MetricName = MetricName.values

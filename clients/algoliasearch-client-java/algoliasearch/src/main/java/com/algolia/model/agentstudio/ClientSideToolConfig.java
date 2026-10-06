@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** ClientSideToolConfig */
 @JsonDeserialize(as = ClientSideToolConfig.class)
-public class ClientSideToolConfig implements ToolConfigInput {
+public class ClientSideToolConfig implements ToolConfigOutput, ItemsUnion, ToolConfigInput {
 
   @JsonProperty("name")
   private String name;

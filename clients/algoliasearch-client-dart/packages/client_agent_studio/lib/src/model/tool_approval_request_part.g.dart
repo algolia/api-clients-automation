@@ -25,6 +25,8 @@ ToolApprovalRequestPart _$ToolApprovalRequestPartFromJson(
                   )),
           argsHash: $checkedConvert('argsHash', (v) => v as String?),
           appId: $checkedConvert('appId', (v) => v as String?),
+          conversationId:
+              $checkedConvert('conversationId', (v) => v as String?),
         );
         return val;
       },
@@ -49,5 +51,6 @@ Map<String, dynamic> _$ToolApprovalRequestPartToJson(
   writeNotNull('providerOptions', instance.providerOptions);
   writeNotNull('argsHash', instance.argsHash);
   writeNotNull('appId', instance.appId);
+  writeNotNull('conversationId', instance.conversationId);
   return val;
 }

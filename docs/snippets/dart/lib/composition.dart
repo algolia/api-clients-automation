@@ -690,7 +690,7 @@ void snippetFormultipleBatch() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "bar",
                     ),
                   ),
@@ -736,7 +736,7 @@ void snippetFormultipleBatch1() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "foo",
                     ),
                   ),
@@ -792,7 +792,7 @@ void snippetFormultipleBatch2() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "foo",
                       params: MainInjectionQueryParameters(
                         filters: "brand:adidas",
@@ -889,7 +889,7 @@ void snippetFormultipleBatch3() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "foo",
                     ),
                   ),
@@ -941,7 +941,7 @@ void snippetForputComposition() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "foo",
               ),
             ),
@@ -987,7 +987,7 @@ void snippetForputComposition1() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "foo",
               ),
             ),
@@ -1037,7 +1037,7 @@ void snippetForputComposition2() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "foo",
                 params: MainInjectionQueryParameters(
                   filters: "brand:adidas",
@@ -1128,7 +1128,7 @@ void snippetForputComposition3() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "foo",
                 params: MainInjectionQueryParameters(
                   filters: "brand:adidas",
@@ -1184,7 +1184,7 @@ void snippetForputComposition4() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "products",
               ),
             ),
@@ -1218,7 +1218,7 @@ void snippetForputComposition5() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainRecommendSource(
-              recommend: MainRecommend(
+              recommend: InjectionMainRecommend(
                 indexName: "<YOUR_INDEX_NAME>",
                 model: Model.fromJson("trending-items"),
                 threshold: 50,
@@ -1229,7 +1229,7 @@ void snippetForputComposition5() async {
             InjectionInjectedItem(
               key: "injected-recommend-key",
               source: InjectedItemRecommendSource(
-                recommend: Recommend(
+                recommend: InjectedItemRecommend(
                   indexName: "<YOUR_INDEX_NAME>",
                   model: Model.fromJson("trending-items"),
                   threshold: 30,
@@ -1271,7 +1271,7 @@ void snippetForputComposition6() async {
         injection: Injection(
           main: InjectionMain(
             source: InjectionMainSearchSource(
-              search: MainSearch(
+              search: InjectionMainSearch(
                 index: "products",
                 params: MainInjectionQueryParameters(
                   filters: "brand:nike",
@@ -1283,7 +1283,7 @@ void snippetForputComposition6() async {
             InjectionInjectedItem(
               key: "injected-recommend-key",
               source: InjectedItemRecommendSource(
-                recommend: Recommend(
+                recommend: InjectedItemRecommend(
                   indexName: "<YOUR_INDEX_NAME>",
                   model: Model.fromJson("trending-items"),
                   threshold: 40,
@@ -1325,7 +1325,7 @@ void snippetForputComposition7() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainRecommendSource(
-                    recommend: MainRecommend(
+                    recommend: InjectionMainRecommend(
                       indexName: "<YOUR_INDEX_NAME>",
                       model: Model.fromJson("trending-items"),
                       threshold: 50,
@@ -1370,7 +1370,7 @@ void snippetForputComposition8() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "products",
                       params: MainInjectionQueryParameters(
                         hitsPerPage: 12,
@@ -1399,7 +1399,7 @@ void snippetForputComposition8() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "articles",
                       params: MainInjectionQueryParameters(
                         hitsPerPage: 5,
@@ -1433,7 +1433,7 @@ void snippetForputComposition8() async {
               injection: Injection(
                 main: InjectionMain(
                   source: InjectionMainSearchSource(
-                    search: MainSearch(
+                    search: InjectionMainSearch(
                       index: "videos",
                       params: MainInjectionQueryParameters(
                         hitsPerPage: 3,
@@ -1453,6 +1453,65 @@ void snippetForputComposition8() async {
             "products",
             "articles",
             "videos",
+          ],
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putComposition method.
+//
+// putComposition
+void snippetForputComposition9() async {
+  // >SEPARATOR putComposition putComposition
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putComposition(
+    compositionID: "my-external-provider-compo",
+    composition: Composition(
+      objectID: "my-external-provider-compo",
+      name: "my external provider composition",
+      behavior: CompositionInjectionBehavior(
+        injection: Injection(
+          main: InjectionMain(
+            source: InjectionMainExternalProviderSource(
+              externalProvider: InjectionMainExternalProvider(
+                index: "products",
+                configurationID: "my-rmn-connection",
+                configurationParams: {
+                  'campaign_id': "summer-sale",
+                  'customer_id': "customer-default",
+                },
+                params: MainInjectionQueryParameters(
+                  filters: "instock:true",
+                ),
+                ordering: ExternalProviderOrdering.fromJson("providerDefined"),
+              ),
+            ),
+          ),
+          injectedItems: [
+            InjectionInjectedItem(
+              key: "sponsored",
+              source: InjectedItemExternalProviderSource(
+                externalProvider: InjectedItemExternalProvider(
+                  index: "products",
+                  configurationID: "my-rmn-connection",
+                  configurationParams: {
+                    'campaign_id': "summer-sale",
+                  },
+                ),
+              ),
+              position: 0,
+              length: 2,
+            ),
           ],
         ),
       ),
@@ -1490,7 +1549,7 @@ void snippetForputCompositionRule() async {
           injection: Injection(
             main: InjectionMain(
               source: InjectionMainSearchSource(
-                search: MainSearch(
+                search: InjectionMainSearch(
                   index: "foo",
                 ),
               ),
@@ -1544,7 +1603,7 @@ void snippetForputCompositionRule1() async {
           injection: Injection(
             main: InjectionMain(
               source: InjectionMainSearchSource(
-                search: MainSearch(
+                search: InjectionMainSearch(
                   index: "foo",
                 ),
               ),
@@ -1630,7 +1689,7 @@ void snippetForputCompositionRule2() async {
           injection: Injection(
             main: InjectionMain(
               source: InjectionMainSearchSource(
-                search: MainSearch(
+                search: InjectionMainSearch(
                   index: "my-index",
                   params: MainInjectionQueryParameters(
                     filters: "brand:adidas",
@@ -1693,7 +1752,7 @@ void snippetForputCompositionRule3() async {
           injection: Injection(
             main: InjectionMain(
               source: InjectionMainSearchSource(
-                search: MainSearch(
+                search: InjectionMainSearch(
                   index: "my-index",
                 ),
               ),
@@ -1713,6 +1772,66 @@ void snippetForputCompositionRule3() async {
             deduplication: Deduplication(
               positioning: DedupPositioning.fromJson("highestInjected"),
             ),
+          ),
+        ),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the putCompositionRule method.
+//
+// putCompositionRule
+void snippetForputCompositionRule4() async {
+  // >SEPARATOR putCompositionRule putCompositionRule
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.putCompositionRule(
+    compositionID: "compositionID",
+    objectID: "rule-with-external-provider-source",
+    compositionRule: CompositionRule(
+      objectID: "rule-with-external-provider-source",
+      conditions: [
+        Condition(
+          anchoring: Anchoring.fromJson("contains"),
+          pattern: "harry",
+        ),
+      ],
+      consequence: CompositionRuleConsequence(
+        behavior: CompositionInjectionBehavior(
+          injection: Injection(
+            main: InjectionMain(
+              source: InjectionMainSearchSource(
+                search: InjectionMainSearch(
+                  index: "my-index",
+                ),
+              ),
+            ),
+            injectedItems: [
+              InjectionInjectedItem(
+                key: "my-unique-external-provider-group-from-rule-key",
+                source: InjectedItemExternalProviderSource(
+                  externalProvider: InjectedItemExternalProvider(
+                    index: "my-index",
+                    configurationID: "my-rmn-connection",
+                    configurationParams: {
+                      'campaign_id': "summer-sale",
+                    },
+                    ordering:
+                        ExternalProviderOrdering.fromJson("providerDefined"),
+                  ),
+                ),
+                position: 0,
+                length: 3,
+              ),
+            ],
           ),
         ),
       ),
@@ -1752,7 +1871,7 @@ void snippetForsaveRules() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainSearchSource(
-                      search: MainSearch(
+                      search: InjectionMainSearch(
                         index: "<YOUR_INDEX_NAME>",
                       ),
                     ),
@@ -1800,7 +1919,7 @@ void snippetForsaveRules1() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainSearchSource(
-                      search: MainSearch(
+                      search: InjectionMainSearch(
                         index: "foo",
                       ),
                     ),
@@ -1892,7 +2011,7 @@ void snippetForsaveRules2() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainSearchSource(
-                      search: MainSearch(
+                      search: InjectionMainSearch(
                         index: "my-index",
                         params: MainInjectionQueryParameters(
                           filters: "brand:adidas",
@@ -1959,7 +2078,7 @@ void snippetForsaveRules3() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainRecommendSource(
-                      recommend: MainRecommend(
+                      recommend: InjectionMainRecommend(
                         indexName: "<YOUR_INDEX_NAME>",
                         model: Model.fromJson("trending-items"),
                         threshold: 50,
@@ -1970,7 +2089,7 @@ void snippetForsaveRules3() async {
                     InjectionInjectedItem(
                       key: "injected-recommend-from-rule-key",
                       source: InjectedItemRecommendSource(
-                        recommend: Recommend(
+                        recommend: InjectedItemRecommend(
                           indexName: "<YOUR_INDEX_NAME>",
                           model: Model.fromJson("trending-items"),
                           threshold: 30,
@@ -2026,7 +2145,7 @@ void snippetForsaveRules4() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainSearchSource(
-                      search: MainSearch(
+                      search: InjectionMainSearch(
                         index: "products",
                         params: MainInjectionQueryParameters(
                           filters: "category:shoes",
@@ -2038,7 +2157,7 @@ void snippetForsaveRules4() async {
                     InjectionInjectedItem(
                       key: "injected-recommend-from-rule-key",
                       source: InjectedItemRecommendSource(
-                        recommend: Recommend(
+                        recommend: InjectedItemRecommend(
                           indexName: "<YOUR_INDEX_NAME>",
                           model: Model.fromJson("trending-items"),
                           threshold: 40,
@@ -2094,7 +2213,7 @@ void snippetForsaveRules5() async {
                       injection: Injection(
                         main: InjectionMain(
                           source: InjectionMainRecommendSource(
-                            recommend: MainRecommend(
+                            recommend: InjectionMainRecommend(
                               indexName: "<YOUR_INDEX_NAME>",
                               model: Model.fromJson("trending-items"),
                               threshold: 50,
@@ -2155,7 +2274,7 @@ void snippetForsaveRules6() async {
                 injection: Injection(
                   main: InjectionMain(
                     source: InjectionMainSearchSource(
-                      search: MainSearch(
+                      search: InjectionMainSearch(
                         index: "my-index",
                       ),
                     ),
@@ -2302,6 +2421,35 @@ void snippetForsearch3() async {
         "feed-movies",
         "feed-comics",
       ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the search method.
+//
+// search
+void snippetForsearch4() async {
+  // >SEPARATOR search search
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    compositionID: "foo",
+    requestBody: RequestBody(
+      params: Params(
+        query: "batman",
+      ),
+      externalProvider: ExternalProvider(
+        configurationParams: {
+          'customer_id': "customer123",
+        },
+      ),
     ),
   );
   // >LOG

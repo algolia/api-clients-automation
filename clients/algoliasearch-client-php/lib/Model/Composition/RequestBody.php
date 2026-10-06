@@ -22,6 +22,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     protected static $modelTypes = [
         'params' => '\Algolia\AlgoliaSearch\Model\Composition\Params',
         'feedsOrder' => 'string[]',
+        'externalProvider' => '\Algolia\AlgoliaSearch\Model\Composition\ExternalProvider',
     ];
 
     /**
@@ -32,6 +33,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     protected static $modelFormats = [
         'params' => null,
         'feedsOrder' => null,
+        'externalProvider' => null,
     ];
 
     /**
@@ -43,6 +45,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     protected static $attributeMap = [
         'params' => 'params',
         'feedsOrder' => 'feedsOrder',
+        'externalProvider' => 'externalProvider',
     ];
 
     /**
@@ -53,6 +56,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     protected static $setters = [
         'params' => 'setParams',
         'feedsOrder' => 'setFeedsOrder',
+        'externalProvider' => 'setExternalProvider',
     ];
 
     /**
@@ -63,6 +67,7 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     protected static $getters = [
         'params' => 'getParams',
         'feedsOrder' => 'getFeedsOrder',
+        'externalProvider' => 'getExternalProvider',
     ];
 
     /**
@@ -84,6 +89,9 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
         }
         if (isset($data['feedsOrder'])) {
             $this->container['feedsOrder'] = $data['feedsOrder'];
+        }
+        if (isset($data['externalProvider'])) {
+            $this->container['externalProvider'] = $data['externalProvider'];
         }
     }
 
@@ -203,6 +211,30 @@ class RequestBody extends AbstractModel implements ModelInterface, \ArrayAccess,
     public function setFeedsOrder($feedsOrder)
     {
         $this->container['feedsOrder'] = $feedsOrder;
+
+        return $this;
+    }
+
+    /**
+     * Gets externalProvider.
+     *
+     * @return null|ExternalProvider
+     */
+    public function getExternalProvider()
+    {
+        return $this->container['externalProvider'] ?? null;
+    }
+
+    /**
+     * Sets externalProvider.
+     *
+     * @param null|ExternalProvider $externalProvider externalProvider
+     *
+     * @return self
+     */
+    public function setExternalProvider($externalProvider)
+    {
+        $this->container['externalProvider'] = $externalProvider;
 
         return $this;
     }

@@ -401,7 +401,7 @@ final class IngestionClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -438,7 +438,7 @@ final class IngestionClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -1667,7 +1667,7 @@ final class IngestionClient implements ApiClient {
       method: RequestMethod.post,
       path: r'/1/sources/{sourceID}/run'.replaceAll(
           '{' r'sourceID' '}', Uri.encodeComponent(sourceID.toString())),
-      body: runSourcePayload?.toJson(),
+      body: runSourcePayload?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -1704,7 +1704,7 @@ final class IngestionClient implements ApiClient {
       method: RequestMethod.post,
       path: r'/2/tasks/{taskID}/run'.replaceAll(
           '{' r'taskID' '}', Uri.encodeComponent(taskID.toString())),
-      body: runTaskPayload?.toJson(),
+      body: runTaskPayload?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -1742,7 +1742,7 @@ final class IngestionClient implements ApiClient {
       method: RequestMethod.post,
       path: r'/1/tasks/{taskID}/run'.replaceAll(
           '{' r'taskID' '}', Uri.encodeComponent(taskID.toString())),
-      body: runTaskPayload?.toJson(),
+      body: runTaskPayload?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -2288,7 +2288,7 @@ final class IngestionClient implements ApiClient {
     final request = ApiRequest(
       method: RequestMethod.post,
       path: r'/1/sources/validate',
-      body: sourceCreate?.toJson(),
+      body: sourceCreate?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,

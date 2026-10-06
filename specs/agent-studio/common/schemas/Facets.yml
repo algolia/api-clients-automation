@@ -1,4 +1,6 @@
 Facets:
+  additionalProperties: true
+  description: Order of facet names.
   properties:
     order:
       oneOf:
@@ -6,8 +8,7 @@ Facets:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: order
-  additionalProperties: true
-  type: object
   title: facets
-  description: Order of facet names.
+  type: object

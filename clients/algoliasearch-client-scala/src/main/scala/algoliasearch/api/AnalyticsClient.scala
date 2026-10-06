@@ -251,7 +251,7 @@ class AnalyticsClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -306,7 +306,7 @@ class AnalyticsClient(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }

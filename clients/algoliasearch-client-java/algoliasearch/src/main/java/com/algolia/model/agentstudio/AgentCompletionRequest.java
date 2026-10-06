@@ -8,7 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /** Request model for creating a completion for an assistant. */
-public class AgentCompletionRequest {
+@JsonDeserialize(as = AgentCompletionRequest.class)
+public class AgentCompletionRequest implements AgentCompletionRequestUnion {
 
   @JsonProperty("configuration")
   private AgentTestConfiguration configuration;

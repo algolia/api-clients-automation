@@ -27,6 +27,7 @@ final class ProviderAuthenticationCreate {
   /// - [BaseProviderInput]
   /// - [OpenAIProviderInput]
   /// - [OpenAICompatibleProviderInput]
+  /// - [XAIProviderInput]
   @JsonKey(name: r'input')
   final dynamic input;
 

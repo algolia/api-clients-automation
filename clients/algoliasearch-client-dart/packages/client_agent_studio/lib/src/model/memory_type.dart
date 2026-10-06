@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Memory types implemented so far. Follows LangMem's ontology: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types.
+/// The type of the stored memory.
 @JsonEnum(valueField: 'raw')
 enum MemoryType {
   semantic(r'semantic'),

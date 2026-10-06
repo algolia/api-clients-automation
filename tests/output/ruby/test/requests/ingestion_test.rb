@@ -679,6 +679,8 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # disableTaskV1
@@ -689,6 +691,8 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # enableTask
@@ -699,6 +703,8 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # enableTaskV1
@@ -709,6 +715,8 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # getAuthentication
@@ -1296,6 +1304,8 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
   # tryTransformation

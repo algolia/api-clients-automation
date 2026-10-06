@@ -24,11 +24,34 @@ MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) =>
               $checkedConvert('inputTokens', (v) => (v as num?)?.toInt()),
           outputTokens:
               $checkedConvert('outputTokens', (v) => (v as num?)?.toInt()),
+          reasoningTokens:
+              $checkedConvert('reasoningTokens', (v) => (v as num?)?.toInt()),
+          inputTokenDetails: $checkedConvert(
+              'inputTokenDetails',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, (e as num).toInt()),
+                  )),
+          outputTokenDetails: $checkedConvert(
+              'outputTokenDetails',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, (e as num).toInt()),
+                  )),
+          isCacheHit: $checkedConvert('isCacheHit', (v) => v as bool?),
           turnContext: $checkedConvert(
               'turnContext',
               (v) => (v as Map<String, dynamic>?)?.map(
-                    (k, e) => MapEntry(k, e as String),
+                    (k, e) => MapEntry(k, e as Object),
                   )),
+          events: $checkedConvert(
+              'events',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => MessageEvent.fromJson(e as Map<String, dynamic>))
+                  .toList()),
+          guardrail: $checkedConvert(
+              'guardrail',
+              (v) => v == null
+                  ? null
+                  : GuardrailOutcome.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -53,7 +76,13 @@ Map<String, dynamic> _$MessageResponseToJson(MessageResponse instance) {
   writeNotNull('model', instance.model);
   writeNotNull('inputTokens', instance.inputTokens);
   writeNotNull('outputTokens', instance.outputTokens);
+  writeNotNull('reasoningTokens', instance.reasoningTokens);
+  writeNotNull('inputTokenDetails', instance.inputTokenDetails);
+  writeNotNull('outputTokenDetails', instance.outputTokenDetails);
+  writeNotNull('isCacheHit', instance.isCacheHit);
   writeNotNull('turnContext', instance.turnContext);
+  writeNotNull('events', instance.events?.map((e) => e.toJson()).toList());
+  writeNotNull('guardrail', instance.guardrail?.toJson());
   return val;
 }
 

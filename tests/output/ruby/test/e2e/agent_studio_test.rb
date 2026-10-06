@@ -93,36 +93,6 @@ class TestAgentStudioClientE2E < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
-  # listAgentConversations with all parameters
-  def test_list_agent_conversations1
-    res = @client.list_agent_conversations_with_http_info(
-      "76710f1b-8231-42e5-b0d1-f43aac618e15",
-      "2024-01-01",
-      "2024-12-31",
-      true,
-      1,
-      2,
-      10,
-      nil
-    )
-
-    assert_equal(res.status, 200)
-    res = @client.list_agent_conversations(
-      "76710f1b-8231-42e5-b0d1-f43aac618e15",
-      "2024-01-01",
-      "2024-12-31",
-      true,
-      1,
-      2,
-      10,
-      nil
-    )
-    expected_body = JSON.parse(
-      "{\"data\":[],\"pagination\":{\"page\":2,\"limit\":10,\"totalCount\":0,\"totalPages\":0}}"
-    )
-    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
-  end
-
   # e2e list agent conversations
   def test_list_agent_conversations2
     res = @client.list_agent_conversations_with_http_info("76710f1b-8231-42e5-b0d1-f43aac618e15")

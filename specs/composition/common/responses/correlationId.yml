@@ -1,0 +1,3 @@
+# Composition reaches the shared header through here, so a Composition-only change stays in one file.
+Correlation-ID:
+  $ref: '../../../common/responses/correlationId.yml#/Correlation-ID'

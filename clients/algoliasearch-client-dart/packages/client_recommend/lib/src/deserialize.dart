@@ -58,6 +58,7 @@ import 'package:algolia_client_recommend/src/model/related_products.dart';
 import 'package:algolia_client_recommend/src/model/related_query.dart';
 import 'package:algolia_client_recommend/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_recommend/src/model/rendering_content.dart';
+import 'package:algolia_client_recommend/src/model/result_card.dart';
 import 'package:algolia_client_recommend/src/model/rule_metadata.dart';
 import 'package:algolia_client_recommend/src/model/search_pagination.dart';
 import 'package:algolia_client_recommend/src/model/search_params_query.dart';
@@ -252,6 +253,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RenderingContent':
       return RenderingContent.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResultCard':
+      return ResultCard.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RuleMetadata':
       return RuleMetadata.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchPagination':

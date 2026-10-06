@@ -53,7 +53,7 @@ final class AgentCompletionRequest {
   @override
   int get hashCode =>
       configuration.hashCode +
-      (messages == null ? 0 : messages.hashCode) +
+      messages.hashCode +
       id.hashCode +
       algolia.hashCode +
       toolApprovals.hashCode;

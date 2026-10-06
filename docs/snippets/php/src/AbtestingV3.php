@@ -18,7 +18,7 @@ class SnippetAbtestingV3Client
      */
     public function snippetForAddABTests(): void
     {
-        // >SEPARATOR addABTests default
+        // >SEPARATOR addABTests addABTests with minimal parameters
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -38,6 +38,46 @@ class SnippetAbtestingV3Client
                     ['index' => 'AB_TEST_2',
                         'trafficPercentage' => 50,
                     ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the AddABTests method.
+     *
+     * addABTests with Bayesian configuration
+     */
+    public function snippetForAddABTests1(): void
+    {
+        // >SEPARATOR addABTests addABTests with Bayesian configuration
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->addABTests(
+            ['endAt' => '2022-12-31T00:00:00.000Z',
+                'name' => 'myABTest',
+                'metrics' => [
+                    ['name' => 'conversionRate',
+                    ],
+                ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 30,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+                'configuration' => ['method' => 'bayesian',
+                    'primaryMetric' => 'conversion_rate',
                 ],
             ],
         );
@@ -630,13 +670,40 @@ class SnippetAbtestingV3Client
      */
     public function snippetForGetABTest(): void
     {
-        // >SEPARATOR getABTest default
+        // >SEPARATOR getABTest getABTest
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getABTest(
             42,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetABTest method.
+     *
+     * getABTest with both inference methods
+     */
+    public function snippetForGetABTest1(): void
+    {
+        // >SEPARATOR getABTest getABTest with both inference methods
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getABTest(
+            42,
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         // >LOG
@@ -674,13 +741,43 @@ class SnippetAbtestingV3Client
      */
     public function snippetForGetTimeseries(): void
     {
-        // >SEPARATOR getTimeseries default
+        // >SEPARATOR getTimeseries getTimeseries
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
         // Call the API
         $response = $client->getTimeseries(
             42,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTimeseries method.
+     *
+     * getTimeseries with Bayesian revenue per search
+     */
+    public function snippetForGetTimeseries1(): void
+    {
+        // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
         );
 
         // >LOG
@@ -727,6 +824,11 @@ class SnippetAbtestingV3Client
             'cts_e2e ab',
             't',
             'asc',
+            [
+                'frequentist',
+
+                'bayesian',
+            ],
         );
 
         // >LOG

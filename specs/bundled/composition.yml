@@ -276,9 +276,14 @@ paths:
                   $ref: '#/components/schemas/params'
                 feedsOrder:
                   $ref: '#/components/schemas/feedsOrder'
+                externalProvider:
+                  $ref: '#/components/schemas/externalProvider'
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -344,6 +349,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -373,6 +381,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -401,6 +412,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -433,6 +447,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -466,6 +483,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -522,6 +542,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -584,6 +607,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -624,6 +650,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -658,6 +687,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -694,6 +726,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -753,6 +788,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -818,6 +856,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -881,6 +922,9 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Correlation-ID:
+              $ref: '#/components/headers/Correlation-ID'
           content:
             application/json:
               schema:
@@ -1156,7 +1200,7 @@ components:
     clickAnalytics:
       type: boolean
       description: >
-        Whether to include a `queryID` attribute in the response
+        Whether to include a `queryID` attribute in the response.
 
         The query ID is a unique identifier for a search query and is required
         for tracking [click and conversion
@@ -1182,7 +1226,7 @@ components:
       type: boolean
       description: >
         Whether this search will use [Dynamic
-        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking).
 
         This setting only has an effect if you activated Dynamic Re-Ranking for
         this index in the Algolia dashboard.
@@ -1235,7 +1279,7 @@ components:
         type: string
       description: >
         Facets for which to retrieve facet values that match the search criteria
-        and the number of matching facet values
+        and the number of matching facet values.
 
         To retrieve all facets, use the wildcard character `*`.
 
@@ -1551,7 +1595,7 @@ components:
         $ref: '#/components/schemas/supportedLanguage'
       description: >
         ISO language codes that adjust settings that are useful for processing
-        natural language queries (as opposed to keyword searches)
+        natural language queries (as opposed to keyword searches).
 
         - Sets `removeStopWords` and `ignorePlurals` to the list of provided
         languages.
@@ -1683,7 +1727,7 @@ components:
       example: 90
       description: >
         Relevancy threshold below which less relevant results aren't included in
-        the results
+        the results.
 
         You can only set `relevancyStrictness` on [virtual replica
         indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
@@ -1698,7 +1742,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the run query
+        Assigns a rule context to the run query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -1828,6 +1872,20 @@ components:
       example:
         - feed-1
         - feed-3
+    externalProvider:
+      title: Run composition external provider parameters as object
+      type: object
+      additionalProperties: false
+      properties:
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Values for non-prefixed configuration placeholders, overriding the
+            composition source's `configurationParams` and the configuration's
+            `defaults`.
+          example:
+            customer_id: customer123
     compositionRunAppliedRules:
       type: object
       properties:
@@ -2017,6 +2075,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/banner'
+    resultCard:
+      description: Agent Studio Result Card to display for a given search.
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Whether to show the Result Card for the current search.
     widgets:
       description: Widgets returned from any rules that are applied to the current search.
       type: object
@@ -2024,6 +2090,8 @@ components:
       properties:
         banners:
           $ref: '#/components/schemas/banners'
+        resultCard:
+          $ref: '#/components/schemas/resultCard'
     renderingContent:
       description: >
         Extra data that can be used in the search UI.
@@ -2617,6 +2685,15 @@ components:
         - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/SearchFields'
         - $ref: '#/components/schemas/resultsCompositionsResponse'
+    processingError:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          description: Description of the non-critical error.
+      required:
+        - message
     searchResults:
       type: object
       additionalProperties: false
@@ -2626,6 +2703,14 @@ components:
           description: Search results.
           items:
             $ref: '#/components/schemas/searchResultsItem'
+        errors:
+          type: array
+          description: >-
+            Non-critical errors encountered while processing the request that
+            may have affected the returned results (for example, an external
+            provider failure that fell back to another result set).
+          items:
+            $ref: '#/components/schemas/processingError'
       required:
         - results
     searchResponse:
@@ -2695,11 +2780,21 @@ components:
           description: Search for facet values results.
           items:
             $ref: '#/components/schemas/searchForFacetValuesResults'
+    baseSearchSource:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+      required:
+        - index
     advancedSyntax:
       type: boolean
       description: >
         Whether to support phrase matching and excluding words from search
-        queries
+        queries.
 
         Use the `advancedSyntaxFeatures` parameter to control which feature is
         supported.
@@ -2718,13 +2813,13 @@ components:
       items:
         $ref: '#/components/schemas/advancedSyntaxFeatures'
       description: |
-        Advanced search syntax features you want to support
+        Advanced search syntax features you want to support.
         - `exactPhrase`.
           Phrases in quotes must match exactly.
-          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case"
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
         - `excludeWords`.
           Query words prefixed with a `-` must not occur in a record.
-          For example, `search -engine` matches records that contain "search" but not "engine"
+          For example, `search -engine` matches records that contain "search" but not "engine".
         This setting only has an effect if `advancedSyntax` is true.
       default:
         - exactPhrase
@@ -2734,7 +2829,7 @@ components:
     allowTyposOnNumericTokens:
       type: boolean
       description: |
-        Whether to allow typos on numbers in the search query
+        Whether to allow typos on numbers in the search query.
         Turn off this setting to reduce the number of irrelevant matches
         when searching in large sets of similar numbers.
       default: true
@@ -2755,24 +2850,24 @@ components:
         $ref: '#/components/schemas/alternativesAsExact'
       description: >
         Determine which plurals and synonyms should be considered an exact
-        matches
+        matches.
 
         By default, Algolia treats singular and plural forms of a word, and
         single-word synonyms, as
         [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact)
         matches when searching.
 
-        For example
+        For example:
 
-        - "swimsuit" and "swimsuits" are treated the same
+        - "swimsuit" and "swimsuits" are treated the same.
 
         - "swimsuit" and "swimwear" are treated the same (if they are
-        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms))
+        [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)).
 
         - `ignorePlurals`.
-          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
         - `singleWordSynonym`.
-          Single-word synonyms, such as "NY" = "NYC", are considered exact matches
+          Single-word synonyms, such as "NY" = "NYC", are considered exact matches.
         - `multiWordsSynonym`.
           Multi-word synonyms, such as "NY" = "New York", are considered exact matches.
       default:
@@ -2784,7 +2879,7 @@ components:
       type: boolean
       description: >
         Whether the best matching attribute should be determined by minimum
-        proximity
+        proximity.
 
         This setting only affects ranking if the Attribute ranking criterion
         comes before Proximity in the `ranking` setting.
@@ -2794,6 +2889,12 @@ components:
 
         Otherwise, the best matching attribute is determined by the order in the
         `searchableAttributes` setting.
+
+
+        Prefer `attributeCriteriaComputedBy`, which expresses the same two
+        behaviors and adds the `sum` strategy.
+
+        If you set both, `attributeCriteriaComputedBy` takes precedence.
       default: false
       x-categories:
         - Advanced
@@ -2807,7 +2908,7 @@ components:
         - conten
         - content
       description: >
-        Attributes to highlight
+        Attributes to highlight.
 
         By default, all searchable attributes are highlighted.
 
@@ -2835,7 +2936,7 @@ components:
         - title
         - content
       description: >
-        Attributes to include in the API response
+        Attributes to include in the API response.
 
         To reduce the size of your response, you can retrieve only some of the
         attributes.
@@ -2922,7 +3023,7 @@ components:
         attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes).
 
         - Reducing the number of matches when you have too many.
-          This can happen with attributes that are long blocks of text, such as product descriptions
+          This can happen with attributes that are long blocks of text, such as product descriptions.
         Consider alternatives such as `disableTypoToleranceOnWords` or adding
         synonyms if your attributes have intentional unusual spellings that
         might look like typos.
@@ -3067,7 +3168,7 @@ components:
       minimum: 1
       maximum: 7
       description: >
-        Minimum proximity score for two matching words
+        Minimum proximity score for two matching words.
 
         This adjusts the [Proximity ranking
         criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
@@ -3163,7 +3264,7 @@ components:
     personalizationImpact:
       type: integer
       description: >
-        Impact that Personalization should have on this search
+        Impact that Personalization should have on this search.
 
         The higher this value is, the more Personalization determines the
         ranking compared to other factors.
@@ -3270,7 +3371,7 @@ components:
     replaceSynonymsInHighlight:
       type: boolean
       description: >
-        Whether to replace a highlighted word with the matched synonym
+        Whether to replace a highlighted word with the matched synonym.
 
         By default, the original words are highlighted even if a synonym
         matches.
@@ -3296,7 +3397,7 @@ components:
       items:
         type: string
       description: >
-        Properties to include in the API response of search and browse requests
+        Properties to include in the API response of search and browse requests.
 
         By default, all response properties are included.
 
@@ -3352,7 +3453,7 @@ components:
       items:
         type: string
       description: >
-        Assigns a rule context to the search query
+        Assigns a rule context to the search query.
 
         [Rule
         contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
@@ -3505,7 +3606,7 @@ components:
     facetingAfterDistinct:
       type: boolean
       description: >
-        Whether faceting should be applied after deduplication with `distinct`
+        Whether faceting should be applied after deduplication with `distinct`.
 
         This leads to accurate facet counts when using faceting in combination
         with `distinct`.
@@ -3528,13 +3629,13 @@ components:
     sortFacetValuesBy:
       type: string
       description: >
-        Order in which to retrieve facet values
+        Order in which to retrieve facet values.
 
         - `count`.
           Facet values are retrieved by decreasing count.
-          The count is the number of matching records containing this facet value
+          The count is the number of matching records containing this facet value.
         - `alpha`.
-          Retrieve facet values alphabetically
+          Retrieve facet values alphabetically.
         This setting doesn't influence how facet values are displayed in your UI
         (see `renderingContent`).
 
@@ -3546,7 +3647,7 @@ components:
     sumOrFiltersScores:
       type: boolean
       description: >
-        Whether to sum all filter scores
+        Whether to sum all filter scores.
 
         If true, all filter scores are summed.
 
@@ -3580,6 +3681,16 @@ components:
               $ref: '#/components/schemas/sortFacetValuesBy'
             sumOrFiltersScores:
               $ref: '#/components/schemas/sumOrFiltersScores'
+    injectionMainSearch:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseSearchSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
     injectionMainSearchSource:
       description: >-
         Organic result set will originate from a search request performed on the
@@ -3590,18 +3701,7 @@ components:
       additionalProperties: false
       properties:
         search:
-          title: mainSearch
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Index to retrieve search results from.
-              example: Products
-            params:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-          required:
-            - index
+          $ref: '#/components/schemas/injectionMainSearch'
       required:
         - search
     model:
@@ -3610,6 +3710,37 @@ components:
         - trending-items
       description: Recommendation model to use for retrieving recommendations.
       example: trending-items
+    baseRecommendSource:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: Index to retrieve recommendations from.
+          example: Products
+        model:
+          $ref: '#/components/schemas/model'
+        threshold:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Minimum score a recommendation must have to be included.
+      required:
+        - indexName
+        - model
+        - threshold
+    injectionMainRecommend:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            queryParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
     injectionMainRecommendSource:
       description: Organic result set will originate from a recommend request.
       x-discriminator-fields:
@@ -3618,36 +3749,74 @@ components:
       additionalProperties: false
       properties:
         recommend:
-          title: mainRecommend
-          type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              type: string
-              description: Index to retrieve recommendations from.
-              example: Products
-            model:
-              $ref: '#/components/schemas/model'
-            threshold:
-              type: integer
-              minimum: 0
-              maximum: 100
-              description: Minimum score a recommendation must have to be included.
-            queryParameters:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-            fallbackParameters:
-              $ref: '#/components/schemas/mainInjectionQueryParameters'
-          required:
-            - indexName
-            - model
-            - threshold
+          $ref: '#/components/schemas/injectionMainRecommend'
       required:
         - recommend
+    externalProviderOrdering:
+      type: string
+      description: >
+        Ordering to apply on the items retrieved from the external provider.
+        'default' uses the relevance ranking from the Algolia retrieval step.
+        'providerDefined' uses the ordering returned by the external provider.
+      enum:
+        - default
+        - providerDefined
+      default: providerDefined
+    baseExternalProviderSource:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to fetch the records.
+          example: Products
+        configurationID:
+          type: string
+          description: Identifier of the external provider configuration.
+          example: my-rmn-connection
+        configurationParams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Default values for the configuration placeholders that are not
+            reserved Composition placeholders.
+          example:
+            campaign_id: winter-sale
+            customer_id: user123
+        ordering:
+          $ref: '#/components/schemas/externalProviderOrdering'
+      required:
+        - index
+        - configurationID
+    injectionMainExternalProvider:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseExternalProviderSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '#/components/schemas/mainInjectionQueryParameters'
+    injectionMainExternalProviderSource:
+      description: >-
+        Organic result set will originate from a request to an external provider
+        configuration.
+      x-discriminator-fields:
+        - externalProvider
+      type: object
+      additionalProperties: false
+      properties:
+        externalProvider:
+          $ref: '#/components/schemas/injectionMainExternalProvider'
+      required:
+        - externalProvider
     injectionMainSource:
       description: Source to be used to retrieve organic result set.
       oneOf:
         - $ref: '#/components/schemas/injectionMainSearchSource'
         - $ref: '#/components/schemas/injectionMainRecommendSource'
+        - $ref: '#/components/schemas/injectionMainExternalProviderSource'
     injectionMain:
       type: object
       additionalProperties: false
@@ -3655,6 +3824,16 @@ components:
       properties:
         source:
           $ref: '#/components/schemas/injectionMainSource'
+    injectedItemSearch:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseSearchSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
     injectedItemSearchSource:
       description: >-
         Injected items will originate from a search request performed on the
@@ -3665,18 +3844,7 @@ components:
       additionalProperties: false
       properties:
         search:
-          title: injectedItemSearch
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Composition Index name.
-              example: Products
-            params:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-          required:
-            - index
+          $ref: '#/components/schemas/injectedItemSearch'
       required:
         - search
     externalOrdering:
@@ -3690,6 +3858,28 @@ components:
         - default
         - userDefined
       default: default
+    baseExternalSource:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          type: string
+          description: Algolia index used to retrieve records.
+          example: Products
+        ordering:
+          $ref: '#/components/schemas/externalOrdering'
+      required:
+        - index
+    injectedItemExternal:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseExternalSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
     injectedItemExternalSource:
       description: >-
         Injected items will originate from externally provided objectIDs (that
@@ -3700,22 +3890,21 @@ components:
       additionalProperties: false
       properties:
         external:
-          title: injectedItemExternal
-          type: object
-          additionalProperties: false
-          properties:
-            index:
-              type: string
-              description: Composition Index name.
-              example: Products
-            params:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-            ordering:
-              $ref: '#/components/schemas/externalOrdering'
-          required:
-            - index
+          $ref: '#/components/schemas/injectedItemExternal'
       required:
         - external
+    injectedItemRecommend:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            queryParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+            fallbackParameters:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
     injectedItemRecommendSource:
       description: >-
         Injected items will originate from a recommendation request performed on
@@ -3726,36 +3915,38 @@ components:
       additionalProperties: false
       properties:
         recommend:
-          title: recommend
-          type: object
-          additionalProperties: false
-          properties:
-            indexName:
-              type: string
-              description: Index to retrieve recommendations from.
-              example: Products
-            model:
-              $ref: '#/components/schemas/model'
-            threshold:
-              type: integer
-              minimum: 0
-              maximum: 100
-              description: Minimum score a recommendation must have to be included.
-            queryParameters:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-            fallbackParameters:
-              $ref: '#/components/schemas/baseInjectionQueryParameters'
-          required:
-            - indexName
-            - model
-            - threshold
+          $ref: '#/components/schemas/injectedItemRecommend'
       required:
         - recommend
+    injectedItemExternalProvider:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/baseExternalProviderSource'
+        - type: object
+          additionalProperties: false
+          properties:
+            params:
+              $ref: '#/components/schemas/baseInjectionQueryParameters'
+    injectedItemExternalProviderSource:
+      description: >-
+        Injected items will originate from a request to an external provider
+        configuration.
+      x-discriminator-fields:
+        - externalProvider
+      type: object
+      additionalProperties: false
+      properties:
+        externalProvider:
+          $ref: '#/components/schemas/injectedItemExternalProvider'
+      required:
+        - externalProvider
     injectedItemSource:
       oneOf:
         - $ref: '#/components/schemas/injectedItemSearchSource'
         - $ref: '#/components/schemas/injectedItemExternalSource'
         - $ref: '#/components/schemas/injectedItemRecommendSource'
+        - $ref: '#/components/schemas/injectedItemExternalProviderSource'
     injectionInjectedItem:
       type: object
       additionalProperties: false
@@ -4322,6 +4513,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  headers:
+    Correlation-ID:
+      description: >
+        Identifies the request in Algolia's logs, where it's the `cid` property
+        of a log entry.
+
+        Include it when you contact the Algolia support team about a specific
+        request.
+
+        Retried requests can share an identifier, so don't use it as a unique
+        key.
+      example: MyAppl-1tMcE-a7BqLm2Pd0Z
+      schema:
+        type: string
 x-tagGroups:
   - name: Composition
     tags:

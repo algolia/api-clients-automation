@@ -9,6 +9,9 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        Correlation-ID:
+          $ref: '../../../common/responses/correlationId.yml#/Correlation-ID'
       content:
         application/json:
           schema:
@@ -40,6 +43,9 @@ put:
   responses:
     '200':
       description: OK
+      headers:
+        Correlation-ID:
+          $ref: '../../../common/responses/correlationId.yml#/Correlation-ID'
       content:
         application/json:
           schema:

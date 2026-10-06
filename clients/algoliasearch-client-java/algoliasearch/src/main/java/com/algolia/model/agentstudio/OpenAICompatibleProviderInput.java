@@ -7,13 +7,9 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * OpenAI-compatible provider input. Contrary to the OpenAIProviderInput, the base_url is required.
- * A model is required to verify connectivity and get saved as the default model. This can later be
- * changed at the Agent level.
- */
+/** Input for a provider with an OpenAI-compatible API. */
 @JsonDeserialize(as = OpenAICompatibleProviderInput.class)
-public class OpenAICompatibleProviderInput implements ProviderInputNullable, ProviderInput {
+public class OpenAICompatibleProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
 
   @JsonProperty("apiKey")
   private String apiKey;

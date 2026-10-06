@@ -71,13 +71,13 @@ final class ToolInvocationV4 {
       toolCallId.hashCode +
       toolName.hashCode +
       args.hashCode +
-      result.hashCode +
-      step.hashCode +
-      state.hashCode +
-      providerOptions.hashCode +
-      requiresApproval.hashCode +
-      description.hashCode +
-      argsHash.hashCode;
+      (result == null ? 0 : result.hashCode) +
+      (step == null ? 0 : step.hashCode) +
+      (state == null ? 0 : state.hashCode) +
+      (providerOptions == null ? 0 : providerOptions.hashCode) +
+      (requiresApproval == null ? 0 : requiresApproval.hashCode) +
+      (description == null ? 0 : description.hashCode) +
+      (argsHash == null ? 0 : argsHash.hashCode);
 
   factory ToolInvocationV4.fromJson(Map<String, dynamic> json) =>
       _$ToolInvocationV4FromJson(json);

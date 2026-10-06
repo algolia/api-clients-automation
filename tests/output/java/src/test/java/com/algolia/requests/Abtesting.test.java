@@ -792,6 +792,6 @@ class AbtestingClientRequestsTests {
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/abtests/42/stop", req.path);
     assertEquals("POST", req.method);
-    assertEquals("{}", req.body);
+    assertNull(req.body);
   }
 }

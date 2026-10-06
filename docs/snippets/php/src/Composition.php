@@ -1377,6 +1377,56 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the PutComposition method.
+     *
+     * putComposition
+     */
+    public function snippetForPutComposition9(): void
+    {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putComposition(
+            'my-external-provider-compo',
+            ['objectID' => 'my-external-provider-compo',
+                'name' => 'my external provider composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['externalProvider' => ['index' => 'products',
+                    'configurationID' => 'my-rmn-connection',
+                    'configurationParams' => ['campaign_id' => 'summer-sale',
+                        'customer_id' => 'customer-default',
+                    ],
+                    'params' => ['filters' => 'instock:true',
+                    ],
+                    'ordering' => 'providerDefined',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'sponsored',
+                            'source' => ['externalProvider' => ['index' => 'products',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the PutCompositionRule method.
      *
      * putCompositionRule
@@ -1582,6 +1632,56 @@ class SnippetCompositionClient
                         ],
                     ],
                     'deduplication' => ['positioning' => 'highestInjected',
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the PutCompositionRule method.
+     *
+     * putCompositionRule
+     */
+    public function snippetForPutCompositionRule4(): void
+    {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->putCompositionRule(
+            'compositionID',
+            'rule-with-external-provider-source',
+            ['objectID' => 'rule-with-external-provider-source',
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-external-provider-group-from-rule-key',
+                            'source' => ['externalProvider' => ['index' => 'my-index',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                                'ordering' => 'providerDefined',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
                     ],
                 ],
                 ],
@@ -2092,6 +2192,34 @@ class SnippetCompositionClient
                     'feed-movies',
 
                     'feed-comics',
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch4(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'externalProvider' => ['configurationParams' => ['customer_id' => 'customer123',
+                ],
                 ],
             ],
         );

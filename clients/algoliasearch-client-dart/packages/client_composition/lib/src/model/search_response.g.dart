@@ -24,6 +24,12 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
                   .map((e) =>
                       SearchResultsItem.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          errors: $checkedConvert(
+              'errors',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) =>
+                      ProcessingError.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -40,5 +46,6 @@ Map<String, dynamic> _$SearchResponseToJson(SearchResponse instance) {
 
   writeNotNull('compositions', instance.compositions?.toJson());
   val['results'] = instance.results.map((e) => e.toJson()).toList();
+  writeNotNull('errors', instance.errors?.map((e) => e.toJson()).toList());
   return val;
 }

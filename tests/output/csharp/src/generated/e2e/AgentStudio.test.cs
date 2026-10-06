@@ -181,35 +181,6 @@ public class AgentStudioClientRequestTestsE2E
     }
   }
 
-  [Fact(DisplayName = "listAgentConversations with all parameters")]
-  public async Task ListAgentConversationsTest1()
-  {
-    try
-    {
-      var resp = await client.ListAgentConversationsAsync(
-        "76710f1b-8231-42e5-b0d1-f43aac618e15",
-        "2024-01-01",
-        "2024-12-31",
-        true,
-        1,
-        2,
-        10,
-        null
-      );
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      TestHelpers.LenientJsonAssert(
-        "{\"data\":[],\"pagination\":{\"page\":2,\"limit\":10,\"totalCount\":0,\"totalPages\":0}}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
-  }
-
   [Fact(DisplayName = "e2e list agent conversations")]
   public async Task ListAgentConversationsTest2()
   {

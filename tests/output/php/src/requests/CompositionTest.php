@@ -43,7 +43,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -62,7 +62,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -80,7 +80,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -99,7 +99,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -129,7 +129,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -467,7 +467,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/1234',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -485,7 +485,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/1234/rules/5678',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -502,7 +502,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -524,7 +524,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/id1',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'headers' => json_decode('{"request-id":"CtsE2eEcho4"}', true),
             ],
         ]);
@@ -546,7 +546,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/id1',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"x-algolia-request-id":"CtsE2eEchoQ"}', true),
             ],
         ]);
@@ -570,7 +570,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo/rules/123',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -588,7 +588,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions/foo/task/42',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -603,7 +603,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -618,7 +618,7 @@ class CompositionTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/compositions',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1220,6 +1220,51 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('putComposition')]
+    public function testPutComposition9(): void
+    {
+        $client = $this->getClient();
+        $client->putComposition(
+            'my-external-provider-compo',
+            ['objectID' => 'my-external-provider-compo',
+                'name' => 'my external provider composition',
+                'behavior' => ['injection' => ['main' => ['source' => ['externalProvider' => ['index' => 'products',
+                    'configurationID' => 'my-rmn-connection',
+                    'configurationParams' => ['campaign_id' => 'summer-sale',
+                        'customer_id' => 'customer-default',
+                    ],
+                    'params' => ['filters' => 'instock:true',
+                    ],
+                    'ordering' => 'providerDefined',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'sponsored',
+                            'source' => ['externalProvider' => ['index' => 'products',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 2,
+                        ],
+                    ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/my-external-provider-compo',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('putCompositionRule')]
     public function testPutCompositionRule(): void
     {
@@ -1415,6 +1460,51 @@ class CompositionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/compositions/compositionID/rules/rule-with-deduplication',
                 'method' => 'PUT',
                 'body' => json_decode('{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('putCompositionRule')]
+    public function testPutCompositionRule4(): void
+    {
+        $client = $this->getClient();
+        $client->putCompositionRule(
+            'compositionID',
+            'rule-with-external-provider-source',
+            ['objectID' => 'rule-with-external-provider-source',
+                'conditions' => [
+                    ['anchoring' => 'contains',
+                        'pattern' => 'harry',
+                    ],
+                ],
+                'consequence' => ['behavior' => ['injection' => ['main' => ['source' => ['search' => ['index' => 'my-index',
+                ],
+                ],
+                ],
+                    'injectedItems' => [
+                        ['key' => 'my-unique-external-provider-group-from-rule-key',
+                            'source' => ['externalProvider' => ['index' => 'my-index',
+                                'configurationID' => 'my-rmn-connection',
+                                'configurationParams' => ['campaign_id' => 'summer-sale',
+                                ],
+                                'ordering' => 'providerDefined',
+                            ],
+                            ],
+                            'position' => 0,
+                            'length' => 3,
+                        ],
+                    ],
+                ],
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/compositionID/rules/rule-with-external-provider-source',
+                'method' => 'PUT',
+                'body' => json_decode('{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}'),
             ],
         ]);
     }
@@ -1871,6 +1961,29 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('search')]
+    public function testSearch4(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'batman',
+            ],
+                'externalProvider' => ['configurationParams' => ['customer_id' => 'customer123',
+                ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchCompositionRules')]
     public function testSearchCompositionRules(): void
     {
@@ -1943,10 +2056,16 @@ class CompositionTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

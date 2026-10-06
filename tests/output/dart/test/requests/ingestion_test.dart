@@ -1124,7 +1124,7 @@ void main() {
         expectPath(request.path,
             '/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable');
         expect(request.method, 'put');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -1146,7 +1146,7 @@ void main() {
         expectPath(request.path,
             '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable');
         expect(request.method, 'put');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -1168,7 +1168,7 @@ void main() {
         expectPath(request.path,
             '/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable');
         expect(request.method, 'put');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -1190,7 +1190,7 @@ void main() {
         expectPath(request.path,
             '/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable');
         expect(request.method, 'put');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );
@@ -2118,7 +2118,7 @@ void main() {
         expectPath(request.path,
             '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover');
         expect(request.method, 'post');
-        expect(request.body, {});
+        expect(request.body, null);
       },
     ),
   );

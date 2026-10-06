@@ -19,6 +19,27 @@ ToolResultPart:
           additionalProperties: true
         - type: 'null'
       title: provideroptions
+    mcpConfigId:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: mcpconfigid
+    mcpConfigName:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: mcpconfigname
+    isTerminal:
+      oneOf:
+        - type: boolean
+        - type: 'null'
+      title: isterminal
+    outputMetadata:
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
+      title: outputmetadata
   type: object
   required:
     - type

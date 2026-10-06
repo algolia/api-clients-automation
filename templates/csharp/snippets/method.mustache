@@ -30,7 +30,7 @@ public class Snippet{{client}}
     {{> snippets/init}}
 
     // Call the API
-     {{#hasResponse}}var response =  {{/hasResponse}}{{> tests/method}};
+     {{#hasResponse}}{{#listReturnType}}List<{{.}}>{{/listReturnType}}{{^listReturnType}}var{{/listReturnType}} response =  {{/hasResponse}}{{> tests/method}};
     // >LOG
     {{#hasResponse}}
     // print the response

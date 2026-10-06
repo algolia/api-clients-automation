@@ -597,7 +597,7 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -652,7 +652,7 @@ class IngestionClient(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -2831,7 +2831,7 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/run")
-      .withBody(runSourcePayload)
+      .withBody(runSourcePayload.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 
@@ -2886,7 +2886,7 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/2/tasks/${escape(taskID)}/run")
-      .withBody(runTaskPayload)
+      .withBody(runTaskPayload.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 
@@ -2946,7 +2946,7 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/tasks/${escape(taskID)}/run")
-      .withBody(runTaskPayload)
+      .withBody(runTaskPayload.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 
@@ -3807,7 +3807,7 @@ class IngestionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/sources/validate")
-      .withBody(sourceCreate)
+      .withBody(sourceCreate.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 

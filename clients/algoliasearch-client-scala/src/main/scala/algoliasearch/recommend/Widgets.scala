@@ -33,5 +33,6 @@ package algoliasearch.recommend
   *   Banners defined in the Merchandising Studio for a given search.
   */
 case class Widgets(
-    banners: Option[Seq[Banner]] = scala.None
+    banners: Option[Seq[Banner]] = scala.None,
+    resultCard: Option[ResultCard] = scala.None
 )

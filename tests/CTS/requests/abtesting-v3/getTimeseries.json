@@ -7,5 +7,25 @@
       "path": "/3/abtests/42/timeseries",
       "method": "GET"
     }
+  },
+  {
+    "testName": "getTimeseries with Bayesian revenue per search",
+    "parameters": {
+      "id": 42,
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "metric": ["revenue_per_search"],
+      "methods": ["bayesian"]
+    },
+    "request": {
+      "path": "/3/abtests/42/timeseries",
+      "method": "GET",
+      "queryParameters": {
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "metric": "revenue_per_search",
+        "methods": "bayesian"
+      }
+    }
   }
 ]

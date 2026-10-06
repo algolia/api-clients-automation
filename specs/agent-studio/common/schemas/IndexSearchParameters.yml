@@ -1,4 +1,9 @@
 IndexSearchParameters:
+  description: |-
+    Structured search parameters configuration for an Algolia index.
+
+    Each parameter controls whether it is exposed to the LLM, its default value,
+    optional constraints, and merge behavior.
   properties:
     query:
       oneOf:
@@ -12,6 +17,10 @@ IndexSearchParameters:
       $ref: 'StringArrayParam.yml#/StringArrayParam'
     responseFields:
       $ref: 'StringArrayParam.yml#/StringArrayParam'
+    distinct:
+      oneOf:
+        - $ref: 'BooleanParam.yml#/BooleanParam'
+        - type: 'null'
     facets:
       oneOf:
         - $ref: 'FacetsParam.yml#/FacetsParam'
@@ -21,11 +30,7 @@ IndexSearchParameters:
         - additionalProperties: true
           type: object
         - type: 'null'
+      default: null
       title: custom
-  type: object
   title: indexSearchParameters
-  description: |-
-    Structured search parameters configuration for an Algolia index.
-
-    Each parameter controls whether it is exposed to the LLM, its default value,
-    optional constraints, and merge behavior.
+  type: object

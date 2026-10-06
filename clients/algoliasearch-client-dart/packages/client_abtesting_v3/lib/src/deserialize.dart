@@ -5,6 +5,8 @@ import 'package:algolia_client_abtesting_v3/src/model/ab_test_settings_response.
 import 'package:algolia_client_abtesting_v3/src/model/ab_tests_variant.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_tests_variant_search_params.dart';
 import 'package:algolia_client_abtesting_v3/src/model/add_ab_tests_request.dart';
+import 'package:algolia_client_abtesting_v3/src/model/analysis_method.dart';
+import 'package:algolia_client_abtesting_v3/src/model/bayesian_metric_result.dart';
 import 'package:algolia_client_abtesting_v3/src/model/conflict_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/create_metric.dart';
 import 'package:algolia_client_abtesting_v3/src/model/custom_search_params.dart';
@@ -17,16 +19,19 @@ import 'package:algolia_client_abtesting_v3/src/model/error_correction_type.dart
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_configuration.dart';
+import 'package:algolia_client_abtesting_v3/src/model/evidence_status.dart';
 import 'package:algolia_client_abtesting_v3/src/model/feature_settings.dart';
 import 'package:algolia_client_abtesting_v3/src/model/filter_effects.dart';
 import 'package:algolia_client_abtesting_v3/src/model/list_ab_tests_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_date.dart';
+import 'package:algolia_client_abtesting_v3/src/model/metric_evidence.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_metadata.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_name.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_result.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metrics_filter.dart';
 import 'package:algolia_client_abtesting_v3/src/model/minimum_detectable_effect.dart';
 import 'package:algolia_client_abtesting_v3/src/model/outliers_filter.dart';
+import 'package:algolia_client_abtesting_v3/src/model/primary_metric.dart';
 import 'package:algolia_client_abtesting_v3/src/model/save_settings_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/status.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries.dart';
@@ -74,6 +79,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AddABTestsRequest':
       return AddABTestsRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AnalysisMethod':
+      return AnalysisMethod.fromJson(value) as ReturnType;
+    case 'BayesianMetricResult':
+      return BayesianMetricResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ConflictResponse':
       return ConflictResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -104,6 +114,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'EstimateConfiguration':
       return EstimateConfiguration.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'EvidenceStatus':
+      return EvidenceStatus.fromJson(value) as ReturnType;
     case 'FeatureSettings':
       return FeatureSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -115,6 +127,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MetricDate':
       return MetricDate.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MetricEvidence':
+      return MetricEvidence.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'MetricMetadata':
       return MetricMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -131,6 +146,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'OutliersFilter':
       return OutliersFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'PrimaryMetric':
+      return PrimaryMetric.fromJson(value) as ReturnType;
     case 'SaveSettingsRequest':
       return SaveSettingsRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
