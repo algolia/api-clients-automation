@@ -1,6 +1,6 @@
 FeedbackUnion:
   oneOf:
-    - items:
-        $ref: 'FeedbackResponse.yml#/FeedbackResponse'
-      type: array
-    - type: 'null'
+  - items:
+      $ref: FeedbackResponse.yml#/FeedbackResponse
+    type: array
+  - type: 'null'

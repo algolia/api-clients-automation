@@ -1,9 +1,9 @@
 InputUnion:
   oneOf:
-    - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
-    - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'
-    - $ref: 'OpenAICompatibleProviderInput.yml#/OpenAICompatibleProviderInput'
-    - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
-    - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
-    - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
-    - $ref: 'ManagedProviderResponseInput.yml#/ManagedProviderResponseInput'
+  - $ref: OpenAIProviderInput.yml#/OpenAIProviderInput
+  - $ref: AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput
+  - $ref: OpenAICompatibleProviderInput.yml#/OpenAICompatibleProviderInput
+  - $ref: BaseProviderInput.yml#/BaseProviderInput
+  - $ref: AnthropicProviderInput.yml#/AnthropicProviderInput
+  - $ref: XAIProviderInput.yml#/XAIProviderInput
+  - $ref: ManagedProviderResponseInput.yml#/ManagedProviderResponseInput
