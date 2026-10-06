@@ -64,7 +64,7 @@ export SDKMAN_NATIVE_VERSION="0.7.34"
 # vendored addition: the broker redirects to the sdkman GitHub release assets, which are immutable per
 # version, so the archives are pinned here and verified after download. The cli zip is the same for
 # every platform, the native zip is per platform. Refresh with scripts/docker/update-pins.sh after a bump.
-export SDKMAN_CLI_SHA256="7ef83583a6986351ea8c86b8494a885fcae91a2fbfac91662bca7ea4f72bd230"
+export SDKMAN_CLI_SHA256="d6a746388a4bf1dfd9254fd5ad160b51fb987daacecba93bffe27761928e5350"
 declare -A SDKMAN_NATIVE_SHA256=(
 	[linuxx64]="d268e17a36f6fae542bb38018f2bfadf60689c4c1de0bff2dcfdace0855ddf0a"
 	[linuxarm64]="79b2747107aaeca1c4d3c1fea1178ec34210e43949633771b5c31f08c353ee7b"
