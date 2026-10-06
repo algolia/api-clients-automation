@@ -112,6 +112,25 @@
       ]
     },
     {
+      "description": "Renovate drops pending updates from a group, so an image held by its own age gate leaves the PR with only the version half and check-version-drift.sh fails. The version half keeps the age gate; the image half must not add its own, because ghcr tags carry no release timestamp (pending forever) and Docker Hub tags reset their age on every rebuild",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "scripts/docker/**"
+      ],
+      "matchDepNames": [
+        "dart",
+        "golang",
+        "ghcr.io/nicklockwood/swiftformat",
+        "mcr.microsoft.com/dotnet/sdk",
+        "php",
+        "ruby",
+        "swift"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
       "description": "Both sdkman pins live in scripts/docker/sdkman-install.sh, one PR avoids conflicting rebases",
       "groupName": "sdkman",
       "matchDepNames": [
