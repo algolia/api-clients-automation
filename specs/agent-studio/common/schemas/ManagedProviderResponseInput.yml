@@ -2,8 +2,8 @@ ManagedProviderResponseInput:
   properties:
     defaultModel:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: defaultmodel
   type: object
   title: managedProviderResponseInput
