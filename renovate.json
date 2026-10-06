@@ -122,11 +122,25 @@
       "matchDepNames": [
         "dart",
         "golang",
-        "ghcr.io/nicklockwood/swiftformat",
         "mcr.microsoft.com/dotnet/sdk",
         "php",
         "ruby",
         "swift"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "ghcr tags carry no release timestamp, so any age gate keeps swiftformat pending forever, digests included",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchDepNames": [
+        "ghcr.io/nicklockwood/swiftformat"
       ],
       "minimumReleaseAge": null
     },
