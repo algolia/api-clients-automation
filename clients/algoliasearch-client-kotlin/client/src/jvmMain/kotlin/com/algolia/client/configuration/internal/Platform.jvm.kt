@@ -10,9 +10,15 @@ internal actual fun platformAgentSegment(): AgentSegment =
   AgentSegment("JVM", System.getProperty("java.version"))
 
 internal actual fun HttpClientConfig<*>.platformConfig(options: ClientOptions) {
-  // Engines such as CIO or Java neither advertise nor decode gzip on their own.
-  install(ContentEncoding) { gzip() }
   if (options.compressionType == CompressionType.GZIP) {
     install(GzipCompression)
+  }
+}
+
+internal actual fun HttpClientConfig<*>.platformResponseDecompression() {
+  // Engines such as CIO or Java neither advertise nor decode gzip on their own.
+  install(ContentEncoding) {
+    gzip()
+    identity()
   }
 }
