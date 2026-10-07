@@ -50,10 +50,19 @@ kotlin {
       }
     }
 
+    val jvmMain by getting {
+      dependencies {
+        implementation(libs.ktor.client.encoding)
+      }
+    }
+
     val jvmTest by getting {
       dependencies {
         implementation(libs.kotlin.test.junit)
         implementation(libs.ktor.client.okhttp)
+        implementation(libs.ktor.client.cio)
+        implementation(libs.ktor.client.java)
+        implementation(libs.ktor.client.apache5)
       }
     }
 
