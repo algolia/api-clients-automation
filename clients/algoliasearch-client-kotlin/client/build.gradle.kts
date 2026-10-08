@@ -66,7 +66,8 @@ kotlin {
         implementation(libs.ktor.client.apache)
         implementation(libs.ktor.client.android)
         implementation(libs.ktor.client.jetty)
-        implementation(libs.ktor.server.jetty)      }
+        implementation(libs.ktor.server.jetty)
+      }
     }
 
     if (HostManager.hostIsMac) {
