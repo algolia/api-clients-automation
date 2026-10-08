@@ -3,6 +3,7 @@ post:
     - Search
   operationId: browse
   x-use-read-transporter: true
+  x-accepts-api-key-in-body: true
   x-acl:
     - browse
   summary: Browse for records

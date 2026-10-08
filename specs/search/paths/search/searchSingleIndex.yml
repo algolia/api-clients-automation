@@ -4,6 +4,7 @@ post:
   operationId: searchSingleIndex
   x-mcp-tool: true
   x-use-read-transporter: true
+  x-accepts-api-key-in-body: true
   x-cacheable: true
   x-acl:
     - search

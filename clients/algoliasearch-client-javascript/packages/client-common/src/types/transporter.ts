@@ -156,7 +156,7 @@ export type TransporterOptions = {
   baseQueryParameters: QueryParameters;
 
   /**
-   * The credentials sent in the JSON body of read requests, when `authMode` is `'WithinBody'`.
+   * The credentials sent in the JSON body of the requests that accept them, when `authMode` is `'WithinBody'`.
    */
   baseBodyParameters?: BodyParameters;
 

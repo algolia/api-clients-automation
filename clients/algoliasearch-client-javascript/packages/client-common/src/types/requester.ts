@@ -30,6 +30,11 @@ export type Request = {
    * This information is defined at the spec level.
    */
   useReadTransporter?: boolean | undefined;
+  /**
+   * If the engine accepts the API key as `apiKey` in the JSON body of this request, used by the
+   * `WithinBody` auth mode. This information is defined at the spec level.
+   */
+  acceptsApiKeyInBody?: boolean | undefined;
 };
 
 export type EndRequest = Pick<Request, 'headers' | 'method'> & {

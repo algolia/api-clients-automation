@@ -64,6 +64,48 @@ describe('WithinBody', () => {
     assertSimpleRequest(req);
   });
 
+  test('browse and searchForFacetValues merge apiKey into the POST body', async () => {
+    const client = createBodyClient();
+    const requests = [
+      (await client.browse({ indexName: 'idx', browseParams: { hitsPerPage: 1 } })) as unknown as EchoResponse,
+      (await client.searchForFacetValues({
+        indexName: 'idx',
+        facetName: 'genre',
+        searchForFacetValuesRequest: { facetQuery: 'a' },
+      })) as unknown as EchoResponse,
+    ];
+
+    for (const req of requests) {
+      expect(req.data).toMatchObject({ apiKey });
+      expect(req.searchParams).toEqual({
+        'x-algolia-application-id': appId,
+      });
+      assertSimpleRequest(req);
+    }
+  });
+
+  test('read requests the engine rejects a body apiKey for fall back to the query parameter', async () => {
+    const client = createBodyClient();
+    const requests = [
+      (await client.getObjects({ requests: [{ indexName: 'idx', objectID: 'id' }] })) as unknown as EchoResponse,
+      (await client.searchRules({ indexName: 'idx', searchRulesParams: { query: '' } })) as unknown as EchoResponse,
+      (await client.searchSynonyms({
+        indexName: 'idx',
+        searchSynonymsParams: { query: '' },
+      })) as unknown as EchoResponse,
+    ];
+
+    for (const req of requests) {
+      expect(req.method).toEqual('POST');
+      expect(req.data).not.toHaveProperty('apiKey');
+      expect(req.searchParams).toMatchObject({
+        'x-algolia-api-key': apiKey,
+        'x-algolia-application-id': appId,
+      });
+      assertSimpleRequest(req);
+    }
+  });
+
   test('GET falls back to the api key query parameter', async () => {
     const client = createBodyClient();
     const req = (await client.getSettings({ indexName: 'idx' })) as unknown as EchoResponse;

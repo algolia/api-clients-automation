@@ -27,6 +27,7 @@ describe('transporter body auth', () => {
     headers: {},
     data: { requests: [{ indexName: 'foo', query: 'bar' }] },
     useReadTransporter: true,
+    acceptsApiKeyInBody: true,
   };
 
   function createTestTransporter(
@@ -197,15 +198,22 @@ describe('transporter body auth', () => {
     expect(queryParams(requests[0]).get('x-algolia-api-key')).toBeNull();
   });
 
-  test('read POST without a body puts the key in the query instead of inventing a body', async () => {
+  test('read POST that does not accept a body key (e.g. getObjects) puts the key in the query', async () => {
     const { requester, requests } = createEchoRequester();
     const transporter = createTestTransporter(requester);
-    const { data: _data, ...withoutData } = searchRequest;
+    const payload = { requests: [{ indexName: 'foo', objectID: 'bar' }] };
 
-    await transporter.request(withoutData);
+    await transporter.request({
+      method: 'POST',
+      path: '/1/indexes/*/objects',
+      queryParameters: {},
+      headers: {},
+      data: payload,
+      useReadTransporter: true,
+    });
 
     expect(requests).toHaveLength(1);
-    expect(requests[0].data).toBeUndefined();
+    expect(JSON.parse(requests[0].data as string)).toEqual(payload);
     assertKeyInQuery(requests[0]);
   });
 

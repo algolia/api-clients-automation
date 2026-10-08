@@ -62,8 +62,8 @@ export function createTransporter({
   const bodyParameters: BodyParameters = baseBodyParameters ?? {};
 
   /**
-   * As in v3, only read requests with an object body (search, browse, getObjects...) carry the body API key:
-   * write bodies are user data. Every other request sends it as the `x-algolia-api-key` query parameter.
+   * Only the endpoints flagged `acceptsApiKeyInBody` in the specs parse an `apiKey` body field; other endpoints
+   * reject it or treat it as user data. Every other request sends it as the `x-algolia-api-key` query parameter.
    */
   function serializeDataWithAuth(
     request: Request,
@@ -75,12 +75,7 @@ export function createTransporter({
       return { data: serializeData(request, requestOptions), authQueryParameters: {}, credentialsInBody: false };
     }
 
-    if (
-      request.useReadTransporter &&
-      request.method !== 'GET' &&
-      request.data !== undefined &&
-      !Array.isArray(request.data)
-    ) {
+    if (request.acceptsApiKeyInBody && !Array.isArray(request.data)) {
       return {
         data: serializeData(request, { ...requestOptions, data: { apiKey, ...requestOptions.data } }),
         authQueryParameters: {},
