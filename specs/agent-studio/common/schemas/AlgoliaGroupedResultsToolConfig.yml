@@ -50,4 +50,4 @@ AlgoliaGroupedResultsToolConfig:
   title: algoliaGroupedResultsToolConfig
   type: object
   required:
-    - type
+  - type

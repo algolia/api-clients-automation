@@ -1,4 +1,4 @@
 ToolConfigOrBooleanUnion:
   oneOf:
-    - $ref: 'McpToolConfig.yml#/McpToolConfig'
-    - type: boolean
+  - $ref: McpToolConfig.yml#/McpToolConfig
+  - type: boolean
