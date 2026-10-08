@@ -6,6 +6,6 @@ TaskResponse:
       title: output
   type: object
   required:
-  - output
+    - output
   title: taskResponse
   description: Response body for a completed task run.

@@ -1,7 +1,7 @@
 MemoryType:
   type: string
   enum:
-  - semantic
-  - episodic
+    - semantic
+    - episodic
   title: memoryType
   description: The type of the stored memory.

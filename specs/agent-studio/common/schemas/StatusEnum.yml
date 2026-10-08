@@ -1,5 +1,5 @@
 StatusEnum:
   type: string
   enum:
-  - resolved
-  - cancelled
+    - resolved
+    - cancelled

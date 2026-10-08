@@ -6,11 +6,11 @@ TextParam:
       type: boolean
     default:
       oneOf:
-      - type: string
-      - type: 'null'
+        - type: string
+        - type: 'null'
       default: null
       title: default
   required:
-  - exposed
+    - exposed
   title: textParam
   type: object

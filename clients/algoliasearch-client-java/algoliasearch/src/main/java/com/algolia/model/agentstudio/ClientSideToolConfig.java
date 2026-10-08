@@ -23,6 +23,9 @@ public class ClientSideToolConfig implements ToolConfigOutput, ItemsUnion, ToolC
   @JsonProperty("inputSchema")
   private ClientToolsArgsSchema inputSchema;
 
+  @JsonProperty("isTerminal")
+  private Boolean isTerminal;
+
   public ClientSideToolConfig setName(String name) {
     this.name = name;
     return this;
@@ -67,6 +70,22 @@ public class ClientSideToolConfig implements ToolConfigOutput, ItemsUnion, ToolC
     return inputSchema;
   }
 
+  public ClientSideToolConfig setIsTerminal(Boolean isTerminal) {
+    this.isTerminal = isTerminal;
+    return this;
+  }
+
+  /**
+   * Server-side declaration that this tool is display/render-only: a resolved result ends the turn
+   * and the model is not re-invoked on it (CR-11753). The client's terminal claim on a tool result
+   * is honored only when this agrees; leave false for data tools whose result the model must reason
+   * about.
+   */
+  @javax.annotation.Nullable
+  public Boolean getIsTerminal() {
+    return isTerminal;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -80,13 +99,14 @@ public class ClientSideToolConfig implements ToolConfigOutput, ItemsUnion, ToolC
       Objects.equals(this.name, clientSideToolConfig.name) &&
       Objects.equals(this.type, clientSideToolConfig.type) &&
       Objects.equals(this.description, clientSideToolConfig.description) &&
-      Objects.equals(this.inputSchema, clientSideToolConfig.inputSchema)
+      Objects.equals(this.inputSchema, clientSideToolConfig.inputSchema) &&
+      Objects.equals(this.isTerminal, clientSideToolConfig.isTerminal)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type, description, inputSchema);
+    return Objects.hash(name, type, description, inputSchema, isTerminal);
   }
 
   @Override
@@ -97,6 +117,7 @@ public class ClientSideToolConfig implements ToolConfigOutput, ItemsUnion, ToolC
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    inputSchema: ").append(toIndentedString(inputSchema)).append("\n");
+    sb.append("    isTerminal: ").append(toIndentedString(isTerminal)).append("\n");
     sb.append("}");
     return sb.toString();
   }

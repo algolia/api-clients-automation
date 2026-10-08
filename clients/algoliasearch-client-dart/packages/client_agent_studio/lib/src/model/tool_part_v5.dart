@@ -18,6 +18,7 @@ final class ToolPartV5 {
     this.output,
     this.outputMetadata,
     this.errorText,
+    this.terminal,
     this.providerOptions,
     this.requiresApproval,
     this.description,
@@ -48,6 +49,9 @@ final class ToolPartV5 {
   @JsonKey(name: r'errorText')
   final String? errorText;
 
+  @JsonKey(name: r'terminal')
+  final bool? terminal;
+
   @JsonKey(name: r'providerOptions')
   final Map<String, Object>? providerOptions;
 
@@ -72,6 +76,7 @@ final class ToolPartV5 {
           other.output == output &&
           other.outputMetadata == outputMetadata &&
           other.errorText == errorText &&
+          other.terminal == terminal &&
           other.providerOptions == providerOptions &&
           other.requiresApproval == requiresApproval &&
           other.description == description &&
@@ -87,6 +92,7 @@ final class ToolPartV5 {
       (output == null ? 0 : output.hashCode) +
       (outputMetadata == null ? 0 : outputMetadata.hashCode) +
       (errorText == null ? 0 : errorText.hashCode) +
+      (terminal == null ? 0 : terminal.hashCode) +
       (providerOptions == null ? 0 : providerOptions.hashCode) +
       (requiresApproval == null ? 0 : requiresApproval.hashCode) +
       (description == null ? 0 : description.hashCode) +

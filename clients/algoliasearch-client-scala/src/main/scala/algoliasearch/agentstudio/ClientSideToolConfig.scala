@@ -36,12 +36,18 @@
 package algoliasearch.agentstudio
 
 /** ClientSideToolConfig
+  *
+  * @param isTerminal
+  *   Server-side declaration that this tool is display/render-only: a resolved result ends the turn and the model is
+  *   not re-invoked on it (CR-11753). The client's terminal claim on a tool result is honored only when this agrees;
+  *   leave false for data tools whose result the model must reason about.
   */
 case class ClientSideToolConfig(
     name: String,
     `type`: String,
     description: String,
-    inputSchema: ClientToolsArgsSchema
+    inputSchema: ClientToolsArgsSchema,
+    isTerminal: Option[Boolean] = scala.None
 ) extends ToolConfigOutputTrait
     with ItemsUnionTrait
     with ToolConfigInputTrait

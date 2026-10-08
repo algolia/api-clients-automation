@@ -18,16 +18,27 @@ ClientSideToolConfig _$ClientSideToolConfigFromJson(
           description: $checkedConvert('description', (v) => v as String),
           inputSchema: $checkedConvert('inputSchema',
               (v) => ClientToolsArgsSchema.fromJson(v as Map<String, dynamic>)),
+          isTerminal: $checkedConvert('isTerminal', (v) => v as bool?),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$ClientSideToolConfigToJson(
-        ClientSideToolConfig instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'type': instance.type,
-      'description': instance.description,
-      'inputSchema': instance.inputSchema.toJson(),
-    };
+    ClientSideToolConfig instance) {
+  final val = <String, dynamic>{
+    'name': instance.name,
+    'type': instance.type,
+    'description': instance.description,
+    'inputSchema': instance.inputSchema.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('isTerminal', instance.isTerminal);
+  return val;
+}

@@ -6,8 +6,8 @@ ToolInvocationPartV4:
       title: type
       type: string
     toolInvocation:
-      $ref: ToolInvocationV4.yml#/ToolInvocationV4
+      $ref: 'ToolInvocationV4.yml#/ToolInvocationV4'
   required:
-  - toolInvocation
+    - toolInvocation
   title: toolInvocationPartV4
   type: object

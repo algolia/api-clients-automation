@@ -19,9 +19,9 @@ ToolCallResultPartAGUI:
       default: null
       title: error
   required:
-  - type
-  - toolCallId
-  - state
-  - content
+    - type
+    - toolCallId
+    - state
+    - content
   title: toolCallResultPartAGUI
   type: object

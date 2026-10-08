@@ -14,6 +14,7 @@ final class ClientSideToolConfig {
     required this.type,
     required this.description,
     required this.inputSchema,
+    this.isTerminal,
   });
 
   @JsonKey(name: r'name')
@@ -28,6 +29,10 @@ final class ClientSideToolConfig {
   @JsonKey(name: r'inputSchema')
   final ClientToolsArgsSchema inputSchema;
 
+  /// Server-side declaration that this tool is display/render-only: a resolved result ends the turn and the model is not re-invoked on it (CR-11753). The client's terminal claim on a tool result is honored only when this agrees; leave false for data tools whose result the model must reason about.
+  @JsonKey(name: r'isTerminal')
+  final bool? isTerminal;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -35,14 +40,16 @@ final class ClientSideToolConfig {
           other.name == name &&
           other.type == type &&
           other.description == description &&
-          other.inputSchema == inputSchema;
+          other.inputSchema == inputSchema &&
+          other.isTerminal == isTerminal;
 
   @override
   int get hashCode =>
       name.hashCode +
       type.hashCode +
       description.hashCode +
-      inputSchema.hashCode;
+      inputSchema.hashCode +
+      isTerminal.hashCode;
 
   factory ClientSideToolConfig.fromJson(Map<String, dynamic> json) =>
       _$ClientSideToolConfigFromJson(json);

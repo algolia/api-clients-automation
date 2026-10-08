@@ -1,83 +1,83 @@
 get:
   tags:
-  - Providers
+    - Providers
   operationId: getProvider
   x-acl:
-  - settings
+    - settings
   summary: Get Provider
-  description: Get Provider
+  description: Get Provider.
   parameters:
-  - name: providerId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: providerId
-    description: The providerId.
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: providerId
+      description: The providerId.
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse
+            $ref: '../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 patch:
   tags:
-  - Providers
+    - Providers
   operationId: updateProvider
   x-acl:
-  - editSettings
+    - editSettings
   summary: Update Provider
-  description: Update Provider
+  description: Update Provider.
   parameters:
-  - name: providerId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: providerId
-    description: The providerId.
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: providerId
+      description: The providerId.
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: ../../common/schemas/ProviderAuthenticationPatch.yml#/ProviderAuthenticationPatch
+          $ref: '../../common/schemas/ProviderAuthenticationPatch.yml#/ProviderAuthenticationPatch'
   responses:
     '200':
       description: Successful Response.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse
+            $ref: '../../common/schemas/ProviderAuthenticationResponse.yml#/ProviderAuthenticationResponse'
     '422':
       description: Validation Error.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
 delete:
   tags:
-  - Providers
+    - Providers
   operationId: deleteProvider
   x-acl:
-  - editSettings
+    - editSettings
   summary: Delete Provider
-  description: Delete Provider
+  description: Delete Provider.
   parameters:
-  - name: providerId
-    in: path
-    required: true
-    schema:
-      type: string
-      title: providerId
-    description: The providerId.
+    - name: providerId
+      in: path
+      required: true
+      schema:
+        type: string
+        title: providerId
+      description: The providerId.
   responses:
     '204':
       description: Successful Response.
@@ -86,4 +86,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError
+            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'

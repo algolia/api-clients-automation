@@ -1,6 +1,6 @@
 PartsUnion:
   oneOf:
-  - items:
-      $ref: TextPartAGUI.yml#/TextPartAGUI
-    type: array
-  - type: 'null'
+    - items:
+        $ref: 'TextPartAGUI.yml#/TextPartAGUI'
+      type: array
+    - type: 'null'
