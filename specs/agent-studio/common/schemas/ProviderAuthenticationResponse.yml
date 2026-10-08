@@ -10,7 +10,7 @@ ProviderAuthenticationResponse:
       type: string
       title: providername
     input:
-      $ref: 'ProviderInput.yml#/ProviderInput'
+      $ref: 'InputUnion.yml#/InputUnion'
     createdAt:
       type: string
       title: createdat
@@ -22,6 +22,10 @@ ProviderAuthenticationResponse:
         - type: string
         - type: 'null'
       title: lastusedat
+    isAlgoliaManaged:
+      type: boolean
+      title: isalgoliamanaged
+      default: false
   type: object
   required:
     - id

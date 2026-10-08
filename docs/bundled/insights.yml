@@ -2219,14 +2219,11 @@ components:
       minLength: 1
       maxLength: 64
       pattern: '[\x20-\x7E]{1,64}'
-      description: >
+      description: |
         Event name, up to 64 ASCII characters.
 
-
         Consider naming events consistently—for example, by adopting Segment's
-
         [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
-
         framework.
     ClickEvent:
       type: string

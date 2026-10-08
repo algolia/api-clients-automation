@@ -75,7 +75,7 @@ public class CatalogEntry {
     return this;
   }
 
-  /** Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`. */
+  /** Public ACL identifiers required to read the field, for example `revenueAnalyticsEnabled`. */
   @javax.annotation.Nonnull
   public List<String> getRequires() {
     return requires;

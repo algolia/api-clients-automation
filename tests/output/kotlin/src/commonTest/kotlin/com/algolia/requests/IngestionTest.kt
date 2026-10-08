@@ -1043,7 +1043,7 @@ class IngestionTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }
@@ -1062,7 +1062,7 @@ class IngestionTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }
@@ -1081,7 +1081,7 @@ class IngestionTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }
@@ -1100,7 +1100,7 @@ class IngestionTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }
@@ -1979,7 +1979,7 @@ class IngestionTest {
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertEmptyBody(it.body)
+        assertNoBody(it.body)
       },
     )
   }

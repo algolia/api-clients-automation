@@ -112,37 +112,6 @@ client.search(params).then((response) {
 
 ## Common Gotchas
 
-### Null Safety
-
-```dart
-// Dart has sound null safety
-String? nullable;      // Can be null
-String nonNull = '';   // Cannot be null
-
-// Use ?? for defaults
-final value = nullable ?? 'default';
-
-// Use ?. for safe access
-final length = nullable?.length;
-
-// Use ! only when certain (avoid if possible)
-final sure = nullable!;  // Throws if null
-```
-
-### Async Context
-
-```dart
-// Can only await in async functions
-Future<void> myFunction() async {
-  final response = await client.search(params);
-}
-
-// Top-level requires main
-void main() async {
-  final response = await client.search(params);
-}
-```
-
 ### JSON Serialization
 
 ```dart
@@ -167,13 +136,6 @@ import 'package:algoliasearch/algoliasearch.dart';
 
 // For internal imports in same package
 import 'src/model/search_params.dart';
-```
-
-### Melos Commands
-
-```dart
-// Melos manages the monorepo
-// Run commands from root with melos
 ```
 
 ## Build & Test Commands

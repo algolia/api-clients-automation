@@ -60,7 +60,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -91,7 +91,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -122,7 +122,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -150,7 +150,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -178,7 +178,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -207,7 +207,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -236,7 +236,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -260,7 +260,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Create or update a batch of Recommend Rules Each Recommend Rule is created or updated,
+   * Create or update a batch of Recommend Rules. Each Recommend Rule is created or updated,
    * depending on whether a Recommend Rule with the same `objectID` already exists. You may also
    * specify `true` for `clearExistingRules`, in which case the batch will atomically replace all
    * the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -284,7 +284,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -319,13 +319,13 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/batch", indexName, model)
       .setMethod("POST")
-      .setBody(recommendRule)
+      .setBody(recommendRule != null ? recommendRule : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<RecommendUpdatedAtResponse>() {});
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -360,13 +360,13 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/batch", indexName, model)
       .setMethod("POST")
-      .setBody(recommendRule)
+      .setBody(recommendRule != null ? recommendRule : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -394,7 +394,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -422,7 +422,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -451,7 +451,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -480,7 +480,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -504,7 +504,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update a batch of Recommend Rules Each Recommend Rule is created or
+   * (asynchronously) Create or update a batch of Recommend Rules. Each Recommend Rule is created or
    * updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may
    * also specify `true` for `clearExistingRules`, in which case the batch will atomically replace
    * all the existing Recommend Rules. Recommend Rules are similar to Search Rules, except that the
@@ -1061,7 +1061,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1089,7 +1089,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1291,7 +1291,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1319,7 +1319,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -2242,7 +2242,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/search", indexName, model)
       .setMethod("POST")
-      .setBody(searchRecommendRulesParams)
+      .setBody(searchRecommendRulesParams != null ? searchRecommendRulesParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<SearchRecommendRulesResponse>() {});
@@ -2275,7 +2275,7 @@ public class RecommendClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/search", indexName, model)
       .setMethod("POST")
-      .setBody(searchRecommendRulesParams)
+      .setBody(searchRecommendRulesParams != null ? searchRecommendRulesParams : Collections.emptyMap())
       .setRead(true)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});

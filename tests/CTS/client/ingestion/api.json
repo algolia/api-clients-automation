@@ -1,6 +1,6 @@
 [
   {
-    "testName": "can handle HTML error",
+    "testName": "can handle HTML error when rate-limit retries are disabled",
     "autoCreateClient": false,
     "steps": [
       {
@@ -9,6 +9,7 @@
           "appId": "test-app-id",
           "apiKey": "test-api-key",
           "region": "us",
+          "maxRateLimitRetries": 0,
           "customHosts": [
             {
               "port": 6676
@@ -25,6 +26,7 @@
         "expected": {
           "error": {
             "csharp": "<html><body>429 too many requests</body></html>",
+            "dart": "429",
             "go": "API error [429] Too Many Requests",
             "java": "Status Code: 429 - Too Many Requests",
             "javascript": "Too Many Requests",
@@ -33,8 +35,7 @@
             "python": "Too Many Requests",
             "ruby": "429: Too Many Requests",
             "scala": "<html><body>429 Too Many Requests</body></html>",
-            "swift": "HTTP error: Status code: 429 Message: No message",
-            "dart": "429"
+            "swift": "HTTP error: Status code: 429 Message: No message"
           }
         }
       }

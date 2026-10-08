@@ -1,4 +1,8 @@
+# Only APIs on {appId}.algolia.net send Correlation-ID. Drop the header below if another API reuses this response.
 description: OK
+headers:
+  Correlation-ID:
+    $ref: '../../../common/responses/correlationId.yml#/Correlation-ID'
 content:
   application/json:
     schema:

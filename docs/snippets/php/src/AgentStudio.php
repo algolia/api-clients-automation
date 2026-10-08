@@ -66,6 +66,71 @@ class SnippetAgentStudioClient
     }
 
     /**
+     * Snippet for the CompactContext method.
+     *
+     * compactContext with required parameters
+     */
+    public function snippetForCompactContext(): void
+    {
+        // >SEPARATOR compactContext compactContext with required parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CompactContext method.
+     *
+     * compactContext with all parameters
+     */
+    public function snippetForCompactContext1(): void
+    {
+        // >SEPARATOR compactContext compactContext with all parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+
+                    ['role' => 'assistant',
+                        'content' => 'I am well.',
+                    ],
+                ],
+                'keepLastMessages' => 2,
+                'instructions' => 'keep every product reference',
+                'targetTokensEstimate' => 128,
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateAgent method.
      *
      * createAgent with minimal parameters
@@ -113,7 +178,11 @@ class SnippetAgentStudioClient
                     'max_tokens' => 1500,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -170,6 +239,63 @@ class SnippetAgentStudioClient
                 ],
             ],
             ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateAgentTask method.
+     *
+     * createAgentTask with required parameters
+     */
+    public function snippetForCreateAgentTask(): void
+    {
+        // >SEPARATOR createAgentTask createAgentTask with required parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['input' => ['pageType' => 'pdp',
+                'title' => 'acmePhone128Gb',
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the CreateAgentTask method.
+     *
+     * createAgentTask with all parameters
+     */
+    public function snippetForCreateAgentTask1(): void
+    {
+        // >SEPARATOR createAgentTask createAgentTask with all parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['task' => 'algolia_on_page_suggestions',
+                'kind' => 'prompt_suggestions',
+                'input' => ['pageType' => 'pdp',
+                    'title' => 'acmePhone128Gb',
+                ],
+            ],
+            false,
+            false,
+            false,
         );
 
         // >LOG
@@ -1456,7 +1582,11 @@ class SnippetAgentStudioClient
             1,
             2,
             10,
-            null,
+            true,
+            true,
+            false,
+            true,
+            'secure-user-token',
         );
 
         // >LOG
@@ -1814,6 +1944,67 @@ class SnippetAgentStudioClient
     }
 
     /**
+     * Snippet for the TrimContext method.
+     *
+     * trimContext with required parameters
+     */
+    public function snippetForTrimContext(): void
+    {
+        // >SEPARATOR trimContext trimContext with required parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+            ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the TrimContext method.
+     *
+     * trimContext with all parameters
+     */
+    public function snippetForTrimContext1(): void
+    {
+        // >SEPARATOR trimContext trimContext with all parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+
+                ['role' => 'assistant',
+                    'content' => 'I am well.',
+                ],
+            ],
+                'keepLastMessages' => 1,
+                'maxTokensEstimate' => 256,
+                'dropToolParts' => true,
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the UnpublishAgent method.
      *
      * unpublishAgent
@@ -1881,7 +2072,11 @@ class SnippetAgentStudioClient
                 'config' => ['temperature' => 0.5,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -1907,6 +2102,61 @@ class SnippetAgentStudioClient
         // Call the API
         $response = $client->updateConfiguration(
             ['maxRetentionDays' => 30,
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the UpdateFeedback method.
+     *
+     * updateFeedback with required parameters
+     */
+    public function snippetForUpdateFeedback(): void
+    {
+        // >SEPARATOR updateFeedback updateFeedback with required parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the UpdateFeedback method.
+     *
+     * updateFeedback with all parameters
+     */
+    public function snippetForUpdateFeedback1(): void
+    {
+        // >SEPARATOR updateFeedback updateFeedback with all parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+                'vote' => 0,
+                'tags' => [
+                    'unhelpful',
+
+                    'off-topic',
+                ],
+                'notes' => 'The response did not address my question.',
             ],
         );
 

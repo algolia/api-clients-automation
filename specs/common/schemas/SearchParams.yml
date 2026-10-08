@@ -47,7 +47,7 @@ baseSearchParamsWithoutQuery:
       items:
         type: string
       description: |
-        Facets for which to retrieve facet values that match the search criteria and the number of matching facet values
+        Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.
         To retrieve all facets, use the wildcard character `*`.
         For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
       default: []
@@ -216,7 +216,7 @@ aroundLatLngViaIP:
 clickAnalytics:
   type: boolean
   description: |
-    Whether to include a `queryID` attribute in the response
+    Whether to include a `queryID` attribute in the response.
     The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
   default: false
   x-categories:
@@ -253,7 +253,7 @@ facetFilters:
 facetingAfterDistinct:
   type: boolean
   description: |
-    Whether faceting should be applied after deduplication with `distinct`
+    Whether faceting should be applied after deduplication with `distinct`.
     This leads to accurate facet counts when using faceting in combination with `distinct`.
     It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting,
     as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
@@ -375,7 +375,7 @@ naturalLanguages:
   items:
     $ref: './IndexSettings.yml#/supportedLanguage'
   description: |
-    ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches)
+    ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches).
     - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages.
     - Sets `removeWordsIfNoResults` to `allOptional`.
     - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
@@ -452,7 +452,7 @@ allowReRankingOnPersonalization:
 personalizationImpact:
   type: integer
   description: |
-    Impact that Personalization should have on this search
+    Impact that Personalization should have on this search.
     The higher this value is, the more Personalization determines the ranking compared to other factors.
     For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
   default: 100
@@ -478,7 +478,7 @@ ruleContexts:
   items:
     type: string
   description: |
-    Assigns a rule context to the search query
+    Assigns a rule context to the search query.
     [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
   default: []
   example: [mobile]
@@ -488,12 +488,12 @@ ruleContexts:
 similarQuery:
   type: string
   description: |
-    Keywords to be used instead of the search query to conduct a more broader search
+    Keywords to be used instead of the search query to conduct a more broader search.
     Using the `similarQuery` parameter changes other settings
     - `queryType` is set to `prefixNone`.
     - `removeStopWords` is set to true.
     - `words` is set as the first ranking criterion.
-    - All remaining words are treated as `optionalWords`
+    - All remaining words are treated as `optionalWords`.
     Since the `similarQuery` is supposed to do a broad search, they usually return many results.
     Combine it with `filters` to narrow down the list of results.
   default: ''
@@ -504,7 +504,7 @@ similarQuery:
 sumOrFiltersScores:
   type: boolean
   description: |
-    Whether to sum all filter scores
+    Whether to sum all filter scores.
     If true, all filter scores are summed.
     Otherwise, the maximum filter score is kept.
     For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).

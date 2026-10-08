@@ -77,6 +77,61 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('compactContext with required parameters')]
+    public function testCompactContext(): void
+    {
+        $client = $this->getClient();
+        $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/compact',
+                'method' => 'POST',
+                'body' => json_decode('{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('compactContext with all parameters')]
+    public function testCompactContext1(): void
+    {
+        $client = $this->getClient();
+        $client->compactContext(
+            ['providerID' => 'c2905529-b933-4b69-87ec-75f9829d5f59',
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user',
+                        'content' => 'Hello, how are you?',
+                    ],
+
+                    ['role' => 'assistant',
+                        'content' => 'I am well.',
+                    ],
+                ],
+                'keepLastMessages' => 2,
+                'instructions' => 'keep every product reference',
+                'targetTokensEstimate' => 128,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/compact',
+                'method' => 'POST',
+                'body' => json_decode('{"providerID":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4o-mini","messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":2,"instructions":"keep every product reference","targetTokensEstimate":128}'),
+            ],
+        ]);
+    }
+
     #[TestDox('createAgent with minimal parameters')]
     public function testCreateAgent(): void
     {
@@ -112,7 +167,11 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                     'max_tokens' => 1500,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -122,7 +181,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents',
                 'method' => 'POST',
-                'body' => json_decode('{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"start"}]}'),
+                'body' => json_decode('{"name":"test-agent","description":"A test agent for CTS","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59","model":"gpt-4","instructions":"You are a helpful assistant.","config":{"sendUsage":true,"sendReasoning":true,"temperature":0.7,"max_tokens":1500},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}'),
             ],
         ]);
     }
@@ -167,6 +226,54 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'method' => 'POST',
                 'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"}]}'),
                 'queryParameters' => json_decode('{"compatibilityMode":"ai-sdk-4"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('createAgentTask with required parameters')]
+    public function testCreateAgentTask(): void
+    {
+        $client = $this->getClient();
+        $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['input' => ['pageType' => 'pdp',
+                'title' => 'acmePhone128Gb',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"input":{"pageType":"pdp","title":"acmePhone128Gb"}}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('createAgentTask with all parameters')]
+    public function testCreateAgentTask1(): void
+    {
+        $client = $this->getClient();
+        $client->createAgentTask(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ['task' => 'algolia_on_page_suggestions',
+                'kind' => 'prompt_suggestions',
+                'input' => ['pageType' => 'pdp',
+                    'title' => 'acmePhone128Gb',
+                ],
+            ],
+            false,
+            false,
+            false,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks',
+                'method' => 'POST',
+                'body' => json_decode('{"task":"algolia_on_page_suggestions","kind":"prompt_suggestions","input":{"pageType":"pdp","title":"acmePhone128Gb"}}'),
+                'queryParameters' => json_decode('{"stream":"false","cache":"false","analytics":"false"}', true),
             ],
         ]);
     }
@@ -312,7 +419,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/test/minimal',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -331,7 +438,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/test/all',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
             ],
         ]);
@@ -349,7 +456,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/test/minimal',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -368,7 +475,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
             ],
         ]);
@@ -398,7 +505,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/test/all',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
                 'headers' => json_decode('{"x-header-1":"spaces are left alone"}', true),
             ],
@@ -736,7 +843,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -753,7 +860,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -772,7 +879,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-06-30"}', true),
             ],
         ]);
@@ -791,7 +898,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -809,7 +916,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -826,7 +933,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -843,7 +950,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys/a1b2c3d4-5678-90ab-cdef-123456789abc',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -860,7 +967,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/user-data/test-user-token',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -877,7 +984,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -896,7 +1003,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31"}', true),
             ],
         ]);
@@ -914,7 +1021,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -931,7 +1038,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -948,7 +1055,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -966,7 +1073,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/a1b2c3d4-5678-90ab-cdef-123456789abc',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -984,7 +1091,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains/6e8a0441-9a41-477c-a1d6-679a461e0990',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -999,7 +1106,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/configuration',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1014,7 +1121,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/configuration',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1032,7 +1139,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/test-conversation-id',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1049,7 +1156,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1066,7 +1173,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1083,7 +1190,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys/a1b2c3d4-5678-90ab-cdef-123456789abc',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1100,7 +1207,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys/c110e615-7d5a-4103-865f-c5062c0d6f4d',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1117,7 +1224,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/user-data/test-user-token',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1134,7 +1241,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/cache',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1152,7 +1259,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/cache',
                 'method' => 'DELETE',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"before":"2024-12-01"}', true),
             ],
         ]);
@@ -1170,7 +1277,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1187,7 +1294,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/allowed-domains',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1204,7 +1311,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1221,15 +1328,20 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             1,
             2,
             10,
-            null,
+            true,
+            true,
+            false,
+            true,
+            'secure-user-token',
         );
 
         $this->assertRequests([
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'GET',
-                'body' => null,
-                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10"}', true),
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}', true),
+                'headers' => json_decode('{"x-algolia-secure-user-token":"secure-user-token"}', true),
             ],
         ]);
     }
@@ -1246,7 +1358,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1261,7 +1373,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1280,7 +1392,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"2","limit":"5","providerId":"c2905529-b933-4b69-87ec-75f9829d5f59"}', true),
             ],
         ]);
@@ -1300,7 +1412,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"1","limit":"2"}', true),
             ],
         ]);
@@ -1316,7 +1428,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/models',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1331,7 +1443,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/models',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1348,7 +1460,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1365,7 +1477,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers/c2905529-b933-4b69-87ec-75f9829d5f59/models',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1380,7 +1492,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1398,7 +1510,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"2","limit":"5"}', true),
             ],
         ]);
@@ -1417,7 +1529,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/providers',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"1","limit":"2"}', true),
             ],
         ]);
@@ -1433,7 +1545,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1451,7 +1563,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"2","limit":"5"}', true),
             ],
         ]);
@@ -1470,7 +1582,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/secret-keys',
                 'method' => 'GET',
-                'body' => null,
+                'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"1","limit":"10"}', true),
             ],
         ]);
@@ -1488,7 +1600,58 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/publish',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
+            ],
+        ]);
+    }
+
+    #[TestDox('trimContext with required parameters')]
+    public function testTrimContext(): void
+    {
+        $client = $this->getClient();
+        $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/trim',
+                'method' => 'POST',
+                'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"}]}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('trimContext with all parameters')]
+    public function testTrimContext1(): void
+    {
+        $client = $this->getClient();
+        $client->trimContext(
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+
+                ['role' => 'assistant',
+                    'content' => 'I am well.',
+                ],
+            ],
+                'keepLastMessages' => 1,
+                'maxTokensEstimate' => 256,
+                'dropToolParts' => true,
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/unstable/context/trim',
+                'method' => 'POST',
+                'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"},{"role":"assistant","content":"I am well."}],"keepLastMessages":1,"maxTokensEstimate":256,"dropToolParts":true}'),
             ],
         ]);
     }
@@ -1505,7 +1668,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/unpublish',
                 'method' => 'POST',
-                'body' => json_decode(''),
+                'expectEmptyBody' => true,
             ],
         ]);
     }
@@ -1543,7 +1706,11 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'config' => ['temperature' => 0.5,
                 ],
                 'tools' => [
-                    ['type' => 'start',
+                    ['type' => 'client_side',
+                        'name' => 'start',
+                        'description' => 'Start a conversation',
+                        'inputSchema' => ['type' => 'object',
+                        ],
                     ],
                 ],
             ],
@@ -1553,7 +1720,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15',
                 'method' => 'PATCH',
-                'body' => json_decode('{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"start"}]}'),
+                'body' => json_decode('{"name":"updated-agent","description":"Updated description","providerId":"new-provider-id","model":"gpt-4o","instructions":"Updated instructions.","config":{"temperature":0.5},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}'),
             ],
         ]);
     }
@@ -1572,6 +1739,51 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/configuration',
                 'method' => 'PATCH',
                 'body' => json_decode('{"maxRetentionDays":30}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateFeedback with required parameters')]
+    public function testUpdateFeedback(): void
+    {
+        $client = $this->getClient();
+        $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/feedback',
+                'method' => 'PATCH',
+                'body' => json_decode('{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15"}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('updateFeedback with all parameters')]
+    public function testUpdateFeedback1(): void
+    {
+        $client = $this->getClient();
+        $client->updateFeedback(
+            ['messageId' => 'msg-abc123',
+                'agentId' => '76710f1b-8231-42e5-b0d1-f43aac618e15',
+                'vote' => 0,
+                'tags' => [
+                    'unhelpful',
+
+                    'off-topic',
+                ],
+                'notes' => 'The response did not address my question.',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/feedback',
+                'method' => 'PATCH',
+                'body' => json_decode('{"messageId":"msg-abc123","agentId":"76710f1b-8231-42e5-b0d1-f43aac618e15","vote":0,"tags":["unhelpful","off-topic"],"notes":"The response did not address my question."}'),
             ],
         ]);
     }
@@ -1650,10 +1862,16 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
 
             $this->assertEquals($request['path'], $recordedRequest->getUri()->getPath());
 
-            if (isset($request['body'])) {
+            if (!empty($request['expectEmptyBody'])) {
+                $this->assertSame(
+                    '',
+                    (string) $recordedRequest->getBody(),
+                    'no body must be sent'
+                );
+            } elseif (isset($request['body'])) {
                 $this->assertEquals(
                     json_encode($request['body'], JSON_UNESCAPED_UNICODE),
-                    $recordedRequest->getBody()->getContents()
+                    (string) $recordedRequest->getBody()
                 );
             }
 

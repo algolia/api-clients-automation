@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -1244,7 +1245,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1272,7 +1273,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -1474,7 +1475,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
@@ -1502,7 +1503,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
-      .setBody(body)
+      .setBody(body != null ? body : Collections.emptyMap())
       .addQueryParameters(parameters)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -7325,7 +7326,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
       .setMethod("POST")
-      .setBody(runSourcePayload)
+      .setBody(runSourcePayload != null ? runSourcePayload : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<RunSourceResponse>() {});
   }
@@ -7351,7 +7352,7 @@ public class IngestionClient extends ApiClient {
     HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/run", sourceID)
       .setMethod("POST")
-      .setBody(runSourcePayload)
+      .setBody(runSourcePayload != null ? runSourcePayload : Collections.emptyMap())
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -7544,7 +7545,11 @@ public class IngestionClient extends ApiClient {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
     Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/run", taskID)
+      .setMethod("POST")
+      .setBody(runTaskPayload != null ? runTaskPayload : Collections.emptyMap())
+      .build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
 
@@ -7566,7 +7571,11 @@ public class IngestionClient extends ApiClient {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTask`.");
     Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTask`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/2/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/2/tasks/{taskID}/run", taskID)
+      .setMethod("POST")
+      .setBody(runTaskPayload != null ? runTaskPayload : Collections.emptyMap())
+      .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
 
@@ -7775,7 +7784,11 @@ public class IngestionClient extends ApiClient {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
     Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/tasks/{taskID}/run", taskID)
+      .setMethod("POST")
+      .setBody(runTaskPayload != null ? runTaskPayload : Collections.emptyMap())
+      .build();
     return executeAsync(request, requestOptions, new TypeReference<RunResponse>() {});
   }
 
@@ -7799,7 +7812,11 @@ public class IngestionClient extends ApiClient {
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
     Parameters.requireNonEmpty(taskID, "Parameter `taskID` is required when calling `runTaskV1`.");
 
-    HttpRequest request = HttpRequest.builder().setPath("/1/tasks/{taskID}/run", taskID).setMethod("POST").setBody(runTaskPayload).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/tasks/{taskID}/run", taskID)
+      .setMethod("POST")
+      .setBody(runTaskPayload != null ? runTaskPayload : Collections.emptyMap())
+      .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
 
@@ -9817,7 +9834,11 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<WatchResponse> validateSourceAsync(SourceCreate sourceCreate, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources/validate")
+      .setMethod("POST")
+      .setBody(sourceCreate != null ? sourceCreate : Collections.emptyMap())
+      .build();
     return executeAsync(
       request,
       new RequestOptions()
@@ -9840,7 +9861,11 @@ public class IngestionClient extends ApiClient {
    */
   public CompletableFuture<Response> validateSourceWithHTTPInfoAsync(SourceCreate sourceCreate, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
+    HttpRequest request = HttpRequest.builder()
+      .setPath("/1/sources/validate")
+      .setMethod("POST")
+      .setBody(sourceCreate != null ? sourceCreate : Collections.emptyMap())
+      .build();
     return executeAsync(
       request,
       new RequestOptions()

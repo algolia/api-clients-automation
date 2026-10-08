@@ -9,13 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Universal storage model for all memory types (semantic, episodic). This is the ONLY model that
- * touches storage (Algolia). Domain models (SemanticMemory, EpisodicMemory) are used for LLM
- * extraction and converted to MemoryRecord before saving. See
- * https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types for memory type
- * definitions.
- */
+/** A stored memory record. */
 public class MemoryRecord {
 
   @JsonProperty("memoryType")
@@ -117,7 +111,7 @@ public class MemoryRecord {
     return this;
   }
 
-  /** 5-20 free-form keywords: entities, context, search terms (any words). */
+  /** Keywords for retrieval: entities, context, search terms. */
   @javax.annotation.Nullable
   public List<String> getKeywords() {
     return keywords;
@@ -137,9 +131,9 @@ public class MemoryRecord {
   }
 
   /**
-   * 2-4 topics ONLY from this list: [complaints, entertainment, family, feedback, finance, food,
-   * goals, health, history, hobbies, learning, praise, preferences, schedule, shopping, technical,
-   * travel, work].
+   * Topics that classify the memory. Each must be one of: [complaints, entertainment, family,
+   * feedback, finance, food, goals, health, history, hobbies, learning, praise, preferences,
+   * schedule, shopping, technical, travel, work].
    */
   @javax.annotation.Nullable
   public List<String> getTopics() {
@@ -181,7 +175,7 @@ public class MemoryRecord {
     return this;
   }
 
-  /** 3-5 natural phrases that should trigger this memory. */
+  /** Phrases that cause the API to recall this memory. */
   @javax.annotation.Nullable
   public List<String> getRecallTriggers() {
     return recallTriggers;

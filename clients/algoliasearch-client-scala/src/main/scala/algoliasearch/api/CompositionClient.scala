@@ -238,7 +238,7 @@ class CompositionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -293,7 +293,7 @@ class CompositionClient(
       .builder()
       .withMethod("PUT")
       .withPath(s"/${path}")
-      .withBody(body)
+      .withBody(body.orElse[Any](Some(Map.empty[String, Any])))
       .withQueryParameters(parameters)
       .build()
   }
@@ -933,7 +933,7 @@ class CompositionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/rules/search")
-      .withBody(searchCompositionRulesParams)
+      .withBody(searchCompositionRulesParams.orElse[Any](Some(Map.empty[String, Any])))
       .build()
   }
 
@@ -1011,7 +1011,7 @@ class CompositionClient(
       .builder()
       .withMethod("POST")
       .withPath(s"/1/compositions/${escape(compositionID)}/facets/${escape(facetName)}/query")
-      .withBody(searchForFacetValuesRequest)
+      .withBody(searchForFacetValuesRequest.orElse[Any](Some(Map.empty[String, Any])))
       .withRead(true)
       .build()
   }

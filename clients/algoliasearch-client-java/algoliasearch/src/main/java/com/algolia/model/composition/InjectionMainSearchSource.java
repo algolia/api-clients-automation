@@ -12,16 +12,16 @@ import java.util.Objects;
 public class InjectionMainSearchSource implements InjectionMainSource {
 
   @JsonProperty("search")
-  private MainSearch search;
+  private InjectionMainSearch search;
 
-  public InjectionMainSearchSource setSearch(MainSearch search) {
+  public InjectionMainSearchSource setSearch(InjectionMainSearch search) {
     this.search = search;
     return this;
   }
 
   /** Get search */
   @javax.annotation.Nonnull
-  public MainSearch getSearch() {
+  public InjectionMainSearch getSearch() {
     return search;
   }
 

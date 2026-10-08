@@ -331,6 +331,131 @@ void main() {
     }
   });
 
+  test('retries 429 on the same host using Retry-After', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6698',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/retry-after/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('retries 429 with a 1s wait when Retry-After is missing', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/missing-header/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('retries 429 with a 1s wait when Retry-After is invalid', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    requester.setOnRequest((request) {});
+    try {
+      final res = await client.customGet(
+        path: "1/test/rate-limit/invalid-header/dart",
+      );
+      expectBody(res, """{"message":"ok rate limit retry"}""");
+    } on InterceptionException catch (_) {
+      // Ignore InterceptionException
+    }
+  });
+
+  test('returns 429 after maxRateLimitRetries is used up', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    await expectError(
+      '429',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/rate-limit/exhausted/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
+  test('fails on the first 429 when maxRateLimitRetries is 0', () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(maxRateLimitRetries: 0, hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6697',
+              scheme: 'http'),
+        ]));
+
+    await expectError(
+      '429',
+      () async {
+        try {
+          final res = await client.customGet(
+            path: "1/test/rate-limit/zero-retries/dart",
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
   test('calls api with correct user agent', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

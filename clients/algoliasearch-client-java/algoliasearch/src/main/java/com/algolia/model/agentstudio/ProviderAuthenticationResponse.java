@@ -20,7 +20,7 @@ public class ProviderAuthenticationResponse {
   private String providerName;
 
   @JsonProperty("input")
-  private ProviderInput input;
+  private InputUnion input;
 
   @JsonProperty("createdAt")
   private String createdAt;
@@ -30,6 +30,9 @@ public class ProviderAuthenticationResponse {
 
   @JsonProperty("lastUsedAt")
   private String lastUsedAt;
+
+  @JsonProperty("isAlgoliaManaged")
+  private Boolean isAlgoliaManaged;
 
   public ProviderAuthenticationResponse setId(String id) {
     this.id = id;
@@ -64,14 +67,14 @@ public class ProviderAuthenticationResponse {
     return providerName;
   }
 
-  public ProviderAuthenticationResponse setInput(ProviderInput input) {
+  public ProviderAuthenticationResponse setInput(InputUnion input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nonnull
-  public ProviderInput getInput() {
+  public InputUnion getInput() {
     return input;
   }
 
@@ -108,6 +111,17 @@ public class ProviderAuthenticationResponse {
     return lastUsedAt;
   }
 
+  public ProviderAuthenticationResponse setIsAlgoliaManaged(Boolean isAlgoliaManaged) {
+    this.isAlgoliaManaged = isAlgoliaManaged;
+    return this;
+  }
+
+  /** Get isAlgoliaManaged */
+  @javax.annotation.Nullable
+  public Boolean getIsAlgoliaManaged() {
+    return isAlgoliaManaged;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -124,13 +138,14 @@ public class ProviderAuthenticationResponse {
       Objects.equals(this.input, providerAuthenticationResponse.input) &&
       Objects.equals(this.createdAt, providerAuthenticationResponse.createdAt) &&
       Objects.equals(this.updatedAt, providerAuthenticationResponse.updatedAt) &&
-      Objects.equals(this.lastUsedAt, providerAuthenticationResponse.lastUsedAt)
+      Objects.equals(this.lastUsedAt, providerAuthenticationResponse.lastUsedAt) &&
+      Objects.equals(this.isAlgoliaManaged, providerAuthenticationResponse.isAlgoliaManaged)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, providerName, input, createdAt, updatedAt, lastUsedAt);
+    return Objects.hash(id, name, providerName, input, createdAt, updatedAt, lastUsedAt, isAlgoliaManaged);
   }
 
   @Override
@@ -144,6 +159,7 @@ public class ProviderAuthenticationResponse {
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    lastUsedAt: ").append(toIndentedString(lastUsedAt)).append("\n");
+    sb.append("    isAlgoliaManaged: ").append(toIndentedString(isAlgoliaManaged)).append("\n");
     sb.append("}");
     return sb.toString();
   }

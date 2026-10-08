@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.util.*;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
@@ -174,9 +173,16 @@ public class TestsRequest extends TestsGenerator {
 
             req.request.body = escapeBody(req.request.body);
 
-            // In a case of a `GET` or `DELETE` request, we want to assert if the body
-            // is correctly parsed (absent from the payload)
-            if (req.request.method.equals("GET") || req.request.method.equals("DELETE")) {
+            // No body param in the spec → the request must carry no JSON object at all.
+            // GET and DELETE never have a body. POST/PUT/PATCH without body params
+            // must not invent "{}".
+            String method = req.request.method;
+            boolean noBodyParam = ope.bodyParams.size() == 0;
+            if (
+              method.equals("GET") ||
+              method.equals("DELETE") ||
+              ((method.equals("POST") || method.equals("PUT") || method.equals("PATCH")) && noBodyParam)
+            ) {
               test.put("assertNullBody", true);
             }
           }
@@ -257,15 +263,9 @@ public class TestsRequest extends TestsGenerator {
 
           addRequestOptions(paramsType, req.requestOptions, test);
 
-          // Determines whether the endpoint is expected to return a response payload deserialized
-          // and therefore a variable to store it into.
-          test.put("hasResponse", true);
-
-          for (CodegenResponse response : ope.responses) {
-            if (response.code.equals("204")) {
-              test.put("hasResponse", false);
-            }
-          }
+          // Only render a response variable when the operation returns a payload: a 204, or a 200
+          // without a body, both have no return type.
+          test.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
           paramsType.enhanceParameters(req.parameters, test, ope);
           tests.add(test);

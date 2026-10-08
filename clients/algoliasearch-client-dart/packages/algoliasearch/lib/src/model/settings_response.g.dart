@@ -143,6 +143,10 @@ SettingsResponse _$SettingsResponseFromJson(Map<String, dynamic> json) =>
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(
               'attributeCriteriaComputedByMinProximity', (v) => v as bool?),
+          attributeCriteriaComputedBy: $checkedConvert(
+              'attributeCriteriaComputedBy',
+              (v) =>
+                  $enumDecodeNullable(_$AttributeCriteriaComputedByEnumMap, v)),
           renderingContent: $checkedConvert(
               'renderingContent',
               (v) => v == null
@@ -239,6 +243,8 @@ Map<String, dynamic> _$SettingsResponseToJson(SettingsResponse instance) {
   writeNotNull('sortFacetValuesBy', instance.sortFacetValuesBy);
   writeNotNull('attributeCriteriaComputedByMinProximity',
       instance.attributeCriteriaComputedByMinProximity);
+  writeNotNull('attributeCriteriaComputedBy',
+      instance.attributeCriteriaComputedBy?.toJson());
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
@@ -351,4 +357,10 @@ const _$AlternativesAsExactEnumMap = {
 const _$AdvancedSyntaxFeaturesEnumMap = {
   AdvancedSyntaxFeatures.exactPhrase: 'exactPhrase',
   AdvancedSyntaxFeatures.excludeWords: 'excludeWords',
+};
+
+const _$AttributeCriteriaComputedByEnumMap = {
+  AttributeCriteriaComputedBy.minProximity: 'minProximity',
+  AttributeCriteriaComputedBy.best: 'best',
+  AttributeCriteriaComputedBy.sum: 'sum',
 };

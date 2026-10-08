@@ -7,7 +7,6 @@ import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 
 public class Snippet {
 
@@ -47,6 +46,7 @@ public class Snippet {
     // for dynamic snippets, we need to reset the context because the order of generation is random
     context.put("method", method);
     context.put("returnType", null);
+    context.put("listReturnType", null);
     context.put("requestOptions", null);
     context.put("parameters", null);
     context.put("parametersWithDataType", null);
@@ -59,13 +59,30 @@ public class Snippet {
       context.put("returnType", camelize(ope.returnType));
     }
 
+    boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
+
+    // Expose the item type of list-returning helpers so snippet templates can annotate the
+    // response variable, making the return shape explicit in documentation code samples.
+    // WatchResponse is excluded: the hand-written `*WithTransformation` helpers return the
+    // ingestion client's WatchResponse model (usually imported under an alias), which the
+    // snippet's own client models would shadow with a nominally different type.
+    if (
+      isHelper &&
+      ope.returnBaseType != null &&
+      ope.returnContainer != null &&
+      (ope.returnContainer.equalsIgnoreCase("array") || ope.returnContainer.equalsIgnoreCase("list")) &&
+      !camelize(ope.returnBaseType).equals("WatchResponse")
+    ) {
+      context.put("listReturnType", camelize(ope.returnBaseType));
+    }
+
     try {
       context.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
       context.put("isReturnGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-return-is-generic", false));
       context.put("isCustomRequest", Helpers.CUSTOM_METHODS.contains(ope.operationIdOriginal));
       context.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
       context.put("hasParams", ope.getHasParams());
-      context.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+      context.put("isHelper", isHelper);
 
       boolean isStreaming = (boolean) ope.vendorExtensions.getOrDefault("x-streaming", false);
       context.put("isStreaming", isStreaming);
@@ -97,14 +114,9 @@ public class Snippet {
         context.put("requestOptions", requestOptionsContext);
       }
 
-      // Determines whether the endpoint is expected to return a response payload deserialized
-      // and therefore a variable to store it into.
-      context.put("hasResponse", true);
-      for (CodegenResponse response : ope.responses) {
-        if (response.code.equals("204")) {
-          context.put("hasResponse", false);
-        }
-      }
+      // Only render a response variable when the operation returns a payload: a 204, or a 200
+      // without a body, both have no return type.
+      context.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
       paramsType.enhanceParameters(parameters, context, ope);
     } catch (CTSException e) {

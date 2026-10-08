@@ -5,7 +5,7 @@ import org.json4s._
 import org.json4s.native.JsonParser.parse
 import org.json4s.native.Serialization.write
 
-import java.io.{InputStream, InputStreamReader, OutputStream, OutputStreamWriter}
+import java.io.{BufferedWriter, InputStream, InputStreamReader, OutputStream, OutputStreamWriter}
 import java.nio.charset.StandardCharsets
 
 /** Utility class for JSON serialization and deserialization using JSON4S. It provides functionality to convert Scala
@@ -21,10 +21,9 @@ class JsonSerializer(implicit val formats: Formats) {
     *   The Scala object to serialize.
     */
   def serialize[T](stream: OutputStream, obj: T): Unit = {
-    val writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)
+    val writer = new BufferedWriter(new OutputStreamWriter(stream, StandardCharsets.UTF_8))
     try {
-      val json = write[T](obj)
-      writer.write(json)
+      write(obj, writer)
       writer.flush()
     } catch {
       case e: Exception => throw AlgoliaClientException(cause = e)

@@ -699,7 +699,9 @@ class CompositionTest {
                                 main =
                                   InjectionMain(
                                     source =
-                                      InjectionMainSearchSource(search = MainSearch(index = "bar"))
+                                      InjectionMainSearchSource(
+                                        search = InjectionMainSearch(index = "bar")
+                                      )
                                   )
                               )
                           ),
@@ -742,7 +744,8 @@ class CompositionTest {
                     Injection(
                       main =
                         InjectionMain(
-                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                          source =
+                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
@@ -786,7 +789,8 @@ class CompositionTest {
                     Injection(
                       main =
                         InjectionMain(
-                          source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                          source =
+                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
                         ),
                       injectedItems =
                         listOf(
@@ -844,7 +848,7 @@ class CompositionTest {
                           source =
                             InjectionMainSearchSource(
                               search =
-                                MainSearch(
+                                InjectionMainSearch(
                                   index = "foo",
                                   params = MainInjectionQueryParameters(filters = "brand:adidas"),
                                 )
@@ -902,7 +906,9 @@ class CompositionTest {
                       main =
                         InjectionMain(
                           source =
-                            InjectionMainSearchSource(search = MainSearch(index = "products"))
+                            InjectionMainSearchSource(
+                              search = InjectionMainSearch(index = "products")
+                            )
                         )
                     )
                 ),
@@ -939,7 +945,7 @@ class CompositionTest {
                           source =
                             InjectionMainRecommendSource(
                               recommend =
-                                MainRecommend(
+                                InjectionMainRecommend(
                                   indexName = "products",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 50,
@@ -953,7 +959,7 @@ class CompositionTest {
                             source =
                               InjectedItemRecommendSource(
                                 recommend =
-                                  Recommend(
+                                  InjectedItemRecommend(
                                     indexName = "products",
                                     model = Model.entries.first { it.value == "trending-items" },
                                     threshold = 30,
@@ -1002,7 +1008,7 @@ class CompositionTest {
                           source =
                             InjectionMainSearchSource(
                               search =
-                                MainSearch(
+                                InjectionMainSearch(
                                   index = "products",
                                   params = MainInjectionQueryParameters(filters = "brand:nike"),
                                 )
@@ -1015,7 +1021,7 @@ class CompositionTest {
                             source =
                               InjectedItemRecommendSource(
                                 recommend =
-                                  Recommend(
+                                  InjectedItemRecommend(
                                     indexName = "products",
                                     model = Model.entries.first { it.value == "trending-items" },
                                     threshold = 40,
@@ -1069,7 +1075,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainRecommendSource(
                                           recommend =
-                                            MainRecommend(
+                                            InjectionMainRecommend(
                                               indexName = "products",
                                               model =
                                                 Model.entries.first {
@@ -1127,7 +1133,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "products",
                                               params =
                                                 MainInjectionQueryParameters(hitsPerPage = 12),
@@ -1164,7 +1170,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "articles",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1205,7 +1211,7 @@ class CompositionTest {
                                       source =
                                         InjectionMainSearchSource(
                                           search =
-                                            MainSearch(
+                                            InjectionMainSearch(
                                               index = "videos",
                                               params =
                                                 MainInjectionQueryParameters(
@@ -1230,6 +1236,89 @@ class CompositionTest {
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody(
           """{"objectID":"my-compo","name":"my composition","behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `putComposition9`() = runTest {
+    client.runTest(
+      call = {
+        putComposition(
+          compositionID = "my-external-provider-compo",
+          composition =
+            Composition(
+              objectID = "my-external-provider-compo",
+              name = "my external provider composition",
+              behavior =
+                CompositionInjectionBehavior(
+                  injection =
+                    Injection(
+                      main =
+                        InjectionMain(
+                          source =
+                            InjectionMainExternalProviderSource(
+                              externalProvider =
+                                InjectionMainExternalProvider(
+                                  index = "products",
+                                  configurationID = "my-rmn-connection",
+                                  configurationParams =
+                                    buildJsonObject {
+                                      put(
+                                        "campaign_id",
+                                        JsonPrimitive("summer-sale"),
+                                      )
+                                      put(
+                                        "customer_id",
+                                        JsonPrimitive("customer-default"),
+                                      )
+                                    },
+                                  params = MainInjectionQueryParameters(filters = "instock:true"),
+                                  ordering =
+                                    ExternalProviderOrdering.entries.first {
+                                      it.value == "providerDefined"
+                                    },
+                                )
+                            )
+                        ),
+                      injectedItems =
+                        listOf(
+                          InjectionInjectedItem(
+                            key = "sponsored",
+                            source =
+                              InjectedItemExternalProviderSource(
+                                externalProvider =
+                                  InjectedItemExternalProvider(
+                                    index = "products",
+                                    configurationID = "my-rmn-connection",
+                                    configurationParams =
+                                      buildJsonObject {
+                                        put(
+                                          "campaign_id",
+                                          JsonPrimitive("summer-sale"),
+                                        )
+                                      },
+                                  )
+                              ),
+                            position = 0,
+                            length = 2,
+                          )
+                        ),
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/my-external-provider-compo".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}""",
           it.body,
         )
       },
@@ -1263,7 +1352,10 @@ class CompositionTest {
                         Injection(
                           main =
                             InjectionMain(
-                              source = InjectionMainSearchSource(search = MainSearch(index = "foo"))
+                              source =
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "foo")
+                                )
                             ),
                           injectedItems =
                             listOf(
@@ -1339,7 +1431,7 @@ class CompositionTest {
                               source =
                                 InjectionMainSearchSource(
                                   search =
-                                    MainSearch(
+                                    InjectionMainSearch(
                                       index = "my-index",
                                       params =
                                         MainInjectionQueryParameters(filters = "brand:adidas"),
@@ -1415,7 +1507,9 @@ class CompositionTest {
                           main =
                             InjectionMain(
                               source =
-                                InjectionMainSearchSource(search = MainSearch(index = "my-index"))
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "my-index")
+                                )
                             ),
                           injectedItems =
                             listOf(
@@ -1454,6 +1548,83 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `putCompositionRule4`() = runTest {
+    client.runTest(
+      call = {
+        putCompositionRule(
+          compositionID = "compositionID",
+          objectID = "rule-with-external-provider-source",
+          compositionRule =
+            CompositionRule(
+              objectID = "rule-with-external-provider-source",
+              conditions =
+                listOf(
+                  Condition(
+                    anchoring = Anchoring.entries.first { it.value == "contains" },
+                    pattern = "harry",
+                  )
+                ),
+              consequence =
+                CompositionRuleConsequence(
+                  behavior =
+                    CompositionInjectionBehavior(
+                      injection =
+                        Injection(
+                          main =
+                            InjectionMain(
+                              source =
+                                InjectionMainSearchSource(
+                                  search = InjectionMainSearch(index = "my-index")
+                                )
+                            ),
+                          injectedItems =
+                            listOf(
+                              InjectionInjectedItem(
+                                key = "my-unique-external-provider-group-from-rule-key",
+                                source =
+                                  InjectedItemExternalProviderSource(
+                                    externalProvider =
+                                      InjectedItemExternalProvider(
+                                        index = "my-index",
+                                        configurationID = "my-rmn-connection",
+                                        configurationParams =
+                                          buildJsonObject {
+                                            put(
+                                              "campaign_id",
+                                              JsonPrimitive("summer-sale"),
+                                            )
+                                          },
+                                        ordering =
+                                          ExternalProviderOrdering.entries.first {
+                                            it.value == "providerDefined"
+                                          },
+                                      )
+                                  ),
+                                position = 0,
+                                length = 3,
+                              )
+                            ),
+                        )
+                    )
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/compositions/compositionID/rules/rule-with-external-provider-source".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody(
+          """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // saveRules
 
   @Test
@@ -1482,7 +1653,8 @@ class CompositionTest {
                                       InjectionMain(
                                         source =
                                           InjectionMainSearchSource(
-                                            search = MainSearch(index = "<YOUR_INDEX_NAME>")
+                                            search =
+                                              InjectionMainSearch(index = "<YOUR_INDEX_NAME>")
                                           )
                                       )
                                   )
@@ -1552,7 +1724,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainSearchSource(
                                             search =
-                                              MainSearch(
+                                              InjectionMainSearch(
                                                 index = "my-index",
                                                 params =
                                                   MainInjectionQueryParameters(
@@ -1640,7 +1812,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainRecommendSource(
                                             recommend =
-                                              MainRecommend(
+                                              InjectionMainRecommend(
                                                 indexName = "products",
                                                 model =
                                                   Model.entries.first {
@@ -1657,7 +1829,7 @@ class CompositionTest {
                                           source =
                                             InjectedItemRecommendSource(
                                               recommend =
-                                                Recommend(
+                                                InjectedItemRecommend(
                                                   indexName = "products",
                                                   model =
                                                     Model.entries.first {
@@ -1730,7 +1902,7 @@ class CompositionTest {
                                         source =
                                           InjectionMainSearchSource(
                                             search =
-                                              MainSearch(
+                                              InjectionMainSearch(
                                                 index = "products",
                                                 params =
                                                   MainInjectionQueryParameters(
@@ -1746,7 +1918,7 @@ class CompositionTest {
                                           source =
                                             InjectedItemRecommendSource(
                                               recommend =
-                                                Recommend(
+                                                InjectedItemRecommend(
                                                   indexName = "products",
                                                   model =
                                                     Model.entries.first {
@@ -1821,7 +1993,7 @@ class CompositionTest {
                                                     source =
                                                       InjectionMainRecommendSource(
                                                         recommend =
-                                                          MainRecommend(
+                                                          InjectionMainRecommend(
                                                             indexName = "products",
                                                             model =
                                                               Model.entries.first {
@@ -1893,7 +2065,7 @@ class CompositionTest {
                                       InjectionMain(
                                         source =
                                           InjectionMainSearchSource(
-                                            search = MainSearch(index = "my-index")
+                                            search = InjectionMainSearch(index = "my-index")
                                           )
                                       ),
                                     injectedItems =
@@ -1996,6 +2168,39 @@ class CompositionTest {
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
           """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `search4`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          compositionID = "foo",
+          requestBody =
+            RequestBody(
+              params = Params(query = "batman"),
+              externalProvider =
+                ExternalProvider(
+                  configurationParams =
+                    buildJsonObject {
+                      put(
+                        "customer_id",
+                        JsonPrimitive("customer123"),
+                      )
+                    }
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}""",
           it.body,
         )
       },

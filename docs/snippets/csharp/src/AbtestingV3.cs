@@ -15,7 +15,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientAddABTests()
   {
-    // >SEPARATOR addABTests default
+    // >SEPARATOR addABTests addABTests with minimal parameters
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -42,6 +42,71 @@ public class SnippetAbtestingV3Client
     // >LOG
     // print the response
     Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the AddABTests method.
+  ///
+  /// addABTests with Bayesian configuration
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientAddABTests1()
+  {
+    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.AddABTestsAsync(
+      new AddABTestsRequest
+      {
+        EndAt = "2022-12-31T00:00:00.000Z",
+        Name = "myABTest",
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "conversionRate" } },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+        Configuration = new ABTestConfiguration
+        {
+          Method = Enum.Parse<AnalysisMethod>("Bayesian"),
+          PrimaryMetric = Enum.Parse<PrimaryMetric>("ConversionRate"),
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ApplyVariantSettings method.
+  ///
+  /// applyVariantSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientApplyVariantSettings()
+  {
+    // >SEPARATOR applyVariantSettings default
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.ApplyVariantSettingsAsync(42, 2);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -650,7 +715,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientGetABTest()
   {
-    // >SEPARATOR getABTest default
+    // >SEPARATOR getABTest getABTest
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -669,13 +734,70 @@ public class SnippetAbtestingV3Client
   }
 
   /// <summary>
+  /// Snippet for the GetABTest method.
+  ///
+  /// getABTest with both inference methods
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetABTest1()
+  {
+    // >SEPARATOR getABTest getABTest with both inference methods
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetABTestAsync(
+      42,
+      new List<AnalysisMethod>
+      {
+        Enum.Parse<AnalysisMethod>("Frequentist"),
+        Enum.Parse<AnalysisMethod>("Bayesian"),
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetABTestSettings method.
+  ///
+  /// getABTestSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetABTestSettings()
+  {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetABTestSettingsAsync(42);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetTimeseries method.
   ///
   /// getTimeseries
   /// </summary>
   public async Task SnippetForAbtestingV3ClientGetTimeseries()
   {
-    // >SEPARATOR getTimeseries default
+    // >SEPARATOR getTimeseries getTimeseries
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -687,6 +809,37 @@ public class SnippetAbtestingV3Client
 
     // Call the API
     var response = await client.GetTimeseriesAsync(42);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTimeseries method.
+  ///
+  /// getTimeseries with Bayesian revenue per search
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetTimeseries1()
+  {
+    // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetTimeseriesAsync(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      new List<MetricName> { Enum.Parse<MetricName>("RevenuePerSearch") },
+      new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
+    );
     // >LOG
     // print the response
     Console.WriteLine(response);
@@ -741,11 +894,66 @@ public class SnippetAbtestingV3Client
       21,
       "cts_e2e ab",
       "t",
-      Enum.Parse<Direction>("Asc")
+      Enum.Parse<Direction>("Asc"),
+      new List<AnalysisMethod>
+      {
+        Enum.Parse<AnalysisMethod>("Frequentist"),
+        Enum.Parse<AnalysisMethod>("Bayesian"),
+      }
     );
     // >LOG
     // print the response
     Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveVariantSettings method.
+  ///
+  /// saveVariantSettings
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientSaveVariantSettings()
+  {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.SaveVariantSettingsAsync(
+      42,
+      2,
+      new SaveSettingsRequest { SaveFeaturesSettings = true }
+    );
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SaveVariantSettings method.
+  ///
+  /// save settings with an empty options object
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientSaveVariantSettings1()
+  {
+    // >SEPARATOR saveVariantSettings save settings with an empty options object
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    await client.SaveVariantSettingsAsync(42, 2, new SaveSettingsRequest { });
+    // >LOG
     // SEPARATOR<
   }
 

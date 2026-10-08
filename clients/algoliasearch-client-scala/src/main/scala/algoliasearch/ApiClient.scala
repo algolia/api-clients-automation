@@ -105,7 +105,7 @@ abstract class ApiClient(
     if (requestIdSupport) {
       builder.withInterceptor(new RequestIdInterceptor())
     }
-    builder.withInterceptor(new RetryStrategy(statefulHosts))
+    builder.withInterceptor(new RetryStrategy(statefulHosts, optionsWithDefaultTimeouts.maxRateLimitRetries))
 
     optionsWithDefaultTimeouts.requesterConfig.foreach(_(builder))
 

@@ -3,7 +3,7 @@ require "algolia"
 require "test/unit"
 
 class TestClientIngestionClient < Test::Unit::TestCase
-  # can handle HTML error
+  # can handle HTML error when rate-limit retries are disabled
   def test_api0
     client = Algolia::IngestionClient.create_with_config(
       Algolia::Configuration.new(
@@ -17,7 +17,8 @@ class TestClientIngestionClient < Test::Unit::TestCase
             accept: CallType::READ | CallType::WRITE
           )
         ],
-        "ingestionClient"
+        "ingestionClient",
+        max_rate_limit_retries: 0
       )
     )
 
@@ -141,7 +142,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.44.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.45.0\).*/))
   end
 
   # handles 204 No Content responses correctly

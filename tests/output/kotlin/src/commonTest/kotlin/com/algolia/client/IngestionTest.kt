@@ -20,7 +20,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 class IngestionTest {
 
   @Test
-  fun `can handle HTML error`() = runTest {
+  fun `can handle HTML error when rate-limit retries are disabled`() = runTest {
     val client =
       IngestionClient(
         appId = "test-app-id",
@@ -35,7 +35,8 @@ class IngestionTest {
                   protocol = "http",
                   port = 6676,
                 )
-              )
+              ),
+            maxRateLimitRetries = 0,
           ),
       )
 
@@ -186,7 +187,7 @@ class IngestionTest {
         customPost(path = "1/test")
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.48.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),

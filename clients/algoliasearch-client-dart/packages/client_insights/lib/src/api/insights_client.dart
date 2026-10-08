@@ -37,6 +37,7 @@ final class InsightsClient implements ApiClient {
               httpClientAdapter: options.httpClientAdapter,
               compression: options.compression,
               requestIdEnabled: options.requestIdEnabled,
+              maxRateLimitRetries: options.maxRateLimitRetries,
             ),
             defaultHosts: () {
               final allowedRegions = ['de', 'us'];
@@ -151,7 +152,7 @@ final class InsightsClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -188,7 +189,7 @@ final class InsightsClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,

@@ -971,7 +971,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "disableTaskV1")]
@@ -982,7 +982,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "enableTask")]
@@ -993,7 +993,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "enableTaskV1")]
@@ -1004,7 +1004,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "getAuthentication")]
@@ -1734,7 +1734,7 @@ public class IngestionClientRequestTests
     var req = _echo.LastResponse;
     Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.Path);
     Assert.Equal("POST", req.Method.ToString());
-    Assert.Equal("{}", req.Body);
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "tryTransformation")]

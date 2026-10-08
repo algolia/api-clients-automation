@@ -12,8 +12,6 @@ final class ValidationError {
     required this.loc,
     required this.msg,
     required this.type,
-    this.input,
-    this.ctx,
   });
 
   /// One of types:
@@ -28,29 +26,16 @@ final class ValidationError {
   @JsonKey(name: r'type')
   final String type;
 
-  @JsonKey(name: r'input')
-  final Object? input;
-
-  @JsonKey(name: r'ctx')
-  final Object? ctx;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ValidationError &&
           other.loc == loc &&
           other.msg == msg &&
-          other.type == type &&
-          other.input == input &&
-          other.ctx == ctx;
+          other.type == type;
 
   @override
-  int get hashCode =>
-      loc.hashCode +
-      msg.hashCode +
-      type.hashCode +
-      (input == null ? 0 : input.hashCode) +
-      ctx.hashCode;
+  int get hashCode => loc.hashCode + msg.hashCode + type.hashCode;
 
   factory ValidationError.fromJson(Map<String, dynamic> json) =>
       _$ValidationErrorFromJson(json);

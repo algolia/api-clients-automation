@@ -77,6 +77,48 @@ get:
         default: 20
         title: limit
       description: Items per page.
+    - name: includeImpactAnalytics
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Include impact analytics (hasView, hasClick, hasConversion) per
+          conversation.
+        default: false
+        title: includeimpactanalytics
+      description: Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+    - name: clicked
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Filter by conversations with at least one item click.
+        title: clicked
+      description: Filter by conversations with at least one item click.
+    - name: converted
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Filter by conversations with at least one conversion.
+        title: converted
+      description: Filter by conversations with at least one conversion.
+    - name: hasAlgoliaSearch
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Filter by conversations where the search tool was used.
+        title: hasalgoliasearch
+      description: Filter by conversations where the search tool was used.
     - name: X-Algolia-Secure-User-Token
       in: header
       required: false
@@ -106,7 +148,7 @@ delete:
   x-acl:
     - logs
   summary: Delete Conversations
-  description: Deletes the conversations matching the given filers.
+  description: Deletes the conversations matching the given filters.
   parameters:
     - name: agentId
       in: path

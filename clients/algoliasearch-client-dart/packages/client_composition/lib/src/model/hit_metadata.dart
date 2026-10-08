@@ -14,7 +14,7 @@ final class HitMetadata extends DelegatingMap<String, dynamic> {
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
-  /// The key of the injectedItem that inserted this metadata.
+  /// The key of the injectedItem that inserted this metadata. Only present when the injectedItem's `metadata.hits.addItemKey` is `true`.
   @JsonKey(name: r'_injectedItemKey')
   final String? injectedItemKey;
 

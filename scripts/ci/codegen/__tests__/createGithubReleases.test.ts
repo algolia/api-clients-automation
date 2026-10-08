@@ -1,6 +1,22 @@
 import { afterAll, describe, expect, it, vi } from 'vitest';
 import { createGitHubRelease } from '../createGitHubReleases.ts';
 
+vi.mock('../../utils.ts', async (importOriginal) => {
+  return {
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../../utils.ts')>()),
+    cloneRepository: vi.fn().mockResolvedValue({ tempGitDir: __dirname }),
+  };
+});
+
+vi.mock('../../../common.ts', async (importOriginal) => {
+  return {
+    // eslint-disable-next-line
+    ...(await importOriginal<typeof import('../../../common.ts')>()),
+    run: vi.fn().mockResolvedValue('5.20.0\n5.19.0\n5.18.0\n5.17.1'),
+  };
+});
+
 describe('createGithubRelease', () => {
   afterAll(() => {
     vi.clearAllMocks();
@@ -15,22 +31,6 @@ describe('createGithubRelease', () => {
         createRelease,
       },
     } as any;
-
-    vi.mock('../../utils.ts', async (importOriginal) => {
-      return {
-        // eslint-disable-next-line
-        ...(await importOriginal<typeof import('../../utils.ts')>()),
-        cloneRepository: vi.fn().mockResolvedValue({ tempGitDir: __dirname }),
-      };
-    });
-
-    vi.mock('../../../common.ts', async (importOriginal) => {
-      return {
-        // eslint-disable-next-line
-        ...(await importOriginal<typeof import('../../../common.ts')>()),
-        run: vi.fn().mockResolvedValue('5.20.0\n5.19.0\n5.18.0\n5.17.1'),
-      };
-    });
 
     await expect(createGitHubRelease(octokit, 'dart')).resolves.toBeUndefined();
 

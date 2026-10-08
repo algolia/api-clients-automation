@@ -13,7 +13,7 @@ class SnippetAbtestingV3Client {
   //
   // addABTests with minimal parameters
   void snippetForAddABTests() throws Exception {
-    // >SEPARATOR addABTests default
+    // >SEPARATOR addABTests addABTests with minimal parameters
     // Initialize the client
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -33,6 +33,48 @@ class SnippetAbtestingV3Client {
     // >LOG
     // print the response
     System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the addABTests method.
+  //
+  // addABTests with Bayesian configuration
+  void snippetForAddABTests1() throws Exception {
+    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    ABTestResponse response = client.addABTests(
+      new AddABTestsRequest()
+        .setEndAt("2022-12-31T00:00:00.000Z")
+        .setName("myABTest")
+        .setMetrics(Arrays.asList(new CreateMetric().setName("conversionRate")))
+        .setVariants(
+          Arrays.asList(
+            new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
+            new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+          )
+        )
+        .setConfiguration(new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.CONVERSION_RATE))
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the applyVariantSettings method.
+  //
+  // applyVariantSettings
+  void snippetForApplyVariantSettings() throws Exception {
+    // >SEPARATOR applyVariantSettings default
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.applyVariantSettings(42, 2);
+    // >LOG
     // SEPARATOR<
   }
 
@@ -539,7 +581,7 @@ class SnippetAbtestingV3Client {
   //
   // getABTest
   void snippetForGetABTest() throws Exception {
-    // >SEPARATOR getABTest default
+    // >SEPARATOR getABTest getABTest
     // Initialize the client
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -551,16 +593,70 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  // Snippet for the getABTest method.
+  //
+  // getABTest with both inference methods
+  void snippetForGetABTest1() throws Exception {
+    // >SEPARATOR getABTest getABTest with both inference methods
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    ABTest response = client.getABTest(42, Arrays.asList(AnalysisMethod.FREQUENTIST, AnalysisMethod.BAYESIAN));
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getABTestSettings method.
+  //
+  // getABTestSettings
+  void snippetForGetABTestSettings() throws Exception {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    ABTestSettingsResponse response = client.getABTestSettings(42);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the getTimeseries method.
   //
   // getTimeseries
   void snippetForGetTimeseries() throws Exception {
-    // >SEPARATOR getTimeseries default
+    // >SEPARATOR getTimeseries getTimeseries
     // Initialize the client
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
     Timeseries response = client.getTimeseries(42);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getTimeseries method.
+  //
+  // getTimeseries with Bayesian revenue per search
+  void snippetForGetTimeseries1() throws Exception {
+    // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    Timeseries response = client.getTimeseries(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      Arrays.asList(MetricName.REVENUE_PER_SEARCH),
+      Arrays.asList(AnalysisMethod.BAYESIAN)
+    );
     // >LOG
     // print the response
     System.out.println(response);
@@ -592,10 +688,46 @@ class SnippetAbtestingV3Client {
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
     // Call the API
-    ListABTestsResponse response = client.listABTests(0, 21, "cts_e2e ab", "t", Direction.ASC);
+    ListABTestsResponse response = client.listABTests(
+      0,
+      21,
+      "cts_e2e ab",
+      "t",
+      Direction.ASC,
+      Arrays.asList(AnalysisMethod.FREQUENTIST, AnalysisMethod.BAYESIAN)
+    );
     // >LOG
     // print the response
     System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveVariantSettings method.
+  //
+  // saveVariantSettings
+  void snippetForSaveVariantSettings() throws Exception {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.saveVariantSettings(42, 2, new SaveSettingsRequest().setSaveFeaturesSettings(true));
+    // >LOG
+    // SEPARATOR<
+  }
+
+  // Snippet for the saveVariantSettings method.
+  //
+  // save settings with an empty options object
+  void snippetForSaveVariantSettings1() throws Exception {
+    // >SEPARATOR saveVariantSettings save settings with an empty options object
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    client.saveVariantSettings(42, 2, new SaveSettingsRequest());
+
+    // >LOG
     // SEPARATOR<
   }
 

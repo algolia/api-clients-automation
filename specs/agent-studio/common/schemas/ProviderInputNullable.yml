@@ -5,4 +5,5 @@ ProviderInputNullable:
     - $ref: 'OpenAICompatibleProviderInput.yml#/OpenAICompatibleProviderInput'
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
     - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
+    - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
     - type: 'null'

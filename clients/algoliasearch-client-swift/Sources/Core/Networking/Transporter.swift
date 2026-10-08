@@ -16,6 +16,7 @@ open class Transporter {
     let retryStrategy: RetryStrategy
     let requestBuilder: RequestBuilder
     let exposeIntermediateErrors: Bool
+    var sleep: (UInt64) async throws -> Void
 
     public init(
         configuration: BaseConfiguration,
@@ -26,6 +27,7 @@ open class Transporter {
         self.configuration = configuration
         self.retryStrategy = retryStrategy ?? AlgoliaRetryStrategy(configuration: configuration)
         self.exposeIntermediateErrors = exposeIntermediateErrors
+        self.sleep = { try await Task.sleep(nanoseconds: $0) }
 
         guard let requestBuilder else {
             let sessionConfiguration: URLSessionConfiguration = .default
@@ -68,6 +70,7 @@ open class Transporter {
         var body: Data? = nil
         var urlComponents = URLComponents()
         var intermediateErrors: [Error] = []
+        var rateLimitRetriesLeft = self.configuration.maxRateLimitRetries
 
         if let requestOptionsData = requestOptions?.body {
             body = try JSONSerialization.data(withJSONObject: requestOptionsData as Any, options: [])
@@ -77,8 +80,6 @@ open class Transporter {
 
         if httpMethod == .get {
             body = nil
-        } else if body == nil, httpMethod != .delete {
-            body = "{}".data(using: .utf8)
         }
 
         if let percentEncodedQueryItems = APIHelper.mapValuesToQueryItems(requestOptions?.queryParameters) {
@@ -114,9 +115,10 @@ open class Transporter {
             request.setValue(
                 UserAgentController.httpHeaderValue, forHTTPHeaderField: "User-Agent".capitalized
             )
-            if self.configuration.compression == .gzip {
-                request.setValue("gzip", forHTTPHeaderField: "Accept-Encoding".capitalized)
+            // Always advertise gzip support for responses, independently of the request compression.
+            request.setValue("gzip", forHTTPHeaderField: "Accept-Encoding".capitalized)
 
+            if self.configuration.compression == .gzip {
                 if let bodyData = body {
                     request.setValue("gzip", forHTTPHeaderField: "Content-Encoding".capitalized)
 
@@ -139,22 +141,37 @@ open class Transporter {
 
             request.httpBody = body
 
-            do {
-                let response: Response<T> = try await requestBuilder.execute(
-                    urlRequest: request, timeout: timeout
-                )
-                self.retryStrategy.notify(host: host, error: nil)
-                return response
-            } catch let cancellationError as CancellationError {
-                throw cancellationError
-            } catch {
-                self.retryStrategy.notify(host: host, error: error)
+            while true {
+                do {
+                    let response: Response<T> = try await requestBuilder.execute(
+                        urlRequest: request, timeout: timeout
+                    )
+                    self.retryStrategy.notify(host: host, error: nil)
+                    return response
+                } catch let cancellationError as CancellationError {
+                    throw cancellationError
+                } catch {
+                    if let httpError = RateLimitRetry.httpError(from: error),
+                       RateLimitRetry.isRateLimited(httpError),
+                       rateLimitRetriesLeft > 0 {
+                        rateLimitRetriesLeft -= 1
+                        // keep the waited-out 429 (and its Correlation-ID) visible if the request
+                        // later dies on the other hosts, as the other clients do
+                        intermediateErrors.append(error)
+                        let wait = RateLimitRetry.waitNanoseconds(from: httpError.headers)
+                        try await self.sleep(wait)
+                        continue
+                    }
 
-                guard self.retryStrategy.canRetry(inCaseOf: error) else {
-                    throw error
+                    self.retryStrategy.notify(host: host, error: error)
+
+                    guard self.retryStrategy.canRetry(inCaseOf: error) else {
+                        throw error
+                    }
+
+                    intermediateErrors.append(error)
+                    break
                 }
-
-                intermediateErrors.append(error)
             }
         }
 

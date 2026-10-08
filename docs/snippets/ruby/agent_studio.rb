@@ -43,6 +43,58 @@ def snippet_for_bulk_delete_allowed_domains
   # SEPARATOR<
 end
 
+# Snippet for the compactContext method.
+#
+# compactContext with required parameters
+def snippet_for_compact_context
+  # >SEPARATOR compactContext compactContext with required parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.compact_context(
+    Algolia::AgentStudio::ContextCompactRequest.new(
+      provider_id: "c2905529-b933-4b69-87ec-75f9829d5f59",
+      model: "gpt-4o-mini",
+      messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the compactContext method.
+#
+# compactContext with all parameters
+def snippet_for_compact_context1
+  # >SEPARATOR compactContext compactContext with all parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.compact_context(
+    Algolia::AgentStudio::ContextCompactRequest.new(
+      provider_id: "c2905529-b933-4b69-87ec-75f9829d5f59",
+      model: "gpt-4o-mini",
+      messages: [
+        Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?"),
+        Algolia::AgentStudio::UserMessageV4.new(role: "assistant", content: "I am well.")
+      ],
+      keep_last_messages: 2,
+      instructions: "keep every product reference",
+      target_tokens_estimate: 128
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the createAgent method.
 #
 # createAgent with minimal parameters
@@ -79,7 +131,14 @@ def snippet_for_create_agent1
       model: "gpt-4",
       instructions: "You are a helpful assistant.",
       config: {sendUsage: true, sendReasoning: true, temperature: 0.7, max_tokens: 1500},
-      tools: [Algolia::AgentStudio::AlgoliaDisplayResultsToolConfig.new(type: "start")]
+      tools: [
+        Algolia::AgentStudio::ClientSideToolConfig.new(
+          type: "client_side",
+          name: "start",
+          description: "Start a conversation",
+          input_schema: Algolia::AgentStudio::ClientToolsArgsSchema.new(type: "object")
+        )
+      ]
     )
   )
 
@@ -124,6 +183,53 @@ def snippet_for_create_agent_completion
     Algolia::AgentStudio::AgentCompletionRequest.new(
       messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
     )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the createAgentTask method.
+#
+# createAgentTask with required parameters
+def snippet_for_create_agent_task
+  # >SEPARATOR createAgentTask createAgentTask with required parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.create_agent_task(
+    "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    Algolia::AgentStudio::TaskRequest.new(input: {pageType: "pdp", title: "acmePhone128Gb"})
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the createAgentTask method.
+#
+# createAgentTask with all parameters
+def snippet_for_create_agent_task1
+  # >SEPARATOR createAgentTask createAgentTask with all parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.create_agent_task(
+    "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    Algolia::AgentStudio::TaskRequest.new(
+      task: "algolia_on_page_suggestions",
+      kind: "prompt_suggestions",
+      input: {pageType: "pdp", title: "acmePhone128Gb"}
+    ),
+    false,
+    false,
+    false
   )
 
   # >LOG
@@ -1090,7 +1196,11 @@ def snippet_for_list_agent_conversations1
     1,
     2,
     10,
-    nil
+    true,
+    true,
+    false,
+    true,
+    "secure-user-token"
   )
 
   # >LOG
@@ -1368,6 +1478,54 @@ def snippet_for_set_client_api_key
   # SEPARATOR<
 end
 
+# Snippet for the trimContext method.
+#
+# trimContext with required parameters
+def snippet_for_trim_context
+  # >SEPARATOR trimContext trimContext with required parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.trim_context(
+    Algolia::AgentStudio::ContextTrimRequest.new(
+      messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the trimContext method.
+#
+# trimContext with all parameters
+def snippet_for_trim_context1
+  # >SEPARATOR trimContext trimContext with all parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.trim_context(
+    Algolia::AgentStudio::ContextTrimRequest.new(
+      messages: [
+        Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?"),
+        Algolia::AgentStudio::UserMessageV4.new(role: "assistant", content: "I am well.")
+      ],
+      keep_last_messages: 1,
+      max_tokens_estimate: 256,
+      drop_tool_parts: true
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the unpublishAgent method.
 #
 # unpublishAgent
@@ -1423,7 +1581,14 @@ def snippet_for_update_agent1
       model: "gpt-4o",
       instructions: "Updated instructions.",
       config: {temperature: 0.5},
-      tools: [Algolia::AgentStudio::AlgoliaDisplayResultsToolConfig.new(type: "start")]
+      tools: [
+        Algolia::AgentStudio::ClientSideToolConfig.new(
+          type: "client_side",
+          name: "start",
+          description: "Start a conversation",
+          input_schema: Algolia::AgentStudio::ClientToolsArgsSchema.new(type: "object")
+        )
+      ]
     )
   )
 
@@ -1443,6 +1608,53 @@ def snippet_for_update_configuration
 
   # Call the API
   response = client.update_configuration(Algolia::AgentStudio::ApplicationConfigPatch.new(max_retention_days: 30))
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the updateFeedback method.
+#
+# updateFeedback with required parameters
+def snippet_for_update_feedback
+  # >SEPARATOR updateFeedback updateFeedback with required parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.update_feedback(
+    Algolia::AgentStudio::FeedbackUpdateRequest.new(
+      message_id: "msg-abc123",
+      agent_id: "76710f1b-8231-42e5-b0d1-f43aac618e15"
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the updateFeedback method.
+#
+# updateFeedback with all parameters
+def snippet_for_update_feedback1
+  # >SEPARATOR updateFeedback updateFeedback with all parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.update_feedback(
+    Algolia::AgentStudio::FeedbackUpdateRequest.new(
+      message_id: "msg-abc123",
+      agent_id: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      vote: 0,
+      tags: ["unhelpful", "off-topic"],
+      notes: "The response did not address my question."
+    )
+  )
 
   # >LOG
   # print the response

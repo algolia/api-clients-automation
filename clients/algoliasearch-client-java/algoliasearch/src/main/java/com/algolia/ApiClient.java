@@ -108,7 +108,7 @@ public abstract class ApiClient implements Closeable {
       builder.addInterceptor(new RequestIdInterceptor());
     }
     builder
-      .addInterceptor(new RetryStrategy(statefulHosts))
+      .addInterceptor(new RetryStrategy(statefulHosts, options.getMaxRateLimitRetries()))
       .setConnectTimeout(connectTimeout)
       .setReadTimeout(readTimeout)
       .setWriteTimeout(writeTimeout);
@@ -138,6 +138,16 @@ public abstract class ApiClient implements Closeable {
       return requestOptions;
     }
     return new RequestOptions().addExtraHeader(RequestId.HEADER, RequestId.generate()).mergeRight(requestOptions);
+  }
+
+  /**
+   * Returns the client's executor for asynchronous work.
+   *
+   * <p>Intended for generated helper code that schedules CompletableFuture continuations on the
+   * same executor used by {@link #executeAsync}.
+   */
+  protected ExecutorService getExecutor() {
+    return executor;
   }
 
   /**

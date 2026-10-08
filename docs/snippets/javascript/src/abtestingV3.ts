@@ -8,7 +8,7 @@ import { algoliasearch } from 'algoliasearch';
 //
 // addABTests with minimal parameters
 export async function snippetForAddABTests(): Promise<void> {
-  // >SEPARATOR addABTests default
+  // >SEPARATOR addABTests addABTests with minimal parameters
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
@@ -27,6 +27,49 @@ export async function snippetForAddABTests(): Promise<void> {
   // >LOG
   // print the response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the addABTests method.
+//
+// addABTests with Bayesian configuration
+export async function snippetForAddABTests1(): Promise<void> {
+  // >SEPARATOR addABTests addABTests with Bayesian configuration
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.addABTests({
+    endAt: '2022-12-31T00:00:00.000Z',
+    name: 'myABTest',
+    metrics: [{ name: 'conversionRate' }],
+    variants: [
+      { index: 'AB_TEST_1', trafficPercentage: 30 },
+      { index: 'AB_TEST_2', trafficPercentage: 50 },
+    ],
+    configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the applyVariantSettings method.
+//
+// applyVariantSettings
+export async function snippetForApplyVariantSettings(): Promise<void> {
+  // >SEPARATOR applyVariantSettings default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.applyVariantSettings({ id: 42, variantId: 2 });
+
+  // >LOG
   // SEPARATOR<
 }
 
@@ -459,7 +502,7 @@ export async function snippetForEstimateABTest(): Promise<void> {
 //
 // getABTest
 export async function snippetForGetABTest(): Promise<void> {
-  // >SEPARATOR getABTest default
+  // >SEPARATOR getABTest getABTest
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
@@ -473,17 +516,77 @@ export async function snippetForGetABTest(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getABTest method.
+//
+// getABTest with both inference methods
+export async function snippetForGetABTest1(): Promise<void> {
+  // >SEPARATOR getABTest getABTest with both inference methods
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getABTest({ id: 42, methods: ['frequentist', 'bayesian'] });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getABTestSettings method.
+//
+// getABTestSettings
+export async function snippetForGetABTestSettings(): Promise<void> {
+  // >SEPARATOR getABTestSettings default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getABTestSettings({ id: 42 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getTimeseries method.
 //
 // getTimeseries
 export async function snippetForGetTimeseries(): Promise<void> {
-  // >SEPARATOR getTimeseries default
+  // >SEPARATOR getTimeseries getTimeseries
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
 
   // Call the API
   const response = await client.getTimeseries({ id: 42 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with Bayesian revenue per search
+export async function snippetForGetTimeseries1(): Promise<void> {
+  // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getTimeseries({
+    id: 42,
+    startDate: '1999-09-19',
+    endDate: '2001-01-01',
+    metric: ['revenue_per_search'],
+    methods: ['bayesian'],
+  });
 
   // >LOG
   // print the response
@@ -525,11 +628,44 @@ export async function snippetForListABTests1(): Promise<void> {
     indexPrefix: 'cts_e2e ab',
     indexSuffix: 't',
     direction: 'asc',
+    methods: ['frequentist', 'bayesian'],
   });
 
   // >LOG
   // print the response
   console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// saveVariantSettings
+export async function snippetForSaveVariantSettings(): Promise<void> {
+  // >SEPARATOR saveVariantSettings saveVariantSettings
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: { saveFeaturesSettings: true } });
+
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// save settings with an empty options object
+export async function snippetForSaveVariantSettings1(): Promise<void> {
+  // >SEPARATOR saveVariantSettings save settings with an empty options object
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  await client.saveVariantSettings({ id: 42, variantId: 2, saveSettingsRequest: {} });
+
+  // >LOG
   // SEPARATOR<
 }
 

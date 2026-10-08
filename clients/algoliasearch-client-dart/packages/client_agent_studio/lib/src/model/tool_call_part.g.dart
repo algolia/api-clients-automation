@@ -16,6 +16,11 @@ ToolCallPart _$ToolCallPartFromJson(Map<String, dynamic> json) =>
           toolCallId: $checkedConvert('toolCallId', (v) => v as String),
           toolName: $checkedConvert('toolName', (v) => v as String),
           args: $checkedConvert('args', (v) => v),
+          rawArgs: $checkedConvert(
+              'rawArgs',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, e as Object),
+                  )),
           requiresApproval:
               $checkedConvert('requiresApproval', (v) => v as bool?),
           providerOptions: $checkedConvert(
@@ -42,6 +47,7 @@ Map<String, dynamic> _$ToolCallPartToJson(ToolCallPart instance) {
   }
 
   writeNotNull('args', instance.args);
+  writeNotNull('rawArgs', instance.rawArgs);
   writeNotNull('requiresApproval', instance.requiresApproval);
   writeNotNull('providerOptions', instance.providerOptions);
   return val;

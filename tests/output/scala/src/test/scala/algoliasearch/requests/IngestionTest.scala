@@ -988,7 +988,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/2/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
     assert(res.method == "PUT")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("disableTaskV1") {
@@ -1002,7 +1002,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f/disable")
     assert(res.method == "PUT")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("enableTask") {
@@ -1016,7 +1016,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/2/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
     assert(res.method == "PUT")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("enableTaskV1") {
@@ -1030,7 +1030,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable")
     assert(res.method == "PUT")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("getAuthentication") {
@@ -1732,7 +1732,7 @@ class IngestionTest extends AnyFunSuite {
 
     assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
   test("tryTransformation") {

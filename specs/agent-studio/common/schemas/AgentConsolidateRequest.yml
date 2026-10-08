@@ -9,7 +9,7 @@ AgentConsolidateRequest:
       title: model
       description: Model name (e.g., gpt-4o-mini).
     messages:
-      $ref: 'MessagesUnionAgentConsolidateRequest.yml#/MessagesUnionAgentConsolidateRequest'
+      $ref: 'MessagesUnion.yml#/MessagesUnion'
     targetMemories:
       type: integer
       maximum: 50.0
@@ -36,10 +36,15 @@ AgentConsolidateRequest:
       title: maxexisting
       description: Maximum number of existing memories to load for consolidation.
       default: 50
+    enableDeletions:
+      type: boolean
+      title: enabledeletions
+      description: 'Allow consolidation to delete memories. Off by default: deletions
+        are irreversible, and when on they are limited to direct factual contradictions.'
+      default: false
   type: object
   required:
     - providerID
     - model
-    - messages
   title: agentConsolidateRequest
   description: Agent endpoint request for automatic memory consolidation.

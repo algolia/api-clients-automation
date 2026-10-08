@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** Model for tool invocation in a Message. */
+/** A tool invocation in a message. */
 public class ToolInvocationV4 {
 
   @JsonProperty("toolCallId")

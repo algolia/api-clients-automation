@@ -14,6 +14,9 @@ import javax.annotation.Nonnull;
 
 public final class ClientOptions implements ClientConfig {
 
+  /** Default number of same-host retries after HTTP 429. */
+  public static final int DEFAULT_MAX_RATE_LIMIT_RETRIES = 3;
+
   public static Builder builder() {
     return new Builder();
   }
@@ -26,6 +29,7 @@ public final class ClientOptions implements ClientConfig {
   private final Duration readTimeout;
   private final Map<String, String> defaultHeaders;
   private final CompressionType compressionType;
+  private final int maxRateLimitRetries;
   private final Requester customRequester;
   private final Logger logger;
   private final Consumer<HttpRequester.Builder> requesterConfig;
@@ -47,6 +51,7 @@ public final class ClientOptions implements ClientConfig {
     this.readTimeout = builder.readTimeout;
     this.defaultHeaders = builder.defaultHeaders;
     this.compressionType = builder.compressionType;
+    this.maxRateLimitRetries = builder.maxRateLimitRetries;
     this.logger = builder.logger;
     this.requesterConfig = builder.requesterConfig;
     this.mapperConfig = builder.mapperConfig;
@@ -92,6 +97,14 @@ public final class ClientOptions implements ClientConfig {
     return compressionType;
   }
 
+  /**
+   * How many times to wait and retry on the same host after HTTP 429. Default 3; 0 fails on the
+   * first 429.
+   */
+  public int getMaxRateLimitRetries() {
+    return maxRateLimitRetries;
+  }
+
   public Requester getCustomRequester() {
     return customRequester;
   }
@@ -128,6 +141,7 @@ public final class ClientOptions implements ClientConfig {
     private Duration writeTimeout = Duration.ZERO;
     private Duration readTimeout = Duration.ZERO;
     private CompressionType compressionType = CompressionType.NONE;
+    private int maxRateLimitRetries = DEFAULT_MAX_RATE_LIMIT_RETRIES;
 
     public Builder setRequester(Requester requester) {
       this.customRequester = requester;
@@ -187,6 +201,16 @@ public final class ClientOptions implements ClientConfig {
 
     public Builder setCompressionType(CompressionType compressionType) {
       this.compressionType = compressionType;
+      return this;
+    }
+
+    /**
+     * How many times to wait and retry on the same host after HTTP 429. The wait is `Retry-After`
+     * in whole seconds, or 1 second if the header is missing or invalid. Default 3; 0 fails on the
+     * first 429.
+     */
+    public Builder setMaxRateLimitRetries(int maxRateLimitRetries) {
+      this.maxRateLimitRetries = maxRateLimitRetries;
       return this;
     }
 

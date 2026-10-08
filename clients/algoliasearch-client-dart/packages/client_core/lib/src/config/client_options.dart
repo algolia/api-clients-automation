@@ -69,6 +69,13 @@ final class ClientOptions {
   /// minting. A caller-supplied Request-ID is never overwritten.
   final bool? requestIdEnabled;
 
+  /// How many times a 429 is waited out on the same host before it surfaces.
+  /// Null means 3; 0 fails on the first 429 without waiting; negative values
+  /// behave like 0. The wait is `Retry-After` in whole seconds, or 1 second
+  /// when the header is missing or invalid. 5xx, timeouts and network errors
+  /// keep failing over to the next host.
+  final int? maxRateLimitRetries;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
   const ClientOptions({
     this.connectTimeout = unsetTimeout,
@@ -83,6 +90,7 @@ final class ClientOptions {
     this.httpClientAdapter,
     this.compression,
     this.requestIdEnabled,
+    this.maxRateLimitRetries,
   });
 
   @override
@@ -101,7 +109,8 @@ final class ClientOptions {
           interceptors == other.interceptors &&
           httpClientAdapter == other.httpClientAdapter &&
           compression == other.compression &&
-          requestIdEnabled == other.requestIdEnabled;
+          requestIdEnabled == other.requestIdEnabled &&
+          maxRateLimitRetries == other.maxRateLimitRetries;
 
   @override
   int get hashCode =>
@@ -116,10 +125,11 @@ final class ClientOptions {
       interceptors.hashCode ^
       httpClientAdapter.hashCode ^
       compression.hashCode ^
-      requestIdEnabled.hashCode;
+      requestIdEnabled.hashCode ^
+      maxRateLimitRetries.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression, requestIdEnabled: $requestIdEnabled}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter, compression: $compression, requestIdEnabled: $requestIdEnabled, maxRateLimitRetries: $maxRateLimitRetries}';
   }
 }

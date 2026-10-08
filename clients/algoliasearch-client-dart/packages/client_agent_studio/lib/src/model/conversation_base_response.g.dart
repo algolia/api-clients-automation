@@ -42,6 +42,11 @@ ConversationBaseResponse _$ConversationBaseResponseFromJson(
                   ?.map((e) =>
                       FeedbackResponse.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          impactAnalytics: $checkedConvert(
+              'impactAnalytics',
+              (v) => v == null
+                  ? null
+                  : ImpactAnalytics.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -72,5 +77,6 @@ Map<String, dynamic> _$ConversationBaseResponseToJson(
   writeNotNull('totalTokens', instance.totalTokens);
   writeNotNull('conversationMetadata', instance.conversationMetadata?.toJson());
   writeNotNull('feedback', instance.feedback?.map((e) => e.toJson()).toList());
+  writeNotNull('impactAnalytics', instance.impactAnalytics?.toJson());
   return val;
 }

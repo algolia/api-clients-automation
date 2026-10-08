@@ -1471,6 +1471,8 @@ func SnippetForDeleteObjectsOfSearch() {
 		panic(err)
 	}
 
+	// response is a slice of search.BatchResponse
+
 	// >LOG
 	// print the response
 	print(response)
@@ -3071,6 +3073,8 @@ func SnippetForPartialUpdateObjectsOfSearch() {
 		panic(err)
 	}
 
+	// response is a slice of search.BatchResponse
+
 	// >LOG
 	// print the response
 	print(response)
@@ -3100,6 +3104,8 @@ func SnippetForPartialUpdateObjectsOfSearch1() {
 		// handle the eventual error
 		panic(err)
 	}
+
+	// response is a slice of search.BatchResponse
 
 	// >LOG
 	// print the response
@@ -3446,6 +3452,8 @@ func SnippetForSaveObjectsOfSearch() {
 		panic(err)
 	}
 
+	// response is a slice of search.BatchResponse
+
 	// >LOG
 	// print the response
 	print(response)
@@ -3484,6 +3492,8 @@ func SnippetForSaveObjectsOfSearch1() {
 		panic(err)
 	}
 
+	// response is a slice of search.BatchResponse
+
 	// >LOG
 	// print the response
 	print(response)
@@ -3514,6 +3524,8 @@ func SnippetForSaveObjectsOfSearch2() {
 		panic(err)
 	}
 
+	// response is a slice of search.BatchResponse
+
 	// >LOG
 	// print the response
 	print(response)
@@ -3543,6 +3555,8 @@ func SnippetForSaveObjectsOfSearch3() {
 		// handle the eventual error
 		panic(err)
 	}
+
+	// response is a slice of search.BatchResponse
 
 	// >LOG
 	// print the response
@@ -3582,6 +3596,8 @@ func SnippetForSaveObjectsOfSearch4() {
 		// handle the eventual error
 		panic(err)
 	}
+
+	// response is a slice of search.BatchResponse
 
 	// >LOG
 	// print the response
@@ -3624,6 +3640,8 @@ func SnippetForSaveObjectsOfSearch5() {
 		// handle the eventual error
 		panic(err)
 	}
+
+	// response is a slice of search.BatchResponse
 
 	// >LOG
 	// print the response

@@ -1210,7 +1210,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.DeleteObjectsAsync(
+    List<BatchResponse> response = await client.DeleteObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<string> { "1", "2" }
     );
@@ -2431,7 +2431,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.PartialUpdateObjectsAsync(
+    List<BatchResponse> response = await client.PartialUpdateObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2458,7 +2458,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.PartialUpdateObjectsAsync(
+    List<BatchResponse> response = await client.PartialUpdateObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2731,7 +2731,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2761,7 +2761,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2791,7 +2791,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2817,7 +2817,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2843,7 +2843,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -2875,7 +2875,7 @@ public class SnippetSearchClient
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
     // Call the API
-    var response = await client.SaveObjectsAsync(
+    List<BatchResponse> response = await client.SaveObjectsAsync(
       "<YOUR_INDEX_NAME>",
       new List<Object>
       {
@@ -9049,7 +9049,7 @@ public class SnippetSearchClient
       "<YOUR_INDEX_NAME>",
       new IndexSettings
       {
-        PaginationLimitedTo = 10,
+        PaginationLimitedTo = 10L,
         TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
       },
       true
@@ -10458,7 +10458,7 @@ public class SnippetSearchClient
         Mode = Enum.Parse<Mode>("NeuralSearch"),
         NumericAttributesForFiltering = new List<string> { "algolia" },
         OptionalWords = new OptionalWords(new List<string> { "myspace" }),
-        PaginationLimitedTo = 0,
+        PaginationLimitedTo = 0L,
         QueryLanguages = new List<SupportedLanguage> { Enum.Parse<SupportedLanguage>("Fr") },
         QueryType = Enum.Parse<QueryType>("PrefixLast"),
         Ranking = new List<string> { "geo" },
@@ -11338,7 +11338,7 @@ public class SnippetSearchClient
     // Call the API
     var response = await client.SetSettingsAsync(
       "<YOUR_INDEX_NAME>",
-      new IndexSettings { PaginationLimitedTo = 1000 }
+      new IndexSettings { PaginationLimitedTo = 1000L }
     );
     // >LOG
     // print the response

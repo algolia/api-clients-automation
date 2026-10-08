@@ -546,7 +546,7 @@ final class CompositionClientSnippet {
                             CompositionInjectionBehavior(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainSearchSource(
-                                            InjectionMainSearchSource(search: MainSearch(index: "bar"))
+                                            InjectionMainSearchSource(search: InjectionMainSearch(index: "bar"))
                                         )))
                             )
                         )
@@ -582,7 +582,7 @@ final class CompositionClientSnippet {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-external-group-key",
@@ -590,8 +590,8 @@ final class CompositionClientSnippet {
                                     .injectedItemExternalSource(
                                         InjectedItemExternalSource(external: InjectedItemExternal(
                                             index: "foo",
-                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                            ordering: ExternalOrdering.userDefined
+                                            ordering: ExternalOrdering.userDefined,
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                         ))
                                     ),
                                 position: 2,
@@ -624,7 +624,7 @@ final class CompositionClientSnippet {
                     behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "foo",
                                     params: MainInjectionQueryParameters(filters: "brand:adidas")
                                 )))),
@@ -696,7 +696,7 @@ final class CompositionClientSnippet {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",
@@ -734,7 +734,9 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-key",
                             source: InjectedItemSource
@@ -770,14 +772,16 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-external-group-key",
                             source: InjectedItemSource
                                 .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
                                     index: "foo",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
+                                    ordering: ExternalOrdering.userDefined,
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                 ))),
                             position: 2,
                             length: 1
@@ -808,7 +812,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "foo",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -878,7 +882,7 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "foo",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -920,7 +924,7 @@ final class CompositionClientSnippet {
                         CompositionInjectionBehavior(
                             injection: Injection(main: InjectionMain(source: InjectionMainSource
                                     .injectionMainSearchSource(
-                                        InjectionMainSearchSource(search: MainSearch(index: "products"))
+                                        InjectionMainSearchSource(search: InjectionMainSearch(index: "products"))
                                     )))
                         )
                     ),
@@ -950,20 +954,26 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
-                                indexName: "<YOUR_INDEX_NAME>",
-                                model: Model.trendingItems,
-                                threshold: 50
-                            )))),
+                            .injectionMainRecommendSource(
+                                InjectionMainRecommendSource(recommend: InjectionMainRecommend(
+                                    indexName: "<YOUR_INDEX_NAME>",
+                                    model: Model.trendingItems,
+                                    threshold: 50
+                                ))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "injected-recommend-key",
                             source: InjectedItemSource
-                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                    indexName: "<YOUR_INDEX_NAME>",
-                                    model: Model.trendingItems,
-                                    threshold: 30,
-                                    fallbackParameters: BaseInjectionQueryParameters(filters: "category:electronics")
-                                ))),
+                                .injectedItemRecommendSource(
+                                    InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                        indexName: "<YOUR_INDEX_NAME>",
+                                        model: Model.trendingItems,
+                                        threshold: 30,
+                                        fallbackParameters: BaseInjectionQueryParameters(
+                                            filters: "category:electronics"
+                                        )
+                                    ))
+                                ),
                             position: 3,
                             length: 2
                         )]
@@ -993,18 +1003,20 @@ final class CompositionClientSnippet {
                 behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "products",
                                 params: MainInjectionQueryParameters(filters: "brand:nike")
                             )))),
                         injectedItems: [InjectionInjectedItem(
                             key: "injected-recommend-key",
                             source: InjectedItemSource
-                                .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                    indexName: "<YOUR_INDEX_NAME>",
-                                    model: Model.trendingItems,
-                                    threshold: 40
-                                ))),
+                                .injectedItemRecommendSource(
+                                    InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                        indexName: "<YOUR_INDEX_NAME>",
+                                        model: Model.trendingItems,
+                                        threshold: 40
+                                    ))
+                                ),
                             position: 1,
                             length: 3
                         )]
@@ -1037,7 +1049,7 @@ final class CompositionClientSnippet {
                             "trending": FeedInjection(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainRecommendSource(
-                                            InjectionMainRecommendSource(recommend: MainRecommend(
+                                            InjectionMainRecommendSource(recommend: InjectionMainRecommend(
                                                 indexName: "<YOUR_INDEX_NAME>",
                                                 model: Model.trendingItems,
                                                 threshold: 50
@@ -1074,7 +1086,7 @@ final class CompositionClientSnippet {
                         feeds: [
                             "products": FeedInjection(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "products",
                                         params: MainInjectionQueryParameters(hitsPerPage: 12)
                                     )))),
@@ -1091,7 +1103,7 @@ final class CompositionClientSnippet {
                             )),
                             "articles": FeedInjection(injection: Injection(
                                 main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "articles",
                                         params: MainInjectionQueryParameters(
                                             attributesToRetrieve: ["title", "excerpt", "publishedAt"],
@@ -1110,7 +1122,7 @@ final class CompositionClientSnippet {
                                 )]
                             )),
                             "videos": FeedInjection(injection: Injection(main: InjectionMain(source: InjectionMainSource
-                                    .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                    .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                         index: "videos",
                                         params: MainInjectionQueryParameters(
                                             attributesToRetrieve: ["title", "thumbnail", "duration"],
@@ -1119,6 +1131,57 @@ final class CompositionClientSnippet {
                                     )))))),
                         ],
                         feedsOrder: ["products", "articles", "videos"]
+                    )))
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putComposition method.
+    ///
+    /// putComposition
+    func snippetForPutComposition9() async throws {
+        // >SEPARATOR putComposition putComposition
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putComposition(
+            compositionID: "my-external-provider-compo",
+            composition: Composition(
+                objectID: "my-external-provider-compo",
+                name: "my external provider composition",
+                behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainExternalProviderSource(
+                                InjectionMainExternalProviderSource(externalProvider: InjectionMainExternalProvider(
+                                    index: "products",
+                                    configurationID: "my-rmn-connection",
+                                    configurationParams: [
+                                        "campaign_id": AnyCodable("summer-sale"),
+                                        "customer_id": AnyCodable("customer-default"),
+                                    ],
+                                    ordering: ExternalProviderOrdering.providerDefined,
+                                    params: MainInjectionQueryParameters(filters: "instock:true")
+                                ))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "sponsored",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "products",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")]
+                                    ))
+                                ),
+                            position: 0,
+                            length: 2
+                        )]
                     )))
             )
         )
@@ -1146,7 +1209,9 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource
@@ -1183,7 +1248,9 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(index: "foo")))),
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
+                            )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-group-from-rule-key",
                             source: InjectedItemSource
@@ -1233,7 +1300,7 @@ final class CompositionClientSnippet {
                 consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
-                            .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                            .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                 index: "my-index",
                                 params: MainInjectionQueryParameters(filters: "brand:adidas")
                             )))),
@@ -1242,8 +1309,8 @@ final class CompositionClientSnippet {
                             source: InjectedItemSource
                                 .injectedItemExternalSource(InjectedItemExternalSource(external: InjectedItemExternal(
                                     index: "my-index",
-                                    params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                    ordering: ExternalOrdering.userDefined
+                                    ordering: ExternalOrdering.userDefined,
+                                    params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                 ))),
                             position: 0,
                             length: 3
@@ -1280,7 +1347,7 @@ final class CompositionClientSnippet {
                     .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                         main: InjectionMain(source: InjectionMainSource
                             .injectionMainSearchSource(
-                                InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                             )),
                         injectedItems: [InjectionInjectedItem(
                             key: "my-unique-injected-item-key",
@@ -1295,6 +1362,50 @@ final class CompositionClientSnippet {
                     )))),
                 description: "my description",
                 enabled: true
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the putCompositionRule method.
+    ///
+    /// putCompositionRule
+    func snippetForPutCompositionRule4() async throws {
+        // >SEPARATOR putCompositionRule putCompositionRule
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.putCompositionRule(
+            compositionID: "compositionID",
+            objectID: "rule-with-external-provider-source",
+            compositionRule: CompositionRule(
+                objectID: "rule-with-external-provider-source",
+                conditions: [CompositionCondition(pattern: "harry", anchoring: CompositionAnchoring.contains)],
+                consequence: CompositionRuleConsequence(behavior: CompositionBehavior
+                    .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
+                        main: InjectionMain(source: InjectionMainSource
+                            .injectionMainSearchSource(
+                                InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
+                            )),
+                        injectedItems: [InjectionInjectedItem(
+                            key: "my-unique-external-provider-group-from-rule-key",
+                            source: InjectedItemSource
+                                .injectedItemExternalProviderSource(
+                                    InjectedItemExternalProviderSource(externalProvider: InjectedItemExternalProvider(
+                                        index: "my-index",
+                                        configurationID: "my-rmn-connection",
+                                        configurationParams: ["campaign_id": AnyCodable("summer-sale")],
+                                        ordering: ExternalProviderOrdering.providerDefined
+                                    ))
+                                ),
+                            position: 0,
+                            length: 3
+                        )]
+                    ))))
             )
         )
         // >LOG
@@ -1324,7 +1435,9 @@ final class CompositionClientSnippet {
                             CompositionInjectionBehavior(
                                 injection: Injection(main: InjectionMain(source: InjectionMainSource
                                         .injectionMainSearchSource(
-                                            InjectionMainSearchSource(search: MainSearch(index: "<YOUR_INDEX_NAME>"))
+                                            InjectionMainSearchSource(
+                                                search: InjectionMainSearch(index: "<YOUR_INDEX_NAME>")
+                                            )
                                         )))
                             )
                         ))
@@ -1357,7 +1470,7 @@ final class CompositionClientSnippet {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "foo"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "foo"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-group-from-rule-key",
@@ -1410,7 +1523,7 @@ final class CompositionClientSnippet {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "my-index",
                                     params: MainInjectionQueryParameters(filters: "brand:adidas")
                                 )))),
@@ -1420,8 +1533,8 @@ final class CompositionClientSnippet {
                                     .injectedItemExternalSource(
                                         InjectedItemExternalSource(external: InjectedItemExternal(
                                             index: "my-index",
-                                            params: BaseInjectionQueryParameters(filters: "brand:adidas"),
-                                            ordering: ExternalOrdering.userDefined
+                                            ordering: ExternalOrdering.userDefined,
+                                            params: BaseInjectionQueryParameters(filters: "brand:adidas")
                                         ))
                                     ),
                                 position: 0,
@@ -1460,22 +1573,26 @@ final class CompositionClientSnippet {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainRecommendSource(InjectionMainRecommendSource(recommend: MainRecommend(
-                                    indexName: "<YOUR_INDEX_NAME>",
-                                    model: Model.trendingItems,
-                                    threshold: 50
-                                )))),
+                                .injectionMainRecommendSource(
+                                    InjectionMainRecommendSource(recommend: InjectionMainRecommend(
+                                        indexName: "<YOUR_INDEX_NAME>",
+                                        model: Model.trendingItems,
+                                        threshold: 50
+                                    ))
+                                )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "injected-recommend-from-rule-key",
                                 source: InjectedItemSource
-                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                        indexName: "<YOUR_INDEX_NAME>",
-                                        model: Model.trendingItems,
-                                        threshold: 30,
-                                        fallbackParameters: BaseInjectionQueryParameters(
-                                            filters: "category:electronics"
-                                        )
-                                    ))),
+                                    .injectedItemRecommendSource(
+                                        InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                            indexName: "<YOUR_INDEX_NAME>",
+                                            model: Model.trendingItems,
+                                            threshold: 30,
+                                            fallbackParameters: BaseInjectionQueryParameters(
+                                                filters: "category:electronics"
+                                            )
+                                        ))
+                                    ),
                                 position: 2,
                                 length: 3
                             )]
@@ -1508,18 +1625,20 @@ final class CompositionClientSnippet {
                     consequence: CompositionRuleConsequence(behavior: CompositionBehavior
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
-                                .injectionMainSearchSource(InjectionMainSearchSource(search: MainSearch(
+                                .injectionMainSearchSource(InjectionMainSearchSource(search: InjectionMainSearch(
                                     index: "products",
                                     params: MainInjectionQueryParameters(filters: "category:shoes")
                                 )))),
                             injectedItems: [InjectionInjectedItem(
                                 key: "injected-recommend-from-rule-key",
                                 source: InjectedItemSource
-                                    .injectedItemRecommendSource(InjectedItemRecommendSource(recommend: Recommend(
-                                        indexName: "<YOUR_INDEX_NAME>",
-                                        model: Model.trendingItems,
-                                        threshold: 40
-                                    ))),
+                                    .injectedItemRecommendSource(
+                                        InjectedItemRecommendSource(recommend: InjectedItemRecommend(
+                                            indexName: "<YOUR_INDEX_NAME>",
+                                            model: Model.trendingItems,
+                                            threshold: 40
+                                        ))
+                                    ),
                                 position: 1,
                                 length: 2
                             )]
@@ -1555,7 +1674,7 @@ final class CompositionClientSnippet {
                                 "trending": FeedInjection(
                                     injection: Injection(main: InjectionMain(source: InjectionMainSource
                                             .injectionMainRecommendSource(
-                                                InjectionMainRecommendSource(recommend: MainRecommend(
+                                                InjectionMainRecommendSource(recommend: InjectionMainRecommend(
                                                     indexName: "<YOUR_INDEX_NAME>",
                                                     model: Model.trendingItems,
                                                     threshold: 50
@@ -1597,7 +1716,7 @@ final class CompositionClientSnippet {
                         .compositionInjectionBehavior(CompositionInjectionBehavior(injection: Injection(
                             main: InjectionMain(source: InjectionMainSource
                                 .injectionMainSearchSource(
-                                    InjectionMainSearchSource(search: MainSearch(index: "my-index"))
+                                    InjectionMainSearchSource(search: InjectionMainSearch(index: "my-index"))
                                 )),
                             injectedItems: [InjectionInjectedItem(
                                 key: "my-unique-injected-item-key",
@@ -1706,6 +1825,28 @@ final class CompositionClientSnippet {
             requestBody: RequestBody(
                 params: CompositionParams(query: "batman"),
                 feedsOrder: ["feed-movies", "feed-comics"]
+            )
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the search method.
+    ///
+    /// search
+    func snippetForSearch4() async throws {
+        // >SEPARATOR search search
+        // Initialize the client
+        let client = try CompositionClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response: CompositionSearchResponse<CompositionHit> = try await client.search(
+            compositionID: "foo",
+            requestBody: RequestBody(
+                params: CompositionParams(query: "batman"),
+                externalProvider: ExternalProvider(configurationParams: ["customer_id": AnyCodable("customer123")])
             )
         )
         // >LOG

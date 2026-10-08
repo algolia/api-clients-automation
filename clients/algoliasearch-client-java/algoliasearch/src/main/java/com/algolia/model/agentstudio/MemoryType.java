@@ -6,10 +6,7 @@ package com.algolia.model.agentstudio;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/**
- * Memory types implemented so far. Follows LangMem's ontology:
- * https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types.
- */
+/** The type of the stored memory. */
 public enum MemoryType {
   SEMANTIC("semantic"),
 

@@ -337,7 +337,7 @@ final class SearchClientRequestsTestsE2E: XCTestCase {
         let response = try await client.setSettingsWithHTTPInfo(
             indexName: "cts_e2e_settings",
             indexSettings: IndexSettings(
-                paginationLimitedTo: 10,
+                paginationLimitedTo: Int64(10),
                 typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
             ),
             forwardToReplicas: true

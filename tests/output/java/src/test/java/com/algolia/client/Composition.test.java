@@ -52,6 +52,14 @@ class CompositionClientClientTests {
       .build();
   }
 
+  private ClientOptions withCustomHosts(List<Host> hosts, boolean gzipEncoding, int maxRateLimitRetries) {
+    return ClientOptions.builder()
+      .setHosts(hosts)
+      .setCompressionType(gzipEncoding ? CompressionType.GZIP : CompressionType.NONE)
+      .setMaxRateLimitRetries(maxRateLimitRetries)
+      .build();
+  }
+
   @Test
   @DisplayName("calls api with correct read host")
   void apiTest0() {
@@ -196,7 +204,7 @@ class CompositionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.43.0\\).*";
+      String regexp = "^Algolia for Java \\(4.44.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

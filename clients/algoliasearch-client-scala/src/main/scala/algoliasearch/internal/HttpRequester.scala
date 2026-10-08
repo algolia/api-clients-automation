@@ -8,13 +8,13 @@ import algoliasearch.internal.util.CorrelationIdHeader
 import algoliasearch.internal.util.UseReadTransporter
 import okhttp3._
 import okhttp3.internal.http.HttpMethod
+import okio.BufferedSink
 import org.json4s.native.{JsonMethods, JsonParser, parseJson}
 import org.json4s.{DefaultFormats, Extraction, Formats}
 import org.json4s.native.Serialization.read
 
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, IOException}
+import java.io.{ByteArrayInputStream, IOException}
 import java.nio.charset.StandardCharsets
-import java.util.Collections
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.collection.mutable.ListBuffer
@@ -36,6 +36,10 @@ private[algoliasearch] class HttpRequester private (
       .readTimeout(config.readTimeout.toMillis, TimeUnit.MILLISECONDS)
       .writeTimeout(config.writeTimeout.toMillis, TimeUnit.MILLISECONDS)
       .addInterceptor(new HeaderInterceptor(config.defaultHeaders))
+      .addNetworkInterceptor { chain =>
+        chain.connection().socket().setTcpNoDelay(true)
+        chain.proceed(chain.request())
+      }
     config.logging.foreach(logging => clientBuilder.addNetworkInterceptor(new LogInterceptor(logging)))
 
     builder.interceptors.foreach(clientBuilder.addInterceptor)
@@ -76,19 +80,23 @@ private[algoliasearch] class HttpRequester private (
   /** Creates a request body for the HTTP request. */
   private def createRequestBody(httpRequest: HttpRequest): RequestBody = {
     val method = httpRequest.method
-    var body = httpRequest.body
-    if (!HttpMethod.permitsRequestBody(method) || (method == "DELETE" && body.isEmpty)) return null
-    if (body.isEmpty) {
-      body = if (HttpMethod.requiresRequestBody(method)) Some(Collections.emptyMap) else Some("")
+    if (!HttpMethod.permitsRequestBody(method) || (method == "DELETE" && httpRequest.body.isEmpty))
+      return null
+    httpRequest.body match {
+      case Some(_) => buildRequestBody(httpRequest.body)
+      case None if HttpMethod.requiresRequestBody(method) =>
+        RequestBody.create(Array.emptyByteArray, jsonMediaType)
+      case None => null
     }
-    buildRequestBody(body)
   }
 
-  /** Serializes the request body into JSON and returns a fixed-length request body. */
-  private def buildRequestBody(requestBody: AnyRef): RequestBody = {
-    val stream = new ByteArrayOutputStream()
-    jsonSerializer.serialize(stream, requestBody)
-    RequestBody.create(stream.toByteArray, jsonMediaType)
+  /** Serializes the request body into JSON format. */
+  private def buildRequestBody(requestBody: AnyRef) = new RequestBody() {
+    override def contentType: MediaType = jsonMediaType
+
+    override def writeTo(bufferedSink: BufferedSink): Unit = {
+      jsonSerializer.serialize(bufferedSink.outputStream, requestBody)
+    }
   }
 
   /** Constructs the headers for the HTTP request. */

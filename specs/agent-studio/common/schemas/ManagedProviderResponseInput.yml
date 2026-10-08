@@ -1,0 +1,10 @@
+ManagedProviderResponseInput:
+  properties:
+    defaultModel:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: defaultmodel
+  type: object
+  title: managedProviderResponseInput
+  description: Response input for the Algolia-hosted provider. Limited by design.

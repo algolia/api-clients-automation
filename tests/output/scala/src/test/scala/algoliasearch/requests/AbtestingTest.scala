@@ -668,7 +668,7 @@ class AbtestingTest extends AnyFunSuite {
 
     assert(res.path == "/2/abtests/42/stop")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
 }

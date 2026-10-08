@@ -8,7 +8,7 @@ require "algolia"
 #
 # addABTests with minimal parameters
 def snippet_for_add_ab_tests
-  # >SEPARATOR addABTests default
+  # >SEPARATOR addABTests addABTests with minimal parameters
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -28,6 +28,51 @@ def snippet_for_add_ab_tests
   # >LOG
   # print the response
   puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the addABTests method.
+#
+# addABTests with Bayesian configuration
+def snippet_for_add_ab_tests1
+  # >SEPARATOR addABTests addABTests with Bayesian configuration
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.add_ab_tests(
+    Algolia::AbtestingV3::AddABTestsRequest.new(
+      end_at: "2022-12-31T00:00:00.000Z",
+      name: "myABTest",
+      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "conversionRate")],
+      variants: [
+        Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
+        Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+      ],
+      configuration: Algolia::AbtestingV3::ABTestConfiguration.new(
+        method: "bayesian",
+        primary_metric: "conversion_rate"
+      )
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the applyVariantSettings method.
+#
+# applyVariantSettings
+def snippet_for_apply_variant_settings
+  # >SEPARATOR applyVariantSettings default
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  client.apply_variant_settings(42, 2)
+  # >LOG
   # SEPARATOR<
 end
 
@@ -443,7 +488,7 @@ end
 #
 # getABTest
 def snippet_for_get_ab_test
-  # >SEPARATOR getABTest default
+  # >SEPARATOR getABTest getABTest
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -456,16 +501,67 @@ def snippet_for_get_ab_test
   # SEPARATOR<
 end
 
+# Snippet for the getABTest method.
+#
+# getABTest with both inference methods
+def snippet_for_get_ab_test1
+  # >SEPARATOR getABTest getABTest with both inference methods
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_ab_test(42, ["frequentist", "bayesian"])
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getABTestSettings method.
+#
+# getABTestSettings
+def snippet_for_get_ab_test_settings
+  # >SEPARATOR getABTestSettings default
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_ab_test_settings(42)
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the getTimeseries method.
 #
 # getTimeseries
 def snippet_for_get_timeseries
-  # >SEPARATOR getTimeseries default
+  # >SEPARATOR getTimeseries getTimeseries
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
   response = client.get_timeseries(42)
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getTimeseries method.
+#
+# getTimeseries with Bayesian revenue per search
+def snippet_for_get_timeseries1
+  # >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_timeseries(42, "1999-09-19", "2001-01-01", ["revenue_per_search"], ["bayesian"])
 
   # >LOG
   # print the response
@@ -499,11 +595,39 @@ def snippet_for_list_ab_tests1
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
   # Call the API
-  response = client.list_ab_tests(0, 21, "cts_e2e ab", "t", "asc")
+  response = client.list_ab_tests(0, 21, "cts_e2e ab", "t", "asc", ["frequentist", "bayesian"])
 
   # >LOG
   # print the response
   puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the saveVariantSettings method.
+#
+# saveVariantSettings
+def snippet_for_save_variant_settings
+  # >SEPARATOR saveVariantSettings saveVariantSettings
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  client.save_variant_settings(42, 2, Algolia::AbtestingV3::SaveSettingsRequest.new(save_features_settings: true))
+  # >LOG
+  # SEPARATOR<
+end
+
+# Snippet for the saveVariantSettings method.
+#
+# save settings with an empty options object
+def snippet_for_save_variant_settings1
+  # >SEPARATOR saveVariantSettings save settings with an empty options object
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  client.save_variant_settings(42, 2, Algolia::AbtestingV3::SaveSettingsRequest.new)
+  # >LOG
   # SEPARATOR<
 end
 

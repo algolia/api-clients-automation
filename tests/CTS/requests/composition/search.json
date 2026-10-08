@@ -127,5 +127,34 @@
         ]
       }
     }
+  },
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "requestBody": {
+        "params": {
+          "query": "batman"
+        },
+        "externalProvider": {
+          "configurationParams": {
+            "customer_id": "customer123"
+          }
+        }
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/run",
+      "method": "POST",
+      "body": {
+        "params": {
+          "query": "batman"
+        },
+        "externalProvider": {
+          "configurationParams": {
+            "customer_id": "customer123"
+          }
+        }
+      }
+    }
   }
 ]

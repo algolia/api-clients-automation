@@ -1,4 +1,9 @@
 SearchParameters:
+  description: |-
+    Algolia Search API parameters that can be predefined for the search tool.
+    Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
+
+    The search tool supports the relevant subset of search parameters in the context of agentic interactions.
   properties:
     queryType:
       oneOf:
@@ -8,6 +13,7 @@ SearchParameters:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: similarquery
     queryLanguages:
       $ref: 'QueryLanguagesUnion.yml#/QueryLanguagesUnion'
@@ -15,6 +21,7 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: advancedsyntax
     advancedSyntaxFeatures:
       $ref: 'AdvancedSyntaxFeaturesUnion.yml#/AdvancedSyntaxFeaturesUnion'
@@ -24,6 +31,7 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: decompoundquery
     typoTolerance:
       $ref: 'TypoToleranceUnion.yml#/TypoToleranceUnion'
@@ -31,16 +39,19 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: allowtyposonnumerictokens
     minWordSizeFor1Typo:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: minwordsizefor1Typo
     minWordSizeFor2Typos:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: minwordsizefor2Typos
     disableTypoToleranceOnAttributes:
       oneOf:
@@ -48,11 +59,13 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: disabletypotoleranceonattributes
     filters:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: filters
     facetFilters:
       oneOf:
@@ -64,21 +77,25 @@ SearchParameters:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: maxvaluesperfacet
     maxFacetHits:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: maxfacethits
     facetingAfterDistinct:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: facetingafterdistinct
     sortFacetValuesBy:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: sortfacetvaluesby
     numericFilters:
       $ref: 'NumericFiltersUnion.yml#/NumericFiltersUnion'
@@ -88,16 +105,19 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: sumorfiltersscores
     aroundLatLng:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: aroundlatlng
     aroundLatLngViaIp:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: aroundlatlngviaip
     aroundRadius:
       $ref: 'AroundRadiusUnion.yml#/AroundRadiusUnion'
@@ -107,6 +127,7 @@ SearchParameters:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: minimumaroundradius
     insideBoundingBox:
       $ref: 'InsideBoundingBoxUnion.yml#/InsideBoundingBoxUnion'
@@ -118,6 +139,7 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: attributestoretrieve
     attributesToSnippet:
       oneOf:
@@ -125,56 +147,67 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: attributestosnippet
     snippetEllipsisText:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: snippetellipsistext
     restrictHighlightAndSnippetArrays:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: restricthighlightandsnippetarrays
     page:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: page
     offset:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: offset
     hitsPerPage:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: hitsperpage
     length:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: length
     getRankingInfo:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: getrankinginfo
     relevancyStrictness:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: relevancystrictness
     minProximity:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: minproximity
     attributeCriteriaComputedByMinProximity:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: attributecriteriacomputedbyminproximity
     distinct:
       $ref: 'DistinctUnion.yml#/DistinctUnion'
@@ -182,26 +215,31 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: enablerules
     enablePersonalization:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: enablepersonalization
     personalizationImpact:
       oneOf:
         - type: integer
         - type: 'null'
+      default: null
       title: personalizationimpact
     enableAbTest:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: enableabtest
     enableReRanking:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: enablereranking
     reRankingApplyFilter:
       $ref: 'ReRankingApplyFilterUnion.yml#/ReRankingApplyFilterUnion'
@@ -211,6 +249,7 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: rulecontexts
     removeStopWords:
       $ref: 'RemoveStopWordsUnion.yml#/RemoveStopWordsUnion'
@@ -228,16 +267,19 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: synonyms
     replaceSynonymsInHighlight:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: replacesynonymsinhighlight
     analytics:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: analytics
     analyticsTags:
       oneOf:
@@ -245,16 +287,19 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: analyticstags
     clickAnalytics:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: clickanalytics
     userToken:
       oneOf:
         - type: string
         - type: 'null'
+      default: null
       title: usertoken
     restrictSearchableAttributes:
       oneOf:
@@ -262,6 +307,7 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: restrictsearchableattributes
     disableExactOnAttributes:
       oneOf:
@@ -269,6 +315,7 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: disableexactonattributes
     exactOnSingleWordQuery:
       oneOf:
@@ -280,6 +327,7 @@ SearchParameters:
       oneOf:
         - type: boolean
         - type: 'null'
+      default: null
       title: percentilecomputation
     explain:
       oneOf:
@@ -287,12 +335,7 @@ SearchParameters:
             type: string
           type: array
         - type: 'null'
+      default: null
       title: explain
-  type: object
   title: searchParameters
-  description: |-
-    Algolia Search API parameters that can be predefined for the search tool.
-    Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
-
-    The parameters that seemed irrelevant for the search tool have been commented out.
-    Uses types from algoliasearch.search.models for better type safety.
+  type: object

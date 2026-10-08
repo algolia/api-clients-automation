@@ -15,6 +15,9 @@ public class Widgets {
   @JsonProperty("banners")
   private List<Banner> banners;
 
+  @JsonProperty("resultCard")
+  private ResultCard resultCard;
+
   public Widgets setBanners(List<Banner> banners) {
     this.banners = banners;
     return this;
@@ -34,6 +37,17 @@ public class Widgets {
     return banners;
   }
 
+  public Widgets setResultCard(ResultCard resultCard) {
+    this.resultCard = resultCard;
+    return this;
+  }
+
+  /** Get resultCard */
+  @javax.annotation.Nullable
+  public ResultCard getResultCard() {
+    return resultCard;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -43,12 +57,12 @@ public class Widgets {
       return false;
     }
     Widgets widgets = (Widgets) o;
-    return Objects.equals(this.banners, widgets.banners);
+    return Objects.equals(this.banners, widgets.banners) && Objects.equals(this.resultCard, widgets.resultCard);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(banners);
+    return Objects.hash(banners, resultCard);
   }
 
   @Override
@@ -56,6 +70,7 @@ public class Widgets {
     StringBuilder sb = new StringBuilder();
     sb.append("class Widgets {\n");
     sb.append("    banners: ").append(toIndentedString(banners)).append("\n");
+    sb.append("    resultCard: ").append(toIndentedString(resultCard)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -31,8 +31,12 @@ package algoliasearch.composition
   *
   * @param results
   *   Search results.
+  * @param errors
+  *   Non-critical errors encountered while processing the request that may have affected the returned results (for
+  *   example, an external provider failure that fell back to another result set).
   */
 case class SearchResponse(
     compositions: Option[CompositionsSearchResponse] = scala.None,
-    results: Seq[SearchResultsItem]
+    results: Seq[SearchResultsItem],
+    errors: Option[Seq[ProcessingError]] = scala.None
 )

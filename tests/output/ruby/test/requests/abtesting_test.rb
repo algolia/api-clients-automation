@@ -396,6 +396,8 @@ class TestAbtestingClient < Test::Unit::TestCase
     assert_equal("/2/abtests/42/stop", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
   end
 
 end

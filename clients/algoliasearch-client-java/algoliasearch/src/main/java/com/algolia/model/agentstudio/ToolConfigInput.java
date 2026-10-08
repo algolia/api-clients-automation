@@ -52,14 +52,9 @@ public interface ToolConfigInput {
       JsonNode discriminatorNode = tree.get("type");
       if (discriminatorNode != null && discriminatorNode.isTextual()) {
         String discriminatorValue = discriminatorNode.asText();
-        if ("algolia_display_results".equals(discriminatorValue)) {
-          try (JsonParser parser = tree.traverse(jp.getCodec())) {
-            return parser.readValueAs(AlgoliaDisplayResultsToolConfig.class);
-          }
-        }
         if ("algolia_recommend".equals(discriminatorValue)) {
           try (JsonParser parser = tree.traverse(jp.getCodec())) {
-            return parser.readValueAs(AlgoliaRecommendToolConfigInput.class);
+            return parser.readValueAs(AlgoliaRecommendToolConfig.class);
           }
         }
         if ("algolia_search_index".equals(discriminatorValue)) {
@@ -112,29 +107,14 @@ public interface ToolConfigInput {
           );
         }
       }
-      // deserialize AlgoliaRecommendToolConfigInput
+      // deserialize AlgoliaRecommendToolConfig
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AlgoliaRecommendToolConfigInput.class);
+          return parser.readValueAs(AlgoliaRecommendToolConfig.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
-            "Failed to deserialize oneOf AlgoliaRecommendToolConfigInput (error: " +
-              e.getMessage() +
-              ") (type: AlgoliaRecommendToolConfigInput)"
-          );
-        }
-      }
-      // deserialize AlgoliaDisplayResultsToolConfig
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AlgoliaDisplayResultsToolConfig.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf AlgoliaDisplayResultsToolConfig (error: " +
-              e.getMessage() +
-              ") (type: AlgoliaDisplayResultsToolConfig)"
+            "Failed to deserialize oneOf AlgoliaRecommendToolConfig (error: " + e.getMessage() + ") (type: AlgoliaRecommendToolConfig)"
           );
         }
       }

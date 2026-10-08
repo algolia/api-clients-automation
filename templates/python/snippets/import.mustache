@@ -1,3 +1,6 @@
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}Sync{{/lambda.pascalcase}}
+{{#listReturnTypes}}
+from algoliasearch.{{{import}}}.models import {{.}}
+{{/listReturnTypes}}
 from json import loads

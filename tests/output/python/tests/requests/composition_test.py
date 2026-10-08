@@ -1287,6 +1287,62 @@ class TestCompositionClient:
             """{"objectID":"my-compo","name":"my composition","behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}"""
         )
 
+    async def test_put_composition_9(self):
+        """
+        putComposition
+        """
+        _req = await self._client.put_composition_with_http_info(
+            composition_id="my-external-provider-compo",
+            composition={
+                "objectID": "my-external-provider-compo",
+                "name": "my external provider composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "externalProvider": {
+                                    "index": "products",
+                                    "configurationID": "my-rmn-connection",
+                                    "configurationParams": {
+                                        "campaign_id": "summer-sale",
+                                        "customer_id": "customer-default",
+                                    },
+                                    "params": {
+                                        "filters": "instock:true",
+                                    },
+                                    "ordering": "providerDefined",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "sponsored",
+                                "source": {
+                                    "externalProvider": {
+                                        "index": "products",
+                                        "configurationID": "my-rmn-connection",
+                                        "configurationParams": {
+                                            "campaign_id": "summer-sale",
+                                        },
+                                    },
+                                },
+                                "position": 0,
+                                "length": 2,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-external-provider-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}"""
+        )
+
     async def test_put_composition_rule_(self):
         """
         putCompositionRule
@@ -1535,6 +1591,65 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
+        )
+
+    async def test_put_composition_rule_4(self):
+        """
+        putCompositionRule
+        """
+        _req = await self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-external-provider-source",
+            composition_rule={
+                "objectID": "rule-with-external-provider-source",
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "my-unique-external-provider-group-from-rule-key",
+                                    "source": {
+                                        "externalProvider": {
+                                            "index": "my-index",
+                                            "configurationID": "my-rmn-connection",
+                                            "configurationParams": {
+                                                "campaign_id": "summer-sale",
+                                            },
+                                            "ordering": "providerDefined",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path
+            == "/1/compositions/compositionID/rules/rule-with-external-provider-source"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}"""
         )
 
     async def test_save_rules_(self):
@@ -2084,6 +2199,32 @@ class TestCompositionClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}"""
+        )
+
+    async def test_search_4(self):
+        """
+        search
+        """
+        _req = await self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                },
+                "externalProvider": {
+                    "configurationParams": {
+                        "customer_id": "customer123",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}"""
         )
 
     async def test_search_composition_rules_(self):
@@ -3424,6 +3565,62 @@ class TestCompositionClientSync:
             """{"objectID":"my-compo","name":"my composition","behavior":{"multifeed":{"feeds":{"products":{"injection":{"main":{"source":{"search":{"index":"products","params":{"hitsPerPage":12}}}},"injectedItems":[{"key":"featured-products","source":{"search":{"index":"products","params":{"filters":"featured:true"}}},"position":0,"length":2}]}},"articles":{"injection":{"main":{"source":{"search":{"index":"articles","params":{"hitsPerPage":5,"attributesToRetrieve":["title","excerpt","publishedAt"]}}}},"injectedItems":[{"key":"editorial-picks","source":{"search":{"index":"articles","params":{"filters":"editorial_pick:true"}}},"position":0,"length":1}]}},"videos":{"injection":{"main":{"source":{"search":{"index":"videos","params":{"hitsPerPage":3,"attributesToRetrieve":["title","thumbnail","duration"]}}}}}}},"feedsOrder":["products","articles","videos"]}}}"""
         )
 
+    def test_put_composition_9(self):
+        """
+        putComposition
+        """
+        _req = self._client.put_composition_with_http_info(
+            composition_id="my-external-provider-compo",
+            composition={
+                "objectID": "my-external-provider-compo",
+                "name": "my external provider composition",
+                "behavior": {
+                    "injection": {
+                        "main": {
+                            "source": {
+                                "externalProvider": {
+                                    "index": "products",
+                                    "configurationID": "my-rmn-connection",
+                                    "configurationParams": {
+                                        "campaign_id": "summer-sale",
+                                        "customer_id": "customer-default",
+                                    },
+                                    "params": {
+                                        "filters": "instock:true",
+                                    },
+                                    "ordering": "providerDefined",
+                                },
+                            },
+                        },
+                        "injectedItems": [
+                            {
+                                "key": "sponsored",
+                                "source": {
+                                    "externalProvider": {
+                                        "index": "products",
+                                        "configurationID": "my-rmn-connection",
+                                        "configurationParams": {
+                                            "campaign_id": "summer-sale",
+                                        },
+                                    },
+                                },
+                                "position": 0,
+                                "length": 2,
+                            },
+                        ],
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/my-external-provider-compo"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"my-external-provider-compo","name":"my external provider composition","behavior":{"injection":{"main":{"source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale","customer_id":"customer-default"},"params":{"filters":"instock:true"},"ordering":"providerDefined"}}},"injectedItems":[{"key":"sponsored","source":{"externalProvider":{"index":"products","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"}}},"position":0,"length":2}]}}}"""
+        )
+
     def test_put_composition_rule_(self):
         """
         putCompositionRule
@@ -3672,6 +3869,65 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"objectID":"rule-with-deduplication","description":"my description","enabled":true,"conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-injected-item-key","source":{"search":{"index":"my-index"}},"position":0,"length":3}],"deduplication":{"positioning":"highestInjected"}}}}}"""
+        )
+
+    def test_put_composition_rule_4(self):
+        """
+        putCompositionRule
+        """
+        _req = self._client.put_composition_rule_with_http_info(
+            composition_id="compositionID",
+            object_id="rule-with-external-provider-source",
+            composition_rule={
+                "objectID": "rule-with-external-provider-source",
+                "conditions": [
+                    {
+                        "anchoring": "contains",
+                        "pattern": "harry",
+                    },
+                ],
+                "consequence": {
+                    "behavior": {
+                        "injection": {
+                            "main": {
+                                "source": {
+                                    "search": {
+                                        "index": "my-index",
+                                    },
+                                },
+                            },
+                            "injectedItems": [
+                                {
+                                    "key": "my-unique-external-provider-group-from-rule-key",
+                                    "source": {
+                                        "externalProvider": {
+                                            "index": "my-index",
+                                            "configurationID": "my-rmn-connection",
+                                            "configurationParams": {
+                                                "campaign_id": "summer-sale",
+                                            },
+                                            "ordering": "providerDefined",
+                                        },
+                                    },
+                                    "position": 0,
+                                    "length": 3,
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        )
+
+        assert (
+            _req.path
+            == "/1/compositions/compositionID/rules/rule-with-external-provider-source"
+        )
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"objectID":"rule-with-external-provider-source","conditions":[{"anchoring":"contains","pattern":"harry"}],"consequence":{"behavior":{"injection":{"main":{"source":{"search":{"index":"my-index"}}},"injectedItems":[{"key":"my-unique-external-provider-group-from-rule-key","source":{"externalProvider":{"index":"my-index","configurationID":"my-rmn-connection","configurationParams":{"campaign_id":"summer-sale"},"ordering":"providerDefined"}},"position":0,"length":3}]}}}}"""
         )
 
     def test_save_rules_(self):
@@ -4221,6 +4477,32 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"params":{"query":"batman"},"feedsOrder":["feed-movies","feed-comics"]}"""
+        )
+
+    def test_search_4(self):
+        """
+        search
+        """
+        _req = self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "batman",
+                },
+                "externalProvider": {
+                    "configurationParams": {
+                        "customer_id": "customer123",
+                    },
+                },
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}"""
         )
 
     def test_search_composition_rules_(self):

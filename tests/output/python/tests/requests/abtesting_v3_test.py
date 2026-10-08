@@ -47,6 +47,59 @@ class TestAbtestingV3Client:
             """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
         )
 
+    async def test_add_ab_tests_1(self):
+        """
+        addABTests with Bayesian configuration
+        """
+        _req = await self._client.add_ab_tests_with_http_info(
+            add_ab_tests_request={
+                "endAt": "2022-12-31T00:00:00.000Z",
+                "name": "myABTest",
+                "metrics": [
+                    {
+                        "name": "conversionRate",
+                    },
+                ],
+                "variants": [
+                    {
+                        "index": "AB_TEST_1",
+                        "trafficPercentage": 30,
+                    },
+                    {
+                        "index": "AB_TEST_2",
+                        "trafficPercentage": 50,
+                    },
+                ],
+                "configuration": {
+                    "method": "bayesian",
+                    "primaryMetric": "conversion_rate",
+                },
+            },
+        )
+
+        assert _req.path == "/3/abtests"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+        )
+
+    async def test_apply_variant_settings_(self):
+        """
+        applyVariantSettings
+        """
+        _req = await self._client.apply_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2/apply"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
@@ -495,6 +548,41 @@ class TestAbtestingV3Client:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_ab_test_1(self):
+        """
+        getABTest with both inference methods
+        """
+        _req = await self._client.get_ab_test_with_http_info(
+            id=42,
+            methods=[
+                "frequentist",
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"methods": "frequentist%2Cbayesian"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_ab_test_settings_(self):
+        """
+        getABTestSettings
+        """
+        _req = await self._client.get_ab_test_settings_with_http_info(
+            id=42,
+        )
+
+        assert _req.path == "/3/abtests/42/settings"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_timeseries_(self):
         """
         getTimeseries
@@ -506,6 +594,36 @@ class TestAbtestingV3Client:
         assert _req.path == "/3/abtests/42/timeseries"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_timeseries_1(self):
+        """
+        getTimeseries with Bayesian revenue per search
+        """
+        _req = await self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "revenue_per_search",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "revenue_per_search",
+                "methods": "bayesian",
+            }.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -531,6 +649,10 @@ class TestAbtestingV3Client:
             index_prefix="cts_e2e ab",
             index_suffix="t",
             direction="asc",
+            methods=[
+                "frequentist",
+                "bayesian",
+            ],
         )
 
         assert _req.path == "/3/abtests"
@@ -543,10 +665,45 @@ class TestAbtestingV3Client:
                 "indexPrefix": "cts_e2e%20ab",
                 "indexSuffix": "t",
                 "direction": "asc",
+                "methods": "frequentist%2Cbayesian",
             }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    async def test_save_variant_settings_(self):
+        """
+        saveVariantSettings
+        """
+        _req = await self._client.save_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+            save_settings_request={
+                "saveFeaturesSettings": True,
+            },
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"saveFeaturesSettings":true}""")
+
+    async def test_save_variant_settings_1(self):
+        """
+        save settings with an empty options object
+        """
+        _req = await self._client.save_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+            save_settings_request={},
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     async def test_stop_ab_test_(self):
         """
@@ -560,6 +717,7 @@ class TestAbtestingV3Client:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
 
 class TestAbtestingV3ClientSync:
@@ -601,6 +759,59 @@ class TestAbtestingV3ClientSync:
         assert loads(_req.data) == loads(
             """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
         )
+
+    def test_add_ab_tests_1(self):
+        """
+        addABTests with Bayesian configuration
+        """
+        _req = self._client.add_ab_tests_with_http_info(
+            add_ab_tests_request={
+                "endAt": "2022-12-31T00:00:00.000Z",
+                "name": "myABTest",
+                "metrics": [
+                    {
+                        "name": "conversionRate",
+                    },
+                ],
+                "variants": [
+                    {
+                        "index": "AB_TEST_1",
+                        "trafficPercentage": 30,
+                    },
+                    {
+                        "index": "AB_TEST_2",
+                        "trafficPercentage": 50,
+                    },
+                ],
+                "configuration": {
+                    "method": "bayesian",
+                    "primaryMetric": "conversion_rate",
+                },
+            },
+        )
+
+        assert _req.path == "/3/abtests"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+        )
+
+    def test_apply_variant_settings_(self):
+        """
+        applyVariantSettings
+        """
+        _req = self._client.apply_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2/apply"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
 
     def test_custom_delete_(self):
         """
@@ -1050,6 +1261,41 @@ class TestAbtestingV3ClientSync:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    def test_get_ab_test_1(self):
+        """
+        getABTest with both inference methods
+        """
+        _req = self._client.get_ab_test_with_http_info(
+            id=42,
+            methods=[
+                "frequentist",
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {"methods": "frequentist%2Cbayesian"}.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_ab_test_settings_(self):
+        """
+        getABTestSettings
+        """
+        _req = self._client.get_ab_test_settings_with_http_info(
+            id=42,
+        )
+
+        assert _req.path == "/3/abtests/42/settings"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     def test_get_timeseries_(self):
         """
         getTimeseries
@@ -1061,6 +1307,36 @@ class TestAbtestingV3ClientSync:
         assert _req.path == "/3/abtests/42/timeseries"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_timeseries_1(self):
+        """
+        getTimeseries with Bayesian revenue per search
+        """
+        _req = self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "revenue_per_search",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "revenue_per_search",
+                "methods": "bayesian",
+            }.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -1086,6 +1362,10 @@ class TestAbtestingV3ClientSync:
             index_prefix="cts_e2e ab",
             index_suffix="t",
             direction="asc",
+            methods=[
+                "frequentist",
+                "bayesian",
+            ],
         )
 
         assert _req.path == "/3/abtests"
@@ -1098,10 +1378,45 @@ class TestAbtestingV3ClientSync:
                 "indexPrefix": "cts_e2e%20ab",
                 "indexSuffix": "t",
                 "direction": "asc",
+                "methods": "frequentist%2Cbayesian",
             }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
+
+    def test_save_variant_settings_(self):
+        """
+        saveVariantSettings
+        """
+        _req = self._client.save_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+            save_settings_request={
+                "saveFeaturesSettings": True,
+            },
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"saveFeaturesSettings":true}""")
+
+    def test_save_variant_settings_1(self):
+        """
+        save settings with an empty options object
+        """
+        _req = self._client.save_variant_settings_with_http_info(
+            id=42,
+            variant_id=2,
+            save_settings_request={},
+        )
+
+        assert _req.path == "/3/abtests/42/settings/2"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
 
     def test_stop_ab_test_(self):
         """
@@ -1115,3 +1430,4 @@ class TestAbtestingV3ClientSync:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+        assert _req.data is None

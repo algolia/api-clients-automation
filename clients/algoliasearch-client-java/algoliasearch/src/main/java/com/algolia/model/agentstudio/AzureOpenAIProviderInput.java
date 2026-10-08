@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Azure OpenAI-specific provider input. */
 @JsonDeserialize(as = AzureOpenAIProviderInput.class)
-public class AzureOpenAIProviderInput implements ProviderInputNullable, ProviderInput {
+public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
 
   @JsonProperty("apiKey")
   private String apiKey;
@@ -50,7 +50,7 @@ public class AzureOpenAIProviderInput implements ProviderInputNullable, Provider
     return this;
   }
 
-  /** Azure model deployment name is required. */
+  /** Azure model deployment name. */
   @javax.annotation.Nonnull
   public String getAzureDeployment() {
     return azureDeployment;

@@ -53,11 +53,19 @@ ConversationFullResponse:
         - type: 'null'
     feedback:
       $ref: 'FeedbackUnion.yml#/FeedbackUnion'
+    impactAnalytics:
+      oneOf:
+        - $ref: 'ImpactAnalytics.yml#/ImpactAnalytics'
+        - type: 'null'
     messages:
       items:
         $ref: 'MessageResponse.yml#/MessageResponse'
       type: array
       title: messages
+    analyticsDegraded:
+      type: boolean
+      title: analyticsdegraded
+      default: false
   type: object
   required:
     - id

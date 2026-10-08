@@ -17,6 +17,12 @@ final class SearchParametersOverrides {
     this.enablePersonalization,
     this.personalizationImpact,
     this.optionalFilters,
+    this.aroundLatLng,
+    this.aroundRadius,
+    this.aroundPrecision,
+    this.minimumAroundRadius,
+    this.insideBoundingBox,
+    this.insidePolygon,
   });
 
   @JsonKey(name: r'filters')
@@ -50,6 +56,36 @@ final class SearchParametersOverrides {
   @JsonKey(name: r'optionalFilters')
   final dynamic optionalFilters;
 
+  @JsonKey(name: r'aroundLatLng')
+  final String? aroundLatLng;
+
+  /// One of types:
+  /// - [String]
+  /// - [int]
+  @JsonKey(name: r'aroundRadius')
+  final dynamic aroundRadius;
+
+  /// One of types:
+  /// - [List<Map<String, int>>]
+  /// - [int]
+  @JsonKey(name: r'aroundPrecision')
+  final dynamic aroundPrecision;
+
+  @JsonKey(name: r'minimumAroundRadius')
+  final int? minimumAroundRadius;
+
+  /// One of types:
+  /// - [List<List<num>>]
+  /// - [String]
+  @JsonKey(name: r'insideBoundingBox')
+  final dynamic insideBoundingBox;
+
+  /// One of types:
+  /// - [List<List<num>>]
+  /// - [String]
+  @JsonKey(name: r'insidePolygon')
+  final dynamic insidePolygon;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,7 +97,13 @@ final class SearchParametersOverrides {
           other.userToken == userToken &&
           other.enablePersonalization == enablePersonalization &&
           other.personalizationImpact == personalizationImpact &&
-          other.optionalFilters == optionalFilters;
+          other.optionalFilters == optionalFilters &&
+          other.aroundLatLng == aroundLatLng &&
+          other.aroundRadius == aroundRadius &&
+          other.aroundPrecision == aroundPrecision &&
+          other.minimumAroundRadius == minimumAroundRadius &&
+          other.insideBoundingBox == insideBoundingBox &&
+          other.insidePolygon == insidePolygon;
 
   @override
   int get hashCode =>
@@ -72,7 +114,13 @@ final class SearchParametersOverrides {
       userToken.hashCode +
       enablePersonalization.hashCode +
       personalizationImpact.hashCode +
-      (optionalFilters == null ? 0 : optionalFilters.hashCode);
+      (optionalFilters == null ? 0 : optionalFilters.hashCode) +
+      aroundLatLng.hashCode +
+      (aroundRadius == null ? 0 : aroundRadius.hashCode) +
+      (aroundPrecision == null ? 0 : aroundPrecision.hashCode) +
+      minimumAroundRadius.hashCode +
+      (insideBoundingBox == null ? 0 : insideBoundingBox.hashCode) +
+      (insidePolygon == null ? 0 : insidePolygon.hashCode);
 
   factory SearchParametersOverrides.fromJson(Map<String, dynamic> json) =>
       _$SearchParametersOverridesFromJson(json);

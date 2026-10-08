@@ -69,6 +69,63 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("addABTests with Bayesian configuration1") {
+    val (client, echo) = testClient()
+    val future = client.addABTests(
+      addABTestsRequest = AddABTestsRequest(
+        endAt = "2022-12-31T00:00:00.000Z",
+        name = "myABTest",
+        metrics = Seq(
+          CreateMetric(
+            name = "conversionRate"
+          )
+        ),
+        variants = Seq(
+          AbTestsVariant(
+            index = "AB_TEST_1",
+            trafficPercentage = 30
+          ),
+          AbTestsVariant(
+            index = "AB_TEST_2",
+            trafficPercentage = 50
+          )
+        ),
+        configuration = Some(
+          ABTestConfiguration(
+            method = Some(AnalysisMethod.withName("bayesian")),
+            primaryMetric = Some(PrimaryMetric.withName("conversion_rate"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("applyVariantSettings") {
+    val (client, echo) = testClient()
+    val future = client.applyVariantSettings(
+      id = 42,
+      variantId = 2
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2/apply")
+    assert(res.method == "POST")
+    assert(res.body.isEmpty)
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
@@ -617,6 +674,42 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getABTest with both inference methods1") {
+    val (client, echo) = testClient()
+    val future = client.getABTest(
+      id = 42,
+      methods = Some(Seq(AnalysisMethod.withName("frequentist"), AnalysisMethod.withName("bayesian")))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"methods":"frequentist%2Cbayesian"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("getABTestSettings") {
+    val (client, echo) = testClient()
+    val future = client.getABTestSettings(
+      id = 42
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getTimeseries") {
     val (client, echo) = testClient()
     val future = client.getTimeseries(
@@ -629,6 +722,33 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.path == "/3/abtests/42/timeseries")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
+  }
+
+  test("getTimeseries with Bayesian revenue per search1") {
+    val (client, echo) = testClient()
+    val future = client.getTimeseries(
+      id = 42,
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      metric = Some(Seq(MetricName.withName("revenue_per_search"))),
+      methods = Some(Seq(AnalysisMethod.withName("bayesian")))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/timeseries")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse(
+      """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}"""
+    ).asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
   }
 
   test("listABTests with minimal parameters") {
@@ -651,7 +771,8 @@ class AbtestingV3Test extends AnyFunSuite {
       limit = Some(21),
       indexPrefix = Some("cts_e2e ab"),
       indexSuffix = Some("t"),
-      direction = Some(Direction.withName("asc"))
+      direction = Some(Direction.withName("asc")),
+      methods = Some(Seq(AnalysisMethod.withName("frequentist"), AnalysisMethod.withName("bayesian")))
     )
 
     Await.ready(future, Duration.Inf)
@@ -661,7 +782,7 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc"}"""
+      """{"offset":"0","limit":"21","indexPrefix":"cts_e2e%20ab","indexSuffix":"t","direction":"asc","methods":"frequentist%2Cbayesian"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
@@ -669,6 +790,45 @@ class AbtestingV3Test extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("saveVariantSettings") {
+    val (client, echo) = testClient()
+    val future = client.saveVariantSettings(
+      id = 42,
+      variantId = 2,
+      saveSettingsRequest = SaveSettingsRequest(
+        saveFeaturesSettings = Some(true)
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"saveFeaturesSettings":true}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("save settings with an empty options object1") {
+    val (client, echo) = testClient()
+    val future = client.saveVariantSettings(
+      id = 42,
+      variantId = 2,
+      saveSettingsRequest = SaveSettingsRequest(
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/settings/2")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("stopABTest") {
@@ -682,7 +842,7 @@ class AbtestingV3Test extends AnyFunSuite {
 
     assert(res.path == "/3/abtests/42/stop")
     assert(res.method == "POST")
-    assert(res.body.contains("{}"))
+    assert(res.body.isEmpty)
   }
 
 }

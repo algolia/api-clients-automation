@@ -40,7 +40,7 @@ class IngestionTest extends AnyFunSuite {
     )
   }
 
-  test("can handle HTML error") {
+  test("can handle HTML error when rate-limit retries are disabled") {
 
     val client = IngestionClient(
       appId = "test-app-id",
@@ -58,6 +58,7 @@ class IngestionTest extends AnyFunSuite {
             )
           )
         )
+        .withMaxRateLimitRetries(0)
         .build()
     )
 
@@ -189,7 +190,7 @@ class IngestionTest extends AnyFunSuite {
       ),
       Duration.Inf
     )
-    val regexp = """^Algolia for Scala \(2.46.0\).*""".r
+    val regexp = """^Algolia for Scala \(2.47.0\).*""".r
     val header = echo.lastResponse.get.headers("user-agent")
     assert(header.matches(regexp.regex), s"Expected $header to match the following regex: ${regexp.regex}")
   }

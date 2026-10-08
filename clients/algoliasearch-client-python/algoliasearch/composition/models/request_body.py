@@ -18,11 +18,13 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.composition.models.external_provider import ExternalProvider
 from algoliasearch.composition.models.params import Params
 
 _ALIASES = {
     "params": "params",
     "feeds_order": "feedsOrder",
+    "external_provider": "externalProvider",
 }
 
 
@@ -38,6 +40,7 @@ class RequestBody(BaseModel):
     params: Optional[Params] = None
     feeds_order: Optional[List[str]] = None
     """ A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.  """
+    external_provider: Optional[ExternalProvider] = None
 
     model_config = ConfigDict(
         strict=False,
@@ -76,6 +79,11 @@ class RequestBody(BaseModel):
 
         obj["params"] = (
             Params.from_dict(obj["params"]) if obj.get("params") is not None else None
+        )
+        obj["externalProvider"] = (
+            ExternalProvider.from_dict(obj["externalProvider"])
+            if obj.get("externalProvider") is not None
+            else None
         )
 
         return cls.model_validate(obj)

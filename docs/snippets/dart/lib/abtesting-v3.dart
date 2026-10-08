@@ -8,7 +8,7 @@ import 'package:algolia_client_abtesting_v3/algolia_client_abtesting_v3.dart';
 //
 // addABTests with minimal parameters
 void snippetForaddABTests() async {
-  // >SEPARATOR addABTests default
+  // >SEPARATOR addABTests addABTests with minimal parameters
   // Initialize the client
   final client = AbtestingV3Client(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -40,6 +40,69 @@ void snippetForaddABTests() async {
   // >LOG
   // print the response
   print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the addABTests method.
+//
+// addABTests with Bayesian configuration
+void snippetForaddABTests1() async {
+  // >SEPARATOR addABTests addABTests with Bayesian configuration
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.addABTests(
+    addABTestsRequest: AddABTestsRequest(
+      endAt: "2022-12-31T00:00:00.000Z",
+      name: "myABTest",
+      metrics: [
+        CreateMetric(
+          name: "conversionRate",
+        ),
+      ],
+      variants: [
+        AbTestsVariant(
+          index: "AB_TEST_1",
+          trafficPercentage: 30,
+        ),
+        AbTestsVariant(
+          index: "AB_TEST_2",
+          trafficPercentage: 50,
+        ),
+      ],
+      configuration: ABTestConfiguration(
+        method: AnalysisMethod.fromJson("bayesian"),
+        primaryMetric: PrimaryMetric.fromJson("conversion_rate"),
+      ),
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the applyVariantSettings method.
+//
+// applyVariantSettings
+void snippetForapplyVariantSettings() async {
+  // >SEPARATOR applyVariantSettings default
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.applyVariantSettings(
+    id: 42,
+    variantId: 2,
+  );
+  // >LOG
   // SEPARATOR<
 }
 
@@ -626,7 +689,7 @@ void snippetForestimateABTest() async {
 //
 // getABTest
 void snippetForgetABTest() async {
-  // >SEPARATOR getABTest default
+  // >SEPARATOR getABTest getABTest
   // Initialize the client
   final client = AbtestingV3Client(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -643,11 +706,57 @@ void snippetForgetABTest() async {
   // SEPARATOR<
 }
 
+// Snippet for the getABTest method.
+//
+// getABTest with both inference methods
+void snippetForgetABTest1() async {
+  // >SEPARATOR getABTest getABTest with both inference methods
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.getABTest(
+    id: 42,
+    methods: [
+      AnalysisMethod.fromJson("frequentist"),
+      AnalysisMethod.fromJson("bayesian"),
+    ],
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getABTestSettings method.
+//
+// getABTestSettings
+void snippetForgetABTestSettings() async {
+  // >SEPARATOR getABTestSettings default
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.getABTestSettings(
+    id: 42,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getTimeseries method.
 //
 // getTimeseries
 void snippetForgetTimeseries() async {
-  // >SEPARATOR getTimeseries default
+  // >SEPARATOR getTimeseries getTimeseries
   // Initialize the client
   final client = AbtestingV3Client(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -657,6 +766,35 @@ void snippetForgetTimeseries() async {
   // Call the API
   final response = await client.getTimeseries(
     id: 42,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with Bayesian revenue per search
+void snippetForgetTimeseries1() async {
+  // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.getTimeseries(
+    id: 42,
+    startDate: "1999-09-19",
+    endDate: "2001-01-01",
+    metric: [
+      MetricName.fromJson("revenue_per_search"),
+    ],
+    methods: [
+      AnalysisMethod.fromJson("bayesian"),
+    ],
   );
   // >LOG
   // print the response
@@ -701,10 +839,58 @@ void snippetForlistABTests1() async {
     indexPrefix: "cts_e2e ab",
     indexSuffix: "t",
     direction: Direction.fromJson("asc"),
+    methods: [
+      AnalysisMethod.fromJson("frequentist"),
+      AnalysisMethod.fromJson("bayesian"),
+    ],
   );
   // >LOG
   // print the response
   print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// saveVariantSettings
+void snippetForsaveVariantSettings() async {
+  // >SEPARATOR saveVariantSettings saveVariantSettings
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.saveVariantSettings(
+    id: 42,
+    variantId: 2,
+    saveSettingsRequest: SaveSettingsRequest(
+      saveFeaturesSettings: true,
+    ),
+  );
+  // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the saveVariantSettings method.
+//
+// save settings with an empty options object
+void snippetForsaveVariantSettings1() async {
+  // >SEPARATOR saveVariantSettings save settings with an empty options object
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  await client.saveVariantSettings(
+    id: 42,
+    variantId: 2,
+    saveSettingsRequest: SaveSettingsRequest(),
+  );
+  // >LOG
   // SEPARATOR<
 }
 

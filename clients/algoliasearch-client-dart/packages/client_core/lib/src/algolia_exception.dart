@@ -15,9 +15,18 @@ final class AlgoliaApiException implements AlgoliaException {
   /// Quote it when contacting Algolia support.
   final String? correlationId;
 
+  /// The headers of the failed response, when the requester provides them;
+  /// the transport reads `Retry-After` from here on a 429.
+  final Map<String, String>? headers;
+
   /// Constructs an [AlgoliaApiException] with the provided status code, error
-  /// message and optional Correlation-ID.
-  const AlgoliaApiException(this.statusCode, this.error, {this.correlationId});
+  /// message, optional Correlation-ID and optional response headers.
+  const AlgoliaApiException(
+    this.statusCode,
+    this.error, {
+    this.correlationId,
+    this.headers,
+  });
 
   @override
   String toString() {

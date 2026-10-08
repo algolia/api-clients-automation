@@ -26,7 +26,7 @@ public class IngestionClientTests
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "can handle HTML error")]
+  [Fact(DisplayName = "can handle HTML error when rate-limit retries are disabled")]
   public async Task ApiTest0()
   {
     IngestionConfig _config = new IngestionConfig("test-app-id", "test-api-key", "us")
@@ -46,6 +46,7 @@ public class IngestionClientTests
           Accept = CallType.Read | CallType.Write,
         },
       },
+      MaxRateLimitRetries = 0,
     };
     var client = new IngestionClient(_config);
 
@@ -163,7 +164,7 @@ public class IngestionClientTests
     await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
-      var regexp = new Regex("^Algolia for Csharp \\(7.48.0\\).*");
+      var regexp = new Regex("^Algolia for Csharp \\(7.49.0\\).*");
       Assert.Matches(regexp, result.Headers["user-agent"]);
     }
   }

@@ -685,7 +685,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "bar" },
+                            Search = new InjectionMainSearch { Index = "bar" },
                           }
                         ),
                       },
@@ -740,7 +740,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "foo" },
+                            Search = new InjectionMainSearch { Index = "foo" },
                           }
                         ),
                       },
@@ -813,7 +813,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "foo",
                               Params = new MainInjectionQueryParameters
@@ -945,7 +945,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch { Index = "foo" },
+                            Search = new InjectionMainSearch { Index = "foo" },
                           }
                         ),
                       },
@@ -1005,7 +1005,10 @@ public class CompositionClientRequestTests
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "foo" },
+                  }
                 ),
               },
               InjectedItems = new List<InjectionInjectedItem>
@@ -1056,7 +1059,10 @@ public class CompositionClientRequestTests
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "foo" },
+                  }
                 ),
               },
               InjectedItems = new List<InjectionInjectedItem>
@@ -1114,7 +1120,7 @@ public class CompositionClientRequestTests
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "foo",
                       Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1226,7 +1232,7 @@ public class CompositionClientRequestTests
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "foo",
                       Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1291,7 +1297,10 @@ public class CompositionClientRequestTests
               Main = new InjectionMain
               {
                 Source = new InjectionMainSource(
-                  new InjectionMainSearchSource { Search = new MainSearch { Index = "products" } }
+                  new InjectionMainSearchSource
+                  {
+                    Search = new InjectionMainSearch { Index = "products" },
+                  }
                 ),
               },
             },
@@ -1329,7 +1338,7 @@ public class CompositionClientRequestTests
                 Source = new InjectionMainSource(
                   new InjectionMainRecommendSource
                   {
-                    Recommend = new MainRecommend
+                    Recommend = new InjectionMainRecommend
                     {
                       IndexName = "products",
                       Model = Enum.Parse<Model>("TrendingItems"),
@@ -1346,7 +1355,7 @@ public class CompositionClientRequestTests
                   Source = new InjectedItemSource(
                     new InjectedItemRecommendSource
                     {
-                      Recommend = new Recommend
+                      Recommend = new InjectedItemRecommend
                       {
                         IndexName = "products",
                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -1397,7 +1406,7 @@ public class CompositionClientRequestTests
                 Source = new InjectionMainSource(
                   new InjectionMainSearchSource
                   {
-                    Search = new MainSearch
+                    Search = new InjectionMainSearch
                     {
                       Index = "products",
                       Params = new MainInjectionQueryParameters { Filters = "brand:nike" },
@@ -1413,7 +1422,7 @@ public class CompositionClientRequestTests
                   Source = new InjectedItemSource(
                     new InjectedItemRecommendSource
                     {
-                      Recommend = new Recommend
+                      Recommend = new InjectedItemRecommend
                       {
                         IndexName = "products",
                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -1468,7 +1477,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainRecommendSource
                           {
-                            Recommend = new MainRecommend
+                            Recommend = new InjectionMainRecommend
                             {
                               IndexName = "products",
                               Model = Enum.Parse<Model>("TrendingItems"),
@@ -1525,7 +1534,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "products",
                               Params = new MainInjectionQueryParameters { HitsPerPage = 12 },
@@ -1569,7 +1578,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "articles",
                               Params = new MainInjectionQueryParameters
@@ -1622,7 +1631,7 @@ public class CompositionClientRequestTests
                         Source = new InjectionMainSource(
                           new InjectionMainSearchSource
                           {
-                            Search = new MainSearch
+                            Search = new InjectionMainSearch
                             {
                               Index = "videos",
                               Params = new MainInjectionQueryParameters
@@ -1660,6 +1669,79 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "putComposition")]
+  public async Task PutCompositionTest9()
+  {
+    await client.PutCompositionAsync(
+      "my-external-provider-compo",
+      new Composition
+      {
+        ObjectID = "my-external-provider-compo",
+        Name = "my external provider composition",
+        Behavior = new CompositionBehavior(
+          new CompositionInjectionBehavior
+          {
+            Injection = new Injection
+            {
+              Main = new InjectionMain
+              {
+                Source = new InjectionMainSource(
+                  new InjectionMainExternalProviderSource
+                  {
+                    ExternalProvider = new InjectionMainExternalProvider
+                    {
+                      Index = "products",
+                      ConfigurationID = "my-rmn-connection",
+                      ConfigurationParams = new Dictionary<string, object>
+                      {
+                        { "campaign_id", "summer-sale" },
+                        { "customer_id", "customer-default" },
+                      },
+                      Params = new MainInjectionQueryParameters { Filters = "instock:true" },
+                      Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                    },
+                  }
+                ),
+              },
+              InjectedItems = new List<InjectionInjectedItem>
+              {
+                new InjectionInjectedItem
+                {
+                  Key = "sponsored",
+                  Source = new InjectedItemSource(
+                    new InjectedItemExternalProviderSource
+                    {
+                      ExternalProvider = new InjectedItemExternalProvider
+                      {
+                        Index = "products",
+                        ConfigurationID = "my-rmn-connection",
+                        ConfigurationParams = new Dictionary<string, object>
+                        {
+                          { "campaign_id", "summer-sale" },
+                        },
+                      },
+                    }
+                  ),
+                  Position = 0,
+                  Length = 2,
+                },
+              },
+            },
+          }
+        ),
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/my-external-provider-compo", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"my-external-provider-compo\",\"name\":\"my external provider composition\",\"behavior\":{\"injection\":{\"main\":{\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\",\"customer_id\":\"customer-default\"},\"params\":{\"filters\":\"instock:true\"},\"ordering\":\"providerDefined\"}}},\"injectedItems\":[{\"key\":\"sponsored\",\"source\":{\"externalProvider\":{\"index\":\"products\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"}}},\"position\":0,\"length\":2}]}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "putCompositionRule")]
   public async Task PutCompositionRuleTest()
   {
@@ -1683,7 +1765,10 @@ public class CompositionClientRequestTests
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "foo" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -1741,7 +1826,10 @@ public class CompositionClientRequestTests
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "foo" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "foo" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -1830,7 +1918,7 @@ public class CompositionClientRequestTests
                   Source = new InjectionMainSource(
                     new InjectionMainSearchSource
                     {
-                      Search = new MainSearch
+                      Search = new InjectionMainSearch
                       {
                         Index = "my-index",
                         Params = new MainInjectionQueryParameters { Filters = "brand:adidas" },
@@ -1900,7 +1988,10 @@ public class CompositionClientRequestTests
                 Main = new InjectionMain
                 {
                   Source = new InjectionMainSource(
-                    new InjectionMainSearchSource { Search = new MainSearch { Index = "my-index" } }
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "my-index" },
+                    }
                   ),
                 },
                 InjectedItems = new List<InjectionInjectedItem>
@@ -1939,6 +2030,79 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "putCompositionRule")]
+  public async Task PutCompositionRuleTest4()
+  {
+    await client.PutCompositionRuleAsync(
+      "compositionID",
+      "rule-with-external-provider-source",
+      new CompositionRule
+      {
+        ObjectID = "rule-with-external-provider-source",
+        Conditions = new List<Condition>
+        {
+          new Condition { Anchoring = Enum.Parse<Anchoring>("Contains"), Pattern = "harry" },
+        },
+        Consequence = new CompositionRuleConsequence
+        {
+          Behavior = new CompositionBehavior(
+            new CompositionInjectionBehavior
+            {
+              Injection = new Injection
+              {
+                Main = new InjectionMain
+                {
+                  Source = new InjectionMainSource(
+                    new InjectionMainSearchSource
+                    {
+                      Search = new InjectionMainSearch { Index = "my-index" },
+                    }
+                  ),
+                },
+                InjectedItems = new List<InjectionInjectedItem>
+                {
+                  new InjectionInjectedItem
+                  {
+                    Key = "my-unique-external-provider-group-from-rule-key",
+                    Source = new InjectedItemSource(
+                      new InjectedItemExternalProviderSource
+                      {
+                        ExternalProvider = new InjectedItemExternalProvider
+                        {
+                          Index = "my-index",
+                          ConfigurationID = "my-rmn-connection",
+                          ConfigurationParams = new Dictionary<string, object>
+                          {
+                            { "campaign_id", "summer-sale" },
+                          },
+                          Ordering = Enum.Parse<ExternalProviderOrdering>("ProviderDefined"),
+                        },
+                      }
+                    ),
+                    Position = 0,
+                    Length = 3,
+                  },
+                },
+              },
+            }
+          ),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal(
+      "/1/compositions/compositionID/rules/rule-with-external-provider-source",
+      req.Path
+    );
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"objectID\":\"rule-with-external-provider-source\",\"conditions\":[{\"anchoring\":\"contains\",\"pattern\":\"harry\"}],\"consequence\":{\"behavior\":{\"injection\":{\"main\":{\"source\":{\"search\":{\"index\":\"my-index\"}}},\"injectedItems\":[{\"key\":\"my-unique-external-provider-group-from-rule-key\",\"source\":{\"externalProvider\":{\"index\":\"my-index\",\"configurationID\":\"my-rmn-connection\",\"configurationParams\":{\"campaign_id\":\"summer-sale\"},\"ordering\":\"providerDefined\"}},\"position\":0,\"length\":3}]}}}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "saveRules")]
   public async Task SaveRulesTest()
   {
@@ -1968,7 +2132,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "<YOUR_INDEX_NAME>" },
+                              Search = new InjectionMainSearch { Index = "<YOUR_INDEX_NAME>" },
                             }
                           ),
                         },
@@ -2025,7 +2189,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "foo" },
+                              Search = new InjectionMainSearch { Index = "foo" },
                             }
                           ),
                         },
@@ -2137,7 +2301,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch
+                              Search = new InjectionMainSearch
                               {
                                 Index = "my-index",
                                 Params = new MainInjectionQueryParameters
@@ -2224,7 +2388,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainRecommendSource
                             {
-                              Recommend = new MainRecommend
+                              Recommend = new InjectionMainRecommend
                               {
                                 IndexName = "products",
                                 Model = Enum.Parse<Model>("TrendingItems"),
@@ -2241,7 +2405,7 @@ public class CompositionClientRequestTests
                             Source = new InjectedItemSource(
                               new InjectedItemRecommendSource
                               {
-                                Recommend = new Recommend
+                                Recommend = new InjectedItemRecommend
                                 {
                                   IndexName = "products",
                                   Model = Enum.Parse<Model>("TrendingItems"),
@@ -2314,7 +2478,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch
+                              Search = new InjectionMainSearch
                               {
                                 Index = "products",
                                 Params = new MainInjectionQueryParameters
@@ -2333,7 +2497,7 @@ public class CompositionClientRequestTests
                             Source = new InjectedItemSource(
                               new InjectedItemRecommendSource
                               {
-                                Recommend = new Recommend
+                                Recommend = new InjectedItemRecommend
                                 {
                                   IndexName = "products",
                                   Model = Enum.Parse<Model>("TrendingItems"),
@@ -2406,7 +2570,7 @@ public class CompositionClientRequestTests
                                   Source = new InjectionMainSource(
                                     new InjectionMainRecommendSource
                                     {
-                                      Recommend = new MainRecommend
+                                      Recommend = new InjectionMainRecommend
                                       {
                                         IndexName = "products",
                                         Model = Enum.Parse<Model>("TrendingItems"),
@@ -2480,7 +2644,7 @@ public class CompositionClientRequestTests
                           Source = new InjectionMainSource(
                             new InjectionMainSearchSource
                             {
-                              Search = new MainSearch { Index = "my-index" },
+                              Search = new InjectionMainSearch { Index = "my-index" },
                             }
                           ),
                         },
@@ -2631,6 +2795,31 @@ public class CompositionClientRequestTests
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"params\":{\"query\":\"batman\"},\"feedsOrder\":[\"feed-movies\",\"feed-comics\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "search")]
+  public async Task SearchTest4()
+  {
+    await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "batman" },
+        ExternalProvider = new ExternalProvider
+        {
+          ConfigurationParams = new Dictionary<string, object> { { "customer_id", "customer123" } },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/foo/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"params\":{\"query\":\"batman\"},\"externalProvider\":{\"configurationParams\":{\"customer_id\":\"customer123\"}}}",
       req.Body,
       new JsonDiffConfig(false)
     );

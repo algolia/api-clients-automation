@@ -48,6 +48,7 @@ final class CompositionClient implements ApiClient {
             httpClientAdapter: options.httpClientAdapter,
             compression: options.compression,
             requestIdEnabled: options.requestIdEnabled,
+            maxRateLimitRetries: options.maxRateLimitRetries,
           ),
           defaultHosts: () =>
               [
@@ -161,7 +162,7 @@ final class CompositionClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -198,7 +199,7 @@ final class CompositionClient implements ApiClient {
       queryParams: {
         ...?parameters,
       },
-      body: body,
+      body: body ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -641,7 +642,7 @@ final class CompositionClient implements ApiClient {
       path: r'/1/compositions/{compositionID}/rules/search'.replaceAll(
           '{' r'compositionID' '}',
           Uri.encodeComponent(compositionID.toString())),
-      body: searchCompositionRulesParams?.toJson(),
+      body: searchCompositionRulesParams?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,
@@ -687,7 +688,7 @@ final class CompositionClient implements ApiClient {
           .replaceAll(
               '{' r'facetName' '}', Uri.encodeComponent(facetName.toString())),
       isRead: true,
-      body: searchForFacetValuesRequest?.toJson(),
+      body: searchForFacetValuesRequest?.toJson() ?? const <String, dynamic>{},
     );
     final response = await _retryStrategy.execute(
       request: request,

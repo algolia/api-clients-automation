@@ -30,6 +30,9 @@ import scala.concurrent.duration.Duration
   *   configuration for the HTTP requester
   * @param customRequester
   *   custom HTTP requester
+  * @param maxRateLimitRetries
+  *   how many times to wait and retry on the same host after HTTP 429. Default 3; 0 fails on the first 429. Wait time
+  *   is `Retry-After` in whole seconds, or 1 second if the header is missing or invalid.
   */
 case class ClientOptions(
     agentSegments: Seq[AgentSegment] = Seq.empty,
@@ -42,7 +45,8 @@ case class ClientOptions(
     logging: Option[Logging] = None,
     customFormats: Option[Formats] = None,
     requesterConfig: Option[HttpRequester.Builder => _] = None,
-    customRequester: Option[Requester] = None
+    customRequester: Option[Requester] = None,
+    maxRateLimitRetries: Int = 3
 ) extends ClientConfig
 
 object ClientOptions {
@@ -61,6 +65,7 @@ object ClientOptions {
     private var customFormats: Option[Formats] = None
     private var requesterConfig: Option[HttpRequester.Builder => _] = None
     private var customRequester: Option[Requester] = None
+    private var maxRateLimitRetries: Int = 3
 
     def withAgentSegments(agentSegments: Seq[AgentSegment]) = {
       this.agentSegments = agentSegments
@@ -102,6 +107,11 @@ object ClientOptions {
       this
     }
 
+    def withMaxRateLimitRetries(maxRateLimitRetries: Int) = {
+      this.maxRateLimitRetries = maxRateLimitRetries
+      this
+    }
+
     def withLogging(logging: Logging) = {
       this.logging = Some(logging)
       this
@@ -133,7 +143,8 @@ object ClientOptions {
       logging = logging,
       customFormats = customFormats,
       requesterConfig = requesterConfig,
-      customRequester = customRequester
+      customRequester = customRequester,
+      maxRateLimitRetries = maxRateLimitRetries
     )
   }
 

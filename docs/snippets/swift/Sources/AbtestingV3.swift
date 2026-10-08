@@ -11,7 +11,7 @@ final class AbtestingV3ClientSnippet {
     ///
     /// addABTests with minimal parameters
     func snippetForAddABTests() async throws {
-        // >SEPARATOR addABTests default
+        // >SEPARATOR addABTests addABTests with minimal parameters
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
@@ -34,6 +34,54 @@ final class AbtestingV3ClientSnippet {
         // >LOG
         // print the response
         print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the addABTests method.
+    ///
+    /// addABTests with Bayesian configuration
+    func snippetForAddABTests1() async throws {
+        // >SEPARATOR addABTests addABTests with Bayesian configuration
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 30
+                )),
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
+            ],
+            metrics: [CreateMetric(name: "conversionRate")],
+            configuration: AbtestingV3ABTestConfiguration(
+                method: AnalysisMethod.bayesian,
+                primaryMetric: PrimaryMetric.conversionRate
+            ),
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the applyVariantSettings method.
+    ///
+    /// applyVariantSettings
+    func snippetForApplyVariantSettings() async throws {
+        // >SEPARATOR applyVariantSettings default
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.applyVariantSettings(id: 42, variantId: 2)
+        // >LOG
         // SEPARATOR<
     }
 
@@ -458,7 +506,7 @@ final class AbtestingV3ClientSnippet {
     ///
     /// getABTest
     func snippetForGetABTest() async throws {
-        // >SEPARATOR getABTest default
+        // >SEPARATOR getABTest getABTest
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
@@ -470,16 +518,73 @@ final class AbtestingV3ClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getABTest method.
+    ///
+    /// getABTest with both inference methods
+    func snippetForGetABTest1() async throws {
+        // >SEPARATOR getABTest getABTest with both inference methods
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getABTest(
+            id: 42,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getABTestSettings method.
+    ///
+    /// getABTestSettings
+    func snippetForGetABTestSettings() async throws {
+        // >SEPARATOR getABTestSettings default
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getABTestSettings(id: 42)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the getTimeseries method.
     ///
     /// getTimeseries
     func snippetForGetTimeseries() async throws {
-        // >SEPARATOR getTimeseries default
+        // >SEPARATOR getTimeseries getTimeseries
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
         // Call the API
         let response = try await client.getTimeseries(id: 42)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getTimeseries method.
+    ///
+    /// getTimeseries with Bayesian revenue per search
+    func snippetForGetTimeseries1() async throws {
+        // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getTimeseries(
+            id: 42,
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            metric: [MetricName.revenuePerSearch],
+            methods: [AnalysisMethod.bayesian]
+        )
         // >LOG
         // print the response
         print(response)
@@ -516,11 +621,44 @@ final class AbtestingV3ClientSnippet {
             limit: 21,
             indexPrefix: "cts_e2e ab",
             indexSuffix: "t",
-            direction: AbtestingV3Direction.asc
+            direction: AbtestingV3Direction.asc,
+            methods: [AnalysisMethod.frequentist, AnalysisMethod.bayesian]
         )
         // >LOG
         // print the response
         print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveVariantSettings method.
+    ///
+    /// saveVariantSettings
+    func snippetForSaveVariantSettings() async throws {
+        // >SEPARATOR saveVariantSettings saveVariantSettings
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.saveVariantSettings(
+            id: 42,
+            variantId: 2,
+            saveSettingsRequest: SaveSettingsRequest(saveFeaturesSettings: true)
+        )
+        // >LOG
+        // SEPARATOR<
+    }
+
+    /// Snippet for the saveVariantSettings method.
+    ///
+    /// save settings with an empty options object
+    func snippetForSaveVariantSettings1() async throws {
+        // >SEPARATOR saveVariantSettings save settings with an empty options object
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        try await client.saveVariantSettings(id: 42, variantId: 2, saveSettingsRequest: SaveSettingsRequest())
+        // >LOG
         // SEPARATOR<
     }
 

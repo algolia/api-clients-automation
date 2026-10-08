@@ -74,6 +74,15 @@ public interface ProviderInputNullable {
           );
         }
       }
+      // deserialize XAIProviderInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(XAIProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf XAIProviderInput (error: " + e.getMessage() + ") (type: XAIProviderInput)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

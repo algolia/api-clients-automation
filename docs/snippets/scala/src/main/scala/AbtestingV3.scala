@@ -22,7 +22,7 @@ class SnippetAbtestingV3Client {
     * addABTests with minimal parameters
     */
   def snippetForAbtestingV3ClientAddABTests(): Unit = {
-    // >SEPARATOR addABTests default
+    // >SEPARATOR addABTests addABTests with minimal parameters
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -58,6 +58,81 @@ class SnippetAbtestingV3Client {
     // >LOG
     // print the response
     println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the addABTests method.
+    *
+    * addABTests with Bayesian configuration
+    */
+  def snippetForAbtestingV3ClientAddABTests1(): Unit = {
+    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.addABTests(
+        addABTestsRequest = AddABTestsRequest(
+          endAt = "2022-12-31T00:00:00.000Z",
+          name = "myABTest",
+          metrics = Seq(
+            CreateMetric(
+              name = "conversionRate"
+            )
+          ),
+          variants = Seq(
+            AbTestsVariant(
+              index = "AB_TEST_1",
+              trafficPercentage = 30
+            ),
+            AbTestsVariant(
+              index = "AB_TEST_2",
+              trafficPercentage = 50
+            )
+          ),
+          configuration = Some(
+            ABTestConfiguration(
+              method = Some(AnalysisMethod.withName("bayesian")),
+              primaryMetric = Some(PrimaryMetric.withName("conversion_rate"))
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the applyVariantSettings method.
+    *
+    * applyVariantSettings
+    */
+  def snippetForAbtestingV3ClientApplyVariantSettings(): Unit = {
+    // >SEPARATOR applyVariantSettings default
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.applyVariantSettings(
+        id = 42,
+        variantId = 2
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 
@@ -690,7 +765,7 @@ class SnippetAbtestingV3Client {
     * getABTest
     */
   def snippetForAbtestingV3ClientGetABTest(): Unit = {
-    // >SEPARATOR getABTest default
+    // >SEPARATOR getABTest getABTest
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -711,12 +786,65 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  /** Snippet for the getABTest method.
+    *
+    * getABTest with both inference methods
+    */
+  def snippetForAbtestingV3ClientGetABTest1(): Unit = {
+    // >SEPARATOR getABTest getABTest with both inference methods
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getABTest(
+        id = 42,
+        methods = Some(Seq(AnalysisMethod.withName("frequentist"), AnalysisMethod.withName("bayesian")))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getABTestSettings method.
+    *
+    * getABTestSettings
+    */
+  def snippetForAbtestingV3ClientGetABTestSettings(): Unit = {
+    // >SEPARATOR getABTestSettings default
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getABTestSettings(
+        id = 42
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the getTimeseries method.
     *
     * getTimeseries
     */
   def snippetForAbtestingV3ClientGetTimeseries(): Unit = {
-    // >SEPARATOR getTimeseries default
+    // >SEPARATOR getTimeseries getTimeseries
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -728,6 +856,36 @@ class SnippetAbtestingV3Client {
     val response = Await.result(
       client.getTimeseries(
         id = 42
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTimeseries method.
+    *
+    * getTimeseries with Bayesian revenue per search
+    */
+  def snippetForAbtestingV3ClientGetTimeseries1(): Unit = {
+    // >SEPARATOR getTimeseries getTimeseries with Bayesian revenue per search
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getTimeseries(
+        id = 42,
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        metric = Some(Seq(MetricName.withName("revenue_per_search"))),
+        methods = Some(Seq(AnalysisMethod.withName("bayesian")))
       ),
       Duration(100, "sec")
     )
@@ -782,13 +940,69 @@ class SnippetAbtestingV3Client {
         limit = Some(21),
         indexPrefix = Some("cts_e2e ab"),
         indexSuffix = Some("t"),
-        direction = Some(Direction.withName("asc"))
+        direction = Some(Direction.withName("asc")),
+        methods = Some(Seq(AnalysisMethod.withName("frequentist"), AnalysisMethod.withName("bayesian")))
       ),
       Duration(100, "sec")
     )
     // >LOG
     // print the response
     println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveVariantSettings method.
+    *
+    * saveVariantSettings
+    */
+  def snippetForAbtestingV3ClientSaveVariantSettings(): Unit = {
+    // >SEPARATOR saveVariantSettings saveVariantSettings
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.saveVariantSettings(
+        id = 42,
+        variantId = 2,
+        saveSettingsRequest = SaveSettingsRequest(
+          saveFeaturesSettings = Some(true)
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // SEPARATOR<
+  }
+
+  /** Snippet for the saveVariantSettings method.
+    *
+    * save settings with an empty options object
+    */
+  def snippetForAbtestingV3ClientSaveVariantSettings1(): Unit = {
+    // >SEPARATOR saveVariantSettings save settings with an empty options object
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    Await.result(
+      client.saveVariantSettings(
+        id = 42,
+        variantId = 2,
+        saveSettingsRequest = SaveSettingsRequest(
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
     // SEPARATOR<
   }
 

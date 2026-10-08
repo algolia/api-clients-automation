@@ -1,9 +1,13 @@
 import 'package:algolia_client_abtesting_v3/src/model/ab_test.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_configuration.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_test_response.dart';
+import 'package:algolia_client_abtesting_v3/src/model/ab_test_settings_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_tests_variant.dart';
 import 'package:algolia_client_abtesting_v3/src/model/ab_tests_variant_search_params.dart';
 import 'package:algolia_client_abtesting_v3/src/model/add_ab_tests_request.dart';
+import 'package:algolia_client_abtesting_v3/src/model/analysis_method.dart';
+import 'package:algolia_client_abtesting_v3/src/model/bayesian_metric_result.dart';
+import 'package:algolia_client_abtesting_v3/src/model/conflict_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/create_metric.dart';
 import 'package:algolia_client_abtesting_v3/src/model/custom_search_params.dart';
 import 'package:algolia_client_abtesting_v3/src/model/decision.dart';
@@ -15,20 +19,26 @@ import 'package:algolia_client_abtesting_v3/src/model/error_correction_type.dart
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_ab_test_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/estimate_configuration.dart';
+import 'package:algolia_client_abtesting_v3/src/model/evidence_status.dart';
+import 'package:algolia_client_abtesting_v3/src/model/feature_settings.dart';
 import 'package:algolia_client_abtesting_v3/src/model/filter_effects.dart';
 import 'package:algolia_client_abtesting_v3/src/model/list_ab_tests_response.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_date.dart';
+import 'package:algolia_client_abtesting_v3/src/model/metric_evidence.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_metadata.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_name.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_result.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metrics_filter.dart';
 import 'package:algolia_client_abtesting_v3/src/model/minimum_detectable_effect.dart';
 import 'package:algolia_client_abtesting_v3/src/model/outliers_filter.dart';
+import 'package:algolia_client_abtesting_v3/src/model/primary_metric.dart';
+import 'package:algolia_client_abtesting_v3/src/model/save_settings_request.dart';
 import 'package:algolia_client_abtesting_v3/src/model/status.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries.dart';
 import 'package:algolia_client_abtesting_v3/src/model/timeseries_variant.dart';
 import 'package:algolia_client_abtesting_v3/src/model/variant.dart';
 import 'package:algolia_client_abtesting_v3/src/model/variant_metadata.dart';
+import 'package:algolia_client_abtesting_v3/src/model/variant_settings.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -57,6 +67,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ABTestResponse':
       return ABTestResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ABTestSettingsResponse':
+      return ABTestSettingsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AbTestsVariant':
       return AbTestsVariant.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -65,6 +78,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AddABTestsRequest':
       return AddABTestsRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalysisMethod':
+      return AnalysisMethod.fromJson(value) as ReturnType;
+    case 'BayesianMetricResult':
+      return BayesianMetricResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConflictResponse':
+      return ConflictResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'CreateMetric':
       return CreateMetric.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -93,6 +114,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'EstimateConfiguration':
       return EstimateConfiguration.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'EvidenceStatus':
+      return EvidenceStatus.fromJson(value) as ReturnType;
+    case 'FeatureSettings':
+      return FeatureSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'FilterEffects':
       return FilterEffects.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -101,6 +127,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MetricDate':
       return MetricDate.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MetricEvidence':
+      return MetricEvidence.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'MetricMetadata':
       return MetricMetadata.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -117,6 +146,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'OutliersFilter':
       return OutliersFilter.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'PrimaryMetric':
+      return PrimaryMetric.fromJson(value) as ReturnType;
+    case 'SaveSettingsRequest':
+      return SaveSettingsRequest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Status':
       return Status.fromJson(value) as ReturnType;
     case 'Timeseries':
@@ -128,6 +162,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Variant.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'VariantMetadata':
       return VariantMetadata.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'VariantSettings':
+      return VariantSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     default:
       RegExpMatch? match;

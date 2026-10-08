@@ -20,7 +20,7 @@ export {{#isAsyncMethod}}async{{/isAsyncMethod}} function snippetFor{{#lambda.pa
 
   {{^isStreaming}}
   // Call the API
-  {{#hasResponse}}const response = {{/hasResponse}}{{> tests/method}};
+  {{#hasResponse}}const response{{#listReturnType}}: {{.}}[]{{/listReturnType}} = {{/hasResponse}}{{> tests/method}};
 
   // >LOG
   {{#hasResponse}}

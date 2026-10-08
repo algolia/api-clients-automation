@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
@@ -74,6 +73,12 @@ public class TestsClient extends TestsGenerator {
           System.out.println("Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language);
           continue skipTest;
         }
+        if (test.onlyLanguages != null && !test.onlyLanguages.contains(language)) {
+          System.out.println(
+            "Skipping client test " + (test.testName == null ? client : test.testName) + " for language " + language + " (onlyLanguages)"
+          );
+          continue skipTest;
+        }
         try {
           Map<String, Object> testOut = new HashMap<>();
           List<Map<String, Object>> steps = new ArrayList<>();
@@ -123,6 +128,12 @@ public class TestsClient extends TestsGenerator {
 
               boolean gzipEncoding = step.parameters != null && step.parameters.getOrDefault("gzip", false).equals(true);
               stepOut.put("gzipEncoding", gzipEncoding);
+
+              boolean hasMaxRateLimitRetries = step.parameters != null && step.parameters.containsKey("maxRateLimitRetries");
+              stepOut.put("hasMaxRateLimitRetries", hasMaxRateLimitRetries);
+              if (hasMaxRateLimitRetries) {
+                stepOut.put("maxRateLimitRetries", step.parameters.get("maxRateLimitRetries"));
+              }
             } else if (step.type.equals("method")) {
               ope = operations.get(step.method);
               if (ope == null) {
@@ -156,14 +167,9 @@ public class TestsClient extends TestsGenerator {
               // default to true because most api calls are asynchronous
               stepOut.put("isAsyncMethod", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true));
 
-              // Determines whether the endpoint is expected to return a response payload
-              // deserialized and therefore a variable to store it into.
-              stepOut.put("hasResponse", true);
-              for (CodegenResponse response : ope.responses) {
-                if (response.code.equals("204")) {
-                  stepOut.put("hasResponse", false);
-                }
-              }
+              // Only render a response variable when the operation returns a payload: a 204, or a
+              // 200 without a body, both have no return type.
+              stepOut.put("hasResponse", ope.returnType != null && !ope.returnType.isEmpty());
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", isHelper);

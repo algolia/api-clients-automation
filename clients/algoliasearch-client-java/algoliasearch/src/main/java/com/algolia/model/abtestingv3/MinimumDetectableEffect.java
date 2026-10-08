@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Configuration for the smallest difference between test variants you want to detect. */
+/**
+ * Configuration for the smallest difference between test variants you want to detect, used to
+ * estimate the required sample size.
+ */
 public class MinimumDetectableEffect {
 
   @JsonProperty("size")
