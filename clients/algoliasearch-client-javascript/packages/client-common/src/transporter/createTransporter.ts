@@ -67,7 +67,12 @@ export function createTransporter({
       return { data: serializeData(request, requestOptions), authQueryParameters: {}, credentialsInBody: false };
     }
 
-    if (request.useReadTransporter && request.method !== 'GET' && !Array.isArray(request.data)) {
+    if (
+      request.useReadTransporter &&
+      request.method !== 'GET' &&
+      request.data !== undefined &&
+      !Array.isArray(request.data)
+    ) {
       return {
         data: serializeData(request, { ...requestOptions, data: { apiKey, ...requestOptions.data } }),
         authQueryParameters: {},

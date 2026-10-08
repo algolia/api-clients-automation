@@ -190,8 +190,23 @@ describe('transporter body auth', () => {
     await transporter.request(searchRequest, { data: { apiKey: 'PER_REQUEST' } });
 
     expect(requests).toHaveLength(1);
-    expect(JSON.parse(requests[0].data as string).apiKey).toBe('PER_REQUEST');
+    expect(JSON.parse(requests[0].data as string)).toEqual({
+      requests: [{ indexName: 'foo', query: 'bar' }],
+      apiKey: 'PER_REQUEST',
+    });
     expect(queryParams(requests[0]).get('x-algolia-api-key')).toBeNull();
+  });
+
+  test('read POST without a body puts the key in the query instead of inventing a body', async () => {
+    const { requester, requests } = createEchoRequester();
+    const transporter = createTestTransporter(requester);
+    const { data: _data, ...withoutData } = searchRequest;
+
+    await transporter.request(withoutData);
+
+    expect(requests).toHaveLength(1);
+    expect(requests[0].data).toBeUndefined();
+    assertKeyInQuery(requests[0]);
   });
 
   test('requestOptions.queryParameters overrides the query fallback credential', async () => {
