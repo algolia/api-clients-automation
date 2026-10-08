@@ -161,4 +161,46 @@ describe('init', () => {
       'x-algolia-application-id': 'foo',
     });
   });
+
+  test('sets authMode WithinBody', async () => {
+    const bodyClient = algoliasearch('foo', 'bar').initRecommend({
+      options: { requester: nodeEchoRequester(), authMode: 'WithinBody' },
+    });
+
+    const postResult = (await bodyClient.customPost({
+      path: '1/baz',
+      body: { query: 'foo' },
+    })) as unknown as EchoResponse;
+    expect(postResult.data).toEqual({
+      query: 'foo',
+    });
+    expect(postResult.searchParams).toEqual({
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+    const { 'request-id': requestId, ...headers } = postResult.headers;
+    expect(requestId).toMatch(/^[0-9A-Za-z]{11}$/);
+    expect(headers).toEqual({
+      accept: 'application/json',
+      'content-type': 'text/plain',
+    });
+
+    const getResult = (await bodyClient.customGet({
+      path: '1/baz',
+    })) as unknown as EchoResponse;
+    expect(getResult.data).toBeUndefined();
+    expect(getResult.searchParams).toEqual({
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+
+    bodyClient.setClientApiKey({ apiKey: 'rotated' });
+    const rotatedResult = (await bodyClient.customGet({
+      path: '1/rotated',
+    })) as unknown as EchoResponse;
+    expect(rotatedResult.searchParams).toEqual({
+      'x-algolia-api-key': 'rotated',
+      'x-algolia-application-id': 'foo',
+    });
+  });
 });

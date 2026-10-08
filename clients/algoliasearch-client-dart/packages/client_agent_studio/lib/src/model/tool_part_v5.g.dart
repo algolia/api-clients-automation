@@ -36,6 +36,7 @@ ToolPartV5 _$ToolPartV5FromJson(Map<String, dynamic> json) => $checkedCreate(
                     (k, e) => MapEntry(k, e as Object),
                   )),
           errorText: $checkedConvert('errorText', (v) => v as String?),
+          terminal: $checkedConvert('terminal', (v) => v as bool?),
           providerOptions: $checkedConvert(
               'providerOptions',
               (v) => (v as Map<String, dynamic>?)?.map(
@@ -68,6 +69,7 @@ Map<String, dynamic> _$ToolPartV5ToJson(ToolPartV5 instance) {
   writeNotNull('output', instance.output);
   writeNotNull('outputMetadata', instance.outputMetadata);
   writeNotNull('errorText', instance.errorText);
+  writeNotNull('terminal', instance.terminal);
   writeNotNull('providerOptions', instance.providerOptions);
   writeNotNull('requiresApproval', instance.requiresApproval);
   writeNotNull('description', instance.description);

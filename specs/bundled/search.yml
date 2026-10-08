@@ -397,6 +397,7 @@ paths:
       operationId: searchSingleIndex
       x-mcp-tool: true
       x-use-read-transporter: true
+      x-accepts-api-key-in-body: true
       x-cacheable: true
       x-acl:
         - search
@@ -441,6 +442,7 @@ paths:
         - search
       operationId: search
       x-use-read-transporter: true
+      x-accepts-api-key-in-body: true
       x-cacheable: true
       x-legacy-signature: true
       x-acl:
@@ -515,6 +517,7 @@ paths:
         - search
       operationId: searchForFacetValues
       x-use-read-transporter: true
+      x-accepts-api-key-in-body: true
       x-cacheable: true
       x-acl:
         - search
@@ -578,6 +581,7 @@ paths:
         - search
       operationId: browse
       x-use-read-transporter: true
+      x-accepts-api-key-in-body: true
       x-acl:
         - browse
       summary: Browse for records

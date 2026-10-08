@@ -48,6 +48,7 @@ case class ToolPartV5(
     output: Option[Map[String, Any]] = scala.None,
     outputMetadata: Option[Map[String, Any]] = scala.None,
     errorText: Option[String] = scala.None,
+    terminal: Option[Boolean] = scala.None,
     providerOptions: Option[Map[String, Any]] = scala.None,
     requiresApproval: Option[Boolean] = scala.None,
     description: Option[String] = scala.None,

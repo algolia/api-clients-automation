@@ -17,6 +17,7 @@ final class SearchParametersOverrides {
     this.enablePersonalization,
     this.personalizationImpact,
     this.optionalFilters,
+    this.facetFilters,
     this.aroundLatLng,
     this.aroundRadius,
     this.aroundPrecision,
@@ -55,6 +56,18 @@ final class SearchParametersOverrides {
   /// - [List<String>]
   @JsonKey(name: r'optionalFilters')
   final dynamic optionalFilters;
+
+  /// One of types:
+  /// - [List<ClientSideToolConfig>]
+  /// - [List<UnknownToolConfig>]
+  /// - [List<AlgoliaGroupedResultsToolConfig>]
+  /// - [List<AlgoliaGroupedResultsCompatToolConfig>]
+  /// - [List<AlgoliaRecommendToolConfig>]
+  /// - [List<AlgoliaSearchToolConfig>]
+  /// - [List<McpServerToolConfig>]
+  /// - [String]
+  @JsonKey(name: r'facetFilters')
+  final dynamic facetFilters;
 
   @JsonKey(name: r'aroundLatLng')
   final String? aroundLatLng;
@@ -98,6 +111,7 @@ final class SearchParametersOverrides {
           other.enablePersonalization == enablePersonalization &&
           other.personalizationImpact == personalizationImpact &&
           other.optionalFilters == optionalFilters &&
+          other.facetFilters == facetFilters &&
           other.aroundLatLng == aroundLatLng &&
           other.aroundRadius == aroundRadius &&
           other.aroundPrecision == aroundPrecision &&
@@ -115,6 +129,7 @@ final class SearchParametersOverrides {
       enablePersonalization.hashCode +
       personalizationImpact.hashCode +
       (optionalFilters == null ? 0 : optionalFilters.hashCode) +
+      (facetFilters == null ? 0 : facetFilters.hashCode) +
       aroundLatLng.hashCode +
       (aroundRadius == null ? 0 : aroundRadius.hashCode) +
       (aroundPrecision == null ? 0 : aroundPrecision.hashCode) +

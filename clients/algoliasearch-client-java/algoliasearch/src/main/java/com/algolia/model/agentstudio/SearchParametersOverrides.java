@@ -40,6 +40,9 @@ public class SearchParametersOverrides {
   @JsonProperty("optionalFilters")
   private OptionalFiltersUnion optionalFilters;
 
+  @JsonProperty("facetFilters")
+  private FacetFiltersUnionSearchParametersOverrides facetFilters;
+
   @JsonProperty("aroundLatLng")
   private String aroundLatLng;
 
@@ -162,6 +165,17 @@ public class SearchParametersOverrides {
     return optionalFilters;
   }
 
+  public SearchParametersOverrides setFacetFilters(FacetFiltersUnionSearchParametersOverrides facetFilters) {
+    this.facetFilters = facetFilters;
+    return this;
+  }
+
+  /** Get facetFilters */
+  @javax.annotation.Nullable
+  public FacetFiltersUnionSearchParametersOverrides getFacetFilters() {
+    return facetFilters;
+  }
+
   public SearchParametersOverrides setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
@@ -246,6 +260,7 @@ public class SearchParametersOverrides {
       Objects.equals(this.enablePersonalization, searchParametersOverrides.enablePersonalization) &&
       Objects.equals(this.personalizationImpact, searchParametersOverrides.personalizationImpact) &&
       Objects.equals(this.optionalFilters, searchParametersOverrides.optionalFilters) &&
+      Objects.equals(this.facetFilters, searchParametersOverrides.facetFilters) &&
       Objects.equals(this.aroundLatLng, searchParametersOverrides.aroundLatLng) &&
       Objects.equals(this.aroundRadius, searchParametersOverrides.aroundRadius) &&
       Objects.equals(this.aroundPrecision, searchParametersOverrides.aroundPrecision) &&
@@ -266,6 +281,7 @@ public class SearchParametersOverrides {
       enablePersonalization,
       personalizationImpact,
       optionalFilters,
+      facetFilters,
       aroundLatLng,
       aroundRadius,
       aroundPrecision,
@@ -287,6 +303,7 @@ public class SearchParametersOverrides {
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    personalizationImpact: ").append(toIndentedString(personalizationImpact)).append("\n");
     sb.append("    optionalFilters: ").append(toIndentedString(optionalFilters)).append("\n");
+    sb.append("    facetFilters: ").append(toIndentedString(facetFilters)).append("\n");
     sb.append("    aroundLatLng: ").append(toIndentedString(aroundLatLng)).append("\n");
     sb.append("    aroundRadius: ").append(toIndentedString(aroundRadius)).append("\n");
     sb.append("    aroundPrecision: ").append(toIndentedString(aroundPrecision)).append("\n");

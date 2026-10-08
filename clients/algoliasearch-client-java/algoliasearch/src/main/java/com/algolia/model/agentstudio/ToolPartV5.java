@@ -37,6 +37,9 @@ public class ToolPartV5 implements AssistantPartV5 {
   @JsonProperty("errorText")
   private String errorText;
 
+  @JsonProperty("terminal")
+  private Boolean terminal;
+
   @JsonProperty("providerOptions")
   private Map<String, Object> providerOptions;
 
@@ -169,6 +172,17 @@ public class ToolPartV5 implements AssistantPartV5 {
     return errorText;
   }
 
+  public ToolPartV5 setTerminal(Boolean terminal) {
+    this.terminal = terminal;
+    return this;
+  }
+
+  /** Get terminal */
+  @javax.annotation.Nullable
+  public Boolean getTerminal() {
+    return terminal;
+  }
+
   public ToolPartV5 setProviderOptions(Map<String, Object> providerOptions) {
     this.providerOptions = providerOptions;
     return this;
@@ -239,6 +253,7 @@ public class ToolPartV5 implements AssistantPartV5 {
       Objects.equals(this.output, toolPartV5.output) &&
       Objects.equals(this.outputMetadata, toolPartV5.outputMetadata) &&
       Objects.equals(this.errorText, toolPartV5.errorText) &&
+      Objects.equals(this.terminal, toolPartV5.terminal) &&
       Objects.equals(this.providerOptions, toolPartV5.providerOptions) &&
       Objects.equals(this.requiresApproval, toolPartV5.requiresApproval) &&
       Objects.equals(this.description, toolPartV5.description) &&
@@ -257,6 +272,7 @@ public class ToolPartV5 implements AssistantPartV5 {
       output,
       outputMetadata,
       errorText,
+      terminal,
       providerOptions,
       requiresApproval,
       description,
@@ -276,6 +292,7 @@ public class ToolPartV5 implements AssistantPartV5 {
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
     sb.append("    outputMetadata: ").append(toIndentedString(outputMetadata)).append("\n");
     sb.append("    errorText: ").append(toIndentedString(errorText)).append("\n");
+    sb.append("    terminal: ").append(toIndentedString(terminal)).append("\n");
     sb.append("    providerOptions: ").append(toIndentedString(providerOptions)).append("\n");
     sb.append("    requiresApproval: ").append(toIndentedString(requiresApproval)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

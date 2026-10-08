@@ -48,6 +48,7 @@ case class SearchParametersOverrides(
     enablePersonalization: Option[Boolean] = scala.None,
     personalizationImpact: Option[Int] = scala.None,
     optionalFilters: Option[OptionalFiltersUnion] = scala.None,
+    facetFilters: Option[FacetFiltersUnionSearchParametersOverrides] = scala.None,
     aroundLatLng: Option[String] = scala.None,
     aroundRadius: Option[AroundRadiusUnion] = scala.None,
     aroundPrecision: Option[AroundPrecisionUnion] = scala.None,

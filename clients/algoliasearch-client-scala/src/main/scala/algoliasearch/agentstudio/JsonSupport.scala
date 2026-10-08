@@ -67,6 +67,7 @@ object JsonSupport {
     AssistantPartV5Serializer :+
     DistinctUnionSerializer :+
     FacetFiltersUnionSerializer :+
+    FacetFiltersUnionSearchParametersOverridesSerializer :+
     FacetsUnionSerializer :+
     IgnorePluralsUnionSerializer :+
     InputUnionSerializer :+

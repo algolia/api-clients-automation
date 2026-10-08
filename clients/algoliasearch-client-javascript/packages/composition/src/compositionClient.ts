@@ -114,6 +114,10 @@ export function createCompositionClient({
       ...auth.queryParameters(),
       ...options.baseQueryParameters,
     },
+    baseBodyParameters: {
+      ...auth.bodyParameters(),
+      ...options.baseBodyParameters,
+    },
   });
 
   return {
@@ -160,7 +164,9 @@ export function createCompositionClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      if (!authMode || authMode === 'WithinHeaders') {
+      if (authMode === 'WithinBody') {
+        transporter.baseBodyParameters.apiKey = apiKey;
+      } else if (!authMode || authMode === 'WithinHeaders') {
         transporter.baseHeaders['x-algolia-api-key'] = apiKey;
       } else {
         transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;

@@ -26,6 +26,7 @@ SearchParametersOverrides _$SearchParametersOverridesFromJson(
           personalizationImpact: $checkedConvert(
               'personalizationImpact', (v) => (v as num?)?.toInt()),
           optionalFilters: $checkedConvert('optionalFilters', (v) => v),
+          facetFilters: $checkedConvert('facetFilters', (v) => v),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
@@ -57,6 +58,7 @@ Map<String, dynamic> _$SearchParametersOverridesToJson(
   writeNotNull('enablePersonalization', instance.enablePersonalization);
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('optionalFilters', instance.optionalFilters);
+  writeNotNull('facetFilters', instance.facetFilters);
   writeNotNull('aroundLatLng', instance.aroundLatLng);
   writeNotNull('aroundRadius', instance.aroundRadius);
   writeNotNull('aroundPrecision', instance.aroundPrecision);
