@@ -2,6 +2,7 @@ import type { ServerSentEvent } from '../sse';
 import { iterSSEEvents } from '../sse';
 import type {
   AlgoliaHttpResponse,
+  BodyParameters,
   EndRequest,
   Headers,
   Host,
@@ -21,7 +22,7 @@ import {
   deserializeSuccess,
   deserializeSuccessWithHttpInfo,
   getLastCorrelationId,
-  serializeDataWithAuth,
+  serializeData,
   serializeHeaders,
   serializeUrl,
 } from './helpers';
@@ -50,7 +51,36 @@ export function createTransporter({
   compression,
   requestIdChannel,
 }: TransporterOptions): TransporterWithHttpInfo {
-  const bodyParameters: Headers = baseBodyParameters ?? {};
+  const bodyParameters: BodyParameters = baseBodyParameters ?? {};
+
+  /**
+   * As in v3, only read requests with an object body (search, browse, getObjects...) carry the body API key:
+   * write bodies are user data. Every other request sends it as the `x-algolia-api-key` query parameter.
+   */
+  function serializeDataWithAuth(
+    request: Request,
+    requestOptions: RequestOptions,
+  ): { data: string | undefined; authQueryParameters: QueryParameters; credentialsInBody: boolean } {
+    const { apiKey } = bodyParameters;
+
+    if (!apiKey) {
+      return { data: serializeData(request, requestOptions), authQueryParameters: {}, credentialsInBody: false };
+    }
+
+    if (request.useReadTransporter && request.method !== 'GET' && !Array.isArray(request.data)) {
+      return {
+        data: serializeData(request, { ...requestOptions, data: { apiKey, ...requestOptions.data } }),
+        authQueryParameters: {},
+        credentialsInBody: true,
+      };
+    }
+
+    return {
+      data: serializeData(request, requestOptions),
+      authQueryParameters: { 'x-algolia-api-key': apiKey },
+      credentialsInBody: false,
+    };
+  }
 
   function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
     if (
@@ -115,11 +145,17 @@ export function createTransporter({
     /**
      * First we prepare the payload that do not depend from hosts.
      */
-    const { data: serializedData, applied } = serializeDataWithAuth(request, requestOptions, bodyParameters);
+    const {
+      data: serializedData,
+      authQueryParameters,
+      credentialsInBody,
+    } = serializeDataWithAuth(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
 
+    // A gzipped body could not be masked by `stackTraceWithoutCredentials`.
     const wantsCompression =
       compression === 'gzip' &&
+      !credentialsInBody &&
       serializedData !== undefined &&
       serializedData.length > COMPRESSION_THRESHOLD &&
       (request.method === 'POST' || request.method === 'PUT');
@@ -145,6 +181,7 @@ export function createTransporter({
 
     const queryParameters: QueryParameters = {
       ...baseQueryParameters,
+      ...authQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
@@ -167,10 +204,6 @@ export function createTransporter({
           queryParameters[key] = requestOptions.queryParameters[key].toString();
         }
       }
-    }
-
-    if (applied === false && bodyParameters.apiKey) {
-      queryParameters['x-algolia-api-key'] = bodyParameters.apiKey;
     }
 
     injectRequestId(headers, queryParameters);
@@ -381,7 +414,7 @@ export function createTransporter({
       throw new Error('This requester does not support streaming');
     }
 
-    const { data, applied } = serializeDataWithAuth(request, requestOptions, bodyParameters);
+    const { data, authQueryParameters } = serializeDataWithAuth(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
     headers['accept'] = 'text/event-stream';
 
@@ -396,6 +429,7 @@ export function createTransporter({
 
     const queryParameters: QueryParameters = {
       ...baseQueryParameters,
+      ...authQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
@@ -415,10 +449,6 @@ export function createTransporter({
           queryParameters[key] = requestOptions.queryParameters[key].toString();
         }
       }
-    }
-
-    if (applied === false && bodyParameters.apiKey) {
-      queryParameters['x-algolia-api-key'] = bodyParameters.apiKey;
     }
 
     injectRequestId(headers, queryParameters);

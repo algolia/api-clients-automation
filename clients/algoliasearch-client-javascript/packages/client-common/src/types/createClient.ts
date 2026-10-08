@@ -5,9 +5,9 @@ import type { AlgoliaAgentOptions, TransporterOptions } from './transporter';
  *
  * - `'WithinHeaders'`: API key and application ID as headers.
  * - `'WithinQueryParameters'`: API key and application ID as query parameters.
- * - `'WithinBody'`: Search-tested opt-in. Sends the API key in the JSON body as
- *   `apiKey`. GET requests and requests with empty or array bodies fall back to
- *   the `x-algolia-api-key` query parameter and can still hit URL limits.
+ * - `'WithinBody'`: application ID as a query parameter, API key as `apiKey` in the JSON body of
+ *   read requests (search, browse, getObjects...). Other requests, such as writes and `GET`s, send the
+ *   API key as the `x-algolia-api-key` query parameter, so they can still hit URL length limits.
  */
 export type AuthMode = 'WithinHeaders' | 'WithinQueryParameters' | 'WithinBody';
 

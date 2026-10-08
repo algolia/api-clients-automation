@@ -52,24 +52,24 @@ describe('init', () => {
   test('sets authMode WithinBody', async () => {
     const bodyClient =  {{{clientName}}}('foo', 'bar'{{#isStandaloneClient}},{{#hasRegionalHost}}'{{{defaultRegion}}}', {{/hasRegionalHost}} { requester: nodeEchoRequester(), authMode: 'WithinBody' }{{/isStandaloneClient}}){{^isStandaloneClient}}.{{{initMethod}}}({ options: { requester: nodeEchoRequester(), authMode: 'WithinBody' }, {{#hasRegionalHost}} region:'{{{defaultRegion}}}' {{/hasRegionalHost}} });{{/isStandaloneClient}};
 
-    const bodyResult = (await bodyClient.customPost({
+    const postResult = (await bodyClient.customPost({
       path: '1/baz',
       body: { query: 'foo' },
     })) as unknown as EchoResponse;
-    expect(bodyResult.data).toEqual({
+    expect(postResult.data).toEqual({
       query: 'foo',
-      apiKey: 'bar',
     });
-    expect(bodyResult.searchParams).toEqual({
+    expect(postResult.searchParams).toEqual({
+      'x-algolia-api-key': 'bar',
       'x-algolia-application-id': 'foo',
     });
     {{#requestIdSupport}}
-    const { 'request-id': requestId, ...headers } = bodyResult.headers;
+    const { 'request-id': requestId, ...headers } = postResult.headers;
     expect(requestId).toMatch(/^[0-9A-Za-z]{11}$/);
     expect(headers).toEqual({
     {{/requestIdSupport}}
     {{^requestIdSupport}}
-    expect(bodyResult.headers).toEqual({
+    expect(postResult.headers).toEqual({
     {{/requestIdSupport}}
       accept: 'application/json',
       'content-type': 'text/plain',
@@ -85,13 +85,12 @@ describe('init', () => {
     });
 
     bodyClient.setClientApiKey({ apiKey: 'rotated' });
-    const rotatedResult = (await bodyClient.customPost({
+    const rotatedResult = (await bodyClient.customGet({
       path: '1/rotated',
-      body: { query: 'foo' },
     })) as unknown as EchoResponse;
-    expect(rotatedResult.data).toEqual({
-      query: 'foo',
-      apiKey: 'rotated',
+    expect(rotatedResult.searchParams).toEqual({
+      'x-algolia-api-key': 'rotated',
+      'x-algolia-application-id': 'foo',
     });
   });
 });

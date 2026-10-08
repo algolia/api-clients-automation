@@ -1,4 +1,4 @@
-import type { AuthMode, Headers, QueryParameters } from './types';
+import type { AuthMode, BodyParameters, Headers, QueryParameters } from './types';
 
 export function createAuth(
   appId: string,
@@ -7,7 +7,7 @@ export function createAuth(
 ): {
   readonly headers: () => Headers;
   readonly queryParameters: () => QueryParameters;
-  readonly bodyParameters: () => Headers;
+  readonly bodyParameters: () => BodyParameters;
 } {
   const credentials = {
     'x-algolia-api-key': apiKey,
@@ -31,7 +31,7 @@ export function createAuth(
       return {};
     },
 
-    bodyParameters(): Headers {
+    bodyParameters(): BodyParameters {
       return authMode === 'WithinBody' ? { apiKey } : {};
     },
   };

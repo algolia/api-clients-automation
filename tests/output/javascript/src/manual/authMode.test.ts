@@ -77,6 +77,23 @@ describe('WithinBody', () => {
     assertSimpleRequest(req);
   });
 
+  test('object-body partialUpdateObject leaves the record untouched and falls back to the query', async () => {
+    const client = createBodyClient();
+    const req = (await client.partialUpdateObject({
+      indexName: 'idx',
+      objectID: 'id',
+      attributesToUpdate: { title: 'foo' },
+    })) as unknown as EchoResponse;
+
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ title: 'foo' });
+    expect(req.searchParams).toMatchObject({
+      'x-algolia-api-key': apiKey,
+      'x-algolia-application-id': appId,
+    });
+    assertSimpleRequest(req);
+  });
+
   test('array-body saveRules leaves the payload untouched and falls back to the query', async () => {
     const client = createBodyClient();
     const rules = [

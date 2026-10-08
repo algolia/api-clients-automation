@@ -2,6 +2,10 @@ export type Headers = Record<string, string>;
 
 export type QueryParameters = Record<string, any>;
 
+export type BodyParameters = {
+  apiKey?: string;
+};
+
 /**
  * The method of the request.
  */
