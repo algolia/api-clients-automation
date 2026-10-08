@@ -63,7 +63,8 @@ kotlin {
         implementation(libs.ktor.client.cio)
         implementation(libs.ktor.client.java)
         implementation(libs.ktor.client.apache5)
-      }
+        implementation(libs.ktor.client.apache)
+        implementation(libs.ktor.client.android)      }
     }
 
     if (HostManager.hostIsMac) {

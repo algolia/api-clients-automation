@@ -5,6 +5,8 @@ import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.Host
 import com.sun.net.httpserver.HttpServer
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.apache.Apache
 import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.java.Java
@@ -26,6 +28,9 @@ import kotlinx.serialization.json.jsonPrimitive
 /**
  * Every JVM engine must advertise `Accept-Encoding: gzip` and decode gzipped responses, mirroring
  * the CTS "test the response decompression strategy" (which only runs with OkHttp).
+ *
+ * Jetty is not covered: Ktor's Jetty engine only speaks HTTP/2, which the JDK `HttpServer` cannot
+ * serve.
  */
 class TestResponseDecompression {
 
@@ -110,6 +115,10 @@ class TestResponseDecompression {
   @Test fun javaEngine() = assertMessage(Java.create())
 
   @Test fun apache5Engine() = assertMessage(Apache5.create())
+
+  @Suppress("DEPRECATION") @Test fun apacheEngine() = assertMessage(Apache.create())
+
+  @Test fun androidEngine() = assertMessage(Android.create())
 
   @Test
   fun identityContentEncoding() = assertMessage(CIO.create(), path = "1/test/identity-response")
