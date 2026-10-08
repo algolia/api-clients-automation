@@ -1,5 +1,5 @@
 OneOfEnum:
   type: string
   enum:
-    - input
-    - output
+  - input
+  - output

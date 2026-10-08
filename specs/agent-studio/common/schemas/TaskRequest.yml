@@ -7,20 +7,20 @@ TaskRequest:
       title: task
       description: ID of the configured task to run.
       examples:
-        - algolia_on_page_suggestions
+      - algolia_on_page_suggestions
     kind:
-      $ref: 'TaskKind.yml#/TaskKind'
+      $ref: TaskKind.yml#/TaskKind
     input:
       additionalProperties: true
       type: object
       title: input
       description: Arbitrary JSON input passed to the task as data.
     configuration:
-      $ref: 'AgentTestConfiguration.yml#/AgentTestConfiguration'
+      $ref: AgentTestConfiguration.yml#/AgentTestConfiguration
   additionalProperties: false
   type: object
   required:
-    - input
+  - input
   title: taskRequest
   description: |-
     Strict request body with a task selector and `input`.

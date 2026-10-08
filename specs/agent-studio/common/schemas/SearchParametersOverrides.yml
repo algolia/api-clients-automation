@@ -23,7 +23,7 @@ SearchParametersOverrides:
       default: null
       title: restrictsearchableattributes
     distinct:
-      $ref: 'DistinctUnion.yml#/DistinctUnion'
+      $ref: DistinctUnion.yml#/DistinctUnion
     userToken:
       type: string
       default: null
@@ -37,22 +37,24 @@ SearchParametersOverrides:
       default: null
       title: personalizationimpact
     optionalFilters:
-      $ref: 'OptionalFiltersUnion.yml#/OptionalFiltersUnion'
+      $ref: OptionalFiltersUnion.yml#/OptionalFiltersUnion
+    facetFilters:
+      $ref: FacetFiltersUnionSearchParametersOverrides.yml#/FacetFiltersUnionSearchParametersOverrides
     aroundLatLng:
       type: string
       default: null
       title: aroundlatlng
     aroundRadius:
-      $ref: 'AroundRadiusUnion.yml#/AroundRadiusUnion'
+      $ref: AroundRadiusUnion.yml#/AroundRadiusUnion
     aroundPrecision:
-      $ref: 'AroundPrecisionUnion.yml#/AroundPrecisionUnion'
+      $ref: AroundPrecisionUnion.yml#/AroundPrecisionUnion
     minimumAroundRadius:
       type: integer
       default: null
       title: minimumaroundradius
     insideBoundingBox:
-      $ref: 'InsideBoundingBoxUnion.yml#/InsideBoundingBoxUnion'
+      $ref: InsideBoundingBoxUnion.yml#/InsideBoundingBoxUnion
     insidePolygon:
-      $ref: 'InsidePolygonUnion.yml#/InsidePolygonUnion'
+      $ref: InsidePolygonUnion.yml#/InsidePolygonUnion
   title: searchParametersOverrides
   type: object

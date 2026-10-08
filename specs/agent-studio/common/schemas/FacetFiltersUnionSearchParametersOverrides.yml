@@ -1,0 +1,7 @@
+FacetFiltersUnionSearchParametersOverrides:
+  oneOf:
+  - type: string
+  - items:
+      $ref: ItemsUnion.yml#/ItemsUnion
+    type: array
+  - type: 'null'

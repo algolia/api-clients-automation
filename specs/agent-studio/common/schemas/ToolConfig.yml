@@ -1,2 +1,2 @@
 ToolConfig:
-  $ref: 'ToolConfigInput.yml#/ToolConfigInput'
+  $ref: ToolConfigInput.yml#/ToolConfigInput

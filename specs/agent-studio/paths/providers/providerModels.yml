@@ -1,19 +1,19 @@
 get:
   tags:
-    - Providers
+  - Providers
   operationId: listProviderModels
   x-acl:
-    - settings
+  - settings
   summary: Get Provider Models By Id
   description: Get available models for a specific provider.
   parameters:
-    - name: providerId
-      in: path
-      required: true
-      schema:
-        type: string
-        title: providerId
-      description: The providerId.
+  - name: providerId
+    in: path
+    required: true
+    schema:
+      type: string
+      title: providerId
+    description: The providerId.
   responses:
     '200':
       description: Successful Response.
@@ -29,4 +29,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/HTTPValidationError.yml#/HTTPValidationError'
+            $ref: ../../common/schemas/HTTPValidationError.yml#/HTTPValidationError

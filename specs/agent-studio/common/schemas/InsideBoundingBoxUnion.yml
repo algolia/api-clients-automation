@@ -1,9 +1,9 @@
 InsideBoundingBoxUnion:
   oneOf:
-    - type: string
-    - items:
-        items:
-          type: number
-        type: array
+  - type: string
+  - items:
+      items:
+        type: number
       type: array
-    - type: 'null'
+    type: array
+  - type: 'null'

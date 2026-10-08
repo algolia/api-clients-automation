@@ -51,4 +51,4 @@ AlgoliaGroupedResultsCompatToolConfig:
   title: algoliaGroupedResultsCompatToolConfig
   type: object
   required:
-    - type
+  - type

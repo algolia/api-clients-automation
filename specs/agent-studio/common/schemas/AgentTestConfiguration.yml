@@ -26,12 +26,12 @@ AgentTestConfiguration:
       type: object
     tools:
       items:
-        $ref: 'ItemsUnion.yml#/ItemsUnion'
+        $ref: ItemsUnion.yml#/ItemsUnion
       title: tools
       type: array
   required:
-    - instructions
-    - config
-    - tools
+  - instructions
+  - config
+  - tools
   title: agentTestConfiguration
   type: object
