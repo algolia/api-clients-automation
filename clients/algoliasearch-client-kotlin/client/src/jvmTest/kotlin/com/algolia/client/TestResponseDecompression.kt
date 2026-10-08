@@ -3,19 +3,31 @@ package com.algolia.client
 import com.algolia.client.api.SearchClient
 import com.algolia.client.configuration.ClientOptions
 import com.algolia.client.configuration.Host
-import com.sun.net.httpserver.HttpServer
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.android.Android
 import io.ktor.client.engine.apache.Apache
 import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.engine.java.Java
+import io.ktor.client.engine.jetty.Jetty
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.engine.EmbeddedServer
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.jetty.Jetty as JettyServer
+import io.ktor.server.request.httpVersion
+import io.ktor.server.response.header
+import io.ktor.server.response.respondBytes
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import java.io.ByteArrayOutputStream
-import java.net.InetSocketAddress
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.zip.GZIPOutputStream
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -29,53 +41,56 @@ import kotlinx.serialization.json.jsonPrimitive
  * Every JVM engine must advertise `Accept-Encoding: gzip` and decode gzipped responses, mirroring
  * the CTS "test the response decompression strategy" (which only runs with OkHttp).
  *
- * Jetty is not covered: Ktor's Jetty engine only speaks HTTP/2, which the JDK `HttpServer` cannot
- * serve.
+ * The Jetty server accepts both HTTP/1.1 and cleartext HTTP/2 (h2c) on the same port, so engines
+ * that only speak HTTP/2 (Jetty) are covered alongside HTTP/1.1 ones.
  */
 class TestResponseDecompression {
 
   private val responseBody = """{"message":"ok decompression test server response"}"""
 
-  private lateinit var server: HttpServer
+  private val httpVersions = CopyOnWriteArrayList<String>()
+
+  private lateinit var server: EmbeddedServer<*, *>
+
+  private var port: Int = 0
 
   @BeforeTest
   fun startServer() {
-    server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
-    server.createContext("/1/test/gzip-response") { exchange ->
-      exchange.use {
-        val acceptEncoding = it.requestHeaders.getFirst("Accept-Encoding").orEmpty()
-        if (!acceptEncoding.contains("gzip")) {
-          val error = """{"message":"client did not send accept-encoding: gzip"}""".toByteArray()
-          it.sendResponseHeaders(400, error.size.toLong())
-          it.responseBody.write(error)
-          return@use
-        }
-        val compressed =
-          ByteArrayOutputStream().use { bos ->
-            GZIPOutputStream(bos).use { gzip -> gzip.write(responseBody.toByteArray()) }
-            bos.toByteArray()
+    server =
+      embeddedServer(JettyServer, host = "127.0.0.1", port = 0) {
+          routing {
+            get("/1/test/gzip-response") {
+              httpVersions += call.request.httpVersion
+              val acceptEncoding = call.request.headers[HttpHeaders.AcceptEncoding].orEmpty()
+              if (!acceptEncoding.contains("gzip")) {
+                call.respondText(
+                  """{"message":"client did not send accept-encoding: gzip"}""",
+                  ContentType.Application.Json,
+                  HttpStatusCode.BadRequest,
+                )
+                return@get
+              }
+              val compressed =
+                ByteArrayOutputStream().use { bos ->
+                  GZIPOutputStream(bos).use { gzip -> gzip.write(responseBody.toByteArray()) }
+                  bos.toByteArray()
+                }
+              call.response.header(HttpHeaders.ContentEncoding, "gzip")
+              call.respondBytes(compressed, ContentType.Application.Json)
+            }
+            get("/1/test/identity-response") {
+              call.response.header(HttpHeaders.ContentEncoding, "identity")
+              call.respondText(responseBody, ContentType.Application.Json)
+            }
           }
-        it.responseHeaders.add("Content-Type", "application/json")
-        it.responseHeaders.add("Content-Encoding", "gzip")
-        it.sendResponseHeaders(200, compressed.size.toLong())
-        it.responseBody.write(compressed)
-      }
-    }
-    server.createContext("/1/test/identity-response") { exchange ->
-      exchange.use {
-        val body = responseBody.toByteArray()
-        it.responseHeaders.add("Content-Type", "application/json")
-        it.responseHeaders.add("Content-Encoding", "identity")
-        it.sendResponseHeaders(200, body.size.toLong())
-        it.responseBody.write(body)
-      }
-    }
-    server.start()
+        }
+        .start(wait = false)
+    port = runBlocking { server.engine.resolvedConnectors().first().port }
   }
 
   @AfterTest
   fun stopServer() {
-    server.stop(0)
+    server.stop(gracePeriodMillis = 0, timeoutMillis = 1000)
   }
 
   private fun assertMessage(
@@ -94,8 +109,7 @@ class TestResponseDecompression {
               engine = engine,
               logLevel = logLevel,
               logger = logger,
-              hosts =
-                listOf(Host(url = "127.0.0.1", protocol = "http", port = server.address.port)),
+              hosts = listOf(Host(url = "127.0.0.1", protocol = "http", port = port)),
             ),
         )
       client.use {
@@ -119,6 +133,12 @@ class TestResponseDecompression {
   @Suppress("DEPRECATION") @Test fun apacheEngine() = assertMessage(Apache.create())
 
   @Test fun androidEngine() = assertMessage(Android.create())
+
+  @Test
+  fun jettyEngine() {
+    assertMessage(Jetty.create())
+    assertEquals(listOf("HTTP/2.0"), httpVersions, "Jetty should have used HTTP/2")
+  }
 
   @Test
   fun identityContentEncoding() = assertMessage(CIO.create(), path = "1/test/identity-response")
