@@ -465,6 +465,11 @@ SourceUpdateCommercetools:
       type: boolean
       description: >
         When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+    categoriesCustomFieldsFullPath:
+      type: boolean
+      description: >
+        When set to true, the connector uses the complete category path (e.g. "Root > Level 1 > Category name") in `categoriesCustomFields`.
+      default: true
     customFields:
       $ref: '#/CommercetoolsCustomFields'
 

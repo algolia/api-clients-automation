@@ -6910,6 +6910,7 @@ paths:
                 "fallbackIsInStockValue": true,
                 "productQueryPredicate": "lorem",
                 "useImagesObjects": true,
+                "categoriesCustomFieldsFullPath": true,
                 "customFields": {
                   "inventory": [
                     "lorem"
@@ -7487,6 +7488,7 @@ paths:
                 "fallbackIsInStockValue": true,
                 "productQueryPredicate": "lorem",
                 "useImagesObjects": true,
+                "categoriesCustomFieldsFullPath": true,
                 "customFields": {
                   "inventory": [
                     "lorem"
@@ -19169,6 +19171,12 @@ components:
       description: Specific configuration attributes of a `commercetools` source.
       additionalProperties: false
       properties:
+        categoriesCustomFieldsFullPath:
+          type: boolean
+          description: >
+            When set to true, the connector uses the complete category path
+            (e.g. "Root > Level 1 > Category name") in `categoriesCustomFields`.
+          default: true
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
         fallbackIsInStockValue:

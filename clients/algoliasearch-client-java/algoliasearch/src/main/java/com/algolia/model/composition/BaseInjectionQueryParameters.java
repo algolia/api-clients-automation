@@ -571,7 +571,7 @@ public class BaseInjectionQueryParameters {
   /**
    * Minimum number of characters a word in the search query must contain to accept matches with
    * [one
-   * typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+   * typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
    */
   @javax.annotation.Nullable
   public Integer getMinWordSizefor1Typo() {
@@ -586,7 +586,7 @@ public class BaseInjectionQueryParameters {
   /**
    * Minimum number of characters a word in the search query must contain to accept matches with
    * [two
-   * typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+   * typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
    */
   @javax.annotation.Nullable
   public Integer getMinWordSizefor2Typos() {
@@ -839,7 +839,7 @@ public class BaseInjectionQueryParameters {
 
   /**
    * Assigns a rule context to the search query. [Rule
-   * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
+   * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context)
    * are strings that you can use to trigger matching rules.
    */
   @javax.annotation.Nullable

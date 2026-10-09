@@ -90,7 +90,7 @@ import algoliasearch.recommend.SupportedLanguage._
   *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
   * @param disablePrefixOnAttributes
   *   Searchable attributes for which you want to turn off [prefix
-  *   matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+  *   matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjust-prefix-search).
   *   Attribute names are case-sensitive.
   * @param allowCompressionOfIntegerArray
   *   Whether arrays with exclusively non-negative integers should be compressed for better performance. If true, the

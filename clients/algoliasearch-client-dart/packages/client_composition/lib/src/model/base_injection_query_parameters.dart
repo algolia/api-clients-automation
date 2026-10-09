@@ -166,11 +166,11 @@ final class BaseInjectionQueryParameters {
   @JsonKey(name: r'minProximity')
   final int? minProximity;
 
-  /// Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+  /// Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
   @JsonKey(name: r'minWordSizefor1Typo')
   final int? minWordSizefor1Typo;
 
-  /// Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+  /// Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
   @JsonKey(name: r'minWordSizefor2Typos')
   final int? minWordSizefor2Typos;
 
@@ -240,7 +240,7 @@ final class BaseInjectionQueryParameters {
   @JsonKey(name: r'restrictSearchableAttributes')
   final List<String>? restrictSearchableAttributes;
 
-  /// Assigns a rule context to the search query. [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+  /// Assigns a rule context to the search query. [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context) are strings that you can use to trigger matching rules.
   @JsonKey(name: r'ruleContexts')
   final List<String>? ruleContexts;
 

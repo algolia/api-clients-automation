@@ -24,6 +24,8 @@ SourceUpdateCommercetools _$SourceUpdateCommercetoolsFromJson(
               $checkedConvert('productQueryPredicate', (v) => v as String?),
           useImagesObjects:
               $checkedConvert('useImagesObjects', (v) => v as bool?),
+          categoriesCustomFieldsFullPath: $checkedConvert(
+              'categoriesCustomFieldsFullPath', (v) => v as bool?),
           customFields: $checkedConvert(
               'customFields',
               (v) => v == null
@@ -51,6 +53,8 @@ Map<String, dynamic> _$SourceUpdateCommercetoolsToJson(
   writeNotNull('fallbackIsInStockValue', instance.fallbackIsInStockValue);
   writeNotNull('productQueryPredicate', instance.productQueryPredicate);
   writeNotNull('useImagesObjects', instance.useImagesObjects);
+  writeNotNull('categoriesCustomFieldsFullPath',
+      instance.categoriesCustomFieldsFullPath);
   writeNotNull('customFields', instance.customFields?.toJson());
   return val;
 }

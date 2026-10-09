@@ -29,6 +29,9 @@ package algoliasearch.ingestion
   *   Predicate](https://docs.commercetools.com/api/predicates/query).
   * @param useImagesObjects
   *   When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+  * @param categoriesCustomFieldsFullPath
+  *   When set to true, the connector uses the complete category path (e.g. \"Root > Level 1 > Category name\") in
+  *   `categoriesCustomFields`.
   */
 case class SourceUpdateCommercetools(
     storeKeys: Option[Seq[String]] = scala.None,
@@ -37,5 +40,6 @@ case class SourceUpdateCommercetools(
     fallbackIsInStockValue: Option[Boolean] = scala.None,
     productQueryPredicate: Option[String] = scala.None,
     useImagesObjects: Option[Boolean] = scala.None,
+    categoriesCustomFieldsFullPath: Option[Boolean] = scala.None,
     customFields: Option[CommercetoolsCustomFields] = scala.None
 ) extends SourceUpdateInputTrait
