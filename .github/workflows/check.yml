@@ -808,9 +808,9 @@ jobs:
             exit 1
           fi
 
-  # yarn docker:setup is the only consumer of these images; a version bump that
-  # leaves a stale checksum is invisible to the tag drift check and to every
-  # other CI job, so build the ones whose own inputs changed. the `!= '[]'` guard
+  # yarn docker:setup is the only consumer of these images and no other CI job
+  # builds them; the drift check verifies the pins but not that an image still
+  # builds, so build the ones whose own inputs changed. the `!= '[]'` guard
   # matters: an empty matrix is an error rather than a skipped job
   docker_images:
     runs-on: ubuntu-24.04
