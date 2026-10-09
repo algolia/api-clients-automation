@@ -1,11 +1,11 @@
 MemoryRecord:
   properties:
     memoryType:
-      $ref: 'MemoryType.yml#/MemoryType'
+      $ref: MemoryType.yml#/MemoryType
     episode:
       oneOf:
-        - $ref: 'Episode.yml#/Episode'
-        - type: 'null'
+      - $ref: Episode.yml#/Episode
+      - type: 'null'
     text:
       type: string
       maxLength: 2000
@@ -47,8 +47,8 @@ MemoryRecord:
       description: Phrases that cause the API to recall this memory.
     objectID:
       oneOf:
-        - type: string
-        - type: 'null'
+      - type: string
+      - type: 'null'
       title: objectid
       description: ObjectID of existing memory to update. Leave empty for new memory.
     appId:
@@ -80,7 +80,7 @@ MemoryRecord:
       default: 0
   type: object
   required:
-    - text
-    - rawExtract
+  - text
+  - rawExtract
   title: memoryRecord
   description: A stored memory record.

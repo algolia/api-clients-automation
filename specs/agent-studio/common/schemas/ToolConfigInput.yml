@@ -1,10 +1,10 @@
 ToolConfigInput:
   oneOf:
-    - $ref: 'ClientSideToolConfig.yml#/ClientSideToolConfig'
-    - $ref: 'AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig'
-    - $ref: 'AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig'
-    - $ref: 'McpServerToolConfig.yml#/McpServerToolConfig'
-    - $ref: 'UnknownToolConfig.yml#/UnknownToolConfig'
+  - $ref: ClientSideToolConfig.yml#/ClientSideToolConfig
+  - $ref: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
+  - $ref: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
+  - $ref: McpServerToolConfig.yml#/McpServerToolConfig
+  - $ref: UnknownToolConfig.yml#/UnknownToolConfig
   discriminator:
     propertyName: type
     mapping:
