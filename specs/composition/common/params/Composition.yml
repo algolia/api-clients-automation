@@ -37,7 +37,7 @@ ruleContexts:
     type: string
   description: |
     Assigns a rule context to the run query.
-    [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+    [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context) are strings that you can use to trigger matching rules.
   default: []
   example: [mobile]
   x-categories:
