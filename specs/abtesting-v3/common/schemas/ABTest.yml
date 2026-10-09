@@ -183,7 +183,8 @@ AnalysisMethod:
     They use `frequentist` instead if the request sets `minimumDetectableEffect`, `errorCorrection`, or a variant's `estimatedSampleSize`,
     or if no primary metric that supports Bayesian analysis is available.
     The selected method is saved in the A/B test configuration.
-    A/B tests without a saved method use `frequentist`.
+    Older A/B tests, created before methods were saved, may have no method in their configuration.
+    These tests use `frequentist`.
   enum:
     - bayesian
     - frequentist
