@@ -47,6 +47,6 @@ Map<String, dynamic> _$BaseExternalProviderSourceToJson(
 }
 
 const _$ExternalProviderOrderingEnumMap = {
-  ExternalProviderOrdering.default_: 'default',
+  ExternalProviderOrdering.algoliaDefined: 'algoliaDefined',
   ExternalProviderOrdering.providerDefined: 'providerDefined',
 };

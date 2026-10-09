@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * Ordering to apply on the items retrieved from the external provider. 'default' uses the relevance
- * ranking from the Algolia retrieval step. 'providerDefined' uses the ordering returned by the
- * external provider.
+ * Ordering to apply on the items retrieved from the external provider. 'algoliaDefined' uses the
+ * relevance ranking from the Algolia retrieval step. 'providerDefined' uses the ordering returned
+ * by the external provider.
  */
 public enum ExternalProviderOrdering {
-  DEFAULT("default"),
+  ALGOLIA_DEFINED("algoliaDefined"),
 
   PROVIDER_DEFINED("providerDefined");
 

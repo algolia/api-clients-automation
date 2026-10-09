@@ -31,17 +31,17 @@ import org.json4s._
 
 sealed trait ExternalProviderOrdering
 
-/** Ordering to apply on the items retrieved from the external provider. 'default' uses the relevance ranking from the
-  * Algolia retrieval step. 'providerDefined' uses the ordering returned by the external provider.
+/** Ordering to apply on the items retrieved from the external provider. 'algoliaDefined' uses the relevance ranking
+  * from the Algolia retrieval step. 'providerDefined' uses the ordering returned by the external provider.
   */
 object ExternalProviderOrdering {
-  case object Default extends ExternalProviderOrdering {
-    override def toString = "default"
+  case object AlgoliaDefined extends ExternalProviderOrdering {
+    override def toString = "algoliaDefined"
   }
   case object ProviderDefined extends ExternalProviderOrdering {
     override def toString = "providerDefined"
   }
-  val values: Seq[ExternalProviderOrdering] = Seq(Default, ProviderDefined)
+  val values: Seq[ExternalProviderOrdering] = Seq(AlgoliaDefined, ProviderDefined)
 
   def withName(name: String): ExternalProviderOrdering = ExternalProviderOrdering.values
     .find(_.toString == name)
