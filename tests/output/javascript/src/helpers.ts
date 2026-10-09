@@ -1,7 +1,7 @@
 export function union(expected: any, received: any): any {
   if (Array.isArray(expected)) {
     if (Array.isArray(received)) {
-      const res = new Array(expected.length);
+      const res = Array.from({ length: expected.length });
       for (const [i, v] of expected.entries()) {
         res[i] = union(v, received[i]);
       }
