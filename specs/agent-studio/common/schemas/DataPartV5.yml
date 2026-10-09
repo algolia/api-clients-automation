@@ -16,6 +16,6 @@ DataPartV5:
       additionalProperties: true
       title: data
   required:
-    - type
+  - type
   title: dataPartV5
   type: object

@@ -1,4 +1,4 @@
-InputUnion:
+InputUnionProviderAuthenticationResponse:
   oneOf:
   - $ref: OpenAIProviderInput.yml#/OpenAIProviderInput
   - $ref: AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput
@@ -6,4 +6,4 @@ InputUnion:
   - $ref: BaseProviderInput.yml#/BaseProviderInput
   - $ref: AnthropicProviderInput.yml#/AnthropicProviderInput
   - $ref: XAIProviderInput.yml#/XAIProviderInput
-  - $ref: AlgoliaManagedLLMCreateInput.yml#/AlgoliaManagedLLMCreateInput
+  - $ref: ManagedProviderResponseInput.yml#/ManagedProviderResponseInput

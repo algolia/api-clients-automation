@@ -1,11 +1,12 @@
 ProviderName:
   type: string
   enum:
-    - openai
-    - azure_openai
-    - google_genai
-    - deepseek
-    - openai_compatible
-    - xai
-    - anthropic
+  - openai
+  - azure_openai
+  - google_genai
+  - deepseek
+  - openai_compatible
+  - algolia_managed_llm
+  - xai
+  - anthropic
   title: providerName

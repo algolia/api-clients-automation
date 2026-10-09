@@ -16,7 +16,7 @@ ClientSideToolConfig:
       title: description
       type: string
     inputSchema:
-      $ref: 'ClientToolsArgsSchema.yml#/ClientToolsArgsSchema'
+      $ref: ClientToolsArgsSchema.yml#/ClientToolsArgsSchema
     isTerminal:
       default: false
       description: 'Server-side declaration that this tool is display/render-only:
@@ -26,9 +26,9 @@ ClientSideToolConfig:
       title: isterminal
       type: boolean
   required:
-    - type
-    - name
-    - description
-    - inputSchema
+  - type
+  - name
+  - description
+  - inputSchema
   title: clientSideToolConfig
   type: object

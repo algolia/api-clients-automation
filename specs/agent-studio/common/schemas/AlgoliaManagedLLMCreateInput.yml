@@ -1,0 +1,6 @@
+AlgoliaManagedLLMCreateInput:
+  properties: {}
+  additionalProperties: false
+  type: object
+  title: algoliaManagedLLMCreateInput
+  description: Empty request settings for provisioning the server-managed provider.
