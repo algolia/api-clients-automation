@@ -79,7 +79,7 @@ final class BaseSearchParamsWithoutQuery {
   @JsonKey(name: r'tagFilters')
   final dynamic tagFilters;
 
-  /// Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum filter score is kept. For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
+  /// Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum filter score is kept. For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulate-scores-with-sumorfiltersscores).
   @JsonKey(name: r'sumOrFiltersScores')
   final bool? sumOrFiltersScores;
 
@@ -149,7 +149,7 @@ final class BaseSearchParamsWithoutQuery {
   @JsonKey(name: r'naturalLanguages')
   final List<SupportedLanguage>? naturalLanguages;
 
-  /// Assigns a rule context to the search query. [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+  /// Assigns a rule context to the search query. [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context) are strings that you can use to trigger matching rules.
   @JsonKey(name: r'ruleContexts')
   final List<String>? ruleContexts;
 

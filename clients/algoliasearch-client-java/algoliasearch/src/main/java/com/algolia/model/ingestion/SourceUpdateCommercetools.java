@@ -31,6 +31,9 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
   @JsonProperty("useImagesObjects")
   private Boolean useImagesObjects;
 
+  @JsonProperty("categoriesCustomFieldsFullPath")
+  private Boolean categoriesCustomFieldsFullPath;
+
   @JsonProperty("customFields")
   private CommercetoolsCustomFields customFields;
 
@@ -125,6 +128,20 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     return useImagesObjects;
   }
 
+  public SourceUpdateCommercetools setCategoriesCustomFieldsFullPath(Boolean categoriesCustomFieldsFullPath) {
+    this.categoriesCustomFieldsFullPath = categoriesCustomFieldsFullPath;
+    return this;
+  }
+
+  /**
+   * When set to true, the connector uses the complete category path (e.g. \"Root > Level 1 >
+   * Category name\") in `categoriesCustomFields`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getCategoriesCustomFieldsFullPath() {
+    return categoriesCustomFieldsFullPath;
+  }
+
   public SourceUpdateCommercetools setCustomFields(CommercetoolsCustomFields customFields) {
     this.customFields = customFields;
     return this;
@@ -152,13 +169,23 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
       Objects.equals(this.fallbackIsInStockValue, sourceUpdateCommercetools.fallbackIsInStockValue) &&
       Objects.equals(this.productQueryPredicate, sourceUpdateCommercetools.productQueryPredicate) &&
       Objects.equals(this.useImagesObjects, sourceUpdateCommercetools.useImagesObjects) &&
+      Objects.equals(this.categoriesCustomFieldsFullPath, sourceUpdateCommercetools.categoriesCustomFieldsFullPath) &&
       Objects.equals(this.customFields, sourceUpdateCommercetools.customFields)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(storeKeys, locales, url, fallbackIsInStockValue, productQueryPredicate, useImagesObjects, customFields);
+    return Objects.hash(
+      storeKeys,
+      locales,
+      url,
+      fallbackIsInStockValue,
+      productQueryPredicate,
+      useImagesObjects,
+      categoriesCustomFieldsFullPath,
+      customFields
+    );
   }
 
   @Override
@@ -171,6 +198,7 @@ public class SourceUpdateCommercetools implements SourceUpdateInput {
     sb.append("    fallbackIsInStockValue: ").append(toIndentedString(fallbackIsInStockValue)).append("\n");
     sb.append("    productQueryPredicate: ").append(toIndentedString(productQueryPredicate)).append("\n");
     sb.append("    useImagesObjects: ").append(toIndentedString(useImagesObjects)).append("\n");
+    sb.append("    categoriesCustomFieldsFullPath: ").append(toIndentedString(categoriesCustomFieldsFullPath)).append("\n");
     sb.append("    customFields: ").append(toIndentedString(customFields)).append("\n");
     sb.append("}");
     return sb.toString();

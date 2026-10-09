@@ -116,11 +116,11 @@ import algoliasearch.composition.SupportedLanguage._
   * @param relevancyStrictness
   *   Relevancy threshold below which less relevant results aren't included in the results. You can only set
   *   `relevancyStrictness` on [virtual replica
-  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+  *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#standard-and-virtual-replicas).
   *   Use this setting to strike a balance between the relevance and number of returned results.
   * @param ruleContexts
   *   Assigns a rule context to the run query. [Rule
-  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
+  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context)
   *   are strings that you can use to trigger matching rules.
   * @param sortBy
   *   Indicates which sorting strategy to apply for the request. The value must match one of the labels defined in the

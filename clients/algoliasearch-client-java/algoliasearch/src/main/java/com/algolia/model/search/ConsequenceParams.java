@@ -337,7 +337,7 @@ public class ConsequenceParams {
   /**
    * Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum
    * filter score is kept. For more information, see [filter
-   * scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
+   * scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulate-scores-with-sumorfiltersscores).
    */
   @javax.annotation.Nullable
   public Boolean getSumOrFiltersScores() {
@@ -579,7 +579,7 @@ public class ConsequenceParams {
 
   /**
    * Assigns a rule context to the search query. [Rule
-   * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
+   * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context)
    * are strings that you can use to trigger matching rules.
    */
   @javax.annotation.Nullable
@@ -776,7 +776,7 @@ public class ConsequenceParams {
   /**
    * Relevancy threshold below which less relevant results aren't included in the results. You can
    * only set `relevancyStrictness` on [virtual replica
-   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#standard-and-virtual-replicas).
    * Use this setting to strike a balance between the relevance and number of returned results.
    */
   @javax.annotation.Nullable
@@ -902,7 +902,7 @@ public class ConsequenceParams {
   /**
    * Minimum number of characters a word in the search query must contain to accept matches with
    * [one
-   * typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+   * typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
    */
   @javax.annotation.Nullable
   public Integer getMinWordSizefor1Typo() {
@@ -917,7 +917,7 @@ public class ConsequenceParams {
   /**
    * Minimum number of characters a word in the search query must contain to accept matches with
    * [two
-   * typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+   * typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
    */
   @javax.annotation.Nullable
   public Integer getMinWordSizefor2Typos() {
@@ -1039,7 +1039,7 @@ public class ConsequenceParams {
   /**
    * Whether to split compound words in the query into their building blocks. For more information,
    * see [Word
-   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
+   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#split-compound-words).
    * Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and
    * Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode
    * characters](https://www.charactercodes.net/category/non-spacing_mark). For example,

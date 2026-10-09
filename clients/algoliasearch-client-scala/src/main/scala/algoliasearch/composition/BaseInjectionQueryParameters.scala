@@ -137,10 +137,10 @@ import algoliasearch.composition.SupportedLanguage._
   *   matches with one word between them would have the same score.
   * @param minWordSizefor1Typo
   *   Minimum number of characters a word in the search query must contain to accept matches with [one
-  *   typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+  *   typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
   * @param minWordSizefor2Typos
   *   Minimum number of characters a word in the search query must contain to accept matches with [two
-  *   typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
+  *   typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).
   * @param naturalLanguages
   *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
   *   keyword searches). - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
@@ -184,7 +184,7 @@ import algoliasearch.composition.SupportedLanguage._
   *   Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
   * @param ruleContexts
   *   Assigns a rule context to the search query. [Rule
-  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
+  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context)
   *   are strings that you can use to trigger matching rules.
   * @param snippetEllipsisText
   *   String used as an ellipsis indicator when a snippet is truncated.

@@ -65,7 +65,7 @@ import algoliasearch.search.SupportedLanguage._
   * @param sumOrFiltersScores
   *   Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum filter score is
   *   kept. For more information, see [filter
-  *   scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
+  *   scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulate-scores-with-sumorfiltersscores).
   * @param restrictSearchableAttributes
   *   Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
   * @param facets
@@ -105,7 +105,7 @@ import algoliasearch.search.SupportedLanguage._
   *   `analyticsTags`.
   * @param ruleContexts
   *   Assigns a rule context to the search query. [Rule
-  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
+  *   contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context)
   *   are strings that you can use to trigger matching rules.
   * @param personalizationImpact
   *   Impact that Personalization should have on this search. The higher this value is, the more Personalization

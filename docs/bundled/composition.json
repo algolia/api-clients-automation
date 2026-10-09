@@ -1957,7 +1957,7 @@
       "relevancyStrictness": {
         "type": "integer",
         "example": 90,
-        "description": "Relevancy threshold below which less relevant results aren't included in the results.\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
+        "description": "Relevancy threshold below which less relevant results aren't included in the results.\nYou can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#standard-and-virtual-replicas).\nUse this setting to strike a balance between the relevance and number of returned results.\n",
         "default": 100,
         "x-categories": [
           "Ranking"
@@ -1968,7 +1968,7 @@
         "items": {
           "type": "string"
         },
-        "description": "Assigns a rule context to the run query.\n[Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.\n",
+        "description": "Assigns a rule context to the run query.\n[Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context) are strings that you can use to trigger matching rules.\n",
         "default": [],
         "example": [
           "mobile"
@@ -3387,7 +3387,7 @@
         ]
       },
       "distinct": {
-        "description": "Determines how many records of a group are included in the search results.\n\nRecords with the same value for the `attributeForDistinct` attribute are considered a group.\nThe `distinct` setting controls how many members of the group are returned.\nThis is useful for [deduplication and grouping](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).\n\nThe `distinct` setting is ignored if `attributeForDistinct` is not set.\n",
+        "description": "Determines how many records of a group are included in the search results.\n\nRecords with the same value for the `attributeForDistinct` attribute are considered a group.\nThe `distinct` setting controls how many members of the group are returned.\nThis is useful for [deduplication and grouping](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#deduplicate-results-with-distinct).\n\nThe `distinct` setting is ignored if `attributeForDistinct` is not set.\n",
         "example": 1,
         "oneOf": [
           {
@@ -3505,7 +3505,7 @@
       },
       "minWordSizefor1Typo": {
         "type": "integer",
-        "description": "Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).",
         "default": 4,
         "x-categories": [
           "Typos"
@@ -3513,7 +3513,7 @@
       },
       "minWordSizefor2Typos": {
         "type": "integer",
-        "description": "Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).",
+        "description": "Minimum number of characters a word in the search query must contain to accept matches with [two typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configure-word-size-threshold-for-typos).",
         "default": 8,
         "x-categories": [
           "Typos"
@@ -3528,14 +3528,14 @@
           "blue",
           "iphone case"
         ],
-        "description": "List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).",
+        "description": "List of [optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#create-a-list-of-optional-words).",
         "default": [],
         "x-categories": [
           "Query strategy"
         ]
       },
       "optionalWords": {
-        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is optional,\nthe search engine runs two queries: one for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has fewer than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words divided by 5 (rounded down).\n  Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).\n",
+        "description": "Words that should be considered optional when found in the query.\n\nBy default, records must match all words in the search query to be included in the search results.\nAdding optional words can increase the number of search results by running an additional search query that doesn't include the optional words.\nFor example, if the search query is \"action video\" and \"video\" is optional,\nthe search engine runs two queries: one for \"action video\" and one for \"action\".\nRecords that match all words are ranked higher.\n\nFor a search query with 4 or more words **and** all its words are optional,\nthe number of matched words required for a record to be included in the search results increases for every 1,000 records:\n\n- If `optionalWords` has fewer than 10 words, the required number of matched words increases by 1:\n  results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 2 matched words.\n- If `optionalWords` has 10 or more words, the required number of matched words increases by the number of optional words divided by 5 (rounded down).\n  Example: with 18 optional words, results 1 to 1,000 require 1 matched word; results 1,001 to 2,000 need 4 matched words.\n\nFor more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#create-a-list-of-optional-words).\n",
         "oneOf": [
           {
             "type": "string"
@@ -3667,7 +3667,7 @@
         "items": {
           "type": "string"
         },
-        "description": "Assigns a rule context to the search query.\n[Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.\n",
+        "description": "Assigns a rule context to the search query.\n[Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#assign-context) are strings that you can use to trigger matching rules.\n",
         "default": [],
         "example": [
           "mobile"
@@ -3885,7 +3885,7 @@
       },
       "sumOrFiltersScores": {
         "type": "boolean",
-        "description": "Whether to sum all filter scores.\nIf true, all filter scores are summed.\nOtherwise, the maximum filter score is kept.\nFor more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).\n",
+        "description": "Whether to sum all filter scores.\nIf true, all filter scores are summed.\nOtherwise, the maximum filter score is kept.\nFor more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulate-scores-with-sumorfiltersscores).\n",
         "default": false,
         "x-categories": [
           "Filtering"

@@ -16,6 +16,7 @@ final class SourceUpdateCommercetools {
     this.fallbackIsInStockValue,
     this.productQueryPredicate,
     this.useImagesObjects,
+    this.categoriesCustomFieldsFullPath,
     this.customFields,
   });
 
@@ -41,6 +42,10 @@ final class SourceUpdateCommercetools {
   @JsonKey(name: r'useImagesObjects')
   final bool? useImagesObjects;
 
+  /// When set to true, the connector uses the complete category path (e.g. \"Root > Level 1 > Category name\") in `categoriesCustomFields`.
+  @JsonKey(name: r'categoriesCustomFieldsFullPath')
+  final bool? categoriesCustomFieldsFullPath;
+
   @JsonKey(name: r'customFields')
   final CommercetoolsCustomFields? customFields;
 
@@ -54,6 +59,8 @@ final class SourceUpdateCommercetools {
           other.fallbackIsInStockValue == fallbackIsInStockValue &&
           other.productQueryPredicate == productQueryPredicate &&
           other.useImagesObjects == useImagesObjects &&
+          other.categoriesCustomFieldsFullPath ==
+              categoriesCustomFieldsFullPath &&
           other.customFields == customFields;
 
   @override
@@ -64,6 +71,7 @@ final class SourceUpdateCommercetools {
       fallbackIsInStockValue.hashCode +
       productQueryPredicate.hashCode +
       useImagesObjects.hashCode +
+      categoriesCustomFieldsFullPath.hashCode +
       customFields.hashCode;
 
   factory SourceUpdateCommercetools.fromJson(Map<String, dynamic> json) =>

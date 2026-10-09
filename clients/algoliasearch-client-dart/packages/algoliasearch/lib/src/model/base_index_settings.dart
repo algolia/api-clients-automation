@@ -69,7 +69,7 @@ final class BaseIndexSettings {
   @JsonKey(name: r'indexLanguages')
   final List<SupportedLanguage>? indexLanguages;
 
-  /// Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search). Attribute names are case-sensitive.
+  /// Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjust-prefix-search). Attribute names are case-sensitive.
   @JsonKey(name: r'disablePrefixOnAttributes')
   final List<String>? disablePrefixOnAttributes;
 
