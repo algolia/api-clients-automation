@@ -1,5 +1,5 @@
 {
-  "version": "5.59.0",
+  "version": "6.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -84,23 +84,23 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/abtesting": "1.25.0",
-    "@algolia/client-abtesting": "5.59.0",
-    "@algolia/client-analytics": "5.59.0",
-    "@algolia/client-common": "5.59.0",
-    "@algolia/client-insights": "5.59.0",
-    "@algolia/client-personalization": "5.59.0",
-    "@algolia/client-query-suggestions": "5.59.0",
-    "@algolia/client-search": "5.59.0",
-    "@algolia/ingestion": "1.59.0",
-    "@algolia/monitoring": "1.59.0",
-    "@algolia/recommend": "5.59.0",
-    "@algolia/requester-browser-xhr": "5.59.0",
-    "@algolia/requester-fetch": "5.59.0",
-    "@algolia/requester-node-http": "5.59.0"
+    "@algolia/abtesting": "2.0.0",
+    "@algolia/client-abtesting": "6.0.0",
+    "@algolia/client-analytics": "6.0.0",
+    "@algolia/client-common": "6.0.0",
+    "@algolia/client-insights": "6.0.0",
+    "@algolia/client-personalization": "6.0.0",
+    "@algolia/client-query-suggestions": "6.0.0",
+    "@algolia/client-search": "6.0.0",
+    "@algolia/ingestion": "2.0.0",
+    "@algolia/monitoring": "2.0.0",
+    "@algolia/recommend": "6.0.0",
+    "@algolia/requester-browser-xhr": "6.0.0",
+    "@algolia/requester-fetch": "6.0.0",
+    "@algolia/requester-node-http": "6.0.0"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.59.0",
+    "@algolia/requester-testing": "6.0.0",
     "@arethetypeswrong/cli": "0.18.5",
     "@cloudflare/vitest-pool-workers": "0.22.0",
     "@cloudflare/workers-types": "5.20260911.1",
