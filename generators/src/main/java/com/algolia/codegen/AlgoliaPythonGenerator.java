@@ -23,6 +23,25 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
   }
 
   @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public String getTypeDeclaration(io.swagger.v3.oas.models.media.Schema p) {
+    if (EmptyObject.isRefToClosedEmptyObject(openAPI, p)) {
+      return toModelName(org.openapitools.codegen.utils.ModelUtils.getSimpleRef(p.get$ref()));
+    }
+    return super.getTypeDeclaration(p);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
+  @Override
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
 

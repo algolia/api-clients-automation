@@ -22,6 +22,17 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     return "algolia-csharp";
   }
 
+  @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
   public String getClientName(String client) {
     return Helpers.createClientName(client, "csharp");
   }

@@ -25,6 +25,17 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   }
 
   @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
+  @Override
   public void processOpts() {
     String client = (String) additionalProperties.get("client");
 

@@ -47,6 +47,10 @@
         {{/vars}}
     }
 {{/hasVars}}
+{{#vendorExtensions.x-is-empty-object}}
+
+    {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} init() {}
+{{/vendorExtensions.x-is-empty-object}}
 
     {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum CodingKeys: {{#hasVars}}String, {{/hasVars}}CodingKey, CaseIterable {
         {{#vars}}
