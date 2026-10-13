@@ -8289,44 +8289,9 @@ void main() {
       call: (client) => client.setDictionarySettings(
         dictionarySettingsParams: DictionarySettingsParams(
           disableStandardEntries: StandardEntries(
-            plurals: {
-              'fr': false,
-              'en': false,
-              'ru': true,
-            },
-          ),
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/dictionaries/*/settings');
-        expect(request.method, 'put');
-        expectBody(request.body,
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}""");
-      },
-    ),
-  );
-
-  // setDictionarySettings
-  test(
-    'get setDictionarySettings results with all parameters',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.setDictionarySettings(
-        dictionarySettingsParams: DictionarySettingsParams(
-          disableStandardEntries: StandardEntries(
-            plurals: {
-              'fr': false,
-              'en': false,
-              'ru': true,
-            },
             stopwords: {
               'fr': false,
-            },
-            compounds: {
+              'en': false,
               'ru': true,
             },
           ),
@@ -8336,7 +8301,7 @@ void main() {
         expectPath(request.path, '/1/dictionaries/*/settings');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""");
+            """{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}""");
       },
     ),
   );

@@ -4707,13 +4707,21 @@ components:
         $ref: '#/components/schemas/variant'
     EffectMetric:
       type: string
-      description: Metric for which you want to detect the smallest relative difference.
+      description: >
+        Metric for which you want to detect the smallest relative difference.
+
+        For user-level rates (`*UsersRate`), sample sizes count users instead of
+        searches.
       enum:
         - addToCartRate
         - clickThroughRate
         - conversionRate
         - purchaseRate
         - noResultsRate
+        - addToCartUsersRate
+        - clickedUsersRate
+        - convertedUsersRate
+        - purchaseUsersRate
     MinimumDetectableEffect:
       type: object
       description: >-

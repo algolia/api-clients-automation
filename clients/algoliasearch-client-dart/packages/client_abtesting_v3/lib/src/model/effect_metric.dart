@@ -2,14 +2,18 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Metric for which you want to detect the smallest relative difference.
+/// Metric for which you want to detect the smallest relative difference. For user-level rates (`*UsersRate`), sample sizes count users instead of searches.
 @JsonEnum(valueField: 'raw')
 enum EffectMetric {
   addToCartRate(r'addToCartRate'),
   clickThroughRate(r'clickThroughRate'),
   conversionRate(r'conversionRate'),
   purchaseRate(r'purchaseRate'),
-  noResultsRate(r'noResultsRate');
+  noResultsRate(r'noResultsRate'),
+  addToCartUsersRate(r'addToCartUsersRate'),
+  clickedUsersRate(r'clickedUsersRate'),
+  convertedUsersRate(r'convertedUsersRate'),
+  purchaseUsersRate(r'purchaseUsersRate');
 
   const EffectMetric(this.raw);
   final dynamic raw;

@@ -6361,7 +6361,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.setDictionarySettings(
         new DictionarySettingsParams().setDisableStandardEntries(
-          new StandardEntries().setPlurals(
+          new StandardEntries().setStopwords(
             new HashMap() {
               {
                 put("fr", false);
@@ -6378,52 +6378,7 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-  }
-
-  @Test
-  @DisplayName("get setDictionarySettings results with all parameters")
-  void setDictionarySettingsTest1() {
-    assertDoesNotThrow(() -> {
-      client.setDictionarySettings(
-        new DictionarySettingsParams().setDisableStandardEntries(
-          new StandardEntries()
-            .setPlurals(
-              new HashMap() {
-                {
-                  put("fr", false);
-                  put("en", false);
-                  put("ru", true);
-                }
-              }
-            )
-            .setStopwords(
-              new HashMap() {
-                {
-                  put("fr", false);
-                }
-              }
-            )
-            .setCompounds(
-              new HashMap() {
-                {
-                  put("ru", true);
-                }
-              }
-            )
-        )
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/dictionaries/*/settings", req.path);
-    assertEquals("PUT", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}",
+        "{\"disableStandardEntries\":{\"stopwords\":{\"fr\":false,\"en\":false,\"ru\":true}}}",
         req.body,
         JSONCompareMode.STRICT
       )

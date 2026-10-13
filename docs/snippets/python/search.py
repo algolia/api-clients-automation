@@ -9577,7 +9577,7 @@ def snippet_for_set_dictionary_settings():
 
     get setDictionarySettings results with minimal parameters
     """
-    # >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+    # >SEPARATOR setDictionarySettings default
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -9586,45 +9586,9 @@ def snippet_for_set_dictionary_settings():
     response = client.set_dictionary_settings(
         dictionary_settings_params={
             "disableStandardEntries": {
-                "plurals": {
-                    "fr": False,
-                    "en": False,
-                    "ru": True,
-                },
-            },
-        },
-    )
-
-    # >LOG
-    # print the response
-    print(response)
-    # SEPARATOR<
-
-
-def snippet_for_set_dictionary_settings1():
-    """
-    Snippet for the setDictionarySettings method.
-
-    get setDictionarySettings results with all parameters
-    """
-    # >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-    # Initialize the client
-    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
-    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-    # Call the API
-    response = client.set_dictionary_settings(
-        dictionary_settings_params={
-            "disableStandardEntries": {
-                "plurals": {
-                    "fr": False,
-                    "en": False,
-                    "ru": True,
-                },
                 "stopwords": {
                     "fr": False,
-                },
-                "compounds": {
+                    "en": False,
                     "ru": True,
                 },
             },

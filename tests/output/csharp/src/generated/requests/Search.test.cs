@@ -7222,7 +7222,7 @@ public class SearchClientRequestTests
       {
         DisableStandardEntries = new StandardEntries
         {
-          Plurals = new Dictionary<string, Boolean>
+          Stopwords = new Dictionary<string, Boolean>
           {
             { "fr", false },
             { "en", false },
@@ -7236,37 +7236,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/dictionaries/*/settings", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "get setDictionarySettings results with all parameters")]
-  public async Task SetDictionarySettingsTest1()
-  {
-    await client.SetDictionarySettingsAsync(
-      new DictionarySettingsParams
-      {
-        DisableStandardEntries = new StandardEntries
-        {
-          Plurals = new Dictionary<string, Boolean>
-          {
-            { "fr", false },
-            { "en", false },
-            { "ru", true },
-          },
-          Stopwords = new Dictionary<string, Boolean> { { "fr", false } },
-          Compounds = new Dictionary<string, Boolean> { { "ru", true } },
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/dictionaries/*/settings", req.Path);
-    Assert.Equal("PUT", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}",
+      "{\"disableStandardEntries\":{\"stopwords\":{\"fr\":false,\"en\":false,\"ru\":true}}}",
       req.Body,
       new JsonDiffConfig(false)
     );
