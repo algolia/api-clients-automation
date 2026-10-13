@@ -113,13 +113,20 @@ MinimumDetectableEffect:
 
 EffectMetric:
   type: string
-  description: Metric for which you want to detect the smallest relative difference.
+  description: |
+    Metric for which you want to detect the smallest relative difference.
+    User-level rates (`addToCartUsersRate`, `clickedUsersRate`, `convertedUsersRate`, `purchaseUsersRate`)
+    are the share of tracked users with at least one such search: their estimated sample sizes count users, not searches.
   enum:
     - addToCartRate
     - clickThroughRate
     - conversionRate
     - purchaseRate
     - noResultsRate
+    - addToCartUsersRate
+    - clickedUsersRate
+    - convertedUsersRate
+    - purchaseUsersRate
 
 PrimaryMetric:
   type: string
