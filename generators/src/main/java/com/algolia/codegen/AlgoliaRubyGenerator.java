@@ -22,6 +22,17 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
   }
 
   @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
+  @Override
   public void processOpts() {
     CLIENT = (String) additionalProperties.get("client");
 
@@ -92,6 +103,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     GenericPropagator.propagateGenericsToModels(models);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
+    EmptyObject.moveOneOfMembersLast(openAPI, models);
     return models;
   }
 
