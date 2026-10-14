@@ -42,5 +42,5 @@ import algoliasearch.agentstudio.ProviderName._
 case class ProviderAuthenticationCreate(
     name: String,
     providerName: ProviderName,
-    input: ProviderInput
+    input: InputUnion
 )

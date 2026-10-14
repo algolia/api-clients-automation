@@ -474,7 +474,7 @@ func TestAgentStudio_CreateProvider(t *testing.T) {
 			agentStudio.NewEmptyProviderAuthenticationCreate().
 				SetName("My OpenAI Provider").
 				SetProviderName(agentStudio.ProviderName("openai")).
-				SetInput(agentStudio.OpenAIProviderInputAsProviderInput(
+				SetInput(agentStudio.OpenAIProviderInputAsInputUnion(
 					agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-test-key-1234"))),
 		))
 		require.NoError(t, err)
@@ -489,7 +489,7 @@ func TestAgentStudio_CreateProvider(t *testing.T) {
 			agentStudio.NewEmptyProviderAuthenticationCreate().
 				SetName("My Azure Provider").
 				SetProviderName(agentStudio.ProviderName("azure_openai")).
-				SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(
+				SetInput(agentStudio.AzureOpenAIProviderInputAsInputUnion(
 					agentStudio.NewEmptyAzureOpenAIProviderInput().
 						SetApiKey("az-test-key-5678").
 						SetAzureEndpoint("https://my-resource.openai.azure.com").

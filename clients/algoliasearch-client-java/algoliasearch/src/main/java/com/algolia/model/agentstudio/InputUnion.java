@@ -83,14 +83,14 @@ public interface InputUnion {
           LOGGER.finest("Failed to deserialize oneOf XAIProviderInput (error: " + e.getMessage() + ") (type: XAIProviderInput)");
         }
       }
-      // deserialize ManagedProviderResponseInput
+      // deserialize AlgoliaManagedLLMCreateInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ManagedProviderResponseInput.class);
+          return parser.readValueAs(AlgoliaManagedLLMCreateInput.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
-            "Failed to deserialize oneOf ManagedProviderResponseInput (error: " + e.getMessage() + ") (type: ManagedProviderResponseInput)"
+            "Failed to deserialize oneOf AlgoliaManagedLLMCreateInput (error: " + e.getMessage() + ") (type: AlgoliaManagedLLMCreateInput)"
           );
         }
       }

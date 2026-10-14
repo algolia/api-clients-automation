@@ -8,11 +8,11 @@ use Algolia\AlgoliaSearch\Model\AbstractModel;
 use Algolia\AlgoliaSearch\Model\ModelInterface;
 
 /**
- * ProviderInput Class Doc Comment.
+ * InputUnionProviderAuthenticationResponse Class Doc Comment.
  *
  * @category Class
  */
-class ProviderInput extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
+class InputUnionProviderAuthenticationResponse extends AbstractModel implements ModelInterface, \ArrayAccess, \JsonSerializable
 {
     /**
      * Array of property to type mappings. Used for (de)serialization.
@@ -342,7 +342,7 @@ class ProviderInput extends AbstractModel implements ModelInterface, \ArrayAcces
     /**
      * Sets defaultModel.
      *
-     * @param string $defaultModel Default model for this provider. Used for validation and as fallback when no model is specified at agent level.
+     * @param string $defaultModel defaultModel
      *
      * @return self
      */

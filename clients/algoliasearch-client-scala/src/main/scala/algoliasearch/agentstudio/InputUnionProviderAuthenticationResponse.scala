@@ -37,18 +37,20 @@ package algoliasearch.agentstudio
 
 import org.json4s._
 
-/** ProviderInput
+/** InputUnionProviderAuthenticationResponse
   */
-sealed trait ProviderInput
+sealed trait InputUnionProviderAuthenticationResponse
 
-trait ProviderInputTrait extends ProviderInput
+trait InputUnionProviderAuthenticationResponseTrait extends InputUnionProviderAuthenticationResponse
 
-object ProviderInput {}
+object InputUnionProviderAuthenticationResponse {}
 
-object ProviderInputSerializer extends Serializer[ProviderInput] {
-  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), ProviderInput] = {
+object InputUnionProviderAuthenticationResponseSerializer extends Serializer[InputUnionProviderAuthenticationResponse] {
+  override def deserialize(implicit
+      format: Formats
+  ): PartialFunction[(TypeInfo, JValue), InputUnionProviderAuthenticationResponse] = {
 
-    case (TypeInfo(clazz, _), json) if clazz == classOf[ProviderInput] =>
+    case (TypeInfo(clazz, _), json) if clazz == classOf[InputUnionProviderAuthenticationResponse] =>
       json match {
         case value: JObject
             if value.obj.exists(_._1 == "azureDeployment") && value.obj.exists(_._1 == "azureEndpoint") =>
@@ -59,18 +61,21 @@ object ProviderInputSerializer extends Serializer[ProviderInput] {
         case value: JObject => Extraction.extract[BaseProviderInput](value)
         case value: JObject => Extraction.extract[AnthropicProviderInput](value)
         case value: JObject => Extraction.extract[XAIProviderInput](value)
-        case _              => throw new MappingException("Can't convert " + json + " to ProviderInput")
+        case value: JObject => Extraction.extract[ManagedProviderResponseInput](value)
+        case _ => throw new MappingException("Can't convert " + json + " to InputUnionProviderAuthenticationResponse")
       }
   }
 
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ProviderInput =>
-    value match {
-      case value: AzureOpenAIProviderInput      => Extraction.decompose(value)(format - this)
-      case value: OpenAICompatibleProviderInput => Extraction.decompose(value)(format - this)
-      case value: OpenAIProviderInput           => Extraction.decompose(value)(format - this)
-      case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
-      case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
-      case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
-    }
+  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case value: InputUnionProviderAuthenticationResponse =>
+      value match {
+        case value: AzureOpenAIProviderInput      => Extraction.decompose(value)(format - this)
+        case value: OpenAICompatibleProviderInput => Extraction.decompose(value)(format - this)
+        case value: OpenAIProviderInput           => Extraction.decompose(value)(format - this)
+        case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
+        case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
+        case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
+        case value: ManagedProviderResponseInput  => Extraction.decompose(value)(format - this)
+      }
   }
 }

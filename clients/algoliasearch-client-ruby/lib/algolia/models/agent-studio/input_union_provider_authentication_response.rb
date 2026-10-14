@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module AgentStudio
-    module ProviderInput
+    module InputUnionProviderAuthenticationResponse
       class << self
       # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
@@ -15,6 +15,7 @@ module Algolia
             :"AnthropicProviderInput",
             :"AzureOpenAIProviderInput",
             :"BaseProviderInput",
+            :"ManagedProviderResponseInput",
             :"OpenAICompatibleProviderInput",
             :"OpenAIProviderInput",
             :"XAIProviderInput"

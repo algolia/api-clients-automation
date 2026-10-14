@@ -57,13 +57,17 @@ object ProviderName {
   case object OpenaiCompatible extends ProviderName {
     override def toString = "openai_compatible"
   }
+  case object AlgoliaManagedLlm extends ProviderName {
+    override def toString = "algolia_managed_llm"
+  }
   case object Xai extends ProviderName {
     override def toString = "xai"
   }
   case object Anthropic extends ProviderName {
     override def toString = "anthropic"
   }
-  val values: Seq[ProviderName] = Seq(Openai, AzureOpenai, GoogleGenai, Deepseek, OpenaiCompatible, Xai, Anthropic)
+  val values: Seq[ProviderName] =
+    Seq(Openai, AzureOpenai, GoogleGenai, Deepseek, OpenaiCompatible, AlgoliaManagedLlm, Xai, Anthropic)
 
   def withName(name: String): ProviderName = ProviderName.values
     .find(_.toString == name)

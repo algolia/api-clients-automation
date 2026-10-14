@@ -18,6 +18,8 @@ public enum ProviderName {
 
   OPENAI_COMPATIBLE("openai_compatible"),
 
+  ALGOLIA_MANAGED_LLM("algolia_managed_llm"),
+
   XAI("xai"),
 
   ANTHROPIC("anthropic");

@@ -18,6 +18,9 @@ else:
     from typing_extensions import Self
 
 
+from algoliasearch.agent_studio.models.algolia_managed_llm_create_input import (
+    AlgoliaManagedLLMCreateInput,
+)
 from algoliasearch.agent_studio.models.anthropic_provider_input import (
     AnthropicProviderInput,
 )
@@ -25,9 +28,6 @@ from algoliasearch.agent_studio.models.azure_open_ai_provider_input import (
     AzureOpenAIProviderInput,
 )
 from algoliasearch.agent_studio.models.base_provider_input import BaseProviderInput
-from algoliasearch.agent_studio.models.managed_provider_response_input import (
-    ManagedProviderResponseInput,
-)
 from algoliasearch.agent_studio.models.open_ai_compatible_provider_input import (
     OpenAICompatibleProviderInput,
 )
@@ -54,25 +54,25 @@ class InputUnion(BaseModel):
 
     oneof_schema_6_validator: Optional[XAIProviderInput] = Field(default=None)
 
-    oneof_schema_7_validator: Optional[ManagedProviderResponseInput] = Field(
+    oneof_schema_7_validator: Optional[AlgoliaManagedLLMCreateInput] = Field(
         default=None
     )
 
     actual_instance: Union[
+        AlgoliaManagedLLMCreateInput,
         AnthropicProviderInput,
         AzureOpenAIProviderInput,
         BaseProviderInput,
-        ManagedProviderResponseInput,
         OpenAICompatibleProviderInput,
         OpenAIProviderInput,
         XAIProviderInput,
         None,
     ] = None
     one_of_schemas: Set[str] = {
+        "AlgoliaManagedLLMCreateInput",
         "AnthropicProviderInput",
         "AzureOpenAIProviderInput",
         "BaseProviderInput",
-        "ManagedProviderResponseInput",
         "OpenAICompatibleProviderInput",
         "OpenAIProviderInput",
         "XAIProviderInput",
@@ -96,10 +96,10 @@ class InputUnion(BaseModel):
     def unwrap_actual_instance(
         self,
     ) -> Union[
+        AlgoliaManagedLLMCreateInput,
         AnthropicProviderInput,
         AzureOpenAIProviderInput,
         BaseProviderInput,
-        ManagedProviderResponseInput,
         OpenAICompatibleProviderInput,
         OpenAIProviderInput,
         XAIProviderInput,
@@ -159,14 +159,14 @@ class InputUnion(BaseModel):
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
         try:
-            instance.actual_instance = ManagedProviderResponseInput.from_json(json_str)
+            instance.actual_instance = AlgoliaManagedLLMCreateInput.from_json(json_str)
 
             return instance
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         raise ValueError(
-            "No match found when deserializing the JSON string into InputUnion with oneOf schemas: AnthropicProviderInput, AzureOpenAIProviderInput, BaseProviderInput, ManagedProviderResponseInput, OpenAICompatibleProviderInput, OpenAIProviderInput, XAIProviderInput. Details: "
+            "No match found when deserializing the JSON string into InputUnion with oneOf schemas: AlgoliaManagedLLMCreateInput, AnthropicProviderInput, AzureOpenAIProviderInput, BaseProviderInput, OpenAICompatibleProviderInput, OpenAIProviderInput, XAIProviderInput. Details: "
             + ", ".join(error_messages)
         )
 
@@ -187,10 +187,10 @@ class InputUnion(BaseModel):
     ) -> Optional[
         Union[
             Dict[str, Any],
+            AlgoliaManagedLLMCreateInput,
             AnthropicProviderInput,
             AzureOpenAIProviderInput,
             BaseProviderInput,
-            ManagedProviderResponseInput,
             OpenAICompatibleProviderInput,
             OpenAIProviderInput,
             XAIProviderInput,

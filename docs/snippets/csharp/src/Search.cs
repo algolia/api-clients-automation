@@ -8974,7 +8974,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientSetDictionarySettings()
   {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+    // >SEPARATOR setDictionarySettings default
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -8984,46 +8984,12 @@ public class SnippetSearchClient
       {
         DisableStandardEntries = new StandardEntries
         {
-          Plurals = new Dictionary<string, Boolean>
+          Stopwords = new Dictionary<string, Boolean>
           {
             { "fr", false },
             { "en", false },
             { "ru", true },
           },
-        },
-      }
-    );
-    // >LOG
-    // print the response
-    Console.WriteLine(response);
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the SetDictionarySettings method.
-  ///
-  /// get setDictionarySettings results with all parameters
-  /// </summary>
-  public async Task SnippetForSearchClientSetDictionarySettings1()
-  {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-    // Initialize the client
-    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
-
-    // Call the API
-    var response = await client.SetDictionarySettingsAsync(
-      new DictionarySettingsParams
-      {
-        DisableStandardEntries = new StandardEntries
-        {
-          Plurals = new Dictionary<string, Boolean>
-          {
-            { "fr", false },
-            { "en", false },
-            { "ru", true },
-          },
-          Stopwords = new Dictionary<string, Boolean> { { "fr", false } },
-          Compounds = new Dictionary<string, Boolean> { { "ru", true } },
         },
       }
     );

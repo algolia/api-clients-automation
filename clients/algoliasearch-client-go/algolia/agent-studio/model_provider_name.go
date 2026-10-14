@@ -11,13 +11,14 @@ type ProviderName string
 
 // List of ProviderName.
 const (
-	PROVIDER_NAME_OPENAI            ProviderName = "openai"
-	PROVIDER_NAME_AZURE_OPENAI      ProviderName = "azure_openai"
-	PROVIDER_NAME_GOOGLE_GENAI      ProviderName = "google_genai"
-	PROVIDER_NAME_DEEPSEEK          ProviderName = "deepseek"
-	PROVIDER_NAME_OPENAI_COMPATIBLE ProviderName = "openai_compatible"
-	PROVIDER_NAME_XAI               ProviderName = "xai"
-	PROVIDER_NAME_ANTHROPIC         ProviderName = "anthropic"
+	PROVIDER_NAME_OPENAI              ProviderName = "openai"
+	PROVIDER_NAME_AZURE_OPENAI        ProviderName = "azure_openai"
+	PROVIDER_NAME_GOOGLE_GENAI        ProviderName = "google_genai"
+	PROVIDER_NAME_DEEPSEEK            ProviderName = "deepseek"
+	PROVIDER_NAME_OPENAI_COMPATIBLE   ProviderName = "openai_compatible"
+	PROVIDER_NAME_ALGOLIA_MANAGED_LLM ProviderName = "algolia_managed_llm"
+	PROVIDER_NAME_XAI                 ProviderName = "xai"
+	PROVIDER_NAME_ANTHROPIC           ProviderName = "anthropic"
 )
 
 // All allowed values of ProviderName enum.
@@ -27,6 +28,7 @@ var AllowedProviderNameEnumValues = []ProviderName{
 	"google_genai",
 	"deepseek",
 	"openai_compatible",
+	"algolia_managed_llm",
 	"xai",
 	"anthropic",
 }

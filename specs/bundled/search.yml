@@ -8653,16 +8653,28 @@ components:
     standardEntries:
       type: object
       description: >
-        Key-value pairs of [supported language ISO
+        Turn off the built-in Algolia stop words for specific languages.
+
+        Only `stopwords` is supported.
+
+        The keys of the `stopwords` object are [language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages)
-        and boolean values.
+        of languages with a built-in stop-word dictionary.
       additionalProperties: false
       properties:
         plurals:
+          deprecated: true
+          description: |
+            Not supported. The API rejects this property with HTTP 400.
+            You cannot turn off the built-in plurals dictionary.
           $ref: '#/components/schemas/standardEntry'
         stopwords:
           $ref: '#/components/schemas/standardEntry'
         compounds:
+          deprecated: true
+          description: |
+            Not supported. The API rejects this property with HTTP 400.
+            You cannot turn off the built-in compounds dictionary.
           $ref: '#/components/schemas/standardEntry'
     dictionaryLanguage:
       oneOf:

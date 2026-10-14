@@ -28,6 +28,7 @@ final class ProviderAuthenticationCreate {
   /// - [OpenAIProviderInput]
   /// - [OpenAICompatibleProviderInput]
   /// - [XAIProviderInput]
+  /// - [AlgoliaManagedLLMCreateInput]
   @JsonKey(name: r'input')
   final dynamic input;
 

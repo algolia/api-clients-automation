@@ -17,6 +17,7 @@ export 'src/model/agui_completion_request.dart';
 export 'src/model/agui_resume.dart';
 export 'src/model/algolia_grouped_results_compat_tool_config.dart';
 export 'src/model/algolia_grouped_results_tool_config.dart';
+export 'src/model/algolia_managed_llm_create_input.dart';
 export 'src/model/algolia_recommend_tool_config.dart';
 export 'src/model/algolia_recommend_tool_index_config.dart';
 export 'src/model/algolia_search_tool_config.dart';

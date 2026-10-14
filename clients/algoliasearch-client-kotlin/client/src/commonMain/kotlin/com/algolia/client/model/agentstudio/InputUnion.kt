@@ -17,10 +17,10 @@ import kotlinx.serialization.json.*
  * InputUnion
  *
  * Implementations:
+ * - [AlgoliaManagedLLMCreateInput]
  * - [AnthropicProviderInput]
  * - [AzureOpenAIProviderInput]
  * - [BaseProviderInput]
- * - [ManagedProviderResponseInput]
  * - [OpenAICompatibleProviderInput]
  * - [OpenAIProviderInput]
  * - [XAIProviderInput]
@@ -57,8 +57,8 @@ public sealed interface InputUnion {
 
   @Serializable
   @JvmInline
-  public value class ManagedProviderResponseInputValue(
-    public val value: ManagedProviderResponseInput
+  public value class AlgoliaManagedLLMCreateInputValue(
+    public val value: AlgoliaManagedLLMCreateInput
   ) : InputUnion
 
   public companion object {
@@ -77,8 +77,8 @@ public sealed interface InputUnion {
 
     public fun of(value: XAIProviderInput): InputUnion = XAIProviderInputValue(value)
 
-    public fun of(value: ManagedProviderResponseInput): InputUnion =
-      ManagedProviderResponseInputValue(value)
+    public fun of(value: AlgoliaManagedLLMCreateInput): InputUnion =
+      AlgoliaManagedLLMCreateInputValue(value)
   }
 }
 
@@ -96,7 +96,7 @@ internal class InputUnionSerializer :
       element is JsonObject -> BaseProviderInput.serializer()
       element is JsonObject -> AnthropicProviderInput.serializer()
       element is JsonObject -> XAIProviderInput.serializer()
-      element is JsonObject -> ManagedProviderResponseInput.serializer()
+      element is JsonObject -> AlgoliaManagedLLMCreateInput.serializer()
       else -> throw AlgoliaClientException("Failed to deserialize json element: $element")
     }
   }

@@ -12,6 +12,7 @@ public enum ProviderName: String, Codable, CaseIterable {
     case googleGenai = "google_genai"
     case deepseek
     case openaiCompatible = "openai_compatible"
+    case algoliaManagedLlm = "algolia_managed_llm"
     case xai
     case anthropic
 }

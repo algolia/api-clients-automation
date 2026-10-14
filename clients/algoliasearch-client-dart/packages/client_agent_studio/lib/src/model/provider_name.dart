@@ -9,6 +9,7 @@ enum ProviderName {
   googleGenai(r'google_genai'),
   deepseek(r'deepseek'),
   openaiCompatible(r'openai_compatible'),
+  algoliaManagedLlm(r'algolia_managed_llm'),
   xai(r'xai'),
   anthropic(r'anthropic');
 

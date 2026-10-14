@@ -7669,7 +7669,7 @@ class SearchTest {
           dictionarySettingsParams =
             DictionarySettingsParams(
               disableStandardEntries =
-                StandardEntries(plurals = mapOf("fr" to false, "en" to false, "ru" to true))
+                StandardEntries(stopwords = mapOf("fr" to false, "en" to false, "ru" to true))
             )
         )
       },
@@ -7677,34 +7677,7 @@ class SearchTest {
         assertEquals("/1/dictionaries/*/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody(
-          """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}""",
-          it.body,
-        )
-      },
-    )
-  }
-
-  @Test
-  fun `get setDictionarySettings results with all parameters1`() = runTest {
-    client.runTest(
-      call = {
-        setDictionarySettings(
-          dictionarySettingsParams =
-            DictionarySettingsParams(
-              disableStandardEntries =
-                StandardEntries(
-                  plurals = mapOf("fr" to false, "en" to false, "ru" to true),
-                  stopwords = mapOf("fr" to false),
-                  compounds = mapOf("ru" to true),
-                )
-            )
-        )
-      },
-      intercept = {
-        assertEquals("/1/dictionaries/*/settings".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody(
-          """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""",
+          """{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}""",
           it.body,
         )
       },

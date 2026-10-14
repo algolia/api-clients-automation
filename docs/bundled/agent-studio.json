@@ -7604,6 +7604,18 @@
                 "type": "null"
               }
             ]
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "metadata"
           }
         },
         "type": "object",
@@ -8101,22 +8113,18 @@
       "ManagedProviderResponseInput": {
         "properties": {
           "defaultModel": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "type": "string",
             "title": "defaultmodel"
           }
         },
         "type": "object",
+        "required": [
+          "defaultModel"
+        ],
         "title": "managedProviderResponseInput",
         "description": "Response input for the Algolia-hosted provider. Limited by design."
       },
-      "InputUnion": {
+      "InputUnionProviderAuthenticationResponse": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/OpenAIProviderInput"
@@ -8156,7 +8164,7 @@
             "title": "providername"
           },
           "input": {
-            "$ref": "#/components/schemas/InputUnion"
+            "$ref": "#/components/schemas/InputUnionProviderAuthenticationResponse"
           },
           "createdAt": {
             "type": "string",
@@ -8176,11 +8184,6 @@
               }
             ],
             "title": "lastusedat"
-          },
-          "isAlgoliaManaged": {
-            "type": "boolean",
-            "title": "isalgoliamanaged",
-            "default": false
           }
         },
         "type": "object",
@@ -8222,12 +8225,20 @@
           "google_genai",
           "deepseek",
           "openai_compatible",
+          "algolia_managed_llm",
           "xai",
           "anthropic"
         ],
         "title": "providerName"
       },
-      "ProviderInput": {
+      "AlgoliaManagedLLMCreateInput": {
+        "properties": {},
+        "additionalProperties": false,
+        "type": "object",
+        "title": "algoliaManagedLLMCreateInput",
+        "description": "Empty request settings for provisioning the server-managed provider."
+      },
+      "InputUnion": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/OpenAIProviderInput"
@@ -8246,6 +8257,9 @@
           },
           {
             "$ref": "#/components/schemas/XAIProviderInput"
+          },
+          {
+            "$ref": "#/components/schemas/AlgoliaManagedLLMCreateInput"
           }
         ]
       },
@@ -8261,7 +8275,7 @@
             "$ref": "#/components/schemas/ProviderName"
           },
           "input": {
-            "$ref": "#/components/schemas/ProviderInput"
+            "$ref": "#/components/schemas/InputUnion"
           }
         },
         "additionalProperties": false,

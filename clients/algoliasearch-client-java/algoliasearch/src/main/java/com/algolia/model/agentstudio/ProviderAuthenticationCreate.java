@@ -17,7 +17,7 @@ public class ProviderAuthenticationCreate {
   private ProviderName providerName;
 
   @JsonProperty("input")
-  private ProviderInput input;
+  private InputUnion input;
 
   public ProviderAuthenticationCreate setName(String name) {
     this.name = name;
@@ -41,14 +41,14 @@ public class ProviderAuthenticationCreate {
     return providerName;
   }
 
-  public ProviderAuthenticationCreate setInput(ProviderInput input) {
+  public ProviderAuthenticationCreate setInput(InputUnion input) {
     this.input = input;
     return this;
   }
 
   /** Get input */
   @javax.annotation.Nonnull
-  public ProviderInput getInput() {
+  public InputUnion getInput() {
     return input;
   }
 

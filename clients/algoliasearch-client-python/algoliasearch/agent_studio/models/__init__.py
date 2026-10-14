@@ -24,6 +24,7 @@ from .algolia_grouped_results_compat_tool_config import (
     AlgoliaGroupedResultsCompatToolConfig,
 )
 from .algolia_grouped_results_tool_config import AlgoliaGroupedResultsToolConfig
+from .algolia_managed_llm_create_input import AlgoliaManagedLLMCreateInput
 from .algolia_recommend_tool_config import AlgoliaRecommendToolConfig
 from .algolia_recommend_tool_index_config import AlgoliaRecommendToolIndexConfig
 from .algolia_search_tool_config import AlgoliaSearchToolConfig
@@ -82,6 +83,9 @@ from .ignore_plurals_union import IgnorePluralsUnion
 from .impact_analytics import ImpactAnalytics
 from .index_search_parameters import IndexSearchParameters
 from .input_union import InputUnion
+from .input_union_provider_authentication_response import (
+    InputUnionProviderAuthenticationResponse,
+)
 from .inside_bounding_box_union import InsideBoundingBoxUnion
 from .inside_polygon_union import InsidePolygonUnion
 from .items_union import ItemsUnion
@@ -119,7 +123,6 @@ from .pagination_metadata import PaginationMetadata
 from .provider_authentication_create import ProviderAuthenticationCreate
 from .provider_authentication_patch import ProviderAuthenticationPatch
 from .provider_authentication_response import ProviderAuthenticationResponse
-from .provider_input import ProviderInput
 from .provider_input_nullable import ProviderInputNullable
 from .provider_name import ProviderName
 from .query_type import QueryType
@@ -197,6 +200,7 @@ __all__ = (
     "AguiResume",
     "AlgoliaGroupedResultsCompatToolConfig",
     "AlgoliaGroupedResultsToolConfig",
+    "AlgoliaManagedLLMCreateInput",
     "AlgoliaRecommendToolConfig",
     "AlgoliaRecommendToolIndexConfig",
     "AlgoliaSearchToolConfig",
@@ -253,6 +257,7 @@ __all__ = (
     "ImpactAnalytics",
     "IndexSearchParameters",
     "InputUnion",
+    "InputUnionProviderAuthenticationResponse",
     "InsideBoundingBoxUnion",
     "InsidePolygonUnion",
     "ItemsUnion",
@@ -288,7 +293,6 @@ __all__ = (
     "ProviderAuthenticationCreate",
     "ProviderAuthenticationPatch",
     "ProviderAuthenticationResponse",
-    "ProviderInput",
     "ProviderInputNullable",
     "ProviderName",
     "QueryType",

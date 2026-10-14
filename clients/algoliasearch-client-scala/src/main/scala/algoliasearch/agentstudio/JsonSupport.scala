@@ -71,6 +71,7 @@ object JsonSupport {
     FacetsUnionSerializer :+
     IgnorePluralsUnionSerializer :+
     InputUnionSerializer :+
+    InputUnionProviderAuthenticationResponseSerializer :+
     InsideBoundingBoxUnionSerializer :+
     InsidePolygonUnionSerializer :+
     ItemsUnionSerializer :+
@@ -84,7 +85,6 @@ object JsonSupport {
     NumericFiltersUnionSerializer :+
     OptionalFiltersUnionSerializer :+
     OptionalWordsUnionSerializer :+
-    ProviderInputSerializer :+
     ProviderInputNullableSerializer :+
     ReRankingApplyFilterUnionSerializer :+
     RemoveStopWordsUnionSerializer :+

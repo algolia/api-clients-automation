@@ -9499,7 +9499,7 @@ class SnippetSearchClient {
     * get setDictionarySettings results with minimal parameters
     */
   def snippetForSearchClientSetDictionarySettings(): Unit = {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+    // >SEPARATOR setDictionarySettings default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -9508,35 +9508,7 @@ class SnippetSearchClient {
       client.setDictionarySettings(
         dictionarySettingsParams = DictionarySettingsParams(
           disableStandardEntries = StandardEntries(
-            plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
-          )
-        )
-      ),
-      Duration(100, "sec")
-    )
-    // >LOG
-    // print the response
-    println(response)
-    // SEPARATOR<
-  }
-
-  /** Snippet for the setDictionarySettings method.
-    *
-    * get setDictionarySettings results with all parameters
-    */
-  def snippetForSearchClientSetDictionarySettings1(): Unit = {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    val response = Await.result(
-      client.setDictionarySettings(
-        dictionarySettingsParams = DictionarySettingsParams(
-          disableStandardEntries = StandardEntries(
-            plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true)),
-            stopwords = Some(Map("fr" -> false)),
-            compounds = Some(Map("ru" -> true))
+            stopwords = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
           )
         )
       ),

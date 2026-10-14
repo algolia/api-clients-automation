@@ -48,14 +48,20 @@ public enum ProviderName
   OpenaiCompatible = 5,
 
   /// <summary>
+  /// Enum AlgoliaManagedLlm for value: algolia_managed_llm
+  /// </summary>
+  [JsonPropertyName("algolia_managed_llm")]
+  AlgoliaManagedLlm = 6,
+
+  /// <summary>
   /// Enum Xai for value: xai
   /// </summary>
   [JsonPropertyName("xai")]
-  Xai = 6,
+  Xai = 7,
 
   /// <summary>
   /// Enum Anthropic for value: anthropic
   /// </summary>
   [JsonPropertyName("anthropic")]
-  Anthropic = 7,
+  Anthropic = 8,
 }

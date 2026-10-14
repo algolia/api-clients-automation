@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Response input for the Algolia-hosted provider. Limited by design. */
 @JsonDeserialize(as = ManagedProviderResponseInput.class)
-public class ManagedProviderResponseInput implements InputUnion {
+public class ManagedProviderResponseInput implements InputUnionProviderAuthenticationResponse {
 
   @JsonProperty("defaultModel")
   private String defaultModel;
@@ -20,7 +20,7 @@ public class ManagedProviderResponseInput implements InputUnion {
   }
 
   /** Get defaultModel */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getDefaultModel() {
     return defaultModel;
   }

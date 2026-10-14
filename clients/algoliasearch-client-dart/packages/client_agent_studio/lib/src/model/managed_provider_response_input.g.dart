@@ -13,22 +13,14 @@ ManagedProviderResponseInput _$ManagedProviderResponseInputFromJson(
       json,
       ($checkedConvert) {
         final val = ManagedProviderResponseInput(
-          defaultModel: $checkedConvert('defaultModel', (v) => v as String?),
+          defaultModel: $checkedConvert('defaultModel', (v) => v as String),
         );
         return val;
       },
     );
 
 Map<String, dynamic> _$ManagedProviderResponseInputToJson(
-    ManagedProviderResponseInput instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('defaultModel', instance.defaultModel);
-  return val;
-}
+        ManagedProviderResponseInput instance) =>
+    <String, dynamic>{
+      'defaultModel': instance.defaultModel,
+    };

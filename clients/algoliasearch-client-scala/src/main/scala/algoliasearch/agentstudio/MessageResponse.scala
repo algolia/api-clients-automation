@@ -55,5 +55,6 @@ case class MessageResponse(
     isCacheHit: Option[Boolean] = scala.None,
     turnContext: Option[Map[String, Any]] = scala.None,
     events: Option[Seq[MessageEvent]] = scala.None,
-    guardrail: Option[GuardrailOutcome] = scala.None
+    guardrail: Option[GuardrailOutcome] = scala.None,
+    metadata: Option[Map[String, Any]] = scala.None
 )

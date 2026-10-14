@@ -41,9 +41,8 @@ case class ProviderAuthenticationResponse(
     id: String,
     name: String,
     providerName: String,
-    input: InputUnion,
+    input: InputUnionProviderAuthenticationResponse,
     createdAt: String,
     updatedAt: String,
-    lastUsedAt: Option[String] = scala.None,
-    isAlgoliaManaged: Option[Boolean] = scala.None
+    lastUsedAt: Option[String] = scala.None
 )

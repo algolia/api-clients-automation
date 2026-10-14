@@ -88,10 +88,10 @@ public partial class InputUnion : AbstractSchema
 
   /// <summary>
   /// Initializes a new instance of the InputUnion class
-  /// with a ManagedProviderResponseInput
+  /// with a AlgoliaManagedLLMCreateInput
   /// </summary>
-  /// <param name="actualInstance">An instance of ManagedProviderResponseInput.</param>
-  public InputUnion(ManagedProviderResponseInput actualInstance)
+  /// <param name="actualInstance">An instance of AlgoliaManagedLLMCreateInput.</param>
+  public InputUnion(AlgoliaManagedLLMCreateInput actualInstance)
   {
     ActualInstance =
       actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
@@ -163,13 +163,13 @@ public partial class InputUnion : AbstractSchema
   }
 
   /// <summary>
-  /// Get the actual instance of `ManagedProviderResponseInput`. If the actual instance is not `ManagedProviderResponseInput`,
+  /// Get the actual instance of `AlgoliaManagedLLMCreateInput`. If the actual instance is not `AlgoliaManagedLLMCreateInput`,
   /// the InvalidClassException will be thrown
   /// </summary>
-  /// <returns>An instance of ManagedProviderResponseInput</returns>
-  public ManagedProviderResponseInput AsManagedProviderResponseInput()
+  /// <returns>An instance of AlgoliaManagedLLMCreateInput</returns>
+  public AlgoliaManagedLLMCreateInput AsAlgoliaManagedLLMCreateInput()
   {
-    return (ManagedProviderResponseInput)ActualInstance;
+    return (AlgoliaManagedLLMCreateInput)ActualInstance;
   }
 
   /// <summary>
@@ -227,12 +227,12 @@ public partial class InputUnion : AbstractSchema
   }
 
   /// <summary>
-  /// Check if the actual instance is of `ManagedProviderResponseInput` type.
+  /// Check if the actual instance is of `AlgoliaManagedLLMCreateInput` type.
   /// </summary>
   /// <returns>Whether or not the instance is the type</returns>
-  public bool IsManagedProviderResponseInput()
+  public bool IsAlgoliaManagedLLMCreateInput()
   {
-    return ActualInstance.GetType() == typeof(ManagedProviderResponseInput);
+    return ActualInstance.GetType() == typeof(AlgoliaManagedLLMCreateInput);
   }
 
   /// <summary>
@@ -419,14 +419,14 @@ public class InputUnionJsonConverter : JsonConverter<InputUnion>
       try
       {
         return new InputUnion(
-          jsonDocument.Deserialize<ManagedProviderResponseInput>(JsonConfig.Options)
+          jsonDocument.Deserialize<AlgoliaManagedLLMCreateInput>(JsonConfig.Options)
         );
       }
       catch (Exception exception)
       {
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
-          $"Failed to deserialize into ManagedProviderResponseInput: {exception}"
+          $"Failed to deserialize into AlgoliaManagedLLMCreateInput: {exception}"
         );
       }
     }

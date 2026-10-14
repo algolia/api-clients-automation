@@ -453,7 +453,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             .createProviderWithHTTPInfo(providerAuthenticationCreate: ProviderAuthenticationCreate(
                 name: "My OpenAI Provider",
                 providerName: ProviderName.openai,
-                input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
+                input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -486,7 +486,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             .createProviderWithHTTPInfo(providerAuthenticationCreate: ProviderAuthenticationCreate(
                 name: "My Azure Provider",
                 providerName: ProviderName.azureOpenai,
-                input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(
+                input: InputUnion.azureOpenAIProviderInput(AzureOpenAIProviderInput(
                     apiKey: "az-test-key-5678",
                     azureEndpoint: "https://my-resource.openai.azure.com",
                     azureDeployment: "gpt-4o"

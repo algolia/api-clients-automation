@@ -15,10 +15,10 @@ module Algolia
             :"AnthropicProviderInput",
             :"AzureOpenAIProviderInput",
             :"BaseProviderInput",
-            :"ManagedProviderResponseInput",
             :"OpenAICompatibleProviderInput",
             :"OpenAIProviderInput",
-            :"XAIProviderInput"
+            :"XAIProviderInput",
+            :"AlgoliaManagedLLMCreateInput"
           ]
         end
 

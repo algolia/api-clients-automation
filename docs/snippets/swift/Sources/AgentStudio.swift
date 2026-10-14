@@ -286,7 +286,7 @@ final class AgentStudioClientSnippet {
         let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(
             name: "My OpenAI Provider",
             providerName: ProviderName.openai,
-            input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
+            input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
         ))
         // >LOG
         // print the response
@@ -306,7 +306,7 @@ final class AgentStudioClientSnippet {
         let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(
             name: "My Azure Provider",
             providerName: ProviderName.azureOpenai,
-            input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(
+            input: InputUnion.azureOpenAIProviderInput(AzureOpenAIProviderInput(
                 apiKey: "az-test-key-5678",
                 azureEndpoint: "https://my-resource.openai.azure.com",
                 azureDeployment: "gpt-4o"

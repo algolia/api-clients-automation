@@ -40,5 +40,5 @@ package algoliasearch.agentstudio
 case class BaseProviderInput(
     apiKey: String
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

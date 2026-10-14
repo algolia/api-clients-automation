@@ -13,7 +13,7 @@ public enum InputUnion: Codable, JSONEncodable, AbstractEncodable {
     case baseProviderInput(BaseProviderInput)
     case anthropicProviderInput(AnthropicProviderInput)
     case xAIProviderInput(XAIProviderInput)
-    case managedProviderResponseInput(ManagedProviderResponseInput)
+    case algoliaManagedLLMCreateInput(AlgoliaManagedLLMCreateInput)
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -30,7 +30,7 @@ public enum InputUnion: Codable, JSONEncodable, AbstractEncodable {
             try container.encode(value)
         case let .xAIProviderInput(value):
             try container.encode(value)
-        case let .managedProviderResponseInput(value):
+        case let .algoliaManagedLLMCreateInput(value):
             try container.encode(value)
         }
     }
@@ -49,8 +49,8 @@ public enum InputUnion: Codable, JSONEncodable, AbstractEncodable {
             self = .anthropicProviderInput(value)
         } else if let value = try? container.decode(XAIProviderInput.self) {
             self = .xAIProviderInput(value)
-        } else if let value = try? container.decode(ManagedProviderResponseInput.self) {
-            self = .managedProviderResponseInput(value)
+        } else if let value = try? container.decode(AlgoliaManagedLLMCreateInput.self) {
+            self = .algoliaManagedLLMCreateInput(value)
         } else {
             throw DecodingError.typeMismatch(
                 Self.Type.self,
@@ -73,8 +73,8 @@ public enum InputUnion: Codable, JSONEncodable, AbstractEncodable {
             value as AnthropicProviderInput
         case let .xAIProviderInput(value):
             value as XAIProviderInput
-        case let .managedProviderResponseInput(value):
-            value as ManagedProviderResponseInput
+        case let .algoliaManagedLLMCreateInput(value):
+            value as AlgoliaManagedLLMCreateInput
         }
     }
 }

@@ -342,7 +342,7 @@ class InputUnion extends AbstractModel implements ModelInterface, \ArrayAccess, 
     /**
      * Sets defaultModel.
      *
-     * @param string $defaultModel defaultModel
+     * @param string $defaultModel Default model for this provider. Used for validation and as fallback when no model is specified at agent level.
      *
      * @return self
      */

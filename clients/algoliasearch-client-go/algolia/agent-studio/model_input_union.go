@@ -10,10 +10,10 @@ import (
 
 // InputUnion - struct for InputUnion.
 type InputUnion struct {
+	AlgoliaManagedLLMCreateInput  *AlgoliaManagedLLMCreateInput
 	AnthropicProviderInput        *AnthropicProviderInput
 	AzureOpenAIProviderInput      *AzureOpenAIProviderInput
 	BaseProviderInput             *BaseProviderInput
-	ManagedProviderResponseInput  *ManagedProviderResponseInput
 	OpenAICompatibleProviderInput *OpenAICompatibleProviderInput
 	OpenAIProviderInput           *OpenAIProviderInput
 	XAIProviderInput              *XAIProviderInput
@@ -61,10 +61,10 @@ func XAIProviderInputAsInputUnion(v *XAIProviderInput) *InputUnion {
 	}
 }
 
-// ManagedProviderResponseInputAsInputUnion is a convenience function that returns ManagedProviderResponseInput wrapped in InputUnion.
-func ManagedProviderResponseInputAsInputUnion(v *ManagedProviderResponseInput) *InputUnion {
+// AlgoliaManagedLLMCreateInputAsInputUnion is a convenience function that returns AlgoliaManagedLLMCreateInput wrapped in InputUnion.
+func AlgoliaManagedLLMCreateInputAsInputUnion(v *AlgoliaManagedLLMCreateInput) *InputUnion {
 	return &InputUnion{
-		ManagedProviderResponseInput: v,
+		AlgoliaManagedLLMCreateInput: v,
 	}
 }
 
@@ -111,13 +111,17 @@ func (dst *InputUnion) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		dst.XAIProviderInput = nil
 	}
-	// try to unmarshal data into ManagedProviderResponseInput
-	err = json.Unmarshal(data, &dst.ManagedProviderResponseInput)
+	// try to unmarshal data into AlgoliaManagedLLMCreateInput
+	err = json.Unmarshal(data, &dst.AlgoliaManagedLLMCreateInput)
 	if err != nil {
-		dst.ManagedProviderResponseInput = nil
+		dst.AlgoliaManagedLLMCreateInput = nil
 	}
 
 	// check if at least one type was successfully unmarshaled
+	if dst.AlgoliaManagedLLMCreateInput != nil {
+		return nil
+	}
+
 	if dst.AnthropicProviderInput != nil {
 		return nil
 	}
@@ -127,10 +131,6 @@ func (dst *InputUnion) UnmarshalJSON(data []byte) error {
 	}
 
 	if dst.BaseProviderInput != nil {
-		return nil
-	}
-
-	if dst.ManagedProviderResponseInput != nil {
 		return nil
 	}
 
@@ -151,6 +151,15 @@ func (dst *InputUnion) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON.
 func (src InputUnion) MarshalJSON() ([]byte, error) {
+	if src.AlgoliaManagedLLMCreateInput != nil {
+		serialized, err := json.Marshal(&src.AlgoliaManagedLLMCreateInput)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal one of AlgoliaManagedLLMCreateInput of InputUnion: %w", err)
+		}
+
+		return serialized, nil
+	}
+
 	if src.AnthropicProviderInput != nil {
 		serialized, err := json.Marshal(&src.AnthropicProviderInput)
 		if err != nil {
@@ -173,15 +182,6 @@ func (src InputUnion) MarshalJSON() ([]byte, error) {
 		serialized, err := json.Marshal(&src.BaseProviderInput)
 		if err != nil {
 			return nil, fmt.Errorf("failed to unmarshal one of BaseProviderInput of InputUnion: %w", err)
-		}
-
-		return serialized, nil
-	}
-
-	if src.ManagedProviderResponseInput != nil {
-		serialized, err := json.Marshal(&src.ManagedProviderResponseInput)
-		if err != nil {
-			return nil, fmt.Errorf("failed to unmarshal one of ManagedProviderResponseInput of InputUnion: %w", err)
 		}
 
 		return serialized, nil
@@ -219,6 +219,10 @@ func (src InputUnion) MarshalJSON() ([]byte, error) {
 
 // Get the actual instance.
 func (obj InputUnion) GetActualInstance() any {
+	if obj.AlgoliaManagedLLMCreateInput != nil {
+		return *obj.AlgoliaManagedLLMCreateInput
+	}
+
 	if obj.AnthropicProviderInput != nil {
 		return *obj.AnthropicProviderInput
 	}
@@ -229,10 +233,6 @@ func (obj InputUnion) GetActualInstance() any {
 
 	if obj.BaseProviderInput != nil {
 		return *obj.BaseProviderInput
-	}
-
-	if obj.ManagedProviderResponseInput != nil {
-		return *obj.ManagedProviderResponseInput
 	}
 
 	if obj.OpenAICompatibleProviderInput != nil {

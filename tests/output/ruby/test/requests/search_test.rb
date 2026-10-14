@@ -5221,7 +5221,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_dictionary_settings
     req = @client.set_dictionary_settings_with_http_info(
       Algolia::Search::DictionarySettingsParams.new(
-        disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
+        disable_standard_entries: Algolia::Search::StandardEntries.new(stopwords: {fr: false, en: false, ru: true})
       )
     )
 
@@ -5230,31 +5230,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse("{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}"),
-      JSON.parse(req.body)
-    )
-  end
-
-  # get setDictionarySettings results with all parameters
-  def test_set_dictionary_settings1
-    req = @client.set_dictionary_settings_with_http_info(
-      Algolia::Search::DictionarySettingsParams.new(
-        disable_standard_entries: Algolia::Search::StandardEntries.new(
-          plurals: {fr: false, en: false, ru: true},
-          stopwords: {fr: false},
-          compounds: {ru: true}
-        )
-      )
-    )
-
-    assert_equal(:put, req.method)
-    assert_equal("/1/dictionaries/*/settings", req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(
-      JSON.parse(
-        "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}"
-      ),
+      JSON.parse("{\"disableStandardEntries\":{\"stopwords\":{\"fr\":false,\"en\":false,\"ru\":true}}}"),
       JSON.parse(req.body)
     )
   end

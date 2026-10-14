@@ -52,6 +52,11 @@ MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : GuardrailOutcome.fromJson(v as Map<String, dynamic>)),
+          metadata: $checkedConvert(
+              'metadata',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k, e as Object),
+                  )),
         );
         return val;
       },
@@ -83,6 +88,7 @@ Map<String, dynamic> _$MessageResponseToJson(MessageResponse instance) {
   writeNotNull('turnContext', instance.turnContext);
   writeNotNull('events', instance.events?.map((e) => e.toJson()).toList());
   writeNotNull('guardrail', instance.guardrail?.toJson());
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 

@@ -45,6 +45,7 @@ const _$ProviderNameEnumMap = {
   ProviderName.googleGenai: 'google_genai',
   ProviderName.deepseek: 'deepseek',
   ProviderName.openaiCompatible: 'openai_compatible',
+  ProviderName.algoliaManagedLlm: 'algolia_managed_llm',
   ProviderName.xai: 'xai',
   ProviderName.anthropic: 'anthropic',
 };

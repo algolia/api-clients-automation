@@ -6948,7 +6948,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->setDictionarySettings(
-            ['disableStandardEntries' => ['plurals' => ['fr' => false,
+            ['disableStandardEntries' => ['stopwords' => ['fr' => false,
                 'en' => false,
                 'ru' => true,
             ],
@@ -6960,33 +6960,7 @@ class SearchTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/dictionaries/*/settings',
                 'method' => 'PUT',
-                'body' => json_decode('{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}'),
-            ],
-        ]);
-    }
-
-    #[TestDox('get setDictionarySettings results with all parameters')]
-    public function testSetDictionarySettings1(): void
-    {
-        $client = $this->getClient();
-        $client->setDictionarySettings(
-            ['disableStandardEntries' => ['plurals' => ['fr' => false,
-                'en' => false,
-                'ru' => true,
-            ],
-                'stopwords' => ['fr' => false,
-                ],
-                'compounds' => ['ru' => true,
-                ],
-            ],
-            ],
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/dictionaries/*/settings',
-                'method' => 'PUT',
-                'body' => json_decode('{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}'),
+                'body' => json_decode('{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}'),
             ],
         ]);
     }

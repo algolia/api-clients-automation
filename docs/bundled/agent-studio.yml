@@ -7522,7 +7522,7 @@ paths:
               {
                 Name = "My OpenAI Provider",
                 ProviderName = Enum.Parse<ProviderName>("Openai"),
-                Input = new ProviderInput(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
+                Input = new InputUnion(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
               }
             );
 
@@ -7569,7 +7569,7 @@ paths:
               agentStudio.NewEmptyProviderAuthenticationCreate().
                 SetName("My OpenAI Provider").
                 SetProviderName(agentStudio.ProviderName("openai")).
-                SetInput(agentStudio.OpenAIProviderInputAsProviderInput(
+                SetInput(agentStudio.OpenAIProviderInputAsInputUnion(
                   agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-test-key-1234"))),
             ))
 
@@ -7773,7 +7773,7 @@ paths:
             ProviderAuthenticationCreate(
                 name: "My OpenAI Provider",
                 providerName: ProviderName.openai,
-                input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
+                input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: "sk-test-key-1234"))
             ))
 
 
@@ -15672,6 +15672,12 @@ components:
             - type: boolean
             - type: 'null'
           title: iscachehit
+        metadata:
+          oneOf:
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          title: metadata
         model:
           oneOf:
             - type: string
@@ -16050,14 +16056,14 @@ components:
     ManagedProviderResponseInput:
       properties:
         defaultModel:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: defaultmodel
       type: object
+      required:
+        - defaultModel
       title: managedProviderResponseInput
       description: Response input for the Algolia-hosted provider. Limited by design.
-    InputUnion:
+    InputUnionProviderAuthenticationResponse:
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -16075,7 +16081,7 @@ components:
           type: string
           title: id
         input:
-          $ref: '#/components/schemas/InputUnion'
+          $ref: '#/components/schemas/InputUnionProviderAuthenticationResponse'
         name:
           type: string
           title: name
@@ -16085,10 +16091,6 @@ components:
         updatedAt:
           type: string
           title: updatedat
-        isAlgoliaManaged:
-          type: boolean
-          title: isalgoliamanaged
-          default: false
         lastUsedAt:
           oneOf:
             - type: string
@@ -16125,10 +16127,17 @@ components:
         - google_genai
         - deepseek
         - openai_compatible
+        - algolia_managed_llm
         - xai
         - anthropic
       title: providerName
-    ProviderInput:
+    AlgoliaManagedLLMCreateInput:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: algoliaManagedLLMCreateInput
+      description: Empty request settings for provisioning the server-managed provider.
+    InputUnion:
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -16136,10 +16145,11 @@ components:
         - $ref: '#/components/schemas/BaseProviderInput'
         - $ref: '#/components/schemas/AnthropicProviderInput'
         - $ref: '#/components/schemas/XAIProviderInput'
+        - $ref: '#/components/schemas/AlgoliaManagedLLMCreateInput'
     ProviderAuthenticationCreate:
       properties:
         input:
-          $ref: '#/components/schemas/ProviderInput'
+          $ref: '#/components/schemas/InputUnion'
         name:
           type: string
           maxLength: 128

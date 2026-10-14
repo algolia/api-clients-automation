@@ -10,6 +10,7 @@ import 'package:algolia_client_agent_studio/src/model/agui_completion_request.da
 import 'package:algolia_client_agent_studio/src/model/agui_resume.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_compat_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_tool_config.dart';
+import 'package:algolia_client_agent_studio/src/model/algolia_managed_llm_create_input.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_index_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_search_tool_config.dart';
@@ -185,6 +186,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'AlgoliaGroupedResultsToolConfig':
       return AlgoliaGroupedResultsToolConfig.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AlgoliaManagedLLMCreateInput':
+      return AlgoliaManagedLLMCreateInput.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'AlgoliaRecommendToolConfig':
       return AlgoliaRecommendToolConfig.fromJson(value as Map<String, dynamic>)

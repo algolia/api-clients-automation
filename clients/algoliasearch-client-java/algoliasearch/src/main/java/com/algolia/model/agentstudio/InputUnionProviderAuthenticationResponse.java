@@ -11,15 +11,15 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** ProviderInput */
-@JsonDeserialize(using = ProviderInput.Deserializer.class)
-public interface ProviderInput {
-  class Deserializer extends JsonDeserializer<ProviderInput> {
+/** InputUnionProviderAuthenticationResponse */
+@JsonDeserialize(using = InputUnionProviderAuthenticationResponse.Deserializer.class)
+public interface InputUnionProviderAuthenticationResponse {
+  class Deserializer extends JsonDeserializer<InputUnionProviderAuthenticationResponse> {
 
     private static final Logger LOGGER = Logger.getLogger(Deserializer.class.getName());
 
     @Override
-    public ProviderInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public InputUnionProviderAuthenticationResponse deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
       // deserialize AzureOpenAIProviderInput
       if (tree.isObject() && tree.has("azureDeployment") && tree.has("azureEndpoint")) {
@@ -83,13 +83,24 @@ public interface ProviderInput {
           LOGGER.finest("Failed to deserialize oneOf XAIProviderInput (error: " + e.getMessage() + ") (type: XAIProviderInput)");
         }
       }
+      // deserialize ManagedProviderResponseInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ManagedProviderResponseInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf ManagedProviderResponseInput (error: " + e.getMessage() + ") (type: ManagedProviderResponseInput)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 
     /** Handle deserialization of the 'null' value. */
     @Override
-    public ProviderInput getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-      throw new JsonMappingException(ctxt.getParser(), "ProviderInput cannot be null");
+    public InputUnionProviderAuthenticationResponse getNullValue(DeserializationContext ctxt) throws JsonMappingException {
+      throw new JsonMappingException(ctxt.getParser(), "InputUnionProviderAuthenticationResponse cannot be null");
     }
   }
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
  * not at completion.
  */
 @JsonDeserialize(as = XAIProviderInput.class)
-public class XAIProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
+public class XAIProviderInput implements InputUnion, InputUnionProviderAuthenticationResponse, ProviderInputNullable {
 
   @JsonProperty("apiKey")
   private String apiKey;

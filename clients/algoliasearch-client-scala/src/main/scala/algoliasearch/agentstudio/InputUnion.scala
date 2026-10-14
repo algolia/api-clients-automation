@@ -59,7 +59,7 @@ object InputUnionSerializer extends Serializer[InputUnion] {
         case value: JObject => Extraction.extract[BaseProviderInput](value)
         case value: JObject => Extraction.extract[AnthropicProviderInput](value)
         case value: JObject => Extraction.extract[XAIProviderInput](value)
-        case value: JObject => Extraction.extract[ManagedProviderResponseInput](value)
+        case value: JObject => Extraction.extract[AlgoliaManagedLLMCreateInput](value)
         case _              => throw new MappingException("Can't convert " + json + " to InputUnion")
       }
   }
@@ -72,7 +72,8 @@ object InputUnionSerializer extends Serializer[InputUnion] {
       case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
       case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
       case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
-      case value: ManagedProviderResponseInput  => Extraction.decompose(value)(format - this)
+      case value: AlgoliaManagedLLMCreateInput  => Extraction.decompose(value)(format - this)
+      case value: AlgoliaManagedLLMCreateInput  => Extraction.decompose(value)(format - this)
     }
   }
 }

@@ -46,5 +46,5 @@ case class AzureOpenAIProviderInput(
     azureDeployment: String,
     apiVersion: Option[String] = scala.None
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

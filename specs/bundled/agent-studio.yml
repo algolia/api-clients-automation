@@ -5233,6 +5233,12 @@ components:
           oneOf:
             - $ref: '#/components/schemas/GuardrailOutcome'
             - type: 'null'
+        metadata:
+          oneOf:
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          title: metadata
       type: object
       required:
         - id
@@ -5583,14 +5589,14 @@ components:
     ManagedProviderResponseInput:
       properties:
         defaultModel:
-          oneOf:
-            - type: string
-            - type: 'null'
+          type: string
           title: defaultmodel
       type: object
+      required:
+        - defaultModel
       title: managedProviderResponseInput
       description: Response input for the Algolia-hosted provider. Limited by design.
-    InputUnion:
+    InputUnionProviderAuthenticationResponse:
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -5611,7 +5617,7 @@ components:
           type: string
           title: providername
         input:
-          $ref: '#/components/schemas/InputUnion'
+          $ref: '#/components/schemas/InputUnionProviderAuthenticationResponse'
         createdAt:
           type: string
           title: createdat
@@ -5623,10 +5629,6 @@ components:
             - type: string
             - type: 'null'
           title: lastusedat
-        isAlgoliaManaged:
-          type: boolean
-          title: isalgoliamanaged
-          default: false
       type: object
       required:
         - id
@@ -5658,10 +5660,17 @@ components:
         - google_genai
         - deepseek
         - openai_compatible
+        - algolia_managed_llm
         - xai
         - anthropic
       title: providerName
-    ProviderInput:
+    AlgoliaManagedLLMCreateInput:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: algoliaManagedLLMCreateInput
+      description: Empty request settings for provisioning the server-managed provider.
+    InputUnion:
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -5669,6 +5678,7 @@ components:
         - $ref: '#/components/schemas/BaseProviderInput'
         - $ref: '#/components/schemas/AnthropicProviderInput'
         - $ref: '#/components/schemas/XAIProviderInput'
+        - $ref: '#/components/schemas/AlgoliaManagedLLMCreateInput'
     ProviderAuthenticationCreate:
       properties:
         name:
@@ -5679,7 +5689,7 @@ components:
         providerName:
           $ref: '#/components/schemas/ProviderName'
         input:
-          $ref: '#/components/schemas/ProviderInput'
+          $ref: '#/components/schemas/InputUnion'
       additionalProperties: false
       type: object
       required:
