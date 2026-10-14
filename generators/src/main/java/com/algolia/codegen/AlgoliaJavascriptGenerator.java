@@ -25,6 +25,17 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   }
 
   @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
+  @Override
   public void processOpts() {
     super.processOpts();
 
@@ -209,6 +220,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models);
+    EmptyObject.markModels(openAPI, models);
     return models;
   }
 

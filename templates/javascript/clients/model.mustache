@@ -25,7 +25,9 @@ export type {{classname}}{{> client/model/types/isGeneric}} = {{#composedSchemas
 {{#description}}
 /**
 * {{{description}}}
-*/{{/description}}{{^isEnum}}
+*/{{/description}}{{^isEnum}}{{#vendorExtensions.x-is-empty-object}}
+export type {{classname}} = Record<string, never>;
+{{/vendorExtensions.x-is-empty-object}}{{^vendorExtensions.x-is-empty-object}}
 export type {{classname}}{{> client/model/types/isGeneric}} = {{^vendorExtensions.x-is-generic}}{{#parent}}{{{.}}} & {{/parent}}{{/vendorExtensions.x-is-generic}}{{#vendorExtensions.x-is-generic}}T & {{/vendorExtensions.x-is-generic}} {
 {{#vendorExtensions}}
 {{#vars}}{{#description}}
@@ -36,6 +38,7 @@ export type {{classname}}{{> client/model/types/isGeneric}} = {{^vendorExtension
 {{/vars}}
 } {{#x-is-SearchForHitsOptions}} & { facet?: never | undefined; maxFacetHits?: never | undefined; facetQuery?: never | undefined}; {{/x-is-SearchForHitsOptions}}
 {{/vendorExtensions}}
+{{/vendorExtensions.x-is-empty-object}}
 {{/isEnum}}
 {{#hasEnums}}{{#vars}}{{#isEnum}}export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}{{/vars}}{{/hasEnums}}
 {{#isEnum}}export type {{classname}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}
