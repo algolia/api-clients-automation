@@ -6,6 +6,7 @@ ProviderName:
     - google_genai
     - deepseek
     - openai_compatible
+    - algolia_managed_llm
     - xai
     - anthropic
   title: providerName

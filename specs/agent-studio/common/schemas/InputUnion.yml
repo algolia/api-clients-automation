@@ -6,4 +6,4 @@ InputUnion:
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
     - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
     - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
-    - $ref: 'ManagedProviderResponseInput.yml#/ManagedProviderResponseInput'
+    - $ref: 'AlgoliaManagedLLMCreateInput.yml#/AlgoliaManagedLLMCreateInput'

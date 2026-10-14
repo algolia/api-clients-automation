@@ -1,4 +1,4 @@
-ProviderInput:
+InputUnionProviderAuthenticationResponse:
   oneOf:
     - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
     - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'
@@ -6,3 +6,4 @@ ProviderInput:
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
     - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
     - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
+    - $ref: 'ManagedProviderResponseInput.yml#/ManagedProviderResponseInput'
