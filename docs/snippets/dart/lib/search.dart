@@ -8022,7 +8022,7 @@ void snippetForsetClientApiKey() async {
 //
 // get setDictionarySettings results with minimal parameters
 void snippetForsetDictionarySettings() async {
-  // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+  // >SEPARATOR setDictionarySettings default
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -8031,42 +8031,9 @@ void snippetForsetDictionarySettings() async {
   final response = await client.setDictionarySettings(
     dictionarySettingsParams: DictionarySettingsParams(
       disableStandardEntries: StandardEntries(
-        plurals: {
-          'fr': false,
-          'en': false,
-          'ru': true,
-        },
-      ),
-    ),
-  );
-  // >LOG
-  // print the response
-  print(response);
-  // SEPARATOR<
-}
-
-// Snippet for the setDictionarySettings method.
-//
-// get setDictionarySettings results with all parameters
-void snippetForsetDictionarySettings1() async {
-  // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-  // Initialize the client
-  final client =
-      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
-
-  // Call the API
-  final response = await client.setDictionarySettings(
-    dictionarySettingsParams: DictionarySettingsParams(
-      disableStandardEntries: StandardEntries(
-        plurals: {
-          'fr': false,
-          'en': false,
-          'ru': true,
-        },
         stopwords: {
           'fr': false,
-        },
-        compounds: {
+          'en': false,
           'ru': true,
         },
       ),

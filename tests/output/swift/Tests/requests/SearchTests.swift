@@ -9720,7 +9720,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let response = try await client
             .setDictionarySettingsWithHTTPInfo(
-                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(stopwords: [
                     "fr": false,
                     "en": false,
                     "ru": true,
@@ -9732,42 +9732,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true}}}"
-            .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/dictionaries/*/settings")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// get setDictionarySettings results with all parameters
-    func testSetDictionarySettingsTest1() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client
-            .setDictionarySettingsWithHTTPInfo(
-                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(
-                    plurals: ["fr": false, "en": false, "ru": true],
-                    stopwords: ["fr": false],
-                    compounds: ["ru": true]
-                ))
-            )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData = "{\"disableStandardEntries\":{\"plurals\":{\"fr\":false,\"en\":false,\"ru\":true},\"stopwords\":{\"fr\":false},\"compounds\":{\"ru\":true}}}"
+        let expectedBodyData = "{\"disableStandardEntries\":{\"stopwords\":{\"fr\":false,\"en\":false,\"ru\":true}}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

@@ -38,9 +38,10 @@
   */
 package algoliasearch.search
 
-/** Key-value pairs of [supported language ISO
+/** Turn off the built-in Algolia stop words for specific languages. Only `stopwords` is supported. The keys of the
+  * `stopwords` object are [language ISO
   * codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages)
-  * and boolean values.
+  * of languages with a built-in stop-word dictionary.
   *
   * @param plurals
   *   Key-value pair of a language ISO code and a boolean value.
