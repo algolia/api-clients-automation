@@ -154,13 +154,32 @@ MetricsFilter:
       example: isOutlier
     trackEffects:
       type: boolean
-      description: Whether the experiment should record the effects of this filter.
+      description: Whether the experiment should record the effects of this filter. Not supported by `core.hasExactCategoryFilter`.
     includes:
       type: boolean
       description: If true, keep items that match the filter; if false, exclude them.
+    parameters:
+      $ref: '#/MetricsFilterParameters'
   required:
     - domain
     - name
+
+MetricsFilterParameters:
+  type: object
+  additionalProperties: false
+  description: |
+    Values for a filter that needs them.
+    The `core.hasExactCategoryFilter` filter requires both properties and keeps the searches that had the exact filter `<filterAttribute>:<filterValue>`.
+    Other filters don't accept parameters.
+  properties:
+    filterAttribute:
+      type: string
+      description: Facet attribute of the category, with one attribute for each hierarchy level.
+      example: categories.lvl1
+    filterValue:
+      type: string
+      description: Facet value of the category, exactly as the search sends it.
+      example: Shoes
 
 MetricsFilters:
   type: array
