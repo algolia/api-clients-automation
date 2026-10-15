@@ -229,7 +229,7 @@ Steps:
 Read the failing step's log; `check-version-drift.sh` and `sdkman-install.sh` print which pin is wrong.
 
 - **Half group** (`X is pinned to A but config/.X-version says B`, or `.github/actions/setup/action.yml has A but scripts/docker/Dockerfile.X has B`): Renovate dropped the image update from the group because it was still pending. Tick the PR's rebase box on the Dependency Dashboard (#532) and add it to "Retried". Do NOT push the missing half yourself: Renovate stops updating a branch once someone else commits to it.
-- **Stale checksum** (`sha256 mismatch` or `hashes to … but the pin says …`): Renovate should move the sdkman checksums together with their tags (`github-release-attachments` managers in `renovate.json`). If it did not, add the PR to "Failing" with the log line; the fix is a `renovate.json` change, not a hand-edited pin.
+- **Stale checksum** (`sha256 mismatch`, `hashes to … but the pin says …` or `points at … but the pin says …`): every pinned download is a `<tag>@<digest>` pin that Renovate moves as a whole, sdkman, google-java-format and rubyfmt through `github-release-attachments`, nvm and golangci-lint through `github-tags` (the commit of the tag), see the regex managers in `renovate.json`. If it did not, add the PR to "Failing" with the log line; the fix is a `renovate.json` change, not a hand-edited pin.
 
 **Path 3 — Give up**: If the failure is in `specs`, `codegen`, or `check_green`, or in `setup` for a reason other than stale custom action builds (see Path 1) or pin drift (see Path 2b), or doesn't match any recovery path, add to "Failing" list. Do NOT retry infrastructure job failures — they indicate real issues.
 

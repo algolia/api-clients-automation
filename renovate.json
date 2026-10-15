@@ -233,46 +233,54 @@
     },
     {
       "customType": "regex",
-      "description": "Update golangci-lint, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "description": "Update golangci-lint, pinned as <release tag>@<commit of that tag> so the tag and the commit move together",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "golangci-lint/v(?<currentValue>[0-9.]+)/install\\.sh",
-        "golangci-install\\.sh -b .+ v(?<currentValue>[0-9.]+)"
+        "GOLANGCI_LINT_PIN[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{40})"
       ],
       "depNameTemplate": "golangci/golangci-lint",
-      "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "datasourceTemplate": "github-tags"
     },
     {
       "customType": "regex",
-      "description": "Update nvm, the checksum next to it must be refreshed with scripts/docker/update-pins.sh",
+      "description": "Update nvm, pinned as <release tag>@<commit of that tag> so the tag and the commit move together",
       "managerFilePatterns": [
         "/Dockerfile/"
       ],
       "matchStrings": [
-        "nvm-sh/nvm/v(?<currentValue>[0-9.]+)/install\\.sh"
+        "NVM_PIN=(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{40})"
       ],
       "depNameTemplate": "nvm-sh/nvm",
-      "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "datasourceTemplate": "github-tags"
     },
     {
       "customType": "regex",
-      "description": "Update the java formatter, the checksums next to it must be refreshed with scripts/docker/update-pins.sh",
+      "description": "Update the java formatter, the release asset digest moves with the tag",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "google-java-format/releases/download/v(?<currentValue>.*?)/google-java-format-",
-        "google-java-format/releases/download/v(.*?)/google-java-format-(?<currentValue>.*?)-all-deps"
+        "JAVA_FORMATTER_PIN[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{64})"
       ],
       "depNameTemplate": "google/google-java-format",
-      "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "datasourceTemplate": "github-release-attachments"
+    },
+    {
+      "customType": "regex",
+      "description": "Update rubyfmt, one pin per platform archive so each release asset digest moves with the tag",
+      "managerFilePatterns": [
+        "/Dockerfile/",
+        "/.github/actions/setup/action.yml/"
+      ],
+      "matchStrings": [
+        "RUBYFMT_PIN_(?:X86_64|AARCH64)[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{64})"
+      ],
+      "depNameTemplate": "fables-tales/rubyfmt",
+      "datasourceTemplate": "github-release-attachments"
     },
     {
       "customType": "regex",
