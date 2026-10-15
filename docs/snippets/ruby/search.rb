@@ -6960,39 +6960,14 @@ end
 #
 # get setDictionarySettings results with minimal parameters
 def snippet_for_set_dictionary_settings
-  # >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+  # >SEPARATOR setDictionarySettings default
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.set_dictionary_settings(
     Algolia::Search::DictionarySettingsParams.new(
-      disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
-    )
-  )
-
-  # >LOG
-  # print the response
-  puts(response)
-  # SEPARATOR<
-end
-
-# Snippet for the setDictionarySettings method.
-#
-# get setDictionarySettings results with all parameters
-def snippet_for_set_dictionary_settings1
-  # >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-  # Initialize the client
-  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-
-  # Call the API
-  response = client.set_dictionary_settings(
-    Algolia::Search::DictionarySettingsParams.new(
-      disable_standard_entries: Algolia::Search::StandardEntries.new(
-        plurals: {fr: false, en: false, ru: true},
-        stopwords: {fr: false},
-        compounds: {ru: true}
-      )
+      disable_standard_entries: Algolia::Search::StandardEntries.new(stopwords: {fr: false, en: false, ru: true})
     )
   )
 

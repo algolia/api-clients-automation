@@ -9305,47 +9305,16 @@ class SnippetSearchClient
      */
     public function snippetForSetDictionarySettings(): void
     {
-        // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+        // >SEPARATOR setDictionarySettings default
         // Initialize the client
         $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
         // Call the API
         $response = $client->setDictionarySettings(
-            ['disableStandardEntries' => ['plurals' => ['fr' => false,
+            ['disableStandardEntries' => ['stopwords' => ['fr' => false,
                 'en' => false,
                 'ru' => true,
             ],
-            ],
-            ],
-        );
-
-        // >LOG
-        // print the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the SetDictionarySettings method.
-     *
-     * get setDictionarySettings results with all parameters
-     */
-    public function snippetForSetDictionarySettings1(): void
-    {
-        // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-        // Initialize the client
-        $client = SearchClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-        // Call the API
-        $response = $client->setDictionarySettings(
-            ['disableStandardEntries' => ['plurals' => ['fr' => false,
-                'en' => false,
-                'ru' => true,
-            ],
-                'stopwords' => ['fr' => false,
-                ],
-                'compounds' => ['ru' => true,
-                ],
             ],
             ],
         );

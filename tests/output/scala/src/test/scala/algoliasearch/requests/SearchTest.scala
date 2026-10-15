@@ -7331,7 +7331,7 @@ class SearchTest extends AnyFunSuite {
     val future = client.setDictionarySettings(
       dictionarySettingsParams = DictionarySettingsParams(
         disableStandardEntries = StandardEntries(
-          plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+          stopwords = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
         )
       )
     )
@@ -7341,31 +7341,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/dictionaries/*/settings")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}""")
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("get setDictionarySettings results with all parameters1") {
-    val (client, echo) = testClient()
-    val future = client.setDictionarySettings(
-      dictionarySettingsParams = DictionarySettingsParams(
-        disableStandardEntries = StandardEntries(
-          plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true)),
-          stopwords = Some(Map("fr" -> false)),
-          compounds = Some(Map("ru" -> true))
-        )
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/dictionaries/*/settings")
-    assert(res.method == "PUT")
-    val expectedBody = parse(
-      """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
-    )
+    val expectedBody = parse("""{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

@@ -9108,16 +9108,20 @@
       },
       "standardEntries": {
         "type": "object",
-        "description": "Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages) and boolean values.\n",
+        "description": "Turn off the built-in Algolia stop words for specific languages.\nOnly `stopwords` is supported.\nThe keys of the `stopwords` object are [language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages) of languages with a built-in stop-word dictionary.\n",
         "additionalProperties": false,
         "properties": {
           "plurals": {
+            "deprecated": true,
+            "description": "Not supported. The API rejects this property with HTTP 400.\nYou cannot turn off the built-in plurals dictionary.\n",
             "$ref": "#/components/schemas/standardEntry"
           },
           "stopwords": {
             "$ref": "#/components/schemas/standardEntry"
           },
           "compounds": {
+            "deprecated": true,
+            "description": "Not supported. The API rejects this property with HTTP 400.\nYou cannot turn off the built-in compounds dictionary.\n",
             "$ref": "#/components/schemas/standardEntry"
           }
         }
