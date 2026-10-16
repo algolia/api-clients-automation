@@ -3,7 +3,7 @@ import type { AlgoliaHttpResponse } from './algoliaHttpResponse';
 import type { Cache } from './cache';
 import type { Host } from './host';
 import type { Logger } from './logger';
-import type { EndRequest, Headers, QueryParameters, Request, Requester, Response } from './requester';
+import type { BodyParameters, EndRequest, Headers, QueryParameters, Request, Requester, Response } from './requester';
 
 export type RequestOptions = Pick<Request, 'cacheable'> & {
   /**
@@ -156,6 +156,11 @@ export type TransporterOptions = {
   baseQueryParameters: QueryParameters;
 
   /**
+   * The credentials sent in the JSON body of the requests that accept them, when `authMode` is `'WithinBody'`.
+   */
+  baseBodyParameters?: BodyParameters;
+
+  /**
    * The user agent used. Sent on query parameters.
    */
   algoliaAgent: AlgoliaAgent;
@@ -192,6 +197,8 @@ export type Transporter = TransporterOptions & {
  * existing implementations of `Transporter` remain type-valid.
  */
 export type TransporterWithHttpInfo = Transporter & {
+  baseBodyParameters: BodyParameters;
+
   /**
    * Performs a request and returns the full HTTP response information — status code,
    * headers (when the requester captures them), raw body and deserialized data.
