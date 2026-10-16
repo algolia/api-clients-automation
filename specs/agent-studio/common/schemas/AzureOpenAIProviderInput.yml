@@ -13,6 +13,8 @@ AzureOpenAIProviderInput:
       minLength: 1
       title: azuredeployment
       description: Azure model deployment name.
+    apiMode:
+      $ref: 'ApiModeEnum.yml#/ApiModeEnum'
     apiVersion:
       oneOf:
         - type: string

@@ -6,4 +6,5 @@ ProviderInputNullable:
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
     - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
     - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
+    - $ref: 'MistralProviderInput.yml#/MistralProviderInput'
     - type: 'null'
