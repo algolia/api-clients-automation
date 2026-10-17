@@ -36,7 +36,9 @@ class SearchTest {
   fun `browse with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        browse(indexName = "cts_e2e_browse")
+        browse(
+          indexName = "cts_e2e_browse",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -108,8 +110,13 @@ class SearchTest {
         search(
           searchMethodParams =
             SearchMethodParams(
-              requests = listOf(SearchForHits(indexName = "cts_e2e_search_empty_index"))
-            )
+              requests =
+                listOf(
+                  SearchForHits(
+                    indexName = "cts_e2e_search_empty_index",
+                  ),
+                ),
+            ),
         )
       },
       response = {
@@ -136,9 +143,9 @@ class SearchTest {
                     attributesToSnippet = listOf("*:20"),
                     attributesToHighlight = listOf("*"),
                     attributesToRetrieve = listOf("*"),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       response = {
@@ -163,10 +170,10 @@ class SearchTest {
                     indexName = "cts_e2e_search_facet",
                     type = SearchTypeFacet.entries.first { it.value == "facet" },
                     facet = "editor",
-                  )
+                  ),
                 ),
               strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
-            )
+            ),
         )
       },
       response = {
@@ -198,7 +205,7 @@ class SearchTest {
                         listOf(
                           FacetFilters.of("editor:'visual studio'"),
                           FacetFilters.of("editor:neovim"),
-                        )
+                        ),
                       ),
                   ),
                   SearchForHits(
@@ -208,7 +215,7 @@ class SearchTest {
                         listOf(
                           FacetFilters.of("editor:'visual studio'"),
                           FacetFilters.of(listOf(FacetFilters.of("editor:neovim"))),
-                        )
+                        ),
                       ),
                   ),
                   SearchForHits(
@@ -221,13 +228,13 @@ class SearchTest {
                             listOf(
                               FacetFilters.of("editor:neovim"),
                               FacetFilters.of(listOf(FacetFilters.of("editor:goland"))),
-                            )
+                            ),
                           ),
-                        )
+                        ),
                       ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       response = {
@@ -257,11 +264,11 @@ class SearchTest {
                           SearchExtensionsQueryCategorization(
                             enableCategoriesRetrieval = true,
                             enableAutoFiltering = false,
-                          )
+                          ),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       response = {
@@ -279,7 +286,10 @@ class SearchTest {
       call = {
         searchDictionaryEntries(
           dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
-          searchDictionaryEntriesParams = SearchDictionaryEntriesParams(query = "about"),
+          searchDictionaryEntriesParams =
+            SearchDictionaryEntriesParams(
+              query = "about",
+            ),
         )
       },
       response = {
@@ -297,7 +307,10 @@ class SearchTest {
       call = {
         searchRules(
           indexName = "cts_e2e_browse",
-          searchRulesParams = SearchRulesParams(query = "zorro"),
+          searchRulesParams =
+            SearchRulesParams(
+              query = "zorro",
+            ),
         )
       },
       response = {
@@ -315,13 +328,16 @@ class SearchTest {
       call = {
         searchRules(
           indexName = "cts_e2e_browse",
-          searchRulesParams = SearchRulesParams(query = "zorro"),
+          searchRulesParams =
+            SearchRulesParams(
+              query = "zorro",
+            ),
           requestOptions =
             RequestOptions(
               urlParameters =
                 buildMap {
                   put("x-algolia-request-id", "CtsE2eQry11")
-                }
+                },
             ),
         )
       },
@@ -335,8 +351,10 @@ class SearchTest {
   fun `search with special characters in indexName1`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(indexName = "cts_e2e_space in index")
-      }
+        searchSingleIndex(
+          indexName = "cts_e2e_space in index",
+        )
+      },
     )
   }
 
@@ -376,7 +394,7 @@ class SearchTest {
             ),
           forwardToReplicas = true,
         )
-      }
+      },
     )
   }
 }

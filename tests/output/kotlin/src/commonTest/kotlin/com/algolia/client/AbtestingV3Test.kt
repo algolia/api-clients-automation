@@ -24,7 +24,9 @@ class AbtestingV3Test {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -45,7 +47,9 @@ class AbtestingV3Test {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
@@ -73,14 +77,16 @@ class AbtestingV3Test {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -94,7 +100,9 @@ class AbtestingV3Test {
 
     client.runTest(
       call = {
-        getABTest(id = 123)
+        getABTest(
+          id = 123,
+        )
       },
       intercept = {
         assertEquals("analytics.us.algolia.com", it.url.host)
@@ -105,9 +113,8 @@ class AbtestingV3Test {
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
-        val client = AbtestingV3Client(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-
-      }
+      val client = AbtestingV3Client(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+    }
       .let { error ->
         assertError(
           error,
@@ -135,14 +142,16 @@ class AbtestingV3Test {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -156,14 +165,18 @@ class AbtestingV3Test {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

@@ -34,15 +34,17 @@ class IngestionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6676,
-                )
+                ),
               ),
             maxRateLimitRetries = 0,
           ),
       )
 
     assertFails {
-        client.customGet(path = "1/html-error")
-      }
+      client.customGet(
+        path = "1/html-error",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -61,7 +63,9 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        customGet(path = "1/test")
+        customGet(
+          path = "1/test",
+        )
       },
       intercept = {
         assertEquals(25000, it.connectTimeout)
@@ -76,7 +80,9 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         assertEquals(25000, it.connectTimeout)
@@ -100,14 +106,16 @@ class IngestionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6676,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/long-wait")
+        customGet(
+          path = "1/long-wait",
+        )
       },
       response = {
         assertNotNull(it)
@@ -128,7 +136,10 @@ class IngestionTest {
       call = {
         validateSourceBeforeUpdate(
           sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          sourceUpdate = SourceUpdate(name = "newName"),
+          sourceUpdate =
+            SourceUpdate(
+              name = "newName",
+            ),
         )
       },
       intercept = {
@@ -146,8 +157,14 @@ class IngestionTest {
       call = {
         validateSourceBeforeUpdate(
           sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          sourceUpdate = SourceUpdate(name = "newName"),
-          requestOptions = RequestOptions(writeTimeout = 3456.milliseconds),
+          sourceUpdate =
+            SourceUpdate(
+              name = "newName",
+            ),
+          requestOptions =
+            RequestOptions(
+              writeTimeout = 3456.milliseconds,
+            ),
         )
       },
       intercept = {
@@ -163,7 +180,9 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -184,7 +203,9 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
@@ -212,14 +233,16 @@ class IngestionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -233,7 +256,9 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        getSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getSource(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals("data.us.algolia.com", it.url.host)
@@ -244,9 +269,8 @@ class IngestionTest {
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
-        val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-
-      }
+      val client = IngestionClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+    }
       .let { error ->
         assertError(
           error,
@@ -274,14 +298,16 @@ class IngestionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/request-id/negative/kotlin")
+        customGet(
+          path = "1/test/request-id/negative/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -309,14 +335,16 @@ class IngestionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -330,14 +358,18 @@ class IngestionTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

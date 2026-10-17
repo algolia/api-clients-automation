@@ -24,7 +24,9 @@ class AnalyticsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -45,7 +47,9 @@ class AnalyticsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
@@ -73,14 +77,16 @@ class AnalyticsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -94,7 +100,9 @@ class AnalyticsTest {
 
     client.runTest(
       call = {
-        getAverageClickPosition(index = "my-index")
+        getAverageClickPosition(
+          index = "my-index",
+        )
       },
       intercept = {
         assertEquals("analytics.algolia.com", it.url.host)
@@ -108,7 +116,9 @@ class AnalyticsTest {
 
     client.runTest(
       call = {
-        customPost(path = "test")
+        customPost(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("analytics.de.algolia.com", it.url.host)
@@ -119,9 +129,8 @@ class AnalyticsTest {
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
-        val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-
-      }
+      val client = AnalyticsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+    }
       .let { error ->
         assertError(
           error,
@@ -139,8 +148,10 @@ class AnalyticsTest {
     val client = AnalyticsClient(appId = "appId", apiKey = "apiKey", region = "us")
 
     assertFails {
-        client.getClickPositions(index = empty())
-      }
+      client.getClickPositions(
+        index = empty(),
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -168,14 +179,16 @@ class AnalyticsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -189,14 +202,18 @@ class AnalyticsTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

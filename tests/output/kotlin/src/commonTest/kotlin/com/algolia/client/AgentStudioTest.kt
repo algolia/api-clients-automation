@@ -44,7 +44,7 @@ class AgentStudioTest {
             AgentConfigCreate(
               name = "test-agent",
               instructions = "test instructions",
-            )
+            ),
         )
       },
       intercept = {
@@ -60,7 +60,9 @@ class AgentStudioTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -81,7 +83,9 @@ class AgentStudioTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
@@ -108,14 +112,16 @@ class AgentStudioTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -129,7 +135,9 @@ class AgentStudioTest {
 
     client.runTest(
       call = {
-        customGet(path = "test")
+        customGet(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("my-app-id-dsn.algolia.net", it.url.host)
@@ -151,14 +159,16 @@ class AgentStudioTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -172,14 +182,18 @@ class AgentStudioTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

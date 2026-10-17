@@ -24,7 +24,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customGet(path = "test")
+        customGet(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -38,7 +40,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        searchSingleIndex(indexName = "indexName")
+        searchSingleIndex(
+          indexName = "indexName",
+        )
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -52,7 +56,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customPost(path = "test")
+        customPost(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
@@ -85,13 +91,15 @@ class SearchTest {
                   protocol = "http",
                   port = 6678,
                 ),
-              )
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/retry/kotlin")
+        customGet(
+          path = "1/test/retry/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -118,14 +126,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6676,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.customGet(path = "1/test/hang/kotlin")
-      }
+      client.customGet(
+        path = "1/test/hang/kotlin",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -163,13 +173,15 @@ class SearchTest {
                   protocol = "http",
                   port = 6673,
                 ),
-              )
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customPost(path = "1/test/error/kotlin")
+        customPost(
+          path = "1/test/error/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -196,7 +208,7 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6678,
-                )
+                ),
               ),
             compressionType = CompressionType.GZIP,
           ),
@@ -212,7 +224,7 @@ class SearchTest {
               put(
                 "message",
                 JsonPrimitive(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
                 ),
               )
             },
@@ -243,14 +255,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6691,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/gzip-response")
+        customGet(
+          path = "1/test/gzip-response",
+        )
       },
       response = {
         assertNotNull(it)
@@ -269,7 +283,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customGet(path = "1/test")
+        customGet(
+          path = "1/test",
+        )
       },
       intercept = {
         assertEquals(2000, it.connectTimeout)
@@ -284,7 +300,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         assertEquals(2000, it.connectTimeout)
@@ -307,14 +325,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        getSettings(indexName = "cts_e2e_unknownField_kotlin")
+        getSettings(
+          indexName = "cts_e2e_unknownField_kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -341,8 +361,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -384,13 +404,15 @@ class SearchTest {
                   protocol = "http",
                   port = 6674,
                 ),
-              )
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/calling/kotlin")
+        customGet(
+          path = "1/test/calling/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -404,7 +426,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customGet(path = "1/test/calling/kotlin")
+        customGet(
+          path = "1/test/calling/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -437,13 +461,15 @@ class SearchTest {
                   protocol = "http",
                   port = 6698,
                 ),
-              )
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/rate-limit/retry-after/kotlin")
+        customGet(
+          path = "1/test/rate-limit/retry-after/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -470,14 +496,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6697,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/rate-limit/missing-header/kotlin")
+        customGet(
+          path = "1/test/rate-limit/missing-header/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -504,14 +532,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6697,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/rate-limit/invalid-header/kotlin")
+        customGet(
+          path = "1/test/rate-limit/invalid-header/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -538,14 +568,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6697,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.customGet(path = "1/test/rate-limit/exhausted/kotlin")
-      }
+      client.customGet(
+        path = "1/test/rate-limit/exhausted/kotlin",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -572,15 +604,17 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6697,
-                )
+                ),
               ),
             maxRateLimitRetries = 0,
           ),
       )
 
     assertFails {
-        client.customGet(path = "1/test/rate-limit/zero-retries/kotlin")
-      }
+      client.customGet(
+        path = "1/test/rate-limit/zero-retries/kotlin",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -599,7 +633,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -620,7 +656,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.49.0\\).*".toRegex()
@@ -647,8 +685,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6680,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -741,7 +779,7 @@ class SearchTest {
           restrictions =
             SecuredApiKeyRestrictions(
               filters =
-                "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)"
+                "user:user42 AND user:public AND (visible_by:John OR visible_by:group/Finance)",
             ),
         )
       },
@@ -757,7 +795,10 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
-          restrictions = SecuredApiKeyRestrictions(filters = "visible_by:group/Finance"),
+          restrictions =
+            SecuredApiKeyRestrictions(
+              filters = "visible_by:group/Finance",
+            ),
         )
       },
       intercept = {},
@@ -772,7 +813,10 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "2640659426d5107b6e47d75db9cbaef8",
-          restrictions = SecuredApiKeyRestrictions(userToken = "user42"),
+          restrictions =
+            SecuredApiKeyRestrictions(
+              userToken = "user42",
+            ),
         )
       },
       intercept = {},
@@ -787,7 +831,10 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "YourSearchOnlyApiKey",
-          restrictions = SecuredApiKeyRestrictions(filters = "user:user42 AND user:public"),
+          restrictions =
+            SecuredApiKeyRestrictions(
+              filters = "user:user42 AND user:public",
+            ),
         )
       },
       intercept = {},
@@ -802,7 +849,10 @@ class SearchTest {
       call = {
         generateSecuredApiKey(
           parentApiKey = "YourSearchOnlyApiKey",
-          restrictions = SecuredApiKeyRestrictions(userToken = "user42"),
+          restrictions =
+            SecuredApiKeyRestrictions(
+              userToken = "user42",
+            ),
         )
       },
       intercept = {},
@@ -823,8 +873,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -843,8 +893,8 @@ class SearchTest {
                     objectID = "missing",
                     indexName = "theIndexName",
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       response = {
@@ -872,14 +922,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        indexExists(indexName = "indexExistsYES")
+        indexExists(
+          indexName = "indexExistsYES",
+        )
       },
       response = {
         assertEquals(true, it)
@@ -901,14 +953,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        indexExists(indexName = "indexExistsNO")
+        indexExists(
+          indexName = "indexExistsNO",
+        )
       },
       response = {
         assertEquals(false, it)
@@ -930,14 +984,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.indexExists(indexName = "indexExistsERROR")
-      }
+      client.indexExists(
+        indexName = "indexExistsERROR",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -964,14 +1020,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -982,9 +1040,8 @@ class SearchTest {
   @Test
   fun `client throws with invalid parameters`() = runTest {
     assertFails {
-        val client = SearchClient(appId = "", apiKey = "")
-
-      }
+      val client = SearchClient(appId = "", apiKey = "")
+    }
       .let { error ->
         assertError(
           error,
@@ -997,9 +1054,8 @@ class SearchTest {
       }
 
     assertFails {
-        val client = SearchClient(appId = "", apiKey = "my-api-key")
-
-      }
+      val client = SearchClient(appId = "", apiKey = "my-api-key")
+    }
       .let { error ->
         assertError(
           error,
@@ -1012,9 +1068,8 @@ class SearchTest {
       }
 
     assertFails {
-        val client = SearchClient(appId = "my-app-id", apiKey = "")
-
-      }
+      val client = SearchClient(appId = "my-app-id", apiKey = "")
+    }
       .let { error ->
         assertError(
           error,
@@ -1032,8 +1087,10 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     assertFails {
-        client.addApiKey(apiKey = empty())
-      }
+      client.addApiKey(
+        apiKey = empty(),
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -1051,12 +1108,12 @@ class SearchTest {
     val client = SearchClient(appId = "appId", apiKey = "apiKey")
 
     assertFails {
-        client.addOrUpdateObject(
-          indexName = empty(),
-          objectID = "my-object-id",
-          body = buildJsonObject {},
-        )
-      }
+      client.addOrUpdateObject(
+        indexName = empty(),
+        objectID = "my-object-id",
+        body = buildJsonObject {},
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -1069,12 +1126,12 @@ class SearchTest {
       }
 
     assertFails {
-        client.addOrUpdateObject(
-          indexName = "my-index-name",
-          objectID = empty(),
-          body = buildJsonObject {},
-        )
-      }
+      client.addOrUpdateObject(
+        indexName = "my-index-name",
+        objectID = empty(),
+        body = buildJsonObject {},
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -1087,12 +1144,12 @@ class SearchTest {
       }
 
     assertFails {
-        client.addOrUpdateObject(
-          indexName = "my-index-name",
-          objectID = "my-object-id",
-          body = empty(),
-        )
-      }
+      client.addOrUpdateObject(
+        indexName = "my-index-name",
+        objectID = "my-object-id",
+        body = empty(),
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -1119,8 +1176,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6680,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1179,8 +1236,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6680,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1250,7 +1307,7 @@ class SearchTest {
                       protocol = "http",
                       port = 6689,
                     ),
-                  )
+                  ),
               ),
           ),
         options =
@@ -1267,7 +1324,7 @@ class SearchTest {
                   protocol = "http",
                   port = 6689,
                 ),
-              )
+              ),
           ),
       )
 
@@ -1327,8 +1384,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6679,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1467,8 +1524,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6685,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1532,39 +1589,39 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6684,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.replaceAllObjects(
-          indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
-          objects =
-            listOf(
-              buildJsonObject {
-                put(
-                  "objectID",
-                  JsonPrimitive("fine"),
-                )
-                put(
-                  "body",
-                  JsonPrimitive("small obj"),
-                )
-              },
-              buildJsonObject {
-                put(
-                  "objectID",
-                  JsonPrimitive("toolarge"),
-                )
-                put(
-                  "body",
-                  JsonPrimitive("something bigger than 10KB"),
-                )
-              },
-            ),
-        )
-      }
+      client.replaceAllObjects(
+        indexName = "cts_e2e_replace_all_objects_too_big_kotlin",
+        objects =
+          listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("fine"),
+              )
+              put(
+                "body",
+                JsonPrimitive("small obj"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("toolarge"),
+              )
+              put(
+                "body",
+                JsonPrimitive("something bigger than 10KB"),
+              )
+            },
+          ),
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -1595,8 +1652,8 @@ class SearchTest {
                         if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                       protocol = "http",
                       port = 6690,
-                    )
-                  )
+                    ),
+                  ),
               ),
           ),
         options =
@@ -1607,8 +1664,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6690,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1758,13 +1815,15 @@ class SearchTest {
                   protocol = "http",
                   port = 6696,
                 ),
-              )
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customPost(path = "1/test/request-id/retry/kotlin")
+        customPost(
+          path = "1/test/request-id/retry/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -1791,14 +1850,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/request-id/fresh/kotlin")
+        customGet(
+          path = "1/test/request-id/fresh/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -1812,7 +1873,9 @@ class SearchTest {
 
     client.runTest(
       call = {
-        customGet(path = "1/test/request-id/fresh/kotlin")
+        customGet(
+          path = "1/test/request-id/fresh/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -1839,8 +1902,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -1854,7 +1917,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("request-id", "CtsUserProvided")
-                }
+                },
             ),
         )
       },
@@ -1883,8 +1946,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2025,14 +2088,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.customGet(path = "1/test/request-id/error/kotlin")
-      }
+      client.customGet(
+        path = "1/test/request-id/error/kotlin",
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -2059,8 +2124,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6680,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2118,39 +2183,39 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6680,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     assertFails {
-        client.saveObjects(
-          indexName = "cts_e2e_saveObjects_kotlin",
-          objects =
-            listOf(
-              buildJsonObject {
-                put(
-                  "objectID",
-                  JsonPrimitive("1"),
-                )
-                put(
-                  "name",
-                  JsonPrimitive("Adam"),
-                )
-              },
-              buildJsonObject {
-                put(
-                  "objectID",
-                  JsonPrimitive("2"),
-                )
-                put(
-                  "name",
-                  JsonPrimitive("Benoit"),
-                )
-              },
-            ),
-        )
-      }
+      client.saveObjects(
+        indexName = "cts_e2e_saveObjects_kotlin",
+        objects =
+          listOf(
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("1"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Adam"),
+              )
+            },
+            buildJsonObject {
+              put(
+                "objectID",
+                JsonPrimitive("2"),
+              )
+              put(
+                "name",
+                JsonPrimitive("Benoit"),
+              )
+            },
+          ),
+      )
+    }
       .let { error ->
         assertError(
           error,
@@ -2177,8 +2242,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2209,7 +2274,7 @@ class SearchTest {
                   "createdAt",
                   JsonPrimitive("1500240452"),
                 )
-              }
+              },
             ),
         )
       },
@@ -2231,8 +2296,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2263,7 +2328,7 @@ class SearchTest {
                   "createdAt",
                   JsonPrimitive("1500240452"),
                 )
-              }
+              },
             ),
           waitForTasks = false,
           batchSize = 1000,
@@ -2272,7 +2337,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("X-Algolia-User-ID", "*")
-                }
+                },
             ),
         )
       },
@@ -2305,7 +2370,7 @@ class SearchTest {
                       protocol = "http",
                       port = 6689,
                     ),
-                  )
+                  ),
               ),
           ),
         options =
@@ -2322,7 +2387,7 @@ class SearchTest {
                   protocol = "http",
                   port = 6689,
                 ),
-              )
+              ),
           ),
       )
 
@@ -2385,8 +2450,8 @@ class SearchTest {
                         if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                       protocol = "http",
                       port = 6693,
-                    )
-                  )
+                    ),
+                  ),
               ),
           ),
         options =
@@ -2397,8 +2462,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6693,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2666,7 +2731,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("x-algolia-user-id", "test-user")
-                }
+                },
             ),
         )
       },
@@ -2688,8 +2753,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6686,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2697,13 +2762,16 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "playlists",
-          searchParams = SearchParamsObject(query = "foo"),
+          searchParams =
+            SearchParamsObject(
+              query = "foo",
+            ),
           requestOptions =
             RequestOptions(
               headers =
                 buildMap {
                   put("X-Algolia-User-ID", "user1234")
-                }
+                },
             ),
         )
       },
@@ -2725,14 +2793,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -2746,14 +2816,18 @@ class SearchTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)
@@ -2780,8 +2854,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2817,8 +2891,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2869,8 +2943,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -2901,14 +2975,16 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        waitForAppTask(taskID = 123L)
+        waitForAppTask(
+          taskID = 123L,
+        )
       },
       response = {
         assertNotNull(it)
@@ -2935,8 +3011,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6681,
-                )
-              )
+                ),
+              ),
           ),
       )
 

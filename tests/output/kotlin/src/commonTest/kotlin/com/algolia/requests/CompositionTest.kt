@@ -27,7 +27,9 @@ class CompositionTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -61,7 +63,9 @@ class CompositionTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -129,7 +133,9 @@ class CompositionTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -183,7 +189,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -215,7 +221,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -250,7 +256,7 @@ class CompositionTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -283,7 +289,7 @@ class CompositionTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -316,7 +322,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -351,7 +357,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -383,7 +389,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -418,7 +424,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -453,7 +459,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -472,7 +478,9 @@ class CompositionTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -513,7 +521,9 @@ class CompositionTest {
   fun `deleteComposition`() = runTest {
     client.runTest(
       call = {
-        deleteComposition(compositionID = "1234")
+        deleteComposition(
+          compositionID = "1234",
+        )
       },
       intercept = {
         assertEquals("/1/compositions/1234".toPathSegments(), it.url.pathSegments)
@@ -548,7 +558,9 @@ class CompositionTest {
   fun `getComposition`() = runTest {
     client.runTest(
       call = {
-        getComposition(compositionID = "foo")
+        getComposition(
+          compositionID = "foo",
+        )
       },
       intercept = {
         assertEquals("/1/compositions/foo".toPathSegments(), it.url.pathSegments)
@@ -569,7 +581,7 @@ class CompositionTest {
               headers =
                 buildMap {
                   put("request-id", "CtsE2eEcho4")
-                }
+                },
             ),
         )
       },
@@ -593,7 +605,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("x-algolia-request-id", "CtsE2eEchoQ")
-                }
+                },
             ),
         )
       },
@@ -700,19 +712,25 @@ class CompositionTest {
                                   InjectionMain(
                                     source =
                                       InjectionMainSearchSource(
-                                        search = InjectionMainSearch(index = "bar")
-                                      )
-                                  )
-                              )
+                                        search =
+                                          InjectionMainSearch(
+                                            index = "bar",
+                                          ),
+                                      ),
+                                  ),
+                              ),
                           ),
                       ),
                   ),
                   MultipleBatchRequest(
                     action = Action.entries.first { it.value == "delete" },
-                    body = DeleteCompositionAction(objectID = "baz"),
+                    body =
+                      DeleteCompositionAction(
+                        objectID = "baz",
+                      ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -745,19 +763,29 @@ class CompositionTest {
                       main =
                         InjectionMain(
                           source =
-                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
+                            InjectionMainSearchSource(
+                              search =
+                                InjectionMainSearch(
+                                  index = "foo",
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
                           InjectionInjectedItem(
                             key = "my-unique-group-key",
                             source =
-                              InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
+                              InjectedItemSearchSource(
+                                search =
+                                  InjectedItemSearch(
+                                    index = "foo",
+                                  ),
+                              ),
                             position = 2,
                             length = 1,
-                          )
+                          ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -790,7 +818,12 @@ class CompositionTest {
                       main =
                         InjectionMain(
                           source =
-                            InjectionMainSearchSource(search = InjectionMainSearch(index = "foo"))
+                            InjectionMainSearchSource(
+                              search =
+                                InjectionMainSearch(
+                                  index = "foo",
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
@@ -803,14 +836,17 @@ class CompositionTest {
                                     index = "foo",
                                     ordering =
                                       ExternalOrdering.entries.first { it.value == "userDefined" },
-                                    params = BaseInjectionQueryParameters(filters = "brand:adidas"),
-                                  )
+                                    params =
+                                      BaseInjectionQueryParameters(
+                                        filters = "brand:adidas",
+                                      ),
+                                  ),
                               ),
                             position = 2,
                             length = 1,
-                          )
+                          ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -850,25 +886,33 @@ class CompositionTest {
                               search =
                                 InjectionMainSearch(
                                   index = "foo",
-                                  params = MainInjectionQueryParameters(filters = "brand:adidas"),
-                                )
-                            )
+                                  params =
+                                    MainInjectionQueryParameters(
+                                      filters = "brand:adidas",
+                                    ),
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
                           InjectionInjectedItem(
                             key = "my-unique-injected-item-key",
                             source =
-                              InjectedItemSearchSource(search = InjectedItemSearch(index = "foo")),
+                              InjectedItemSearchSource(
+                                search =
+                                  InjectedItemSearch(
+                                    index = "foo",
+                                  ),
+                              ),
                             position = 2,
                             length = 1,
-                          )
+                          ),
                         ),
                       deduplication =
                         Deduplication(
-                          positioning = DedupPositioning.entries.first { it.value == "highest" }
+                          positioning = DedupPositioning.entries.first { it.value == "highest" },
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -907,10 +951,13 @@ class CompositionTest {
                         InjectionMain(
                           source =
                             InjectionMainSearchSource(
-                              search = InjectionMainSearch(index = "products")
-                            )
-                        )
-                    )
+                              search =
+                                InjectionMainSearch(
+                                  index = "products",
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
             ),
         )
@@ -949,8 +996,8 @@ class CompositionTest {
                                   indexName = "products",
                                   model = Model.entries.first { it.value == "trending-items" },
                                   threshold = 50,
-                                )
-                            )
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
@@ -965,15 +1012,15 @@ class CompositionTest {
                                     threshold = 30,
                                     fallbackParameters =
                                       BaseInjectionQueryParameters(
-                                        filters = "category:electronics"
+                                        filters = "category:electronics",
                                       ),
-                                  )
+                                  ),
                               ),
                             position = 3,
                             length = 2,
-                          )
+                          ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -1010,9 +1057,12 @@ class CompositionTest {
                               search =
                                 InjectionMainSearch(
                                   index = "products",
-                                  params = MainInjectionQueryParameters(filters = "brand:nike"),
-                                )
-                            )
+                                  params =
+                                    MainInjectionQueryParameters(
+                                      filters = "brand:nike",
+                                    ),
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
@@ -1025,13 +1075,13 @@ class CompositionTest {
                                     indexName = "products",
                                     model = Model.entries.first { it.value == "trending-items" },
                                     threshold = 40,
-                                  )
+                                  ),
                               ),
                             position = 1,
                             length = 3,
-                          )
+                          ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -1082,14 +1132,14 @@ class CompositionTest {
                                                   it.value == "trending-items"
                                                 },
                                               threshold = 50,
-                                            )
-                                        )
-                                    )
-                                )
-                            )
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                       feedsOrder = listOf("trending"),
-                    )
+                    ),
                 ),
             ),
         )
@@ -1136,9 +1186,11 @@ class CompositionTest {
                                             InjectionMainSearch(
                                               index = "products",
                                               params =
-                                                MainInjectionQueryParameters(hitsPerPage = 12),
-                                            )
-                                        )
+                                                MainInjectionQueryParameters(
+                                                  hitsPerPage = 12,
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                   injectedItems =
                                     listOf(
@@ -1151,15 +1203,15 @@ class CompositionTest {
                                                 index = "products",
                                                 params =
                                                   BaseInjectionQueryParameters(
-                                                    filters = "featured:true"
+                                                    filters = "featured:true",
                                                   ),
-                                              )
+                                              ),
                                           ),
                                         position = 0,
                                         length = 2,
-                                      )
+                                      ),
                                     ),
-                                )
+                                ),
                             ),
                           "articles" to
                             FeedInjection(
@@ -1178,8 +1230,8 @@ class CompositionTest {
                                                   attributesToRetrieve =
                                                     listOf("title", "excerpt", "publishedAt"),
                                                 ),
-                                            )
-                                        )
+                                            ),
+                                        ),
                                     ),
                                   injectedItems =
                                     listOf(
@@ -1192,15 +1244,15 @@ class CompositionTest {
                                                 index = "articles",
                                                 params =
                                                   BaseInjectionQueryParameters(
-                                                    filters = "editorial_pick:true"
+                                                    filters = "editorial_pick:true",
                                                   ),
-                                              )
+                                              ),
                                           ),
                                         position = 0,
                                         length = 1,
-                                      )
+                                      ),
                                     ),
-                                )
+                                ),
                             ),
                           "videos" to
                             FeedInjection(
@@ -1219,14 +1271,14 @@ class CompositionTest {
                                                   attributesToRetrieve =
                                                     listOf("title", "thumbnail", "duration"),
                                                 ),
-                                            )
-                                        )
-                                    )
-                                )
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                       feedsOrder = listOf("products", "articles", "videos"),
-                    )
+                    ),
                 ),
             ),
         )
@@ -1275,13 +1327,16 @@ class CompositionTest {
                                         JsonPrimitive("customer-default"),
                                       )
                                     },
-                                  params = MainInjectionQueryParameters(filters = "instock:true"),
+                                  params =
+                                    MainInjectionQueryParameters(
+                                      filters = "instock:true",
+                                    ),
                                   ordering =
                                     ExternalProviderOrdering.entries.first {
                                       it.value == "providerDefined"
                                     },
-                                )
-                            )
+                                ),
+                            ),
                         ),
                       injectedItems =
                         listOf(
@@ -1300,13 +1355,13 @@ class CompositionTest {
                                           JsonPrimitive("summer-sale"),
                                         )
                                       },
-                                  )
+                                  ),
                               ),
                             position = 0,
                             length = 2,
-                          )
+                          ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -1342,7 +1397,7 @@ class CompositionTest {
                   Condition(
                     anchoring = Anchoring.entries.first { it.value == "is" },
                     pattern = "test",
-                  )
+                  ),
                 ),
               consequence =
                 CompositionRuleConsequence(
@@ -1354,8 +1409,11 @@ class CompositionTest {
                             InjectionMain(
                               source =
                                 InjectionMainSearchSource(
-                                  search = InjectionMainSearch(index = "foo")
-                                )
+                                  search =
+                                    InjectionMainSearch(
+                                      index = "foo",
+                                    ),
+                                ),
                             ),
                           injectedItems =
                             listOf(
@@ -1363,14 +1421,17 @@ class CompositionTest {
                                 key = "my-unique-group-from-rule-key",
                                 source =
                                   InjectedItemSearchSource(
-                                    search = InjectedItemSearch(index = "foo")
+                                    search =
+                                      InjectedItemSearch(
+                                        index = "foo",
+                                      ),
                                   ),
                                 position = 2,
                                 length = 1,
-                              )
+                              ),
                             ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
             ),
         )
@@ -1407,7 +1468,7 @@ class CompositionTest {
                   TimeRange(
                     from = 1704063600L,
                     until = 1704083600L,
-                  )
+                  ),
                 ),
               conditions =
                 listOf(
@@ -1434,9 +1495,11 @@ class CompositionTest {
                                     InjectionMainSearch(
                                       index = "my-index",
                                       params =
-                                        MainInjectionQueryParameters(filters = "brand:adidas"),
-                                    )
-                                )
+                                        MainInjectionQueryParameters(
+                                          filters = "brand:adidas",
+                                        ),
+                                    ),
+                                ),
                             ),
                           injectedItems =
                             listOf(
@@ -1448,19 +1511,21 @@ class CompositionTest {
                                       InjectedItemExternal(
                                         index = "my-index",
                                         params =
-                                          BaseInjectionQueryParameters(filters = "brand:adidas"),
+                                          BaseInjectionQueryParameters(
+                                            filters = "brand:adidas",
+                                          ),
                                         ordering =
                                           ExternalOrdering.entries.first {
                                             it.value == "userDefined"
                                           },
-                                      )
+                                      ),
                                   ),
                                 position = 0,
                                 length = 3,
-                              )
+                              ),
                             ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
             ),
         )
@@ -1496,7 +1561,7 @@ class CompositionTest {
                   Condition(
                     anchoring = Anchoring.entries.first { it.value == "contains" },
                     pattern = "harry",
-                  )
+                  ),
                 ),
               consequence =
                 CompositionRuleConsequence(
@@ -1508,8 +1573,11 @@ class CompositionTest {
                             InjectionMain(
                               source =
                                 InjectionMainSearchSource(
-                                  search = InjectionMainSearch(index = "my-index")
-                                )
+                                  search =
+                                    InjectionMainSearch(
+                                      index = "my-index",
+                                    ),
+                                ),
                             ),
                           injectedItems =
                             listOf(
@@ -1517,19 +1585,22 @@ class CompositionTest {
                                 key = "my-unique-injected-item-key",
                                 source =
                                   InjectedItemSearchSource(
-                                    search = InjectedItemSearch(index = "my-index")
+                                    search =
+                                      InjectedItemSearch(
+                                        index = "my-index",
+                                      ),
                                   ),
                                 position = 0,
                                 length = 3,
-                              )
+                              ),
                             ),
                           deduplication =
                             Deduplication(
                               positioning =
-                                DedupPositioning.entries.first { it.value == "highestInjected" }
+                                DedupPositioning.entries.first { it.value == "highestInjected" },
                             ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
             ),
         )
@@ -1563,7 +1634,7 @@ class CompositionTest {
                   Condition(
                     anchoring = Anchoring.entries.first { it.value == "contains" },
                     pattern = "harry",
-                  )
+                  ),
                 ),
               consequence =
                 CompositionRuleConsequence(
@@ -1575,8 +1646,11 @@ class CompositionTest {
                             InjectionMain(
                               source =
                                 InjectionMainSearchSource(
-                                  search = InjectionMainSearch(index = "my-index")
-                                )
+                                  search =
+                                    InjectionMainSearch(
+                                      index = "my-index",
+                                    ),
+                                ),
                             ),
                           injectedItems =
                             listOf(
@@ -1599,14 +1673,14 @@ class CompositionTest {
                                           ExternalProviderOrdering.entries.first {
                                             it.value == "providerDefined"
                                           },
-                                      )
+                                      ),
                                   ),
                                 position = 0,
                                 length = 3,
-                              )
+                              ),
                             ),
-                        )
-                    )
+                        ),
+                    ),
                 ),
             ),
         )
@@ -1642,7 +1716,12 @@ class CompositionTest {
                     body =
                       CompositionRule(
                         objectID = "123",
-                        conditions = listOf(Condition(pattern = "a")),
+                        conditions =
+                          listOf(
+                            Condition(
+                              pattern = "a",
+                            ),
+                          ),
                         consequence =
                           CompositionRuleConsequence(
                             behavior =
@@ -1654,15 +1733,17 @@ class CompositionTest {
                                         source =
                                           InjectionMainSearchSource(
                                             search =
-                                              InjectionMainSearch(index = "<YOUR_INDEX_NAME>")
-                                          )
-                                      )
-                                  )
-                              )
+                                              InjectionMainSearch(
+                                                index = "<YOUR_INDEX_NAME>",
+                                              ),
+                                          ),
+                                      ),
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -1700,7 +1781,7 @@ class CompositionTest {
                             TimeRange(
                               from = 1704063600L,
                               until = 1704083600L,
-                            )
+                            ),
                           ),
                         conditions =
                           listOf(
@@ -1728,10 +1809,10 @@ class CompositionTest {
                                                 index = "my-index",
                                                 params =
                                                   MainInjectionQueryParameters(
-                                                    filters = "brand:adidas"
+                                                    filters = "brand:adidas",
                                                   ),
-                                              )
-                                          )
+                                              ),
+                                          ),
                                       ),
                                     injectedItems =
                                       listOf(
@@ -1744,24 +1825,24 @@ class CompositionTest {
                                                   index = "my-index",
                                                   params =
                                                     BaseInjectionQueryParameters(
-                                                      filters = "brand:adidas"
+                                                      filters = "brand:adidas",
                                                     ),
                                                   ordering =
                                                     ExternalOrdering.entries.first {
                                                       it.value == "userDefined"
                                                     },
-                                                )
+                                                ),
                                             ),
                                           position = 0,
                                           length = 3,
-                                        )
+                                        ),
                                       ),
-                                  )
-                              )
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -1799,7 +1880,7 @@ class CompositionTest {
                             Condition(
                               anchoring = Anchoring.entries.first { it.value == "is" },
                               pattern = "trending",
-                            )
+                            ),
                           ),
                         consequence =
                           CompositionRuleConsequence(
@@ -1819,8 +1900,8 @@ class CompositionTest {
                                                     it.value == "trending-items"
                                                   },
                                                 threshold = 50,
-                                              )
-                                          )
+                                              ),
+                                          ),
                                       ),
                                     injectedItems =
                                       listOf(
@@ -1838,20 +1919,20 @@ class CompositionTest {
                                                   threshold = 30,
                                                   fallbackParameters =
                                                     BaseInjectionQueryParameters(
-                                                      filters = "category:electronics"
+                                                      filters = "category:electronics",
                                                     ),
-                                                )
+                                                ),
                                             ),
                                           position = 2,
                                           length = 3,
-                                        )
+                                        ),
                                       ),
-                                  )
-                              )
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -1889,7 +1970,7 @@ class CompositionTest {
                             Condition(
                               anchoring = Anchoring.entries.first { it.value == "contains" },
                               pattern = "shoes",
-                            )
+                            ),
                           ),
                         consequence =
                           CompositionRuleConsequence(
@@ -1906,10 +1987,10 @@ class CompositionTest {
                                                 index = "products",
                                                 params =
                                                   MainInjectionQueryParameters(
-                                                    filters = "category:shoes"
+                                                    filters = "category:shoes",
                                                   ),
-                                              )
-                                          )
+                                              ),
+                                          ),
                                       ),
                                     injectedItems =
                                       listOf(
@@ -1925,18 +2006,18 @@ class CompositionTest {
                                                       it.value == "trending-items"
                                                     },
                                                   threshold = 40,
-                                                )
+                                                ),
                                             ),
                                           position = 1,
                                           length = 2,
-                                        )
+                                        ),
                                       ),
-                                  )
-                              )
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -1974,7 +2055,7 @@ class CompositionTest {
                             Condition(
                               anchoring = Anchoring.entries.first { it.value == "is" },
                               pattern = "trending",
-                            )
+                            ),
                           ),
                         consequence =
                           CompositionRuleConsequence(
@@ -2000,19 +2081,19 @@ class CompositionTest {
                                                                 it.value == "trending-items"
                                                               },
                                                             threshold = 50,
-                                                          )
-                                                      )
-                                                  )
-                                              )
-                                          )
+                                                          ),
+                                                      ),
+                                                  ),
+                                              ),
+                                          ),
                                       ),
                                     feedsOrder = listOf("trending"),
-                                  )
-                              )
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -2053,7 +2134,9 @@ class CompositionTest {
                               anchoring = Anchoring.entries.first { it.value == "contains" },
                               pattern = "harry",
                             ),
-                            Condition(sortBy = "price-low-to-high"),
+                            Condition(
+                              sortBy = "price-low-to-high",
+                            ),
                           ),
                         consequence =
                           CompositionRuleConsequence(
@@ -2065,8 +2148,11 @@ class CompositionTest {
                                       InjectionMain(
                                         source =
                                           InjectionMainSearchSource(
-                                            search = InjectionMainSearch(index = "my-index")
-                                          )
+                                            search =
+                                              InjectionMainSearch(
+                                                index = "my-index",
+                                              ),
+                                          ),
                                       ),
                                     injectedItems =
                                       listOf(
@@ -2074,25 +2160,28 @@ class CompositionTest {
                                           key = "my-unique-injected-item-key",
                                           source =
                                             InjectedItemSearchSource(
-                                              search = InjectedItemSearch(index = "my-index")
+                                              search =
+                                                InjectedItemSearch(
+                                                  index = "my-index",
+                                                ),
                                             ),
                                           position = 0,
                                           length = 3,
-                                        )
+                                        ),
                                       ),
                                     deduplication =
                                       Deduplication(
                                         positioning =
                                           DedupPositioning.entries.first {
                                             it.value == "highestInjected"
-                                          }
+                                          },
                                       ),
-                                  )
-                              )
+                                  ),
+                              ),
                           ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -2115,7 +2204,13 @@ class CompositionTest {
       call = {
         search(
           compositionID = "foo",
-          requestBody = RequestBody(params = Params(query = "batman")),
+          requestBody =
+            RequestBody(
+              params =
+                Params(
+                  query = "batman",
+                ),
+            ),
         )
       },
       intercept = {
@@ -2138,7 +2233,7 @@ class CompositionTest {
                 Params(
                   query = "batman",
                   sortBy = "Price (asc)",
-                )
+                ),
             ),
         )
       },
@@ -2158,7 +2253,10 @@ class CompositionTest {
           compositionID = "foo",
           requestBody =
             RequestBody(
-              params = Params(query = "batman"),
+              params =
+                Params(
+                  query = "batman",
+                ),
               feedsOrder = listOf("feed-movies", "feed-comics"),
             ),
         )
@@ -2182,7 +2280,10 @@ class CompositionTest {
           compositionID = "foo",
           requestBody =
             RequestBody(
-              params = Params(query = "batman"),
+              params =
+                Params(
+                  query = "batman",
+                ),
               externalProvider =
                 ExternalProvider(
                   configurationParams =
@@ -2191,7 +2292,7 @@ class CompositionTest {
                         "customer_id",
                         JsonPrimitive("customer123"),
                       )
-                    }
+                    },
                 ),
             ),
         )
@@ -2215,7 +2316,10 @@ class CompositionTest {
       call = {
         searchCompositionRules(
           compositionID = "foo",
-          searchCompositionRulesParams = SearchCompositionRulesParams(query = "batman"),
+          searchCompositionRulesParams =
+            SearchCompositionRulesParams(
+              query = "batman",
+            ),
         )
       },
       intercept = {
@@ -2236,7 +2340,12 @@ class CompositionTest {
           compositionID = "foo",
           facetName = "brand",
           searchForFacetValuesRequest =
-            SearchForFacetValuesRequest(params = SearchForFacetValuesParams(maxFacetHits = 10)),
+            SearchForFacetValuesRequest(
+              params =
+                SearchForFacetValuesParams(
+                  maxFacetHits = 10,
+                ),
+            ),
         )
       },
       intercept = {

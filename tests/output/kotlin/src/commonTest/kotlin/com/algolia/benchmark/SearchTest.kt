@@ -29,8 +29,8 @@ class SearchTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6682,
-                )
-              )
+                ),
+              ),
           ),
       )
 
@@ -47,9 +47,9 @@ class SearchTest {
                       indexName = "cts_e2e_benchmark_search_kotlin",
                       query = "iphone 15 pro max 512gb",
                       hitsPerPage = 50,
-                    )
-                  )
-              )
+                    ),
+                  ),
+              ),
           )
         },
         intercept = {},
