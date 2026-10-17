@@ -132,7 +132,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/api-client-automation@workspace:."
   dependencies:
-    "@eslint/json": "npm:2.1.0"
+    "@eslint/json": "npm:2.1.1"
     "@openapitools/openapi-generator-cli": "npm:2.41.0"
     "@redocly/cli": "npm:2.27.0"
     eslint: "npm:10.10.0"
@@ -1143,15 +1143,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/json@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@eslint/json@npm:2.1.0"
+"@eslint/json@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@eslint/json@npm:2.1.1"
   dependencies:
     "@eslint/core": "npm:^1.2.1"
-    "@eslint/plugin-kit": "npm:^0.7.2"
-    "@humanwhocodes/momoa": "npm:^3.3.10"
+    "@eslint/plugin-kit": "npm:^0.7.3"
+    "@humanwhocodes/momoa": "npm:^3.3.13"
     natural-compare: "npm:^1.4.0"
-  checksum: 10/f3e792a1768b2873ee5237dba87fb973ea82af921fdf208ae1c4e60877e49559e60d2542bd696f8dc04aff6e69a5842a2e1d141b7b061a6d2204bd857e95da32
+  checksum: 10/9a888f87cdfc62b75758ce7921ad62a8e793f3774808caf3f09d293a3c84f26dc55ca8fb12c88989da30157093b51d14d1d70e47dc50a14f98330fa070592d22
   languageName: node
   linkType: hard
 
@@ -1169,16 +1169,6 @@ __metadata:
     "@eslint/core": "npm:^1.2.1"
     levn: "npm:^0.4.1"
   checksum: 10/8f923f4cdadadd215e0c2028e6a53101bb148a7780cdb4dc8cd69b0c77fc88496742e87e0605b12905ff715e2c7ad6cbd2d92c5653cdbf91cca1e229b5022c1f
-  languageName: node
-  linkType: hard
-
-"@eslint/plugin-kit@npm:^0.7.2":
-  version: 0.7.2
-  resolution: "@eslint/plugin-kit@npm:0.7.2"
-  dependencies:
-    "@eslint/core": "npm:^1.2.1"
-    levn: "npm:^0.4.1"
-  checksum: 10/ef9fc6f8ca28e132d4c81cfbaa92274800d1d73bb9d6ef2124613dd39b7f09e3592deb64bad10b183bff78db5465d4b100f522d994c8550424526b9ac4a072b0
   languageName: node
   linkType: hard
 
@@ -1286,10 +1276,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@humanwhocodes/momoa@npm:^3.3.10":
-  version: 3.3.10
-  resolution: "@humanwhocodes/momoa@npm:3.3.10"
-  checksum: 10/c6c0f1586ec45af5052202e1c438fdb3950ecd7574e6375731d95a89543dff6890ee61605e5dfff8c26c6380bc6018681f6030b3c09135b469221f439f7668d3
+"@humanwhocodes/momoa@npm:^3.3.13":
+  version: 3.3.13
+  resolution: "@humanwhocodes/momoa@npm:3.3.13"
+  checksum: 10/e5c4de6510600c48e5a6aa5e86f88baf83ab31fbfd2426f058a16f6445ee22832f2b29e5ece55b55a91392ff44a0561e5164f736b8d8ebf674cdfd4f7d5850e4
   languageName: node
   linkType: hard
 
