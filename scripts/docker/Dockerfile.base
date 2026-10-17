@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0.401@sha256:2fa828c68761b1b8c23d7662dc1344
 FROM golang:1.27.1-alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
 FROM composer:2.10.3@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac AS composer-builder
-FROM php:8.5.10-trixie@sha256:9ebdf4c28ab12c02085e171c31e22ac5f7bbb6a9f6927e3bc3dfe7ee23df51e0 AS builder
+FROM php:8.5.11-trixie@sha256:01a109229f4465bc9ef042d9198f09a4d9da7775a825dbd8572dcdbd8756c4d3 AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
