@@ -31,6 +31,6 @@
     "remark-smartypants": "3.0.3"
   },
   "resolutions": {
-    "follow-redirects": "^1.16.0"
+    "follow-redirects": "^1.16.1"
   }
 }
