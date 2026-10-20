@@ -1627,8 +1627,7 @@
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setDictionarySettings": {
-      "get setDictionarySettings results with minimal parameters": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "get setDictionarySettings results with all parameters": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().\n      SetPlurals(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}).\n      SetStopwords(map[string]bool{\"fr\": false}).\n      SetCompounds(map[string]bool{\"ru\": true}),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "default": "response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(\n\n  search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(\n    search.NewEmptyStandardEntries().SetStopwords(map[string]bool{\"fr\": false, \"en\": false, \"ru\": true}))))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setSettings": {
       "minimal parameters": "response, err := client.SetSettings(client.NewApiSetSettingsRequest(\n  \"<YOUR_INDEX_NAME>\",\n  search.NewEmptyIndexSettings().\n    SetPaginationLimitedTo(10).\n    SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum(\"false\"))),\n).WithForwardToReplicas(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -2849,8 +2848,7 @@
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
     },
     "setDictionarySettings": {
-      "get setDictionarySettings results with minimal parameters": "const response = await client.setDictionarySettings({\n  disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },\n});",
-      "get setDictionarySettings results with all parameters": "const response = await client.setDictionarySettings({\n  disableStandardEntries: {\n    plurals: { fr: false, en: false, ru: true },\n    stopwords: { fr: false },\n    compounds: { ru: true },\n  },\n});"
+      "default": "const response = await client.setDictionarySettings({\n  disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } },\n});"
     },
     "setSettings": {
       "minimal parameters": "const response = await client.setSettings({\n  indexName: 'cts_e2e_settings',\n  indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },\n  forwardToReplicas: true,\n});",
@@ -4674,8 +4672,7 @@
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
     },
     "setDictionarySettings": {
-      "get setDictionarySettings results with minimal parameters": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)",
-      "get setDictionarySettings results with all parameters": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"plurals\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n            \"stopwords\": {\n                \"fr\": False,\n            },\n            \"compounds\": {\n                \"ru\": True,\n            },\n        },\n    },\n)"
+      "default": "response = client.set_dictionary_settings(\n    dictionary_settings_params={\n        \"disableStandardEntries\": {\n            \"stopwords\": {\n                \"fr\": False,\n                \"en\": False,\n                \"ru\": True,\n            },\n        },\n    },\n)"
     },
     "setSettings": {
       "minimal parameters": "response = client.set_settings(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    index_settings={\n        \"paginationLimitedTo\": 10,\n        \"typoTolerance\": \"false\",\n    },\n    forward_to_replicas=True,\n)",
@@ -6501,8 +6498,7 @@
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"
     },
     "setDictionarySettings": {
-      "get setDictionarySettings results with minimal parameters": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [\n            \"fr\": false,\n            \"en\": false,\n            \"ru\": true,\n        ]))\n    )",
-      "get setDictionarySettings results with all parameters": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(\n            plurals: [\"fr\": false, \"en\": false, \"ru\": true],\n            stopwords: [\"fr\": false],\n            compounds: [\"ru\": true]\n        ))\n    )"
+      "default": "let response = try await client\n    .setDictionarySettings(\n        dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(stopwords: [\n            \"fr\": false,\n            \"en\": false,\n            \"ru\": true,\n        ]))\n    )"
     },
     "setSettings": {
       "minimal parameters": "let response = try await client.setSettings(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    indexSettings: IndexSettings(\n        paginationLimitedTo: Int64(10),\n        typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)\n    ),\n    forwardToReplicas: true\n)",
