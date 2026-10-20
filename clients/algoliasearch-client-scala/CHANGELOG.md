@@ -1,3 +1,7 @@
+## [2.48.1](https://github.com/algolia/algoliasearch-client-scala/compare/2.48.0...2.48.1)
+
+- [e6d5471f15](https://github.com/algolia/api-clients-automation/commit/e6d5471f15) fix(scripts): avoid swift CTS deadlock when running in docker ([#7146](https://github.com/algolia/api-clients-automation/pull/7146)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [2.48.0](https://github.com/algolia/algoliasearch-client-scala/compare/2.47.0...2.48.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, request bodies, Agent Studio API). See below for more details.
