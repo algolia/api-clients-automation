@@ -14815,7 +14815,7 @@ paths:
             client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
               search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
+                search.NewEmptyStandardEntries().SetStopwords(map[string]bool{"fr": false, "en": false, "ru": true}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14867,7 +14867,7 @@ paths:
             // Call the API
 
             const response = await client.setDictionarySettings({
-              disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+              disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } },
             });
 
 
@@ -14941,7 +14941,7 @@ paths:
             response = client.set_dictionary_settings(
                 dictionary_settings_params={
                     "disableStandardEntries": {
-                        "plurals": {
+                        "stopwords": {
                             "fr": False,
                             "en": False,
                             "ru": True,
@@ -15016,7 +15016,7 @@ paths:
 
             let response = try await client
                 .setDictionarySettings(
-                    dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                    dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(stopwords: [
                         "fr": false,
                         "en": false,
                         "ru": true,
@@ -19971,9 +19971,6 @@ paths:
 
         - If the source index doesn't exist, copying creates a new index with 0
         records and default settings.
-
-        - API keys from the source index are merged with the existing keys in
-        the destination index.
 
         - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
 
