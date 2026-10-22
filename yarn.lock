@@ -4417,7 +4417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.4.0, debug@npm:^4.4.3":
+"debug@npm:4, debug@npm:4.4.3, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.4.0, debug@npm:^4.4.3":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
   dependencies:
@@ -4426,18 +4426,6 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10/9ada3434ea2993800bd9a1e320bd4aa7af69659fb51cca685d390949434bc0a8873c21ed7c9b852af6f2455a55c6d050aa3937d52b3c69f796dab666f762acad
-  languageName: node
-  linkType: hard
-
-"debug@npm:4.4.0":
-  version: 4.4.0
-  resolution: "debug@npm:4.4.0"
-  dependencies:
-    ms: "npm:^2.1.3"
-  peerDependenciesMeta:
-    supports-color:
-      optional: true
-  checksum: 10/1847944c2e3c2c732514b93d11886575625686056cd765336212dc15de2d2b29612b6cd80e1afba767bb8e1803b778caf9973e98169ef1a24a7a7009e1820367
   languageName: node
   linkType: hard
 
@@ -5318,15 +5306,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"folder-hash@npm:4.1.3":
-  version: 4.1.3
-  resolution: "folder-hash@npm:4.1.3"
+"folder-hash@npm:4.1.4":
+  version: 4.1.4
+  resolution: "folder-hash@npm:4.1.4"
   dependencies:
-    debug: "npm:4.4.0"
+    debug: "npm:4.4.3"
     minimatch: "npm:7.4.9"
   bin:
     folder-hash: bin/folder-hash
-  checksum: 10/8f8e2233b6c7dadba9d2808921b30f8d4f0b0cdd703cc9d48e56d1f782e43f40574bddaad242f2c55ea64e1e3417a56e8e247065f59afcd3b2b98d14b92cabb3
+  checksum: 10/9dca69616fa67b7e01cbbc22a2a981bae8c827b7a3a4c5cd5ea88f7776d096a219d3b8d1b4d07fb60131ee04e70c396b1ee0dc23d7345c44788f47e02215f6c5
   languageName: node
   linkType: hard
 
@@ -8292,7 +8280,7 @@ __metadata:
     esbuild: "npm:0.28.2"
     execa: "npm:10.0.1"
     express: "npm:5.2.1"
-    folder-hash: "npm:4.1.3"
+    folder-hash: "npm:4.1.4"
     fs-extra: "npm:11.4.1"
     js-yaml: "npm:5.4.3"
     knip: "npm:6.35.1"
