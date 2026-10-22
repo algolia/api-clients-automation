@@ -747,6 +747,38 @@ class SnippetAbtestingV3Client {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTimeseries2() {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response =
+      client.getTimeseries(
+        id = 42,
+        startDate = "1999-09-19",
+        endDate = "2001-01-01",
+        metric =
+          listOf(
+            MetricName.entries.first { it.value == "clicked_users_rate" },
+            MetricName.entries.first { it.value == "converted_users_rate" },
+          ),
+        methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForListABTests() {
     // >SEPARATOR listABTests listABTests with minimal parameters
     // Initialize the client

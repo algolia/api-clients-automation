@@ -1000,6 +1000,43 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// getTimeseries with user-based metrics
+    func testGetTimeseriesTest2() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getTimeseriesWithHTTPInfo(
+            id: 42,
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],
+            methods: [AnalysisMethod.bayesian]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/42/timeseries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// listABTests with minimal parameters
     func testListABTestsTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(

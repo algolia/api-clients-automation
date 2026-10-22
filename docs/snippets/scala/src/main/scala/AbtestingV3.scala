@@ -895,6 +895,36 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  /** Snippet for the getTimeseries method.
+    *
+    * getTimeseries with user-based metrics
+    */
+  def snippetForAbtestingV3ClientGetTimeseries2(): Unit = {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getTimeseries(
+        id = 42,
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        metric = Some(Seq(MetricName.withName("clicked_users_rate"), MetricName.withName("converted_users_rate"))),
+        methods = Some(Seq(AnalysisMethod.withName("bayesian")))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the listABTests method.
     *
     * listABTests with minimal parameters

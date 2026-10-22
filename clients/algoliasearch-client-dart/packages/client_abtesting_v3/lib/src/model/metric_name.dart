@@ -21,7 +21,23 @@ enum MetricName {
   averageClickPosition(r'average_click_position'),
   revenue(r'revenue'),
   revenuePerSearch(r'revenue_per_search'),
-  averageOrderValue(r'average_order_value');
+  averageOrderValue(r'average_order_value'),
+  clickedUsersCount(r'clicked_users_count'),
+  convertedUsersCount(r'converted_users_count'),
+  addToCartUsersCount(r'add_to_cart_users_count'),
+  purchaseUsersCount(r'purchase_users_count'),
+  usersWithNoResultsCount(r'users_with_no_results_count'),
+  clickedUsersRate(r'clicked_users_rate'),
+  convertedUsersRate(r'converted_users_rate'),
+  addToCartUsersRate(r'add_to_cart_users_rate'),
+  purchaseUsersRate(r'purchase_users_rate'),
+  avgClickThroughRatePerUser(r'avg_click_through_rate_per_user'),
+  avgConversionRatePerUser(r'avg_conversion_rate_per_user'),
+  avgPurchaseRatePerUser(r'avg_purchase_rate_per_user'),
+  avgAddToCartRatePerUser(r'avg_add_to_cart_rate_per_user'),
+  avgClickPositionPerUser(r'avg_click_position_per_user'),
+  winsorizedRevenuePerUser(r'winsorized_revenue_per_user'),
+  winsorizedRevenuePerPurchaser(r'winsorized_revenue_per_purchaser');
 
   const MetricName(this.raw);
   final dynamic raw;

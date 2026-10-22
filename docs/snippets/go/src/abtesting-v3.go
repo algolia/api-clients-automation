@@ -854,6 +854,37 @@ func SnippetForGetTimeseriesOfAbtestingV31() {
 	// SEPARATOR<
 }
 
+func SnippetForGetTimeseriesOfAbtestingV32() {
+	/*
+	   Snippet for the getTimeseries method.
+
+	   getTimeseries with user-based metrics
+	*/
+
+	// >SEPARATOR getTimeseries getTimeseries with user-based metrics
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+		[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForListABTestsOfAbtestingV3() {
 	/*
 	   Snippet for the listABTests method.

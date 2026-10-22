@@ -830,6 +830,38 @@ void main() {
     ),
   );
 
+  // getTimeseries
+  test(
+    'getTimeseries with user-based metrics',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTimeseries(
+        id: 42,
+        startDate: "1999-09-19",
+        endDate: "2001-01-01",
+        metric: [
+          MetricName.fromJson("clicked_users_rate"),
+          MetricName.fromJson("converted_users_rate"),
+        ],
+        methods: [
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/timeseries');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // listABTests
   test(
     'listABTests with minimal parameters',

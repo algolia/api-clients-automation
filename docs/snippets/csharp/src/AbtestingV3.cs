@@ -847,6 +847,41 @@ public class SnippetAbtestingV3Client
   }
 
   /// <summary>
+  /// Snippet for the GetTimeseries method.
+  ///
+  /// getTimeseries with user-based metrics
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetTimeseries2()
+  {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetTimeseriesAsync(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      new List<MetricName>
+      {
+        Enum.Parse<MetricName>("ClickedUsersRate"),
+        Enum.Parse<MetricName>("ConvertedUsersRate"),
+      },
+      new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the ListABTests method.
   ///
   /// listABTests with minimal parameters

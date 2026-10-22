@@ -627,6 +627,37 @@ class TestAbtestingV3Client:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_timeseries_2(self):
+        """
+        getTimeseries with user-based metrics
+        """
+        _req = await self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "clicked_users_rate",
+                "converted_users_rate",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "clicked_users_rate%2Cconverted_users_rate",
+                "methods": "bayesian",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_list_ab_tests_(self):
         """
         listABTests with minimal parameters
@@ -1334,6 +1365,37 @@ class TestAbtestingV3ClientSync:
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
                 "metric": "revenue_per_search",
+                "methods": "bayesian",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_timeseries_2(self):
+        """
+        getTimeseries with user-based metrics
+        """
+        _req = self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "clicked_users_rate",
+                "converted_users_rate",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "clicked_users_rate%2Cconverted_users_rate",
                 "methods": "bayesian",
             }.items()
         )

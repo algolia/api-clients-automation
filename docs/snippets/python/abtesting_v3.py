@@ -853,6 +853,39 @@ def snippet_for_get_timeseries1():
     # SEPARATOR<
 
 
+def snippet_for_get_timeseries2():
+    """
+    Snippet for the getTimeseries method.
+
+    getTimeseries with user-based metrics
+    """
+    # >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_timeseries(
+        id=42,
+        start_date="1999-09-19",
+        end_date="2001-01-01",
+        metric=[
+            "clicked_users_rate",
+            "converted_users_rate",
+        ],
+        methods=[
+            "bayesian",
+        ],
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_list_ab_tests():
     """
     Snippet for the listABTests method.

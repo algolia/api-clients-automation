@@ -594,6 +594,30 @@ export async function snippetForGetTimeseries1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with user-based metrics
+export async function snippetForGetTimeseries2(): Promise<void> {
+  // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getTimeseries({
+    id: 42,
+    startDate: '1999-09-19',
+    endDate: '2001-01-01',
+    metric: ['clicked_users_rate', 'converted_users_rate'],
+    methods: ['bayesian'],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the listABTests method.
 //
 // listABTests with minimal parameters

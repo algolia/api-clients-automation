@@ -591,6 +591,28 @@ final class AbtestingV3ClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getTimeseries method.
+    ///
+    /// getTimeseries with user-based metrics
+    func snippetForGetTimeseries2() async throws {
+        // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getTimeseries(
+            id: 42,
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],
+            methods: [AnalysisMethod.bayesian]
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the listABTests method.
     ///
     /// listABTests with minimal parameters
