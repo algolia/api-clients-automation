@@ -24,7 +24,9 @@ class InsightsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -45,7 +47,9 @@ class InsightsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.50.0\\).*".toRegex()
@@ -73,14 +77,16 @@ class InsightsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -109,9 +115,9 @@ class InsightsTest {
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                     positions = listOf(7, 6),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -126,7 +132,9 @@ class InsightsTest {
 
     client.runTest(
       call = {
-        customDelete(path = "test")
+        customDelete(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("insights.us.algolia.io", it.url.host)
@@ -137,9 +145,8 @@ class InsightsTest {
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
-        val client = InsightsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-
-      }
+      val client = InsightsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+    }
       .let { error ->
         assertError(
           error,
@@ -167,14 +174,16 @@ class InsightsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -188,14 +197,18 @@ class InsightsTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

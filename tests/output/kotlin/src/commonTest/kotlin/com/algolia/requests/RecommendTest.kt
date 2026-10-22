@@ -48,7 +48,9 @@ class RecommendTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -82,7 +84,9 @@ class RecommendTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -150,7 +154,9 @@ class RecommendTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -204,7 +210,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -236,7 +242,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -271,7 +277,7 @@ class RecommendTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -304,7 +310,7 @@ class RecommendTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -337,7 +343,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -372,7 +378,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -404,7 +410,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -439,7 +445,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -474,7 +480,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -493,7 +499,9 @@ class RecommendTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -613,9 +621,9 @@ class RecommendTest {
                     objectID = "objectID",
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 42.1,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -644,9 +652,9 @@ class RecommendTest {
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 20.0,
                     maxRecommendations = 2,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -688,9 +696,9 @@ class RecommendTest {
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                         facetFilters = FacetFilters.of(listOf(FacetFilters.of("brand:apple"))),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -719,9 +727,9 @@ class RecommendTest {
                     threshold = 42.1,
                     facetName = "facet",
                     facetValue = "value",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -763,9 +771,9 @@ class RecommendTest {
                         optionalFilters =
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -800,8 +808,8 @@ class RecommendTest {
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 21.7,
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -862,8 +870,8 @@ class RecommendTest {
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:microsoft"))),
                       ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -891,9 +899,9 @@ class RecommendTest {
                     objectID = "objectID1",
                     model = FbtModel.entries.first { it.value == "bought-together" },
                     threshold = 42.7,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {

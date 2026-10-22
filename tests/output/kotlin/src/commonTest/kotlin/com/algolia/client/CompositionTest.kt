@@ -24,7 +24,9 @@ class CompositionTest {
 
     client.runTest(
       call = {
-        customGet(path = "test")
+        customGet(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -38,7 +40,9 @@ class CompositionTest {
 
     client.runTest(
       call = {
-        customPost(path = "test")
+        customPost(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
@@ -60,7 +64,7 @@ class CompositionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6678,
-                )
+                ),
               ),
             compressionType = CompressionType.GZIP,
           ),
@@ -76,7 +80,7 @@ class CompositionTest {
               put(
                 "message",
                 JsonPrimitive(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.",
                 ),
               )
             },
@@ -107,14 +111,16 @@ class CompositionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6691,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/gzip-response")
+        customGet(
+          path = "1/test/gzip-response",
+        )
       },
       response = {
         assertNotNull(it)
@@ -133,7 +139,9 @@ class CompositionTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -154,7 +162,9 @@ class CompositionTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.50.0\\).*".toRegex()
@@ -181,14 +191,16 @@ class CompositionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -210,14 +222,16 @@ class CompositionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/request-id/smoke/composition/kotlin")
+        customGet(
+          path = "1/test/request-id/smoke/composition/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -244,14 +258,16 @@ class CompositionTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -265,14 +281,18 @@ class CompositionTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

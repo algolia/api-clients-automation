@@ -39,8 +39,10 @@ class AgentStudioTest {
   fun `e2e export conversations2`() = runTest {
     client.runTest(
       call = {
-        exportConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
-      }
+        exportConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
+      },
     )
   }
 
@@ -48,7 +50,9 @@ class AgentStudioTest {
   fun `e2e get agent1`() = runTest {
     client.runTest(
       call = {
-        getAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        getAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -93,7 +97,9 @@ class AgentStudioTest {
   fun `e2e get provider1`() = runTest {
     client.runTest(
       call = {
-        getProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        getProvider(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -108,7 +114,9 @@ class AgentStudioTest {
   fun `e2e get secret key1`() = runTest {
     client.runTest(
       call = {
-        getSecretKey(secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d")
+        getSecretKey(
+          secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -123,7 +131,9 @@ class AgentStudioTest {
   fun `e2e list agent allowed domains1`() = runTest {
     client.runTest(
       call = {
-        listAgentAllowedDomains(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        listAgentAllowedDomains(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -138,8 +148,10 @@ class AgentStudioTest {
   fun `e2e list agent conversations2`() = runTest {
     client.runTest(
       call = {
-        listAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
-      }
+        listAgentConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
+      },
     )
   }
 
@@ -177,8 +189,10 @@ class AgentStudioTest {
   fun `e2e list provider models1`() = runTest {
     client.runTest(
       call = {
-        listProviderModels(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
-      }
+        listProviderModels(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
+      },
     )
   }
 

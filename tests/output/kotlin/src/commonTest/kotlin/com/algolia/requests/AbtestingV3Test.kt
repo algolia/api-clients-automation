@@ -32,7 +32,12 @@ class AbtestingV3Test {
             AddABTestsRequest(
               endAt = "2022-12-31T00:00:00.000Z",
               name = "myABTest",
-              metrics = listOf(CreateMetric(name = "myMetric")),
+              metrics =
+                listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
               variants =
                 listOf(
                   AbTestsVariant(
@@ -44,7 +49,7 @@ class AbtestingV3Test {
                     trafficPercentage = 50,
                   ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -67,7 +72,12 @@ class AbtestingV3Test {
             AddABTestsRequest(
               endAt = "2022-12-31T00:00:00.000Z",
               name = "myABTest",
-              metrics = listOf(CreateMetric(name = "conversionRate")),
+              metrics =
+                listOf(
+                  CreateMetric(
+                    name = "conversionRate",
+                  ),
+                ),
               variants =
                 listOf(
                   AbTestsVariant(
@@ -84,7 +94,7 @@ class AbtestingV3Test {
                   method = AnalysisMethod.entries.first { it.value == "bayesian" },
                   primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -123,7 +133,9 @@ class AbtestingV3Test {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -157,7 +169,9 @@ class AbtestingV3Test {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -225,7 +239,9 @@ class AbtestingV3Test {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -279,7 +295,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -311,7 +327,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -346,7 +362,7 @@ class AbtestingV3Test {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -379,7 +395,7 @@ class AbtestingV3Test {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -412,7 +428,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -447,7 +463,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -479,7 +495,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -514,7 +530,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -549,7 +565,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -568,7 +584,9 @@ class AbtestingV3Test {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -609,7 +627,9 @@ class AbtestingV3Test {
   fun `deleteABTest`() = runTest {
     client.runTest(
       call = {
-        deleteABTest(id = 42)
+        deleteABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -634,7 +654,7 @@ class AbtestingV3Test {
                     MinimumDetectableEffect(
                       size = 0.03,
                       metric = EffectMetric.entries.first { it.value == "conversionRate" },
-                    )
+                    ),
                 ),
               variants =
                 listOf(
@@ -647,7 +667,7 @@ class AbtestingV3Test {
                     trafficPercentage = 50,
                   ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -667,7 +687,9 @@ class AbtestingV3Test {
   fun `getABTest`() = runTest {
     client.runTest(
       call = {
-        getABTest(id = 42)
+        getABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -705,7 +727,9 @@ class AbtestingV3Test {
   fun `getABTestSettings`() = runTest {
     client.runTest(
       call = {
-        getABTestSettings(id = 42)
+        getABTestSettings(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/settings".toPathSegments(), it.url.pathSegments)
@@ -721,7 +745,9 @@ class AbtestingV3Test {
   fun `getTimeseries`() = runTest {
     client.runTest(
       call = {
-        getTimeseries(id = 42)
+        getTimeseries(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
@@ -809,7 +835,10 @@ class AbtestingV3Test {
         saveVariantSettings(
           id = 42,
           variantId = 2,
-          saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),
+          saveSettingsRequest =
+            SaveSettingsRequest(
+              saveFeaturesSettings = true,
+            ),
         )
       },
       intercept = {
@@ -844,7 +873,9 @@ class AbtestingV3Test {
   fun `stopABTest`() = runTest {
     client.runTest(
       call = {
-        stopABTest(id = 42)
+        stopABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/stop".toPathSegments(), it.url.pathSegments)

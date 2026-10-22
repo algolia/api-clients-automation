@@ -27,7 +27,9 @@ class AnalyticsTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -61,7 +63,9 @@ class AnalyticsTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -129,7 +133,9 @@ class AnalyticsTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -183,7 +189,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -215,7 +221,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -250,7 +256,7 @@ class AnalyticsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -283,7 +289,7 @@ class AnalyticsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -316,7 +322,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -351,7 +357,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -383,7 +389,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -418,7 +424,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -453,7 +459,7 @@ class AnalyticsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -472,7 +478,9 @@ class AnalyticsTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -513,7 +521,9 @@ class AnalyticsTest {
   fun `get getAddToCartRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getAddToCartRate(index = "index")
+        getAddToCartRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/conversions/addToCartRate".toPathSegments(), it.url.pathSegments)
@@ -553,7 +563,9 @@ class AnalyticsTest {
   fun `get getAverageClickPosition with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getAverageClickPosition(index = "index")
+        getAverageClickPosition(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/clicks/averageClickPosition".toPathSegments(), it.url.pathSegments)
@@ -593,7 +605,9 @@ class AnalyticsTest {
   fun `get getClickPositions with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getClickPositions(index = "index")
+        getClickPositions(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/clicks/positions".toPathSegments(), it.url.pathSegments)
@@ -633,7 +647,9 @@ class AnalyticsTest {
   fun `get getClickThroughRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getClickThroughRate(index = "index")
+        getClickThroughRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/clicks/clickThroughRate".toPathSegments(), it.url.pathSegments)
@@ -673,7 +689,9 @@ class AnalyticsTest {
   fun `get getConversationRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getConversionRate(index = "index")
+        getConversionRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/conversions/conversionRate".toPathSegments(), it.url.pathSegments)
@@ -713,7 +731,9 @@ class AnalyticsTest {
   fun `get getNoClickRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getNoClickRate(index = "index")
+        getNoClickRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches/noClickRate".toPathSegments(), it.url.pathSegments)
@@ -753,7 +773,9 @@ class AnalyticsTest {
   fun `get getNoResultsRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getNoResultsRate(index = "index")
+        getNoResultsRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
@@ -809,7 +831,9 @@ class AnalyticsTest {
   fun `get getPurchaseRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getPurchaseRate(index = "index")
+        getPurchaseRate(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/conversions/purchaseRate".toPathSegments(), it.url.pathSegments)
@@ -849,7 +873,9 @@ class AnalyticsTest {
   fun `get getRevenue with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getRevenue(index = "index")
+        getRevenue(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/conversions/revenue".toPathSegments(), it.url.pathSegments)
@@ -889,7 +915,9 @@ class AnalyticsTest {
   fun `get getSearchesCount with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesCount(index = "index")
+        getSearchesCount(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches/count".toPathSegments(), it.url.pathSegments)
@@ -929,7 +957,9 @@ class AnalyticsTest {
   fun `get getSearchesNoClicks with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoClicks(index = "index")
+        getSearchesNoClicks(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches/noClicks".toPathSegments(), it.url.pathSegments)
@@ -971,7 +1001,9 @@ class AnalyticsTest {
   fun `get getSearchesNoResults with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getSearchesNoResults(index = "index")
+        getSearchesNoResults(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches/noResults".toPathSegments(), it.url.pathSegments)
@@ -1013,7 +1045,9 @@ class AnalyticsTest {
   fun `get getStatus with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getStatus(index = "index")
+        getStatus(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/status".toPathSegments(), it.url.pathSegments)
@@ -1030,7 +1064,9 @@ class AnalyticsTest {
   fun `get getTopCountries with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopCountries(index = "index")
+        getTopCountries(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/countries".toPathSegments(), it.url.pathSegments)
@@ -1072,7 +1108,9 @@ class AnalyticsTest {
   fun `get getTopFilterAttributes with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopFilterAttributes(index = "index")
+        getTopFilterAttributes(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/filters".toPathSegments(), it.url.pathSegments)
@@ -1207,7 +1245,9 @@ class AnalyticsTest {
   fun `get getTopFiltersNoResults with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopFiltersNoResults(index = "index")
+        getTopFiltersNoResults(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/filters/noResults".toPathSegments(), it.url.pathSegments)
@@ -1250,7 +1290,9 @@ class AnalyticsTest {
   fun `get getTopHits with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopHits(index = "index")
+        getTopHits(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
@@ -1295,7 +1337,9 @@ class AnalyticsTest {
   fun `get getTopSearches with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getTopSearches(index = "index")
+        getTopSearches(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
@@ -1341,7 +1385,9 @@ class AnalyticsTest {
   fun `get getUsersCount with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getUsersCount(index = "index")
+        getUsersCount(
+          index = "index",
+        )
       },
       intercept = {
         assertEquals("/2/users/count".toPathSegments(), it.url.pathSegments)
@@ -1396,14 +1442,14 @@ class AnalyticsTest {
                         BinEdge.of(4),
                         BinEdge.of(5),
                       ),
-                  )
+                  ),
                 ),
               parameters =
                 listOf(
                   ParameterDefinition(
                     kind = "indices",
                     value = ParameterValue.of(listOf("index")),
-                  )
+                  ),
                 ),
             ),
           index = "index",
@@ -1430,13 +1476,18 @@ class AnalyticsTest {
         queryPatternsScalar(
           scalarPayload =
             ScalarPayload(
-              metrics = listOf(FieldReference(kind = "conversionRate")),
+              metrics =
+                listOf(
+                  FieldReference(
+                    kind = "conversionRate",
+                  ),
+                ),
               parameters =
                 listOf(
                   ParameterDefinition(
                     kind = "indices",
                     value = ParameterValue.of(listOf("index")),
-                  )
+                  ),
                 ),
             ),
           index = "index",
@@ -1463,13 +1514,18 @@ class AnalyticsTest {
         queryPatternsTable(
           tablePayload =
             TablePayload(
-              metrics = listOf(FieldReference(kind = "searchesCount")),
+              metrics =
+                listOf(
+                  FieldReference(
+                    kind = "searchesCount",
+                  ),
+                ),
               parameters =
                 listOf(
                   ParameterDefinition(
                     kind = "indices",
                     value = ParameterValue.of(listOf("index")),
-                  )
+                  ),
                 ),
             ),
           index = "index",
@@ -1495,22 +1551,37 @@ class AnalyticsTest {
           tablePayload =
             TablePayload(
               domain = "core",
-              metrics = listOf(FieldReference(kind = "searchesCount")),
-              groupBy = listOf(FieldReference(kind = "query")),
-              filters = listOf(FilterDefinition(kind = "clicked")),
+              metrics =
+                listOf(
+                  FieldReference(
+                    kind = "searchesCount",
+                  ),
+                ),
+              groupBy =
+                listOf(
+                  FieldReference(
+                    kind = "query",
+                  ),
+                ),
+              filters =
+                listOf(
+                  FilterDefinition(
+                    kind = "clicked",
+                  ),
+                ),
               parameters =
                 listOf(
                   ParameterDefinition(
                     kind = "indices",
                     value = ParameterValue.of(listOf("index")),
-                  )
+                  ),
                 ),
               orderBy =
                 listOf(
                   OrderDefinition(
                     kind = "searchesCount",
                     direction = OrderDirection.entries.first { it.value == "desc" },
-                  )
+                  ),
                 ),
               limit = 100,
               offset = 0,
@@ -1539,13 +1610,18 @@ class AnalyticsTest {
         queryPatternsTimeseries(
           timeseriesPayload =
             TimeseriesPayload(
-              metrics = listOf(FieldReference(kind = "searchesCount")),
+              metrics =
+                listOf(
+                  FieldReference(
+                    kind = "searchesCount",
+                  ),
+                ),
               parameters =
                 listOf(
                   ParameterDefinition(
                     kind = "indices",
                     value = ParameterValue.of(listOf("index")),
-                  )
+                  ),
                 ),
             ),
           index = "index",
@@ -1573,20 +1649,32 @@ class AnalyticsTest {
               domain = "core",
               metrics =
                 listOf(
-                  FieldReference(kind = "searchesCount"),
+                  FieldReference(
+                    kind = "searchesCount",
+                  ),
                   FieldReference(
                     domain = "abtesting",
                     kind = "isMsrQuery",
                   ),
                 ),
-              groupBy = listOf(FieldReference(kind = "index")),
+              groupBy =
+                listOf(
+                  FieldReference(
+                    kind = "index",
+                  ),
+                ),
               filters =
                 listOf(
-                  FilterDefinition(kind = "clicked"),
+                  FilterDefinition(
+                    kind = "clicked",
+                  ),
                   FilterDefinition(
                     kind = "country",
                     operator = "=",
-                    parameter = ParameterReference(kind = "country"),
+                    parameter =
+                      ParameterReference(
+                        kind = "country",
+                      ),
                   ),
                 ),
               parameters =
