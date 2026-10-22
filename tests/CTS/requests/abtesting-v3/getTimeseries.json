@@ -27,5 +27,23 @@
         "methods": "bayesian"
       }
     }
+  },
+  {
+    "testName": "getTimeseries with user-based metrics",
+    "parameters": {
+      "id": 42,
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "metric": ["clicked_users_rate", "converted_users_rate"]
+    },
+    "request": {
+      "path": "/3/abtests/42/timeseries",
+      "method": "GET",
+      "queryParameters": {
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "metric": "clicked_users_rate,converted_users_rate"
+      }
+    }
   }
 ]
