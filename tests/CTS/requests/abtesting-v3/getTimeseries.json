@@ -34,7 +34,8 @@
       "id": 42,
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
-      "metric": ["clicked_users_rate", "converted_users_rate"]
+      "metric": ["clicked_users_rate", "converted_users_rate"],
+      "methods": ["bayesian"]
     },
     "request": {
       "path": "/3/abtests/42/timeseries",
@@ -42,7 +43,8 @@
       "queryParameters": {
         "startDate": "1999-09-19",
         "endDate": "2001-01-01",
-        "metric": "clicked_users_rate,converted_users_rate"
+        "metric": "clicked_users_rate%2Cconverted_users_rate",
+        "methods": "bayesian"
       }
     }
   }
