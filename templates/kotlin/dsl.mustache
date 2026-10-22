@@ -1,0 +1,41 @@
+{{> licenseInfo}}
+package com.algolia.client.dsl.generated
+
+import com.algolia.client.dsl.DSLParameters
+import com.algolia.client.dsl.AlgoliaExperimentalDsl
+import com.algolia.client.dsl.filter.DSLFacetFilters
+import com.algolia.client.dsl.filter.DSLFilters
+import com.algolia.client.dsl.filter.Filter
+import com.algolia.client.dsl.filter.FilterWrite
+import com.algolia.client.dsl.filter.rowsBehind
+import com.algolia.client.model.search.*
+import kotlinx.serialization.json.*
+
+@DSLParameters
+@AlgoliaExperimentalDsl
+public class DSL{{classname}} internal constructor() {
+{{#vars}}
+  public var {{{name}}}: {{> data_class_field_type}}? = null
+{{/vars}}
+
+  internal constructor(source: {{classname}}) : this() {
+{{#vars}}
+    this.{{{name}}} = source.{{{name}}}
+{{/vars}}
+  }
+{{#filterHelpers}}
+{{> dsl_filter_helper}}
+{{/filterHelpers}}
+{{#listHelpers}}
+{{> dsl_list_helper}}
+{{/listHelpers}}
+{{#nestedHelpers}}
+{{> dsl_nested_helper}}
+{{/nestedHelpers}}
+
+  internal fun build(): {{classname}} = {{classname}}(
+{{#vars}}
+    {{{name}}} = {{#required}}{{^isNullable}}requireNotNull({{{name}}}) { "{{dslModelName}}.{{{name}}} is required" }{{/isNullable}}{{#isNullable}}{{{name}}}{{/isNullable}}{{/required}}{{^required}}{{{name}}}{{/required}},
+{{/vars}}
+  )
+}

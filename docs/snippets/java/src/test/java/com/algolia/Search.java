@@ -7440,14 +7440,14 @@ class SnippetSearchClient {
   //
   // get setDictionarySettings results with minimal parameters
   void snippetForSetDictionarySettings() throws Exception {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+    // >SEPARATOR setDictionarySettings default
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     UpdatedAtResponse response = client.setDictionarySettings(
       new DictionarySettingsParams().setDisableStandardEntries(
-        new StandardEntries().setPlurals(
+        new StandardEntries().setStopwords(
           new HashMap() {
             {
               put("fr", false);
@@ -7456,49 +7456,6 @@ class SnippetSearchClient {
             }
           }
         )
-      )
-    );
-    // >LOG
-    // print the response
-    System.out.println(response);
-    // SEPARATOR<
-  }
-
-  // Snippet for the setDictionarySettings method.
-  //
-  // get setDictionarySettings results with all parameters
-  void snippetForSetDictionarySettings1() throws Exception {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-    // Initialize the client
-    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
-
-    // Call the API
-    UpdatedAtResponse response = client.setDictionarySettings(
-      new DictionarySettingsParams().setDisableStandardEntries(
-        new StandardEntries()
-          .setPlurals(
-            new HashMap() {
-              {
-                put("fr", false);
-                put("en", false);
-                put("ru", true);
-              }
-            }
-          )
-          .setStopwords(
-            new HashMap() {
-              {
-                put("fr", false);
-              }
-            }
-          )
-          .setCompounds(
-            new HashMap() {
-              {
-                put("ru", true);
-              }
-            }
-          )
       )
     );
     // >LOG

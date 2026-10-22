@@ -1,0 +1,5 @@
+
+  /** Sets [{{{name}}}] from a [{{{builder}}}] block. Last write wins. */
+  public fun {{{name}}}(block: {{{builder}}}.() -> Unit) {
+    this.{{{name}}} = {{{builder}}}().apply(block).build()
+  }

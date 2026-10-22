@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Primary metric for Bayesian analysis. Required when `method` is `bayesian`. If the request includes a non-empty `metrics` list, this metric must be in that list. Revenue per search requires access to revenue analytics.
+/// Primary metric for Bayesian analysis. Required when `method` is `bayesian`. When `method` is omitted and the test defaults to `bayesian`, the default primary metric is `conversion_rate`, or the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include conversion rate. If the request includes a non-empty `metrics` list, this metric must be in that list. Revenue per search requires access to revenue analytics.
 @JsonEnum(valueField: 'raw')
 enum PrimaryMetric {
   addToCartRate(r'add_to_cart_rate'),

@@ -4305,8 +4305,17 @@ components:
       description: >
         A/B test statistical analysis method.
 
-        When omitted, the test is treated as `frequentist`. The server doesn't
-        write a default value back to the configuration.
+        When omitted, new A/B tests use `bayesian`.
+
+        They use `frequentist` instead only if no primary metric that supports
+        Bayesian analysis is available.
+
+        The selected method is saved in the A/B test configuration.
+
+        Older A/B tests, created before methods were saved, may have no method
+        in their configuration.
+
+        These tests use `frequentist`.
       enum:
         - bayesian
         - frequentist
@@ -4771,6 +4780,12 @@ components:
       description: >
         Primary metric for Bayesian analysis. Required when `method` is
         `bayesian`.
+
+        When `method` is omitted and the test defaults to `bayesian`, the
+        default primary metric is `conversion_rate`,
+
+        or the first metric in `metrics` that supports Bayesian analysis if
+        `metrics` doesn't include conversion rate.
 
         If the request includes a non-empty `metrics` list, this metric must be
         in that list.

@@ -14759,7 +14759,7 @@ paths:
               {
                 DisableStandardEntries = new StandardEntries
                 {
-                  Plurals = new Dictionary<string, Boolean>
+                  Stopwords = new Dictionary<string, Boolean>
                   {
                     { "fr", false },
                     { "en", false },
@@ -14784,7 +14784,7 @@ paths:
             final response = await client.setDictionarySettings(
               dictionarySettingsParams: DictionarySettingsParams(
                 disableStandardEntries: StandardEntries(
-                  plurals: {
+                  stopwords: {
                     'fr': false,
                     'en': false,
                     'ru': true,
@@ -14815,7 +14815,7 @@ paths:
             client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
               search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-                search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
+                search.NewEmptyStandardEntries().SetStopwords(map[string]bool{"fr": false, "en": false, "ru": true}))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -14839,7 +14839,7 @@ paths:
 
             UpdatedAtResponse response = client.setDictionarySettings(
               new DictionarySettingsParams().setDisableStandardEntries(
-                new StandardEntries().setPlurals(
+                new StandardEntries().setStopwords(
                   new HashMap() {
                     {
                       put("fr", false);
@@ -14867,7 +14867,7 @@ paths:
             // Call the API
 
             const response = await client.setDictionarySettings({
-              disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+              disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } },
             });
 
 
@@ -14891,7 +14891,7 @@ paths:
                 dictionarySettingsParams =
                   DictionarySettingsParams(
                     disableStandardEntries =
-                      StandardEntries(plurals = mapOf("fr" to false, "en" to false, "ru" to true))
+                      StandardEntries(stopwords = mapOf("fr" to false, "en" to false, "ru" to true))
                   )
               )
 
@@ -14911,7 +14911,7 @@ paths:
             // Call the API
 
             $response = $client->setDictionarySettings(
-                ['disableStandardEntries' => ['plurals' => ['fr' => false,
+                ['disableStandardEntries' => ['stopwords' => ['fr' => false,
                     'en' => false,
                     'ru' => true,
                 ],
@@ -14941,7 +14941,7 @@ paths:
             response = client.set_dictionary_settings(
                 dictionary_settings_params={
                     "disableStandardEntries": {
-                        "plurals": {
+                        "stopwords": {
                             "fr": False,
                             "en": False,
                             "ru": True,
@@ -14968,7 +14968,7 @@ paths:
 
             response = client.set_dictionary_settings(
               Algolia::Search::DictionarySettingsParams.new(
-                disable_standard_entries: Algolia::Search::StandardEntries.new(plurals: {fr: false, en: false, ru: true})
+                disable_standard_entries: Algolia::Search::StandardEntries.new(stopwords: {fr: false, en: false, ru: true})
               )
             )
 
@@ -14992,7 +14992,7 @@ paths:
               client.setDictionarySettings(
                 dictionarySettingsParams = DictionarySettingsParams(
                   disableStandardEntries = StandardEntries(
-                    plurals = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
+                    stopwords = Some(Map("fr" -> false, "en" -> false, "ru" -> true))
                   )
                 )
               ),
@@ -15016,7 +15016,7 @@ paths:
 
             let response = try await client
                 .setDictionarySettings(
-                    dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                    dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(stopwords: [
                         "fr": false,
                         "en": false,
                         "ru": true,
@@ -19971,9 +19971,6 @@ paths:
 
         - If the source index doesn't exist, copying creates a new index with 0
         records and default settings.
-
-        - API keys from the source index are merged with the existing keys in
-        the destination index.
 
         - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
 
@@ -26894,14 +26891,26 @@ components:
     standardEntries:
       type: object
       description: >
-        Key-value pairs of [supported language ISO
+        Turn off the built-in Algolia stop words for specific languages.
+
+        Only `stopwords` is supported.
+
+        The keys of the `stopwords` object are [language ISO
         codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages)
-        and boolean values.
+        of languages with a built-in stop-word dictionary.
       additionalProperties: false
       properties:
         compounds:
+          deprecated: true
+          description: |
+            Not supported. The API rejects this property with HTTP 400.
+            You cannot turn off the built-in compounds dictionary.
           $ref: '#/components/schemas/standardEntry'
         plurals:
+          deprecated: true
+          description: |
+            Not supported. The API rejects this property with HTTP 400.
+            You cannot turn off the built-in plurals dictionary.
           $ref: '#/components/schemas/standardEntry'
         stopwords:
           $ref: '#/components/schemas/standardEntry'

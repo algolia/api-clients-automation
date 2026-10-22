@@ -2,10 +2,10 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Ordering to apply on the items retrieved from the external provider. 'default' uses the relevance ranking from the Algolia retrieval step. 'providerDefined' uses the ordering returned by the external provider.
+/// Ordering to apply on the items retrieved from the external provider. 'algoliaDefined' uses the relevance ranking from the Algolia retrieval step. 'providerDefined' uses the ordering returned by the external provider.
 @JsonEnum(valueField: 'raw')
 enum ExternalProviderOrdering {
-  default_(r'default'),
+  algoliaDefined(r'algoliaDefined'),
   providerDefined(r'providerDefined');
 
   const ExternalProviderOrdering(this.raw);

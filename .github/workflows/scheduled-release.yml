@@ -4,6 +4,16 @@ on:
   schedule:
     - cron: '30 6 * * 2'
   workflow_dispatch:
+    inputs:
+      release-type:
+        description: Force the release type for every client with changes (default infers it from the commits)
+        type: choice
+        default: auto
+        options:
+          - auto
+          - patch
+          - minor
+          - major
 
 permissions: {}
 
@@ -38,6 +48,7 @@ jobs:
           type: minimal
           language: dart # we need the dart deps because we use melos to bump dependencies for its client
 
-      - run: yarn cli release
+      - run: yarn cli release ${RELEASE_TYPE:+--release-type "$RELEASE_TYPE"}
         env:
+          RELEASE_TYPE: ${{ inputs.release-type != 'auto' && inputs.release-type || '' }}
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

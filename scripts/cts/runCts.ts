@@ -1,7 +1,7 @@
 import fsp from 'fs/promises';
 
 import { exists, isVerbose, run, runComposerInstall, toAbsolutePath, YARN_HARDENED_MODE_PREFIX } from '../common.ts';
-import { getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
+import { getDockerImage, getSwiftBuildFolder, getTestOutputFolder } from '../config.ts';
 import { createSpinner } from '../spinners.ts';
 import type { Language } from '../types.ts';
 
@@ -101,6 +101,14 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
       await run(`./gradle/gradlew -p tests/output/kotlin jvmTest ${filter((f) => `--tests 'com.algolia.${f}*'`)}`, {
         language,
       });
+      if (suites.client) {
+        await run('./gradle/gradlew -p clients/algoliasearch-client-kotlin :client:jvmTest', { language });
+      }
+      if (suites.e2e) {
+        await run('./gradle/gradlew -p clients/algoliasearch-client-kotlin --continue :client:jvmDslLiveTest', {
+          language,
+        });
+      }
       break;
     case 'php':
       await runComposerInstall();
@@ -148,8 +156,12 @@ async function runCtsOne(language: Language, suites: Record<CTSType, boolean>): 
     }
     case 'swift': {
       const swiftSuites = [...folders, ...(suites.client ? ['manual'] : [])];
+      // XCTest async tests randomly deadlock on linux when several threads are available (the test body Task is never
+      // picked up by libdispatch, reproduced on swift 5.9 and 6.0 in docker). Locally (docker), run a single process
+      // pinned on one CPU: it is also much faster than `--parallel`, which spawns one process per test.
+      const inDocker = Boolean(getDockerImage('swift'));
       await run(
-        `swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()} --parallel ${swiftSuites.map((f) => `--filter "${f}.*"`).join(' ')}`,
+        `${inDocker ? 'taskset -c 0 ' : ''}swift test -Xswiftc -suppress-warnings --build-path ${getSwiftBuildFolder()}${inDocker ? '' : ' --parallel'} ${swiftSuites.map((f) => `--filter "${f}.*"`).join(' ')}`,
         {
           cwd,
           language,

@@ -1,0 +1,19 @@
+
+  private var {{{name}}}Write: FilterWrite<{{{type}}}, {{{leaf}}}>? = null
+
+  /**
+   * Sets [{{{name}}}] from a [{{{receiver}}}] block. Last write wins.
+{{^strict}}
+   * An empty block leaves the field omitted.
+{{/strict}}
+{{#strict}}
+   * Throws [IllegalArgumentException] when the block, or any group in it, adds no filter.
+{{/strict}}
+   */
+  public fun {{{name}}}(block: {{{receiver}}}.() -> Unit) {
+    val write = com.algolia.client.dsl.filter.{{{function}}}(block)
+    {{{name}}}Write = write
+    this.{{{name}}} = write.value
+  }
+
+  internal fun {{{name}}}Rows(): List<List<{{{leaf}}}>>? = rowsBehind({{{name}}}, {{{name}}}Write)

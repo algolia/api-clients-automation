@@ -3,40 +3,9 @@
     "testName": "get setDictionarySettings results with minimal parameters",
     "parameters": {
       "disableStandardEntries": {
-        "plurals": {
-          "fr": false,
-          "en": false,
-          "ru": true
-        }
-      }
-    },
-    "request": {
-      "path": "/1/dictionaries/*/settings",
-      "method": "PUT",
-      "body": {
-        "disableStandardEntries": {
-          "plurals": {
-            "fr": false,
-            "en": false,
-            "ru": true
-          }
-        }
-      }
-    }
-  },
-  {
-    "testName": "get setDictionarySettings results with all parameters",
-    "parameters": {
-      "disableStandardEntries": {
-        "plurals": {
-          "fr": false,
-          "en": false,
-          "ru": true
-        },
         "stopwords": {
-          "fr": false
-        },
-        "compounds": {
+          "fr": false,
+          "en": false,
           "ru": true
         }
       }
@@ -46,15 +15,9 @@
       "method": "PUT",
       "body": {
         "disableStandardEntries": {
-          "plurals": {
+          "stopwords": {
             "fr": false,
             "en": false,
-            "ru": true
-          },
-          "stopwords": {
-            "fr": false
-          },
-          "compounds": {
             "ru": true
           }
         }

@@ -8099,7 +8099,7 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForSetDictionarySettings() {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+    // >SEPARATOR setDictionarySettings default
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -8109,34 +8109,7 @@ class SnippetSearchClient {
         dictionarySettingsParams =
           DictionarySettingsParams(
             disableStandardEntries =
-              StandardEntries(plurals = mapOf("fr" to false, "en" to false, "ru" to true))
-          )
-      )
-
-    // >LOG
-    // print the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
-  suspend fun snippetForSetDictionarySettings1() {
-    // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-    // Initialize the client
-    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
-
-    // Call the API
-    var response =
-      client.setDictionarySettings(
-        dictionarySettingsParams =
-          DictionarySettingsParams(
-            disableStandardEntries =
-              StandardEntries(
-                plurals = mapOf("fr" to false, "en" to false, "ru" to true),
-                stopwords = mapOf("fr" to false),
-                compounds = mapOf("ru" to true),
-              )
+              StandardEntries(stopwords = mapOf("fr" to false, "en" to false, "ru" to true))
           )
       )
 
