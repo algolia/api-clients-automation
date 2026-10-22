@@ -146,7 +146,7 @@ MetricsFilter:
   properties:
     domain:
       type: string
-      description: Metric domain (for example `abtesting`, `personalization`).
+      description: Metric domain (for example `abtesting`, `core`, `personalization`).
       example: abtesting
     name:
       type: string
@@ -157,7 +157,7 @@ MetricsFilter:
       description: Whether the experiment should record the effects of this filter. Not supported by `core.hasExactCategoryFilter`.
     includes:
       type: boolean
-      description: If true, keep items that match the filter; if false, exclude them.
+      description: If true, keep items that match the filter; if false, exclude them. Defaults to false.
     parameters:
       $ref: '#/MetricsFilterParameters'
   required:
@@ -169,15 +169,19 @@ MetricsFilterParameters:
   additionalProperties: false
   description: |
     Values for a filter that needs them.
-    The `core.hasExactCategoryFilter` filter requires both properties and keeps the searches that had the exact filter `<filterAttribute>:<filterValue>`.
+    The `core.hasExactCategoryFilter` filter requires both properties and matches the searches that had the exact filter `<filterAttribute>:<filterValue>`.
+    With `includes` false or omitted, the test counts every search except those searches.
+    A test can have at most one `core.hasExactCategoryFilter` filter.
     Other filters don't accept parameters.
   properties:
     filterAttribute:
       type: string
-      description: Facet attribute of the category, with one attribute for each hierarchy level.
-      example: categories.lvl1
+      minLength: 1
+      description: Facet attribute of the category, for example `categories.lvl0`. Hierarchical facets have one attribute for each level.
+      example: categories.lvl0
     filterValue:
       type: string
+      minLength: 1
       description: Facet value of the category, exactly as the search sends it.
       example: Shoes
 
