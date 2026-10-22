@@ -100,6 +100,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
         continue;
       }
 
+      addFieldMetadata(model);
+
       for (CodegenProperty param : Iterables.concat(model.vars, model.allVars, model.requiredVars, model.optionalVars)) {
         if (!param.isNullable || param.isContainer || param.isFreeFormObject || (param.isAnyType && !param.isModel)) {
           continue;
@@ -122,6 +124,8 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     for (Map.Entry<String, ModelsMap> entry : models.entrySet()) {
       String modelName = entry.getKey();
       CodegenModel model = entry.getValue().getModels().get(0).getModel();
+
+      inheritRefDescriptions(model, models);
 
       // for some reason the property additionalPropertiesIsAnyType is not propagated to the
       // property
@@ -179,5 +183,125 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     }
 
     return operations;
+  }
+
+  // addFieldMetadata exposes Go-safe literals for the template's FieldExamples and
+  // FieldDescriptions maps, which only iterate model.vars.
+  private static void addFieldMetadata(CodegenModel model) {
+    boolean hasFieldExamples = false;
+    boolean hasFieldDescriptions = false;
+
+    for (CodegenProperty param : model.vars) {
+      param.vendorExtensions.put("x-go-basename-literal", goStringLiteral(param.baseName));
+
+      // OpenAPI Generator fabricates the string "null" as the example of any property without one.
+      if ("null".equals(param.example)) {
+        param.example = null;
+      }
+
+      if (param.example != null && !param.example.isEmpty()) {
+        param.vendorExtensions.put("x-go-example-literal", goStringLiteral(param.example));
+        // a line break would end the `// Example:` comment and turn the rest into Go code.
+        param.example = singleLine(param.example);
+        hasFieldExamples = true;
+      }
+
+      // param.description is pre-escaped for comments (quotes become \"), so the literal needs the
+      // unescaped one.
+      String description = param.unescapedDescription != null ? param.unescapedDescription : param.description;
+      if (description != null && !description.isEmpty()) {
+        param.vendorExtensions.put("x-go-description-literal", goStringLiteral(description));
+        hasFieldDescriptions = true;
+      }
+    }
+
+    if (hasFieldExamples && !hasAccessorClash(model)) {
+      model.vendorExtensions.put("x-has-field-examples", true);
+    }
+    if (hasFieldDescriptions && !hasAccessorClash(model)) {
+      model.vendorExtensions.put("x-has-field-descriptions", true);
+    }
+  }
+
+  // a field named like an accessor would not compile next to the generated method.
+  private static boolean hasAccessorClash(CodegenModel model) {
+    for (CodegenProperty param : model.vars) {
+      if ("FieldExample".equals(param.name) || "FieldDescription".equals(param.name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // inheritRefDescriptions gives a property that $refs a schema the schema's description, since
+  // OpenAPI
+  // ignores siblings of a $ref and the property has none of its own.
+  private static void inheritRefDescriptions(CodegenModel model, Map<String, ModelsMap> models) {
+    boolean inherited = false;
+
+    for (CodegenProperty param : model.vars) {
+      if (param.isContainer || param.vendorExtensions.containsKey("x-go-description-literal")) {
+        continue;
+      }
+
+      String description = refDescription(param, models);
+      if (description != null) {
+        param.vendorExtensions.put("x-go-description-literal", goStringLiteral(description));
+        inherited = true;
+      }
+    }
+
+    if (inherited && !hasAccessorClash(model)) {
+      model.vendorExtensions.put("x-has-field-descriptions", true);
+    }
+  }
+
+  private static String refDescription(CodegenProperty param, Map<String, ModelsMap> models) {
+    String refName = param.complexType != null ? param.complexType : param.datatypeWithEnum;
+    ModelsMap ref = models.get(refName);
+    if (ref == null) {
+      return null;
+    }
+
+    CodegenModel refModel = ref.getModels().get(0).getModel();
+    String description = refModel.unescapedDescription != null ? refModel.unescapedDescription : refModel.description;
+    return description == null || description.isEmpty() ? null : description;
+  }
+
+  private static String singleLine(String s) {
+    return s.replaceAll("\\s*[\\r\\n]+\\s*", " ");
+  }
+
+  // goStringLiteral turns an arbitrary string into a double-quoted Go string literal, escaping the
+  // characters that would otherwise break the literal (examples often contain quotes and JSON).
+  private static String goStringLiteral(String s) {
+    StringBuilder sb = new StringBuilder("\"");
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
+      switch (c) {
+        case '\\':
+          sb.append("\\\\");
+          break;
+        case '"':
+          sb.append("\\\"");
+          break;
+        case '\n':
+          sb.append("\\n");
+          break;
+        case '\r':
+          sb.append("\\r");
+          break;
+        case '\t':
+          sb.append("\\t");
+          break;
+        default:
+          if (c < 0x20 || c == 0x7f) {
+            sb.append(String.format("\\u%04x", (int) c));
+          } else {
+            sb.append(c);
+          }
+      }
+    }
+    return sb.append("\"").toString();
   }
 }
