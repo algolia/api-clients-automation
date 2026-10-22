@@ -167,7 +167,7 @@ runs:
     # Scala
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
-      uses: sbt/setup-sbt@82da71df4e122282484a99a8d70096bc2369dbd8 # v1.5.9
+      uses: sbt/setup-sbt@ecad189dd245444b9ae0a0cd5922fd938b88906f # v1.5.12
 
     # Swift deps
     - name: Install swift
