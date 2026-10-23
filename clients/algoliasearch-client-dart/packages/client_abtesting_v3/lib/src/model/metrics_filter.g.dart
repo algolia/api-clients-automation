@@ -16,6 +16,12 @@ MetricsFilter _$MetricsFilterFromJson(Map<String, dynamic> json) =>
           name: $checkedConvert('name', (v) => v as String),
           trackEffects: $checkedConvert('trackEffects', (v) => v as bool?),
           includes: $checkedConvert('includes', (v) => v as bool?),
+          parameters: $checkedConvert(
+              'parameters',
+              (v) => v == null
+                  ? null
+                  : MetricsFilterParameters.fromJson(
+                      v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -35,5 +41,6 @@ Map<String, dynamic> _$MetricsFilterToJson(MetricsFilter instance) {
 
   writeNotNull('trackEffects', instance.trackEffects);
   writeNotNull('includes', instance.includes);
+  writeNotNull('parameters', instance.parameters?.toJson());
   return val;
 }

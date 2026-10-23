@@ -1563,7 +1563,11 @@ paths:
                     "domain": "abtesting",
                     "name": "isOutlier",
                     "trackEffects": true,
-                    "includes": true
+                    "includes": true,
+                    "parameters": {
+                      "filterAttribute": "categories.lvl0",
+                      "filterValue": "Shoes"
+                    }
                   }
                 ],
                 "errorCorrection": "bonferroni",
@@ -3118,7 +3122,11 @@ paths:
                     "domain": "abtesting",
                     "name": "isOutlier",
                     "trackEffects": true,
-                    "includes": true
+                    "includes": true,
+                    "parameters": {
+                      "filterAttribute": "categories.lvl0",
+                      "filterValue": "Shoes"
+                    }
                   }
                 ],
                 "minimumDetectableEffect": {
@@ -4735,6 +4743,37 @@ components:
       required:
         - size
         - metric
+    MetricsFilterParameters:
+      type: object
+      additionalProperties: false
+      description: >
+        Values for a filter that needs them.
+
+        The `core.hasExactCategoryFilter` filter requires both properties and
+        matches the searches that had the exact filter
+        `<filterAttribute>:<filterValue>`.
+
+        Optional filters and filters in an OR group don't match.
+
+        With `includes` false or omitted, the test counts every search except
+        those searches.
+
+        A test can have at most one `core.hasExactCategoryFilter` filter.
+
+        Other filters don't accept parameters.
+      properties:
+        filterAttribute:
+          type: string
+          minLength: 1
+          description: >-
+            Facet attribute of the category, for example `categories.lvl0`.
+            Hierarchical facets have one attribute for each level.
+          example: categories.lvl0
+        filterValue:
+          type: string
+          minLength: 1
+          description: Facet value of the category, exactly as the search sends it.
+          example: Shoes
     MetricsFilter:
       type: object
       additionalProperties: false
@@ -4747,7 +4786,7 @@ components:
       properties:
         domain:
           type: string
-          description: Metric domain (for example `abtesting`, `personalization`).
+          description: Metric domain (for example `abtesting`, `core`, `personalization`).
           example: abtesting
         name:
           type: string
@@ -4755,10 +4794,16 @@ components:
           example: isOutlier
         includes:
           type: boolean
-          description: If true, keep items that match the filter; if false, exclude them.
+          description: >-
+            If true, keep items that match the filter; if false, exclude them.
+            Defaults to false.
+        parameters:
+          $ref: '#/components/schemas/MetricsFilterParameters'
         trackEffects:
           type: boolean
-          description: Whether the experiment should record the effects of this filter.
+          description: >-
+            Whether the experiment should record the effects of this filter. Not
+            supported by `core.hasExactCategoryFilter`.
       required:
         - domain
         - name

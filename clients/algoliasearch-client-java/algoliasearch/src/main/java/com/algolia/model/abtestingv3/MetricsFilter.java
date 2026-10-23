@@ -25,12 +25,15 @@ public class MetricsFilter {
   @JsonProperty("includes")
   private Boolean includes;
 
+  @JsonProperty("parameters")
+  private MetricsFilterParameters parameters;
+
   public MetricsFilter setDomain(String domain) {
     this.domain = domain;
     return this;
   }
 
-  /** Metric domain (for example `abtesting`, `personalization`). */
+  /** Metric domain (for example `abtesting`, `core`, `personalization`). */
   @javax.annotation.Nonnull
   public String getDomain() {
     return domain;
@@ -52,7 +55,10 @@ public class MetricsFilter {
     return this;
   }
 
-  /** Whether the experiment should record the effects of this filter. */
+  /**
+   * Whether the experiment should record the effects of this filter. Not supported by
+   * `core.hasExactCategoryFilter`.
+   */
   @javax.annotation.Nullable
   public Boolean getTrackEffects() {
     return trackEffects;
@@ -63,10 +69,21 @@ public class MetricsFilter {
     return this;
   }
 
-  /** If true, keep items that match the filter; if false, exclude them. */
+  /** If true, keep items that match the filter; if false, exclude them. Defaults to false. */
   @javax.annotation.Nullable
   public Boolean getIncludes() {
     return includes;
+  }
+
+  public MetricsFilter setParameters(MetricsFilterParameters parameters) {
+    this.parameters = parameters;
+    return this;
+  }
+
+  /** Get parameters */
+  @javax.annotation.Nullable
+  public MetricsFilterParameters getParameters() {
+    return parameters;
   }
 
   @Override
@@ -82,13 +99,14 @@ public class MetricsFilter {
       Objects.equals(this.domain, metricsFilter.domain) &&
       Objects.equals(this.name, metricsFilter.name) &&
       Objects.equals(this.trackEffects, metricsFilter.trackEffects) &&
-      Objects.equals(this.includes, metricsFilter.includes)
+      Objects.equals(this.includes, metricsFilter.includes) &&
+      Objects.equals(this.parameters, metricsFilter.parameters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(domain, name, trackEffects, includes);
+    return Objects.hash(domain, name, trackEffects, includes, parameters);
   }
 
   @Override
@@ -99,6 +117,7 @@ public class MetricsFilter {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    trackEffects: ").append(toIndentedString(trackEffects)).append("\n");
     sb.append("    includes: ").append(toIndentedString(includes)).append("\n");
+    sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

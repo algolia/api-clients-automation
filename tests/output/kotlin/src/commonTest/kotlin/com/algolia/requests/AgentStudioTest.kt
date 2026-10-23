@@ -29,7 +29,9 @@ class AgentStudioTest {
         bulkCreateAllowedDomains(
           agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
           allowedDomainBulkInsert =
-            AllowedDomainBulkInsert(domains = listOf("https://app.example.com", "*.example.org")),
+            AllowedDomainBulkInsert(
+              domains = listOf("https://app.example.com", "*.example.org"),
+            ),
         )
       },
       intercept = {
@@ -58,7 +60,7 @@ class AgentStudioTest {
                 listOf(
                   "a1b2c3d4-5678-90ab-cdef-123456789abc",
                   "b2c3d4e5-6789-01ab-cdef-234567890abc",
-                )
+                ),
             ),
         )
       },
@@ -94,10 +96,10 @@ class AgentStudioTest {
                     UserMessageV4(
                       role = "user",
                       content = "Hello, how are you?",
-                    )
-                  )
+                    ),
+                  ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -134,12 +136,12 @@ class AgentStudioTest {
                       role = "assistant",
                       content = "I am well.",
                     ),
-                  )
+                  ),
                 ),
               keepLastMessages = 2,
               instructions = "keep every product reference",
               targetTokensEstimate = 128,
-            )
+            ),
         )
       },
       intercept = {
@@ -167,7 +169,7 @@ class AgentStudioTest {
             AgentConfigCreate(
               name = "test-agent",
               instructions = "You are a helpful assistant.",
-            )
+            ),
         )
       },
       intercept = {
@@ -218,10 +220,13 @@ class AgentStudioTest {
                     type = "client_side",
                     name = "start",
                     description = "Start a conversation",
-                    inputSchema = ClientToolsArgsSchema(type = "object"),
-                  )
+                    inputSchema =
+                      ClientToolsArgsSchema(
+                        type = "object",
+                      ),
+                  ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -243,7 +248,10 @@ class AgentStudioTest {
       call = {
         createAgentAllowedDomain(
           agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-          allowedDomainCreate = AllowedDomainCreate(domain = "https://app.example.com"),
+          allowedDomainCreate =
+            AllowedDomainCreate(
+              domain = "https://app.example.com",
+            ),
         )
       },
       intercept = {
@@ -275,9 +283,9 @@ class AgentStudioTest {
                     UserMessageV4(
                       role = "user",
                       content = "Hello, how are you?",
-                    )
-                  )
-                )
+                    ),
+                  ),
+                ),
             ),
         )
       },
@@ -317,7 +325,7 @@ class AgentStudioTest {
                     "title",
                     JsonPrimitive("acmePhone128Gb"),
                   )
-                }
+                },
             ),
         )
       },
@@ -389,7 +397,7 @@ class AgentStudioTest {
               messageId = "msg-abc123",
               agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
               vote = VoteEnum.entries.first { it.value == "1" },
-            )
+            ),
         )
       },
       intercept = {
@@ -415,7 +423,7 @@ class AgentStudioTest {
               vote = VoteEnum.entries.first { it.value == "0" },
               tags = listOf("unhelpful", "off-topic"),
               notes = "The response did not address my question.",
-            )
+            ),
         )
       },
       intercept = {
@@ -440,8 +448,11 @@ class AgentStudioTest {
             ProviderAuthenticationCreate(
               name = "My OpenAI Provider",
               providerName = ProviderName.entries.first { it.value == "openai" },
-              input = OpenAIProviderInput(apiKey = "sk-test-key-1234"),
-            )
+              input =
+                OpenAIProviderInput(
+                  apiKey = "sk-test-key-1234",
+                ),
+            ),
         )
       },
       intercept = {
@@ -470,7 +481,7 @@ class AgentStudioTest {
                   azureEndpoint = "https://my-resource.openai.azure.com",
                   azureDeployment = "gpt-4o",
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -490,7 +501,12 @@ class AgentStudioTest {
   fun `createSecretKey with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        createSecretKey(secretKeyCreate = SecretKeyCreate(name = "my-secret-key"))
+        createSecretKey(
+          secretKeyCreate =
+            SecretKeyCreate(
+              name = "my-secret-key",
+            ),
+        )
       },
       intercept = {
         assertEquals("/agent-studio/1/secret-keys".toPathSegments(), it.url.pathSegments)
@@ -509,7 +525,7 @@ class AgentStudioTest {
             SecretKeyCreate(
               name = "scoped-key",
               agentIds = listOf("76710f1b-8231-42e5-b0d1-f43aac618e15"),
-            )
+            ),
         )
       },
       intercept = {
@@ -529,7 +545,9 @@ class AgentStudioTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/agent-studio/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -563,7 +581,9 @@ class AgentStudioTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/agent-studio/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -631,7 +651,9 @@ class AgentStudioTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/agent-studio/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -685,7 +707,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -717,7 +739,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -752,7 +774,7 @@ class AgentStudioTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -785,7 +807,7 @@ class AgentStudioTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -818,7 +840,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -853,7 +875,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -885,7 +907,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -920,7 +942,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -955,7 +977,7 @@ class AgentStudioTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -974,7 +996,9 @@ class AgentStudioTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/agent-studio/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -1015,7 +1039,9 @@ class AgentStudioTest {
   fun `deleteAgent`() = runTest {
     client.runTest(
       call = {
-        deleteAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        deleteAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1034,7 +1060,9 @@ class AgentStudioTest {
   fun `deleteAgentConversations without filters`() = runTest {
     client.runTest(
       call = {
-        deleteAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        deleteAgentConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1126,7 +1154,9 @@ class AgentStudioTest {
   fun `deleteProvider`() = runTest {
     client.runTest(
       call = {
-        deleteProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        deleteProvider(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       intercept = {
         assertEquals(
@@ -1145,7 +1175,9 @@ class AgentStudioTest {
   fun `deleteSecretKey`() = runTest {
     client.runTest(
       call = {
-        deleteSecretKey(secretKeyId = "a1b2c3d4-5678-90ab-cdef-123456789abc")
+        deleteSecretKey(
+          secretKeyId = "a1b2c3d4-5678-90ab-cdef-123456789abc",
+        )
       },
       intercept = {
         assertEquals(
@@ -1164,7 +1196,9 @@ class AgentStudioTest {
   fun `deleteUserData`() = runTest {
     client.runTest(
       call = {
-        deleteUserData(userToken = "test-user-token")
+        deleteUserData(
+          userToken = "test-user-token",
+        )
       },
       intercept = {
         assertEquals(
@@ -1183,7 +1217,9 @@ class AgentStudioTest {
   fun `exportConversations without filters`() = runTest {
     client.runTest(
       call = {
-        exportConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        exportConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1227,7 +1263,9 @@ class AgentStudioTest {
   fun `e2e export conversations2`() = runTest {
     client.runTest(
       call = {
-        exportConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        exportConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1247,7 +1285,9 @@ class AgentStudioTest {
   fun `getAgent`() = runTest {
     client.runTest(
       call = {
-        getAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        getAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1264,7 +1304,9 @@ class AgentStudioTest {
   fun `e2e get agent1`() = runTest {
     client.runTest(
       call = {
-        getAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        getAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1380,7 +1422,9 @@ class AgentStudioTest {
   fun `getProvider`() = runTest {
     client.runTest(
       call = {
-        getProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        getProvider(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       intercept = {
         assertEquals(
@@ -1397,7 +1441,9 @@ class AgentStudioTest {
   fun `e2e get provider1`() = runTest {
     client.runTest(
       call = {
-        getProvider(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        getProvider(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       intercept = {
         assertEquals(
@@ -1416,7 +1462,9 @@ class AgentStudioTest {
   fun `getSecretKey`() = runTest {
     client.runTest(
       call = {
-        getSecretKey(secretKeyId = "a1b2c3d4-5678-90ab-cdef-123456789abc")
+        getSecretKey(
+          secretKeyId = "a1b2c3d4-5678-90ab-cdef-123456789abc",
+        )
       },
       intercept = {
         assertEquals(
@@ -1433,7 +1481,9 @@ class AgentStudioTest {
   fun `e2e get secret key1`() = runTest {
     client.runTest(
       call = {
-        getSecretKey(secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d")
+        getSecretKey(
+          secretKeyId = "c110e615-7d5a-4103-865f-c5062c0d6f4d",
+        )
       },
       intercept = {
         assertEquals(
@@ -1452,7 +1502,9 @@ class AgentStudioTest {
   fun `getUserData`() = runTest {
     client.runTest(
       call = {
-        getUserData(userToken = "test-user-token")
+        getUserData(
+          userToken = "test-user-token",
+        )
       },
       intercept = {
         assertEquals(
@@ -1471,7 +1523,9 @@ class AgentStudioTest {
   fun `invalidateAgentCache without before`() = runTest {
     client.runTest(
       call = {
-        invalidateAgentCache(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        invalidateAgentCache(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1511,7 +1565,9 @@ class AgentStudioTest {
   fun `listAgentAllowed-Domains`() = runTest {
     client.runTest(
       call = {
-        listAgentAllowedDomains(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        listAgentAllowedDomains(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1529,7 +1585,9 @@ class AgentStudioTest {
   fun `e2e list agent allowed domains1`() = runTest {
     client.runTest(
       call = {
-        listAgentAllowedDomains(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        listAgentAllowedDomains(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1549,7 +1607,9 @@ class AgentStudioTest {
   fun `listAgentConversations with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        listAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        listAgentConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1603,7 +1663,9 @@ class AgentStudioTest {
   fun `e2e list agent conversations2`() = runTest {
     client.runTest(
       call = {
-        listAgentConversations(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        listAgentConversations(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1709,7 +1771,9 @@ class AgentStudioTest {
   fun `listProviderModels`() = runTest {
     client.runTest(
       call = {
-        listProviderModels(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        listProviderModels(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       intercept = {
         assertEquals(
@@ -1726,7 +1790,9 @@ class AgentStudioTest {
   fun `e2e list provider models1`() = runTest {
     client.runTest(
       call = {
-        listProviderModels(providerId = "c2905529-b933-4b69-87ec-75f9829d5f59")
+        listProviderModels(
+          providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
+        )
       },
       intercept = {
         assertEquals(
@@ -1849,7 +1915,9 @@ class AgentStudioTest {
   fun `publishAgent`() = runTest {
     client.runTest(
       call = {
-        publishAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        publishAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1877,10 +1945,10 @@ class AgentStudioTest {
                     UserMessageV4(
                       role = "user",
                       content = "Hello, how are you?",
-                    )
-                  )
-                )
-            )
+                    ),
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -1912,12 +1980,12 @@ class AgentStudioTest {
                       role = "assistant",
                       content = "I am well.",
                     ),
-                  )
+                  ),
                 ),
               keepLastMessages = 1,
               maxTokensEstimate = 256,
               dropToolParts = true,
-            )
+            ),
         )
       },
       intercept = {
@@ -1937,7 +2005,9 @@ class AgentStudioTest {
   fun `unpublishAgent`() = runTest {
     client.runTest(
       call = {
-        unpublishAgent(agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15")
+        unpublishAgent(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        )
       },
       intercept = {
         assertEquals(
@@ -1958,7 +2028,10 @@ class AgentStudioTest {
       call = {
         updateAgent(
           agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-          agentConfigUpdate = AgentConfigUpdate(name = "updated-agent-name"),
+          agentConfigUpdate =
+            AgentConfigUpdate(
+              name = "updated-agent-name",
+            ),
         )
       },
       intercept = {
@@ -1998,8 +2071,11 @@ class AgentStudioTest {
                     type = "client_side",
                     name = "start",
                     description = "Start a conversation",
-                    inputSchema = ClientToolsArgsSchema(type = "object"),
-                  )
+                    inputSchema =
+                      ClientToolsArgsSchema(
+                        type = "object",
+                      ),
+                  ),
                 ),
             ),
         )
@@ -2024,7 +2100,12 @@ class AgentStudioTest {
   fun `updateConfiguration`() = runTest {
     client.runTest(
       call = {
-        updateConfiguration(applicationConfigPatch = ApplicationConfigPatch(maxRetentionDays = 30))
+        updateConfiguration(
+          applicationConfigPatch =
+            ApplicationConfigPatch(
+              maxRetentionDays = 30,
+            ),
+        )
       },
       intercept = {
         assertEquals("/agent-studio/1/configuration".toPathSegments(), it.url.pathSegments)
@@ -2045,7 +2126,7 @@ class AgentStudioTest {
             FeedbackUpdateRequest(
               messageId = "msg-abc123",
               agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
-            )
+            ),
         )
       },
       intercept = {
@@ -2071,7 +2152,7 @@ class AgentStudioTest {
               vote = VoteEnum.entries.first { it.value == "0" },
               tags = listOf("unhelpful", "off-topic"),
               notes = "The response did not address my question.",
-            )
+            ),
         )
       },
       intercept = {
@@ -2093,7 +2174,10 @@ class AgentStudioTest {
       call = {
         updateProvider(
           providerId = "c2905529-b933-4b69-87ec-75f9829d5f59",
-          providerAuthenticationPatch = ProviderAuthenticationPatch(name = "Updated Provider Name"),
+          providerAuthenticationPatch =
+            ProviderAuthenticationPatch(
+              name = "Updated Provider Name",
+            ),
         )
       },
       intercept = {
@@ -2116,7 +2200,10 @@ class AgentStudioTest {
           providerAuthenticationPatch =
             ProviderAuthenticationPatch(
               name = "Updated Provider",
-              input = OpenAIProviderInput(apiKey = "sk-new-key-5678"),
+              input =
+                OpenAIProviderInput(
+                  apiKey = "sk-new-key-5678",
+                ),
             ),
         )
       },

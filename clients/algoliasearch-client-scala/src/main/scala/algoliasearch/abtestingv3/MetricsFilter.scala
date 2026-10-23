@@ -27,17 +27,18 @@ package algoliasearch.abtestingv3
   * include (true) or exclude (false) matching records.
   *
   * @param domain
-  *   Metric domain (for example `abtesting`, `personalization`).
+  *   Metric domain (for example `abtesting`, `core`, `personalization`).
   * @param name
   *   Public metric name.
   * @param trackEffects
-  *   Whether the experiment should record the effects of this filter.
+  *   Whether the experiment should record the effects of this filter. Not supported by `core.hasExactCategoryFilter`.
   * @param includes
-  *   If true, keep items that match the filter; if false, exclude them.
+  *   If true, keep items that match the filter; if false, exclude them. Defaults to false.
   */
 case class MetricsFilter(
     domain: String,
     name: String,
     trackEffects: Option[Boolean] = scala.None,
-    includes: Option[Boolean] = scala.None
+    includes: Option[Boolean] = scala.None,
+    parameters: Option[MetricsFilterParameters] = scala.None
 )

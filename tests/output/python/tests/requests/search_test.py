@@ -6697,39 +6697,9 @@ class TestSearchClient:
         _req = await self._client.set_dictionary_settings_with_http_info(
             dictionary_settings_params={
                 "disableStandardEntries": {
-                    "plurals": {
-                        "fr": False,
-                        "en": False,
-                        "ru": True,
-                    },
-                },
-            },
-        )
-
-        assert _req.path == "/1/dictionaries/*/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}"""
-        )
-
-    async def test_set_dictionary_settings_1(self):
-        """
-        get setDictionarySettings results with all parameters
-        """
-        _req = await self._client.set_dictionary_settings_with_http_info(
-            dictionary_settings_params={
-                "disableStandardEntries": {
-                    "plurals": {
-                        "fr": False,
-                        "en": False,
-                        "ru": True,
-                    },
                     "stopwords": {
                         "fr": False,
-                    },
-                    "compounds": {
+                        "en": False,
                         "ru": True,
                     },
                 },
@@ -6741,7 +6711,7 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
+            """{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}"""
         )
 
     async def test_set_settings_(self):
@@ -16315,39 +16285,9 @@ class TestSearchClientSync:
         _req = self._client.set_dictionary_settings_with_http_info(
             dictionary_settings_params={
                 "disableStandardEntries": {
-                    "plurals": {
-                        "fr": False,
-                        "en": False,
-                        "ru": True,
-                    },
-                },
-            },
-        )
-
-        assert _req.path == "/1/dictionaries/*/settings"
-        assert _req.verb == "PUT"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}"""
-        )
-
-    def test_set_dictionary_settings_1(self):
-        """
-        get setDictionarySettings results with all parameters
-        """
-        _req = self._client.set_dictionary_settings_with_http_info(
-            dictionary_settings_params={
-                "disableStandardEntries": {
-                    "plurals": {
-                        "fr": False,
-                        "en": False,
-                        "ru": True,
-                    },
                     "stopwords": {
                         "fr": False,
-                    },
-                    "compounds": {
+                        "en": False,
                         "ru": True,
                     },
                 },
@@ -16359,7 +16299,7 @@ class TestSearchClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
+            """{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}"""
         )
 
     def test_set_settings_(self):
