@@ -7,10 +7,10 @@ Models:
   schema:
     $ref: '#/recommendModels'
 
-# This list excludes `looking-similar` as that can't be used with rules.
+# This list excludes `trending-facets` as that can't be used with rules.
 recommendModels:
   type: string
-  enum: [related-products, bought-together, trending-facets, trending-items]
+  enum: [related-products, bought-together, trending-items, looking-similar]
 
 ObjectID:
   in: path

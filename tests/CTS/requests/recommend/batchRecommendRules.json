@@ -10,5 +10,139 @@
             "method": "POST",
             "body": {}
         }
+    },
+    {
+        "testName": "batch recommend rules for trending items with request scopes",
+        "parameters": {
+            "indexName": "indexName",
+            "model": "trending-items",
+            "recommendRule": [
+                {
+                    "objectID": "global-rule",
+                    "condition": {
+                        "requestScope": {
+                            "global": true
+                        }
+                    },
+                    "consequence": {
+                        "promote": [
+                            {
+                                "objectID": "item-1",
+                                "position": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "objectID": "facet-rule",
+                    "condition": {
+                        "context": "mobile",
+                        "requestScope": {
+                            "facetName": "brand",
+                            "facetValue": "acme"
+                        }
+                    },
+                    "consequence": {
+                        "hide": [
+                            {
+                                "objectID": "item-2"
+                            }
+                        ],
+                        "params": {
+                            "filters": "inStock:true"
+                        }
+                    }
+                }
+            ]
+        },
+        "request": {
+            "path": "/1/indexes/indexName/trending-items/recommend/rules/batch",
+            "method": "POST",
+            "body": [
+                {
+                    "objectID": "global-rule",
+                    "condition": {
+                        "requestScope": {
+                            "global": true
+                        }
+                    },
+                    "consequence": {
+                        "promote": [
+                            {
+                                "objectID": "item-1",
+                                "position": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "objectID": "facet-rule",
+                    "condition": {
+                        "context": "mobile",
+                        "requestScope": {
+                            "facetName": "brand",
+                            "facetValue": "acme"
+                        }
+                    },
+                    "consequence": {
+                        "hide": [
+                            {
+                                "objectID": "item-2"
+                            }
+                        ],
+                        "params": {
+                            "filters": "inStock:true"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "testName": "batch recommend rules for looking similar",
+        "parameters": {
+            "indexName": "indexName",
+            "model": "looking-similar",
+            "recommendRule": [
+                {
+                    "objectID": "looking-similar-rule",
+                    "condition": {
+                        "filters": "brand:acme"
+                    },
+                    "consequence": {
+                        "params": {
+                            "automaticFacetFilters": [
+                                {
+                                    "facet": "category",
+                                    "negative": false
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "request": {
+            "path": "/1/indexes/indexName/looking-similar/recommend/rules/batch",
+            "method": "POST",
+            "body": [
+                {
+                    "objectID": "looking-similar-rule",
+                    "condition": {
+                        "filters": "brand:acme"
+                    },
+                    "consequence": {
+                        "params": {
+                            "automaticFacetFilters": [
+                                {
+                                    "facet": "category",
+                                    "negative": false
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
     }
 ]
