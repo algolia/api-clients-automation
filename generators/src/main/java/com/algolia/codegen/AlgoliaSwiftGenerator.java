@@ -124,8 +124,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "renderingcontent",
     "rerankingapplyfilter",
     "resultcard",
-    "scheduleabtestresponse",
-    "scheduleabtestsrequest",
     "searchpagination",
     "searchparams",
     "searchparamsobject",
