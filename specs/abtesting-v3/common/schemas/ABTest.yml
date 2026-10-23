@@ -170,6 +170,7 @@ MetricsFilterParameters:
   description: |
     Values for a filter that needs them.
     The `core.hasExactCategoryFilter` filter requires both properties and matches the searches that had the exact filter `<filterAttribute>:<filterValue>`.
+    Optional filters and filters in an OR group don't match.
     With `includes` false or omitted, the test counts every search except those searches.
     A test can have at most one `core.hasExactCategoryFilter` filter.
     Other filters don't accept parameters.
