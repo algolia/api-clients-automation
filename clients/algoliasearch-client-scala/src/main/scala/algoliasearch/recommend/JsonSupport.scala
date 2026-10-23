@@ -65,6 +65,7 @@ object JsonSupport {
     RecommendationsHitSerializer :+
     RecommendationsRequestSerializer :+
     RemoveStopWordsSerializer :+
+    RequestScopeSerializer :+
     SnippetResultSerializer :+
     TagFiltersSerializer :+
     TypoToleranceSerializer

@@ -49,6 +49,130 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("batch recommend rules for trending items with request scopes1") {
+    val (client, echo) = testClient()
+    val future = client.batchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("trending-items"),
+      recommendRule = Some(
+        Seq(
+          RecommendRule(
+            objectID = Some("global-rule"),
+            condition = Some(
+              Condition(
+                requestScope = Some(
+                  GlobalRequestScope(
+                    global = true
+                  )
+                )
+              )
+            ),
+            consequence = Some(
+              Consequence(
+                promote = Some(
+                  Seq(
+                    PromoteConsequenceObject(
+                      objectID = Some("item-1"),
+                      position = Some(0)
+                    )
+                  )
+                )
+              )
+            )
+          ),
+          RecommendRule(
+            objectID = Some("facet-rule"),
+            condition = Some(
+              Condition(
+                context = Some("mobile"),
+                requestScope = Some(
+                  FacetRequestScope(
+                    facetName = "brand",
+                    facetValue = "acme"
+                  )
+                )
+              )
+            ),
+            consequence = Some(
+              Consequence(
+                hide = Some(
+                  Seq(
+                    HideConsequenceObject(
+                      objectID = Some("item-2")
+                    )
+                  )
+                ),
+                params = Some(
+                  ParamsConsequence(
+                    filters = Some("inStock:true")
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/trending-items/recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("batch recommend rules for looking similar2") {
+    val (client, echo) = testClient()
+    val future = client.batchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("looking-similar"),
+      recommendRule = Some(
+        Seq(
+          RecommendRule(
+            objectID = Some("looking-similar-rule"),
+            condition = Some(
+              Condition(
+                filters = Some("brand:acme")
+              )
+            ),
+            consequence = Some(
+              Consequence(
+                params = Some(
+                  ParamsConsequence(
+                    automaticFacetFilters = Some(
+                      Seq(
+                        AutoFacetFilter(
+                          facet = Some("category"),
+                          negative = Some(false)
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/looking-similar/recommend/rules/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
@@ -566,6 +690,38 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("get recommend rule for trending items1") {
+    val (client, echo) = testClient()
+    val future = client.getRecommendRule(
+      indexName = "indexName",
+      model = RecommendModels.withName("trending-items"),
+      objectID = "objectID"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/trending-items/recommend/rules/objectID")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("get recommend rule for looking similar2") {
+    val (client, echo) = testClient()
+    val future = client.getRecommendRule(
+      indexName = "indexName",
+      model = RecommendModels.withName("looking-similar"),
+      objectID = "objectID"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/looking-similar/recommend/rules/objectID")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("getRecommendStatus") {
     val (client, echo) = testClient()
     val future = client.getRecommendStatus(
@@ -877,6 +1033,40 @@ class RecommendTest extends AnyFunSuite {
     val res = echo.lastResponse.get
 
     assert(res.path == "/1/indexes/indexName/related-products/recommend/rules/search")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search recommend rules for trending items1") {
+    val (client, echo) = testClient()
+    val future = client.searchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("trending-items")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/trending-items/recommend/rules/search")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search recommend rules for looking similar2") {
+    val (client, echo) = testClient()
+    val future = client.searchRecommendRules(
+      indexName = "indexName",
+      model = RecommendModels.withName("looking-similar")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/indexName/looking-similar/recommend/rules/search")
     assert(res.method == "POST")
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)

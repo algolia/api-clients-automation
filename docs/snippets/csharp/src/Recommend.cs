@@ -15,7 +15,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientBatchRecommendRules()
   {
-    // >SEPARATOR batchRecommendRules default
+    // >SEPARATOR batchRecommendRules batch recommend rules
     // Initialize the client
     var client = new RecommendClient(
       new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -25,6 +25,109 @@ public class SnippetRecommendClient
     var response = await client.BatchRecommendRulesAsync(
       "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts")
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the BatchRecommendRules method.
+  ///
+  /// batch recommend rules for trending items with request scopes
+  /// </summary>
+  public async Task SnippetForRecommendClientBatchRecommendRules1()
+  {
+    // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.BatchRecommendRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("TrendingItems"),
+      new List<RecommendRule>
+      {
+        new RecommendRule
+        {
+          ObjectID = "global-rule",
+          Condition = new Condition
+          {
+            RequestScope = new RequestScope(new GlobalRequestScope { Global = true }),
+          },
+          Consequence = new Consequence
+          {
+            Promote = new List<PromoteConsequenceObject>
+            {
+              new PromoteConsequenceObject { ObjectID = "item-1", Position = 0 },
+            },
+          },
+        },
+        new RecommendRule
+        {
+          ObjectID = "facet-rule",
+          Condition = new Condition
+          {
+            Context = "mobile",
+            RequestScope = new RequestScope(
+              new FacetRequestScope { FacetName = "brand", FacetValue = "acme" }
+            ),
+          },
+          Consequence = new Consequence
+          {
+            Hide = new List<HideConsequenceObject>
+            {
+              new HideConsequenceObject { ObjectID = "item-2" },
+            },
+            Params = new ParamsConsequence { Filters = "inStock:true" },
+          },
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the BatchRecommendRules method.
+  ///
+  /// batch recommend rules for looking similar
+  /// </summary>
+  public async Task SnippetForRecommendClientBatchRecommendRules2()
+  {
+    // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.BatchRecommendRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("LookingSimilar"),
+      new List<RecommendRule>
+      {
+        new RecommendRule
+        {
+          ObjectID = "looking-similar-rule",
+          Condition = new Condition { Filters = "brand:acme" },
+          Consequence = new Consequence
+          {
+            Params = new ParamsConsequence
+            {
+              AutomaticFacetFilters = new List<AutoFacetFilter>
+              {
+                new AutoFacetFilter { Facet = "category", Negative = false },
+              },
+            },
+          },
+        },
+      }
     );
     // >LOG
     // print the response
@@ -523,7 +626,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientGetRecommendRule()
   {
-    // >SEPARATOR getRecommendRule default
+    // >SEPARATOR getRecommendRule getRecommendRule
     // Initialize the client
     var client = new RecommendClient(
       new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -533,6 +636,56 @@ public class SnippetRecommendClient
     var response = await client.GetRecommendRuleAsync(
       "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts"),
+      "objectID"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetRecommendRule method.
+  ///
+  /// get recommend rule for trending items
+  /// </summary>
+  public async Task SnippetForRecommendClientGetRecommendRule1()
+  {
+    // >SEPARATOR getRecommendRule get recommend rule for trending items
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetRecommendRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("TrendingItems"),
+      "objectID"
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetRecommendRule method.
+  ///
+  /// get recommend rule for looking similar
+  /// </summary>
+  public async Task SnippetForRecommendClientGetRecommendRule2()
+  {
+    // >SEPARATOR getRecommendRule get recommend rule for looking similar
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.GetRecommendRuleAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("LookingSimilar"),
       "objectID"
     );
     // >LOG
@@ -953,7 +1106,7 @@ public class SnippetRecommendClient
   /// </summary>
   public async Task SnippetForRecommendClientSearchRecommendRules()
   {
-    // >SEPARATOR searchRecommendRules default
+    // >SEPARATOR searchRecommendRules searchRecommendRules
     // Initialize the client
     var client = new RecommendClient(
       new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -963,6 +1116,54 @@ public class SnippetRecommendClient
     var response = await client.SearchRecommendRulesAsync(
       "<YOUR_INDEX_NAME>",
       Enum.Parse<RecommendModels>("RelatedProducts")
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchRecommendRules method.
+  ///
+  /// search recommend rules for trending items
+  /// </summary>
+  public async Task SnippetForRecommendClientSearchRecommendRules1()
+  {
+    // >SEPARATOR searchRecommendRules search recommend rules for trending items
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchRecommendRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("TrendingItems")
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the SearchRecommendRules method.
+  ///
+  /// search recommend rules for looking similar
+  /// </summary>
+  public async Task SnippetForRecommendClientSearchRecommendRules2()
+  {
+    // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+    // Initialize the client
+    var client = new RecommendClient(
+      new RecommendConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchRecommendRulesAsync(
+      "<YOUR_INDEX_NAME>",
+      Enum.Parse<RecommendModels>("LookingSimilar")
     );
     // >LOG
     // print the response

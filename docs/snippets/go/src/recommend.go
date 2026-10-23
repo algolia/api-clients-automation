@@ -13,7 +13,7 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 	   batch recommend rules
 	*/
 
-	// >SEPARATOR batchRecommendRules default
+	// >SEPARATOR batchRecommendRules batch recommend rules
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -24,6 +24,79 @@ func SnippetForBatchRecommendRulesOfRecommend() {
 	// Call the API
 	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
 		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForBatchRecommendRulesOfRecommend1() {
+	/*
+	   Snippet for the batchRecommendRules method.
+
+	   batch recommend rules for trending items with request scopes
+	*/
+
+	// >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("trending-items")).WithRecommendRule(
+		[]recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID("global-rule").SetCondition(
+			recommend.NewEmptyCondition().SetRequestScope(recommend.GlobalRequestScopeAsRequestScope(
+				recommend.NewEmptyGlobalRequestScope().SetGlobal(true)))).SetConsequence(
+			recommend.NewEmptyConsequence().SetPromote(
+				[]recommend.PromoteConsequenceObject{*recommend.NewEmptyPromoteConsequenceObject().SetObjectID("item-1").SetPosition(0)})), *recommend.NewEmptyRecommendRule().SetObjectID("facet-rule").SetCondition(
+			recommend.NewEmptyCondition().SetContext("mobile").SetRequestScope(recommend.FacetRequestScopeAsRequestScope(
+				recommend.NewEmptyFacetRequestScope().SetFacetName("brand").SetFacetValue("acme")))).SetConsequence(
+			recommend.NewEmptyConsequence().SetHide(
+				[]recommend.HideConsequenceObject{*recommend.NewEmptyHideConsequenceObject().SetObjectID("item-2")}).SetParams(
+				recommend.NewEmptyParamsConsequence().SetFilters("inStock:true")))}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForBatchRecommendRulesOfRecommend2() {
+	/*
+	   Snippet for the batchRecommendRules method.
+
+	   batch recommend rules for looking similar
+	*/
+
+	// >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("looking-similar")).WithRecommendRule(
+		[]recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID("looking-similar-rule").SetCondition(
+			recommend.NewEmptyCondition().SetFilters("brand:acme")).SetConsequence(
+			recommend.NewEmptyConsequence().SetParams(
+				recommend.NewEmptyParamsConsequence().SetAutomaticFacetFilters(
+					[]recommend.AutoFacetFilter{*recommend.NewEmptyAutoFacetFilter().SetFacet("category").SetNegative(false)})))}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -607,7 +680,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 	   getRecommendRule
 	*/
 
-	// >SEPARATOR getRecommendRule default
+	// >SEPARATOR getRecommendRule getRecommendRule
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -618,6 +691,64 @@ func SnippetForGetRecommendRuleOfRecommend() {
 	// Call the API
 	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
 		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products"), "objectID"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetRecommendRuleOfRecommend1() {
+	/*
+	   Snippet for the getRecommendRule method.
+
+	   get recommend rule for trending items
+	*/
+
+	// >SEPARATOR getRecommendRule get recommend rule for trending items
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("trending-items"), "objectID"))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetRecommendRuleOfRecommend2() {
+	/*
+	   Snippet for the getRecommendRule method.
+
+	   get recommend rule for looking similar
+	*/
+
+	// >SEPARATOR getRecommendRule get recommend rule for looking similar
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("looking-similar"), "objectID"))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -940,7 +1071,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 	   searchRecommendRules
 	*/
 
-	// >SEPARATOR searchRecommendRules default
+	// >SEPARATOR searchRecommendRules searchRecommendRules
 	// Initialize the client
 	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -951,6 +1082,64 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 	// Call the API
 	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
 		"<YOUR_INDEX_NAME>", recommend.RecommendModels("related-products")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSearchRecommendRulesOfRecommend1() {
+	/*
+	   Snippet for the searchRecommendRules method.
+
+	   search recommend rules for trending items
+	*/
+
+	// >SEPARATOR searchRecommendRules search recommend rules for trending items
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("trending-items")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForSearchRecommendRulesOfRecommend2() {
+	/*
+	   Snippet for the searchRecommendRules method.
+
+	   search recommend rules for looking similar
+	*/
+
+	// >SEPARATOR searchRecommendRules search recommend rules for looking similar
+	// Initialize the client
+	client, err := recommend.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
+		"<YOUR_INDEX_NAME>", recommend.RecommendModels("looking-similar")))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

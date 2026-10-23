@@ -8,12 +8,85 @@ require "algolia"
 #
 # batch recommend rules
 def snippet_for_batch_recommend_rules
-  # >SEPARATOR batchRecommendRules default
+  # >SEPARATOR batchRecommendRules batch recommend rules
   # Initialize the client
   client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.batch_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the batchRecommendRules method.
+#
+# batch recommend rules for trending items with request scopes
+def snippet_for_batch_recommend_rules1
+  # >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.batch_recommend_rules(
+    "<YOUR_INDEX_NAME>",
+    "trending-items",
+    [
+      Algolia::Recommend::RecommendRule.new(
+        algolia_object_id: "global-rule",
+        condition: Algolia::Recommend::Condition.new(
+          request_scope: Algolia::Recommend::GlobalRequestScope.new(global: true)
+        ),
+        consequence: Algolia::Recommend::Consequence.new(
+          promote: [Algolia::Recommend::PromoteConsequenceObject.new(algolia_object_id: "item-1", position: 0)]
+        )
+      ),
+      Algolia::Recommend::RecommendRule.new(
+        algolia_object_id: "facet-rule",
+        condition: Algolia::Recommend::Condition.new(
+          context: "mobile",
+          request_scope: Algolia::Recommend::FacetRequestScope.new(facet_name: "brand", facet_value: "acme")
+        ),
+        consequence: Algolia::Recommend::Consequence.new(
+          hide: [Algolia::Recommend::HideConsequenceObject.new(algolia_object_id: "item-2")],
+          params: Algolia::Recommend::ParamsConsequence.new(filters: "inStock:true")
+        )
+      )
+    ]
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the batchRecommendRules method.
+#
+# batch recommend rules for looking similar
+def snippet_for_batch_recommend_rules2
+  # >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.batch_recommend_rules(
+    "<YOUR_INDEX_NAME>",
+    "looking-similar",
+    [
+      Algolia::Recommend::RecommendRule.new(
+        algolia_object_id: "looking-similar-rule",
+        condition: Algolia::Recommend::Condition.new(filters: "brand:acme"),
+        consequence: Algolia::Recommend::Consequence.new(
+          params: Algolia::Recommend::ParamsConsequence.new(
+            automatic_facet_filters: [Algolia::Recommend::AutoFacetFilter.new(facet: "category", negative: false)]
+          )
+        )
+      )
+    ]
+  )
 
   # >LOG
   # print the response
@@ -403,12 +476,46 @@ end
 #
 # getRecommendRule
 def snippet_for_get_recommend_rule
-  # >SEPARATOR getRecommendRule default
+  # >SEPARATOR getRecommendRule getRecommendRule
   # Initialize the client
   client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "related-products", "objectID")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getRecommendRule method.
+#
+# get recommend rule for trending items
+def snippet_for_get_recommend_rule1
+  # >SEPARATOR getRecommendRule get recommend rule for trending items
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "trending-items", "objectID")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getRecommendRule method.
+#
+# get recommend rule for looking similar
+def snippet_for_get_recommend_rule2
+  # >SEPARATOR getRecommendRule get recommend rule for looking similar
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.get_recommend_rule("<YOUR_INDEX_NAME>", "looking-similar", "objectID")
 
   # >LOG
   # print the response
@@ -713,12 +820,46 @@ end
 #
 # searchRecommendRules
 def snippet_for_search_recommend_rules
-  # >SEPARATOR searchRecommendRules default
+  # >SEPARATOR searchRecommendRules searchRecommendRules
   # Initialize the client
   client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
   response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "related-products")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the searchRecommendRules method.
+#
+# search recommend rules for trending items
+def snippet_for_search_recommend_rules1
+  # >SEPARATOR searchRecommendRules search recommend rules for trending items
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "trending-items")
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the searchRecommendRules method.
+#
+# search recommend rules for looking similar
+def snippet_for_search_recommend_rules2
+  # >SEPARATOR searchRecommendRules search recommend rules for looking similar
+  # Initialize the client
+  client = Algolia::RecommendClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search_recommend_rules("<YOUR_INDEX_NAME>", "looking-similar")
 
   # >LOG
   # print the response

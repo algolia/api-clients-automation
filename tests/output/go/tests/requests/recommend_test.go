@@ -46,6 +46,43 @@ func TestRecommend_BatchRecommendRules(t *testing.T) {
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
 	})
+	t.Run("batch recommend rules for trending items with request scopes", func(t *testing.T) {
+		_, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+			"indexName", recommend.RecommendModels("trending-items")).WithRecommendRule(
+			[]recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID("global-rule").SetCondition(
+				recommend.NewEmptyCondition().SetRequestScope(recommend.GlobalRequestScopeAsRequestScope(
+					recommend.NewEmptyGlobalRequestScope().SetGlobal(true)))).SetConsequence(
+				recommend.NewEmptyConsequence().SetPromote(
+					[]recommend.PromoteConsequenceObject{*recommend.NewEmptyPromoteConsequenceObject().SetObjectID("item-1").SetPosition(0)})), *recommend.NewEmptyRecommendRule().SetObjectID("facet-rule").SetCondition(
+				recommend.NewEmptyCondition().SetContext("mobile").SetRequestScope(recommend.FacetRequestScopeAsRequestScope(
+					recommend.NewEmptyFacetRequestScope().SetFacetName("brand").SetFacetValue("acme")))).SetConsequence(
+				recommend.NewEmptyConsequence().SetHide(
+					[]recommend.HideConsequenceObject{*recommend.NewEmptyHideConsequenceObject().SetObjectID("item-2")}).SetParams(
+					recommend.NewEmptyParamsConsequence().SetFilters("inStock:true")))}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/trending-items/recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]`)
+	})
+	t.Run("batch recommend rules for looking similar", func(t *testing.T) {
+		_, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(
+			"indexName", recommend.RecommendModels("looking-similar")).WithRecommendRule(
+			[]recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID("looking-similar-rule").SetCondition(
+				recommend.NewEmptyCondition().SetFilters("brand:acme")).SetConsequence(
+				recommend.NewEmptyConsequence().SetParams(
+					recommend.NewEmptyParamsConsequence().SetAutomaticFacetFilters(
+						[]recommend.AutoFacetFilter{*recommend.NewEmptyAutoFacetFilter().SetFacet("category").SetNegative(false)})))}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/looking-similar/recommend/rules/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]`)
+	})
 }
 
 func TestRecommend_CustomDelete(t *testing.T) {
@@ -441,6 +478,26 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
+	t.Run("get recommend rule for trending items", func(t *testing.T) {
+		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
+			"indexName", recommend.RecommendModels("trending-items"), "objectID"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/trending-items/recommend/rules/objectID", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+	t.Run("get recommend rule for looking similar", func(t *testing.T) {
+		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
+			"indexName", recommend.RecommendModels("looking-similar"), "objectID"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/looking-similar/recommend/rules/objectID", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
 }
 
 func TestRecommend_GetRecommendStatus(t *testing.T) {
@@ -612,6 +669,26 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/related-products/recommend/rules/search", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
+	})
+	t.Run("search recommend rules for trending items", func(t *testing.T) {
+		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
+			"indexName", recommend.RecommendModels("trending-items")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/trending-items/recommend/rules/search", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)
+	})
+	t.Run("search recommend rules for looking similar", func(t *testing.T) {
+		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
+			"indexName", recommend.RecommendModels("looking-similar")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/indexName/looking-similar/recommend/rules/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).Assertf(*echo.Body, "%s", `{}`)

@@ -11,7 +11,7 @@ def snippet_for_batch_recommend_rules():
 
     batch recommend rules
     """
-    # >SEPARATOR batchRecommendRules default
+    # >SEPARATOR batchRecommendRules batch recommend rules
     # Initialize the client
     # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
     client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -20,6 +20,108 @@ def snippet_for_batch_recommend_rules():
     response = client.batch_recommend_rules(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_batch_recommend_rules1():
+    """
+    Snippet for the batchRecommendRules method.
+
+    batch recommend rules for trending items with request scopes
+    """
+    # >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.batch_recommend_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        model="trending-items",
+        recommend_rule=[
+            {
+                "objectID": "global-rule",
+                "condition": {
+                    "requestScope": {
+                        "global": True,
+                    },
+                },
+                "consequence": {
+                    "promote": [
+                        {
+                            "objectID": "item-1",
+                            "position": 0,
+                        },
+                    ],
+                },
+            },
+            {
+                "objectID": "facet-rule",
+                "condition": {
+                    "context": "mobile",
+                    "requestScope": {
+                        "facetName": "brand",
+                        "facetValue": "acme",
+                    },
+                },
+                "consequence": {
+                    "hide": [
+                        {
+                            "objectID": "item-2",
+                        },
+                    ],
+                    "params": {
+                        "filters": "inStock:true",
+                    },
+                },
+            },
+        ],
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_batch_recommend_rules2():
+    """
+    Snippet for the batchRecommendRules method.
+
+    batch recommend rules for looking similar
+    """
+    # >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.batch_recommend_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        model="looking-similar",
+        recommend_rule=[
+            {
+                "objectID": "looking-similar-rule",
+                "condition": {
+                    "filters": "brand:acme",
+                },
+                "consequence": {
+                    "params": {
+                        "automaticFacetFilters": [
+                            {
+                                "facet": "category",
+                                "negative": False,
+                            },
+                        ],
+                    },
+                },
+            },
+        ],
     )
 
     # >LOG
@@ -562,7 +664,7 @@ def snippet_for_get_recommend_rule():
 
     getRecommendRule
     """
-    # >SEPARATOR getRecommendRule default
+    # >SEPARATOR getRecommendRule getRecommendRule
     # Initialize the client
     # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
     client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -571,6 +673,54 @@ def snippet_for_get_recommend_rule():
     response = client.get_recommend_rule(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
+        object_id="objectID",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_recommend_rule1():
+    """
+    Snippet for the getRecommendRule method.
+
+    get recommend rule for trending items
+    """
+    # >SEPARATOR getRecommendRule get recommend rule for trending items
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_recommend_rule(
+        index_name="<YOUR_INDEX_NAME>",
+        model="trending-items",
+        object_id="objectID",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_recommend_rule2():
+    """
+    Snippet for the getRecommendRule method.
+
+    get recommend rule for looking similar
+    """
+    # >SEPARATOR getRecommendRule get recommend rule for looking similar
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.get_recommend_rule(
+        index_name="<YOUR_INDEX_NAME>",
+        model="looking-similar",
         object_id="objectID",
     )
 
@@ -928,7 +1078,7 @@ def snippet_for_search_recommend_rules():
 
     searchRecommendRules
     """
-    # >SEPARATOR searchRecommendRules default
+    # >SEPARATOR searchRecommendRules searchRecommendRules
     # Initialize the client
     # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
     client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -937,6 +1087,52 @@ def snippet_for_search_recommend_rules():
     response = client.search_recommend_rules(
         index_name="<YOUR_INDEX_NAME>",
         model="related-products",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_recommend_rules1():
+    """
+    Snippet for the searchRecommendRules method.
+
+    search recommend rules for trending items
+    """
+    # >SEPARATOR searchRecommendRules search recommend rules for trending items
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_recommend_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        model="trending-items",
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_search_recommend_rules2():
+    """
+    Snippet for the searchRecommendRules method.
+
+    search recommend rules for looking similar
+    """
+    # >SEPARATOR searchRecommendRules search recommend rules for looking similar
+    # Initialize the client
+    # In an asynchronous context, you can use RecommendClient instead, which exposes the exact same methods.
+    client = RecommendClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search_recommend_rules(
+        index_name="<YOUR_INDEX_NAME>",
+        model="looking-similar",
     )
 
     # >LOG

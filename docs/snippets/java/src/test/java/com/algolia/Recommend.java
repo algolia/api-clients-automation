@@ -13,12 +13,76 @@ class SnippetRecommendClient {
   //
   // batch recommend rules
   void snippetForBatchRecommendRules() throws Exception {
-    // >SEPARATOR batchRecommendRules default
+    // >SEPARATOR batchRecommendRules batch recommend rules
     // Initialize the client
     RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     RecommendUpdatedAtResponse response = client.batchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the batchRecommendRules method.
+  //
+  // batch recommend rules for trending items with request scopes
+  void snippetForBatchRecommendRules1() throws Exception {
+    // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RecommendUpdatedAtResponse response = client.batchRecommendRules(
+      "<YOUR_INDEX_NAME>",
+      RecommendModels.TRENDING_ITEMS,
+      Arrays.asList(
+        new RecommendRule()
+          .setObjectID("global-rule")
+          .setCondition(new Condition().setRequestScope(new GlobalRequestScope().setGlobal(true)))
+          .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteConsequenceObject().setObjectID("item-1").setPosition(0)))),
+        new RecommendRule()
+          .setObjectID("facet-rule")
+          .setCondition(
+            new Condition().setContext("mobile").setRequestScope(new FacetRequestScope().setFacetName("brand").setFacetValue("acme"))
+          )
+          .setConsequence(
+            new Consequence()
+              .setHide(Arrays.asList(new HideConsequenceObject().setObjectID("item-2")))
+              .setParams(new ParamsConsequence().setFilters("inStock:true"))
+          )
+      )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the batchRecommendRules method.
+  //
+  // batch recommend rules for looking similar
+  void snippetForBatchRecommendRules2() throws Exception {
+    // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RecommendUpdatedAtResponse response = client.batchRecommendRules(
+      "<YOUR_INDEX_NAME>",
+      RecommendModels.LOOKING_SIMILAR,
+      Arrays.asList(
+        new RecommendRule()
+          .setObjectID("looking-similar-rule")
+          .setCondition(new Condition().setFilters("brand:acme"))
+          .setConsequence(
+            new Consequence().setParams(
+              new ParamsConsequence().setAutomaticFacetFilters(Arrays.asList(new AutoFacetFilter().setFacet("category").setNegative(false)))
+            )
+          )
+      )
+    );
     // >LOG
     // print the response
     System.out.println(response);
@@ -499,12 +563,44 @@ class SnippetRecommendClient {
   //
   // getRecommendRule
   void snippetForGetRecommendRule() throws Exception {
-    // >SEPARATOR getRecommendRule default
+    // >SEPARATOR getRecommendRule getRecommendRule
     // Initialize the client
     RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     RecommendRule response = client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS, "objectID");
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getRecommendRule method.
+  //
+  // get recommend rule for trending items
+  void snippetForGetRecommendRule1() throws Exception {
+    // >SEPARATOR getRecommendRule get recommend rule for trending items
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RecommendRule response = client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.TRENDING_ITEMS, "objectID");
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the getRecommendRule method.
+  //
+  // get recommend rule for looking similar
+  void snippetForGetRecommendRule2() throws Exception {
+    // >SEPARATOR getRecommendRule get recommend rule for looking similar
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    RecommendRule response = client.getRecommendRule("<YOUR_INDEX_NAME>", RecommendModels.LOOKING_SIMILAR, "objectID");
     // >LOG
     // print the response
     System.out.println(response);
@@ -797,12 +893,44 @@ class SnippetRecommendClient {
   //
   // searchRecommendRules
   void snippetForSearchRecommendRules() throws Exception {
-    // >SEPARATOR searchRecommendRules default
+    // >SEPARATOR searchRecommendRules searchRecommendRules
     // Initialize the client
     RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
     SearchRecommendRulesResponse response = client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.RELATED_PRODUCTS);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchRecommendRules method.
+  //
+  // search recommend rules for trending items
+  void snippetForSearchRecommendRules1() throws Exception {
+    // >SEPARATOR searchRecommendRules search recommend rules for trending items
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchRecommendRulesResponse response = client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.TRENDING_ITEMS);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the searchRecommendRules method.
+  //
+  // search recommend rules for looking similar
+  void snippetForSearchRecommendRules2() throws Exception {
+    // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+    // Initialize the client
+    RecommendClient client = new RecommendClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchRecommendRulesResponse response = client.searchRecommendRules("<YOUR_INDEX_NAME>", RecommendModels.LOOKING_SIMILAR);
     // >LOG
     // print the response
     System.out.println(response);

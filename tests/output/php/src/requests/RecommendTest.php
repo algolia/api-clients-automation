@@ -49,6 +49,83 @@ class RecommendTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('batch recommend rules for trending items with request scopes')]
+    public function testBatchRecommendRules1(): void
+    {
+        $client = $this->getClient();
+        $client->batchRecommendRules(
+            'indexName',
+            'trending-items',
+            [
+                ['objectID' => 'global-rule',
+                    'condition' => ['requestScope' => ['global' => true,
+                    ],
+                    ],
+                    'consequence' => ['promote' => [
+                        ['objectID' => 'item-1',
+                            'position' => 0,
+                        ],
+                    ],
+                    ],
+                ],
+
+                ['objectID' => 'facet-rule',
+                    'condition' => ['context' => 'mobile',
+                        'requestScope' => ['facetName' => 'brand',
+                            'facetValue' => 'acme',
+                        ],
+                    ],
+                    'consequence' => ['hide' => [
+                        ['objectID' => 'item-2',
+                        ],
+                    ],
+                        'params' => ['filters' => 'inStock:true',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/trending-items/recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]'),
+            ],
+        ]);
+    }
+
+    #[TestDox('batch recommend rules for looking similar')]
+    public function testBatchRecommendRules2(): void
+    {
+        $client = $this->getClient();
+        $client->batchRecommendRules(
+            'indexName',
+            'looking-similar',
+            [
+                ['objectID' => 'looking-similar-rule',
+                    'condition' => ['filters' => 'brand:acme',
+                    ],
+                    'consequence' => ['params' => ['automaticFacetFilters' => [
+                        ['facet' => 'category',
+                            'negative' => false,
+                        ],
+                    ],
+                    ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/looking-similar/recommend/rules/batch',
+                'method' => 'POST',
+                'body' => json_decode('[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]'),
+            ],
+        ]);
+    }
+
     #[TestDox('allow del method for a custom path with minimal parameters')]
     public function testCustomDelete(): void
     {
@@ -511,6 +588,44 @@ class RecommendTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('get recommend rule for trending items')]
+    public function testGetRecommendRule1(): void
+    {
+        $client = $this->getClient();
+        $client->getRecommendRule(
+            'indexName',
+            'trending-items',
+            'objectID',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/trending-items/recommend/rules/objectID',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+            ],
+        ]);
+    }
+
+    #[TestDox('get recommend rule for looking similar')]
+    public function testGetRecommendRule2(): void
+    {
+        $client = $this->getClient();
+        $client->getRecommendRule(
+            'indexName',
+            'looking-similar',
+            'objectID',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/looking-similar/recommend/rules/objectID',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+            ],
+        ]);
+    }
+
     #[TestDox('getRecommendStatus')]
     public function testGetRecommendStatus(): void
     {
@@ -796,6 +911,42 @@ class RecommendTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/1/indexes/indexName/related-products/recommend/rules/search',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search recommend rules for trending items')]
+    public function testSearchRecommendRules1(): void
+    {
+        $client = $this->getClient();
+        $client->searchRecommendRules(
+            'indexName',
+            'trending-items',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/trending-items/recommend/rules/search',
+                'method' => 'POST',
+                'body' => json_decode('{}'),
+            ],
+        ]);
+    }
+
+    #[TestDox('search recommend rules for looking similar')]
+    public function testSearchRecommendRules2(): void
+    {
+        $client = $this->getClient();
+        $client->searchRecommendRules(
+            'indexName',
+            'looking-similar',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/indexes/indexName/looking-similar/recommend/rules/search',
                 'method' => 'POST',
                 'body' => json_decode('{}'),
             ],

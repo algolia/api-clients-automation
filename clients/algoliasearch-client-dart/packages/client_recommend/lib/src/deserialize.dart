@@ -20,6 +20,7 @@ import 'package:algolia_client_recommend/src/model/error_base.dart';
 import 'package:algolia_client_recommend/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_recommend/src/model/exhaustive.dart';
 import 'package:algolia_client_recommend/src/model/facet_ordering.dart';
+import 'package:algolia_client_recommend/src/model/facet_request_scope.dart';
 import 'package:algolia_client_recommend/src/model/facet_stats.dart';
 import 'package:algolia_client_recommend/src/model/fallback_params.dart';
 import 'package:algolia_client_recommend/src/model/fbt_model.dart';
@@ -27,6 +28,7 @@ import 'package:algolia_client_recommend/src/model/frequently_bought_together.da
 import 'package:algolia_client_recommend/src/model/get_recommend_task_response.dart';
 import 'package:algolia_client_recommend/src/model/get_recommendations_params.dart';
 import 'package:algolia_client_recommend/src/model/get_recommendations_response.dart';
+import 'package:algolia_client_recommend/src/model/global_request_scope.dart';
 import 'package:algolia_client_recommend/src/model/hide_consequence_object.dart';
 import 'package:algolia_client_recommend/src/model/highlight_result_option.dart';
 import 'package:algolia_client_recommend/src/model/index_settings_facets.dart';
@@ -153,6 +155,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FacetOrdering':
       return FacetOrdering.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'FacetRequestScope':
+      return FacetRequestScope.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'FacetStats':
       return FacetStats.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'FallbackParams':
@@ -171,6 +176,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'GetRecommendationsResponse':
       return GetRecommendationsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'GlobalRequestScope':
+      return GlobalRequestScope.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'HideConsequenceObject':
       return HideConsequenceObject.fromJson(value as Map<String, dynamic>)
