@@ -126,6 +126,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       CodegenModel model = entry.getValue().getModels().get(0).getModel();
 
       inheritRefDescriptions(model, models);
+      markAccessors(model);
 
       // for some reason the property additionalPropertiesIsAnyType is not propagated to the
       // property
@@ -188,9 +189,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
   // addFieldMetadata exposes Go-safe literals for the template's FieldExamples and
   // FieldDescriptions maps, which only iterate model.vars.
   private static void addFieldMetadata(CodegenModel model) {
-    boolean hasFieldExamples = false;
-    boolean hasFieldDescriptions = false;
-
     for (CodegenProperty param : model.vars) {
       param.vendorExtensions.put("x-go-basename-literal", goStringLiteral(param.baseName));
 
@@ -203,7 +201,6 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
         param.vendorExtensions.put("x-go-example-literal", goStringLiteral(param.example));
         // a line break would end the `// Example:` comment and turn the rest into Go code.
         param.example = singleLine(param.example);
-        hasFieldExamples = true;
       }
 
       // param.description is pre-escaped for comments (quotes become \"), so the literal needs the
@@ -211,34 +208,36 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       String description = param.unescapedDescription != null ? param.unescapedDescription : param.description;
       if (description != null && !description.isEmpty()) {
         param.vendorExtensions.put("x-go-description-literal", goStringLiteral(description));
-        hasFieldDescriptions = true;
       }
     }
+  }
 
-    if (hasFieldExamples && !hasAccessorClash(model)) {
+  // markAccessors enables the template's accessors for a model with metadata, unless a field named
+  // like an accessor would not compile next to it.
+  private static void markAccessors(CodegenModel model) {
+    boolean hasExamples = false;
+    boolean hasDescriptions = false;
+
+    for (CodegenProperty param : model.vars) {
+      if ("FieldExample".equals(param.name) || "FieldDescription".equals(param.name)) {
+        return;
+      }
+
+      hasExamples |= param.vendorExtensions.containsKey("x-go-example-literal");
+      hasDescriptions |= param.vendorExtensions.containsKey("x-go-description-literal");
+    }
+
+    if (hasExamples) {
       model.vendorExtensions.put("x-has-field-examples", true);
     }
-    if (hasFieldDescriptions && !hasAccessorClash(model)) {
+    if (hasDescriptions) {
       model.vendorExtensions.put("x-has-field-descriptions", true);
     }
   }
 
-  // a field named like an accessor would not compile next to the generated method.
-  private static boolean hasAccessorClash(CodegenModel model) {
-    for (CodegenProperty param : model.vars) {
-      if ("FieldExample".equals(param.name) || "FieldDescription".equals(param.name)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   // inheritRefDescriptions gives a property that $refs a schema the schema's description, since
-  // OpenAPI
-  // ignores siblings of a $ref and the property has none of its own.
+  // OpenAPI ignores siblings of a $ref.
   private static void inheritRefDescriptions(CodegenModel model, Map<String, ModelsMap> models) {
-    boolean inherited = false;
-
     for (CodegenProperty param : model.vars) {
       if (param.isContainer || param.vendorExtensions.containsKey("x-go-description-literal")) {
         continue;
@@ -247,12 +246,7 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       String description = refDescription(param, models);
       if (description != null) {
         param.vendorExtensions.put("x-go-description-literal", goStringLiteral(description));
-        inherited = true;
       }
-    }
-
-    if (inherited && !hasAccessorClash(model)) {
-      model.vendorExtensions.put("x-has-field-descriptions", true);
     }
   }
 
