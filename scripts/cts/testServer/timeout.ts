@@ -1,7 +1,7 @@
 import type { Server } from 'http';
 
 import { expect } from 'chai';
-import type express from 'express';
+import express from 'express';
 
 import { setupServer } from './index.ts';
 
@@ -124,6 +124,11 @@ function addRoutes(app: express.Express): void {
     res.append('Set-Cookie', 'b=2');
     res.setHeader('X-Colon-Value', 'https://host.test:8080/path');
     res.json({ success: true });
+  });
+
+  // echoes the method and raw body, to check that HTTP clients send both as-is
+  app.all('/1/test/echo', express.text({ type: '*/*' }), (req, res) => {
+    res.json({ method: req.method, body: typeof req.body === 'string' ? req.body : '' });
   });
 }
 
