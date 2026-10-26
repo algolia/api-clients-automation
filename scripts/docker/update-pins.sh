@@ -3,6 +3,9 @@
 # in scripts/docker/ and .github/actions/setup/action.yml, paste them back after a version bump
 set -euo pipefail
 
+# shellcheck source=scripts/docker/tool-pins.sh
+source scripts/docker/tool-pins.sh
+
 echo "== docker image digests =="
 grep -hE '^FROM ' scripts/docker/Dockerfile.* | awk '{print $2}' | cut -d@ -f1 | sort -u | while read -r ref; do
   # || true so one unresolvable ref does not abort the whole listing under set -e
@@ -33,27 +36,28 @@ echo
 echo "== tool pins (scripts/docker/Dockerfile.*, .github/actions/setup/action.yml) =="
 # each pin is <release tag>@<commit of that tag> or <release tag>@<sha256 of a release asset>; after
 # editing the tag by hand, paste the printed pin back over the whole value in every file that has it
-while read -r name file repo kind asset; do
-  tag=$(sed -nE "s/.*${name}[=:] ?(v[0-9.]+)@.*/\1/p" "$file" | head -n1)
+# (the pins and their datasources come from the `# renovate:` annotations, see scripts/docker/tool-pins.sh)
+rows=$(tool_pins | awk '
+  { key = $1 SUBSEP $5
+    if (!(key in files)) { order[++n] = key; line[key] = $1 " " $3 " " $4 " " $5; first[key] = $2; files[key] = $2 }
+    else files[key] = files[key] "," $2 }
+  END { for (i = 1; i <= n; i++) print line[order[i]], first[order[i]], files[order[i]] }
+')
+while read -r name repo kind asset first all_files; do
+  tag=$(sed -nE "s/.*${name}[=:] ?(v[0-9.]+)@.*/\1/p" "$first" | head -n1)
   if [[ "$kind" == "commit" ]]; then
-    digest=$(git ls-remote "https://github.com/${repo}" "refs/tags/${tag}" "refs/tags/${tag}^{}" 2>/dev/null \
+    digest=$(git ls-remote "https://github.com/${repo}" "refs/tags/${tag}" "refs/tags/${tag}^{}" 2>/dev/null </dev/null \
       | awk '$2 ~ /\^\{\}$/ {peeled=$1} $2 !~ /\^\{\}$/ {plain=$1} END {print (peeled ? peeled : plain)}' || true)
   else
     asset="${asset//\{tag\}/$tag}"
     asset="${asset//\{version\}/${tag#v}}"
     tmp=$(mktemp)
-    if curl -sfL --retry 3 -o "$tmp" "https://github.com/${repo}/releases/download/${tag}/${asset}" && [[ -s "$tmp" ]]; then
+    if curl -sfL --retry 3 -o "$tmp" "https://github.com/${repo}/releases/download/${tag}/${asset}" </dev/null && [[ -s "$tmp" ]]; then
       digest=$(shasum -a 256 "$tmp" | awk '{print $1}')
     else
       digest=""
     fi
     rm -f "$tmp"
   fi
-  echo "${name}=${tag}@${digest:-<unresolved>}  ${file}"
-done <<'PINS'
-NVM_PIN scripts/docker/Dockerfile.base nvm-sh/nvm commit -
-GOLANGCI_LINT_PIN scripts/docker/Dockerfile.base golangci/golangci-lint commit -
-JAVA_FORMATTER_PIN scripts/docker/Dockerfile.base google/google-java-format sha256 google-java-format-{version}-all-deps.jar
-RUBYFMT_PIN_X86_64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-x86_64.tar.gz
-RUBYFMT_PIN_AARCH64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-aarch64.tar.gz
-PINS
+  echo "${name}=${tag}@${digest:-<unresolved>}  ${all_files}"
+done <<< "$rows"

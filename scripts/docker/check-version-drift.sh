@@ -1,6 +1,8 @@
 #!/bin/bash
-# always fails when a pinned FROM line is missing its digest, when a shared tool pin in the
-# docker images diverges from the CI setup action, or when the sdkman or tool pins are malformed.
+# always fails when a pinned FROM line is missing its digest, when a tool pin appears twice with
+# different values (the docker images vs the CI setup action), when a tool pin or a pinned download
+# has no `# renovate:` annotation (see scripts/docker/tool-pins.sh), or when the sdkman or tool pins
+# are malformed.
 # With DRIFT_CHECK_TAGS=1 it also fails when a pinned FROM tag diverges from its
 # config/.*-version file. With DRIFT_CHECK_LIVE=1 it resolves every pinned ref against its
 # registry: a tag that does not exist fails, a digest that no longer matches the tag only warns,
@@ -9,6 +11,9 @@
 # tool release assets, which are immutable, and resolves the tool tags to their commits, so a
 # mismatch there fails. Both extras run only in the docker jobs.
 set -euo pipefail
+
+# shellcheck source=scripts/docker/tool-pins.sh
+source scripts/docker/tool-pins.sh
 
 get_from() {
   local match
@@ -199,13 +204,131 @@ native/install/${native_version}/linuxarm64 ${native_arm64#*@}
 EOF
 }
 
+# every tool pin must be annotated so renovate and the checks below see it; these fail closed, a
+# pin or a download that escapes the annotations would silently stop being updated and verified
+check_pin_coverage() {
+  local file name url line
+  local files
+  files=$(pin_files)
+  # 1. a pin line without the annotation directly above it
+  while read -r file name; do
+    echo "$file: $name has no \`# renovate:\` annotation above it (see scripts/docker/tool-pins.sh)"
+    fail=1
+  done < <(
+    # shellcheck disable=SC2086
+    awk '
+      FNR == 1 { ann = 0 }
+      /^[[:space:]]*# renovate:/ { ann = 1; next }
+      match($0, /[A-Z0-9_]+_PIN[A-Z0-9_]*[=:] ?v[0-9]/) {
+        if (!ann) { name = substr($0, RSTART, RLENGTH); sub(/[=:].*/, "", name); print FILENAME, name }
+        ann = 0
+        next
+      }
+      { ann = 0 }
+    ' $files
+  )
+  # 2. an annotation renovate would not match: it only accepts this exact shape (see tool-pins.sh)
+  while IFS= read -r line; do
+    file="${line%%:*}"
+    line="${line#*:}"
+    if [[ "$line" =~ ^[[:space:]]*'# renovate: datasource=github-tags depName='[^[:space:]]+$ ]]; then
+      continue
+    fi
+    if [[ "$line" =~ ^[[:space:]]*'# renovate: datasource=github-release-attachments depName='[^[:space:]]+' asset='[^[:space:]]+$ ]]; then
+      continue
+    fi
+    echo "$file: invalid annotation \`${line#"${line%%#*}"}\`, expected \`# renovate: datasource=github-tags depName=<owner/repo>\` or \`# renovate: datasource=github-release-attachments depName=<owner/repo> asset=<template>\`, in that order with nothing else on the line (see scripts/docker/tool-pins.sh)"
+    fail=1
+  done < <(
+    # shellcheck disable=SC2086
+    { grep -HE '^[[:space:]]*# renovate:' $files || true; }
+  )
+  # 3. a url that is not built from a pin. a statement is a Dockerfile instruction with its \ continuations
+  # joined, or a whole step of the setup action; every http(s) url in it must use variables only, each one
+  # either a *_PIN or assigned inside that same statement, and the statement must reference a *_PIN
+  local stmt urls var vars ok
+  while IFS=$'\t' read -r file stmt; do
+    urls=$({ grep -oE "https?://[^\"' )]+" <<< "$stmt" || true; })
+    [[ -z "$urls" ]] && continue
+    while IFS= read -r url; do
+      ok=1
+      [[ "$url" == *'$'* ]] || ok=0
+      [[ "$stmt" =~ [A-Z0-9_]+_PIN[A-Z0-9_]* ]] || ok=0
+      vars=$({ grep -oE '[$][{]?[A-Za-z_][A-Za-z0-9_]*' <<< "$url" || true; } | sed -E 's/^[$][{]?//')
+      for var in $vars; do
+        [[ "$var" =~ _PIN ]] && continue
+        [[ "$stmt" =~ (^|[^A-Za-z0-9_])${var}= ]] && continue
+        ok=0
+      done
+      if [[ "$ok" != "1" ]]; then
+        echo "$file: $url is downloaded without a pin, pin it as <tag>@<digest> with a \`# renovate:\` annotation (see scripts/docker/tool-pins.sh)"
+        fail=1
+      fi
+    done <<< "$urls"
+  done < <(
+    # shellcheck disable=SC2086
+    awk '
+      function flush() { if (stmt ~ /[^[:space:]]/) print cur "\t" stmt; stmt = ""; cont = 0 }
+      FNR == 1 { flush(); cur = FILENAME; yaml = (FILENAME ~ /\.ya?ml$/) }
+      /^[[:space:]]*#/ { next }
+      yaml && /^[[:space:]]*- (name|uses):/ { flush() }
+      {
+        line = $0
+        if (!yaml) {
+          if (!cont) flush()
+          cont = sub(/\\[[:space:]]*$/, "", line)
+        }
+        stmt = stmt " " line
+      }
+      END { flush() }
+    ' $files
+  )
+}
+
+# the same pin in several files (the docker images and the setup action) must be identical, and
+# every pin of the same tool must be on the same tag (rubyfmt has one archive checksum per platform)
+check_shared_tool_pins() {
+  local rows=$1 name file repo pin
+  local seen="" mismatches
+  while read -r name file repo _; do
+    pin=$(extract_ver "$file" "${name}[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]+)")
+    [[ -n "$pin" ]] && seen+="${name} ${file} ${repo} ${pin}"$'\n'
+  done <<< "$rows"
+  mismatches=$(awk '
+    {
+      if (($1 in pin) && pin[$1] != $4) print $1 ": " pfile[$1] " has " pin[$1] " but " $2 " has " $4
+      if (!($1 in pin)) { pin[$1] = $4; pfile[$1] = $2 }
+      tag = $4; sub(/@.*/, "", tag)
+      if (($3 in dtag) && dtag[$3] != tag) print $3 ": " dname[$3] " is on " dtag[$3] " but " $1 " in " $2 " is on " tag
+      if (!($3 in dtag)) { dtag[$3] = tag; dname[$3] = $1 " in " $2 }
+    }
+  ' <<< "$seen")
+  if [[ -n "$mismatches" ]]; then
+    echo "$mismatches"
+    echo "  -> keep the same version in every file (scripts/docker/update-pins.sh prints checksums after a bump)"
+    echo "  -> on a renovate PR this is a half group: tick its rebase box on the Dependency Dashboard instead of pushing to the branch"
+    fail=1
+  fi
+}
+
 # the tool pins are <release tag>@<commit of that tag> (installer scripts fetched by commit) or
 # <release tag>@<sha256 of a release asset>; renovate moves both halves together, so parse them here
 # so a mangled pin fails setup, and (when live) resolve them so a stale commit or checksum fails the
 # cheap job instead of the image build or a language job
 check_tool_pins() {
-  local name file repo kind asset digest_re pin tag want got tmp
+  local name file repo kind asset digest_re pin tag want got tmp rows
+  rows=$(tool_pins)
+  if [[ -z "$rows" ]]; then
+    echo "no annotated tool pins found (see scripts/docker/tool-pins.sh)"
+    fail=1
+    return
+  fi
+  check_shared_tool_pins "$rows"
   while read -r name file repo kind asset; do
+    # an invalid annotation is reported by check_pin_coverage
+    if [[ "$kind" == "invalid" || ( "$kind" == "sha256" && "$asset" == "-" ) ]]; then
+      continue
+    fi
     if [[ "$kind" == "commit" ]]; then digest_re='[a-f0-9]{40}'; else digest_re='[a-f0-9]{64}'; fi
     pin=$(extract_ver "$file" "${name}[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@${digest_re})")
     if [[ -z "$pin" ]]; then
@@ -223,7 +346,7 @@ check_tool_pins() {
       # retried like the curl downloads so a network blip does not fail the job
       got=""
       for _ in 1 2 3; do
-        got=$(git ls-remote "https://github.com/${repo}" "refs/tags/${tag}" "refs/tags/${tag}^{}" 2>/dev/null \
+        got=$(git ls-remote "https://github.com/${repo}" "refs/tags/${tag}" "refs/tags/${tag}^{}" 2>/dev/null </dev/null \
           | awk '$2 ~ /\^\{\}$/ {peeled=$1} $2 !~ /\^\{\}$/ {plain=$1} END {print (peeled ? peeled : plain)}') || true
         [[ -n "$got" ]] && break
         sleep 2
@@ -241,7 +364,7 @@ check_tool_pins() {
     asset="${asset//\{tag\}/$tag}"
     asset="${asset//\{version\}/${tag#v}}"
     tmp=$(mktemp)
-    if curl -sfL --retry 3 -o "$tmp" "https://github.com/${repo}/releases/download/${tag}/${asset}" && [[ -s "$tmp" ]]; then
+    if curl -sfL --retry 3 -o "$tmp" "https://github.com/${repo}/releases/download/${tag}/${asset}" </dev/null && [[ -s "$tmp" ]]; then
       got=$(sha256sum "$tmp" | awk '{print $1}')
       if [[ "$got" != "$want" ]]; then
         echo "$file: ${asset} hashes to ${got} but the pin says ${want}"
@@ -253,16 +376,7 @@ check_tool_pins() {
       fail=1
     fi
     rm -f "$tmp"
-  done <<'EOF'
-NVM_PIN scripts/docker/Dockerfile.base nvm-sh/nvm commit -
-GOLANGCI_LINT_PIN scripts/docker/Dockerfile.base golangci/golangci-lint commit -
-GOLANGCI_LINT_PIN .github/actions/setup/action.yml golangci/golangci-lint commit -
-JAVA_FORMATTER_PIN scripts/docker/Dockerfile.base google/google-java-format sha256 google-java-format-{version}-all-deps.jar
-JAVA_FORMATTER_PIN .github/actions/setup/action.yml google/google-java-format sha256 google-java-format-{version}-all-deps.jar
-RUBYFMT_PIN_X86_64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-x86_64.tar.gz
-RUBYFMT_PIN_AARCH64 scripts/docker/Dockerfile.ruby fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-aarch64.tar.gz
-RUBYFMT_PIN_X86_64 .github/actions/setup/action.yml fables-tales/rubyfmt sha256 rubyfmt-{tag}-Linux-x86_64.tar.gz
-EOF
+  done <<< "$rows"
 }
 
 check Dockerfile.base dart .dart-version
@@ -277,16 +391,12 @@ check Dockerfile.swift swift .swift-version
 check_digest Dockerfile.base composer
 check_digest Dockerfile.swift ghcr.io/nicklockwood/swiftformat
 
-check_shared_pin golangci-lint 'GOLANGCI_LINT_PIN[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{40})'
-check_shared_pin google-java-format 'JAVA_FORMATTER_PIN[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{64})'
-check_shared_pin rubyfmt 'RUBYFMT_PIN_X86_64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+@[a-f0-9]{64})' scripts/docker/Dockerfile.ruby
-# the aarch64 archive is only used by the image, its own checksum differs, so only the tag has to agree
-check_shared_pin rubyfmt-aarch64 'RUBYFMT_PIN_X86_64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+)@' scripts/docker/Dockerfile.ruby 'RUBYFMT_PIN_AARCH64[=:] ?(v[0-9]+\.[0-9]+\.[0-9]+)@'
 # the ARG that used to keep these two in one renovate manager is gone, and the docker tag and
 # the CI source build now resolve from different datasources, so compare them explicitly
 check_shared_pin swiftformat 'SWIFTFORMAT_VERSION=([0-9]+\.[0-9]+\.[0-9]+)' scripts/docker/Dockerfile.swift 'swiftformat:([0-9]+\.[0-9]+\.[0-9]+)@'
 
 check_sdkman_pins
+check_pin_coverage
 check_tool_pins
 
 exit $fail

@@ -233,54 +233,14 @@
     },
     {
       "customType": "regex",
-      "description": "Update golangci-lint, pinned as <release tag>@<commit of that tag> so the tag and the commit move together",
+      "description": "Update the annotated <tag>@<digest> tool pins in the docker images and the setup action, the digest moves with the tag (see scripts/docker/tool-pins.sh)",
       "managerFilePatterns": [
         "/Dockerfile/",
         "/.github/actions/setup/action.yml/"
       ],
       "matchStrings": [
-        "GOLANGCI_LINT_PIN[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{40})"
-      ],
-      "depNameTemplate": "golangci/golangci-lint",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "description": "Update nvm, pinned as <release tag>@<commit of that tag> so the tag and the commit move together",
-      "managerFilePatterns": [
-        "/Dockerfile/"
-      ],
-      "matchStrings": [
-        "NVM_PIN=(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{40})"
-      ],
-      "depNameTemplate": "nvm-sh/nvm",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "description": "Update the java formatter, the release asset digest moves with the tag",
-      "managerFilePatterns": [
-        "/Dockerfile/",
-        "/.github/actions/setup/action.yml/"
-      ],
-      "matchStrings": [
-        "JAVA_FORMATTER_PIN[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{64})"
-      ],
-      "depNameTemplate": "google/google-java-format",
-      "datasourceTemplate": "github-release-attachments"
-    },
-    {
-      "customType": "regex",
-      "description": "Update rubyfmt, one pin per platform archive so each release asset digest moves with the tag",
-      "managerFilePatterns": [
-        "/Dockerfile/",
-        "/.github/actions/setup/action.yml/"
-      ],
-      "matchStrings": [
-        "RUBYFMT_PIN_(?:X86_64|AARCH64)[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]{64})"
-      ],
-      "depNameTemplate": "fables-tales/rubyfmt",
-      "datasourceTemplate": "github-release-attachments"
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: asset=\\S+)?\\n\\s*(?:ARG )?[A-Z0-9_]+_PIN[A-Z0-9_]*[=:] ?(?<currentValue>v[0-9.]+)@(?<currentDigest>[a-f0-9]+)"
+      ]
     },
     {
       "customType": "regex",

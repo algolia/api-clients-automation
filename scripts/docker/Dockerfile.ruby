@@ -2,9 +2,10 @@
 # version must stay in sync with config/.ruby-version, CI checks the drift
 FROM ruby:4.0.7-trixie@sha256:f5d60242cdd3f17245399384a3f14b83f148cd9c948aed97329f5a0e6dc97a3b
 
-# one <release tag>@<sha256 of the archive> per platform, on one line each so renovate (github-release-attachments) moves
-# the tag and the checksum together; both tags must match RUBYFMT_PIN_X86_64 in .github/actions/setup/action.yml
+# one pin per platform archive, the build platform picks it below
+# renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
 ARG RUBYFMT_PIN_X86_64=v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
+# renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-aarch64.tar.gz
 ARG RUBYFMT_PIN_AARCH64=v0.10.0@619535a281c64874a4fc74dd55ebbdbc5b9d788a063bfca47bc2e25b5c18464a
 RUN arch="$(uname -m)" && \
   case "$arch" in \

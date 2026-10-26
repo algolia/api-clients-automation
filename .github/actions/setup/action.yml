@@ -36,7 +36,7 @@ runs:
       if: inputs.type != 'minimal'
       shell: bash
       env:
-        # <release tag>@<sha256 of the jar>, same pin as scripts/docker/Dockerfile.base
+        # renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
         JAVA_FORMATTER_PIN: v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
       run: |
         version="${JAVA_FORMATTER_PIN%@*}"
@@ -86,7 +86,7 @@ runs:
       if: ${{ inputs.language == 'go' }}
       shell: bash
       env:
-        # <release tag>@<commit of that tag>, same pin as scripts/docker/Dockerfile.base
+        # renovate: datasource=github-tags depName=golangci/golangci-lint
         GOLANGCI_LINT_PIN: v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
       run: |
         curl --retry 3 -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" -o /tmp/golangci-install.sh
@@ -164,7 +164,7 @@ runs:
       if: ${{ inputs.language == 'ruby' }}
       shell: bash
       env:
-        # <release tag>@<sha256 of the Linux-x86_64 archive>, same pin as scripts/docker/Dockerfile.ruby
+        # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
         RUBYFMT_PIN_X86_64: v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
       run: |
         version="${RUBYFMT_PIN_X86_64%@*}"
