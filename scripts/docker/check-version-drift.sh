@@ -135,8 +135,8 @@ check() {
 check_shared_pin() {
   local name=$1
   local regex=$2
-  local docker_file=${3:-scripts/docker/Dockerfile.base}
-  local docker_regex=${4:-$regex}
+  local docker_file=$3
+  local docker_regex=$4
   local action_ver docker_ver
   action_ver=$(extract_ver .github/actions/setup/action.yml "$regex")
   docker_ver=$(extract_ver "$docker_file" "$docker_regex")
@@ -326,7 +326,7 @@ check_tool_pins() {
   check_shared_tool_pins "$rows"
   while read -r name file repo kind asset; do
     # an invalid annotation is reported by check_pin_coverage
-    if [[ "$kind" == "invalid" || ( "$kind" == "sha256" && "$asset" == "-" ) ]]; then
+    if [[ "$kind" == "invalid" ]]; then
       continue
     fi
     if [[ "$kind" == "commit" ]]; then digest_re='[a-f0-9]{40}'; else digest_re='[a-f0-9]{64}'; fi
