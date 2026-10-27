@@ -25,7 +25,7 @@ composition:
 sortingStrategy:
   type: object
   description: |
-    A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. A sorting index that is unrelated to the targeted indices is ignored at run time and reported in the `errors` field of the response.
+    A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The API ignores a sorting index that is unrelated to the targeted indices. The response reports it in the `errors` field.
     Each key is the label your frontend sends at runtime (for example, "Price (asc)"), and each value is the name of the index that should be queried when that label is selected.
 
     When a request includes a "sortBy" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The targeted index is replaced

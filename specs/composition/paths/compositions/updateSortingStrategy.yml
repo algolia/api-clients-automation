@@ -9,7 +9,8 @@ post:
     Updates the "sortingStrategy" field of an existing composition.
     This endpoint lets you create a new sorting strategy mapping or replace the configured one.
     This endpoint doesn't validate the sorting indices.
-    At run time, a sorting index that is unrelated to the targeted indices is ignored and reported in the `errors` field of the response.
+    At runtime, the API ignores a sorting index that is unrelated to the targeted indices.
+    The response reports it in the `errors` field.
 
     The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
   parameters:

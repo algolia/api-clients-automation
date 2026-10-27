@@ -68,19 +68,22 @@ feeds:
   title: Run composition feeds as object
   type: object
   description: |
-    Per-feed parameters, only for `multifeed` compositions. Keyed by feed ID.
+    Per-feed parameters for `multifeed` compositions. Each key is a feed ID.
 
     Feed `params` take precedence over the root `params`.
-    Keys a feed doesn't set are inherited from the root `params`.
-    A feed value replaces the root value, it isn't combined with it.
+    A feed inherits every root key it doesn't set.
+    A feed value replaces the root value instead of combining with it.
     This applies to every key, including `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`.
-    For example, `filters` must repeat the common values, and an empty value such as `filters: ""` discards the root value.
+    For example, `filters` must repeat the common values.
+    An empty value such as `filters: ""` discards the root value.
 
-    Feed `params` are validated like the root `params`. Unsupported parameters return a 400 error.
+    The API validates feed `params` like the root `params`.
+    An unsupported parameter returns a 400 error.
 
-    A feed ID that doesn't exist in the composition (for example, because a rule removed it) is reported in the `errors` field of the response and doesn't fail the request.
+    A feed ID may not exist in the composition (for example, because a rule removed it).
+    The response reports it in the `errors` field but request still succeeds.
 
-    Composition rules match once per request, using the root `params` only.
+    Rules match once per request, against the root `params` only.
   additionalProperties:
     title: feedRequest
     type: object
@@ -100,7 +103,7 @@ feeds:
 
 feedParams:
   title: Run composition feed parameters as object
-  description: Parameters for a single feed. Same as the root `params`, except `injectedItems`, `getRankingInfo`, and `enableABTest`, which aren't supported per feed.
+  description: Parameters for a single feed. These match the root `params` minus `injectedItems`, `getRankingInfo`, and `enableABTest`.
   type: object
   additionalProperties: false
   properties:
