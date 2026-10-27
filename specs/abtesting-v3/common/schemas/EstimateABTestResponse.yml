@@ -10,9 +10,9 @@ EstimateABTestResponse:
       type: array
       description: |
         Sample size estimates for each variant. The first element is the control variant.
-        Each element is the estimated number of searches required to achieve the desired statistical significance.
+        Each element is the estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.
       items:
         type: integer
         format: int64
-        description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+        description: Number of tracked searches, or tracked users for user-level rates, needed to be able to detect the configured effect for the control variant.
         example: 23415
