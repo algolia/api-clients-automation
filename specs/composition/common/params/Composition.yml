@@ -132,10 +132,15 @@ sortBy:
   description: |
     Indicates which sorting strategy to apply for the request.
     The value must match one of the labels defined in the "sortingStrategy" mapping. For example, "Price (asc)", see Upsert Composition.
-    At runtime, this label is used to look up the corresponding index or replica configured in "sortingStrategy", and the query is executed using that index instead of main's.
+    At runtime, this label is used to look up the corresponding index or replica configured in "sortingStrategy", and the query is executed using that index instead of the targeted index.
 
     In addition to "sortingStrategy", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on "sortBy", see Composition Rules.
 
     If no value is provided or an invalid value, no sorting strategy is applied.
+
+    For `multifeed` compositions, every feed inherits the root "sortBy" unless the feed sets its own "sortBy" in `feeds.<id>.params`.
+    An empty string disables sorting for that feed.
+    A value that is invalid, or whose index is unrelated to the feed's indices, is reported in the `errors` field of the response and doesn't fail the request. The message names the feed.
+    The root "sortBy" still drives Composition Rule matching.
   default: ''
   example: 'Price (asc)'
