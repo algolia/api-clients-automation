@@ -87,6 +87,68 @@ func TestInjectedItemSource_RoundTripExternalSource(t *testing.T) {
 	require.JSONEq(t, input, string(output))
 }
 
+func TestRequestBody_RoundTripFeeds(t *testing.T) {
+	t.Parallel()
+
+	input := `{
+  "params": {
+    "query": "shoes",
+    "filters": "brand:acme"
+  },
+  "feeds": {
+    "organic": {
+      "params": {
+        "filters": "brand:acme AND inStock:true",
+        "sortBy": "Price (asc)"
+      }
+    },
+    "banner": {
+      "params": {
+        "query": "shoes sale",
+        "filters": "",
+        "sortBy": ""
+      }
+    }
+  },
+  "feedsOrder": ["banner", "organic"]
+}`
+
+	var body composition.RequestBody
+
+	err := json.Unmarshal([]byte(input), &body)
+	require.NoError(t, err)
+
+	output, marshalErr := json.Marshal(&body)
+
+	require.NoError(t, marshalErr)
+	require.NotNil(t, body.Params)
+	require.NotNil(t, body.Params.Query)
+	require.Equal(t, "shoes", *body.Params.Query)
+	require.Equal(t, []string{"banner", "organic"}, body.FeedsOrder)
+	require.NotNil(t, body.Feeds)
+
+	feeds := *body.Feeds
+	organic := feeds["organic"].Params
+	banner := feeds["banner"].Params
+
+	require.NotNil(t, organic)
+	require.Nil(t, organic.Query)
+	require.NotNil(t, organic.Filters)
+	require.NotNil(t, organic.SortBy)
+	require.Equal(t, "brand:acme AND inStock:true", *organic.Filters)
+	require.Equal(t, "Price (asc)", *organic.SortBy)
+
+	require.NotNil(t, banner)
+	require.NotNil(t, banner.Query)
+	require.NotNil(t, banner.Filters)
+	require.NotNil(t, banner.SortBy)
+	require.Equal(t, "shoes sale", *banner.Query)
+	require.Empty(t, *banner.Filters)
+	require.Empty(t, *banner.SortBy)
+
+	require.JSONEq(t, input, string(output))
+}
+
 func TestInjectionMainSource_UnmarshalSearchSource(t *testing.T) {
 	t.Parallel()
 
