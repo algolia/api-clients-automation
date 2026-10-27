@@ -1,3 +1,8 @@
+## [4.50.1](https://github.com/algolia/algoliasearch-client-php/compare/4.50.0...4.50.1)
+
+- [e6d5471f15](https://github.com/algolia/api-clients-automation/commit/e6d5471f15) fix(scripts): avoid swift CTS deadlock when running in docker ([#7146](https://github.com/algolia/api-clients-automation/pull/7146)) by [@Fluf22](https://github.com/Fluf22/)
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+
 ## [4.50.0](https://github.com/algolia/algoliasearch-client-php/compare/4.49.0...4.50.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, PHP requirements, Agent Studio API). See below for more details.

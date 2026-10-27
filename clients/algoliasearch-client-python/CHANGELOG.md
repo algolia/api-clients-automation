@@ -1,3 +1,7 @@
+## [4.48.1](https://github.com/algolia/algoliasearch-client-python/compare/4.48.0...4.48.1)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+
 ## [4.48.0](https://github.com/algolia/algoliasearch-client-python/compare/4.47.0...4.48.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, Agent Studio API). See below for more details.

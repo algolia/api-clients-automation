@@ -1,3 +1,8 @@
+## [4.49.0](https://github.com/algolia/algoliasearch-client-go/compare/4.48.0...4.49.0)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+- [b98d27caa4](https://github.com/algolia/api-clients-automation/commit/b98d27caa4) feat(go): expose field description and example metadata in generated models ([#7180](https://github.com/algolia/api-clients-automation/pull/7180)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+
 ## [4.48.0](https://github.com/algolia/algoliasearch-client-go/compare/4.47.0...4.48.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, index settings types, Agent Studio API). See below for more details.
