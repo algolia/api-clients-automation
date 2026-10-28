@@ -552,7 +552,7 @@ class SnippetAbtestingV3Client {
   //
   // estimate AB Test sample size
   void snippetForEstimateABTest() throws Exception {
-    // >SEPARATOR estimateABTest default
+    // >SEPARATOR estimateABTest estimate AB Test sample size
     // Initialize the client
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -562,6 +562,35 @@ class SnippetAbtestingV3Client {
         .setConfiguration(
           new EstimateConfiguration().setMinimumDetectableEffect(
             new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE)
+          )
+        )
+        .setVariants(
+          Arrays.asList(
+            new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+            new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+          )
+        )
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the estimateABTest method.
+  //
+  // estimate AB Test sample size for a user-level rate
+  void snippetForEstimateABTest1() throws Exception {
+    // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    EstimateABTestResponse response = client.estimateABTest(
+      new EstimateABTestRequest()
+        .setConfiguration(
+          new EstimateConfiguration().setMinimumDetectableEffect(
+            new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERTED_USERS_RATE)
           )
         )
         .setVariants(

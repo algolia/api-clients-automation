@@ -475,7 +475,7 @@ final class AbtestingV3ClientSnippet {
     ///
     /// estimate AB Test sample size
     func snippetForEstimateABTest() async throws {
-        // >SEPARATOR estimateABTest default
+        // >SEPARATOR estimateABTest estimate AB Test sample size
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
@@ -484,6 +484,37 @@ final class AbtestingV3ClientSnippet {
             configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(
                 size: 0.03,
                 metric: AbtestingV3EffectMetric.conversionRate
+            )),
+            variants: [
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_1",
+                    trafficPercentage: 50
+                )),
+                AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                    index: "AB_TEST_2",
+                    trafficPercentage: 50
+                )),
+            ]
+        ))
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the estimateABTest method.
+    ///
+    /// estimate AB Test sample size for a user-level rate
+    func snippetForEstimateABTest1() async throws {
+        // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+        // Initialize the client
+        let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.estimateABTest(estimateABTestRequest: AbtestingV3EstimateABTestRequest(
+            configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(
+                size: 0.03,
+                metric: AbtestingV3EffectMetric.convertedUsersRate
             )),
             variants: [
                 AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(

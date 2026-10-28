@@ -589,7 +589,7 @@ class SnippetAbtestingV3Client {
   }
 
   suspend fun snippetForEstimateABTest() {
-    // >SEPARATOR estimateABTest default
+    // >SEPARATOR estimateABTest estimate AB Test sample size
     // Initialize the client
     val client =
       AbtestingV3Client(
@@ -609,6 +609,45 @@ class SnippetAbtestingV3Client {
                   MinimumDetectableEffect(
                     size = 0.03,
                     metric = EffectMetric.entries.first { it.value == "conversionRate" },
+                  )
+              ),
+            variants =
+              listOf(
+                AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 50),
+                AbTestsVariant(index = "AB_TEST_2", trafficPercentage = 50),
+              ),
+          )
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForEstimateABTest1() {
+    // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+    // Initialize the client
+    val client =
+      AbtestingV3Client(
+        appId = "ALGOLIA_APPLICATION_ID",
+        apiKey = "ALGOLIA_API_KEY",
+        region = "ALGOLIA_APPLICATION_REGION",
+      )
+
+    // Call the API
+    var response =
+      client.estimateABTest(
+        estimateABTestRequest =
+          EstimateABTestRequest(
+            configuration =
+              EstimateConfiguration(
+                minimumDetectableEffect =
+                  MinimumDetectableEffect(
+                    size = 0.03,
+                    metric = EffectMetric.entries.first { it.value == "convertedUsersRate" },
                   )
               ),
             variants =

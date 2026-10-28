@@ -637,6 +637,38 @@ public class AbtestingV3ClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "estimate AB Test sample size for a user-level rate")]
+  public async Task EstimateABTestTest1()
+  {
+    await client.EstimateABTestAsync(
+      new EstimateABTestRequest
+      {
+        Configuration = new EstimateConfiguration
+        {
+          MinimumDetectableEffect = new MinimumDetectableEffect
+          {
+            Size = 0.03,
+            Metric = Enum.Parse<EffectMetric>("ConvertedUsersRate"),
+          },
+        },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/estimate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "getABTest")]
   public async Task GetABTestTest()
   {

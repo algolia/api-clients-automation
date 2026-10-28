@@ -681,6 +681,46 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `estimate AB Test sample size for a user-level rate1`() = runTest {
+    client.runTest(
+      call = {
+        estimateABTest(
+          estimateABTestRequest =
+            EstimateABTestRequest(
+              configuration =
+                EstimateConfiguration(
+                  minimumDetectableEffect =
+                    MinimumDetectableEffect(
+                      size = 0.03,
+                      metric = EffectMetric.entries.first { it.value == "convertedUsersRate" },
+                    ),
+                ),
+              variants =
+                listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/estimate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // getABTest
 
   @Test

@@ -1428,7 +1428,7 @@
           },
           "estimatedSampleSize": {
             "type": "integer",
-            "description": "Estimated number of searches required to achieve the desired statistical significance.\n\nThe A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.\n",
+            "description": "Estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.\n\nThe A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.\n",
             "example": 0
           },
           "index": {
@@ -1468,13 +1468,17 @@
       },
       "EffectMetric": {
         "type": "string",
-        "description": "Metric for which you want to detect the smallest relative difference.",
+        "description": "Metric for which you want to detect the smallest relative difference.\nMetrics ending in `UsersRate` are user-level rates: the share of tracked users with at least one search with a click, conversion, add-to-cart, or purchase.\nFor these metrics, sample sizes count users instead of searches.\n",
         "enum": [
           "addToCartRate",
           "clickThroughRate",
           "conversionRate",
           "purchaseRate",
-          "noResultsRate"
+          "noResultsRate",
+          "addToCartUsersRate",
+          "clickedUsersRate",
+          "convertedUsersRate",
+          "purchaseUsersRate"
         ]
       },
       "MinimumDetectableEffect": {
@@ -1789,11 +1793,11 @@
           },
           "sampleSizes": {
             "type": "array",
-            "description": "Sample size estimates for each variant. The first element is the control variant.\nEach element is the estimated number of searches required to achieve the desired statistical significance.\n",
+            "description": "Sample size estimates for each variant. The first element is the control variant.\nEach element is the estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.\n",
             "items": {
               "type": "integer",
               "format": "int64",
-              "description": "Number of tracked searches needed to be able to detect the configured effect for the control variant.",
+              "description": "Number of tracked searches, or tracked users for user-level rates, needed to be able to detect the configured effect for the control variant.",
               "example": 23415
             }
           }

@@ -494,6 +494,27 @@ func TestAbtestingV3_EstimateABTest(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
+	t.Run("estimate AB Test sample size for a user-level rate", func(t *testing.T) {
+		_, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+			abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
+				abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+					abtestingV3.NewEmptyMinimumDetectableEffect().
+						SetSize(0.03).
+						SetMetric(abtestingV3.EffectMetric("convertedUsersRate")),
+				),
+			).SetVariants(
+				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/estimate", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
+	})
 }
 
 func TestAbtestingV3_GetABTest(t *testing.T) {
