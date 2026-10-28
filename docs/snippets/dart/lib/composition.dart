@@ -2458,6 +2458,49 @@ void snippetForsearch4() async {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search
+void snippetForsearch5() async {
+  // >SEPARATOR search search
+  // Initialize the client
+  final client = CompositionClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.search(
+    compositionID: "foo",
+    requestBody: RequestBody(
+      params: Params(
+        query: "shoes",
+        filters: "brand:acme",
+      ),
+      feeds: {
+        'organic': FeedRequest(
+          params: FeedParams(
+            filters: "brand:acme AND inStock:true",
+            sortBy: "Price (asc)",
+          ),
+        ),
+        'banner': FeedRequest(
+          params: FeedParams(
+            query: "shoes sale",
+            filters: "",
+          ),
+        ),
+      },
+      feedsOrder: [
+        "banner",
+        "organic",
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchCompositionRules method.
 //
 // searchCompositionRules

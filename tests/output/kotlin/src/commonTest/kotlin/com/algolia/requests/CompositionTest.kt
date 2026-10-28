@@ -2308,6 +2308,53 @@ class CompositionTest {
     )
   }
 
+  @Test
+  fun `search5`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          compositionID = "foo",
+          requestBody =
+            RequestBody(
+              params =
+                Params(
+                  query = "shoes",
+                  filters = "brand:acme",
+                ),
+              feeds =
+                mapOf(
+                  "organic" to
+                    FeedRequest(
+                      params =
+                        FeedParams(
+                          filters = "brand:acme AND inStock:true",
+                          sortBy = "Price (asc)",
+                        ),
+                    ),
+                  "banner" to
+                    FeedRequest(
+                      params =
+                        FeedParams(
+                          query = "shoes sale",
+                          filters = "",
+                        ),
+                    ),
+                ),
+              feedsOrder = listOf("banner", "organic"),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/compositions/foo/run".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // searchCompositionRules
 
   @Test

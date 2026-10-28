@@ -2500,6 +2500,44 @@ class CompositionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("search")
+  void searchTest5() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        "foo",
+        new RequestBody()
+          .setParams(new Params().setQuery("shoes").setFilters("brand:acme"))
+          .setFeeds(
+            new HashMap() {
+              {
+                put(
+                  "organic",
+                  new FeedRequest().setParams(new FeedParams().setFilters("brand:acme AND inStock:true").setSortBy("Price (asc)"))
+                );
+                put("banner", new FeedRequest().setParams(new FeedParams().setQuery("shoes sale").setFilters("")));
+              }
+            }
+          )
+          .setFeedsOrder(Arrays.asList("banner", "organic")),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/compositions/foo/run", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"params\":{\"query\":\"shoes\",\"filters\":\"brand:acme\"},\"feeds\":{\"organic\":{\"params\":{\"filters\":\"brand:acme" +
+          " AND inStock:true\",\"sortBy\":\"Price" +
+          " (asc)\"}},\"banner\":{\"params\":{\"query\":\"shoes" +
+          " sale\",\"filters\":\"\"}}},\"feedsOrder\":[\"banner\",\"organic\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("searchCompositionRules")
   void searchCompositionRulesTest() {
     assertDoesNotThrow(() -> {

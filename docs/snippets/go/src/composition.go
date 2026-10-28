@@ -2195,6 +2195,44 @@ func SnippetForSearchOfComposition4() {
 	// SEPARATOR<
 }
 
+func SnippetForSearchOfComposition5() {
+	/*
+	   Snippet for the search method.
+
+	   search
+	*/
+
+	// >SEPARATOR search search
+	// Initialize the client
+	client, err := composition.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.Search(client.NewApiSearchRequest(
+		"foo",
+		composition.NewEmptyRequestBody().SetParams(
+			composition.NewEmptyParams().
+				SetQuery("shoes").
+				SetFilters("brand:acme"),
+		).
+			SetFeeds(map[string]composition.FeedRequest{"organic": *composition.NewEmptyFeedRequest().SetParams(
+				composition.NewEmptyFeedParams().SetFilters("brand:acme AND inStock:true").SetSortBy("Price (asc)")), "banner": *composition.NewEmptyFeedRequest().SetParams(
+				composition.NewEmptyFeedParams().SetQuery("shoes sale").SetFilters(""))}).SetFeedsOrder(
+			[]string{"banner", "organic"})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
 func SnippetForSearchCompositionRulesOfComposition() {
 	/*
 	   Snippet for the searchCompositionRules method.

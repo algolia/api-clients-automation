@@ -278,6 +278,9 @@
                   },
                   "externalProvider": {
                     "$ref": "#/components/schemas/externalProvider"
+                  },
+                  "feeds": {
+                    "$ref": "#/components/schemas/feeds"
                   }
                 }
               }
@@ -721,7 +724,7 @@
           "editSettings"
         ],
         "summary": "Set or update the \"sortingStrategy\" configuration for an existing composition",
-        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint lets you create a new sorting strategy mapping or replace the configured one.\nThe provided sorting indices must be associated indices or replicas of the main targeted index.\n\nThis endpoint can't validate whether the sort index is related to the composition's main index.\nValidation fails at runtime if the index you updated isn't related.\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
+        "description": "Updates the \"sortingStrategy\" field of an existing composition.\nThis endpoint lets you create a new sorting strategy mapping or replace the configured one.\nThis endpoint only validates that the sorting indices exist.\nAt runtime, the API ignores a sorting index that is unrelated to the targeted indices.\nThe response reports it in the `errors` field.\n\nThe update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/compositionID"
@@ -1979,7 +1982,7 @@
       },
       "sortBy": {
         "type": "string",
-        "description": "Indicates which sorting strategy to apply for the request.\nThe value must match one of the labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition.\nAt runtime, this label is used to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using that index instead of main's.\n\nIn addition to \"sortingStrategy\", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules.\n\nIf no value is provided or an invalid value, no sorting strategy is applied.\n",
+        "description": "Indicates which sorting strategy to apply for the request.\nThe value must match one of the labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition.\nAt runtime, this label is used to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using that index instead of main's.\n\nIn addition to \"sortingStrategy\", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules.\n\nIf no value is provided or an invalid value, no sorting strategy is applied.\n\nFor `multifeed` compositions, every feed inherits the root \"sortBy\" unless the feed sets its own \"sortBy\" in `feeds.<id>.params`.\nAn empty string disables sorting for that feed.\nThe response reports an invalid value in the `errors` field. This includes a value whose index is unrelated to the feed's indices.\nComposition Rules still match on the root \"sortBy\".\n",
         "default": "",
         "example": "Price (asc)"
       },
@@ -2111,6 +2114,124 @@
             "description": "Values for non-prefixed configuration placeholders, overriding the composition source's `configurationParams` and the configuration's `defaults`.",
             "example": {
               "customer_id": "customer123"
+            }
+          }
+        }
+      },
+      "feedParams": {
+        "title": "Run composition feed parameters as object",
+        "description": "Parameters for a single feed. These match the root `params` minus `injectedItems`, `getRankingInfo`, and `enableABTest`.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "analytics": {
+            "$ref": "#/components/schemas/analytics"
+          },
+          "analyticsTags": {
+            "$ref": "#/components/schemas/analyticsTags"
+          },
+          "aroundLatLng": {
+            "$ref": "#/components/schemas/aroundLatLng"
+          },
+          "aroundLatLngViaIP": {
+            "$ref": "#/components/schemas/aroundLatLngViaIP"
+          },
+          "aroundRadius": {
+            "$ref": "#/components/schemas/aroundRadius"
+          },
+          "aroundPrecision": {
+            "$ref": "#/components/schemas/aroundPrecision"
+          },
+          "clickAnalytics": {
+            "$ref": "#/components/schemas/clickAnalytics"
+          },
+          "enablePersonalization": {
+            "$ref": "#/components/schemas/enablePersonalization"
+          },
+          "enableReRanking": {
+            "$ref": "#/components/schemas/enableReRanking"
+          },
+          "enableRules": {
+            "$ref": "#/components/schemas/enableRules"
+          },
+          "facetFilters": {
+            "$ref": "#/components/schemas/facetFilters"
+          },
+          "facets": {
+            "$ref": "#/components/schemas/facets"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/filters"
+          },
+          "hitsPerPage": {
+            "$ref": "#/components/schemas/hitsPerPage"
+          },
+          "insideBoundingBox": {
+            "$ref": "#/components/schemas/insideBoundingBox"
+          },
+          "insidePolygon": {
+            "$ref": "#/components/schemas/insidePolygon"
+          },
+          "minimumAroundRadius": {
+            "$ref": "#/components/schemas/minimumAroundRadius"
+          },
+          "naturalLanguages": {
+            "$ref": "#/components/schemas/naturalLanguages"
+          },
+          "numericFilters": {
+            "$ref": "#/components/schemas/numericFilters"
+          },
+          "optionalFilters": {
+            "$ref": "#/components/schemas/optionalFilters"
+          },
+          "page": {
+            "$ref": "#/components/schemas/page"
+          },
+          "query": {
+            "$ref": "#/components/schemas/query"
+          },
+          "queryLanguages": {
+            "$ref": "#/components/schemas/queryLanguages"
+          },
+          "relevancyStrictness": {
+            "$ref": "#/components/schemas/relevancyStrictness"
+          },
+          "ruleContexts": {
+            "$ref": "#/components/schemas/ruleContexts"
+          },
+          "sortBy": {
+            "$ref": "#/components/schemas/sortBy"
+          },
+          "userToken": {
+            "$ref": "#/components/schemas/userToken"
+          }
+        }
+      },
+      "feeds": {
+        "title": "Run composition feeds as object",
+        "type": "object",
+        "description": "Per-feed parameters for `multifeed` compositions. Each key is a feed ID.\n\nFeed `params` take precedence over the root `params`.\nA feed inherits every root key it doesn't set.\nA feed value replaces the root value instead of combining with it.\nThis applies to every key, including `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`.\nFor example, `filters` must repeat the common values.\nAn empty value such as `filters: \"\"` discards the root value.\n\nThe API validates feed `params` like the root `params`.\nAn unsupported parameter returns a 400 error.\n\nA feed ID may not exist in the composition (for example, because a rule removed it).\nThe response reports it in the `errors` field but request still succeeds.\n\nRules match once per request, against the root `params` only.\n",
+        "additionalProperties": {
+          "title": "feedRequest",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "params": {
+              "$ref": "#/components/schemas/feedParams"
+            }
+          }
+        },
+        "example": {
+          "organic": {
+            "params": {
+              "filters": "category:shoes",
+              "hitsPerPage": 20
+            }
+          },
+          "banner": {
+            "params": {
+              "hitsPerPage": 2,
+              "sortBy": ""
             }
           }
         }
@@ -4541,7 +4662,7 @@
       },
       "sortingStrategy": {
         "type": "object",
-        "description": "A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The sorting indices MUST be related to the associated main targeted index in the composition.\nEach key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each value is the name of the index that should be queried when that label is selected.\n\nWhen a request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main targeted index is replaced\nwith the sorting strategy index it is mapped to.\n\nUp to 20 sorting strategies can be defined.\n",
+        "description": "A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. When the composition is run, the API ignores a sorting index that is unrelated to the targeted indices. The response reports it in the `errors` field.\nEach key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each value is the name of the index that should be queried when that label is selected.\n\nWhen a request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main targeted index is replaced\nwith the sorting strategy index it is mapped to.\n\nUp to 20 sorting strategies can be defined.\n",
         "additionalProperties": {
           "type": "string"
         },

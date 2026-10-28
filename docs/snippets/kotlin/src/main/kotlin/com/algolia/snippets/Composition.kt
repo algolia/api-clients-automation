@@ -1982,6 +1982,39 @@ class SnippetCompositionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearch5() {
+    // >SEPARATOR search search
+    // Initialize the client
+    val client = CompositionClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.search(
+        compositionID = "foo",
+        requestBody =
+          RequestBody(
+            params = Params(query = "shoes", filters = "brand:acme"),
+            feeds =
+              mapOf(
+                "organic" to
+                  FeedRequest(
+                    params =
+                      FeedParams(filters = "brand:acme AND inStock:true", sortBy = "Price (asc)")
+                  ),
+                "banner" to FeedRequest(params = FeedParams(query = "shoes sale", filters = "")),
+              ),
+            feedsOrder = listOf("banner", "organic"),
+          ),
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForSearchCompositionRules() {
     // >SEPARATOR searchCompositionRules default
     // Initialize the client

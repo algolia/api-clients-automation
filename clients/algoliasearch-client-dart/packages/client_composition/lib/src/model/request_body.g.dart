@@ -23,6 +23,12 @@ RequestBody _$RequestBodyFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => v == null
                   ? null
                   : ExternalProvider.fromJson(v as Map<String, dynamic>)),
+          feeds: $checkedConvert(
+              'feeds',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(
+                        k, FeedRequest.fromJson(e as Map<String, dynamic>)),
+                  )),
         );
         return val;
       },
@@ -40,5 +46,6 @@ Map<String, dynamic> _$RequestBodyToJson(RequestBody instance) {
   writeNotNull('params', instance.params?.toJson());
   writeNotNull('feedsOrder', instance.feedsOrder);
   writeNotNull('externalProvider', instance.externalProvider?.toJson());
+  writeNotNull('feeds', instance.feeds?.map((k, e) => MapEntry(k, e.toJson())));
   return val;
 }

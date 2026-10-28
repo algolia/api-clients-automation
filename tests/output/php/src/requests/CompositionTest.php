@@ -1984,6 +1984,41 @@ class CompositionTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('search')]
+    public function testSearch5(): void
+    {
+        $client = $this->getClient();
+        $client->search(
+            'foo',
+            ['params' => ['query' => 'shoes',
+                'filters' => 'brand:acme',
+            ],
+                'feeds' => ['organic' => ['params' => ['filters' => 'brand:acme AND inStock:true',
+                    'sortBy' => 'Price (asc)',
+                ],
+                ],
+                    'banner' => ['params' => ['query' => 'shoes sale',
+                        'filters' => '',
+                    ],
+                    ],
+                ],
+                'feedsOrder' => [
+                    'banner',
+
+                    'organic',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/compositions/foo/run',
+                'method' => 'POST',
+                'body' => json_decode('{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('searchCompositionRules')]
     public function testSearchCompositionRules(): void
     {
