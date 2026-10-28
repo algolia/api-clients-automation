@@ -100,13 +100,22 @@ final class HostCollection
         }, $this->hosts);
     }
 
+    /**
+     * @param mixed $hostKey
+     *
+     * @return bool whether the host state changed
+     */
     public function resetHost($hostKey)
     {
-        array_map(function (Host $host) use ($hostKey) {
+        $changed = false;
+
+        foreach ($this->hosts as $host) {
             if ($host->getUrl() === $hostKey) {
-                $host->reset();
+                $changed = $host->reset() || $changed;
             }
-        }, $this->hosts);
+        }
+
+        return $changed;
     }
 
     public function setRetryCount($hostKey, int $count)
