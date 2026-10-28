@@ -27,7 +27,9 @@ class InsightsTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -61,7 +63,9 @@ class InsightsTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -129,7 +133,9 @@ class InsightsTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -183,7 +189,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -215,7 +221,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -250,7 +256,7 @@ class InsightsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -283,7 +289,7 @@ class InsightsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -316,7 +322,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -351,7 +357,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -383,7 +389,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -418,7 +424,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -453,7 +459,7 @@ class InsightsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -472,7 +478,9 @@ class InsightsTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -513,7 +521,9 @@ class InsightsTest {
   fun `deleteUserToken`() = runTest {
     client.runTest(
       call = {
-        deleteUserToken(userToken = "test-user-1")
+        deleteUserToken(
+          userToken = "test-user-1",
+        )
       },
       intercept = {
         assertEquals("/1/usertokens/test-user-1".toPathSegments(), it.url.pathSegments)
@@ -544,9 +554,9 @@ class InsightsTest {
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                     positions = listOf(7, 6),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -575,7 +585,7 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1791590400000L,
+                    timestamp = 1793145600000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
                   ),
@@ -585,18 +595,18 @@ class InsightsTest {
                     index = "products",
                     userToken = "user-123456",
                     authenticatedUserToken = "user-123456",
-                    timestamp = 1791590400000L,
+                    timestamp = 1793145600000L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
         assertEquals("/1/events".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1791590400000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1791590400000,"objectIDs":["9780545139700","9780439784542"]}]}""",
+          """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1793145600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1793145600000,"objectIDs":["9780545139700","9780439784542"]}]}""",
           it.body,
         )
       },
@@ -621,9 +631,9 @@ class InsightsTest {
                     timestamp = 1641290601962L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
                     queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -654,9 +664,9 @@ class InsightsTest {
                     authenticatedUserToken = "user-123456",
                     timestamp = 1641290601962L,
                     objectIDs = listOf("9780545139700", "9780439784542"),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -703,9 +713,9 @@ class InsightsTest {
                         ),
                       ),
                     currency = "USD",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {

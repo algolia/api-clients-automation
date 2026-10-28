@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
 FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
-FROM mcr.microsoft.com/dotnet/sdk:10.0.401@sha256:2fa828c68761b1b8c23d7662dc134421b9d3b59fe1425fdbc80804e390cdb24d AS csharp-builder
-FROM golang:1.27.1-alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 AS go-builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0.402@sha256:0d99ebf1ccad15037b5c98c9fe8979d6b8dbac23812feae2277a0b277b5c5ffa AS csharp-builder
+FROM golang:1.27.2-alpine@sha256:f92b6ef800e499660581efdabdf25d9d817a9d124eaf900924f0504e7e27e12d AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
 FROM composer:2.10.3@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac AS composer-builder
-FROM php:8.5.10-trixie@sha256:9ebdf4c28ab12c02085e171c31e22ac5f7bbb6a9f6927e3bc3dfe7ee23df51e0 AS builder
+FROM php:8.5.11-trixie@sha256:01a109229f4465bc9ef042d9198f09a4d9da7775a825dbd8572dcdbd8756c4d3 AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -18,8 +18,10 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY .nvmrc .nvmrc
-RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh \
-  && echo "8e45fa547f428e9196a5613efad3bfa4d4608b74ca870f930090598f5af5f643  /tmp/nvm-install.sh" | sha256sum -c - \
+# the installer is fetched by the commit of its release tag, which cannot change under it
+# renovate: datasource=github-tags depName=nvm-sh/nvm
+ARG NVM_PIN=v0.39.7@bab86d5de571015b63fd8fc30b47bbe072a1290e
+RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_PIN#*@}/install.sh" \
   && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
   && npm install -g yarn
@@ -33,7 +35,11 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
   && sdk install sbt
 
 # Java formatter
-ADD --checksum=sha256:25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4 https://github.com/google/google-java-format/releases/download/v1.36.1/google-java-format-1.36.1-all-deps.jar /tmp/java-formatter.jar
+# renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
+ARG JAVA_FORMATTER_PIN=v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+RUN version="${JAVA_FORMATTER_PIN%@*}" \
+  && curl -sSfL --retry 3 -o /tmp/java-formatter.jar "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" \
+  && echo "${JAVA_FORMATTER_PIN#*@}  /tmp/java-formatter.jar" | sha256sum -c -
 
 
 # Python
@@ -49,10 +55,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Go
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
+# the installer is fetched by commit like nvm above, then checks the release archive against the release checksums
+# renovate: datasource=github-tags depName=golangci/golangci-lint
+ARG GOLANGCI_LINT_PIN=v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
-  && curl -sSfL --retry 3 -o /tmp/golangci-install.sh https://raw.githubusercontent.com/golangci/golangci-lint/v2.10.1/install.sh \
-  && echo "edfa587f31bde70db161d1e5b783e086a1627d7e2f7c91de5f7cca79bcdf8631  /tmp/golangci-install.sh" | sha256sum -c - \
-  && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin v2.10.1 && rm /tmp/golangci-install.sh \
+  && curl -sSfL --retry 3 -o /tmp/golangci-install.sh "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" \
+  && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}" && rm /tmp/golangci-install.sh \
   && go install golang.org/x/tools/cmd/goimports@v0.22.0
 
 # Dart

@@ -4366,31 +4366,13 @@ func TestSearch_SetDictionarySettings(t *testing.T) {
 		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
 			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-				search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
+				search.NewEmptyStandardEntries().SetStopwords(map[string]bool{"fr": false, "en": false, "ru": true}))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
-		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}`)
-	})
-	t.Run("get setDictionarySettings results with all parameters", func(t *testing.T) {
-		_, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
-
-			search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-				search.NewEmptyStandardEntries().
-					SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).
-					SetStopwords(map[string]bool{"fr": false}).
-					SetCompounds(map[string]bool{"ru": true}),
-			),
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/dictionaries/*/settings", echo.Path)
-		require.Equal(t, "PUT", echo.Method)
-
-		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}`)
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}`)
 	})
 }
 

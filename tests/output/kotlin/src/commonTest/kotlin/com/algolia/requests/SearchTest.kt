@@ -35,7 +35,7 @@ class SearchTest {
                   Acl.entries.first { it.value == "addObject" },
                 ),
               description = "my new api key",
-            )
+            ),
         )
       },
       intercept = {
@@ -60,7 +60,7 @@ class SearchTest {
                   Acl.entries.first { it.value == "nluReadProject" },
                 ),
               description = "my new api key",
-            )
+            ),
         )
       },
       intercept = {
@@ -90,7 +90,7 @@ class SearchTest {
               validity = 300,
               maxQueriesPerIPPerHour = 100,
               maxHitsPerQuery = 20,
-            )
+            ),
         )
       },
       intercept = {
@@ -141,7 +141,7 @@ class SearchTest {
             Source(
               source = "theSource",
               description = "theDescription",
-            )
+            ),
         )
       },
       intercept = {
@@ -160,7 +160,10 @@ class SearchTest {
       call = {
         assignUserId(
           xAlgoliaUserID = "user42",
-          assignUserIdParams = AssignUserIdParams(cluster = "d4242-eu"),
+          assignUserIdParams =
+            AssignUserIdParams(
+              cluster = "d4242-eu",
+            ),
         )
       },
       intercept = {
@@ -178,7 +181,10 @@ class SearchTest {
       call = {
         assignUserId(
           xAlgoliaUserID = "user id with spaces",
-          assignUserIdParams = AssignUserIdParams(cluster = "cluster with spaces"),
+          assignUserIdParams =
+            AssignUserIdParams(
+              cluster = "cluster with spaces",
+            ),
         )
       },
       intercept = {
@@ -230,7 +236,7 @@ class SearchTest {
                         )
                       },
                   ),
-                )
+                ),
             ),
         )
       },
@@ -264,8 +270,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -296,8 +302,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -328,8 +334,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -363,8 +369,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -398,8 +404,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -433,8 +439,8 @@ class SearchTest {
                           JsonPrimitive("value"),
                         )
                       },
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -497,7 +503,7 @@ class SearchTest {
                         decomposition = listOf("trust", "algolia"),
                         state = DictionaryEntryState.entries.first { it.value == "enabled" },
                       ),
-                  )
+                  ),
                 ),
             ),
         )
@@ -526,8 +532,11 @@ class SearchTest {
                 listOf(
                   BatchDictionaryEntriesRequest(
                     action = DictionaryAction.entries.first { it.value == "deleteEntry" },
-                    body = DictionaryEntry(objectID = "1"),
-                  )
+                    body =
+                      DictionaryEntry(
+                        objectID = "1",
+                      ),
+                  ),
                 ),
             ),
         )
@@ -559,10 +568,13 @@ class SearchTest {
                       DictionaryEntry(
                         objectID = "1",
                         language = SupportedLanguage.entries.first { it.value == "en" },
-                        additionalProperties = mapOf("additional" to JsonPrimitive("try me")),
+                        additionalProperties =
+                          mapOf(
+                            "additional" to JsonPrimitive("try me"),
+                          ),
                       ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -583,7 +595,9 @@ class SearchTest {
   fun `browse with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        browse(indexName = "cts_e2e_browse")
+        browse(
+          indexName = "cts_e2e_browse",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/cts_e2e_browse/browse".toPathSegments(), it.url.pathSegments)
@@ -620,7 +634,10 @@ class SearchTest {
       call = {
         browse(
           indexName = "indexName",
-          browseParams = BrowseParamsObject(cursor = "test"),
+          browseParams =
+            BrowseParamsObject(
+              cursor = "test",
+            ),
         )
       },
       intercept = {
@@ -637,7 +654,10 @@ class SearchTest {
       call = {
         browse(
           indexName = "indexName",
-          browseParams = SearchParamsString(params = "foo=bar&cursor=test"),
+          browseParams =
+            SearchParamsString(
+              params = "foo=bar&cursor=test",
+            ),
         )
       },
       intercept = {
@@ -654,7 +674,9 @@ class SearchTest {
   fun `clearObjects`() = runTest {
     client.runTest(
       call = {
-        clearObjects(indexName = "theIndexName")
+        clearObjects(
+          indexName = "theIndexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName/clear".toPathSegments(), it.url.pathSegments)
@@ -670,7 +692,9 @@ class SearchTest {
   fun `clearRules`() = runTest {
     client.runTest(
       call = {
-        clearRules(indexName = "indexName")
+        clearRules(
+          indexName = "indexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/rules/clear".toPathSegments(), it.url.pathSegments)
@@ -686,7 +710,9 @@ class SearchTest {
   fun `clearSynonyms`() = runTest {
     client.runTest(
       call = {
-        clearSynonyms(indexName = "indexName")
+        clearSynonyms(
+          indexName = "indexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/clear".toPathSegments(), it.url.pathSegments)
@@ -702,7 +728,9 @@ class SearchTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -736,7 +764,9 @@ class SearchTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -804,7 +834,9 @@ class SearchTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -858,7 +890,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -890,7 +922,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -925,7 +957,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -958,7 +990,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -991,7 +1023,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -1026,7 +1058,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -1058,7 +1090,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -1093,7 +1125,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -1128,7 +1160,7 @@ class SearchTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -1147,7 +1179,9 @@ class SearchTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -1188,7 +1222,9 @@ class SearchTest {
   fun `deleteApiKey`() = runTest {
     client.runTest(
       call = {
-        deleteApiKey(key = "myTestApiKey")
+        deleteApiKey(
+          key = "myTestApiKey",
+        )
       },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
@@ -1206,7 +1242,10 @@ class SearchTest {
       call = {
         deleteBy(
           indexName = "theIndexName",
-          deleteByParams = DeleteByParams(filters = "brand:brandName"),
+          deleteByParams =
+            DeleteByParams(
+              filters = "brand:brandName",
+            ),
         )
       },
       intercept = {
@@ -1223,7 +1262,9 @@ class SearchTest {
   fun `deleteIndex`() = runTest {
     client.runTest(
       call = {
-        deleteIndex(indexName = "theIndexName")
+        deleteIndex(
+          indexName = "theIndexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/theIndexName".toPathSegments(), it.url.pathSegments)
@@ -1300,7 +1341,9 @@ class SearchTest {
   fun `deleteSource`() = runTest {
     client.runTest(
       call = {
-        deleteSource(source = "theSource")
+        deleteSource(
+          source = "theSource",
+        )
       },
       intercept = {
         assertEquals("/1/security/sources/theSource".toPathSegments(), it.url.pathSegments)
@@ -1335,7 +1378,9 @@ class SearchTest {
   fun `getApiKey`() = runTest {
     client.runTest(
       call = {
-        getApiKey(key = "myTestApiKey")
+        getApiKey(
+          key = "myTestApiKey",
+        )
       },
       intercept = {
         assertEquals("/1/keys/myTestApiKey".toPathSegments(), it.url.pathSegments)
@@ -1351,7 +1396,9 @@ class SearchTest {
   fun `getAppTask`() = runTest {
     client.runTest(
       call = {
-        getAppTask(taskID = 123L)
+        getAppTask(
+          taskID = 123L,
+        )
       },
       intercept = {
         assertEquals("/1/task/123".toPathSegments(), it.url.pathSegments)
@@ -1487,9 +1534,9 @@ class SearchTest {
                   GetObjectsRequest(
                     objectID = "uniqueID",
                     indexName = "theIndexName",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -1520,8 +1567,8 @@ class SearchTest {
                     objectID = "uniqueID2",
                     indexName = "theIndexName2",
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1548,9 +1595,9 @@ class SearchTest {
                     attributesToRetrieve = listOf("attr1", "attr2"),
                     objectID = "uniqueID",
                     indexName = "theIndexName",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -1699,7 +1746,9 @@ class SearchTest {
   fun `getUserId`() = runTest {
     client.runTest(
       call = {
-        getUserId(userID = "uniqueID")
+        getUserId(
+          userID = "uniqueID",
+        )
       },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -1729,7 +1778,9 @@ class SearchTest {
   fun `hasPendingMappings with parameters1`() = runTest {
     client.runTest(
       call = {
-        hasPendingMappings(getClusters = true)
+        hasPendingMappings(
+          getClusters = true,
+        )
       },
       intercept = {
         assertEquals("/1/clusters/mapping/pending".toPathSegments(), it.url.pathSegments)
@@ -1861,9 +1912,9 @@ class SearchTest {
                         )
                       },
                     indexName = "theIndexName",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -2058,7 +2109,7 @@ class SearchTest {
                     JsonPrimitive("one"),
                     JsonPrimitive("two"),
                     JsonPrimitive("three"),
-                  )
+                  ),
                 ),
               )
             },
@@ -2123,7 +2174,7 @@ class SearchTest {
                     JsonPrimitive("Angela"),
                     JsonPrimitive("group/Finance"),
                     JsonPrimitive("group/Shareholders"),
-                  )
+                  ),
                 ),
               )
             },
@@ -2227,7 +2278,9 @@ class SearchTest {
   fun `removeUserId`() = runTest {
     client.runTest(
       call = {
-        removeUserId(userID = "uniqueID")
+        removeUserId(
+          userID = "uniqueID",
+        )
       },
       intercept = {
         assertEquals("/1/clusters/mapping/uniqueID".toPathSegments(), it.url.pathSegments)
@@ -2249,8 +2302,8 @@ class SearchTest {
               Source(
                 source = "theSource",
                 description = "theDescription",
-              )
-            )
+              ),
+            ),
         )
       },
       intercept = {
@@ -2267,7 +2320,9 @@ class SearchTest {
   fun `restoreApiKey`() = runTest {
     client.runTest(
       call = {
-        restoreApiKey(key = "ALGOLIA_API_KEY")
+        restoreApiKey(
+          key = "ALGOLIA_API_KEY",
+        )
       },
       intercept = {
         assertEquals("/1/keys/ALGOLIA_API_KEY/restore".toPathSegments(), it.url.pathSegments)
@@ -2334,9 +2389,15 @@ class SearchTest {
                   Condition(
                     pattern = "apple",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
-              consequence = Consequence(params = ConsequenceParams(filters = "brand:xiaomi")),
+              consequence =
+                Consequence(
+                  params =
+                    ConsequenceParams(
+                      filters = "brand:xiaomi",
+                    ),
+                ),
             ),
         )
       },
@@ -2368,7 +2429,7 @@ class SearchTest {
                     anchoring = Anchoring.entries.first { it.value == "contains" },
                     alternatives = false,
                     context = "search",
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2393,7 +2454,12 @@ class SearchTest {
                             ),
                         ),
                     ),
-                  hide = listOf(ConsequenceHide(objectID = "321")),
+                  hide =
+                    listOf(
+                      ConsequenceHide(
+                        objectID = "321",
+                      ),
+                    ),
                   filterPromotes = false,
                   userData =
                     buildJsonObject {
@@ -2421,7 +2487,7 @@ class SearchTest {
                   TimeRange(
                     from = 1656670273L,
                     until = 1656670277L,
-                  )
+                  ),
                 ),
             ),
           forwardToReplicas = true,
@@ -2454,7 +2520,7 @@ class SearchTest {
                   Condition(
                     pattern = "article",
                     anchoring = Anchoring.entries.first { it.value == "startsWith" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2467,11 +2533,11 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "article",
-                              )
-                            )
+                              ),
+                            ),
                         ),
                       restrictSearchableAttributes = listOf("title", "book_id"),
-                    )
+                    ),
                 ),
             ),
         )
@@ -2505,7 +2571,7 @@ class SearchTest {
                   Condition(
                     pattern = "{facet:director} director",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2514,7 +2580,11 @@ class SearchTest {
                       restrictSearchableAttributes = listOf("title", "book_id"),
                       automaticFacetFilters =
                         AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
-                          listOf(AutomaticFacetFilter(facet = "director"))
+                          listOf(
+                            AutomaticFacetFilter(
+                              facet = "director",
+                            ),
+                          ),
                         ),
                       query =
                         ConsequenceQueryObject(
@@ -2523,10 +2593,10 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "director",
-                              )
-                            )
+                              ),
+                            ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -2560,7 +2630,7 @@ class SearchTest {
                   Condition(
                     pattern = "harry potter",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2570,7 +2640,7 @@ class SearchTest {
                         "promo_content",
                         JsonPrimitive("20% OFF on all Harry Potter books!"),
                       )
-                    }
+                    },
                 ),
             ),
         )
@@ -2605,11 +2675,14 @@ class SearchTest {
                     pattern = "",
                     anchoring = Anchoring.entries.first { it.value == "is" },
                     context = "landing",
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
-                  params = ConsequenceParams(optionalFilters = OptionalFilters.of("clearance:true"))
+                  params =
+                    ConsequenceParams(
+                      optionalFilters = OptionalFilters.of("clearance:true"),
+                    ),
                 ),
             ),
         )
@@ -2643,7 +2716,7 @@ class SearchTest {
                   Condition(
                     pattern = "help",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2653,7 +2726,7 @@ class SearchTest {
                         "redirect",
                         JsonPrimitive("https://www.algolia.com/support"),
                       )
-                    }
+                    },
                 ),
             ),
         )
@@ -2687,12 +2760,14 @@ class SearchTest {
                   Condition(
                     pattern = "tomato",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
                   params =
-                    ConsequenceParams(optionalFilters = OptionalFilters.of("food_group:fruit"))
+                    ConsequenceParams(
+                      optionalFilters = OptionalFilters.of("food_group:fruit"),
+                    ),
                 ),
             ),
         )
@@ -2726,7 +2801,7 @@ class SearchTest {
                   Condition(
                     pattern = "apple",
                     anchoring = Anchoring.entries.first { it.value == "is" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2735,8 +2810,8 @@ class SearchTest {
                       PromoteObjectIDs(
                         objectIDs = listOf("iPhone-12345", "watch-123"),
                         position = 0,
-                      )
-                    )
+                      ),
+                    ),
                 ),
             ),
         )
@@ -2770,7 +2845,7 @@ class SearchTest {
                   Condition(
                     pattern = "iPhone",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2779,8 +2854,8 @@ class SearchTest {
                       PromoteObjectID(
                         objectID = "iPhone-12345",
                         position = 0,
-                      )
-                    )
+                      ),
+                    ),
                 ),
             ),
         )
@@ -2814,7 +2889,7 @@ class SearchTest {
                   Condition(
                     pattern = "Harry Potter",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2823,8 +2898,8 @@ class SearchTest {
                       PromoteObjectID(
                         objectID = "HP-12345",
                         position = 0,
-                      )
-                    )
+                      ),
+                    ),
                 ),
             ),
         )
@@ -2858,7 +2933,7 @@ class SearchTest {
                   Condition(
                     pattern = "article",
                     anchoring = Anchoring.entries.first { it.value == "startsWith" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2871,11 +2946,11 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "article",
-                              )
-                            )
+                              ),
+                            ),
                         ),
                       restrictSearchableAttributes = listOf("title", "book_id"),
-                    )
+                    ),
                 ),
             ),
         )
@@ -2909,7 +2984,7 @@ class SearchTest {
                     pattern = "brand: {facet:brand}",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
                     alternatives = false,
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -2917,10 +2992,17 @@ class SearchTest {
                     ConsequenceParams(
                       automaticFacetFilters =
                         AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
-                          listOf(AutomaticFacetFilter(facet = "brand"))
+                          listOf(
+                            AutomaticFacetFilter(
+                              facet = "brand",
+                            ),
+                          ),
                         ),
-                      query = ConsequenceQueryObject(remove = listOf("brand:", "{facet:brand}")),
-                    )
+                      query =
+                        ConsequenceQueryObject(
+                          remove = listOf("brand:", "{facet:brand}"),
+                        ),
+                    ),
                 ),
               description = "filter on brand: {brand}",
               objectID = "tagged-brand-rule",
@@ -2951,16 +3033,25 @@ class SearchTest {
           rule =
             Rule(
               objectID = "color-facets",
-              conditions = listOf(Condition(pattern = "{facet:color}")),
+              conditions =
+                listOf(
+                  Condition(
+                    pattern = "{facet:color}",
+                  ),
+                ),
               consequence =
                 Consequence(
                   params =
                     ConsequenceParams(
                       automaticFacetFilters =
                         AutomaticFacetFilters.ofListOfAutomaticFacetFilter(
-                          listOf(AutomaticFacetFilter(facet = "color"))
-                        )
-                    )
+                          listOf(
+                            AutomaticFacetFilter(
+                              facet = "color",
+                            ),
+                          ),
+                        ),
+                    ),
                 ),
             ),
         )
@@ -2994,9 +3085,17 @@ class SearchTest {
                   Condition(
                     pattern = "cheap",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
-              consequence = Consequence(hide = listOf(ConsequenceHide(objectID = "to-hide-12345"))),
+              consequence =
+                Consequence(
+                  hide =
+                    listOf(
+                      ConsequenceHide(
+                        objectID = "to-hide-12345",
+                      ),
+                    ),
+                ),
             ),
         )
       },
@@ -3026,15 +3125,18 @@ class SearchTest {
                   Condition(
                     pattern = "red",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
                   params =
                     ConsequenceParams(
-                      query = ConsequenceQueryObject(remove = listOf("red")),
+                      query =
+                        ConsequenceQueryObject(
+                          remove = listOf("red"),
+                        ),
                       filters = "color:red",
-                    )
+                    ),
                 ),
             ),
         )
@@ -3065,15 +3167,18 @@ class SearchTest {
                   Condition(
                     pattern = "cheap",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
                   params =
                     ConsequenceParams(
-                      query = ConsequenceQueryObject(remove = listOf("cheap")),
+                      query =
+                        ConsequenceQueryObject(
+                          remove = listOf("cheap"),
+                        ),
                       filters = "price < 10",
-                    )
+                    ),
                 ),
             ),
         )
@@ -3104,7 +3209,7 @@ class SearchTest {
                   Condition(
                     pattern = "gluten-free",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -3118,10 +3223,10 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "gluten-free",
-                              )
-                            )
+                              ),
+                            ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -3155,7 +3260,7 @@ class SearchTest {
                   Condition(
                     pattern = "diet",
                     anchoring = Anchoring.entries.first { it.value == "contains" },
-                  )
+                  ),
                 ),
               consequence =
                 Consequence(
@@ -3169,10 +3274,10 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "diet",
-                              )
-                            )
+                              ),
+                            ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -3210,10 +3315,10 @@ class SearchTest {
                               Edit(
                                 type = EditType.entries.first { it.value == "remove" },
                                 delete = "diet",
-                              )
-                            )
+                              ),
+                            ),
                         ),
-                    )
+                    ),
                 ),
             ),
         )
@@ -3239,9 +3344,19 @@ class SearchTest {
           rule =
             Rule(
               objectID = "a-rule-id",
-              conditions = listOf(Condition(context = "mobile")),
+              conditions =
+                listOf(
+                  Condition(
+                    context = "mobile",
+                  ),
+                ),
               consequence =
-                Consequence(params = ConsequenceParams(filters = "release_date >= 1577836800")),
+                Consequence(
+                  params =
+                    ConsequenceParams(
+                      filters = "release_date >= 1577836800",
+                    ),
+                ),
             ),
         )
       },
@@ -3267,13 +3382,18 @@ class SearchTest {
             Rule(
               objectID = "a-rule-id",
               consequence =
-                Consequence(params = ConsequenceParams(aroundRadius = AroundRadius.of(1000))),
+                Consequence(
+                  params =
+                    ConsequenceParams(
+                      aroundRadius = AroundRadius.of(1000),
+                    ),
+                ),
               validity =
                 listOf(
                   TimeRange(
                     from = 1577836800L,
                     until = 1577836800L,
-                  )
+                  ),
                 ),
             ),
         )
@@ -3300,8 +3420,18 @@ class SearchTest {
             Rule(
               objectID = "a-rule-id",
               consequence =
-                Consequence(params = ConsequenceParams(aroundRadius = AroundRadius.of(1000))),
-              validity = listOf(TimeRange(from = 1577836800L)),
+                Consequence(
+                  params =
+                    ConsequenceParams(
+                      aroundRadius = AroundRadius.of(1000),
+                    ),
+                ),
+              validity =
+                listOf(
+                  TimeRange(
+                    from = 1577836800L,
+                  ),
+                ),
             ),
         )
       },
@@ -3333,9 +3463,15 @@ class SearchTest {
                     Condition(
                       pattern = "smartphone",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
-                consequence = Consequence(params = ConsequenceParams(filters = "brand:apple")),
+                consequence =
+                  Consequence(
+                    params =
+                      ConsequenceParams(
+                        filters = "brand:apple",
+                      ),
+                  ),
               ),
               Rule(
                 objectID = "a-second-rule-id",
@@ -3344,9 +3480,15 @@ class SearchTest {
                     Condition(
                       pattern = "apple",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
-                consequence = Consequence(params = ConsequenceParams(filters = "brand:samsung")),
+                consequence =
+                  Consequence(
+                    params =
+                      ConsequenceParams(
+                        filters = "brand:samsung",
+                      ),
+                  ),
               ),
             ),
           forwardToReplicas = false,
@@ -3388,7 +3530,7 @@ class SearchTest {
                       anchoring = Anchoring.entries.first { it.value == "contains" },
                       alternatives = false,
                       context = "search",
-                    )
+                    ),
                   ),
                 consequence =
                   Consequence(
@@ -3413,7 +3555,12 @@ class SearchTest {
                               ),
                           ),
                       ),
-                    hide = listOf(ConsequenceHide(objectID = "321")),
+                    hide =
+                      listOf(
+                        ConsequenceHide(
+                          objectID = "321",
+                        ),
+                      ),
                     filterPromotes = false,
                     userData =
                       buildJsonObject {
@@ -3441,9 +3588,9 @@ class SearchTest {
                     TimeRange(
                       from = 1656670273L,
                       until = 1656670277L,
-                    )
+                    ),
                   ),
-              )
+              ),
             ),
           forwardToReplicas = true,
           clearExistingRules = true,
@@ -3482,15 +3629,18 @@ class SearchTest {
                     Condition(
                       pattern = "toaster",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
                 consequence =
                   Consequence(
                     params =
                       ConsequenceParams(
-                        query = ConsequenceQueryObject(remove = listOf("toaster")),
+                        query =
+                          ConsequenceQueryObject(
+                            remove = listOf("toaster"),
+                          ),
                         filters = "product_type:toaster",
-                      )
+                      ),
                   ),
               ),
               Rule(
@@ -3500,15 +3650,18 @@ class SearchTest {
                     Condition(
                       pattern = "cheap",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
                 consequence =
                   Consequence(
                     params =
                       ConsequenceParams(
-                        query = ConsequenceQueryObject(remove = listOf("cheap")),
+                        query =
+                          ConsequenceQueryObject(
+                            remove = listOf("cheap"),
+                          ),
                         filters = "price < 15",
-                      )
+                      ),
                   ),
               ),
             ),
@@ -3543,9 +3696,15 @@ class SearchTest {
                     Condition(
                       pattern = "{facet:country}",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
-                consequence = Consequence(params = ConsequenceParams(aroundLatLngViaIP = false)),
+                consequence =
+                  Consequence(
+                    params =
+                      ConsequenceParams(
+                        aroundLatLngViaIP = false,
+                      ),
+                  ),
               ),
               Rule(
                 objectID = "city",
@@ -3554,9 +3713,15 @@ class SearchTest {
                     Condition(
                       pattern = "{facet:city}",
                       anchoring = Anchoring.entries.first { it.value == "contains" },
-                    )
+                    ),
                   ),
-                consequence = Consequence(params = ConsequenceParams(aroundLatLngViaIP = false)),
+                consequence =
+                  Consequence(
+                    params =
+                      ConsequenceParams(
+                        aroundLatLngViaIP = false,
+                      ),
+                  ),
               ),
             ),
         )
@@ -3664,9 +3829,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     hitsPerPage = 50,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3693,9 +3858,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     filters = "actor:Scarlett Johansson",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3722,9 +3887,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     filters = "actor:Tom Cruise OR actor:Scarlett Johansson",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3751,9 +3916,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     filters = "NOT actor:Nicolas Cage",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3774,8 +3939,13 @@ class SearchTest {
         search(
           searchMethodParams =
             SearchMethodParams(
-              requests = listOf(SearchForHits(indexName = "cts_e2e_search_empty_index"))
-            )
+              requests =
+                listOf(
+                  SearchForHits(
+                    indexName = "cts_e2e_search_empty_index",
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3801,9 +3971,9 @@ class SearchTest {
                     attributesToSnippet = listOf("*:20"),
                     attributesToHighlight = listOf("*"),
                     attributesToRetrieve = listOf("*"),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3830,9 +4000,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     facets = listOf("author", "genre"),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3859,9 +4029,9 @@ class SearchTest {
                     indexName = "<YOUR_INDEX_NAME>",
                     query = "<YOUR_QUERY>",
                     facets = listOf("*"),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3888,10 +4058,10 @@ class SearchTest {
                     indexName = "cts_e2e_search_facet",
                     type = SearchTypeFacet.entries.first { it.value == "facet" },
                     facet = "editor",
-                  )
+                  ),
                 ),
               strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
-            )
+            ),
         )
       },
       intercept = {
@@ -3919,9 +4089,9 @@ class SearchTest {
                     query = "myQuery",
                     hitsPerPage = 50,
                     type = SearchTypeDefault.entries.first { it.value == "default" },
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -3951,10 +4121,10 @@ class SearchTest {
                     facetQuery = "theFacetQuery",
                     query = "theQuery",
                     maxFacetHits = 50,
-                  )
+                  ),
                 ),
               strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
-            )
+            ),
         )
       },
       intercept = {
@@ -3978,7 +4148,9 @@ class SearchTest {
               SearchMethodParams(
                 requests =
                   listOf(
-                    SearchForHits(indexName = "theIndexName"),
+                    SearchForHits(
+                      indexName = "theIndexName",
+                    ),
                     SearchForFacets(
                       indexName = "theIndexName2",
                       type = SearchTypeFacet.entries.first { it.value == "facet" },
@@ -3990,7 +4162,7 @@ class SearchTest {
                     ),
                   ),
                 strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
-              )
+              ),
           )
         },
         intercept = {
@@ -4029,7 +4201,7 @@ class SearchTest {
                   ),
                 ),
               strategy = SearchStrategy.entries.first { it.value == "stopIfEnoughMatches" },
-            )
+            ),
         )
       },
       intercept = {
@@ -4070,43 +4242,43 @@ class SearchTest {
                             listOf(
                               FacetFilters.of("mySearch:filters"),
                               FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"))),
-                            )
+                            ),
                           ),
-                        )
+                        ),
                       ),
                     reRankingApplyFilter =
                       ReRankingApplyFilter.of(
                         listOf(
                           ReRankingApplyFilter.of("mySearch:filters"),
                           ReRankingApplyFilter.of(
-                            listOf(ReRankingApplyFilter.of("mySearch:filters"))
+                            listOf(ReRankingApplyFilter.of("mySearch:filters")),
                           ),
-                        )
+                        ),
                       ),
                     tagFilters =
                       TagFilters.of(
                         listOf(
                           TagFilters.of("mySearch:filters"),
                           TagFilters.of(listOf(TagFilters.of("mySearch:filters"))),
-                        )
+                        ),
                       ),
                     numericFilters =
                       NumericFilters.of(
                         listOf(
                           NumericFilters.of("mySearch:filters"),
                           NumericFilters.of(listOf(NumericFilters.of("mySearch:filters"))),
-                        )
+                        ),
                       ),
                     optionalFilters =
                       OptionalFilters.of(
                         listOf(
                           OptionalFilters.of("mySearch:filters"),
                           OptionalFilters.of(listOf(OptionalFilters.of("mySearch:filters"))),
-                        )
+                        ),
                       ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -4140,7 +4312,7 @@ class SearchTest {
                         listOf(
                           FacetFilters.of("editor:'visual studio'"),
                           FacetFilters.of("editor:neovim"),
-                        )
+                        ),
                       ),
                   ),
                   SearchForHits(
@@ -4150,7 +4322,7 @@ class SearchTest {
                         listOf(
                           FacetFilters.of("editor:'visual studio'"),
                           FacetFilters.of(listOf(FacetFilters.of("editor:neovim"))),
-                        )
+                        ),
                       ),
                   ),
                   SearchForHits(
@@ -4163,13 +4335,13 @@ class SearchTest {
                             listOf(
                               FacetFilters.of("editor:neovim"),
                               FacetFilters.of(listOf(FacetFilters.of("editor:goland"))),
-                            )
+                            ),
                           ),
-                        )
+                        ),
                       ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -4235,7 +4407,7 @@ class SearchTest {
                         listOf(
                           listOf(47.3165, 4.9665, 47.3424, 5.0201),
                           listOf(40.9234, 2.1185, 38.643, 1.9916),
-                        )
+                        ),
                       ),
                     insidePolygon =
                       listOf(
@@ -4270,7 +4442,10 @@ class SearchTest {
                       RenderingContent(
                         facetOrdering =
                           FacetOrdering(
-                            facets = Facets(order = listOf("a", "b")),
+                            facets =
+                              Facets(
+                                order = listOf("a", "b"),
+                              ),
                             values =
                               mapOf(
                                 "a" to
@@ -4278,9 +4453,9 @@ class SearchTest {
                                     order = listOf("b"),
                                     sortRemainingBy =
                                       SortRemainingBy.entries.first { it.value == "count" },
-                                  )
+                                  ),
                               ),
-                          )
+                          ),
                       ),
                     replaceSynonymsInHighlight = true,
                     responseFields = listOf(""),
@@ -4296,9 +4471,9 @@ class SearchTest {
                     type = SearchTypeDefault.entries.first { it.value == "default" },
                     typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
                     userToken = "",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -4330,11 +4505,11 @@ class SearchTest {
                           SearchExtensionsQueryCategorization(
                             enableCategoriesRetrieval = true,
                             enableAutoFiltering = false,
-                          )
+                          ),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -4356,7 +4531,10 @@ class SearchTest {
       call = {
         searchDictionaryEntries(
           dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
-          searchDictionaryEntriesParams = SearchDictionaryEntriesParams(query = "about"),
+          searchDictionaryEntriesParams =
+            SearchDictionaryEntriesParams(
+              query = "about",
+            ),
         )
       },
       intercept = {
@@ -4448,7 +4626,10 @@ class SearchTest {
         searchForFacetValues(
           indexName = "indexName",
           facetName = "author",
-          searchForFacetValuesRequest = SearchForFacetValuesRequest(facetQuery = "stephen"),
+          searchForFacetValuesRequest =
+            SearchForFacetValuesRequest(
+              facetQuery = "stephen",
+            ),
         )
       },
       intercept = {
@@ -4470,7 +4651,10 @@ class SearchTest {
       call = {
         searchRules(
           indexName = "cts_e2e_browse",
-          searchRulesParams = SearchRulesParams(query = "zorro"),
+          searchRulesParams =
+            SearchRulesParams(
+              query = "zorro",
+            ),
         )
       },
       intercept = {
@@ -4487,13 +4671,16 @@ class SearchTest {
       call = {
         searchRules(
           indexName = "cts_e2e_browse",
-          searchRulesParams = SearchRulesParams(query = "zorro"),
+          searchRulesParams =
+            SearchRulesParams(
+              query = "zorro",
+            ),
           requestOptions =
             RequestOptions(
               urlParameters =
                 buildMap {
                   put("x-algolia-request-id", "CtsE2eQry11")
-                }
+                },
             ),
         )
       },
@@ -4513,7 +4700,9 @@ class SearchTest {
   fun `search with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(indexName = "indexName")
+        searchSingleIndex(
+          indexName = "indexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/query".toPathSegments(), it.url.pathSegments)
@@ -4527,7 +4716,9 @@ class SearchTest {
   fun `search with special characters in indexName1`() = runTest {
     client.runTest(
       call = {
-        searchSingleIndex(indexName = "cts_e2e_space in index")
+        searchSingleIndex(
+          indexName = "cts_e2e_space in index",
+        )
       },
       intercept = {
         assertEquals(
@@ -4592,7 +4783,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "phone"),
+          searchParams =
+            SearchParamsObject(
+              query = "phone",
+            ),
         )
       },
       intercept = {
@@ -4609,7 +4803,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "country:US AND price.gross < 2.0"),
+          searchParams =
+            SearchParamsObject(
+              filters = "country:US AND price.gross < 2.0",
+            ),
         )
       },
       intercept = {
@@ -4701,7 +4898,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "is_available:true"),
+          searchParams =
+            SearchParamsObject(
+              filters = "is_available:true",
+            ),
         )
       },
       intercept = {
@@ -4718,7 +4918,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(distinct = Distinct.of(true)),
+          searchParams =
+            SearchParamsObject(
+              distinct = Distinct.of(true),
+            ),
         )
       },
       intercept = {
@@ -4735,7 +4938,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "price < 10"),
+          searchParams =
+            SearchParamsObject(
+              filters = "price < 10",
+            ),
         )
       },
       intercept = {
@@ -4753,7 +4959,9 @@ class SearchTest {
         searchSingleIndex(
           indexName = "indexName",
           searchParams =
-            SearchParamsObject(filters = "NOT date_timestamp:1514764800 TO 1546300799"),
+            SearchParamsObject(
+              filters = "NOT date_timestamp:1514764800 TO 1546300799",
+            ),
         )
       },
       intercept = {
@@ -4773,7 +4981,7 @@ class SearchTest {
           searchParams =
             SearchParamsObject(
               filters =
-                "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)"
+                "(company:Google<score=3> OR company:Amazon<score=2> OR company:Facebook<score=1>)",
             ),
         )
       },
@@ -4844,7 +5052,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "author:\"Stephen King\""),
+          searchParams =
+            SearchParamsObject(
+              filters = "author:\"Stephen King\"",
+            ),
         )
       },
       intercept = {
@@ -4882,7 +5093,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(filters = "NOT _tags:non-fiction"),
+          searchParams =
+            SearchParamsObject(
+              filters = "NOT _tags:non-fiction",
+            ),
         )
       },
       intercept = {
@@ -4899,7 +5113,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(numericFilters = NumericFilters.of("price>20")),
+          searchParams =
+            SearchParamsObject(
+              numericFilters = NumericFilters.of("price>20"),
+            ),
         )
       },
       intercept = {
@@ -4926,10 +5143,10 @@ class SearchTest {
                       listOf(
                         FacetFilters.of("author:Stephen King"),
                         FacetFilters.of("genre:Horror"),
-                      )
+                      ),
                     ),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -4976,7 +5193,7 @@ class SearchTest {
               query = "query",
               facetFilters =
                 FacetFilters.of(
-                  listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe"))
+                  listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe")),
                 ),
             ),
         )
@@ -5005,9 +5222,9 @@ class SearchTest {
                 FacetFilters.of(
                   listOf(
                     FacetFilters.of(
-                      listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe"))
-                    )
-                  )
+                      listOf(FacetFilters.of("category:Book"), FacetFilters.of("author:John Doe")),
+                    ),
+                  ),
                 ),
             ),
         )
@@ -5037,9 +5254,9 @@ class SearchTest {
                   listOf(
                     FacetFilters.of("author:John Doe"),
                     FacetFilters.of(
-                      listOf(FacetFilters.of("category:Book"), FacetFilters.of("category:Movie"))
+                      listOf(FacetFilters.of("category:Book"), FacetFilters.of("category:Movie")),
                     ),
-                  )
+                  ),
                 ),
             ),
         )
@@ -5061,7 +5278,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(facetFilters = FacetFilters.of("category:-Ebook")),
+          searchParams =
+            SearchParamsObject(
+              facetFilters = FacetFilters.of("category:-Ebook"),
+            ),
         )
       },
       intercept = {
@@ -5102,7 +5322,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(facets = listOf("author", "genre")),
+          searchParams =
+            SearchParamsObject(
+              facets = listOf("author", "genre"),
+            ),
         )
       },
       intercept = {
@@ -5119,7 +5342,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(facets = listOf("*")),
+          searchParams =
+            SearchParamsObject(
+              facets = listOf("*"),
+            ),
         )
       },
       intercept = {
@@ -5136,7 +5362,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(maxValuesPerFacet = 1000),
+          searchParams =
+            SearchParamsObject(
+              maxValuesPerFacet = 1000,
+            ),
         )
       },
       intercept = {
@@ -5153,7 +5382,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(aroundLatLng = "40.71, -74.01"),
+          searchParams =
+            SearchParamsObject(
+              aroundLatLng = "40.71, -74.01",
+            ),
         )
       },
       intercept = {
@@ -5170,7 +5402,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(aroundLatLngViaIP = true),
+          searchParams =
+            SearchParamsObject(
+              aroundLatLngViaIP = true,
+            ),
         )
       },
       intercept = {
@@ -5212,8 +5447,8 @@ class SearchTest {
             SearchParamsObject(
               insideBoundingBox =
                 InsideBoundingBox.of(
-                  listOf(listOf(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875))
-                )
+                  listOf(listOf(49.067996905313834, 65.73828125, 25.905859247243498, 128.8046875)),
+                ),
             ),
         )
       },
@@ -5251,8 +5486,8 @@ class SearchTest {
                     -97.68234374999997,
                     32.300311895879545,
                     -117.54828125,
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -5276,7 +5511,7 @@ class SearchTest {
           searchParams =
             SearchParamsObject(
               optionalFilters =
-                OptionalFilters.of(listOf(OptionalFilters.of("can_deliver_quickly:true")))
+                OptionalFilters.of(listOf(OptionalFilters.of("can_deliver_quickly:true"))),
             ),
         )
       },
@@ -5302,8 +5537,8 @@ class SearchTest {
                     OptionalFilters.of("brand:Apple<score=3>"),
                     OptionalFilters.of("brand:Samsung<score=2>"),
                     OptionalFilters.of("brand:-Huawei"),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -5331,8 +5566,8 @@ class SearchTest {
                   listOf(
                     OptionalFilters.of("brand:Apple<score=2>"),
                     OptionalFilters.of("type:tablet"),
-                  )
-                )
+                  ),
+                ),
             ),
         )
       },
@@ -5350,7 +5585,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(restrictSearchableAttributes = listOf("title_fr")),
+          searchParams =
+            SearchParamsObject(
+              restrictSearchableAttributes = listOf("title_fr"),
+            ),
         )
       },
       intercept = {
@@ -5409,7 +5647,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(clickAnalytics = true),
+          searchParams =
+            SearchParamsObject(
+              clickAnalytics = true,
+            ),
         )
       },
       intercept = {
@@ -5468,7 +5709,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(userToken = "user-1"),
+          searchParams =
+            SearchParamsObject(
+              userToken = "user-1",
+            ),
         )
       },
       intercept = {
@@ -5506,7 +5750,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(analyticsTags = listOf("YOUR_ANALYTICS_TAG")),
+          searchParams =
+            SearchParamsObject(
+              analyticsTags = listOf("YOUR_ANALYTICS_TAG"),
+            ),
         )
       },
       intercept = {
@@ -5527,8 +5774,8 @@ class SearchTest {
             SearchParamsObject(
               facetFilters =
                 FacetFilters.of(
-                  listOf(FacetFilters.of("user:user42"), FacetFilters.of("user:public"))
-                )
+                  listOf(FacetFilters.of("user:user42"), FacetFilters.of("user:public")),
+                ),
             ),
         )
       },
@@ -5616,7 +5863,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "shirt"),
+          searchParams =
+            SearchParamsObject(
+              query = "shirt",
+            ),
         )
       },
       intercept = {
@@ -5633,7 +5883,10 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = ""),
+          searchParams =
+            SearchParamsObject(
+              query = "",
+            ),
         )
       },
       intercept = {
@@ -5906,7 +6159,10 @@ class SearchTest {
               query = "query",
               optionalFilters =
                 OptionalFilters.of(
-                  listOf(OptionalFilters.of("category:Book"), OptionalFilters.of("author:John Doe"))
+                  listOf(
+                    OptionalFilters.of("category:Book"),
+                    OptionalFilters.of("author:John Doe"),
+                  ),
                 ),
             ),
         )
@@ -5936,7 +6192,7 @@ class SearchTest {
                   listOf(
                     OptionalFilters.of("category:Book"),
                     OptionalFilters.of("author:-John Doe"),
-                  )
+                  ),
                 ),
             ),
         )
@@ -5994,9 +6250,9 @@ class SearchTest {
                       listOf(
                         NumericFilters.of("inStock = 1"),
                         NumericFilters.of("deliveryDate < 1441755506"),
-                      )
+                      ),
                     ),
-                  )
+                  ),
                 ),
             ),
         )
@@ -6026,7 +6282,7 @@ class SearchTest {
                   listOf(
                     TagFilters.of("SciFi"),
                     TagFilters.of(listOf(TagFilters.of("Book"), TagFilters.of("Movie"))),
-                  )
+                  ),
                 ),
             ),
         )
@@ -6500,7 +6756,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("x-forwarded-for", "XX.XXX.XXX.XXX")
-                }
+                },
             ),
         )
       },
@@ -6525,7 +6781,7 @@ class SearchTest {
               headers =
                 buildMap {
                   put("x-forwarded-for", "XX.XXX.XXX.XXX")
-                }
+                },
             ),
         )
       },
@@ -6621,7 +6877,7 @@ class SearchTest {
                       from = 2000,
                       value = 1000,
                     ),
-                  )
+                  ),
                 ),
             ),
         )
@@ -6669,7 +6925,7 @@ class SearchTest {
               query = "query",
               insideBoundingBox =
                 InsideBoundingBox.of(
-                  listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625))
+                  listOf(listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625)),
                 ),
             ),
         )
@@ -6699,7 +6955,7 @@ class SearchTest {
                   listOf(
                     listOf(46.650828100116044, 7.123046875, 45.17210966999772, 1.009765625),
                     listOf(49.62625916704081, 4.6181640625, 47.715070300900194, 0.482421875),
-                  )
+                  ),
                 ),
             ),
         )
@@ -6733,7 +6989,7 @@ class SearchTest {
                     1.009765625,
                     49.62625916704081,
                     4.6181640625,
-                  )
+                  ),
                 ),
             ),
         )
@@ -6807,7 +7063,7 @@ class SearchTest {
                   listOf(
                     SupportedLanguage.entries.first { it.value == "ca" },
                     SupportedLanguage.entries.first { it.value == "es" },
-                  )
+                  ),
                 ),
             ),
         )
@@ -7548,13 +7804,16 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "indexName",
-          searchParams = SearchParamsObject(query = "query"),
+          searchParams =
+            SearchParamsObject(
+              query = "query",
+            ),
           requestOptions =
             RequestOptions(
               headers =
                 buildMap {
                   put("X-Algolia-User-ID", "user1234")
-                }
+                },
             ),
         )
       },
@@ -7572,13 +7831,16 @@ class SearchTest {
       call = {
         searchSingleIndex(
           indexName = "playlists",
-          searchParams = SearchParamsObject(query = "peace"),
+          searchParams =
+            SearchParamsObject(
+              query = "peace",
+            ),
           requestOptions =
             RequestOptions(
               headers =
                 buildMap {
                   put("X-Algolia-User-ID", "user42")
-                }
+                },
             ),
         )
       },
@@ -7596,7 +7858,9 @@ class SearchTest {
   fun `searchSynonyms with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        searchSynonyms(indexName = "indexName")
+        searchSynonyms(
+          indexName = "indexName",
+        )
       },
       intercept = {
         assertEquals("/1/indexes/indexName/synonyms/search".toPathSegments(), it.url.pathSegments)
@@ -7645,7 +7909,7 @@ class SearchTest {
               clusterName = "theClusterName",
               page = 5,
               hitsPerPage = 10,
-            )
+            ),
         )
       },
       intercept = {
@@ -7669,42 +7933,17 @@ class SearchTest {
           dictionarySettingsParams =
             DictionarySettingsParams(
               disableStandardEntries =
-                StandardEntries(plurals = mapOf("fr" to false, "en" to false, "ru" to true))
-            )
-        )
-      },
-      intercept = {
-        assertEquals("/1/dictionaries/*/settings".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody(
-          """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true}}}""",
-          it.body,
-        )
-      },
-    )
-  }
-
-  @Test
-  fun `get setDictionarySettings results with all parameters1`() = runTest {
-    client.runTest(
-      call = {
-        setDictionarySettings(
-          dictionarySettingsParams =
-            DictionarySettingsParams(
-              disableStandardEntries =
                 StandardEntries(
-                  plurals = mapOf("fr" to false, "en" to false, "ru" to true),
-                  stopwords = mapOf("fr" to false),
-                  compounds = mapOf("ru" to true),
-                )
-            )
+                  stopwords = mapOf("fr" to false, "en" to false, "ru" to true),
+                ),
+            ),
         )
       },
       intercept = {
         assertEquals("/1/dictionaries/*/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody(
-          """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""",
+          """{"disableStandardEntries":{"stopwords":{"fr":false,"en":false,"ru":true}}}""",
           it.body,
         )
       },
@@ -7742,7 +7981,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(typoTolerance = TypoTolerance.of(true)),
+          indexSettings =
+            IndexSettings(
+              typoTolerance = TypoTolerance.of(true),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7762,7 +8004,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" }),
+            IndexSettings(
+              typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7781,7 +8025,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(ignorePlurals = IgnorePlurals.of(true)),
+          indexSettings =
+            IndexSettings(
+              ignorePlurals = IgnorePlurals.of(true),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7803,7 +8050,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               ignorePlurals =
-                IgnorePlurals.of(listOf(SupportedLanguage.entries.first { it.value == "fr" }))
+                IgnorePlurals.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
             ),
           forwardToReplicas = true,
         )
@@ -7823,7 +8070,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(removeStopWords = RemoveStopWords.of(true)),
+          indexSettings =
+            IndexSettings(
+              removeStopWords = RemoveStopWords.of(true),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7845,7 +8095,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               removeStopWords =
-                RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "fr" }))
+                RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
             ),
           forwardToReplicas = true,
         )
@@ -7865,7 +8115,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(distinct = Distinct.of(true)),
+          indexSettings =
+            IndexSettings(
+              distinct = Distinct.of(true),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7884,7 +8137,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(distinct = Distinct.of(1)),
+          indexSettings =
+            IndexSettings(
+              distinct = Distinct.of(1),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -7945,7 +8201,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(distinct = Distinct.of(true)),
+          indexSettings =
+            IndexSettings(
+              distinct = Distinct.of(true),
+            ),
         )
       },
       intercept = {
@@ -7983,7 +8242,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("allergens")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("allergens"),
+            ),
         )
       },
       intercept = {
@@ -8003,7 +8265,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("color", "availableIn")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("color", "availableIn"),
+            ),
         )
       },
       intercept = {
@@ -8023,7 +8288,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("genre", "author")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("genre", "author"),
+            ),
         )
       },
       intercept = {
@@ -8044,7 +8312,9 @@ class SearchTest {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
           indexSettings =
-            IndexSettings(attributesForFaceting = listOf("genre", "searchable(author)")),
+            IndexSettings(
+              attributesForFaceting = listOf("genre", "searchable(author)"),
+            ),
         )
       },
       intercept = {
@@ -8065,7 +8335,9 @@ class SearchTest {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
           indexSettings =
-            IndexSettings(attributesForFaceting = listOf("filterOnly(genre)", "author")),
+            IndexSettings(
+              attributesForFaceting = listOf("filterOnly(genre)", "author"),
+            ),
         )
       },
       intercept = {
@@ -8086,7 +8358,9 @@ class SearchTest {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
           indexSettings =
-            IndexSettings(attributesForFaceting = listOf("searchable(categoryPageId)")),
+            IndexSettings(
+              attributesForFaceting = listOf("searchable(categoryPageId)"),
+            ),
         )
       },
       intercept = {
@@ -8106,7 +8380,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(unretrievableAttributes = listOf("visible_by")),
+          indexSettings =
+            IndexSettings(
+              unretrievableAttributes = listOf("visible_by"),
+            ),
         )
       },
       intercept = {
@@ -8126,7 +8403,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("filterOnly(visible_by)")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("filterOnly(visible_by)"),
+            ),
         )
       },
       intercept = {
@@ -8147,7 +8427,9 @@ class SearchTest {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
           indexSettings =
-            IndexSettings(attributesForFaceting = listOf("can_deliver_quickly", "restaurant")),
+            IndexSettings(
+              attributesForFaceting = listOf("can_deliver_quickly", "restaurant"),
+            ),
         )
       },
       intercept = {
@@ -8170,7 +8452,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("query_terms")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("query_terms"),
+            ),
         )
       },
       intercept = {
@@ -8190,7 +8475,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("director")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("director"),
+            ),
         )
       },
       intercept = {
@@ -8210,7 +8498,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "<YOUR_INDEX_NAME>",
-          indexSettings = IndexSettings(attributesForFaceting = listOf("filterOnly(brand)")),
+          indexSettings =
+            IndexSettings(
+              attributesForFaceting = listOf("filterOnly(brand)"),
+            ),
         )
       },
       intercept = {
@@ -8230,7 +8521,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(mode = Mode.entries.first { it.value == "neuralSearch" }),
+          indexSettings =
+            IndexSettings(
+              mode = Mode.entries.first { it.value == "neuralSearch" },
+            ),
         )
       },
       intercept = {
@@ -8247,7 +8541,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(mode = Mode.entries.first { it.value == "keywordSearch" }),
+          indexSettings =
+            IndexSettings(
+              mode = Mode.entries.first { it.value == "keywordSearch" },
+            ),
         )
       },
       intercept = {
@@ -8265,7 +8562,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(searchableAttributes = listOf("title,comments", "ingredients")),
+            IndexSettings(
+              searchableAttributes = listOf("title,comments", "ingredients"),
+            ),
         )
       },
       intercept = {
@@ -8282,7 +8581,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(searchableAttributes = listOf("title", "ingredients")),
+          indexSettings =
+            IndexSettings(
+              searchableAttributes = listOf("title", "ingredients"),
+            ),
         )
       },
       intercept = {
@@ -8299,7 +8601,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(retweets)", "desc(likes)")),
+          indexSettings =
+            IndexSettings(
+              customRanking = listOf("desc(retweets)", "desc(likes)"),
+            ),
         )
       },
       intercept = {
@@ -8316,7 +8621,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(boosted)")),
+          indexSettings =
+            IndexSettings(
+              customRanking = listOf("desc(boosted)"),
+            ),
         )
       },
       intercept = {
@@ -8334,7 +8642,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(customRanking = listOf("desc(pageviews)", "desc(comments)")),
+            IndexSettings(
+              customRanking = listOf("desc(pageviews)", "desc(comments)"),
+            ),
         )
       },
       intercept = {
@@ -8376,7 +8686,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(customRanking = listOf("desc(rounded_pageviews)", "desc(comments)")),
+            IndexSettings(
+              customRanking = listOf("desc(rounded_pageviews)", "desc(comments)"),
+            ),
         )
       },
       intercept = {
@@ -8396,7 +8708,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(price)")),
+          indexSettings =
+            IndexSettings(
+              customRanking = listOf("desc(price)"),
+            ),
         )
       },
       intercept = {
@@ -8426,7 +8741,7 @@ class SearchTest {
                   "attribute",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -8460,7 +8775,7 @@ class SearchTest {
                   "attribute",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -8481,7 +8796,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(ranking = listOf("desc(post_date_timestamp)")),
+          indexSettings =
+            IndexSettings(
+              ranking = listOf("desc(post_date_timestamp)"),
+            ),
         )
       },
       intercept = {
@@ -8498,7 +8816,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(post_date_timestamp)")),
+          indexSettings =
+            IndexSettings(
+              customRanking = listOf("desc(post_date_timestamp)"),
+            ),
         )
       },
       intercept = {
@@ -8573,7 +8894,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(replicas = listOf("products_price_desc")),
+          indexSettings =
+            IndexSettings(
+              replicas = listOf("products_price_desc"),
+            ),
         )
       },
       intercept = {
@@ -8590,7 +8914,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(replicas = listOf("articles_date_desc")),
+          indexSettings =
+            IndexSettings(
+              replicas = listOf("articles_date_desc"),
+            ),
         )
       },
       intercept = {
@@ -8607,7 +8934,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(replicas = listOf("virtual(products_price_desc)")),
+          indexSettings =
+            IndexSettings(
+              replicas = listOf("virtual(products_price_desc)"),
+            ),
         )
       },
       intercept = {
@@ -8624,7 +8954,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(replicas = listOf("")),
+          indexSettings =
+            IndexSettings(
+              replicas = listOf(""),
+            ),
         )
       },
       intercept = {
@@ -8641,7 +8974,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(searchableAttributes = listOf("name", "description")),
+          indexSettings =
+            IndexSettings(
+              searchableAttributes = listOf("name", "description"),
+            ),
           forwardToReplicas = true,
         )
       },
@@ -8660,7 +8996,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(maxValuesPerFacet = 1000),
+          indexSettings =
+            IndexSettings(
+              maxValuesPerFacet = 1000,
+            ),
         )
       },
       intercept = {
@@ -8677,7 +9016,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(maxFacetHits = 100),
+          indexSettings =
+            IndexSettings(
+              maxFacetHits = 100,
+            ),
         )
       },
       intercept = {
@@ -8697,7 +9039,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               attributesForFaceting =
-                listOf("actor", "filterOnly(category)", "searchable(publisher)")
+                listOf("actor", "filterOnly(category)", "searchable(publisher)"),
             ),
         )
       },
@@ -8734,7 +9076,7 @@ class SearchTest {
                   "attribute",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -8755,7 +9097,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(searchableAttributes = listOf("design", "type", "color")),
+          indexSettings =
+            IndexSettings(
+              searchableAttributes = listOf("design", "type", "color"),
+            ),
         )
       },
       intercept = {
@@ -8797,7 +9142,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributesToHighlight = listOf("author", "title", "content")),
+            IndexSettings(
+              attributesToHighlight = listOf("author", "title", "content"),
+            ),
         )
       },
       intercept = {
@@ -8839,7 +9186,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToHighlight = listOf("*")),
+          indexSettings =
+            IndexSettings(
+              attributesToHighlight = listOf("*"),
+            ),
         )
       },
       intercept = {
@@ -8920,7 +9270,10 @@ class SearchTest {
                 RenderingContent(
                   facetOrdering =
                     FacetOrdering(
-                      facets = Facets(order = listOf("a", "b")),
+                      facets =
+                        Facets(
+                          order = listOf("a", "b"),
+                        ),
                       values =
                         mapOf(
                           "a" to
@@ -8928,16 +9281,19 @@ class SearchTest {
                               order = listOf("b"),
                               sortRemainingBy =
                                 SortRemainingBy.entries.first { it.value == "count" },
-                            )
+                            ),
                         ),
-                    )
+                    ),
                 ),
               replaceSynonymsInHighlight = true,
               replicas = listOf(""),
               responseFields = listOf("algolia"),
               restrictHighlightAndSnippetArrays = true,
               searchableAttributes = listOf("foo"),
-              semanticSearch = SemanticSearch(eventSources = listOf("foo")),
+              semanticSearch =
+                SemanticSearch(
+                  eventSources = listOf("foo"),
+                ),
               separatorsToIndex = "bar",
               snippetEllipsisText = "---",
               sortFacetValuesBy = "date",
@@ -8993,7 +9349,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(searchableAttributes = listOf("unordered(title)", "cast")),
+          indexSettings =
+            IndexSettings(
+              searchableAttributes = listOf("unordered(title)", "cast"),
+            ),
         )
       },
       intercept = {
@@ -9013,7 +9372,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               searchableAttributes =
-                listOf("name", "product_reference", "product_reference_suffixes")
+                listOf("name", "product_reference", "product_reference_suffixes"),
             ),
         )
       },
@@ -9056,7 +9415,9 @@ class SearchTest {
         setSettings(
           indexName = "movies",
           indexSettings =
-            IndexSettings(searchableAttributes = listOf("title_eng", "title_fr", "title_es")),
+            IndexSettings(
+              searchableAttributes = listOf("title_eng", "title_fr", "title_es"),
+            ),
         )
       },
       intercept = {
@@ -9073,7 +9434,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(disablePrefixOnAttributes = listOf("serial_number")),
+          indexSettings =
+            IndexSettings(
+              disablePrefixOnAttributes = listOf("serial_number"),
+            ),
         )
       },
       intercept = {
@@ -9090,7 +9454,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(disableTypoToleranceOnAttributes = listOf("serial_number")),
+          indexSettings =
+            IndexSettings(
+              disableTypoToleranceOnAttributes = listOf("serial_number"),
+            ),
         )
       },
       intercept = {
@@ -9107,7 +9474,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(searchableAttributes = listOf("serial_number")),
+          indexSettings =
+            IndexSettings(
+              searchableAttributes = listOf("serial_number"),
+            ),
         )
       },
       intercept = {
@@ -9125,7 +9495,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(searchableAttributes = listOf("serial_number", "serial_number_suffixes")),
+            IndexSettings(
+              searchableAttributes = listOf("serial_number", "serial_number_suffixes"),
+            ),
         )
       },
       intercept = {
@@ -9148,7 +9520,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               searchableAttributes =
-                listOf("title,alternative_title", "author", "unordered(text)", "emails.personal")
+                listOf("title,alternative_title", "author", "unordered(text)", "emails.personal"),
             ),
         )
       },
@@ -9178,7 +9550,7 @@ class SearchTest {
                   "searchable(edition)",
                   "afterDistinct(category)",
                   "afterDistinct(searchable(publisher))",
-                )
+                ),
             ),
         )
       },
@@ -9199,7 +9571,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(unretrievableAttributes = listOf("total_number_of_sales")),
+          indexSettings =
+            IndexSettings(
+              unretrievableAttributes = listOf("total_number_of_sales"),
+            ),
         )
       },
       intercept = {
@@ -9217,7 +9592,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributesToRetrieve = listOf("author", "title", "content")),
+            IndexSettings(
+              attributesToRetrieve = listOf("author", "title", "content"),
+            ),
         )
       },
       intercept = {
@@ -9234,7 +9611,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToRetrieve = listOf("*")),
+          indexSettings =
+            IndexSettings(
+              attributesToRetrieve = listOf("*"),
+            ),
         )
       },
       intercept = {
@@ -9252,7 +9632,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(attributesToRetrieve = listOf("*", "-SKU", "-internal_desc")),
+            IndexSettings(
+              attributesToRetrieve = listOf("*", "-SKU", "-internal_desc"),
+            ),
         )
       },
       intercept = {
@@ -9269,7 +9651,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(mode = Mode.entries.first { it.value == "neuralSearch" }),
+          indexSettings =
+            IndexSettings(
+              mode = Mode.entries.first { it.value == "neuralSearch" },
+            ),
         )
       },
       intercept = {
@@ -9286,7 +9671,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(mode = Mode.entries.first { it.value == "keywordSearch" }),
+          indexSettings =
+            IndexSettings(
+              mode = Mode.entries.first { it.value == "keywordSearch" },
+            ),
         )
       },
       intercept = {
@@ -9315,7 +9703,7 @@ class SearchTest {
                   "proximity",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -9349,7 +9737,7 @@ class SearchTest {
                   "attribute",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -9383,7 +9771,7 @@ class SearchTest {
                   "attribute",
                   "exact",
                   "custom",
-                )
+                ),
             ),
         )
       },
@@ -9404,7 +9792,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(customRanking = listOf("desc(popularity)", "asc(price)")),
+          indexSettings =
+            IndexSettings(
+              customRanking = listOf("desc(popularity)", "asc(price)"),
+            ),
         )
       },
       intercept = {
@@ -9421,7 +9812,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(relevancyStrictness = 90),
+          indexSettings =
+            IndexSettings(
+              relevancyStrictness = 90,
+            ),
         )
       },
       intercept = {
@@ -9439,7 +9833,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(replicas = listOf("name_of_replica_index1", "name_of_replica_index2")),
+            IndexSettings(
+              replicas = listOf("name_of_replica_index1", "name_of_replica_index2"),
+            ),
         )
       },
       intercept = {
@@ -9459,7 +9855,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(maxValuesPerFacet = 100),
+          indexSettings =
+            IndexSettings(
+              maxValuesPerFacet = 100,
+            ),
         )
       },
       intercept = {
@@ -9476,7 +9875,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(sortFacetValuesBy = "alpha"),
+          indexSettings =
+            IndexSettings(
+              sortFacetValuesBy = "alpha",
+            ),
         )
       },
       intercept = {
@@ -9493,7 +9895,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToSnippet = listOf("content:80", "description")),
+          indexSettings =
+            IndexSettings(
+              attributesToSnippet = listOf("content:80", "description"),
+            ),
         )
       },
       intercept = {
@@ -9510,7 +9915,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToSnippet = listOf("*:80")),
+          indexSettings =
+            IndexSettings(
+              attributesToSnippet = listOf("*:80"),
+            ),
         )
       },
       intercept = {
@@ -9527,7 +9935,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(highlightPreTag = "<em>"),
+          indexSettings =
+            IndexSettings(
+              highlightPreTag = "<em>",
+            ),
         )
       },
       intercept = {
@@ -9544,7 +9955,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(highlightPostTag = "</em>"),
+          indexSettings =
+            IndexSettings(
+              highlightPostTag = "</em>",
+            ),
         )
       },
       intercept = {
@@ -9561,7 +9975,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(snippetEllipsisText = "…"),
+          indexSettings =
+            IndexSettings(
+              snippetEllipsisText = "…",
+            ),
         )
       },
       intercept = {
@@ -9578,7 +9995,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(restrictHighlightAndSnippetArrays = true),
+          indexSettings =
+            IndexSettings(
+              restrictHighlightAndSnippetArrays = true,
+            ),
         )
       },
       intercept = {
@@ -9595,7 +10015,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(hitsPerPage = 20),
+          indexSettings =
+            IndexSettings(
+              hitsPerPage = 20,
+            ),
         )
       },
       intercept = {
@@ -9612,7 +10035,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(paginationLimitedTo = 1000L),
+          indexSettings =
+            IndexSettings(
+              paginationLimitedTo = 1000L,
+            ),
         )
       },
       intercept = {
@@ -9629,7 +10055,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(minWordSizefor1Typo = 4),
+          indexSettings =
+            IndexSettings(
+              minWordSizefor1Typo = 4,
+            ),
         )
       },
       intercept = {
@@ -9646,7 +10075,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(minWordSizefor2Typos = 4),
+          indexSettings =
+            IndexSettings(
+              minWordSizefor2Typos = 4,
+            ),
         )
       },
       intercept = {
@@ -9663,7 +10095,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(typoTolerance = TypoTolerance.of(true)),
+          indexSettings =
+            IndexSettings(
+              typoTolerance = TypoTolerance.of(true),
+            ),
         )
       },
       intercept = {
@@ -9680,7 +10115,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(allowTyposOnNumericTokens = false),
+          indexSettings =
+            IndexSettings(
+              allowTyposOnNumericTokens = false,
+            ),
         )
       },
       intercept = {
@@ -9697,7 +10135,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(disableTypoToleranceOnWords = listOf("wheel", "1X2BCD")),
+          indexSettings =
+            IndexSettings(
+              disableTypoToleranceOnWords = listOf("wheel", "1X2BCD"),
+            ),
         )
       },
       intercept = {
@@ -9714,7 +10155,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(separatorsToIndex = "+#"),
+          indexSettings =
+            IndexSettings(
+              separatorsToIndex = "+#",
+            ),
         )
       },
       intercept = {
@@ -9797,7 +10241,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(camelCaseAttributes = listOf("description")),
+          indexSettings =
+            IndexSettings(
+              camelCaseAttributes = listOf("description"),
+            ),
         )
       },
       intercept = {
@@ -9820,9 +10267,13 @@ class SearchTest {
                 buildJsonObject {
                   put(
                     "de",
-                    JsonArray(listOf(JsonPrimitive("name"))),
+                    JsonArray(
+                      listOf(
+                        JsonPrimitive("name"),
+                      ),
+                    ),
                   )
-                }
+                },
             ),
         )
       },
@@ -9850,7 +10301,7 @@ class SearchTest {
                       listOf(
                         JsonPrimitive("name_de"),
                         JsonPrimitive("description_de"),
-                      )
+                      ),
                     ),
                   )
                   put(
@@ -9859,10 +10310,10 @@ class SearchTest {
                       listOf(
                         JsonPrimitive("name_fi"),
                         JsonPrimitive("description_fi"),
-                      )
+                      ),
                     ),
                   )
-                }
+                },
             ),
         )
       },
@@ -9883,7 +10334,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(keepDiacriticsOnCharacters = "øé"),
+          indexSettings =
+            IndexSettings(
+              keepDiacriticsOnCharacters = "øé",
+            ),
         )
       },
       intercept = {
@@ -9901,7 +10355,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(customNormalization = mapOf("default" to mapOf("ä" to "ae"))),
+            IndexSettings(
+              customNormalization = mapOf("default" to mapOf("ä" to "ae")),
+            ),
         )
       },
       intercept = {
@@ -9945,7 +10401,7 @@ class SearchTest {
           indexName = "theIndexName",
           indexSettings =
             IndexSettings(
-              indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "ja" })
+              indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "ja" }),
             ),
         )
       },
@@ -9963,7 +10419,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(decompoundQuery = true),
+          indexSettings =
+            IndexSettings(
+              decompoundQuery = true,
+            ),
         )
       },
       intercept = {
@@ -9980,7 +10439,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(enableRules = true),
+          indexSettings =
+            IndexSettings(
+              enableRules = true,
+            ),
         )
       },
       intercept = {
@@ -9997,7 +10459,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(enablePersonalization = true),
+          indexSettings =
+            IndexSettings(
+              enablePersonalization = true,
+            ),
         )
       },
       intercept = {
@@ -10015,7 +10480,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(queryType = QueryType.entries.first { it.value == "prefixLast" }),
+            IndexSettings(
+              queryType = QueryType.entries.first { it.value == "prefixLast" },
+            ),
         )
       },
       intercept = {
@@ -10034,7 +10501,7 @@ class SearchTest {
           indexName = "theIndexName",
           indexSettings =
             IndexSettings(
-              removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "none" }
+              removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "none" },
             ),
         )
       },
@@ -10052,7 +10519,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(advancedSyntax = true),
+          indexSettings =
+            IndexSettings(
+              advancedSyntax = true,
+            ),
         )
       },
       intercept = {
@@ -10070,7 +10540,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(optionalWords = OptionalWords.of(listOf("blue", "iphone case"))),
+            IndexSettings(
+              optionalWords = OptionalWords.of(listOf("blue", "iphone case")),
+            ),
         )
       },
       intercept = {
@@ -10087,7 +10559,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(disablePrefixOnAttributes = listOf("sku")),
+          indexSettings =
+            IndexSettings(
+              disablePrefixOnAttributes = listOf("sku"),
+            ),
         )
       },
       intercept = {
@@ -10104,7 +10579,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(disableExactOnAttributes = listOf("description")),
+          indexSettings =
+            IndexSettings(
+              disableExactOnAttributes = listOf("description"),
+            ),
         )
       },
       intercept = {
@@ -10124,7 +10602,7 @@ class SearchTest {
           indexSettings =
             IndexSettings(
               exactOnSingleWordQuery =
-                ExactOnSingleWordQuery.entries.first { it.value == "attribute" }
+                ExactOnSingleWordQuery.entries.first { it.value == "attribute" },
             ),
         )
       },
@@ -10148,7 +10626,7 @@ class SearchTest {
                 listOf(
                   AlternativesAsExact.entries.first { it.value == "ignorePlurals" },
                   AlternativesAsExact.entries.first { it.value == "singleWordSynonym" },
-                )
+                ),
             ),
         )
       },
@@ -10167,7 +10645,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(numericAttributesForFiltering = listOf("quantity", "popularity")),
+            IndexSettings(
+              numericAttributesForFiltering = listOf("quantity", "popularity"),
+            ),
         )
       },
       intercept = {
@@ -10184,7 +10664,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(allowCompressionOfIntegerArray = true),
+          indexSettings =
+            IndexSettings(
+              allowCompressionOfIntegerArray = true,
+            ),
         )
       },
       intercept = {
@@ -10201,7 +10684,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributeForDistinct = "url"),
+          indexSettings =
+            IndexSettings(
+              attributeForDistinct = "url",
+            ),
         )
       },
       intercept = {
@@ -10239,7 +10725,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(replaceSynonymsInHighlight = false),
+          indexSettings =
+            IndexSettings(
+              replaceSynonymsInHighlight = false,
+            ),
         )
       },
       intercept = {
@@ -10256,7 +10745,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(minProximity = 1),
+          indexSettings =
+            IndexSettings(
+              minProximity = 1,
+            ),
         )
       },
       intercept = {
@@ -10274,7 +10766,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(responseFields = listOf("hits", "hitsPerPage", "nbPages", "page")),
+            IndexSettings(
+              responseFields = listOf("hits", "hitsPerPage", "nbPages", "page"),
+            ),
         )
       },
       intercept = {
@@ -10291,7 +10785,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(maxFacetHits = 10),
+          indexSettings =
+            IndexSettings(
+              maxFacetHits = 10,
+            ),
         )
       },
       intercept = {
@@ -10308,7 +10805,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributeCriteriaComputedByMinProximity = true),
+          indexSettings =
+            IndexSettings(
+              attributeCriteriaComputedByMinProximity = true,
+            ),
         )
       },
       intercept = {
@@ -10330,7 +10830,7 @@ class SearchTest {
               userData =
                 buildJsonObject {
                   put("extraData", "This is the custom data that you want to store in your index")
-                }
+                },
             ),
         )
       },
@@ -10357,7 +10857,10 @@ class SearchTest {
                 RenderingContent(
                   facetOrdering =
                     FacetOrdering(
-                      facets = Facets(order = listOf("size", "brand")),
+                      facets =
+                        Facets(
+                          order = listOf("size", "brand"),
+                        ),
                       values =
                         mapOf(
                           "brand" to
@@ -10374,8 +10877,8 @@ class SearchTest {
                                 SortRemainingBy.entries.first { it.value == "hidden" },
                             ),
                         ),
-                    )
-                )
+                    ),
+                ),
             ),
         )
       },
@@ -10397,7 +10900,9 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings =
-            IndexSettings(typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" }),
+            IndexSettings(
+              typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
+            ),
         )
       },
       intercept = {
@@ -10414,7 +10919,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(minWordSizefor1Typo = 5),
+          indexSettings =
+            IndexSettings(
+              minWordSizefor1Typo = 5,
+            ),
         )
       },
       intercept = {
@@ -10431,7 +10939,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(attributesToSnippet = listOf("body:20", "title")),
+          indexSettings =
+            IndexSettings(
+              attributesToSnippet = listOf("body:20", "title"),
+            ),
         )
       },
       intercept = {
@@ -10448,7 +10959,10 @@ class SearchTest {
       call = {
         setSettings(
           indexName = "theIndexName",
-          indexSettings = IndexSettings(snippetEllipsisText = "[&hellip;]"),
+          indexSettings =
+            IndexSettings(
+              snippetEllipsisText = "[&hellip;]",
+            ),
         )
       },
       intercept = {

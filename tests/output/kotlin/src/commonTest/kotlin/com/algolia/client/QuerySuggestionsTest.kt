@@ -24,7 +24,9 @@ class QuerySuggestionsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -45,7 +47,9 @@ class QuerySuggestionsTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.50.0\\).*".toRegex()
@@ -73,14 +77,16 @@ class QuerySuggestionsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -91,9 +97,8 @@ class QuerySuggestionsTest {
   @Test
   fun `throws when region is not given`() = runTest {
     assertFails {
-        val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")
-
-      }
+      val client = QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "")
+    }
       .let { error ->
         assertError(
           error,
@@ -109,10 +114,9 @@ class QuerySuggestionsTest {
   @Test
   fun `throws when incorrect region is given`() = runTest {
     assertFails {
-        val client =
-          QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
-
-      }
+      val client =
+        QuerySuggestionsClient(appId = "my-app-id", apiKey = "my-api-key", "not_a_region")
+    }
       .let { error ->
         assertError(
           error,
@@ -145,14 +149,16 @@ class QuerySuggestionsTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -166,14 +172,18 @@ class QuerySuggestionsTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

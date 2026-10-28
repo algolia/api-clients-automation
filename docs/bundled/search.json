@@ -3912,7 +3912,7 @@
           "addObject"
         ],
         "summary": "Copy or move an index",
-        "description": "Copies or moves (renames) an index within the same Algolia application.\n\nNotes:\n- Existing destination indices are overwritten, except for their analytics data.\n- If the destination index doesn't exist yet, it's created.\n- This operation is resource-intensive.\n\n**Copy**\n\n- If the source index doesn't exist, copying creates a new index with 0 records and default settings.\n- API keys from the source index are merged with the existing keys in the destination index.\n- You can't copy the `enableReRanking`, `mode`, and `replicas` settings.\n- You can't copy to a destination index that already has replicas.\n- Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).\n- For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).\n\n**Move**\n\n- If the source index doesn't exist, moving is ignored without returning an error.\n- When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.\n  To access the original analytics in the dashboard, create an index with the original name.\n- If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.\n- For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
+        "description": "Copies or moves (renames) an index within the same Algolia application.\n\nNotes:\n- Existing destination indices are overwritten, except for their analytics data.\n- If the destination index doesn't exist yet, it's created.\n- This operation is resource-intensive.\n\n**Copy**\n\n- If the source index doesn't exist, copying creates a new index with 0 records and default settings.\n- You can't copy the `enableReRanking`, `mode`, and `replicas` settings.\n- You can't copy to a destination index that already has replicas.\n- Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).\n- For more information, see [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices).\n\n**Move**\n\n- If the source index doesn't exist, moving is ignored without returning an error.\n- When moving an index, the analytics data keeps its original name, and a new set of analytics data is started for the new name.\n  To access the original analytics in the dashboard, create an index with the original name.\n- If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.\n- For more information, see [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices).\n\nThis operation is subject to [indexing rate limits](https://support.algolia.com/hc/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -9108,16 +9108,20 @@
       },
       "standardEntries": {
         "type": "object",
-        "description": "Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages) and boolean values.\n",
+        "description": "Turn off the built-in Algolia stop words for specific languages.\nOnly `stopwords` is supported.\nThe keys of the `stopwords` object are [language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages) of languages with a built-in stop-word dictionary.\n",
         "additionalProperties": false,
         "properties": {
           "plurals": {
+            "deprecated": true,
+            "description": "Not supported. The API rejects this property with HTTP 400.\nYou cannot turn off the built-in plurals dictionary.\n",
             "$ref": "#/components/schemas/standardEntry"
           },
           "stopwords": {
             "$ref": "#/components/schemas/standardEntry"
           },
           "compounds": {
+            "deprecated": true,
+            "description": "Not supported. The API rejects this property with HTTP 400.\nYou cannot turn off the built-in compounds dictionary.\n",
             "$ref": "#/components/schemas/standardEntry"
           }
         }

@@ -206,7 +206,7 @@ jobs:
           echo "SPECS_SHA=$(shasum -a 256 specs-bundle.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Store bundled specs
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           if-no-files-found: error
           name: specs
@@ -333,7 +333,7 @@ jobs:
           echo "JS_SHA=$(shasum -a 256 clients-javascript.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
       - name: Store javascript clients
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           if-no-files-found: error
           name: clients-javascript
@@ -477,7 +477,7 @@ jobs:
 
       - name: Store ${{ matrix.client.language }} clients
         if: ${{ matrix.client.isMainVersion }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
@@ -808,9 +808,9 @@ jobs:
             exit 1
           fi
 
-  # yarn docker:setup is the only consumer of these images; a version bump that
-  # leaves a stale checksum is invisible to the tag drift check and to every
-  # other CI job, so build the ones whose own inputs changed. the `!= '[]'` guard
+  # yarn docker:setup is the only consumer of these images and no other CI job
+  # builds them; the drift check verifies the pins but not that an image still
+  # builds, so build the ones whose own inputs changed. the `!= '[]'` guard
   # matters: an empty matrix is an error rather than a skipped job
   docker_images:
     runs-on: ubuntu-24.04

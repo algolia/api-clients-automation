@@ -24,7 +24,9 @@ class RecommendTest {
 
     client.runTest(
       call = {
-        customGet(path = "test")
+        customGet(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id-dsn.algolia.net", it.url.host)
@@ -38,7 +40,9 @@ class RecommendTest {
 
     client.runTest(
       call = {
-        customPost(path = "test")
+        customPost(
+          path = "test",
+        )
       },
       intercept = {
         assertEquals("test-app-id.algolia.net", it.url.host)
@@ -52,7 +56,9 @@ class RecommendTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp =
@@ -73,7 +79,9 @@ class RecommendTest {
 
     client.runTest(
       call = {
-        customPost(path = "1/test")
+        customPost(
+          path = "1/test",
+        )
       },
       intercept = {
         val regexp = "^Algolia for Kotlin \\(3.50.0\\).*".toRegex()
@@ -100,14 +108,16 @@ class RecommendTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6692,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customDelete(path = "1/test/no-content")
+        customDelete(
+          path = "1/test/no-content",
+        )
       },
       response = {
         assertNull(it)
@@ -129,14 +139,16 @@ class RecommendTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6694,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "1/test/request-id/smoke/recommend/kotlin")
+        customGet(
+          path = "1/test/request-id/smoke/recommend/kotlin",
+        )
       },
       response = {
         assertNotNull(it)
@@ -163,14 +175,16 @@ class RecommendTest {
                   url = if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
                   protocol = "http",
                   port = 6683,
-                )
-              )
+                ),
+              ),
           ),
       )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/1")
+        customGet(
+          path = "check-api-key/1",
+        )
       },
       response = {
         assertNotNull(it)
@@ -184,14 +198,18 @@ class RecommendTest {
 
     client.runTest(
       call = {
-        setClientApiKey(apiKey = "updated-api-key")
+        setClientApiKey(
+          apiKey = "updated-api-key",
+        )
       },
       intercept = {},
     )
 
     client.runTest(
       call = {
-        customGet(path = "check-api-key/2")
+        customGet(
+          path = "check-api-key/2",
+        )
       },
       response = {
         assertNotNull(it)

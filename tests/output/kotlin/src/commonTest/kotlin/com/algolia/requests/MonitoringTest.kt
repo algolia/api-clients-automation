@@ -26,7 +26,9 @@ class MonitoringTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -60,7 +62,9 @@ class MonitoringTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -128,7 +132,9 @@ class MonitoringTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -182,7 +188,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -214,7 +220,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -249,7 +255,7 @@ class MonitoringTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -282,7 +288,7 @@ class MonitoringTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -315,7 +321,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -350,7 +356,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -382,7 +388,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -417,7 +423,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -452,7 +458,7 @@ class MonitoringTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -471,7 +477,9 @@ class MonitoringTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -512,7 +520,9 @@ class MonitoringTest {
   fun `getClusterIncidents`() = runTest {
     client.runTest(
       call = {
-        getClusterIncidents(clusters = "c1-de")
+        getClusterIncidents(
+          clusters = "c1-de",
+        )
       },
       intercept = {
         assertEquals("/1/incidents/c1-de".toPathSegments(), it.url.pathSegments)
@@ -528,7 +538,9 @@ class MonitoringTest {
   fun `getClusterStatus`() = runTest {
     client.runTest(
       call = {
-        getClusterStatus(clusters = "c1-de")
+        getClusterStatus(
+          clusters = "c1-de",
+        )
       },
       intercept = {
         assertEquals("/1/status/c1-de".toPathSegments(), it.url.pathSegments)
@@ -560,7 +572,9 @@ class MonitoringTest {
   fun `getIndexingTime`() = runTest {
     client.runTest(
       call = {
-        getIndexingTime(clusters = "c1-de")
+        getIndexingTime(
+          clusters = "c1-de",
+        )
       },
       intercept = {
         assertEquals("/1/indexing/c1-de".toPathSegments(), it.url.pathSegments)
@@ -576,7 +590,9 @@ class MonitoringTest {
   fun `getLatency`() = runTest {
     client.runTest(
       call = {
-        getLatency(clusters = "c1-de")
+        getLatency(
+          clusters = "c1-de",
+        )
       },
       intercept = {
         assertEquals("/1/latency/c1-de".toPathSegments(), it.url.pathSegments)
@@ -614,7 +630,9 @@ class MonitoringTest {
   fun `getReachability`() = runTest {
     client.runTest(
       call = {
-        getReachability(clusters = "c1-de")
+        getReachability(
+          clusters = "c1-de",
+        )
       },
       intercept = {
         assertEquals("/1/reachability/c1-de/probes".toPathSegments(), it.url.pathSegments)
