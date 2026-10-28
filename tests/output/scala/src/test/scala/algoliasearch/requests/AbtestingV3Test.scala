@@ -660,6 +660,41 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("estimate AB Test sample size for a user-level rate1") {
+    val (client, echo) = testClient()
+    val future = client.estimateABTest(
+      estimateABTestRequest = EstimateABTestRequest(
+        configuration = EstimateConfiguration(
+          minimumDetectableEffect = MinimumDetectableEffect(
+            size = 0.03,
+            metric = EffectMetric.withName("convertedUsersRate")
+          )
+        ),
+        variants = Seq(
+          AbTestsVariant(
+            index = "AB_TEST_1",
+            trafficPercentage = 50
+          ),
+          AbTestsVariant(
+            index = "AB_TEST_2",
+            trafficPercentage = 50
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/estimate")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("getABTest") {
     val (client, echo) = testClient()
     val future = client.getABTest(

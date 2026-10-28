@@ -776,6 +776,37 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("estimate AB Test sample size for a user-level rate")
+  void estimateABTestTest1() {
+    assertDoesNotThrow(() -> {
+      client.estimateABTest(
+        new EstimateABTestRequest()
+          .setConfiguration(
+            new EstimateConfiguration().setMinimumDetectableEffect(
+              new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERTED_USERS_RATE)
+            )
+          )
+          .setVariants(
+            Arrays.asList(
+              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/estimate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getABTest")
   void getABTestTest() {
     assertDoesNotThrow(() -> {

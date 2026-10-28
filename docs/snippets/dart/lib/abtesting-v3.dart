@@ -651,7 +651,7 @@ void snippetFordeleteABTest() async {
 //
 // estimate AB Test sample size
 void snippetForestimateABTest() async {
-  // >SEPARATOR estimateABTest default
+  // >SEPARATOR estimateABTest estimate AB Test sample size
   // Initialize the client
   final client = AbtestingV3Client(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -665,6 +665,44 @@ void snippetForestimateABTest() async {
         minimumDetectableEffect: MinimumDetectableEffect(
           size: 0.03,
           metric: EffectMetric.fromJson("conversionRate"),
+        ),
+      ),
+      variants: [
+        AbTestsVariant(
+          index: "AB_TEST_1",
+          trafficPercentage: 50,
+        ),
+        AbTestsVariant(
+          index: "AB_TEST_2",
+          trafficPercentage: 50,
+        ),
+      ],
+    ),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the estimateABTest method.
+//
+// estimate AB Test sample size for a user-level rate
+void snippetForestimateABTest1() async {
+  // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.estimateABTest(
+    estimateABTestRequest: EstimateABTestRequest(
+      configuration: EstimateConfiguration(
+        minimumDetectableEffect: MinimumDetectableEffect(
+          size: 0.03,
+          metric: EffectMetric.fromJson("convertedUsersRate"),
         ),
       ),
       variants: [

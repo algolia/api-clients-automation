@@ -1254,8 +1254,9 @@ components:
         estimatedSampleSize:
           type: integer
           description: >
-            Estimated number of searches required to achieve the desired
-            statistical significance.
+            Estimated number of searches, or users for user-level rates (metrics
+            ending in `UsersRate`), required to achieve the desired statistical
+            significance.
 
 
             The A/B test configuration must include a `minimumDetectableEffect`
@@ -1300,13 +1301,24 @@ components:
         $ref: '#/components/schemas/variant'
     EffectMetric:
       type: string
-      description: Metric for which you want to detect the smallest relative difference.
+      description: >
+        Metric for which you want to detect the smallest relative difference.
+
+        Metrics ending in `UsersRate` are user-level rates: the share of tracked
+        users with at least one search with a click, conversion, add-to-cart, or
+        purchase.
+
+        For these metrics, sample sizes count users instead of searches.
       enum:
         - addToCartRate
         - clickThroughRate
         - conversionRate
         - purchaseRate
         - noResultsRate
+        - addToCartUsersRate
+        - clickedUsersRate
+        - convertedUsersRate
+        - purchaseUsersRate
     MinimumDetectableEffect:
       type: object
       description: >-
@@ -1577,14 +1589,16 @@ components:
             Sample size estimates for each variant. The first element is the
             control variant.
 
-            Each element is the estimated number of searches required to achieve
-            the desired statistical significance.
+            Each element is the estimated number of searches, or users for
+            user-level rates (metrics ending in `UsersRate`), required to
+            achieve the desired statistical significance.
           items:
             type: integer
             format: int64
             description: >-
-              Number of tracked searches needed to be able to detect the
-              configured effect for the control variant.
+              Number of tracked searches, or tracked users for user-level rates,
+              needed to be able to detect the configured effect for the control
+              variant.
             example: 23415
     MetricName:
       type: string

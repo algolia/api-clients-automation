@@ -564,7 +564,6 @@ jobs:
     name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
 
       - name: Download specs artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -574,7 +573,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
-        if: ${{ env.ALGOLIA_APPLICATION_ID != '' }}
         with:
           language: swift
           version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}

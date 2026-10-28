@@ -866,6 +866,53 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// estimate AB Test sample size for a user-level rate
+    func testEstimateABTestTest1() async throws {
+        let configuration = try AbtestingV3ClientConfiguration(
+            appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
+            apiKey: AbtestingV3ClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AbtestingV3Client(configuration: configuration, transporter: transporter)
+
+        let response = try await client
+            .estimateABTestWithHTTPInfo(estimateABTestRequest: AbtestingV3EstimateABTestRequest(
+                configuration: AbtestingV3EstimateConfiguration(
+                    minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(
+                        size: 0.03,
+                        metric: AbtestingV3EffectMetric.convertedUsersRate
+                    )
+                ),
+                variants: [
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_1",
+                        trafficPercentage: 50
+                    )),
+                    AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(
+                        index: "AB_TEST_2",
+                        trafficPercentage: 50
+                    )),
+                ]
+            ))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/3/abtests/estimate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getABTest
     func testGetABTestTest() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
