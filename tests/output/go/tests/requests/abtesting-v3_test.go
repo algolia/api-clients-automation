@@ -614,6 +614,32 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("getTimeseries with user-based metrics", func(t *testing.T) {
+		_, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+			42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+			[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
+			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/timeseries", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		queryParams := map[string]string{}
+		require.NoError(
+			t,
+			json.Unmarshal(
+				[]byte(`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}`),
+				&queryParams,
+			),
+		)
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 }
 
 func TestAbtestingV3_ListABTests(t *testing.T) {

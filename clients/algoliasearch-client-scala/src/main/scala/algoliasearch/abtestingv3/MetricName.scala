@@ -84,6 +84,54 @@ object MetricName {
   case object AverageOrderValue extends MetricName {
     override def toString = "average_order_value"
   }
+  case object ClickedUsersCount extends MetricName {
+    override def toString = "clicked_users_count"
+  }
+  case object ConvertedUsersCount extends MetricName {
+    override def toString = "converted_users_count"
+  }
+  case object AddToCartUsersCount extends MetricName {
+    override def toString = "add_to_cart_users_count"
+  }
+  case object PurchaseUsersCount extends MetricName {
+    override def toString = "purchase_users_count"
+  }
+  case object UsersWithNoResultsCount extends MetricName {
+    override def toString = "users_with_no_results_count"
+  }
+  case object ClickedUsersRate extends MetricName {
+    override def toString = "clicked_users_rate"
+  }
+  case object ConvertedUsersRate extends MetricName {
+    override def toString = "converted_users_rate"
+  }
+  case object AddToCartUsersRate extends MetricName {
+    override def toString = "add_to_cart_users_rate"
+  }
+  case object PurchaseUsersRate extends MetricName {
+    override def toString = "purchase_users_rate"
+  }
+  case object AvgClickThroughRatePerUser extends MetricName {
+    override def toString = "avg_click_through_rate_per_user"
+  }
+  case object AvgConversionRatePerUser extends MetricName {
+    override def toString = "avg_conversion_rate_per_user"
+  }
+  case object AvgPurchaseRatePerUser extends MetricName {
+    override def toString = "avg_purchase_rate_per_user"
+  }
+  case object AvgAddToCartRatePerUser extends MetricName {
+    override def toString = "avg_add_to_cart_rate_per_user"
+  }
+  case object AvgClickPositionPerUser extends MetricName {
+    override def toString = "avg_click_position_per_user"
+  }
+  case object WinsorizedRevenuePerUser extends MetricName {
+    override def toString = "winsorized_revenue_per_user"
+  }
+  case object WinsorizedRevenuePerPurchaser extends MetricName {
+    override def toString = "winsorized_revenue_per_purchaser"
+  }
   val values: Seq[MetricName] = Seq(
     SearchCount,
     TrackedSearchCount,
@@ -102,7 +150,23 @@ object MetricName {
     AverageClickPosition,
     Revenue,
     RevenuePerSearch,
-    AverageOrderValue
+    AverageOrderValue,
+    ClickedUsersCount,
+    ConvertedUsersCount,
+    AddToCartUsersCount,
+    PurchaseUsersCount,
+    UsersWithNoResultsCount,
+    ClickedUsersRate,
+    ConvertedUsersRate,
+    AddToCartUsersRate,
+    PurchaseUsersRate,
+    AvgClickThroughRatePerUser,
+    AvgConversionRatePerUser,
+    AvgPurchaseRatePerUser,
+    AvgAddToCartRatePerUser,
+    AvgClickPositionPerUser,
+    WinsorizedRevenuePerUser,
+    WinsorizedRevenuePerPurchaser
   )
 
   def withName(name: String): MetricName = MetricName.values

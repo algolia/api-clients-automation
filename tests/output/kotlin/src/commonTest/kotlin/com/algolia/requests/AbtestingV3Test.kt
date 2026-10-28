@@ -821,6 +821,34 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `getTimeseries with user-based metrics2`() = runTest {
+    client.runTest(
+      call = {
+        getTimeseries(
+          id = 42,
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          metric =
+            listOf(
+              MetricName.entries.first { it.value == "clicked_users_rate" },
+              MetricName.entries.first { it.value == "converted_users_rate" },
+            ),
+          methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams(
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}""",
+          it.url.encodedParameters,
+        )
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // listABTests
 
   @Test

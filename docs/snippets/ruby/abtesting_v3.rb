@@ -599,6 +599,29 @@ def snippet_for_get_timeseries1
   # SEPARATOR<
 end
 
+# Snippet for the getTimeseries method.
+#
+# getTimeseries with user-based metrics
+def snippet_for_get_timeseries2
+  # >SEPARATOR getTimeseries getTimeseries with user-based metrics
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_timeseries(
+    42,
+    "1999-09-19",
+    "2001-01-01",
+    ["clicked_users_rate", "converted_users_rate"],
+    ["bayesian"]
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the listABTests method.
 #
 # listABTests with minimal parameters

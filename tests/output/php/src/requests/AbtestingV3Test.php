@@ -717,6 +717,34 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('getTimeseries with user-based metrics')]
+    public function testGetTimeseries2(): void
+    {
+        $client = $this->getClient();
+        $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'clicked_users_rate',
+
+                'converted_users_rate',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/timeseries',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('listABTests with minimal parameters')]
     public function testListABTests(): void
     {

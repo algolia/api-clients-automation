@@ -52,7 +52,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "var response = await client.GetTimeseriesAsync(42);",
-      "getTimeseries with Bayesian revenue per search": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName> { Enum.Parse<MetricName>(\"RevenuePerSearch\") },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
+      "getTimeseries with Bayesian revenue per search": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName> { Enum.Parse<MetricName>(\"RevenuePerSearch\") },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);",
+      "getTimeseries with user-based metrics": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName>\n  {\n    Enum.Parse<MetricName>(\"ClickedUsersRate\"),\n    Enum.Parse<MetricName>(\"ConvertedUsersRate\"),\n  },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
@@ -125,7 +126,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "final response = await client.getTimeseries(\n  id: 42,\n);",
-      "getTimeseries with Bayesian revenue per search": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"revenue_per_search\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
+      "getTimeseries with Bayesian revenue per search": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"revenue_per_search\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);",
+      "getTimeseries with user-based metrics": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"clicked_users_rate\"),\n    MetricName.fromJson(\"converted_users_rate\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "final response = await client.listABTests();",
@@ -198,7 +200,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "getTimeseries with Bayesian revenue per search": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"revenue_per_search\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getTimeseries with Bayesian revenue per search": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"revenue_per_search\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "getTimeseries with user-based metrics": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"clicked_users_rate\"), abtestingV3.MetricName(\"converted_users_rate\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -271,7 +274,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "Timeseries response = client.getTimeseries(42);",
-      "getTimeseries with Bayesian revenue per search": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.REVENUE_PER_SEARCH),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
+      "getTimeseries with Bayesian revenue per search": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.REVENUE_PER_SEARCH),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);",
+      "getTimeseries with user-based metrics": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
@@ -344,7 +348,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "const response = await client.getTimeseries({ id: 42 });",
-      "getTimeseries with Bayesian revenue per search": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['revenue_per_search'],\n  methods: ['bayesian'],\n});"
+      "getTimeseries with Bayesian revenue per search": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['revenue_per_search'],\n  methods: ['bayesian'],\n});",
+      "getTimeseries with user-based metrics": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['clicked_users_rate', 'converted_users_rate'],\n  methods: ['bayesian'],\n});"
     },
     "listABTests": {
       "listABTests with minimal parameters": "const response = await client.listABTests();",
@@ -414,7 +419,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "var response = client.getTimeseries(id = 42)",
-      "getTimeseries with Bayesian revenue per search": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric = listOf(MetricName.entries.first { it.value == \"revenue_per_search\" }),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
+      "getTimeseries with Bayesian revenue per search": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric = listOf(MetricName.entries.first { it.value == \"revenue_per_search\" }),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )",
+      "getTimeseries with user-based metrics": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric =\n      listOf(\n        MetricName.entries.first { it.value == \"clicked_users_rate\" },\n        MetricName.entries.first { it.value == \"converted_users_rate\" },\n      ),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = client.listABTests()",
@@ -487,7 +493,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "$response = $client->getTimeseries(\n    42,\n);",
-      "getTimeseries with Bayesian revenue per search": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'revenue_per_search',\n    ],\n    [\n        'bayesian',\n    ],\n);"
+      "getTimeseries with Bayesian revenue per search": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'revenue_per_search',\n    ],\n    [\n        'bayesian',\n    ],\n);",
+      "getTimeseries with user-based metrics": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'clicked_users_rate',\n\n        'converted_users_rate',\n    ],\n    [\n        'bayesian',\n    ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "$response = $client->listABTests();",
@@ -560,7 +567,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(\n    id=42,\n)",
-      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"revenue_per_search\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
+      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"revenue_per_search\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)",
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"clicked_users_rate\",\n        \"converted_users_rate\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests()",
@@ -633,7 +641,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(42)",
-      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(42, \"1999-09-19\", \"2001-01-01\", [\"revenue_per_search\"], [\"bayesian\"])"
+      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(42, \"1999-09-19\", \"2001-01-01\", [\"revenue_per_search\"], [\"bayesian\"])",
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  [\"clicked_users_rate\", \"converted_users_rate\"],\n  [\"bayesian\"]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests",
@@ -706,7 +715,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "val response = Await.result(\n  client.getTimeseries(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)",
-      "getTimeseries with Bayesian revenue per search": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"revenue_per_search\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
+      "getTimeseries with Bayesian revenue per search": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"revenue_per_search\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)",
+      "getTimeseries with user-based metrics": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"clicked_users_rate\"), MetricName.withName(\"converted_users_rate\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
@@ -779,7 +789,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "let response = try await client.getTimeseries(id: 42)",
-      "getTimeseries with Bayesian revenue per search": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.revenuePerSearch],\n    methods: [AnalysisMethod.bayesian]\n)"
+      "getTimeseries with Bayesian revenue per search": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.revenuePerSearch],\n    methods: [AnalysisMethod.bayesian]\n)",
+      "getTimeseries with user-based metrics": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],\n    methods: [AnalysisMethod.bayesian]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "let response = try await client.listABTests()",

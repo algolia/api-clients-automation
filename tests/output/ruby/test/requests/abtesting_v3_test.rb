@@ -488,6 +488,32 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # getTimeseries with user-based metrics
+  def test_get_timeseries2
+    req = @client.get_timeseries_with_http_info(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      ["clicked_users_rate", "converted_users_rate"],
+      ["bayesian"]
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42/timeseries", req.path)
+    assert_equal(
+      {
+        :"startDate" => "1999-09-19",
+        :"endDate" => "2001-01-01",
+        :"metric" => "clicked_users_rate%2Cconverted_users_rate",
+        :"methods" => "bayesian"
+      }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # listABTests with minimal parameters
   def test_list_ab_tests
     req = @client.list_ab_tests_with_http_info

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.annotation.*;
  * omitted and the test defaults to `bayesian`, the default primary metric is `conversion_rate`, or
  * the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include
  * conversion rate. If the request includes a non-empty `metrics` list, this metric must be in that
- * list. Revenue per search requires access to revenue analytics.
+ * list. User-level rates (`*_users_rate`) are the share of tracked users with at least one such
+ * search. Add-to-cart rates, purchase rates, and revenue per search require access to revenue
+ * analytics.
  */
 public enum PrimaryMetric {
   ADD_TO_CART_RATE("add_to_cart_rate"),
@@ -22,7 +24,15 @@ public enum PrimaryMetric {
 
   PURCHASE_RATE("purchase_rate"),
 
-  REVENUE_PER_SEARCH("revenue_per_search");
+  REVENUE_PER_SEARCH("revenue_per_search"),
+
+  ADD_TO_CART_USERS_RATE("add_to_cart_users_rate"),
+
+  CLICKED_USERS_RATE("clicked_users_rate"),
+
+  CONVERTED_USERS_RATE("converted_users_rate"),
+
+  PURCHASE_USERS_RATE("purchase_users_rate");
 
   private final String value;
 

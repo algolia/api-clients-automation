@@ -692,6 +692,28 @@ class SnippetAbtestingV3Client {
     // SEPARATOR<
   }
 
+  // Snippet for the getTimeseries method.
+  //
+  // getTimeseries with user-based metrics
+  void snippetForGetTimeseries2() throws Exception {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
+
+    // Call the API
+    Timeseries response = client.getTimeseries(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),
+      Arrays.asList(AnalysisMethod.BAYESIAN)
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the listABTests method.
   //
   // listABTests with minimal parameters

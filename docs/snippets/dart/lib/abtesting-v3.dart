@@ -840,6 +840,36 @@ void snippetForgetTimeseries1() async {
   // SEPARATOR<
 }
 
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with user-based metrics
+void snippetForgetTimeseries2() async {
+  // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+  // Initialize the client
+  final client = AbtestingV3Client(
+      appId: 'ALGOLIA_APPLICATION_ID',
+      apiKey: 'ALGOLIA_API_KEY',
+      region: 'ALGOLIA_APPLICATION_REGION');
+
+  // Call the API
+  final response = await client.getTimeseries(
+    id: 42,
+    startDate: "1999-09-19",
+    endDate: "2001-01-01",
+    metric: [
+      MetricName.fromJson("clicked_users_rate"),
+      MetricName.fromJson("converted_users_rate"),
+    ],
+    methods: [
+      AnalysisMethod.fromJson("bayesian"),
+    ],
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the listABTests method.
 //
 // listABTests with minimal parameters

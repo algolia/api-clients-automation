@@ -786,6 +786,33 @@ class AbtestingV3Test extends AnyFunSuite {
     }
   }
 
+  test("getTimeseries with user-based metrics2") {
+    val (client, echo) = testClient()
+    val future = client.getTimeseries(
+      id = 42,
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      metric = Some(Seq(MetricName.withName("clicked_users_rate"), MetricName.withName("converted_users_rate"))),
+      methods = Some(Seq(AnalysisMethod.withName("bayesian")))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/timeseries")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse(
+      """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}"""
+    ).asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("listABTests with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.listABTests(

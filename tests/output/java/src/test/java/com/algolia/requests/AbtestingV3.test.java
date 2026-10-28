@@ -903,6 +903,39 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getTimeseries with user-based metrics")
+  void getTimeseriesTest2() {
+    assertDoesNotThrow(() -> {
+      client.getTimeseries(
+        42,
+        "1999-09-19",
+        "2001-01-01",
+        Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),
+        Arrays.asList(AnalysisMethod.BAYESIAN)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/timeseries", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("listABTests with minimal parameters")
   void listABTestsTest() {
     assertDoesNotThrow(() -> {

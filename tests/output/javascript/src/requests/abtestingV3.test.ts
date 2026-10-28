@@ -433,6 +433,26 @@ describe('getTimeseries', () => {
       methods: 'bayesian',
     });
   });
+
+  test('getTimeseries with user-based metrics', async () => {
+    const req = (await client.getTimeseries({
+      id: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: ['clicked_users_rate', 'converted_users_rate'],
+      methods: ['bayesian'],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/timeseries');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: 'clicked_users_rate%2Cconverted_users_rate',
+      methods: 'bayesian',
+    });
+  });
 });
 
 describe('listABTests', () => {

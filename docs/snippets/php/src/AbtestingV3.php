@@ -822,6 +822,38 @@ class SnippetAbtestingV3Client
     }
 
     /**
+     * Snippet for the GetTimeseries method.
+     *
+     * getTimeseries with user-based metrics
+     */
+    public function snippetForGetTimeseries2(): void
+    {
+        // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'clicked_users_rate',
+
+                'converted_users_rate',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the ListABTests method.
      *
      * listABTests with minimal parameters
