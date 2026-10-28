@@ -62,4 +62,32 @@ class CurlHttpClientIntegrationTest extends TestCase
             'fractional timeout above 1s' => [1.5, 2500, 1.4, 2.0],
         ];
     }
+
+    #[DataProvider('methodProvider')]
+    public function testMethodAndBodySurviveTheWire(string $method, ?string $body, string $expectedBody): void
+    {
+        $response = (new CurlHttpClient())->sendRequest(
+            new Request($method, 'http://'.getCurlTestServerHost().'/1/test/echo', ['Content-Type' => 'application/json'], $body),
+            5,
+            5
+        );
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(
+            ['method' => $method, 'body' => $expectedBody],
+            json_decode((string) $response->getBody(), true)
+        );
+    }
+
+    public static function methodProvider(): array
+    {
+        return [
+            'GET' => ['GET', null, ''],
+            'DELETE' => ['DELETE', null, ''],
+            'POST' => ['POST', '{"a":1}', '{"a":1}'],
+            'PUT' => ['PUT', '{"a":1}', '{"a":1}'],
+            'PATCH' => ['PATCH', '{"enabled":false}', '{"enabled":false}'],
+            'POST without body' => ['POST', null, ''],
+        ];
+    }
 }
