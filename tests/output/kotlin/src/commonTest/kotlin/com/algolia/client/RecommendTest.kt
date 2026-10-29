@@ -84,7 +84,7 @@ class RecommendTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.50.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.51.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
