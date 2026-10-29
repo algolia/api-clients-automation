@@ -7,6 +7,8 @@ get:
   description: |
     Retrieves the servers that belong to clusters.
 
+    This endpoint only supports Classic instances. It doesn't return Metis instances.
+
     The response depends on whether you authenticate your API request:
 
     - With authentication, the response lists the servers assigned to your
