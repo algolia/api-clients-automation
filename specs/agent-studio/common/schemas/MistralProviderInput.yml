@@ -1,0 +1,21 @@
+MistralProviderInput:
+  properties:
+    apiKey:
+      type: string
+      title: apikey
+    baseUrl:
+      oneOf:
+        - type: string
+          maxLength: 2083
+          minLength: 1
+        - type: 'null'
+      title: baseurl
+  type: object
+  required:
+    - apiKey
+  title: mistralProviderInput
+  description: |-
+    Mistral-specific provider input.
+
+    api_key only, with an optional base_url override (defaults to https://api.mistral.ai/v1), e.g.
+    the EU or US regional endpoint (https://docs.mistral.ai/inference/regional-inference.md).
