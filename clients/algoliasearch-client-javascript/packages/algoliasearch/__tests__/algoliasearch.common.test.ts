@@ -80,6 +80,7 @@ describe('api', () => {
         'x-algolia-api-key': 'API_KEY',
         'x-algolia-application-id': 'APP_ID',
       },
+      baseBodyParameters: {},
       baseHeaders: {
         'content-type': 'text/plain',
       },
@@ -292,6 +293,62 @@ describe('init', () => {
       'content-type': 'text/plain',
       'x-algolia-api-key': 'bar',
       'x-algolia-application-id': 'foo',
+    });
+  });
+
+  test('sets authMode WithinBody', async () => {
+    const bodyClient = algoliasearch('foo', 'bar', {
+      authMode: 'WithinBody',
+      requester: browserEchoRequester(),
+    });
+
+    const searchParams = { requests: [{ indexName: 'idx', query: 'foo' }] };
+
+    const result = (await bodyClient.search(searchParams)) as unknown as EchoResponse;
+
+    expect(result.data).toEqual({ ...searchParams, apiKey: 'bar' });
+    expect(result.searchParams).toEqual({
+      'x-algolia-application-id': 'foo',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
+    });
+    expect(result.headers).toEqual({
+      accept: 'application/json',
+      'content-type': 'text/plain',
+    });
+
+    const write = (await bodyClient.customPost({
+      path: '1/foo',
+      body: { ping: true },
+    })) as unknown as EchoResponse;
+    expect(write.data).toEqual({ ping: true });
+    expect(write.searchParams).toMatchObject({
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+
+    bodyClient.setClientApiKey({ apiKey: 'rotated' });
+    const rotated = (await bodyClient.search(searchParams)) as unknown as EchoResponse;
+    expect(rotated.data).toEqual({ ...searchParams, apiKey: 'rotated' });
+  });
+
+  test('sets authMode WithinBody on the lite client', async () => {
+    const lite = liteClient('foo', 'bar', {
+      authMode: 'WithinBody',
+      requester: browserEchoRequester(),
+    });
+
+    const result = (await lite.search({
+      requests: [{ indexName: 'idx', query: 'foo' }],
+    })) as unknown as EchoResponse;
+
+    expect(result.data).toEqual({ requests: [{ indexName: 'idx', query: 'foo' }], apiKey: 'bar' });
+    expect(result.searchParams).toEqual({
+      'x-algolia-application-id': 'foo',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
+    });
+    expect(result.headers).toEqual({
+      accept: 'application/json',
+      'content-type': 'text/plain',
     });
   });
 
