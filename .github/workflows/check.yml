@@ -935,10 +935,10 @@ jobs:
 
       - name: notify failures
         uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
-        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '' || steps.indexSnippets.outcome == 'failure') }}
+        if: ${{ !cancelled() && (steps.spreadGeneration.outputs.FAILED_LANGUAGES != '' || steps.waitForAllReleases.outputs.FAILED_RELEASES != '' || steps.waitForAllReleases.outputs.WARNING_RELEASES != '' || steps.indexSnippets.outcome == 'failure') }}
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\nSnippets indexing: **${{ steps.indexSnippets.outcome }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
+            text: ":alert: Some clients failed during release :alert: \nSpread generation failures: **${{ steps.spreadGeneration.outputs.FAILED_LANGUAGES || 'none' }}**\nRelease CI failures: **${{ steps.waitForAllReleases.outputs.FAILED_RELEASES || 'none' }}**\nRelease CI warnings (non-blocking): **${{ steps.waitForAllReleases.outputs.WARNING_RELEASES || 'none' }}**\nSnippets indexing: **${{ steps.indexSnippets.outcome }}**\n\nYou can retry the CI jobs to release them again, it will not affect already released clients."
