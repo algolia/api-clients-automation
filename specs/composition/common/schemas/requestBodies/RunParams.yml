@@ -64,6 +64,104 @@ params:
     userToken:
       $ref: '../../params/Search.yml#/userToken'
 
+feeds:
+  title: Run composition feeds as object
+  type: object
+  description: |
+    Per-feed parameters for `multifeed` compositions. Each key is a feed ID.
+
+    Feed `params` take precedence over the root `params`.
+    A feed inherits every root key it doesn't set.
+    A feed value replaces the root value instead of combining with it.
+    This applies to every key, including `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`.
+    For example, `filters` must repeat the common values.
+    An empty value such as `filters: ""` discards the root value.
+
+    The API validates feed `params` like the root `params`.
+    An unsupported parameter returns a 400 error.
+
+    A feed ID may not exist in the composition (for example, because a rule removed it).
+    The response reports it in the `errors` field but request still succeeds.
+
+    Rules match once per request, against the root `params` only.
+  additionalProperties:
+    title: feedRequest
+    type: object
+    additionalProperties: false
+    properties:
+      params:
+        $ref: '#/feedParams'
+  example:
+    organic:
+      params:
+        filters: 'category:shoes'
+        hitsPerPage: 20
+    banner:
+      params:
+        hitsPerPage: 2
+        sortBy: ''
+
+feedParams:
+  title: Run composition feed parameters as object
+  description: Parameters for a single feed. These match the root `params` minus `injectedItems`, `getRankingInfo`, and `enableABTest`.
+  type: object
+  additionalProperties: false
+  properties:
+    analytics:
+      $ref: '../../params/Search.yml#/analytics'
+    analyticsTags:
+      $ref: '../../params/Search.yml#/analyticsTags'
+    aroundLatLng:
+      $ref: '../../params/Search.yml#/aroundLatLng'
+    aroundLatLngViaIP:
+      $ref: '../../params/Search.yml#/aroundLatLngViaIP'
+    aroundRadius:
+      $ref: '../../params/Search.yml#/aroundRadius'
+    aroundPrecision:
+      $ref: '../../params/Search.yml#/aroundPrecision'
+    clickAnalytics:
+      $ref: '../../params/Search.yml#/clickAnalytics'
+    enablePersonalization:
+      $ref: '../../params/Search.yml#/enablePersonalization'
+    enableReRanking:
+      $ref: '../../params/Search.yml#/enableReRanking'
+    enableRules:
+      $ref: '../../params/Composition.yml#/enableRules'
+    facetFilters:
+      $ref: '../../params/Search.yml#/facetFilters'
+    facets:
+      $ref: '../../params/Composition.yml#/facets'
+    filters:
+      $ref: '../../params/Search.yml#/filters'
+    hitsPerPage:
+      $ref: '../../params/Search.yml#/hitsPerPage'
+    insideBoundingBox:
+      $ref: '../../params/Search.yml#/insideBoundingBox'
+    insidePolygon:
+      $ref: '../../params/Search.yml#/insidePolygon'
+    minimumAroundRadius:
+      $ref: '../../params/Search.yml#/minimumAroundRadius'
+    naturalLanguages:
+      $ref: '../../params/Search.yml#/naturalLanguages'
+    numericFilters:
+      $ref: '../../params/Search.yml#/numericFilters'
+    optionalFilters:
+      $ref: '../../params/Search.yml#/optionalFilters'
+    page:
+      $ref: '../../params/Search.yml#/page'
+    query:
+      $ref: '../../params/Search.yml#/query'
+    queryLanguages:
+      $ref: '../../params/Search.yml#/queryLanguages'
+    relevancyStrictness:
+      $ref: '../../params/Search.yml#/relevancyStrictness'
+    ruleContexts:
+      $ref: '../../params/Composition.yml#/ruleContexts'
+    sortBy:
+      $ref: '../../params/Composition.yml#/sortBy'
+    userToken:
+      $ref: '../../params/Search.yml#/userToken'
+
 externalProvider:
   title: Run composition external provider parameters as object
   type: object
