@@ -1,3 +1,9 @@
+## [1.55.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.54.0...1.55.0)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+- [75e309924e](https://github.com/algolia/api-clients-automation/commit/75e309924e) clients(clients): cache host state only on change ([#7202](https://github.com/algolia/api-clients-automation/pull/7202)) by [@zigzagdev](https://github.com/zigzagdev/)
+- [e7642ce951](https://github.com/algolia/api-clients-automation/commit/e7642ce951) feat(specs): add user metrics to abtesting-v3 timeseries enum ([#7181](https://github.com/algolia/api-clients-automation/pull/7181)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [1.54.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.53.0...1.54.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, request bodies, Agent Studio API). See below for more details.

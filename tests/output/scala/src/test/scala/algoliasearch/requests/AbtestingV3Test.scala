@@ -660,6 +660,41 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("estimate AB Test sample size for a user-level rate1") {
+    val (client, echo) = testClient()
+    val future = client.estimateABTest(
+      estimateABTestRequest = EstimateABTestRequest(
+        configuration = EstimateConfiguration(
+          minimumDetectableEffect = MinimumDetectableEffect(
+            size = 0.03,
+            metric = EffectMetric.withName("convertedUsersRate")
+          )
+        ),
+        variants = Seq(
+          AbTestsVariant(
+            index = "AB_TEST_1",
+            trafficPercentage = 50
+          ),
+          AbTestsVariant(
+            index = "AB_TEST_2",
+            trafficPercentage = 50
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/estimate")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("getABTest") {
     val (client, echo) = testClient()
     val future = client.getABTest(
@@ -742,6 +777,33 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.body.isEmpty)
     val expectedQuery = parse(
       """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}"""
+    ).asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("getTimeseries with user-based metrics2") {
+    val (client, echo) = testClient()
+    val future = client.getTimeseries(
+      id = 42,
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      metric = Some(Seq(MetricName.withName("clicked_users_rate"), MetricName.withName("converted_users_rate"))),
+      methods = Some(Seq(AnalysisMethod.withName("bayesian")))
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/3/abtests/42/timeseries")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse(
+      """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)

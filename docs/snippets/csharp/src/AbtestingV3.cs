@@ -673,7 +673,7 @@ public class SnippetAbtestingV3Client
   /// </summary>
   public async Task SnippetForAbtestingV3ClientEstimateABTest()
   {
-    // >SEPARATOR estimateABTest default
+    // >SEPARATOR estimateABTest estimate AB Test sample size
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -693,6 +693,48 @@ public class SnippetAbtestingV3Client
           {
             Size = 0.03,
             Metric = Enum.Parse<EffectMetric>("ConversionRate"),
+          },
+        },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the EstimateABTest method.
+  ///
+  /// estimate AB Test sample size for a user-level rate
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientEstimateABTest1()
+  {
+    // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.EstimateABTestAsync(
+      new EstimateABTestRequest
+      {
+        Configuration = new EstimateConfiguration
+        {
+          MinimumDetectableEffect = new MinimumDetectableEffect
+          {
+            Size = 0.03,
+            Metric = Enum.Parse<EffectMetric>("ConvertedUsersRate"),
           },
         },
         Variants = new List<AddABTestsVariant>
@@ -838,6 +880,41 @@ public class SnippetAbtestingV3Client
       "1999-09-19",
       "2001-01-01",
       new List<MetricName> { Enum.Parse<MetricName>("RevenuePerSearch") },
+      new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTimeseries method.
+  ///
+  /// getTimeseries with user-based metrics
+  /// </summary>
+  public async Task SnippetForAbtestingV3ClientGetTimeseries2()
+  {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    var client = new AbtestingV3Client(
+      new AbtestingV3Config(
+        "ALGOLIA_APPLICATION_ID",
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APPLICATION_REGION"
+      )
+    );
+
+    // Call the API
+    var response = await client.GetTimeseriesAsync(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      new List<MetricName>
+      {
+        Enum.Parse<MetricName>("ClickedUsersRate"),
+        Enum.Parse<MetricName>("ConvertedUsersRate"),
+      },
       new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
     );
     // >LOG

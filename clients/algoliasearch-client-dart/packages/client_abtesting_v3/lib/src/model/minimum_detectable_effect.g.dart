@@ -34,4 +34,8 @@ const _$EffectMetricEnumMap = {
   EffectMetric.conversionRate: 'conversionRate',
   EffectMetric.purchaseRate: 'purchaseRate',
   EffectMetric.noResultsRate: 'noResultsRate',
+  EffectMetric.addToCartUsersRate: 'addToCartUsersRate',
+  EffectMetric.clickedUsersRate: 'clickedUsersRate',
+  EffectMetric.convertedUsersRate: 'convertedUsersRate',
+  EffectMetric.purchaseUsersRate: 'purchaseUsersRate',
 };

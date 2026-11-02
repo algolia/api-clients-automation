@@ -686,7 +686,7 @@ def snippet_for_estimate_ab_test():
 
     estimate AB Test sample size
     """
-    # >SEPARATOR estimateABTest default
+    # >SEPARATOR estimateABTest estimate AB Test sample size
     # Initialize the client
     # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
     client = AbtestingV3ClientSync(
@@ -700,6 +700,47 @@ def snippet_for_estimate_ab_test():
                 "minimumDetectableEffect": {
                     "size": 0.03,
                     "metric": "conversionRate",
+                },
+            },
+            "variants": [
+                {
+                    "index": "AB_TEST_1",
+                    "trafficPercentage": 50,
+                },
+                {
+                    "index": "AB_TEST_2",
+                    "trafficPercentage": 50,
+                },
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_estimate_ab_test1():
+    """
+    Snippet for the estimateABTest method.
+
+    estimate AB Test sample size for a user-level rate
+    """
+    # >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.estimate_ab_test(
+        estimate_ab_test_request={
+            "configuration": {
+                "minimumDetectableEffect": {
+                    "size": 0.03,
+                    "metric": "convertedUsersRate",
                 },
             },
             "variants": [
@@ -841,6 +882,39 @@ def snippet_for_get_timeseries1():
         end_date="2001-01-01",
         metric=[
             "revenue_per_search",
+        ],
+        methods=[
+            "bayesian",
+        ],
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_get_timeseries2():
+    """
+    Snippet for the getTimeseries method.
+
+    getTimeseries with user-based metrics
+    """
+    # >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    # Initialize the client
+    # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
+    client = AbtestingV3ClientSync(
+        "ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION"
+    )
+
+    # Call the API
+    response = client.get_timeseries(
+        id=42,
+        start_date="1999-09-19",
+        end_date="2001-01-01",
+        metric=[
+            "clicked_users_rate",
+            "converted_users_rate",
         ],
         methods=[
             "bayesian",

@@ -40,7 +40,8 @@
       "default": "var response = await client.DeleteABTestAsync(42);"
     },
     "estimateABTest": {
-      "default": "var response = await client.EstimateABTestAsync(\n  new EstimateABTestRequest\n  {\n    Configuration = new EstimateConfiguration\n    {\n      MinimumDetectableEffect = new MinimumDetectableEffect\n      {\n        Size = 0.03,\n        Metric = Enum.Parse<EffectMetric>(\"ConversionRate\"),\n      },\n    },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 50 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
+      "estimate AB Test sample size": "var response = await client.EstimateABTestAsync(\n  new EstimateABTestRequest\n  {\n    Configuration = new EstimateConfiguration\n    {\n      MinimumDetectableEffect = new MinimumDetectableEffect\n      {\n        Size = 0.03,\n        Metric = Enum.Parse<EffectMetric>(\"ConversionRate\"),\n      },\n    },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 50 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);",
+      "estimate AB Test sample size for a user-level rate": "var response = await client.EstimateABTestAsync(\n  new EstimateABTestRequest\n  {\n    Configuration = new EstimateConfiguration\n    {\n      MinimumDetectableEffect = new MinimumDetectableEffect\n      {\n        Size = 0.03,\n        Metric = Enum.Parse<EffectMetric>(\"ConvertedUsersRate\"),\n      },\n    },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 50 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);"
     },
     "getABTest": {
       "getABTest": "var response = await client.GetABTestAsync(42);",
@@ -51,7 +52,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "var response = await client.GetTimeseriesAsync(42);",
-      "getTimeseries with Bayesian revenue per search": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName> { Enum.Parse<MetricName>(\"RevenuePerSearch\") },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
+      "getTimeseries with Bayesian revenue per search": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName> { Enum.Parse<MetricName>(\"RevenuePerSearch\") },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);",
+      "getTimeseries with user-based metrics": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName>\n  {\n    Enum.Parse<MetricName>(\"ClickedUsersRate\"),\n    Enum.Parse<MetricName>(\"ConvertedUsersRate\"),\n  },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
@@ -112,7 +114,8 @@
       "default": "final response = await client.deleteABTest(\n  id: 42,\n);"
     },
     "estimateABTest": {
-      "default": "final response = await client.estimateABTest(\n  estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n      minimumDetectableEffect: MinimumDetectableEffect(\n        size: 0.03,\n        metric: EffectMetric.fromJson(\"conversionRate\"),\n      ),\n    ),\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 50,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
+      "estimate AB Test sample size": "final response = await client.estimateABTest(\n  estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n      minimumDetectableEffect: MinimumDetectableEffect(\n        size: 0.03,\n        metric: EffectMetric.fromJson(\"conversionRate\"),\n      ),\n    ),\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 50,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);",
+      "estimate AB Test sample size for a user-level rate": "final response = await client.estimateABTest(\n  estimateABTestRequest: EstimateABTestRequest(\n    configuration: EstimateConfiguration(\n      minimumDetectableEffect: MinimumDetectableEffect(\n        size: 0.03,\n        metric: EffectMetric.fromJson(\"convertedUsersRate\"),\n      ),\n    ),\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 50,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);"
     },
     "getABTest": {
       "getABTest": "final response = await client.getABTest(\n  id: 42,\n);",
@@ -123,7 +126,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "final response = await client.getTimeseries(\n  id: 42,\n);",
-      "getTimeseries with Bayesian revenue per search": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"revenue_per_search\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
+      "getTimeseries with Bayesian revenue per search": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"revenue_per_search\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);",
+      "getTimeseries with user-based metrics": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"clicked_users_rate\"),\n    MetricName.fromJson(\"converted_users_rate\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "final response = await client.listABTests();",
@@ -184,7 +188,8 @@
       "default": "response, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "estimateABTest": {
-      "default": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(\n      abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "estimate AB Test sample size": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(\n      abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric(\"conversionRate\")))).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "estimate AB Test sample size for a user-level rate": "response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(\n\n  abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(\n    abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(\n      abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric(\"convertedUsersRate\")))).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getABTest": {
       "getABTest": "response, err := client.GetABTest(client.NewApiGetABTestRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -195,7 +200,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "getTimeseries with Bayesian revenue per search": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"revenue_per_search\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getTimeseries with Bayesian revenue per search": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"revenue_per_search\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "getTimeseries with user-based metrics": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"clicked_users_rate\"), abtestingV3.MetricName(\"converted_users_rate\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -256,7 +262,8 @@
       "default": "ABTestResponse response = client.deleteABTest(42);"
     },
     "estimateABTest": {
-      "default": "EstimateABTestResponse response = client.estimateABTest(\n  new EstimateABTestRequest()\n    .setConfiguration(\n      new EstimateConfiguration().setMinimumDetectableEffect(\n        new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE)\n      )\n    )\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(50),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
+      "estimate AB Test sample size": "EstimateABTestResponse response = client.estimateABTest(\n  new EstimateABTestRequest()\n    .setConfiguration(\n      new EstimateConfiguration().setMinimumDetectableEffect(\n        new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERSION_RATE)\n      )\n    )\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(50),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);",
+      "estimate AB Test sample size for a user-level rate": "EstimateABTestResponse response = client.estimateABTest(\n  new EstimateABTestRequest()\n    .setConfiguration(\n      new EstimateConfiguration().setMinimumDetectableEffect(\n        new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERTED_USERS_RATE)\n      )\n    )\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(50),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);"
     },
     "getABTest": {
       "getABTest": "ABTest response = client.getABTest(42);",
@@ -267,7 +274,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "Timeseries response = client.getTimeseries(42);",
-      "getTimeseries with Bayesian revenue per search": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.REVENUE_PER_SEARCH),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
+      "getTimeseries with Bayesian revenue per search": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.REVENUE_PER_SEARCH),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);",
+      "getTimeseries with user-based metrics": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
@@ -328,7 +336,8 @@
       "default": "const response = await client.deleteABTest({ id: 42 });"
     },
     "estimateABTest": {
-      "default": "const response = await client.estimateABTest({\n  configuration: { minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' } },\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 50 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
+      "estimate AB Test sample size": "const response = await client.estimateABTest({\n  configuration: { minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' } },\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 50 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});",
+      "estimate AB Test sample size for a user-level rate": "const response = await client.estimateABTest({\n  configuration: { minimumDetectableEffect: { size: 0.03, metric: 'convertedUsersRate' } },\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 50 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});"
     },
     "getABTest": {
       "getABTest": "const response = await client.getABTest({ id: 42 });",
@@ -339,7 +348,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "const response = await client.getTimeseries({ id: 42 });",
-      "getTimeseries with Bayesian revenue per search": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['revenue_per_search'],\n  methods: ['bayesian'],\n});"
+      "getTimeseries with Bayesian revenue per search": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['revenue_per_search'],\n  methods: ['bayesian'],\n});",
+      "getTimeseries with user-based metrics": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['clicked_users_rate', 'converted_users_rate'],\n  methods: ['bayesian'],\n});"
     },
     "listABTests": {
       "listABTests with minimal parameters": "const response = await client.listABTests();",
@@ -397,7 +407,8 @@
       "default": "var response = client.deleteABTest(id = 42)"
     },
     "estimateABTest": {
-      "default": "var response =\n  client.estimateABTest(\n    estimateABTestRequest =\n      EstimateABTestRequest(\n        configuration =\n          EstimateConfiguration(\n            minimumDetectableEffect =\n              MinimumDetectableEffect(\n                size = 0.03,\n                metric = EffectMetric.entries.first { it.value == \"conversionRate\" },\n              )\n          ),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 50),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )"
+      "estimate AB Test sample size": "var response =\n  client.estimateABTest(\n    estimateABTestRequest =\n      EstimateABTestRequest(\n        configuration =\n          EstimateConfiguration(\n            minimumDetectableEffect =\n              MinimumDetectableEffect(\n                size = 0.03,\n                metric = EffectMetric.entries.first { it.value == \"conversionRate\" },\n              )\n          ),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 50),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )",
+      "estimate AB Test sample size for a user-level rate": "var response =\n  client.estimateABTest(\n    estimateABTestRequest =\n      EstimateABTestRequest(\n        configuration =\n          EstimateConfiguration(\n            minimumDetectableEffect =\n              MinimumDetectableEffect(\n                size = 0.03,\n                metric = EffectMetric.entries.first { it.value == \"convertedUsersRate\" },\n              )\n          ),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 50),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )"
     },
     "getABTest": {
       "getABTest": "var response = client.getABTest(id = 42)",
@@ -408,7 +419,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "var response = client.getTimeseries(id = 42)",
-      "getTimeseries with Bayesian revenue per search": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric = listOf(MetricName.entries.first { it.value == \"revenue_per_search\" }),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
+      "getTimeseries with Bayesian revenue per search": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric = listOf(MetricName.entries.first { it.value == \"revenue_per_search\" }),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )",
+      "getTimeseries with user-based metrics": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric =\n      listOf(\n        MetricName.entries.first { it.value == \"clicked_users_rate\" },\n        MetricName.entries.first { it.value == \"converted_users_rate\" },\n      ),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = client.listABTests()",
@@ -469,7 +481,8 @@
       "default": "$response = $client->deleteABTest(\n    42,\n);"
     },
     "estimateABTest": {
-      "default": "$response = $client->estimateABTest(\n    ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,\n        'metric' => 'conversionRate',\n    ],\n    ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 50,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
+      "estimate AB Test sample size": "$response = $client->estimateABTest(\n    ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,\n        'metric' => 'conversionRate',\n    ],\n    ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 50,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);",
+      "estimate AB Test sample size for a user-level rate": "$response = $client->estimateABTest(\n    ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,\n        'metric' => 'convertedUsersRate',\n    ],\n    ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 50,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);"
     },
     "getABTest": {
       "getABTest": "$response = $client->getABTest(\n    42,\n);",
@@ -480,7 +493,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "$response = $client->getTimeseries(\n    42,\n);",
-      "getTimeseries with Bayesian revenue per search": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'revenue_per_search',\n    ],\n    [\n        'bayesian',\n    ],\n);"
+      "getTimeseries with Bayesian revenue per search": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'revenue_per_search',\n    ],\n    [\n        'bayesian',\n    ],\n);",
+      "getTimeseries with user-based metrics": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'clicked_users_rate',\n\n        'converted_users_rate',\n    ],\n    [\n        'bayesian',\n    ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "$response = $client->listABTests();",
@@ -541,7 +555,8 @@
       "default": "response = client.delete_ab_test(\n    id=42,\n)"
     },
     "estimateABTest": {
-      "default": "response = client.estimate_ab_test(\n    estimate_ab_test_request={\n        \"configuration\": {\n            \"minimumDetectableEffect\": {\n                \"size\": 0.03,\n                \"metric\": \"conversionRate\",\n            },\n        },\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 50,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
+      "estimate AB Test sample size": "response = client.estimate_ab_test(\n    estimate_ab_test_request={\n        \"configuration\": {\n            \"minimumDetectableEffect\": {\n                \"size\": 0.03,\n                \"metric\": \"conversionRate\",\n            },\n        },\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 50,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)",
+      "estimate AB Test sample size for a user-level rate": "response = client.estimate_ab_test(\n    estimate_ab_test_request={\n        \"configuration\": {\n            \"minimumDetectableEffect\": {\n                \"size\": 0.03,\n                \"metric\": \"convertedUsersRate\",\n            },\n        },\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 50,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)"
     },
     "getABTest": {
       "getABTest": "response = client.get_ab_test(\n    id=42,\n)",
@@ -552,7 +567,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(\n    id=42,\n)",
-      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"revenue_per_search\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
+      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"revenue_per_search\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)",
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"clicked_users_rate\",\n        \"converted_users_rate\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests()",
@@ -613,7 +629,8 @@
       "default": "response = client.delete_ab_test(42)"
     },
     "estimateABTest": {
-      "default": "response = client.estimate_ab_test(\n  Algolia::AbtestingV3::EstimateABTestRequest.new(\n    configuration: Algolia::AbtestingV3::EstimateConfiguration.new(\n      minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(\n        size: 0.03,\n        metric: \"conversionRate\"\n      )\n    ),\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 50),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
+      "estimate AB Test sample size": "response = client.estimate_ab_test(\n  Algolia::AbtestingV3::EstimateABTestRequest.new(\n    configuration: Algolia::AbtestingV3::EstimateConfiguration.new(\n      minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(\n        size: 0.03,\n        metric: \"conversionRate\"\n      )\n    ),\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 50),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)",
+      "estimate AB Test sample size for a user-level rate": "response = client.estimate_ab_test(\n  Algolia::AbtestingV3::EstimateABTestRequest.new(\n    configuration: Algolia::AbtestingV3::EstimateConfiguration.new(\n      minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(\n        size: 0.03,\n        metric: \"convertedUsersRate\"\n      )\n    ),\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 50),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)"
     },
     "getABTest": {
       "getABTest": "response = client.get_ab_test(42)",
@@ -624,7 +641,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(42)",
-      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(42, \"1999-09-19\", \"2001-01-01\", [\"revenue_per_search\"], [\"bayesian\"])"
+      "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(42, \"1999-09-19\", \"2001-01-01\", [\"revenue_per_search\"], [\"bayesian\"])",
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  [\"clicked_users_rate\", \"converted_users_rate\"],\n  [\"bayesian\"]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests",
@@ -685,7 +703,8 @@
       "default": "val response = Await.result(\n  client.deleteABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "estimateABTest": {
-      "default": "val response = Await.result(\n  client.estimateABTest(\n    estimateABTestRequest = EstimateABTestRequest(\n      configuration = EstimateConfiguration(\n        minimumDetectableEffect = MinimumDetectableEffect(\n          size = 0.03,\n          metric = EffectMetric.withName(\"conversionRate\")\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 50\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "estimate AB Test sample size": "val response = Await.result(\n  client.estimateABTest(\n    estimateABTestRequest = EstimateABTestRequest(\n      configuration = EstimateConfiguration(\n        minimumDetectableEffect = MinimumDetectableEffect(\n          size = 0.03,\n          metric = EffectMetric.withName(\"conversionRate\")\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 50\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "estimate AB Test sample size for a user-level rate": "val response = Await.result(\n  client.estimateABTest(\n    estimateABTestRequest = EstimateABTestRequest(\n      configuration = EstimateConfiguration(\n        minimumDetectableEffect = MinimumDetectableEffect(\n          size = 0.03,\n          metric = EffectMetric.withName(\"convertedUsersRate\")\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 50\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getABTest": {
       "getABTest": "val response = Await.result(\n  client.getABTest(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)",
@@ -696,7 +715,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "val response = Await.result(\n  client.getTimeseries(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)",
-      "getTimeseries with Bayesian revenue per search": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"revenue_per_search\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
+      "getTimeseries with Bayesian revenue per search": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"revenue_per_search\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)",
+      "getTimeseries with user-based metrics": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"clicked_users_rate\"), MetricName.withName(\"converted_users_rate\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
@@ -757,7 +777,8 @@
       "default": "let response = try await client.deleteABTest(id: 42)"
     },
     "estimateABTest": {
-      "default": "let response = try await client.estimateABTest(estimateABTestRequest: AbtestingV3EstimateABTestRequest(\n    configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(\n        size: 0.03,\n        metric: AbtestingV3EffectMetric.conversionRate\n    )),\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 50\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ]\n))"
+      "estimate AB Test sample size": "let response = try await client.estimateABTest(estimateABTestRequest: AbtestingV3EstimateABTestRequest(\n    configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(\n        size: 0.03,\n        metric: AbtestingV3EffectMetric.conversionRate\n    )),\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 50\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ]\n))",
+      "estimate AB Test sample size for a user-level rate": "let response = try await client.estimateABTest(estimateABTestRequest: AbtestingV3EstimateABTestRequest(\n    configuration: AbtestingV3EstimateConfiguration(minimumDetectableEffect: AbtestingV3MinimumDetectableEffect(\n        size: 0.03,\n        metric: AbtestingV3EffectMetric.convertedUsersRate\n    )),\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 50\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ]\n))"
     },
     "getABTest": {
       "getABTest": "let response = try await client.getABTest(id: 42)",
@@ -768,7 +789,8 @@
     },
     "getTimeseries": {
       "getTimeseries": "let response = try await client.getTimeseries(id: 42)",
-      "getTimeseries with Bayesian revenue per search": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.revenuePerSearch],\n    methods: [AnalysisMethod.bayesian]\n)"
+      "getTimeseries with Bayesian revenue per search": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.revenuePerSearch],\n    methods: [AnalysisMethod.bayesian]\n)",
+      "getTimeseries with user-based metrics": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],\n    methods: [AnalysisMethod.bayesian]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "let response = try await client.listABTests()",

@@ -681,6 +681,46 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `estimate AB Test sample size for a user-level rate1`() = runTest {
+    client.runTest(
+      call = {
+        estimateABTest(
+          estimateABTestRequest =
+            EstimateABTestRequest(
+              configuration =
+                EstimateConfiguration(
+                  minimumDetectableEffect =
+                    MinimumDetectableEffect(
+                      size = 0.03,
+                      metric = EffectMetric.entries.first { it.value == "convertedUsersRate" },
+                    ),
+                ),
+              variants =
+                listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/estimate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // getABTest
 
   @Test
@@ -774,6 +814,34 @@ class AbtestingV3Test {
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
           """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""",
+          it.url.encodedParameters,
+        )
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `getTimeseries with user-based metrics2`() = runTest {
+    client.runTest(
+      call = {
+        getTimeseries(
+          id = 42,
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          metric =
+            listOf(
+              MetricName.entries.first { it.value == "clicked_users_rate" },
+              MetricName.entries.first { it.value == "converted_users_rate" },
+            ),
+          methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams(
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)

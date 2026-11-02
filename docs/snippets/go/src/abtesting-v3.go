@@ -678,7 +678,7 @@ func SnippetForEstimateABTestOfAbtestingV3() {
 	   estimate AB Test sample size
 	*/
 
-	// >SEPARATOR estimateABTest default
+	// >SEPARATOR estimateABTest estimate AB Test sample size
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -692,6 +692,41 @@ func SnippetForEstimateABTestOfAbtestingV3() {
 		abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
 			abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
 				abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric("conversionRate")))).SetVariants(
+			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForEstimateABTestOfAbtestingV31() {
+	/*
+	   Snippet for the estimateABTest method.
+
+	   estimate AB Test sample size for a user-level rate
+	*/
+
+	// >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+		abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
+			abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+				abtestingV3.NewEmptyMinimumDetectableEffect().SetSize(0.03).SetMetric(abtestingV3.EffectMetric("convertedUsersRate")))).SetVariants(
 			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
@@ -842,6 +877,37 @@ func SnippetForGetTimeseriesOfAbtestingV31() {
 	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
 		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
 		[]abtestingV3.MetricName{abtestingV3.MetricName("revenue_per_search")}).WithMethods(
+		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForGetTimeseriesOfAbtestingV32() {
+	/*
+	   Snippet for the getTimeseries method.
+
+	   getTimeseries with user-based metrics
+	*/
+
+	// >SEPARATOR getTimeseries getTimeseries with user-based metrics
+	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
+	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+		[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
 		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
 	if err != nil {
 		// handle the eventual error

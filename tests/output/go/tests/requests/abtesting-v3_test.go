@@ -494,6 +494,27 @@ func TestAbtestingV3_EstimateABTest(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
+	t.Run("estimate AB Test sample size for a user-level rate", func(t *testing.T) {
+		_, err := client.EstimateABTest(client.NewApiEstimateABTestRequest(
+
+			abtestingV3.NewEmptyEstimateABTestRequest().SetConfiguration(
+				abtestingV3.NewEmptyEstimateConfiguration().SetMinimumDetectableEffect(
+					abtestingV3.NewEmptyMinimumDetectableEffect().
+						SetSize(0.03).
+						SetMetric(abtestingV3.EffectMetric("convertedUsersRate")),
+				),
+			).SetVariants(
+				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(50)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
+					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/estimate", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
+	})
 }
 
 func TestAbtestingV3_GetABTest(t *testing.T) {
@@ -584,6 +605,32 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 			t,
 			json.Unmarshal(
 				[]byte(`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}`),
+				&queryParams,
+			),
+		)
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("getTimeseries with user-based metrics", func(t *testing.T) {
+		_, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
+			42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
+			[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
+			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+		require.NoError(t, err)
+
+		require.Equal(t, "/3/abtests/42/timeseries", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+
+		queryParams := map[string]string{}
+		require.NoError(
+			t,
+			json.Unmarshal(
+				[]byte(`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}`),
 				&queryParams,
 			),
 		)

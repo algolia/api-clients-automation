@@ -55,21 +55,10 @@ final class CurlHttpClient implements HttpClientInterface
         //        curl_setopt($curlHandle, CURLOPT_CAINFO, $this->caInfoPath);
 
         curl_setopt($curlHandle, CURLOPT_URL, (string) $request->getUri());
-        $version = curl_version();
-        if (
-            version_compare($version['version'], '7.16.2', '>=')
-            && $connectTimeout < 1
-        ) {
-            curl_setopt(
-                $curlHandle,
-                CURLOPT_CONNECTTIMEOUT_MS,
-                $connectTimeout * 1000
-            );
-            curl_setopt($curlHandle, CURLOPT_TIMEOUT_MS, $timeout * 1000);
-        } else {
-            curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, $connectTimeout);
-            curl_setopt($curlHandle, CURLOPT_TIMEOUT, $timeout);
-        }
+        // Timeouts are in seconds and may be fractional: the second-based options truncate them to
+        // integers (0.5 would become 0, which curl treats as no timeout), so always use milliseconds.
+        curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT_MS, (int) round($connectTimeout * 1000));
+        curl_setopt($curlHandle, CURLOPT_TIMEOUT_MS, (int) round($timeout * 1000));
 
         // The problem is that on (Li|U)nix, when libcurl uses the standard name resolver,
         // a SIGALRM is raised during name resolution which libcurl thinks is the timeout alarm.
@@ -84,25 +73,14 @@ final class CurlHttpClient implements HttpClientInterface
         });
 
         $method = $request->getMethod();
+        $body = (string) $request->getBody();
+        curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, $method);
+
         if ('GET' === $method) {
-            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($curlHandle, CURLOPT_HTTPGET, true);
-            curl_setopt($curlHandle, CURLOPT_POST, false);
-        } else {
-            if ('POST' === $method) {
-                $body = (string) $request->getBody();
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'POST');
-                curl_setopt($curlHandle, CURLOPT_POST, true);
-                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
-            } elseif ('DELETE' === $method) {
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                curl_setopt($curlHandle, CURLOPT_POST, false);
-            } elseif ('PUT' === $method) {
-                $body = (string) $request->getBody();
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
-                curl_setopt($curlHandle, CURLOPT_POST, true);
-            }
+        } elseif (in_array($method, ['POST', 'PUT', 'PATCH'], true) || '' !== $body) {
+            // POSTFIELDS sends the body (and a `Content-Length`, even when empty), CUSTOMREQUEST keeps the method
+            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
         }
         $mhandle = $this->getMHandle($curlHandle);
 

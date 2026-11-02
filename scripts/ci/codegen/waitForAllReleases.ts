@@ -8,6 +8,9 @@ import type { Language } from '../../types.ts';
 
 import { commitStartRelease } from './text.ts';
 
+// Release workflows that tolerate a non-blocking failure (e.g. CocoaPods) flag it with a `::warning title=<prefix>...` annotation.
+export const RELEASE_WARNING_TITLE_PREFIX = 'release-warning:';
+
 type Run = {
   language: Language;
   run?: components['schemas']['workflow-run'];
@@ -55,6 +58,37 @@ export function sleep(ms: number): Promise<void> {
   });
 }
 
+export async function getReleaseWarnings(language: Language, runId: number): Promise<string[]> {
+  const octokit = getOctokit();
+  const owner = 'algolia';
+  const repo = getClientsConfigField(language, 'gitRepoId');
+
+  const jobs = await octokit.paginate(octokit.actions.listJobsForWorkflowRun, {
+    owner,
+    repo,
+    run_id: runId,
+    per_page: 100,
+  });
+  const warnings: string[] = [];
+
+  for (const job of jobs) {
+    const annotations = await octokit.paginate(octokit.checks.listAnnotations, {
+      owner,
+      repo,
+      check_run_id: job.id,
+      per_page: 100,
+    });
+
+    for (const annotation of annotations) {
+      if (annotation.annotation_level === 'warning' && annotation.title?.startsWith(RELEASE_WARNING_TITLE_PREFIX)) {
+        warnings.push(annotation.title.slice(RELEASE_WARNING_TITLE_PREFIX.length).trim());
+      }
+    }
+  }
+
+  return warnings;
+}
+
 async function waitForAllReleases(languagesReleased: Language[]): Promise<void> {
   const lastCommitMessage = await run('git log -1 --format="%s"');
 
@@ -80,6 +114,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
   );
 
   const failures: Language[] = [];
+  const warnings: string[] = [];
 
   const start = Date.now();
   // kotlin release can take a long time
@@ -120,6 +155,15 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
         console.log(`${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`);
         if (!success) {
           failures.push(ciRun.language);
+        } else {
+          try {
+            for (const warning of await getReleaseWarnings(ciRun.language, ciRun.run.id)) {
+              console.warn(`⚠️ ${ciRun.language}: ${warning}`);
+              warnings.push(`${ciRun.language} (${warning})`);
+            }
+          } catch (e) {
+            console.error(`Failed to read the release warnings of ${ciRun.language}: ${e}`);
+          }
         }
         // stop fetching this run.
         ciRun.finished = true;
@@ -136,6 +180,10 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
   if (failures.length > 0) {
     console.error(`${failures.join(', ')} releases failed, please check the CI logs.`);
     core.setOutput('FAILED_RELEASES', failures.join(' '));
+  }
+
+  if (warnings.length > 0) {
+    core.setOutput('WARNING_RELEASES', warnings.join(', '));
   }
 
   core.setOutput('CAN_PUSH_TO_REPO', true);

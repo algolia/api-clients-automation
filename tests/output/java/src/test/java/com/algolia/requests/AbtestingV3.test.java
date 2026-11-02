@@ -776,6 +776,37 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("estimate AB Test sample size for a user-level rate")
+  void estimateABTestTest1() {
+    assertDoesNotThrow(() -> {
+      client.estimateABTest(
+        new EstimateABTestRequest()
+          .setConfiguration(
+            new EstimateConfiguration().setMinimumDetectableEffect(
+              new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERTED_USERS_RATE)
+            )
+          )
+          .setVariants(
+            Arrays.asList(
+              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/estimate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getABTest")
   void getABTestTest() {
     assertDoesNotThrow(() -> {
@@ -858,6 +889,39 @@ class AbtestingV3ClientRequestsTests {
     try {
       Map<String, String> expectedQuery = json.readValue(
         "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"revenue_per_search\",\"methods\":\"bayesian\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("getTimeseries with user-based metrics")
+  void getTimeseriesTest2() {
+    assertDoesNotThrow(() -> {
+      client.getTimeseries(
+        42,
+        "1999-09-19",
+        "2001-01-01",
+        Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),
+        Arrays.asList(AnalysisMethod.BAYESIAN)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/timeseries", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;

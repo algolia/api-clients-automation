@@ -30,7 +30,9 @@ sealed trait PrimaryMetric
 /** Primary metric for Bayesian analysis. Required when `method` is `bayesian`. When `method` is omitted and the test
   * defaults to `bayesian`, the default primary metric is `conversion_rate`, or the first metric in `metrics` that
   * supports Bayesian analysis if `metrics` doesn't include conversion rate. If the request includes a non-empty
-  * `metrics` list, this metric must be in that list. Revenue per search requires access to revenue analytics.
+  * `metrics` list, this metric must be in that list. User-level rates (`*_users_rate`) are the share of tracked users
+  * with at least one such search. Add-to-cart rates, purchase rates, and revenue per search require access to revenue
+  * analytics.
   */
 object PrimaryMetric {
   case object AddToCartRate extends PrimaryMetric {
@@ -48,7 +50,29 @@ object PrimaryMetric {
   case object RevenuePerSearch extends PrimaryMetric {
     override def toString = "revenue_per_search"
   }
-  val values: Seq[PrimaryMetric] = Seq(AddToCartRate, ClickThroughRate, ConversionRate, PurchaseRate, RevenuePerSearch)
+  case object AddToCartUsersRate extends PrimaryMetric {
+    override def toString = "add_to_cart_users_rate"
+  }
+  case object ClickedUsersRate extends PrimaryMetric {
+    override def toString = "clicked_users_rate"
+  }
+  case object ConvertedUsersRate extends PrimaryMetric {
+    override def toString = "converted_users_rate"
+  }
+  case object PurchaseUsersRate extends PrimaryMetric {
+    override def toString = "purchase_users_rate"
+  }
+  val values: Seq[PrimaryMetric] = Seq(
+    AddToCartRate,
+    ClickThroughRate,
+    ConversionRate,
+    PurchaseRate,
+    RevenuePerSearch,
+    AddToCartUsersRate,
+    ClickedUsersRate,
+    ConvertedUsersRate,
+    PurchaseUsersRate
+  )
 
   def withName(name: String): PrimaryMetric = PrimaryMetric.values
     .find(_.toString == name)

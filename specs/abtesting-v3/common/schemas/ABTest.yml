@@ -113,13 +113,20 @@ MinimumDetectableEffect:
 
 EffectMetric:
   type: string
-  description: Metric for which you want to detect the smallest relative difference.
+  description: |
+    Metric for which you want to detect the smallest relative difference.
+    Metrics ending in `UsersRate` are user-level rates: the share of tracked users with at least one search with a click, conversion, add-to-cart, or purchase.
+    For these metrics, sample sizes count users instead of searches.
   enum:
     - addToCartRate
     - clickThroughRate
     - conversionRate
     - purchaseRate
     - noResultsRate
+    - addToCartUsersRate
+    - clickedUsersRate
+    - convertedUsersRate
+    - purchaseUsersRate
 
 PrimaryMetric:
   type: string
@@ -128,7 +135,8 @@ PrimaryMetric:
     When `method` is omitted and the test defaults to `bayesian`, the default primary metric is `conversion_rate`,
     or the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include conversion rate.
     If the request includes a non-empty `metrics` list, this metric must be in that list.
-    Revenue per search requires access to revenue analytics.
+    User-level rates (`*_users_rate`) are the share of tracked users with at least one such search.
+    Add-to-cart rates, purchase rates, and revenue per search require access to revenue analytics.
   example: conversion_rate
   enum:
     - add_to_cart_rate
@@ -136,6 +144,10 @@ PrimaryMetric:
     - conversion_rate
     - purchase_rate
     - revenue_per_search
+    - add_to_cart_users_rate
+    - clicked_users_rate
+    - converted_users_rate
+    - purchase_users_rate
 
 MetricsFilter:
   type: object
