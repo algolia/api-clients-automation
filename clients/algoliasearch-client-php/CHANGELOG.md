@@ -1,3 +1,7 @@
+## [4.51.1](https://github.com/algolia/algoliasearch-client-php/compare/4.51.0...4.51.1)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+
 ## [4.51.0](https://github.com/algolia/algoliasearch-client-php/compare/4.50.0...4.51.0)
 
 - [e6d5471f15](https://github.com/algolia/api-clients-automation/commit/e6d5471f15) fix(scripts): avoid swift CTS deadlock when running in docker ([#7146](https://github.com/algolia/api-clients-automation/pull/7146)) by [@Fluf22](https://github.com/Fluf22/)

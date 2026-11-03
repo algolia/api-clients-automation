@@ -1,3 +1,7 @@
+## [4.49.1](https://github.com/algolia/algoliasearch-client-go/compare/4.49.0...4.49.1)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+
 ## [4.49.0](https://github.com/algolia/algoliasearch-client-go/compare/4.48.0...4.49.0)
 
 - [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
