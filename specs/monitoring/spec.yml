@@ -1,3 +1,4 @@
+# ci check: no-op change to trigger client jobs
 openapi: 3.0.2
 info:
   title: Algolia Monitoring API
