@@ -29,7 +29,7 @@ use Psr\Http\Message\RequestInterface;
 class GuzzleHttpClientTest extends TestCase
 {
     /**
-     * @dataProvider retriableTransferFailures
+     * @dataProvider timeoutTransferFailures
      */
     public function testTransferFailuresAreRaisedAsTimeouts(\Throwable $failure, string $expectedMessage): void
     {
@@ -39,11 +39,9 @@ class GuzzleHttpClientTest extends TestCase
         $this->transportFailingWith($failure)->sendRequest(self::request(), 5, 2);
     }
 
-    public static function retriableTransferFailures(): iterable
+    public static function timeoutTransferFailures(): iterable
     {
         $request = self::request();
-
-        yield 'connection refused' => [new ConnectException('connection refused', $request), 'connection refused'];
 
         if (8 > ClientInterface::MAJOR_VERSION) {
             yield 'curl timeout (errno 28)' => [new ConnectException('cURL error 28: operation timed out', $request, null, ['errno' => CURLE_OPERATION_TIMEDOUT]), 'Connection timed out'];
@@ -53,13 +51,38 @@ class GuzzleHttpClientTest extends TestCase
 
         yield 'connect timeout' => [new ConnectTimeoutException('connect timed out', $request), 'Connection timed out'];
 
-        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request), 'connection reset by peer'];
-
         yield 'network timeout before headers' => [new NetworkTimeoutException('operation timed out', $request), 'Connection timed out'];
 
         yield 'read timeout after headers' => [new ResponseTimeoutException('operation timed out', $request, new GuzzleResponse(200, [], '{"hits":[')), 'Connection timed out'];
 
         yield 'handler closed mid-transfer' => [new HandlerClosedException('handler closed', $request), 'handler closed'];
+    }
+
+    /**
+     * A host that cannot be reached is not a timeout: it comes back as a status 0 response, which
+     * the retry strategy treats as an unreachable host and marks down.
+     *
+     * @dataProvider unreachableTransferFailures
+     */
+    public function testUnreachableHostsReturnAStatusZeroResponse(\Throwable $failure, string $expectedReason): void
+    {
+        $response = $this->transportFailingWith($failure)->sendRequest(self::request(), 5, 2);
+
+        $this->assertSame(0, $response->getStatusCode());
+        $this->assertSame($expectedReason, $response->getReasonPhrase());
+    }
+
+    public static function unreachableTransferFailures(): iterable
+    {
+        $request = self::request();
+
+        yield 'connection refused' => [new ConnectException('connection refused', $request), 'connection refused'];
+
+        if (8 > ClientInterface::MAJOR_VERSION) {
+            return;
+        }
+
+        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request), 'connection reset by peer'];
     }
 
     public function testFailuresCarryingAResponseReturnThatResponse(): void
