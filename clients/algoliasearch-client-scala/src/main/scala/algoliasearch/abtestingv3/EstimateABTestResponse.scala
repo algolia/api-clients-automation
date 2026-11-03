@@ -30,7 +30,8 @@ package algoliasearch.abtestingv3
   *   is based on historical traffic.
   * @param sampleSizes
   *   Sample size estimates for each variant. The first element is the control variant. Each element is the estimated
-  *   number of searches required to achieve the desired statistical significance.
+  *   number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired
+  *   statistical significance.
   */
 case class EstimateABTestResponse(
     durationDays: Option[Long] = scala.None,

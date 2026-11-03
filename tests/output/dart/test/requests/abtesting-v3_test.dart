@@ -709,6 +709,45 @@ void main() {
     ),
   );
 
+  // estimateABTest
+  test(
+    'estimate AB Test sample size for a user-level rate',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.estimateABTest(
+        estimateABTestRequest: EstimateABTestRequest(
+          configuration: EstimateConfiguration(
+            minimumDetectableEffect: MinimumDetectableEffect(
+              size: 0.03,
+              metric: EffectMetric.fromJson("convertedUsersRate"),
+            ),
+          ),
+          variants: [
+            AbTestsVariant(
+              index: "AB_TEST_1",
+              trafficPercentage: 50,
+            ),
+            AbTestsVariant(
+              index: "AB_TEST_2",
+              trafficPercentage: 50,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/estimate');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}""");
+      },
+    ),
+  );
+
   // getABTest
   test(
     'getABTest',
@@ -825,6 +864,38 @@ void main() {
         expect(request.method, 'get');
         expectParams(request.queryParameters,
             """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getTimeseries
+  test(
+    'getTimeseries with user-based metrics',
+    () => runTest(
+      builder: (requester) => AbtestingV3Client(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        region: 'us',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getTimeseries(
+        id: 42,
+        startDate: "1999-09-19",
+        endDate: "2001-01-01",
+        metric: [
+          MetricName.fromJson("clicked_users_rate"),
+          MetricName.fromJson("converted_users_rate"),
+        ],
+        methods: [
+          AnalysisMethod.fromJson("bayesian"),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/3/abtests/42/timeseries');
+        expect(request.method, 'get');
+        expectParams(request.queryParameters,
+            """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}""");
         expect(request.body, null);
       },
     ),

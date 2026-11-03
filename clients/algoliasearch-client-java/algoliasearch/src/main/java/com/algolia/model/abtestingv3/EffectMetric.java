@@ -6,7 +6,12 @@ package com.algolia.model.abtestingv3;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Metric for which you want to detect the smallest relative difference. */
+/**
+ * Metric for which you want to detect the smallest relative difference. Metrics ending in
+ * `UsersRate` are user-level rates: the share of tracked users with at least one search with a
+ * click, conversion, add-to-cart, or purchase. For these metrics, sample sizes count users instead
+ * of searches.
+ */
 public enum EffectMetric {
   ADD_TO_CART_RATE("addToCartRate"),
 
@@ -16,7 +21,15 @@ public enum EffectMetric {
 
   PURCHASE_RATE("purchaseRate"),
 
-  NO_RESULTS_RATE("noResultsRate");
+  NO_RESULTS_RATE("noResultsRate"),
+
+  ADD_TO_CART_USERS_RATE("addToCartUsersRate"),
+
+  CLICKED_USERS_RATE("clickedUsersRate"),
+
+  CONVERTED_USERS_RATE("convertedUsersRate"),
+
+  PURCHASE_USERS_RATE("purchaseUsersRate");
 
   private final String value;
 

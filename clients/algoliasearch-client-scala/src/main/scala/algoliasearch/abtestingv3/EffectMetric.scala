@@ -27,7 +27,9 @@ import org.json4s._
 
 sealed trait EffectMetric
 
-/** Metric for which you want to detect the smallest relative difference.
+/** Metric for which you want to detect the smallest relative difference. Metrics ending in `UsersRate` are user-level
+  * rates: the share of tracked users with at least one search with a click, conversion, add-to-cart, or purchase. For
+  * these metrics, sample sizes count users instead of searches.
   */
 object EffectMetric {
   case object AddToCartRate extends EffectMetric {
@@ -45,7 +47,29 @@ object EffectMetric {
   case object NoResultsRate extends EffectMetric {
     override def toString = "noResultsRate"
   }
-  val values: Seq[EffectMetric] = Seq(AddToCartRate, ClickThroughRate, ConversionRate, PurchaseRate, NoResultsRate)
+  case object AddToCartUsersRate extends EffectMetric {
+    override def toString = "addToCartUsersRate"
+  }
+  case object ClickedUsersRate extends EffectMetric {
+    override def toString = "clickedUsersRate"
+  }
+  case object ConvertedUsersRate extends EffectMetric {
+    override def toString = "convertedUsersRate"
+  }
+  case object PurchaseUsersRate extends EffectMetric {
+    override def toString = "purchaseUsersRate"
+  }
+  val values: Seq[EffectMetric] = Seq(
+    AddToCartRate,
+    ClickThroughRate,
+    ConversionRate,
+    PurchaseRate,
+    NoResultsRate,
+    AddToCartUsersRate,
+    ClickedUsersRate,
+    ConvertedUsersRate,
+    PurchaseUsersRate
+  )
 
   def withName(name: String): EffectMetric = EffectMetric.values
     .find(_.toString == name)

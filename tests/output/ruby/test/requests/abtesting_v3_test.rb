@@ -391,6 +391,35 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     )
   end
 
+  # estimate AB Test sample size for a user-level rate
+  def test_estimate_ab_test1
+    req = @client.estimate_ab_test_with_http_info(
+      Algolia::AbtestingV3::EstimateABTestRequest.new(
+        configuration: Algolia::AbtestingV3::EstimateConfiguration.new(
+          minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(
+            size: 0.03,
+            metric: "convertedUsersRate"
+          )
+        ),
+        variants: [
+          Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+          Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/3/abtests/estimate", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # getABTest
   def test_get_ab_test
     req = @client.get_ab_test_with_http_info(42)
@@ -450,6 +479,32 @@ class TestAbtestingV3Client < Test::Unit::TestCase
         :"startDate" => "1999-09-19",
         :"endDate" => "2001-01-01",
         :"metric" => "revenue_per_search",
+        :"methods" => "bayesian"
+      }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # getTimeseries with user-based metrics
+  def test_get_timeseries2
+    req = @client.get_timeseries_with_http_info(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      ["clicked_users_rate", "converted_users_rate"],
+      ["bayesian"]
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal("/3/abtests/42/timeseries", req.path)
+    assert_equal(
+      {
+        :"startDate" => "1999-09-19",
+        :"endDate" => "2001-01-01",
+        :"metric" => "clicked_users_rate%2Cconverted_users_rate",
         :"methods" => "bayesian"
       }.to_a,
       req.query_params.to_a

@@ -478,7 +478,7 @@ export async function snippetForDeleteABTest(): Promise<void> {
 //
 // estimate AB Test sample size
 export async function snippetForEstimateABTest(): Promise<void> {
-  // >SEPARATOR estimateABTest default
+  // >SEPARATOR estimateABTest estimate AB Test sample size
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
@@ -486,6 +486,30 @@ export async function snippetForEstimateABTest(): Promise<void> {
   // Call the API
   const response = await client.estimateABTest({
     configuration: { minimumDetectableEffect: { size: 0.03, metric: 'conversionRate' } },
+    variants: [
+      { index: 'AB_TEST_1', trafficPercentage: 50 },
+      { index: 'AB_TEST_2', trafficPercentage: 50 },
+    ],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the estimateABTest method.
+//
+// estimate AB Test sample size for a user-level rate
+export async function snippetForEstimateABTest1(): Promise<void> {
+  // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.estimateABTest({
+    configuration: { minimumDetectableEffect: { size: 0.03, metric: 'convertedUsersRate' } },
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 50 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
@@ -585,6 +609,30 @@ export async function snippetForGetTimeseries1(): Promise<void> {
     startDate: '1999-09-19',
     endDate: '2001-01-01',
     metric: ['revenue_per_search'],
+    methods: ['bayesian'],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTimeseries method.
+//
+// getTimeseries with user-based metrics
+export async function snippetForGetTimeseries2(): Promise<void> {
+  // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
+
+  // Call the API
+  const response = await client.getTimeseries({
+    id: 42,
+    startDate: '1999-09-19',
+    endDate: '2001-01-01',
+    metric: ['clicked_users_rate', 'converted_users_rate'],
     methods: ['bayesian'],
   });
 

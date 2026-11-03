@@ -47,7 +47,8 @@ public class EstimateABTestResponse {
 
   /**
    * Sample size estimates for each variant. The first element is the control variant. Each element
-   * is the estimated number of searches required to achieve the desired statistical significance.
+   * is the estimated number of searches, or users for user-level rates (metrics ending in
+   * `UsersRate`), required to achieve the desired statistical significance.
    */
   @javax.annotation.Nullable
   public List<Long> getSampleSizes() {

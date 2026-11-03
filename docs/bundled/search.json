@@ -8519,7 +8519,7 @@
           },
           "maxHitsPerQuery": {
             "type": "integer",
-            "description": "Maximum number of results this API key can retrieve in one query.\nBy default, there's no limit.\n",
+            "description": "Maximum number of hits this API key can retrieve per page.\n\nIf you set this to 0, the maximum allowed value (1,000) applies.\nIf you also set `hitsPerPage` on the index, the engine uses the lower of the two values.\n",
             "default": 0
           },
           "maxQueriesPerIPPerHour": {

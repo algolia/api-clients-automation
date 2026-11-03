@@ -26,28 +26,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class OperationIndexModelTest extends TestCase
 {
-    private function makeClient(): array
-    {
-        $mockHttp = new class implements HttpClientInterface {
-            public ?RequestInterface $capturedRequest = null;
-
-            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
-            {
-                $this->capturedRequest = $request;
-
-                return new Response(200, ['Content-Type' => 'application/json'], '{"taskID":1,"updatedAt":"2024-01-01T00:00:00Z"}');
-            }
-        };
-
-        $config = SearchConfig::create('test-app-id', 'test-api-key');
-        $client = new SearchClient(
-            new ApiWrapper($mockHttp, $config, ClusterHosts::create('127.0.0.1'), new RequestOptionsFactory($config)),
-            $config
-        );
-
-        return [$client, $mockHttp];
-    }
-
     public function testOperationIndexWithModelObjectDoesNotThrow(): void
     {
         [$client, $mockHttp] = $this->makeClient();
@@ -93,5 +71,27 @@ class OperationIndexModelTest extends TestCase
             $mockArray->capturedRequest->getBody()->getContents(),
             $mockModel->capturedRequest->getBody()->getContents()
         );
+    }
+
+    private function makeClient(): array
+    {
+        $mockHttp = new class implements HttpClientInterface {
+            public ?RequestInterface $capturedRequest = null;
+
+            public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
+            {
+                $this->capturedRequest = $request;
+
+                return new Response(200, ['Content-Type' => 'application/json'], '{"taskID":1,"updatedAt":"2024-01-01T00:00:00Z"}');
+            }
+        };
+
+        $config = SearchConfig::create('test-app-id', 'test-api-key');
+        $client = new SearchClient(
+            new ApiWrapper($mockHttp, $config, ClusterHosts::create('127.0.0.1'), new RequestOptionsFactory($config)),
+            $config
+        );
+
+        return [$client, $mockHttp];
     }
 }

@@ -534,6 +534,39 @@ class TestAbtestingV3Client:
             """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
         )
 
+    async def test_estimate_ab_test_1(self):
+        """
+        estimate AB Test sample size for a user-level rate
+        """
+        _req = await self._client.estimate_ab_test_with_http_info(
+            estimate_ab_test_request={
+                "configuration": {
+                    "minimumDetectableEffect": {
+                        "size": 0.03,
+                        "metric": "convertedUsersRate",
+                    },
+                },
+                "variants": [
+                    {
+                        "index": "AB_TEST_1",
+                        "trafficPercentage": 50,
+                    },
+                    {
+                        "index": "AB_TEST_2",
+                        "trafficPercentage": 50,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/3/abtests/estimate"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+        )
+
     async def test_get_ab_test_(self):
         """
         getABTest
@@ -621,6 +654,37 @@ class TestAbtestingV3Client:
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
                 "metric": "revenue_per_search",
+                "methods": "bayesian",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_timeseries_2(self):
+        """
+        getTimeseries with user-based metrics
+        """
+        _req = await self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "clicked_users_rate",
+                "converted_users_rate",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "clicked_users_rate%2Cconverted_users_rate",
                 "methods": "bayesian",
             }.items()
         )
@@ -1247,6 +1311,39 @@ class TestAbtestingV3ClientSync:
             """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"conversionRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
         )
 
+    def test_estimate_ab_test_1(self):
+        """
+        estimate AB Test sample size for a user-level rate
+        """
+        _req = self._client.estimate_ab_test_with_http_info(
+            estimate_ab_test_request={
+                "configuration": {
+                    "minimumDetectableEffect": {
+                        "size": 0.03,
+                        "metric": "convertedUsersRate",
+                    },
+                },
+                "variants": [
+                    {
+                        "index": "AB_TEST_1",
+                        "trafficPercentage": 50,
+                    },
+                    {
+                        "index": "AB_TEST_2",
+                        "trafficPercentage": 50,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/3/abtests/estimate"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}"""
+        )
+
     def test_get_ab_test_(self):
         """
         getABTest
@@ -1334,6 +1431,37 @@ class TestAbtestingV3ClientSync:
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
                 "metric": "revenue_per_search",
+                "methods": "bayesian",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_timeseries_2(self):
+        """
+        getTimeseries with user-based metrics
+        """
+        _req = self._client.get_timeseries_with_http_info(
+            id=42,
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            metric=[
+                "clicked_users_rate",
+                "converted_users_rate",
+            ],
+            methods=[
+                "bayesian",
+            ],
+        )
+
+        assert _req.path == "/3/abtests/42/timeseries"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "metric": "clicked_users_rate%2Cconverted_users_rate",
                 "methods": "bayesian",
             }.items()
         )

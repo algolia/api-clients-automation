@@ -635,7 +635,7 @@ class SnippetAbtestingV3Client
      */
     public function snippetForEstimateABTest(): void
     {
-        // >SEPARATOR estimateABTest default
+        // >SEPARATOR estimateABTest estimate AB Test sample size
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -643,6 +643,41 @@ class SnippetAbtestingV3Client
         $response = $client->estimateABTest(
             ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,
                 'metric' => 'conversionRate',
+            ],
+            ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 50,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the EstimateABTest method.
+     *
+     * estimate AB Test sample size for a user-level rate
+     */
+    public function snippetForEstimateABTest1(): void
+    {
+        // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->estimateABTest(
+            ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,
+                'metric' => 'convertedUsersRate',
             ],
             ],
                 'variants' => [
@@ -774,6 +809,38 @@ class SnippetAbtestingV3Client
             '2001-01-01',
             [
                 'revenue_per_search',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTimeseries method.
+     *
+     * getTimeseries with user-based metrics
+     */
+    public function snippetForGetTimeseries2(): void
+    {
+        // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+        // Initialize the client
+        $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
+
+        // Call the API
+        $response = $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'clicked_users_rate',
+
+                'converted_users_rate',
             ],
             [
                 'bayesian',

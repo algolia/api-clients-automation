@@ -28,6 +28,35 @@
         "direction": "asc",
         "methods": "frequentist%2Cbayesian"
       }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "abtests": [
+          {
+            "abTestID": 85635,
+            "createdAt": "2024-05-13T10:12:27.739233Z",
+            "endAt": "2124-05-13T00:00:00Z",
+            "name": "cts_e2e_abtest",
+            "hypothesis": "",
+            "status": "active",
+            "variants": [
+              {
+                "description": "this abtest is used for api client automation tests and will expire in 2124",
+                "index": "cts_e2e_search_facet",
+                "trafficPercentage": 25
+              },
+              {
+                "description": "",
+                "index": "cts_e2e abtest",
+                "trafficPercentage": 75
+              }
+            ]
+          }
+        ],
+        "count": 1,
+        "total": 1
+      }
     }
   }
 ]

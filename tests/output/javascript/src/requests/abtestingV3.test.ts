@@ -350,6 +350,27 @@ describe('estimateABTest', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('estimate AB Test sample size for a user-level rate', async () => {
+    const req = (await client.estimateABTest({
+      configuration: { minimumDetectableEffect: { size: 0.03, metric: 'convertedUsersRate' } },
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 50 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/estimate');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      configuration: { minimumDetectableEffect: { size: 0.03, metric: 'convertedUsersRate' } },
+      variants: [
+        { index: 'AB_TEST_1', trafficPercentage: 50 },
+        { index: 'AB_TEST_2', trafficPercentage: 50 },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('getABTest', () => {
@@ -409,6 +430,26 @@ describe('getTimeseries', () => {
       startDate: '1999-09-19',
       endDate: '2001-01-01',
       metric: 'revenue_per_search',
+      methods: 'bayesian',
+    });
+  });
+
+  test('getTimeseries with user-based metrics', async () => {
+    const req = (await client.getTimeseries({
+      id: 42,
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: ['clicked_users_rate', 'converted_users_rate'],
+      methods: ['bayesian'],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/3/abtests/42/timeseries');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      metric: 'clicked_users_rate%2Cconverted_users_rate',
       methods: 'bayesian',
     });
   });

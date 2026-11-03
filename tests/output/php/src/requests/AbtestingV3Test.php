@@ -587,6 +587,36 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('estimate AB Test sample size for a user-level rate')]
+    public function testEstimateABTest1(): void
+    {
+        $client = $this->getClient();
+        $client->estimateABTest(
+            ['configuration' => ['minimumDetectableEffect' => ['size' => 0.03,
+                'metric' => 'convertedUsersRate',
+            ],
+            ],
+                'variants' => [
+                    ['index' => 'AB_TEST_1',
+                        'trafficPercentage' => 50,
+                    ],
+
+                    ['index' => 'AB_TEST_2',
+                        'trafficPercentage' => 50,
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/estimate',
+                'method' => 'POST',
+                'body' => json_decode('{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}'),
+            ],
+        ]);
+    }
+
     #[TestDox('getABTest')]
     public function testGetABTest(): void
     {
@@ -683,6 +713,34 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('getTimeseries with user-based metrics')]
+    public function testGetTimeseries2(): void
+    {
+        $client = $this->getClient();
+        $client->getTimeseries(
+            42,
+            '1999-09-19',
+            '2001-01-01',
+            [
+                'clicked_users_rate',
+
+                'converted_users_rate',
+            ],
+            [
+                'bayesian',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/3/abtests/42/timeseries',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}', true),
             ],
         ]);
     }

@@ -637,6 +637,38 @@ public class AbtestingV3ClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "estimate AB Test sample size for a user-level rate")]
+  public async Task EstimateABTestTest1()
+  {
+    await client.EstimateABTestAsync(
+      new EstimateABTestRequest
+      {
+        Configuration = new EstimateConfiguration
+        {
+          MinimumDetectableEffect = new MinimumDetectableEffect
+          {
+            Size = 0.03,
+            Metric = Enum.Parse<EffectMetric>("ConvertedUsersRate"),
+          },
+        },
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 50 }),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50 }),
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/estimate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "getABTest")]
   public async Task GetABTestTest()
   {
@@ -718,6 +750,40 @@ public class AbtestingV3ClientRequestTests
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
       "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"revenue_per_search\",\"methods\":\"bayesian\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "getTimeseries with user-based metrics")]
+  public async Task GetTimeseriesTest2()
+  {
+    await client.GetTimeseriesAsync(
+      42,
+      "1999-09-19",
+      "2001-01-01",
+      new List<MetricName>
+      {
+        Enum.Parse<MetricName>("ClickedUsersRate"),
+        Enum.Parse<MetricName>("ConvertedUsersRate"),
+      },
+      new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/3/abtests/42/timeseries", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}"
     );
     Assert.NotNull(expectedQuery);
 
