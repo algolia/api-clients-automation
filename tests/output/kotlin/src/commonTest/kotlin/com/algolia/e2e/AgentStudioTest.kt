@@ -180,7 +180,7 @@ class AgentStudioTest {
         listModels()
       },
       response = {
-        lenientJsonAssert("{\"openai\":[\"gpt-4\"]}", Json.encodeToString(it))
+        lenientJsonAssert("{\"openai\":[]}", Json.encodeToString(it))
       },
     )
   }
