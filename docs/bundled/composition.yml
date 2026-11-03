@@ -1104,6 +1104,8 @@ paths:
               properties:
                 externalProvider:
                   $ref: '#/components/schemas/externalProvider'
+                feeds:
+                  $ref: '#/components/schemas/feeds'
                 feedsOrder:
                   $ref: '#/components/schemas/feedsOrder'
                 params:
@@ -1140,11 +1142,29 @@ paths:
               "foo",
               new RequestBody
               {
-                Params = new Params { Query = "batman" },
-                ExternalProvider = new ExternalProvider
+                Params = new Params { Query = "shoes", Filters = "brand:acme" },
+                Feeds = new Dictionary<string, FeedRequest>
                 {
-                  ConfigurationParams = new Dictionary<string, object> { { "customer_id", "customer123" } },
+                  {
+                    "organic",
+                    new FeedRequest
+                    {
+                      Params = new FeedParams
+                      {
+                        Filters = "brand:acme AND inStock:true",
+                        SortBy = "Price (asc)",
+                      },
+                    }
+                  },
+                  {
+                    "banner",
+                    new FeedRequest
+                    {
+                      Params = new FeedParams { Query = "shoes sale", Filters = "" },
+                    }
+                  },
                 },
+                FeedsOrder = new List<string> { "banner", "organic" },
               }
             );
 
@@ -1162,13 +1182,27 @@ paths:
               compositionID: "foo",
               requestBody: RequestBody(
                 params: Params(
-                  query: "batman",
+                  query: "shoes",
+                  filters: "brand:acme",
                 ),
-                externalProvider: ExternalProvider(
-                  configurationParams: {
-                    'customer_id': "customer123",
-                  },
-                ),
+                feeds: {
+                  'organic': FeedRequest(
+                    params: FeedParams(
+                      filters: "brand:acme AND inStock:true",
+                      sortBy: "Price (asc)",
+                    ),
+                  ),
+                  'banner': FeedRequest(
+                    params: FeedParams(
+                      query: "shoes sale",
+                      filters: "",
+                    ),
+                  ),
+                },
+                feedsOrder: [
+                  "banner",
+                  "organic",
+                ],
               ),
             );
 
@@ -1193,8 +1227,14 @@ paths:
             response, err := client.Search(client.NewApiSearchRequest(
               "foo",
               composition.NewEmptyRequestBody().SetParams(
-                composition.NewEmptyParams().SetQuery("batman")).SetExternalProvider(
-                composition.NewEmptyExternalProvider().SetConfigurationParams(map[string]any{"customer_id": "customer123"}))))
+                composition.NewEmptyParams().
+                  SetQuery("shoes").
+                  SetFilters("brand:acme"),
+              ).
+                SetFeeds(map[string]composition.FeedRequest{"organic": *composition.NewEmptyFeedRequest().SetParams(
+                  composition.NewEmptyFeedParams().SetFilters("brand:acme AND inStock:true").SetSortBy("Price (asc)")), "banner": *composition.NewEmptyFeedRequest().SetParams(
+                  composition.NewEmptyFeedParams().SetQuery("shoes sale").SetFilters(""))}).SetFeedsOrder(
+                []string{"banner", "organic"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1218,15 +1258,20 @@ paths:
 
             SearchResponse response = client.search(
               "foo",
-              new RequestBody().setParams(new Params().setQuery("batman")).setExternalProvider(
-                new ExternalProvider().setConfigurationParams(
+              new RequestBody()
+                .setParams(new Params().setQuery("shoes").setFilters("brand:acme"))
+                .setFeeds(
                   new HashMap() {
                     {
-                      put("customer_id", "customer123");
+                      put(
+                        "organic",
+                        new FeedRequest().setParams(new FeedParams().setFilters("brand:acme AND inStock:true").setSortBy("Price (asc)"))
+                      );
+                      put("banner", new FeedRequest().setParams(new FeedParams().setQuery("shoes sale").setFilters("")));
                     }
                   }
                 )
-              ),
+                .setFeedsOrder(Arrays.asList("banner", "organic")),
               Hit.class
             );
 
@@ -1248,8 +1293,12 @@ paths:
             const response = await client.search({
               compositionID: 'foo',
               requestBody: {
-                params: { query: 'batman' },
-                externalProvider: { configurationParams: { customer_id: 'customer123' } },
+                params: { query: 'shoes', filters: 'brand:acme' },
+                feeds: {
+                  organic: { params: { filters: 'brand:acme AND inStock:true', sortBy: 'Price (asc)' } },
+                  banner: { params: { query: 'shoes sale', filters: '' } },
+                },
+                feedsOrder: ['banner', 'organic'],
               },
             });
 
@@ -1274,12 +1323,17 @@ paths:
                 compositionID = "foo",
                 requestBody =
                   RequestBody(
-                    params = Params(query = "batman"),
-                    externalProvider =
-                      ExternalProvider(
-                        configurationParams =
-                          buildJsonObject { put("customer_id", JsonPrimitive("customer123")) }
+                    params = Params(query = "shoes", filters = "brand:acme"),
+                    feeds =
+                      mapOf(
+                        "organic" to
+                          FeedRequest(
+                            params =
+                              FeedParams(filters = "brand:acme AND inStock:true", sortBy = "Price (asc)")
+                          ),
+                        "banner" to FeedRequest(params = FeedParams(query = "shoes sale", filters = "")),
                       ),
+                    feedsOrder = listOf("banner", "organic"),
                   ),
               )
 
@@ -1300,10 +1354,22 @@ paths:
 
             $response = $client->search(
                 'foo',
-                ['params' => ['query' => 'batman',
+                ['params' => ['query' => 'shoes',
+                    'filters' => 'brand:acme',
                 ],
-                    'externalProvider' => ['configurationParams' => ['customer_id' => 'customer123',
+                    'feeds' => ['organic' => ['params' => ['filters' => 'brand:acme AND inStock:true',
+                        'sortBy' => 'Price (asc)',
                     ],
+                    ],
+                        'banner' => ['params' => ['query' => 'shoes sale',
+                            'filters' => '',
+                        ],
+                        ],
+                    ],
+                    'feedsOrder' => [
+                        'banner',
+
+                        'organic',
                     ],
                 ],
             );
@@ -1331,13 +1397,27 @@ paths:
                 composition_id="foo",
                 request_body={
                     "params": {
-                        "query": "batman",
+                        "query": "shoes",
+                        "filters": "brand:acme",
                     },
-                    "externalProvider": {
-                        "configurationParams": {
-                            "customer_id": "customer123",
+                    "feeds": {
+                        "organic": {
+                            "params": {
+                                "filters": "brand:acme AND inStock:true",
+                                "sortBy": "Price (asc)",
+                            },
+                        },
+                        "banner": {
+                            "params": {
+                                "query": "shoes sale",
+                                "filters": "",
+                            },
                         },
                     },
+                    "feedsOrder": [
+                        "banner",
+                        "organic",
+                    ],
                 },
             )
 
@@ -1360,8 +1440,16 @@ paths:
             response = client.search(
               "foo",
               Algolia::Composition::RequestBody.new(
-                params: Algolia::Composition::Params.new(query: "batman"),
-                external_provider: Algolia::Composition::ExternalProvider.new(configuration_params: {customer_id: "customer123"})
+                params: Algolia::Composition::Params.new(query: "shoes", filters: "brand:acme"),
+                feeds: {
+                  organic: Algolia::Composition::FeedRequest.new(
+                    params: Algolia::Composition::FeedParams.new(filters: "brand:acme AND inStock:true", sort_by: "Price (asc)")
+                  ),
+                  banner: Algolia::Composition::FeedRequest.new(
+                    params: Algolia::Composition::FeedParams.new(query: "shoes sale", filters: "")
+                  )
+                },
+                feeds_order: ["banner", "organic"]
               )
             )
 
@@ -1387,14 +1475,31 @@ paths:
                 requestBody = RequestBody(
                   params = Some(
                     Params(
-                      query = Some("batman")
+                      query = Some("shoes"),
+                      filters = Some("brand:acme")
                     )
                   ),
-                  externalProvider = Some(
-                    ExternalProvider(
-                      configurationParams = Some(Map("customer_id" -> "customer123"))
+                  feeds = Some(
+                    Map(
+                      "organic" -> FeedRequest(
+                        params = Some(
+                          FeedParams(
+                            filters = Some("brand:acme AND inStock:true"),
+                            sortBy = Some("Price (asc)")
+                          )
+                        )
+                      ),
+                      "banner" -> FeedRequest(
+                        params = Some(
+                          FeedParams(
+                            query = Some("shoes sale"),
+                            filters = Some("")
+                          )
+                        )
+                      )
                     )
-                  )
+                  ),
+                  feedsOrder = Some(Seq("banner", "organic"))
                 )
               ),
               Duration(100, "sec")
@@ -1419,8 +1524,15 @@ paths:
             client.search(
                 compositionID: "foo",
                 requestBody: RequestBody(
-                    params: CompositionParams(query: "batman"),
-                    externalProvider: ExternalProvider(configurationParams: ["customer_id": AnyCodable("customer123")])
+                    params: CompositionParams(filters: "brand:acme", query: "shoes"),
+                    feedsOrder: ["banner", "organic"],
+                    feeds: [
+                        "organic": FeedRequest(params: FeedParams(
+                            filters: "brand:acme AND inStock:true",
+                            sortBy: "Price (asc)"
+                        )),
+                        "banner": FeedRequest(params: FeedParams(filters: "", query: "shoes sale")),
+                    ]
                 )
             )
 
@@ -1545,6 +1657,20 @@ paths:
               "externalProvider": {
                 "configurationParams": {
                   "customer_id": "customer123"
+                }
+              },
+              "feeds": {
+                "organic": {
+                  "params": {
+                    "filters": "category:shoes",
+                    "hitsPerPage": 20
+                  }
+                },
+                "banner": {
+                  "params": {
+                    "hitsPerPage": 2,
+                    "sortBy": ""
+                  }
                 }
               }
             }
@@ -4706,14 +4832,12 @@ paths:
         This endpoint lets you create a new sorting strategy mapping or replace
         the configured one.
 
-        The provided sorting indices must be associated indices or replicas of
-        the main targeted index.
+        This endpoint only validates that the sorting indices exist.
 
+        At runtime, the API ignores a sorting index that is unrelated to the
+        targeted indices.
 
-        This endpoint can't validate whether the sort index is related to the
-        composition's main index.
-
-        Validation fails at runtime if the index you updated isn't related.
+        The response reports it in the `errors` field.
 
 
         The update is applied to the specified composition within the current
@@ -9000,6 +9124,17 @@ components:
 
         If no value is provided or an invalid value, no sorting strategy is
         applied.
+
+
+        For `multifeed` compositions, every feed inherits the root "sortBy"
+        unless the feed sets its own "sortBy" in `feeds.<id>.params`.
+
+        An empty string disables sorting for that feed.
+
+        The response reports an invalid value in the `errors` field. This
+        includes a value whose index is unrelated to the feed's indices.
+
+        Composition Rules still match on the root "sortBy".
       default: ''
       example: Price (asc)
     userToken:
@@ -9114,6 +9249,118 @@ components:
             `defaults`.
           example:
             customer_id: customer123
+    feedParams:
+      title: Run composition feed parameters as object
+      description: >-
+        Parameters for a single feed. These match the root `params` minus
+        `injectedItems`, `getRankingInfo`, and `enableABTest`.
+      type: object
+      additionalProperties: false
+      properties:
+        analytics:
+          $ref: '#/components/schemas/analytics'
+        analyticsTags:
+          $ref: '#/components/schemas/analyticsTags'
+        aroundLatLng:
+          $ref: '#/components/schemas/aroundLatLng'
+        aroundLatLngViaIP:
+          $ref: '#/components/schemas/aroundLatLngViaIP'
+        aroundPrecision:
+          $ref: '#/components/schemas/aroundPrecision'
+        aroundRadius:
+          $ref: '#/components/schemas/aroundRadius'
+        clickAnalytics:
+          $ref: '#/components/schemas/clickAnalytics'
+        enablePersonalization:
+          $ref: '#/components/schemas/enablePersonalization'
+        enableReRanking:
+          $ref: '#/components/schemas/enableReRanking'
+        enableRules:
+          $ref: '#/components/schemas/enableRules'
+        facetFilters:
+          $ref: '#/components/schemas/facetFilters'
+        facets:
+          $ref: '#/components/schemas/facets'
+        filters:
+          $ref: '#/components/schemas/filters'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+        insideBoundingBox:
+          $ref: '#/components/schemas/insideBoundingBox'
+        insidePolygon:
+          $ref: '#/components/schemas/insidePolygon'
+        minimumAroundRadius:
+          $ref: '#/components/schemas/minimumAroundRadius'
+        naturalLanguages:
+          $ref: '#/components/schemas/naturalLanguages'
+        numericFilters:
+          $ref: '#/components/schemas/numericFilters'
+        optionalFilters:
+          $ref: '#/components/schemas/optionalFilters'
+        page:
+          $ref: '#/components/schemas/page'
+        query:
+          $ref: '#/components/schemas/query'
+        queryLanguages:
+          $ref: '#/components/schemas/queryLanguages'
+        relevancyStrictness:
+          $ref: '#/components/schemas/relevancyStrictness'
+        ruleContexts:
+          $ref: '#/components/schemas/ruleContexts'
+        sortBy:
+          $ref: '#/components/schemas/sortBy'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+    feeds:
+      title: Run composition feeds as object
+      type: object
+      description: >
+        Per-feed parameters for `multifeed` compositions. Each key is a feed ID.
+
+
+        Feed `params` take precedence over the root `params`.
+
+        A feed inherits every root key it doesn't set.
+
+        A feed value replaces the root value instead of combining with it.
+
+        This applies to every key, including `filters`, `facetFilters`,
+        `optionalFilters`, and `analyticsTags`.
+
+        For example, `filters` must repeat the common values.
+
+        An empty value such as `filters: ""` discards the root value.
+
+
+        The API validates feed `params` like the root `params`.
+
+        An unsupported parameter returns a 400 error.
+
+
+        A feed ID may not exist in the composition (for example, because a rule
+        removed it).
+
+        The response reports it in the `errors` field but request still
+        succeeds.
+
+
+        Rules match once per request, against the root `params` only.
+      additionalProperties:
+        title: feedRequest
+        type: object
+        additionalProperties: false
+        properties:
+          params:
+            $ref: '#/components/schemas/feedParams'
+      example:
+        organic:
+          params:
+            filters: category:shoes
+            hitsPerPage: 20
+        banner:
+          params:
+            hitsPerPage: 2
+            sortBy: ''
     compositionRunAppliedRules:
       type: object
       properties:
@@ -11514,8 +11761,9 @@ components:
       type: object
       description: >
         A mapping of sorting labels to the indices (or replicas) that implement
-        those sorting rules. The sorting indices MUST be related to the
-        associated main targeted index in the composition.
+        those sorting rules. When the composition is run, the API ignores a
+        sorting index that is unrelated to the targeted indices. The response
+        reports it in the `errors` field.
 
         Each key is the label your frontend sends at runtime (for example,
         "Price (asc)"), and each value is the name of the index that should be

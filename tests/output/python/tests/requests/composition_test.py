@@ -2227,6 +2227,46 @@ class TestCompositionClient:
             """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}"""
         )
 
+    async def test_search_5(self):
+        """
+        search
+        """
+        _req = await self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "shoes",
+                    "filters": "brand:acme",
+                },
+                "feeds": {
+                    "organic": {
+                        "params": {
+                            "filters": "brand:acme AND inStock:true",
+                            "sortBy": "Price (asc)",
+                        },
+                    },
+                    "banner": {
+                        "params": {
+                            "query": "shoes sale",
+                            "filters": "",
+                        },
+                    },
+                },
+                "feedsOrder": [
+                    "banner",
+                    "organic",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}"""
+        )
+
     async def test_search_composition_rules_(self):
         """
         searchCompositionRules
@@ -4503,6 +4543,46 @@ class TestCompositionClientSync:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}"""
+        )
+
+    def test_search_5(self):
+        """
+        search
+        """
+        _req = self._client.search_with_http_info(
+            composition_id="foo",
+            request_body={
+                "params": {
+                    "query": "shoes",
+                    "filters": "brand:acme",
+                },
+                "feeds": {
+                    "organic": {
+                        "params": {
+                            "filters": "brand:acme AND inStock:true",
+                            "sortBy": "Price (asc)",
+                        },
+                    },
+                    "banner": {
+                        "params": {
+                            "query": "shoes sale",
+                            "filters": "",
+                        },
+                    },
+                },
+                "feedsOrder": [
+                    "banner",
+                    "organic",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/compositions/foo/run"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}"""
         )
 
     def test_search_composition_rules_(self):
