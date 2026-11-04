@@ -53,7 +53,7 @@ FilterDefinition:
     invert:
       type: boolean
       default: false
-      description: Whether to keep the rows the filter excludes instead of the rows it keeps, for example every search except empty ones with `isEmptySearch`. Only boolean filters without an `operator` or implicit parameters can be inverted.
+      description: Whether to keep the searches the filter excludes, where the flag is false or unknown, instead of the ones it keeps. For example, `isEmptySearch` with `invert` keeps every search with a query. Only per-search boolean flags can be inverted. Filters with an `operator`, filters bound to a parameter (`appID`, `indices`, `startDate`, `endDate`, `compositionIDs`) and aggregated flags such as `isOutlier` return a 422 error.
 
 ParameterDefinition:
   type: object
