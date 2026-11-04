@@ -28,17 +28,46 @@ func TestInjectedItemSource_UnmarshalSearchSource(t *testing.T) {
 func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
 	t.Parallel()
 
-	input := `{"external": {"index": "sponsored", "ordering": "userDefined"}}`
+	orderingUserDefined := "userDefined"
+	orderingDefault := "default"
+	orderingAlgoliaDefined := "algoliaDefined"
 
-	var source composition.InjectedItemSource
-
-	err := json.Unmarshal([]byte(input), &source)
-	require.NoError(t, err)
-
-	require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
-	require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
-	require.Nil(t, source.InjectedItemRecommendSource, "expected RecommendSource to be nil")
-	require.Equal(t, "sponsored", source.InjectedItemExternalSource.External.Index)
+	for name, testcase := range map[string]struct {
+		input            string
+		expectedIndex    string
+		expectedOrdering *string
+	}{
+		"nominal": {
+			input:         `{"external": {"index": "sponsored"}}`,
+			expectedIndex: "sponsored",
+		},
+		"with-default-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "default"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingDefault,
+		},
+		"with-userDefined-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "userDefined"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingUserDefined,
+		},
+		"with-algoliaDefined-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "algoliaDefined"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingAlgoliaDefined,
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			var source composition.InjectedItemSource
+			err := json.Unmarshal([]byte(testcase.input), &source)
+			require.NoError(t, err)
+			require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
+			require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
+			require.Nil(t, source.InjectedItemRecommendSource, "expected RecommendSource to be nil")
+			require.Equal(t, testcase.expectedIndex, source.InjectedItemExternalSource.External.Index)
+			require.EqualValues(t, testcase.expectedOrdering, source.InjectedItemExternalSource.External.Ordering)
+		})
+	}
 }
 
 func TestInjectedItemSource_UnmarshalRecommendSource(t *testing.T) {
