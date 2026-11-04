@@ -50,6 +50,10 @@ FilterDefinition:
       $ref: '#/filterOperator'
     parameter:
       $ref: '#/ParameterReference'
+    invert:
+      type: boolean
+      default: false
+      description: Whether to keep the rows the filter excludes instead of the rows it keeps, for example every search except empty ones with `isEmptySearch`. Only boolean filters without an `operator` or implicit parameters can be inverted.
 
 ParameterDefinition:
   type: object
