@@ -45,6 +45,7 @@ Map<String, dynamic> _$InjectedItemExternalToJson(
 }
 
 const _$ExternalOrderingEnumMap = {
+  ExternalOrdering.algoliaDefined: 'algoliaDefined',
   ExternalOrdering.default_: 'default',
   ExternalOrdering.userDefined: 'userDefined',
 };
