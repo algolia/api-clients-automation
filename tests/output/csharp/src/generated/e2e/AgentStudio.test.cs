@@ -226,7 +226,7 @@ public class AgentStudioClientRequestTestsE2E
       Assert.NotNull(resp);
 
       TestHelpers.LenientJsonAssert(
-        "{\"openai\":[\"gpt-4\"]}",
+        "{\"openai\":[]}",
         JsonSerializer.Serialize(resp, JsonConfig.Options)
       );
     }

@@ -3014,6 +3014,55 @@ public class SnippetCompositionClient
   }
 
   /// <summary>
+  /// Snippet for the Search method.
+  ///
+  /// search
+  /// </summary>
+  public async Task SnippetForCompositionClientSearch5()
+  {
+    // >SEPARATOR search search
+    // Initialize the client
+    var client = new CompositionClient(
+      new CompositionConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "shoes", Filters = "brand:acme" },
+        Feeds = new Dictionary<string, FeedRequest>
+        {
+          {
+            "organic",
+            new FeedRequest
+            {
+              Params = new FeedParams
+              {
+                Filters = "brand:acme AND inStock:true",
+                SortBy = "Price (asc)",
+              },
+            }
+          },
+          {
+            "banner",
+            new FeedRequest
+            {
+              Params = new FeedParams { Query = "shoes sale", Filters = "" },
+            }
+          },
+        },
+        FeedsOrder = new List<string> { "banner", "organic" },
+      }
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the SearchCompositionRules method.
   ///
   /// searchCompositionRules
