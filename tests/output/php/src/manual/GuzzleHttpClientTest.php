@@ -2,9 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Tests;
 
+use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Exceptions\RetriableException;
 use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
+use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
 use Algolia\AlgoliaSearch\Http\GuzzleHttpClient;
 use Algolia\AlgoliaSearch\Http\Psr7\Request;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -105,9 +111,83 @@ class GuzzleHttpClientTest extends TestCase
         $this->assertSame('could not create the response', $response->getReasonPhrase());
     }
 
+    public function testUnreachableHostIsMarkedDownInsteadOfTimedOut(): void
+    {
+        [$wrapper, $clusterHosts] = $this->wrapperFailingWith(new ConnectException('connection refused', self::request()));
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $errors = $e->getErrors();
+            $this->assertCount(1, $errors);
+            $this->assertInstanceOf(RetriableException::class, $errors[0]['error']);
+            $this->assertStringContainsString('connection refused', $errors[0]['error']->getMessage());
+        }
+
+        $this->assertSame(['host-two.invalid'], $clusterHosts->read());
+        $this->assertSame(0, $clusterHosts->getRetryCount('host-one.invalid', true));
+    }
+
+    public function testTimedOutHostStaysUpWithAnIncrementedRetryCount(): void
+    {
+        [$wrapper, $clusterHosts] = $this->wrapperFailingWith(self::timeoutFailure());
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertInstanceOf(TimeoutException::class, $e->getErrors()[0]['error']);
+        }
+
+        $this->assertSame(['host-one.invalid', 'host-two.invalid'], $clusterHosts->read());
+        $this->assertSame(1, $clusterHosts->getRetryCount('host-one.invalid', true));
+    }
+
+    public function testUnreachableHostMessageDoesNotLeakTheApiKey(): void
+    {
+        $failure = new ConnectException(
+            'cURL error 6: Could not resolve host: host-one.invalid for https://host-one.invalid/1/test?x-algolia-api-key=SECRET-KEY',
+            self::request()
+        );
+        [$wrapper] = $this->wrapperFailingWith($failure);
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertStringNotContainsString('SECRET-KEY', $e->getMessage());
+            $this->assertStringNotContainsString('SECRET-KEY', $e->getErrors()[0]['error']->getMessage());
+            $this->assertStringContainsString('x-algolia-api-key=[FILTERED]', $e->getMessage());
+        }
+    }
+
     private static function request(): RequestInterface
     {
         return new Request('GET', 'http://localhost/1/indexes/test/query');
+    }
+
+    private static function timeoutFailure(): \Throwable
+    {
+        if (8 > ClientInterface::MAJOR_VERSION) {
+            return new ConnectException('cURL error 28: operation timed out', self::request(), null, ['errno' => CURLE_OPERATION_TIMEDOUT]);
+        }
+
+        return new ConnectTimeoutException('connect timed out', self::request());
+    }
+
+    /**
+     * @return array{0: ApiWrapper, 1: ClusterHosts}
+     */
+    private function wrapperFailingWith(\Throwable $failure): array
+    {
+        $clusterHosts = ClusterHosts::create(['host-one.invalid', 'host-two.invalid']);
+        $config = SearchConfig::create('test-app-id', 'test-api-key');
+
+        return [
+            new ApiWrapper($this->transportFailingWith($failure), $config, $clusterHosts, new RequestOptionsFactory($config)),
+            $clusterHosts,
+        ];
     }
 
     private function transportFailingWith(\Throwable $failure): GuzzleHttpClient

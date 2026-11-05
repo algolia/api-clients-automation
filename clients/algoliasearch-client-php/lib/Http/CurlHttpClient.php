@@ -100,8 +100,11 @@ final class CurlHttpClient implements HttpClientInterface
         }
 
         // curl_multi only reports the transfer result (curl_errno / curl_error) once it is read here
+        $errorCode = null;
         while (false !== ($info = curl_multi_info_read($mhandle))) {
             if ($info['handle'] === $curlHandle) {
+                $errorCode = $info['result'];
+
                 break;
             }
         }
@@ -109,9 +112,16 @@ final class CurlHttpClient implements HttpClientInterface
         $statusCode = (int) curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
         $responseBody = curl_multi_getcontent($curlHandle);
         $error = curl_error($curlHandle);
-        $errorCode = curl_errno($curlHandle);
 
         $this->releaseMHandle($curlHandle);
+
+        // curl_multi_exec failed before the transfer completed: there is no result to read, and
+        // the host is treated as unreachable rather than as a timeout
+        if (null === $errorCode) {
+            $reason = CURLM_OK !== $mrc ? curl_multi_strerror($mrc) : null;
+
+            return new Response(0, [], null, '1.1', $reason ?? 'Transfer did not complete');
+        }
 
         if (CURLE_OPERATION_TIMEDOUT === $errorCode) {
             throw new TimeoutException('Connection timed out');
