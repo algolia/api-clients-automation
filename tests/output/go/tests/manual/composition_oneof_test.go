@@ -28,17 +28,46 @@ func TestInjectedItemSource_UnmarshalSearchSource(t *testing.T) {
 func TestInjectedItemSource_UnmarshalExternalSource(t *testing.T) {
 	t.Parallel()
 
-	input := `{"external": {"index": "sponsored", "ordering": "userDefined"}}`
+	orderingUserDefined := "userDefined"
+	orderingDefault := "default"
+	orderingAlgoliaDefined := "algoliaDefined"
 
-	var source composition.InjectedItemSource
-
-	err := json.Unmarshal([]byte(input), &source)
-	require.NoError(t, err)
-
-	require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
-	require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
-	require.Nil(t, source.InjectedItemRecommendSource, "expected RecommendSource to be nil")
-	require.Equal(t, "sponsored", source.InjectedItemExternalSource.External.Index)
+	for name, testcase := range map[string]struct {
+		input            string
+		expectedIndex    string
+		expectedOrdering *string
+	}{
+		"nominal": {
+			input:         `{"external": {"index": "sponsored"}}`,
+			expectedIndex: "sponsored",
+		},
+		"with-default-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "default"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingDefault,
+		},
+		"with-userDefined-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "userDefined"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingUserDefined,
+		},
+		"with-algoliaDefined-ordering": {
+			input:            `{"external": {"index": "sponsored", "ordering": "algoliaDefined"}}`,
+			expectedIndex:    "sponsored",
+			expectedOrdering: &orderingAlgoliaDefined,
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			var source composition.InjectedItemSource
+			err := json.Unmarshal([]byte(testcase.input), &source)
+			require.NoError(t, err)
+			require.NotNil(t, source.InjectedItemExternalSource, "expected External Source to be set")
+			require.Nil(t, source.InjectedItemSearchSource, "expected Search Source to be nil")
+			require.Nil(t, source.InjectedItemRecommendSource, "expected RecommendSource to be nil")
+			require.Equal(t, testcase.expectedIndex, source.InjectedItemExternalSource.External.Index)
+			require.EqualValues(t, testcase.expectedOrdering, source.InjectedItemExternalSource.External.Ordering)
+		})
+	}
 }
 
 func TestInjectedItemSource_UnmarshalRecommendSource(t *testing.T) {
@@ -84,6 +113,68 @@ func TestInjectedItemSource_RoundTripExternalSource(t *testing.T) {
 
 	output, err := json.Marshal(&source)
 	require.NoError(t, err)
+	require.JSONEq(t, input, string(output))
+}
+
+func TestRequestBody_RoundTripFeeds(t *testing.T) {
+	t.Parallel()
+
+	input := `{
+  "params": {
+    "query": "shoes",
+    "filters": "brand:acme"
+  },
+  "feeds": {
+    "organic": {
+      "params": {
+        "filters": "brand:acme AND inStock:true",
+        "sortBy": "Price (asc)"
+      }
+    },
+    "banner": {
+      "params": {
+        "query": "shoes sale",
+        "filters": "",
+        "sortBy": ""
+      }
+    }
+  },
+  "feedsOrder": ["banner", "organic"]
+}`
+
+	var body composition.RequestBody
+
+	err := json.Unmarshal([]byte(input), &body)
+	require.NoError(t, err)
+
+	output, marshalErr := json.Marshal(&body)
+
+	require.NoError(t, marshalErr)
+	require.NotNil(t, body.Params)
+	require.NotNil(t, body.Params.Query)
+	require.Equal(t, "shoes", *body.Params.Query)
+	require.Equal(t, []string{"banner", "organic"}, body.FeedsOrder)
+	require.NotNil(t, body.Feeds)
+
+	feeds := *body.Feeds
+	organic := feeds["organic"].Params
+	banner := feeds["banner"].Params
+
+	require.NotNil(t, organic)
+	require.Nil(t, organic.Query)
+	require.NotNil(t, organic.Filters)
+	require.NotNil(t, organic.SortBy)
+	require.Equal(t, "brand:acme AND inStock:true", *organic.Filters)
+	require.Equal(t, "Price (asc)", *organic.SortBy)
+
+	require.NotNil(t, banner)
+	require.NotNil(t, banner.Query)
+	require.NotNil(t, banner.Filters)
+	require.NotNil(t, banner.SortBy)
+	require.Equal(t, "shoes sale", *banner.Query)
+	require.Empty(t, *banner.Filters)
+	require.Empty(t, *banner.SortBy)
+
 	require.JSONEq(t, input, string(output))
 }
 
