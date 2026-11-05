@@ -40,6 +40,57 @@ Condition:
       $ref: './QueryParameters.yml#/baseRecommendSearchParams/properties/filters'
     context:
       $ref: '../../../common/schemas/Rule.yml#/context'
+    requestScope:
+      $ref: '#/RequestScope'
+
+RequestScope:
+  description: |
+    Facet that a Trending Items request must target for the rule to apply.
+
+    Only available for the `trending-items` model.
+    Rules without `requestScope` apply to all Trending Items requests.
+  oneOf:
+    - $ref: '#/GlobalRequestScope'
+    - $ref: '#/FacetRequestScope'
+
+GlobalRequestScope:
+  type: object
+  title: Global request scope
+  description: Apply the rule only to Trending Items requests without `facetName` and `facetValue`.
+  additionalProperties: false
+  properties:
+    global:
+      type: boolean
+      description: Whether the rule applies to requests without a facet. Must be `true`.
+  required:
+    - global
+  x-discriminator-fields:
+    - global
+
+FacetRequestScope:
+  type: object
+  title: Facet request scope
+  description: Apply the rule only to Trending Items requests with the same `facetName` and `facetValue`.
+  additionalProperties: false
+  properties:
+    facetName:
+      type: string
+      description: Facet attribute of the Trending Items request.
+      minLength: 1
+      maxLength: 1000
+      example: 'brand'
+    facetValue:
+      type: string
+      description: Facet value of the Trending Items request.
+      minLength: 1
+      maxLength: 1000
+      example: 'acme'
+  required:
+    - facetName
+    - facetValue
+  x-discriminator-fields:
+    - facetName
+    - facetValue
 
 Consequence:
   type: object
