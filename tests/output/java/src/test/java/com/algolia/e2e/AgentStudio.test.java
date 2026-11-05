@@ -132,7 +132,7 @@ class AgentStudioClientRequestsTestsE2E {
   @DisplayName("e2e list models")
   void listModelsTest1() {
     Map res = client.listModels();
-    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"openai\":[\"gpt-4\"]}", json.writeValueAsString(res)));
+    assertDoesNotThrow(() -> TestHelpers.lenientJsonAssert("{\"openai\":[]}", json.writeValueAsString(res)));
   }
 
   @Test

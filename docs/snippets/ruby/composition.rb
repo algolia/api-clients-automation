@@ -2083,6 +2083,37 @@ def snippet_for_search4
   # SEPARATOR<
 end
 
+# Snippet for the search method.
+#
+# search
+def snippet_for_search5
+  # >SEPARATOR search search
+  # Initialize the client
+  client = Algolia::CompositionClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.search(
+    "foo",
+    Algolia::Composition::RequestBody.new(
+      params: Algolia::Composition::Params.new(query: "shoes", filters: "brand:acme"),
+      feeds: {
+        organic: Algolia::Composition::FeedRequest.new(
+          params: Algolia::Composition::FeedParams.new(filters: "brand:acme AND inStock:true", sort_by: "Price (asc)")
+        ),
+        banner: Algolia::Composition::FeedRequest.new(
+          params: Algolia::Composition::FeedParams.new(query: "shoes sale", filters: "")
+        )
+      },
+      feeds_order: ["banner", "organic"]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the searchCompositionRules method.
 #
 # searchCompositionRules

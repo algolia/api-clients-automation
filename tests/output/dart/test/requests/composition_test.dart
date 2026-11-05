@@ -2585,6 +2585,51 @@ void main() {
     ),
   );
 
+  // search
+  test(
+    'search',
+    () => runTest(
+      builder: (requester) => CompositionClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        compositionID: "foo",
+        requestBody: RequestBody(
+          params: Params(
+            query: "shoes",
+            filters: "brand:acme",
+          ),
+          feeds: {
+            'organic': FeedRequest(
+              params: FeedParams(
+                filters: "brand:acme AND inStock:true",
+                sortBy: "Price (asc)",
+              ),
+            ),
+            'banner': FeedRequest(
+              params: FeedParams(
+                query: "shoes sale",
+                filters: "",
+              ),
+            ),
+          },
+          feedsOrder: [
+            "banner",
+            "organic",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/compositions/foo/run');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}""");
+      },
+    ),
+  );
+
   // searchCompositionRules
   test(
     'searchCompositionRules',

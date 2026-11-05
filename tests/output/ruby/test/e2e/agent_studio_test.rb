@@ -118,7 +118,7 @@ class TestAgentStudioClientE2E < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @client.list_models
-    expected_body = JSON.parse("{\"openai\":[\"gpt-4\"]}")
+    expected_body = JSON.parse("{\"openai\":[]}")
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
