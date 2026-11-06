@@ -29,6 +29,9 @@ const request: Request = {
     {{#x-use-read-transporter}}
       useReadTransporter: true,
     {{/x-use-read-transporter}}
+    {{#x-accepts-api-key-in-body}}
+      acceptsApiKeyInBody: true,
+    {{/x-accepts-api-key-in-body}}
     {{#x-cacheable}}
       cacheable: true,
     {{/x-cacheable}}

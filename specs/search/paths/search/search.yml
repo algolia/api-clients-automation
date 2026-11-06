@@ -3,6 +3,7 @@ post:
     - Search
   operationId: search
   x-use-read-transporter: true
+  x-accepts-api-key-in-body: true
   x-cacheable: true
   x-legacy-signature: true
   x-acl:

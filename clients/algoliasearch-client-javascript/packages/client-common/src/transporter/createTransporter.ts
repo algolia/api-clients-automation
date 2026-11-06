@@ -2,6 +2,7 @@ import type { ServerSentEvent } from '../sse';
 import { iterSSEEvents } from '../sse';
 import type {
   AlgoliaHttpResponse,
+  BodyParameters,
   EndRequest,
   Headers,
   Host,
@@ -47,6 +48,7 @@ export function createTransporter({
   baseHeaders,
   logger,
   baseQueryParameters,
+  baseBodyParameters,
   algoliaAgent,
   timeouts,
   requester,
@@ -57,6 +59,37 @@ export function createTransporter({
   requestIdChannel,
   maxRateLimitRetries = 3,
 }: TransporterOptions): TransporterWithHttpInfo {
+  const bodyParameters: BodyParameters = baseBodyParameters ?? {};
+
+  /**
+   * Only the endpoints flagged `acceptsApiKeyInBody` in the specs parse an `apiKey` body field; other endpoints
+   * reject it or treat it as user data. Every other request sends it as the `x-algolia-api-key` query parameter.
+   */
+  function serializeDataWithAuth(
+    request: Request,
+    requestOptions: RequestOptions,
+  ): { data: string | undefined; authQueryParameters: QueryParameters; credentialsInBody: boolean } {
+    const { apiKey } = bodyParameters;
+
+    if (!apiKey) {
+      return { data: serializeData(request, requestOptions), authQueryParameters: {}, credentialsInBody: false };
+    }
+
+    if (request.acceptsApiKeyInBody && !Array.isArray(request.data)) {
+      return {
+        data: serializeData(request, { ...requestOptions, data: { apiKey, ...requestOptions.data } }),
+        authQueryParameters: {},
+        credentialsInBody: true,
+      };
+    }
+
+    return {
+      data: serializeData(request, requestOptions),
+      authQueryParameters: { 'x-algolia-api-key': apiKey },
+      credentialsInBody: false,
+    };
+  }
+
   function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
     if (
       requestIdChannel === undefined ||
@@ -125,11 +158,17 @@ export function createTransporter({
     /**
      * First we prepare the payload that do not depend from hosts.
      */
-    const serializedData = serializeData(request, requestOptions);
+    const {
+      data: serializedData,
+      authQueryParameters,
+      credentialsInBody,
+    } = serializeDataWithAuth(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
 
+    // A gzipped body could not be masked by `stackTraceWithoutCredentials`.
     const wantsCompression =
       compression === 'gzip' &&
+      !credentialsInBody &&
       serializedData !== undefined &&
       serializedData.length > COMPRESSION_THRESHOLD &&
       (request.method === 'POST' || request.method === 'PUT');
@@ -155,6 +194,7 @@ export function createTransporter({
 
     const queryParameters: QueryParameters = {
       ...baseQueryParameters,
+      ...authQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
@@ -333,6 +373,7 @@ export function createTransporter({
       transporter: {
         queryParameters: baseQueryParameters,
         headers: baseHeaders,
+        bodyParameters,
       },
     };
 
@@ -401,7 +442,7 @@ export function createTransporter({
       throw new Error('This requester does not support streaming');
     }
 
-    const data = serializeData(request, requestOptions);
+    const { data, authQueryParameters } = serializeDataWithAuth(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
     headers['accept'] = 'text/event-stream';
 
@@ -416,6 +457,7 @@ export function createTransporter({
 
     const queryParameters: QueryParameters = {
       ...baseQueryParameters,
+      ...authQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
@@ -491,6 +533,7 @@ export function createTransporter({
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,
+    baseBodyParameters: bodyParameters,
     requestIdChannel,
     hosts,
     maxRateLimitRetries,

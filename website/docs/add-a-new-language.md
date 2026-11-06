@@ -138,6 +138,10 @@ This option is provided [at the spec level](https://github.com/algolia/api-clien
 
 You can take a look at the implementation over all clients, [in this pull request](https://github.com/algolia/api-clients-automation/pull/525).
 
+### `acceptsApiKeyInBody`
+
+Only a few `POST` methods (`search`, `searchSingleIndex`, `browse` and `searchForFacetValues`) accept the API key as an `apiKey` field of the JSON body; the other endpoints reject it or store it as user data. These methods are flagged with `vendorExtensions.x-accepts-api-key-in-body`. A client that supports sending the API key in the body (the JavaScript `WithinBody` auth mode) must only do it for those methods, and send it as the `x-algolia-api-key` query parameter otherwise.
+
 ### `requestOptions`
 
 Every methods of every clients provide a parameter that does not exist in the REST API, called `requestOptions`.
