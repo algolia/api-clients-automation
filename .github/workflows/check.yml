@@ -21,7 +21,7 @@ permissions: {}
 
 jobs:
   notification:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 1
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     # no GITHUB_TOKEN permissions: the sticky comment is posted with the app token
@@ -45,7 +45,7 @@ jobs:
             _Please do not push any generated code to this pull request._
 
   setup:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -154,7 +154,7 @@ jobs:
       KOTLIN_DATA: ${{ steps.gen-matrix.outputs.KOTLIN_DATA }}
 
   scripts:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
@@ -181,7 +181,7 @@ jobs:
         run: yarn workspace eslint-plugin-automation-custom test
 
   specs:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     needs: setup
     permissions:
@@ -214,7 +214,7 @@ jobs:
 
   client_gen_javascript:
     timeout-minutes: 15
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - setup
       - specs
@@ -542,7 +542,7 @@ jobs:
 
   swift_build_linux:
     timeout-minutes: 10
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     needs:
       - setup
       - specs
@@ -588,7 +588,7 @@ jobs:
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   codegen:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     needs:
       - setup
@@ -751,7 +751,7 @@ jobs:
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   action_pins:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 5
     permissions:
       contents: read
@@ -811,7 +811,7 @@ jobs:
   # builds, so build the ones whose own inputs changed. the `!= '[]'` guard
   # matters: an empty matrix is an error rather than a skipped job
   docker_images:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     needs: setup
     if: ${{ needs.setup.outputs.DOCKER_IMAGES != '[]' }}
@@ -832,7 +832,7 @@ jobs:
 
   # one run per CI, not one per image: each run resolves every pinned ref against its registry
   docker_digests:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_DOCKER == 'true' }}
@@ -849,7 +849,7 @@ jobs:
           DRIFT_CHECK_LIVE: '1'
 
   check_green:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     needs:
       - codegen
@@ -867,7 +867,7 @@ jobs:
           fi
 
   push_and_release:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     needs:
       - codegen
