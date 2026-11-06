@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # version must stay in sync with config/.ruby-version, CI checks the drift
-FROM ruby:4.0.7-trixie@sha256:f5d60242cdd3f17245399384a3f14b83f148cd9c948aed97329f5a0e6dc97a3b
+FROM ruby:4.0.9-trixie@sha256:07042b74555ff2eef7365abd72d39cba6e499ab63e2d2942fd34d4778338495b
 
 # one pin per platform archive, the build platform picks it below
 # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
