@@ -341,6 +341,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
+    # swift runs on macOS with the version set in createMatrix.ts, not the minimum supported one
     runs-on: ${{ matrix.client.language == 'swift' && 'macos-15' || 'ubuntu-24.04' }}
     needs:
       - setup
@@ -540,6 +541,7 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
+  # builds with the minimum supported swift version (config/.swift-version), the macOS job in client_gen runs a newer one
   swift_build_linux:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
