@@ -8,7 +8,7 @@ ProviderAuthenticationCreate:
     providerName:
       $ref: 'ProviderName.yml#/ProviderName'
     input:
-      $ref: 'ProviderInput.yml#/ProviderInput'
+      $ref: 'InputUnion.yml#/InputUnion'
   additionalProperties: false
   type: object
   required:
