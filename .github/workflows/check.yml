@@ -544,7 +544,7 @@ jobs:
   # builds with the minimum supported swift version (config/.swift-version), the macOS job in client_gen runs a newer one
   swift_build_linux:
     timeout-minutes: 10
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - setup
       - specs
