@@ -341,7 +341,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 20 # swift CTS is excruciatingly slow
-    runs-on: ${{ matrix.client.language == 'swift' && 'macos-14' || 'ubuntu-24.04' }}
+    runs-on: ${{ matrix.client.language == 'swift' && 'macos-15' || 'ubuntu-24.04' }}
     needs:
       - setup
       - specs
@@ -493,7 +493,7 @@ jobs:
 
   kotlin_build_macos:
     timeout-minutes: 15
-    runs-on: macos-14
+    runs-on: macos-15
     needs:
       - setup
       - specs
