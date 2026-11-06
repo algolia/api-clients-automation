@@ -494,7 +494,7 @@ jobs:
 
   kotlin_build_macos:
     timeout-minutes: 15
-    runs-on: macos-15
+    runs-on: macos-26
     needs:
       - setup
       - specs
