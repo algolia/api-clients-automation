@@ -36,7 +36,7 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
 
 # Java formatter
 # renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
-ARG JAVA_FORMATTER_PIN=v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+ARG JAVA_FORMATTER_PIN=v2.0.0@c78feb48c549fa7114b7ea11db3b456808f7b371ffe84e6643a44dd2f9588639
 RUN version="${JAVA_FORMATTER_PIN%@*}" \
   && curl -sSfL --retry 3 -o /tmp/java-formatter.jar "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" \
   && echo "${JAVA_FORMATTER_PIN#*@}  /tmp/java-formatter.jar" | sha256sum -c -
