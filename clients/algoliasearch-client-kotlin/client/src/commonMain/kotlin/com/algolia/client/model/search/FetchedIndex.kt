@@ -16,7 +16,7 @@ import kotlinx.serialization.json.*
  * @param entries Number of records contained in the index.
  * @param dataSize Number of bytes of the index in minified format.
  * @param fileSize Number of bytes of the index binary file.
- * @param lastBuildTimeS Last build time.
+ * @param lastBuildTimeS Last build time. Not returned by all infrastructures.
  * @param numberOfPendingTasks Number of pending indexing operations. This value is deprecated and
  *   should not be used.
  * @param pendingTask A boolean which says whether the index has pending tasks. This value is
@@ -52,17 +52,21 @@ public data class FetchedIndex(
   /** Number of bytes of the index binary file. */
   @SerialName(value = "fileSize") val fileSize: Long,
 
-  /** Last build time. */
-  @SerialName(value = "lastBuildTimeS") val lastBuildTimeS: Int,
+  /** Last build time. Not returned by all infrastructures. */
+  @SerialName(value = "lastBuildTimeS") val lastBuildTimeS: Int? = null,
 
   /** Number of pending indexing operations. This value is deprecated and should not be used. */
-  @SerialName(value = "numberOfPendingTasks") val numberOfPendingTasks: Int,
+  @Deprecated(message = "This property is deprecated.")
+  @SerialName(value = "numberOfPendingTasks")
+  val numberOfPendingTasks: Int? = null,
 
   /**
    * A boolean which says whether the index has pending tasks. This value is deprecated and should
    * not be used.
    */
-  @SerialName(value = "pendingTask") val pendingTask: Boolean,
+  @Deprecated(message = "This property is deprecated.")
+  @SerialName(value = "pendingTask")
+  val pendingTask: Boolean? = null,
 
   /** Only present if the index is a replica. Contains the name of the related primary index. */
   @SerialName(value = "primary") val primary: String? = null,

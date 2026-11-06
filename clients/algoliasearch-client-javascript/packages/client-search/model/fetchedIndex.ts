@@ -34,19 +34,19 @@ export type FetchedIndex = {
   fileSize: number;
 
   /**
-   * Last build time.
+   * Last build time. Not returned by all infrastructures.
    */
-  lastBuildTimeS: number;
+  lastBuildTimeS?: number | undefined;
 
   /**
    * Number of pending indexing operations. This value is deprecated and should not be used.
    */
-  numberOfPendingTasks: number;
+  numberOfPendingTasks?: number | undefined;
 
   /**
    * A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
    */
-  pendingTask: boolean;
+  pendingTask?: boolean | undefined;
 
   /**
    * Only present if the index is a replica. Contains the name of the related primary index.

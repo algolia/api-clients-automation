@@ -125,8 +125,8 @@ public class FetchedIndex {
     return this;
   }
 
-  /** Last build time. */
-  @javax.annotation.Nonnull
+  /** Last build time. Not returned by all infrastructures. */
+  @javax.annotation.Nullable
   public Integer getLastBuildTimeS() {
     return lastBuildTimeS;
   }
@@ -136,8 +136,13 @@ public class FetchedIndex {
     return this;
   }
 
-  /** Number of pending indexing operations. This value is deprecated and should not be used. */
-  @javax.annotation.Nonnull
+  /**
+   * Number of pending indexing operations. This value is deprecated and should not be used.
+   *
+   * @deprecated
+   */
+  @Deprecated
+  @javax.annotation.Nullable
   public Integer getNumberOfPendingTasks() {
     return numberOfPendingTasks;
   }
@@ -150,8 +155,11 @@ public class FetchedIndex {
   /**
    * A boolean which says whether the index has pending tasks. This value is deprecated and should
    * not be used.
+   *
+   * @deprecated
    */
-  @javax.annotation.Nonnull
+  @Deprecated
+  @javax.annotation.Nullable
   public Boolean getPendingTask() {
     return pendingTask;
   }

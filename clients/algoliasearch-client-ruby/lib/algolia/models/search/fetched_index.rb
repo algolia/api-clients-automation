@@ -26,7 +26,7 @@ module Algolia
       # Number of bytes of the index binary file.
       attr_accessor :file_size
 
-      # Last build time.
+      # Last build time. Not returned by all infrastructures.
       attr_accessor :last_build_time_s
 
       # Number of pending indexing operations. This value is deprecated and should not be used.
@@ -157,20 +157,14 @@ module Algolia
 
         if attributes.key?(:last_build_time_s)
           self.last_build_time_s = attributes[:last_build_time_s]
-        else
-          self.last_build_time_s = nil
         end
 
         if attributes.key?(:number_of_pending_tasks)
           self.number_of_pending_tasks = attributes[:number_of_pending_tasks]
-        else
-          self.number_of_pending_tasks = nil
         end
 
         if attributes.key?(:pending_task)
           self.pending_task = attributes[:pending_task]
-        else
-          self.pending_task = nil
         end
 
         if attributes.key?(:primary)

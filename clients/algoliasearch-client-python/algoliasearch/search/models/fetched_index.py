@@ -59,11 +59,11 @@ class FetchedIndex(BaseModel):
     """ Number of bytes of the index in minified format. """
     file_size: int
     """ Number of bytes of the index binary file. """
-    last_build_time_s: int
-    """ Last build time. """
-    number_of_pending_tasks: int
+    last_build_time_s: Optional[int] = None
+    """ Last build time. Not returned by all infrastructures. """
+    number_of_pending_tasks: Optional[int] = None
     """ Number of pending indexing operations. This value is deprecated and should not be used. """
-    pending_task: bool
+    pending_task: Optional[bool] = None
     """ A boolean which says whether the index has pending tasks. This value is deprecated and should not be used. """
     primary: Optional[str] = None
     """ Only present if the index is a replica. Contains the name of the related primary index. """

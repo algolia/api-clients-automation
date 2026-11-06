@@ -19,10 +19,10 @@ FetchedIndex _$FetchedIndexFromJson(Map<String, dynamic> json) =>
           dataSize: $checkedConvert('dataSize', (v) => (v as num).toInt()),
           fileSize: $checkedConvert('fileSize', (v) => (v as num).toInt()),
           lastBuildTimeS:
-              $checkedConvert('lastBuildTimeS', (v) => (v as num).toInt()),
+              $checkedConvert('lastBuildTimeS', (v) => (v as num?)?.toInt()),
           numberOfPendingTasks: $checkedConvert(
-              'numberOfPendingTasks', (v) => (v as num).toInt()),
-          pendingTask: $checkedConvert('pendingTask', (v) => v as bool),
+              'numberOfPendingTasks', (v) => (v as num?)?.toInt()),
+          pendingTask: $checkedConvert('pendingTask', (v) => v as bool?),
           primary: $checkedConvert('primary', (v) => v as String?),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
@@ -46,9 +46,6 @@ Map<String, dynamic> _$FetchedIndexToJson(FetchedIndex instance) {
     'entries': instance.entries,
     'dataSize': instance.dataSize,
     'fileSize': instance.fileSize,
-    'lastBuildTimeS': instance.lastBuildTimeS,
-    'numberOfPendingTasks': instance.numberOfPendingTasks,
-    'pendingTask': instance.pendingTask,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -57,6 +54,9 @@ Map<String, dynamic> _$FetchedIndexToJson(FetchedIndex instance) {
     }
   }
 
+  writeNotNull('lastBuildTimeS', instance.lastBuildTimeS);
+  writeNotNull('numberOfPendingTasks', instance.numberOfPendingTasks);
+  writeNotNull('pendingTask', instance.pendingTask);
   writeNotNull('primary', instance.primary);
   writeNotNull('replicas', instance.replicas);
   writeNotNull('virtual', instance.virtual);

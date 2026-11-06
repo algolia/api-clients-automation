@@ -16,9 +16,9 @@ final class FetchedIndex {
     required this.entries,
     required this.dataSize,
     required this.fileSize,
-    required this.lastBuildTimeS,
-    required this.numberOfPendingTasks,
-    required this.pendingTask,
+    this.lastBuildTimeS,
+    this.numberOfPendingTasks,
+    this.pendingTask,
     this.primary,
     this.replicas,
     this.virtual,
@@ -50,17 +50,19 @@ final class FetchedIndex {
   @JsonKey(name: r'fileSize')
   final int fileSize;
 
-  /// Last build time.
+  /// Last build time. Not returned by all infrastructures.
   @JsonKey(name: r'lastBuildTimeS')
-  final int lastBuildTimeS;
+  final int? lastBuildTimeS;
 
   /// Number of pending indexing operations. This value is deprecated and should not be used.
+  @Deprecated('numberOfPendingTasks has been deprecated')
   @JsonKey(name: r'numberOfPendingTasks')
-  final int numberOfPendingTasks;
+  final int? numberOfPendingTasks;
 
   /// A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
+  @Deprecated('pendingTask has been deprecated')
   @JsonKey(name: r'pendingTask')
-  final bool pendingTask;
+  final bool? pendingTask;
 
   /// Only present if the index is a replica. Contains the name of the related primary index.
   @JsonKey(name: r'primary')
@@ -92,8 +94,6 @@ final class FetchedIndex {
           other.dataSize == dataSize &&
           other.fileSize == fileSize &&
           other.lastBuildTimeS == lastBuildTimeS &&
-          other.numberOfPendingTasks == numberOfPendingTasks &&
-          other.pendingTask == pendingTask &&
           other.primary == primary &&
           other.replicas == replicas &&
           other.virtual == virtual &&
@@ -109,8 +109,6 @@ final class FetchedIndex {
       dataSize.hashCode +
       fileSize.hashCode +
       lastBuildTimeS.hashCode +
-      numberOfPendingTasks.hashCode +
-      pendingTask.hashCode +
       primary.hashCode +
       replicas.hashCode +
       virtual.hashCode +

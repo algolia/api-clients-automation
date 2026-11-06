@@ -31,19 +31,13 @@ public partial class FetchedIndex
   /// <param name="entries">Number of records contained in the index. (required).</param>
   /// <param name="dataSize">Number of bytes of the index in minified format. (required).</param>
   /// <param name="fileSize">Number of bytes of the index binary file. (required).</param>
-  /// <param name="lastBuildTimeS">Last build time. (required).</param>
-  /// <param name="numberOfPendingTasks">Number of pending indexing operations. This value is deprecated and should not be used. (required) (default to 0).</param>
-  /// <param name="pendingTask">A boolean which says whether the index has pending tasks. This value is deprecated and should not be used. (required) (default to false).</param>
   public FetchedIndex(
     string name,
     string createdAt,
     string updatedAt,
     int entries,
     long dataSize,
-    long fileSize,
-    int lastBuildTimeS,
-    int numberOfPendingTasks,
-    bool pendingTask
+    long fileSize
   )
   {
     Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -52,9 +46,6 @@ public partial class FetchedIndex
     Entries = entries;
     DataSize = dataSize;
     FileSize = fileSize;
-    LastBuildTimeS = lastBuildTimeS;
-    NumberOfPendingTasks = numberOfPendingTasks;
-    PendingTask = pendingTask;
   }
 
   /// <summary>
@@ -100,25 +91,27 @@ public partial class FetchedIndex
   public long FileSize { get; set; }
 
   /// <summary>
-  /// Last build time.
+  /// Last build time. Not returned by all infrastructures.
   /// </summary>
-  /// <value>Last build time.</value>
+  /// <value>Last build time. Not returned by all infrastructures.</value>
   [JsonPropertyName("lastBuildTimeS")]
-  public int LastBuildTimeS { get; set; }
+  public int? LastBuildTimeS { get; set; }
 
   /// <summary>
   /// Number of pending indexing operations. This value is deprecated and should not be used.
   /// </summary>
   /// <value>Number of pending indexing operations. This value is deprecated and should not be used.</value>
   [JsonPropertyName("numberOfPendingTasks")]
-  public int NumberOfPendingTasks { get; set; }
+  [Obsolete]
+  public int? NumberOfPendingTasks { get; set; }
 
   /// <summary>
   /// A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
   /// </summary>
   /// <value>A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.</value>
   [JsonPropertyName("pendingTask")]
-  public bool PendingTask { get; set; }
+  [Obsolete]
+  public bool? PendingTask { get; set; }
 
   /// <summary>
   /// Only present if the index is a replica. Contains the name of the related primary index.

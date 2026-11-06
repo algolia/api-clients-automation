@@ -53,7 +53,7 @@ package algoliasearch.search
   * @param fileSize
   *   Number of bytes of the index binary file.
   * @param lastBuildTimeS
-  *   Last build time.
+  *   Last build time. Not returned by all infrastructures.
   * @param numberOfPendingTasks
   *   Number of pending indexing operations. This value is deprecated and should not be used.
   * @param pendingTask
@@ -76,9 +76,9 @@ case class FetchedIndex(
     entries: Int,
     dataSize: Long,
     fileSize: Long,
-    lastBuildTimeS: Int,
-    numberOfPendingTasks: Int,
-    pendingTask: Boolean,
+    lastBuildTimeS: Option[Int] = scala.None,
+    numberOfPendingTasks: Option[Int] = scala.None,
+    pendingTask: Option[Boolean] = scala.None,
     primary: Option[String] = scala.None,
     replicas: Option[Seq[String]] = scala.None,
     virtual: Option[Boolean] = scala.None,

@@ -26,13 +26,15 @@ type FetchedIndex struct {
 	// Number of bytes of the index binary file.
 	// Example: 112927
 	FileSize int64 `json:"fileSize"`
-	// Last build time.
+	// Last build time. Not returned by all infrastructures.
 	// Example: 3
-	LastBuildTimeS int32 `json:"lastBuildTimeS"`
+	LastBuildTimeS *int32 `json:"lastBuildTimeS,omitempty"`
 	// Number of pending indexing operations. This value is deprecated and should not be used.
-	NumberOfPendingTasks int32 `json:"numberOfPendingTasks"`
+	// Deprecated
+	NumberOfPendingTasks *int32 `json:"numberOfPendingTasks,omitempty"`
 	// A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
-	PendingTask bool `json:"pendingTask"`
+	// Deprecated
+	PendingTask *bool `json:"pendingTask,omitempty"`
 	// Only present if the index is a replica. Contains the name of the related primary index.
 	// Example: T02
 	Primary *string `json:"primary,omitempty"`
@@ -48,6 +50,24 @@ type FetchedIndex struct {
 }
 
 type FetchedIndexOption func(f *FetchedIndex)
+
+func WithFetchedIndexLastBuildTimeS(val int32) FetchedIndexOption {
+	return func(f *FetchedIndex) {
+		f.LastBuildTimeS = &val
+	}
+}
+
+func WithFetchedIndexNumberOfPendingTasks(val int32) FetchedIndexOption {
+	return func(f *FetchedIndex) {
+		f.NumberOfPendingTasks = &val
+	}
+}
+
+func WithFetchedIndexPendingTask(val bool) FetchedIndexOption {
+	return func(f *FetchedIndex) {
+		f.PendingTask = &val
+	}
+}
 
 func WithFetchedIndexPrimary(val string) FetchedIndexOption {
 	return func(f *FetchedIndex) {
@@ -90,9 +110,6 @@ func NewFetchedIndex(
 	entries int32,
 	dataSize int64,
 	fileSize int64,
-	lastBuildTimeS int32,
-	numberOfPendingTasks int32,
-	pendingTask bool,
 	opts ...FetchedIndexOption,
 ) *FetchedIndex {
 	this := &FetchedIndex{}
@@ -101,11 +118,8 @@ func NewFetchedIndex(
 	this.UpdatedAt = updatedAt
 	this.Entries = entries
 	this.DataSize = dataSize
-	this.FileSize = fileSize
-	this.LastBuildTimeS = lastBuildTimeS
-	this.NumberOfPendingTasks = numberOfPendingTasks
 
-	this.PendingTask = pendingTask
+	this.FileSize = fileSize
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -286,86 +300,119 @@ func (o *FetchedIndex) SetFileSize(v int64) *FetchedIndex {
 	return o
 }
 
-// GetLastBuildTimeS returns the LastBuildTimeS field value.
+// GetLastBuildTimeS returns the LastBuildTimeS field value if set, zero value otherwise.
 func (o *FetchedIndex) GetLastBuildTimeS() int32 {
-	if o == nil {
+	if o == nil || o.LastBuildTimeS == nil {
 		var ret int32
 
 		return ret
 	}
 
-	return o.LastBuildTimeS
+	return *o.LastBuildTimeS
 }
 
-// GetLastBuildTimeSOk returns a tuple with the LastBuildTimeS field value
+// GetLastBuildTimeSOk returns a tuple with the LastBuildTimeS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FetchedIndex) GetLastBuildTimeSOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || o.LastBuildTimeS == nil {
 		return nil, false
 	}
 
-	return &o.LastBuildTimeS, true
+	return o.LastBuildTimeS, true
 }
 
-// SetLastBuildTimeS sets field value.
+// HasLastBuildTimeS returns a boolean if a field has been set.
+func (o *FetchedIndex) HasLastBuildTimeS() bool {
+	if o != nil && o.LastBuildTimeS != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLastBuildTimeS gets a reference to the given int32 and assigns it to the LastBuildTimeS field.
 func (o *FetchedIndex) SetLastBuildTimeS(v int32) *FetchedIndex {
-	o.LastBuildTimeS = v
+	o.LastBuildTimeS = &v
 
 	return o
 }
 
-// GetNumberOfPendingTasks returns the NumberOfPendingTasks field value.
+// GetNumberOfPendingTasks returns the NumberOfPendingTasks field value if set, zero value otherwise.
+// Deprecated.
 func (o *FetchedIndex) GetNumberOfPendingTasks() int32 {
-	if o == nil {
+	if o == nil || o.NumberOfPendingTasks == nil {
 		var ret int32
 
 		return ret
 	}
 
-	return o.NumberOfPendingTasks
+	return *o.NumberOfPendingTasks
 }
 
-// GetNumberOfPendingTasksOk returns a tuple with the NumberOfPendingTasks field value
+// GetNumberOfPendingTasksOk returns a tuple with the NumberOfPendingTasks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated.
 func (o *FetchedIndex) GetNumberOfPendingTasksOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || o.NumberOfPendingTasks == nil {
 		return nil, false
 	}
 
-	return &o.NumberOfPendingTasks, true
+	return o.NumberOfPendingTasks, true
 }
 
-// SetNumberOfPendingTasks sets field value.
+// HasNumberOfPendingTasks returns a boolean if a field has been set.
+func (o *FetchedIndex) HasNumberOfPendingTasks() bool {
+	if o != nil && o.NumberOfPendingTasks != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNumberOfPendingTasks gets a reference to the given int32 and assigns it to the NumberOfPendingTasks field.
+// Deprecated.
 func (o *FetchedIndex) SetNumberOfPendingTasks(v int32) *FetchedIndex {
-	o.NumberOfPendingTasks = v
+	o.NumberOfPendingTasks = &v
 
 	return o
 }
 
-// GetPendingTask returns the PendingTask field value.
+// GetPendingTask returns the PendingTask field value if set, zero value otherwise.
+// Deprecated.
 func (o *FetchedIndex) GetPendingTask() bool {
-	if o == nil {
+	if o == nil || o.PendingTask == nil {
 		var ret bool
 
 		return ret
 	}
 
-	return o.PendingTask
+	return *o.PendingTask
 }
 
-// GetPendingTaskOk returns a tuple with the PendingTask field value
+// GetPendingTaskOk returns a tuple with the PendingTask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated.
 func (o *FetchedIndex) GetPendingTaskOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || o.PendingTask == nil {
 		return nil, false
 	}
 
-	return &o.PendingTask, true
+	return o.PendingTask, true
 }
 
-// SetPendingTask sets field value.
+// HasPendingTask returns a boolean if a field has been set.
+func (o *FetchedIndex) HasPendingTask() bool {
+	if o != nil && o.PendingTask != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPendingTask gets a reference to the given bool and assigns it to the PendingTask field.
+// Deprecated.
 func (o *FetchedIndex) SetPendingTask(v bool) *FetchedIndex {
-	o.PendingTask = v
+	o.PendingTask = &v
 
 	return o
 }
@@ -562,11 +609,20 @@ func (o FetchedIndex) MarshalJSON() ([]byte, error) {
 	toSerialize["updatedAt"] = o.UpdatedAt
 	toSerialize["entries"] = o.Entries
 	toSerialize["dataSize"] = o.DataSize
-	toSerialize["fileSize"] = o.FileSize
-	toSerialize["lastBuildTimeS"] = o.LastBuildTimeS
-	toSerialize["numberOfPendingTasks"] = o.NumberOfPendingTasks
 
-	toSerialize["pendingTask"] = o.PendingTask
+	toSerialize["fileSize"] = o.FileSize
+	if o.LastBuildTimeS != nil {
+		toSerialize["lastBuildTimeS"] = o.LastBuildTimeS
+	}
+
+	if o.NumberOfPendingTasks != nil {
+		toSerialize["numberOfPendingTasks"] = o.NumberOfPendingTasks
+	}
+
+	if o.PendingTask != nil {
+		toSerialize["pendingTask"] = o.PendingTask
+	}
+
 	if o.Primary != nil {
 		toSerialize["primary"] = o.Primary
 	}
@@ -642,7 +698,7 @@ var FetchedIndexFieldDescriptions = map[string]string{
 	"entries":              "Number of records contained in the index.",
 	"dataSize":             "Number of bytes of the index in minified format.",
 	"fileSize":             "Number of bytes of the index binary file.",
-	"lastBuildTimeS":       "Last build time.",
+	"lastBuildTimeS":       "Last build time. Not returned by all infrastructures.",
 	"numberOfPendingTasks": "Number of pending indexing operations. This value is deprecated and should not be used.",
 	"pendingTask":          "A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.",
 	"primary":              "Only present if the index is a replica. Contains the name of the related primary index.",

@@ -19,12 +19,14 @@ public struct FetchedIndex: Codable, JSONEncodable {
     public var dataSize: Int64
     /// Number of bytes of the index binary file.
     public var fileSize: Int64
-    /// Last build time.
-    public var lastBuildTimeS: Int
+    /// Last build time. Not returned by all infrastructures.
+    public var lastBuildTimeS: Int?
     /// Number of pending indexing operations. This value is deprecated and should not be used.
-    public var numberOfPendingTasks: Int
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var numberOfPendingTasks: Int?
     /// A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
-    public var pendingTask: Bool
+    @available(*, deprecated, message: "This property is deprecated.")
+    public var pendingTask: Bool?
     /// Only present if the index is a replica. Contains the name of the related primary index.
     public var primary: String?
     /// Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
@@ -43,9 +45,9 @@ public struct FetchedIndex: Codable, JSONEncodable {
         entries: Int,
         dataSize: Int64,
         fileSize: Int64,
-        lastBuildTimeS: Int,
-        numberOfPendingTasks: Int,
-        pendingTask: Bool,
+        lastBuildTimeS: Int? = nil,
+        numberOfPendingTasks: Int? = nil,
+        pendingTask: Bool? = nil,
         primary: String? = nil,
         replicas: [String]? = nil,
         virtual: Bool? = nil,
@@ -95,9 +97,9 @@ public struct FetchedIndex: Codable, JSONEncodable {
         try container.encode(self.entries, forKey: .entries)
         try container.encode(self.dataSize, forKey: .dataSize)
         try container.encode(self.fileSize, forKey: .fileSize)
-        try container.encode(self.lastBuildTimeS, forKey: .lastBuildTimeS)
-        try container.encode(self.numberOfPendingTasks, forKey: .numberOfPendingTasks)
-        try container.encode(self.pendingTask, forKey: .pendingTask)
+        try container.encodeIfPresent(self.lastBuildTimeS, forKey: .lastBuildTimeS)
+        try container.encodeIfPresent(self.numberOfPendingTasks, forKey: .numberOfPendingTasks)
+        try container.encodeIfPresent(self.pendingTask, forKey: .pendingTask)
         try container.encodeIfPresent(self.primary, forKey: .primary)
         try container.encodeIfPresent(self.replicas, forKey: .replicas)
         try container.encodeIfPresent(self.virtual, forKey: .virtual)
@@ -116,9 +118,9 @@ extension FetchedIndex: Hashable {
         hasher.combine(self.entries.hashValue)
         hasher.combine(self.dataSize.hashValue)
         hasher.combine(self.fileSize.hashValue)
-        hasher.combine(self.lastBuildTimeS.hashValue)
-        hasher.combine(self.numberOfPendingTasks.hashValue)
-        hasher.combine(self.pendingTask.hashValue)
+        hasher.combine(self.lastBuildTimeS?.hashValue)
+        hasher.combine(self.numberOfPendingTasks?.hashValue)
+        hasher.combine(self.pendingTask?.hashValue)
         hasher.combine(self.primary?.hashValue)
         hasher.combine(self.replicas?.hashValue)
         hasher.combine(self.virtual?.hashValue)

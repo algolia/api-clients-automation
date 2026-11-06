@@ -261,15 +261,6 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
         if (!isset($this->container['fileSize']) || null === $this->container['fileSize']) {
             $invalidProperties[] = "'fileSize' can't be null";
         }
-        if (!isset($this->container['lastBuildTimeS']) || null === $this->container['lastBuildTimeS']) {
-            $invalidProperties[] = "'lastBuildTimeS' can't be null";
-        }
-        if (!isset($this->container['numberOfPendingTasks']) || null === $this->container['numberOfPendingTasks']) {
-            $invalidProperties[] = "'numberOfPendingTasks' can't be null";
-        }
-        if (!isset($this->container['pendingTask']) || null === $this->container['pendingTask']) {
-            $invalidProperties[] = "'pendingTask' can't be null";
-        }
 
         return $invalidProperties;
     }
@@ -432,7 +423,7 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets lastBuildTimeS.
      *
-     * @return int
+     * @return null|int
      */
     public function getLastBuildTimeS()
     {
@@ -442,7 +433,7 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets lastBuildTimeS.
      *
-     * @param int $lastBuildTimeS last build time
+     * @param null|int $lastBuildTimeS Last build time. Not returned by all infrastructures.
      *
      * @return self
      */
@@ -456,7 +447,9 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets numberOfPendingTasks.
      *
-     * @return int
+     * @return null|int
+     *
+     * @deprecated
      */
     public function getNumberOfPendingTasks()
     {
@@ -466,9 +459,11 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets numberOfPendingTasks.
      *
-     * @param int $numberOfPendingTasks Number of pending indexing operations. This value is deprecated and should not be used.
+     * @param null|int $numberOfPendingTasks Number of pending indexing operations. This value is deprecated and should not be used.
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setNumberOfPendingTasks($numberOfPendingTasks)
     {
@@ -480,7 +475,9 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Gets pendingTask.
      *
-     * @return bool
+     * @return null|bool
+     *
+     * @deprecated
      */
     public function getPendingTask()
     {
@@ -490,9 +487,11 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets pendingTask.
      *
-     * @param bool $pendingTask A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
+     * @param null|bool $pendingTask A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setPendingTask($pendingTask)
     {
