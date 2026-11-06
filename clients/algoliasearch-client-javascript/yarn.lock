@@ -3121,7 +3121,7 @@ __metadata:
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
     "@types/node": "npm:24.13.4"
-    bundlewatch: "npm:0.4.2"
+    bundlewatch: "npm:1.1.0"
     execa: "npm:10.0.1"
     lerna: "npm:9.0.7"
     rollup: "npm:4.63.6"
@@ -3443,23 +3443,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bundlewatch@npm:0.4.2":
-  version: 0.4.2
-  resolution: "bundlewatch@npm:0.4.2"
+"bundlewatch@npm:1.1.0":
+  version: 1.1.0
+  resolution: "bundlewatch@npm:1.1.0"
   dependencies:
-    axios: "npm:^0.31.1"
-    bytes: "npm:^3.1.1"
-    chalk: "npm:^4.0.0"
-    ci-env: "npm:^1.17.0"
-    commander: "npm:^5.0.0"
-    glob: "npm:^7.1.2"
-    gzip-size: "npm:^6.0.0"
+    glob: "npm:^7.2.3"
     jsonpack: "npm:^1.1.5"
-    lodash.merge: "npm:^4.6.1"
-    read-pkg-up: "npm:^7.0.1"
   bin:
-    bundlewatch: lib/bin/index.js
-  checksum: 10/844aef38c938c7729d4a3cf24309f7e25ed173e39608cf6ef36541979332fe828c433cd419b85b3401e2db84496c55dc4e2c5152b12d20b1e535812e3e553b0b
+    bundlewatch: dist/cli.js
+  checksum: 10/59766c961fa0a9815098c86755efc31125050bb063e77130daef5b0d4a5f11f274c0356f6da36a9c965c1128fc575b069eeea2c929711f8fe5c323e57631bd9e
   languageName: node
   linkType: hard
 
@@ -3467,13 +3459,6 @@ __metadata:
   version: 8.1.1
   resolution: "byte-size@npm:8.1.1"
   checksum: 10/eacd83b5f39b4b35115160201553150c3c085473ddb1e788d0f4ee22a2f3461470de5732eef8d7874efbbd883b7ae1277190b579128060e616d606ff419fe1e0
-  languageName: node
-  linkType: hard
-
-"bytes@npm:^3.1.1":
-  version: 3.1.2
-  resolution: "bytes@npm:3.1.2"
-  checksum: 10/a10abf2ba70c784471d6b4f58778c0beeb2b5d405148e66affa91f23a9f13d07603d0a0354667310ae1d6dc141474ffd44e2a074be0f6e2254edb8fc21445388
   languageName: node
   linkType: hard
 
@@ -3609,13 +3594,6 @@ __metadata:
   version: 3.0.0
   resolution: "chownr@npm:3.0.0"
   checksum: 10/b63cb1f73d171d140a2ed8154ee6566c8ab775d3196b0e03a2a94b5f6a0ce7777ee5685ca56849403c8d17bd457a6540672f9a60696a6137c7a409097495b82c
-  languageName: node
-  linkType: hard
-
-"ci-env@npm:^1.17.0":
-  version: 1.17.0
-  resolution: "ci-env@npm:1.17.0"
-  checksum: 10/ce5ce285d43e1808d80f86de4d22ee74a93f1051b7f1332c72a4518e871f2c23ea0f839d16918427dcd22868063196eda6fc6bf939019ef4386c0c44e5a28613
   languageName: node
   linkType: hard
 
@@ -3811,13 +3789,6 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: 10/3b2dc4125f387dab73b3294dbcb0ab2a862f9c0ad748ee2b27e3544d25325b7a8cdfbcc228d103a98a716960b14478114a5206b5415bd48cdafa38797891562c
-  languageName: node
-  linkType: hard
-
-"commander@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "commander@npm:5.1.0"
-  checksum: 10/3e2ef5c003c5179250161e42ce6d48e0e69a54af970c65b7f985c70095240c260fd647453efd4c2c5a31b30ce468f373dc70f769c2f54a2c014abc4792aaca28
   languageName: node
   linkType: hard
 
@@ -4218,13 +4189,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     gopd: "npm:^1.2.0"
   checksum: 10/5add88a3d68d42d6e6130a0cac450b7c2edbe73364bbd2fc334564418569bea97c6943a8fcd70e27130bf32afc236f30982fc4905039b703f23e9e0433c29934
-  languageName: node
-  linkType: hard
-
-"duplexer@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "duplexer@npm:0.1.2"
-  checksum: 10/62ba61a830c56801db28ff6305c7d289b6dc9f859054e8c982abd8ee0b0a14d2e9a8e7d086ffee12e868d43e2bbe8a964be55ddbd8c8957714c87373c7a4f9b0
   languageName: node
   linkType: hard
 
@@ -5035,7 +4999,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.2":
+"glob@npm:^7.2.3":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -5070,15 +5034,6 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10/bf152d0ed1dc159239db1ba1f74fdbc40cb02f626770dcd5815c427ce0688c2635a06ed69af364396da4636d0408fcf7d4afdf7881724c3307e46aff30ca49e2
-  languageName: node
-  linkType: hard
-
-"gzip-size@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "gzip-size@npm:6.0.0"
-  dependencies:
-    duplexer: "npm:^0.1.2"
-  checksum: 10/2df97f359696ad154fc171dcb55bc883fe6e833bca7a65e457b9358f3cb6312405ed70a8da24a77c1baac0639906cd52358dc0ce2ec1a937eaa631b934c94194
   languageName: node
   linkType: hard
 
@@ -6093,13 +6048,6 @@ __metadata:
   version: 4.4.0
   resolution: "lodash.ismatch@npm:4.4.0"
   checksum: 10/946a7176cdf4048f7b624378defda00dc0d01a2dad9933c54dad11fbecc253716df4210fbbfcd7d042e6fdb7603463cfe48e0ef576e20bf60d43f7deb1a2fe04
-  languageName: node
-  linkType: hard
-
-"lodash.merge@npm:^4.6.1":
-  version: 4.6.2
-  resolution: "lodash.merge@npm:4.6.2"
-  checksum: 10/d0ea2dd0097e6201be083865d50c3fb54fbfbdb247d9cc5950e086c991f448b7ab0cdab0d57eacccb43473d3f2acd21e134db39f22dac2d6c9ba6bf26978e3d6
   languageName: node
   linkType: hard
 
