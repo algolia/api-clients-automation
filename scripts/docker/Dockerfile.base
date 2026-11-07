@@ -1,10 +1,10 @@
-# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1.28.0@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
 # versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
 FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
-FROM mcr.microsoft.com/dotnet/sdk:10.0.402@sha256:0d99ebf1ccad15037b5c98c9fe8979d6b8dbac23812feae2277a0b277b5c5ffa AS csharp-builder
-FROM golang:1.27.2-alpine@sha256:f92b6ef800e499660581efdabdf25d9d817a9d124eaf900924f0504e7e27e12d AS go-builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0.403@sha256:212fe4cb74627d5adf9817a4088906ae3edff1bd853bb27565d4b46731efe61e AS csharp-builder
+FROM golang:1.27.3-alpine@sha256:fa3d596898d9f126af7c01d14ee7597bab3f39cccf392ef36b69fe77cd681f18 AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
-FROM composer:2.10.3@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac AS composer-builder
+FROM composer:2.11.0@sha256:278dfc7bd35169965d03f87194816f43bf4e6b6ea61707c2114e52ad12fe24ce AS composer-builder
 FROM php:8.5.12-trixie@sha256:635a4b998025ab269194639a5549c6fdcd9b4f88ec8cd761b092de8653d40663 AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
@@ -20,7 +20,7 @@ RUN apt-get update \
 COPY .nvmrc .nvmrc
 # the installer is fetched by the commit of its release tag, which cannot change under it
 # renovate: datasource=github-tags depName=nvm-sh/nvm
-ARG NVM_PIN=v0.39.7@bab86d5de571015b63fd8fc30b47bbe072a1290e
+ARG NVM_PIN=v0.40.8@a885b885fef16fac4bc544188fb25e9e37ae83e8
 RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_PIN#*@}/install.sh" \
   && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
