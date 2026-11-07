@@ -37,7 +37,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
-        JAVA_FORMATTER_PIN: v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+        JAVA_FORMATTER_PIN: v1.37.0@834b2a0c38cb774953322a84b5ca3f2f40dd3156650b3cd44d3b744345962f7a
       run: |
         version="${JAVA_FORMATTER_PIN%@*}"
         curl -f --retry 3 -L "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" -o /tmp/java-formatter.jar
