@@ -165,7 +165,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
-        RUBYFMT_PIN_X86_64: v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
+        RUBYFMT_PIN_X86_64: v0.14.1@9590cc3b8b2ed37a250a5f7c22a542ce014f13954f613c93a72230de8a74fbbd
       run: |
         version="${RUBYFMT_PIN_X86_64%@*}"
         curl -f --retry 3 -L "https://github.com/fables-tales/rubyfmt/releases/download/${version}/rubyfmt-${version}-Linux-x86_64.tar.gz" -o rubyfmt.tar.gz
