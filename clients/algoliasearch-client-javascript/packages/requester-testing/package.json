@@ -53,7 +53,7 @@
     "@types/node": "24.13.4",
     "publint": "0.3.25",
     "tsup": "8.5.1",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   },
   "engines": {
     "node": ">= 14.0.0"
