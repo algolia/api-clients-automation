@@ -31,12 +31,12 @@ package algoliasearch.analytics
 /** GetNoClickRateResponse
   *
   * @param rate
-  *   No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked
-  *   searches.
+  *   No click rate: calculated as the number of tracked searches with results whose query didn't get any click in the
+  *   time range, divided by the number of tracked searches with results.
   * @param count
   *   Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
   * @param noClickCount
-  *   Number of times this search was returned as a result without any click.
+  *   Number of tracked searches with results whose query didn't get any click in the time range.
   * @param dates
   *   Daily no click rates.
   */

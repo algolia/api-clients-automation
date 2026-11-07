@@ -30,8 +30,9 @@ public class GetNoClickRateResponse {
   }
 
   /**
-   * No click rate: calculated as the number of tracked searches without clicks divided by the
-   * number of tracked searches. minimum: 0 maximum: 1
+   * No click rate: calculated as the number of tracked searches with results whose query didn't get
+   * any click in the time range, divided by the number of tracked searches with results. minimum: 0
+   * maximum: 1
    */
   @javax.annotation.Nonnull
   public Double getRate() {
@@ -57,7 +58,10 @@ public class GetNoClickRateResponse {
     return this;
   }
 
-  /** Number of times this search was returned as a result without any click. minimum: 1 */
+  /**
+   * Number of tracked searches with results whose query didn't get any click in the time range.
+   * minimum: 1
+   */
   @javax.annotation.Nonnull
   public Integer getNoClickCount() {
     return noClickCount;
