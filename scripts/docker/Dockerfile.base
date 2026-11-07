@@ -20,7 +20,7 @@ RUN apt-get update \
 COPY .nvmrc .nvmrc
 # the installer is fetched by the commit of its release tag, which cannot change under it
 # renovate: datasource=github-tags depName=nvm-sh/nvm
-ARG NVM_PIN=v0.39.7@bab86d5de571015b63fd8fc30b47bbe072a1290e
+ARG NVM_PIN=v0.40.8@a885b885fef16fac4bc544188fb25e9e37ae83e8
 RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_PIN#*@}/install.sh" \
   && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
