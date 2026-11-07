@@ -8292,7 +8292,7 @@ __metadata:
     js-yaml: "npm:5.4.3"
     knip: "npm:6.35.1"
     micromatch: "npm:4.0.8"
-    semver: "npm:7.8.5"
+    semver: "npm:7.8.6"
     spinnies: "npm:0.5.1"
     typescript: "npm:5.9.3"
     vitest: "npm:4.1.11"
@@ -8306,12 +8306,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.8.5":
-  version: 7.8.5
-  resolution: "semver@npm:7.8.5"
+"semver@npm:7.8.6":
+  version: 7.8.6
+  resolution: "semver@npm:7.8.6"
   bin:
     semver: bin/semver.js
-  checksum: 10/9b01d2ff11e6e4a4539b7ca3c5f280c8704cb397a28504469f2ed4f00ad2194748d756647362a9712fff30984d15772ab7f083108c2fb508e2096ae9e708f22c
+  checksum: 10/76fd62a781a9c58464e4d4b1b9c99c404063d8133fff8a0753e66b1bd826bfb720d843664e7ab1268c0fb7134d04df9f3b8788eb2f1000c509648e0eeac03921
   languageName: node
   linkType: hard
 
