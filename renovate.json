@@ -187,6 +187,34 @@
       "allowedVersions": "<3.14"
     },
     {
+      "description": "Maven Central rate limits (429) the shared egress IPs of hosted Renovate, and Renovate aborts the whole run with an external-host-error on any 429 from repo.maven.apache.org or repo1.maven.org. Look the sbt libraries up on Google's Central mirror instead, a 429 there only skips that package. The mirror stamps files with its own copy time, so release timestamps (and the minimumReleaseAge gate) lag the real publish date by up to a day. Builds still resolve from Maven Central. Gradle dependencies are left alone because they declare several repositories (plugins.gradle.org, Google, ...) that a registryUrls override would replace.",
+      "matchDatasources": [
+        "sbt-package"
+      ],
+      "registryUrls": [
+        "https://maven-central.storage-download.googleapis.com/maven2/"
+      ]
+    },
+    {
+      "description": "The sbt plugins (sbt-ci-release, sbt-scalafmt, sbt-buildinfo) are found by listing Maven Central directories, which the Google mirror does not serve, and repo.scala-sbt.org no longer answers for them, so they can only be looked up on Central and a 429 there aborts the whole run. Bump them by hand in the plugins.sbt files until that is fixed.",
+      "matchDatasources": [
+        "sbt-plugin"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Same mirror as the sbt libraries, for the openapi-generator packages, which only live on Maven Central (generators/build.gradle declares mavenCentral() alone).",
+      "matchDatasources": [
+        "maven"
+      ],
+      "matchPackageNames": [
+        "/^org\\.openapitools:/"
+      ],
+      "registryUrls": [
+        "https://maven-central.storage-download.googleapis.com/maven2/"
+      ]
+    },
+    {
       "description": "@cloudflare/vitest-pool-workers (used by the JavaScript client to run tests in workerd) declares a vitest ^4.1.0 peer range, and vitest 5 removed the published @vitest/runner package it depends on. No released pool version supports vitest 5 yet, so the workerd pool fails to start. Lift this once @cloudflare/vitest-pool-workers supports vitest 5.",
       "matchPackageNames": [
         "vitest"
