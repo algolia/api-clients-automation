@@ -34,7 +34,7 @@
       "id": 42,
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
-      "metric": ["clicked_users_rate", "converted_users_rate"],
+      "metric": ["clicked_users_rate", "converted_users_rate", "users_with_no_results_rate"],
       "methods": ["bayesian"]
     },
     "request": {
@@ -43,7 +43,7 @@
       "queryParameters": {
         "startDate": "1999-09-19",
         "endDate": "2001-01-01",
-        "metric": "clicked_users_rate%2Cconverted_users_rate",
+        "metric": "clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate",
         "methods": "bayesian"
       }
     }

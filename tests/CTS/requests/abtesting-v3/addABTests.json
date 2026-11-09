@@ -37,11 +37,11 @@
     }
   },
   {
-    "testName": "addABTests with Bayesian configuration",
+    "testName": "addABTests with Bayesian no-results user rate",
     "parameters": {
       "endAt": "2022-12-31T00:00:00.000Z",
       "name": "myABTest",
-      "metrics": [{"name": "conversionRate"}],
+      "metrics": [{"name": "usersWithNoResultsRate"}],
       "variants": [
         {
           "index": "AB_TEST_1",
@@ -54,7 +54,7 @@
       ],
       "configuration": {
         "method": "bayesian",
-        "primaryMetric": "conversion_rate"
+        "primaryMetric": "users_with_no_results_rate"
       }
     },
     "request": {
@@ -63,7 +63,7 @@
       "body": {
         "endAt": "2022-12-31T00:00:00.000Z",
         "name": "myABTest",
-        "metrics": [{"name": "conversionRate"}],
+        "metrics": [{"name": "usersWithNoResultsRate"}],
         "variants": [
           {
             "index": "AB_TEST_1",
@@ -76,7 +76,7 @@
         ],
         "configuration": {
           "method": "bayesian",
-          "primaryMetric": "conversion_rate"
+          "primaryMetric": "users_with_no_results_rate"
         }
       }
     }
