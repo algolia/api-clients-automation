@@ -1,0 +1,43 @@
+TargetAppId:
+  name: target.appId
+  in: query
+  required: true
+  description: Algolia application ID to list suggestions for.
+  schema:
+    type: string
+    minLength: 1
+    pattern: ^[a-zA-Z0-9_-]+$
+
+TargetIndex:
+  name: target.index
+  in: query
+  description: Only list suggestions that target this index.
+  schema:
+    type: string
+    minLength: 1
+
+UserId:
+  name: userId
+  in: query
+  description: |
+    ID of the user viewing the suggestions.
+    When set, suggestions that this user dismissed within the dismissal cooldown include `dismissedAt`.
+  schema:
+    type: string
+    minLength: 1
+
+ExcludeDismissed:
+  name: excludeDismissed
+  in: query
+  description: Whether to leave out the suggestions that `userId` dismissed.
+  schema:
+    type: boolean
+
+SuggestionID:
+  name: suggestionID
+  in: path
+  required: true
+  description: Unique identifier of the suggestion.
+  schema:
+    type: string
+    format: uuid

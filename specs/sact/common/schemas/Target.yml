@@ -1,0 +1,14 @@
+type: object
+additionalProperties: false
+required:
+  - appId
+properties:
+  appId:
+    type: string
+    minLength: 1
+    pattern: ^[a-zA-Z0-9_-]+$
+    description: Algolia application ID the suggestion applies to.
+  index:
+    type: string
+    minLength: 1
+    description: Index the suggestion applies to, if it targets one index.

@@ -1,0 +1,8 @@
+type: string
+description: Lifecycle state of the suggestion.
+enum:
+  - SUGGESTION_STATE_UNSPECIFIED
+  - ACTIVE
+  - EXPIRED
+  - WITHDRAWN
+  - COMPLETED

@@ -23,6 +23,8 @@ apis:
     root: specs/query-suggestions/spec.yml
   recommend:
     root: specs/recommend/spec.yml
+  sact:
+    root: specs/sact/spec.yml
   search:
     root: specs/search/spec.yml
 

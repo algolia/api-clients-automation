@@ -1,0 +1,25 @@
+type: object
+additionalProperties: false
+required:
+  - kind
+  - id
+  - evidence
+properties:
+  kind:
+    $ref: './EvidenceSourceKind.yml'
+  id:
+    type: string
+    minLength: 1
+    description: |
+      Identifier of the specific source result, such as a feature qualifier or feature fit result ID.
+      Together with `kind`, it identifies the evidence source.
+  version:
+    type: string
+    minLength: 1
+    description: Version of the source.
+  observedAt:
+    $ref: './Timestamp.yml'
+  evidence:
+    type: object
+    additionalProperties: true
+    description: Evidence that the source produced.
