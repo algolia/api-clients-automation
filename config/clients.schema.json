@@ -23,7 +23,7 @@
                 "advanced-personalization",
                 "query-suggestions",
                 "recommend",
-                "sact",
+                "suggested-actions",
                 "search"
               ]
             }
@@ -49,7 +49,7 @@
                     "advanced-personalization",
                     "query-suggestions",
                     "recommend",
-                    "sact",
+                    "suggested-actions",
                     "search"
                   ]
                 },

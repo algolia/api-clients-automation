@@ -219,8 +219,8 @@
         "isStandaloneClient": true
       },
       {
-        "name": "sact",
-        "output": "clients/algoliasearch-client-javascript/packages/sact",
+        "name": "suggested-actions",
+        "output": "clients/algoliasearch-client-javascript/packages/suggested-actions",
         "isStandaloneClient": true
       }
     ],
