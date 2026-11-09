@@ -238,8 +238,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
   }
 
   /**
-   * Parameters can have a dot in their name (e.g. `target.appId`), the default implementation spells the dot out (`targetPeriodappId`)
-   * while the client generators camelize it (`targetAppId`), so the generated tests wouldn't match the client's signature.
+   * Parameters can have a dot in their name (e.g. `target.appId`), the default implementation
+   * spells the dot out (`targetPeriodappId`) while the client generators camelize it
+   * (`targetAppId`), so the generated tests wouldn't match the client's signature.
    */
   @Override
   public String toParamName(String name) {
