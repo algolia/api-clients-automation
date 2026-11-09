@@ -52,7 +52,7 @@ public class AbtestingV3ClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "addABTests with Bayesian configuration")]
+  [Fact(DisplayName = "addABTests with Bayesian no-results user rate")]
   public async Task AddABTestsTest1()
   {
     await client.AddABTestsAsync(
@@ -60,7 +60,7 @@ public class AbtestingV3ClientRequestTests
       {
         EndAt = "2022-12-31T00:00:00.000Z",
         Name = "myABTest",
-        Metrics = new List<CreateMetric> { new CreateMetric { Name = "conversionRate" } },
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "usersWithNoResultsRate" } },
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
@@ -69,7 +69,7 @@ public class AbtestingV3ClientRequestTests
         Configuration = new ABTestConfiguration
         {
           Method = Enum.Parse<AnalysisMethod>("Bayesian"),
-          PrimaryMetric = Enum.Parse<PrimaryMetric>("ConversionRate"),
+          PrimaryMetric = Enum.Parse<PrimaryMetric>("UsersWithNoResultsRate"),
         },
       }
     );
@@ -78,7 +78,7 @@ public class AbtestingV3ClientRequestTests
     Assert.Equal("/3/abtests", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}",
+      "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"usersWithNoResultsRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"users_with_no_results_rate\"}}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -774,6 +774,7 @@ public class AbtestingV3ClientRequestTests
       {
         Enum.Parse<MetricName>("ClickedUsersRate"),
         Enum.Parse<MetricName>("ConvertedUsersRate"),
+        Enum.Parse<MetricName>("UsersWithNoResultsRate"),
       },
       new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
     );
@@ -783,7 +784,7 @@ public class AbtestingV3ClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}"
+      "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate\",\"methods\":\"bayesian\"}"
     );
     Assert.NotNull(expectedQuery);
 

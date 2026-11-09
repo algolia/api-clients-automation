@@ -38,9 +38,9 @@ class SnippetAbtestingV3Client {
 
   // Snippet for the addABTests method.
   //
-  // addABTests with Bayesian configuration
+  // addABTests with Bayesian no-results user rate
   void snippetForAddABTests1() throws Exception {
-    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     // Initialize the client
     AbtestingV3Client client = new AbtestingV3Client("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION");
 
@@ -49,14 +49,16 @@ class SnippetAbtestingV3Client {
       new AddABTestsRequest()
         .setEndAt("2022-12-31T00:00:00.000Z")
         .setName("myABTest")
-        .setMetrics(Arrays.asList(new CreateMetric().setName("conversionRate")))
+        .setMetrics(Arrays.asList(new CreateMetric().setName("usersWithNoResultsRate")))
         .setVariants(
           Arrays.asList(
             new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
             new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
           )
         )
-        .setConfiguration(new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.CONVERSION_RATE))
+        .setConfiguration(
+          new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.USERS_WITH_NO_RESULTS_RATE)
+        )
     );
     // >LOG
     // print the response
@@ -705,7 +707,7 @@ class SnippetAbtestingV3Client {
       42,
       "1999-09-19",
       "2001-01-01",
-      Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),
+      Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE, MetricName.USERS_WITH_NO_RESULTS_RATE),
       Arrays.asList(AnalysisMethod.BAYESIAN)
     );
     // >LOG

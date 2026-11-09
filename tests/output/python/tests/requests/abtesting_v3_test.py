@@ -49,7 +49,7 @@ class TestAbtestingV3Client:
 
     async def test_add_ab_tests_1(self):
         """
-        addABTests with Bayesian configuration
+        addABTests with Bayesian no-results user rate
         """
         _req = await self._client.add_ab_tests_with_http_info(
             add_ab_tests_request={
@@ -57,7 +57,7 @@ class TestAbtestingV3Client:
                 "name": "myABTest",
                 "metrics": [
                     {
-                        "name": "conversionRate",
+                        "name": "usersWithNoResultsRate",
                     },
                 ],
                 "variants": [
@@ -72,7 +72,7 @@ class TestAbtestingV3Client:
                 ],
                 "configuration": {
                     "method": "bayesian",
-                    "primaryMetric": "conversion_rate",
+                    "primaryMetric": "users_with_no_results_rate",
                 },
             },
         )
@@ -82,7 +82,7 @@ class TestAbtestingV3Client:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}"""
         )
 
     async def test_apply_variant_settings_(self):
@@ -671,6 +671,7 @@ class TestAbtestingV3Client:
             metric=[
                 "clicked_users_rate",
                 "converted_users_rate",
+                "users_with_no_results_rate",
             ],
             methods=[
                 "bayesian",
@@ -684,7 +685,7 @@ class TestAbtestingV3Client:
             == {
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
-                "metric": "clicked_users_rate%2Cconverted_users_rate",
+                "metric": "clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate",
                 "methods": "bayesian",
             }.items()
         )
@@ -826,7 +827,7 @@ class TestAbtestingV3ClientSync:
 
     def test_add_ab_tests_1(self):
         """
-        addABTests with Bayesian configuration
+        addABTests with Bayesian no-results user rate
         """
         _req = self._client.add_ab_tests_with_http_info(
             add_ab_tests_request={
@@ -834,7 +835,7 @@ class TestAbtestingV3ClientSync:
                 "name": "myABTest",
                 "metrics": [
                     {
-                        "name": "conversionRate",
+                        "name": "usersWithNoResultsRate",
                     },
                 ],
                 "variants": [
@@ -849,7 +850,7 @@ class TestAbtestingV3ClientSync:
                 ],
                 "configuration": {
                     "method": "bayesian",
-                    "primaryMetric": "conversion_rate",
+                    "primaryMetric": "users_with_no_results_rate",
                 },
             },
         )
@@ -859,7 +860,7 @@ class TestAbtestingV3ClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+            """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}"""
         )
 
     def test_apply_variant_settings_(self):
@@ -1448,6 +1449,7 @@ class TestAbtestingV3ClientSync:
             metric=[
                 "clicked_users_rate",
                 "converted_users_rate",
+                "users_with_no_results_rate",
             ],
             methods=[
                 "bayesian",
@@ -1461,7 +1463,7 @@ class TestAbtestingV3ClientSync:
             == {
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
-                "metric": "clicked_users_rate%2Cconverted_users_rate",
+                "metric": "clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate",
                 "methods": "bayesian",
             }.items()
         )

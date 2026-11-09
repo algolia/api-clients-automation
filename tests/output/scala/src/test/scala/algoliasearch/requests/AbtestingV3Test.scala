@@ -69,7 +69,7 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("addABTests with Bayesian configuration1") {
+  test("addABTests with Bayesian no-results user rate1") {
     val (client, echo) = testClient()
     val future = client.addABTests(
       addABTestsRequest = AddABTestsRequest(
@@ -77,7 +77,7 @@ class AbtestingV3Test extends AnyFunSuite {
         name = "myABTest",
         metrics = Seq(
           CreateMetric(
-            name = "conversionRate"
+            name = "usersWithNoResultsRate"
           )
         ),
         variants = Seq(
@@ -93,7 +93,7 @@ class AbtestingV3Test extends AnyFunSuite {
         configuration = Some(
           ABTestConfiguration(
             method = Some(AnalysisMethod.withName("bayesian")),
-            primaryMetric = Some(PrimaryMetric.withName("conversion_rate"))
+            primaryMetric = Some(PrimaryMetric.withName("users_with_no_results_rate"))
           )
         )
       )
@@ -105,7 +105,7 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.path == "/3/abtests")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}"""
+      """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -792,7 +792,13 @@ class AbtestingV3Test extends AnyFunSuite {
       id = 42,
       startDate = Some("1999-09-19"),
       endDate = Some("2001-01-01"),
-      metric = Some(Seq(MetricName.withName("clicked_users_rate"), MetricName.withName("converted_users_rate"))),
+      metric = Some(
+        Seq(
+          MetricName.withName("clicked_users_rate"),
+          MetricName.withName("converted_users_rate"),
+          MetricName.withName("users_with_no_results_rate")
+        )
+      ),
       methods = Some(Seq(AnalysisMethod.withName("bayesian")))
     )
 
@@ -803,7 +809,7 @@ class AbtestingV3Test extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}"""
+      """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate","methods":"bayesian"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)

@@ -16,6 +16,9 @@ public class MetricMetadata {
   @JsonProperty("mean")
   private Double mean;
 
+  @JsonProperty("userCount")
+  private Long userCount;
+
   public MetricMetadata setWinsorizedValue(Double winsorizedValue) {
     this.winsorizedValue = winsorizedValue;
     return this;
@@ -43,6 +46,23 @@ public class MetricMetadata {
     return mean;
   }
 
+  public MetricMetadata setUserCount(Long userCount) {
+    this.userCount = userCount;
+    return this;
+  }
+
+  /**
+   * Only present for `winsorized_revenue_per_user`. Number of tracked users in this variant with a
+   * tracked purchase in the metric's currency (`dimension`), plus tracked users with no tracked
+   * purchase in any currency. Users who purchased only in other currencies are excluded. It's the
+   * sample size behind the mean, p-value, and intervals, and differs from the overall `user_count`
+   * metric. Omitted when the variant has no record for that currency.
+   */
+  @javax.annotation.Nullable
+  public Long getUserCount() {
+    return userCount;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -52,12 +72,16 @@ public class MetricMetadata {
       return false;
     }
     MetricMetadata metricMetadata = (MetricMetadata) o;
-    return Objects.equals(this.winsorizedValue, metricMetadata.winsorizedValue) && Objects.equals(this.mean, metricMetadata.mean);
+    return (
+      Objects.equals(this.winsorizedValue, metricMetadata.winsorizedValue) &&
+      Objects.equals(this.mean, metricMetadata.mean) &&
+      Objects.equals(this.userCount, metricMetadata.userCount)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(winsorizedValue, mean);
+    return Objects.hash(winsorizedValue, mean, userCount);
   }
 
   @Override
@@ -66,6 +90,7 @@ public class MetricMetadata {
     sb.append("class MetricMetadata {\n");
     sb.append("    winsorizedValue: ").append(toIndentedString(winsorizedValue)).append("\n");
     sb.append("    mean: ").append(toIndentedString(mean)).append("\n");
+    sb.append("    userCount: ").append(toIndentedString(userCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }
