@@ -59,9 +59,9 @@ class TestClientCompositionClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"message" => "ok compression test server response",
-        :"body" => {
-          :"message" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+        "message": "ok compression test server response",
+        "body": {
+          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
         }
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
@@ -89,8 +89,8 @@ class TestClientCompositionClient < Test::Unit::TestCase
     req = client.custom_get("1/test/gzip-response")
     assert_equal(
       {
-        :"message" => "ok decompression test server response",
-        :"data" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "message": "ok decompression test server response",
+        "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -121,7 +121,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.48.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.49.0\).*/))
   end
 
   # handles 204 No Content responses correctly
@@ -165,7 +165,7 @@ class TestClientCompositionClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/request-id/smoke/composition/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # switch API key
@@ -187,10 +187,10 @@ class TestClientCompositionClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("check-api-key/1")
-    assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
     req = client.custom_get("check-api-key/2")
-    assert_equal({:"headerAPIKeyValue" => "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
 end

@@ -30,7 +30,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -54,7 +54,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters%20with%20space"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters%20with%20space"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -77,11 +77,11 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
     assert_equal(
-      {:"query" => "parameters%20with%20space", :"and%20an%20array" => "array%2Cwith%20spaces"}.to_a,
+      {"query": "parameters%20with%20space", "and%20an%20array": "array%2Cwith%20spaces"}.to_a,
       req.query_params.to_a
     )
     assert(
-      ({:"x-header-1" => "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-header-1": "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
 
@@ -105,7 +105,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -121,7 +121,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -137,7 +137,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"query2" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "query2": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -153,9 +153,9 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -172,9 +172,9 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -191,7 +191,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"isItWorking" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "isItWorking": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -207,7 +207,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -223,7 +223,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -239,7 +239,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -255,7 +255,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "1%2C2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "1%2C2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -277,7 +277,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -325,7 +325,7 @@ class TestCompositionClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/1/compositions/id1", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
-    assert(({:"request-id" => "CtsE2eEcho4"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert(({"request-id": "CtsE2eEcho4"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
   end
@@ -339,7 +339,7 @@ class TestCompositionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/compositions/id1", req.path)
-    assert_equal({:"x-algolia-request-id" => "CtsE2eEchoQ"}.to_a, req.query_params.to_a)
+    assert_equal({"x-algolia-request-id": "CtsE2eEchoQ"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert(
       req.headers.keys.none? { |k| k.to_s.casecmp?("request-id") },
@@ -524,10 +524,10 @@ class TestCompositionClient < Test::Unit::TestCase
                         hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                           add_item_key: true,
                           extra: {
-                            :"my-string" => "string",
-                            :"my-bool" => true,
-                            :"my-number" => 42,
-                            :"my-object" => {:"sub-key" => "sub-value"}
+                            'my-string': "string",
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': {'sub-key': "sub-value"}
                           }
                         )
                       )
@@ -546,10 +546,10 @@ class TestCompositionClient < Test::Unit::TestCase
                         hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                           add_item_key: true,
                           extra: {
-                            :"my-string" => "string",
-                            :"my-bool" => true,
-                            :"my-number" => 42,
-                            :"my-object" => {:"sub-key" => "sub-value"}
+                            'my-string': "string",
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': {'sub-key': "sub-value"}
                           }
                         )
                       )
@@ -741,10 +741,10 @@ class TestCompositionClient < Test::Unit::TestCase
                   hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                     add_item_key: true,
                     extra: {
-                      :"my-string" => "string",
-                      :"my-bool" => true,
-                      :"my-number" => 42,
-                      :"my-object" => {:"sub-key" => "sub-value"}
+                      'my-string': "string",
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': {'sub-key': "sub-value"}
                     }
                   )
                 )
@@ -763,10 +763,10 @@ class TestCompositionClient < Test::Unit::TestCase
                   hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                     add_item_key: true,
                     extra: {
-                      :"my-string" => "string",
-                      :"my-bool" => true,
-                      :"my-number" => 42,
-                      :"my-object" => {:"sub-key" => "sub-value"}
+                      'my-string': "string",
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': {'sub-key': "sub-value"}
                     }
                   )
                 )
@@ -841,7 +841,7 @@ class TestCompositionClient < Test::Unit::TestCase
       Algolia::Composition::Composition.new(
         algolia_object_id: "my-compo",
         name: "my composition",
-        sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+        sorting_strategy: {'Price-asc': "products-low-to-high", 'Price-desc': "products-high-to-low"},
         behavior: Algolia::Composition::CompositionInjectionBehavior.new(
           injection: Algolia::Composition::Injection.new(
             main: Algolia::Composition::InjectionMain.new(
@@ -1231,10 +1231,10 @@ class TestCompositionClient < Test::Unit::TestCase
                     hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                       add_item_key: true,
                       extra: {
-                        :"my-string" => "string",
-                        :"my-bool" => true,
-                        :"my-number" => 42,
-                        :"my-object" => {:"sub-key" => "sub-value"}
+                        'my-string': "string",
+                        'my-bool': true,
+                        'my-number': 42,
+                        'my-object': {'sub-key': "sub-value"}
                       }
                     )
                   )
@@ -1486,10 +1486,10 @@ class TestCompositionClient < Test::Unit::TestCase
                           hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                             add_item_key: true,
                             extra: {
-                              :"my-string" => "string",
-                              :"my-bool" => true,
-                              :"my-number" => 42,
-                              :"my-object" => {:"sub-key" => "sub-value"}
+                              'my-string': "string",
+                              'my-bool': true,
+                              'my-number': 42,
+                              'my-object': {'sub-key': "sub-value"}
                             }
                           )
                         )
@@ -1827,16 +1827,16 @@ class TestCompositionClient < Test::Unit::TestCase
         params: Algolia::Composition::Params.new(
           query: "batman",
           injected_items: {
-            :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
+            'my-unique-external-group-key': Algolia::Composition::ExternalInjectedItem.new(
               items: [
                 Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
                 Algolia::Composition::ExternalInjection.new(
                   algolia_object_id: "my-object-2",
                   metadata: {
-                    :"my-string" => "string",
-                    :"my-bool" => true,
-                    :"my-number" => 42,
-                    :"my-object" => {:"sub-key" => "sub-value"}
+                    'my-string': "string",
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': {'sub-key': "sub-value"}
                   }
                 )
               ]
@@ -1983,7 +1983,7 @@ class TestCompositionClient < Test::Unit::TestCase
   def test_update_sorting_strategy_composition
     req = @client.update_sorting_strategy_composition_with_http_info(
       "my-compo",
-      {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"}
+      {'Price-asc': "products-low-to-high", 'Price-desc': "products-high-to-low"}
     )
 
     assert_equal(:post, req.method)

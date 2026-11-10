@@ -5075,7 +5075,7 @@ paths:
 
             response = client.update_sorting_strategy_composition(
               "my-compo",
-              {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"}
+              {'Price-asc': "products-low-to-high", 'Price-desc': "products-high-to-low"}
             )
 
 

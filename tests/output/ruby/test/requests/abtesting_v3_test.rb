@@ -98,7 +98,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -122,7 +122,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters%20with%20space"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters%20with%20space"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -145,11 +145,11 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
     assert_equal(
-      {:"query" => "parameters%20with%20space", :"and%20an%20array" => "array%2Cwith%20spaces"}.to_a,
+      {"query": "parameters%20with%20space", "and%20an%20array": "array%2Cwith%20spaces"}.to_a,
       req.query_params.to_a
     )
     assert(
-      ({:"x-header-1" => "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-header-1": "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
 
@@ -173,7 +173,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -189,7 +189,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -205,7 +205,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"query2" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "query2": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -221,9 +221,9 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -240,9 +240,9 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -259,7 +259,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"isItWorking" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "isItWorking": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -275,7 +275,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -291,7 +291,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -307,7 +307,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -323,7 +323,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "1%2C2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "1%2C2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -345,7 +345,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -438,7 +438,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/3/abtests/42", req.path)
-    assert_equal({:"methods" => "frequentist%2Cbayesian"}.to_a, req.query_params.to_a)
+    assert_equal({"methods": "frequentist%2Cbayesian"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -475,12 +475,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/3/abtests/42/timeseries", req.path)
     assert_equal(
-      {
-        :"startDate" => "1999-09-19",
-        :"endDate" => "2001-01-01",
-        :"metric" => "revenue_per_search",
-        :"methods" => "bayesian"
-      }.to_a,
+      {"startDate": "1999-09-19", "endDate": "2001-01-01", "metric": "revenue_per_search", "methods": "bayesian"}.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -502,10 +497,10 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal("/3/abtests/42/timeseries", req.path)
     assert_equal(
       {
-        :"startDate" => "1999-09-19",
-        :"endDate" => "2001-01-01",
-        :"metric" => "clicked_users_rate%2Cconverted_users_rate",
-        :"methods" => "bayesian"
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "metric": "clicked_users_rate%2Cconverted_users_rate",
+        "methods": "bayesian"
       }.to_a,
       req.query_params.to_a
     )
@@ -534,12 +529,12 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert_equal("/3/abtests", req.path)
     assert_equal(
       {
-        :"offset" => "0",
-        :"limit" => "21",
-        :"indexPrefix" => "cts_e2e%20ab",
-        :"indexSuffix" => "t",
-        :"direction" => "asc",
-        :"methods" => "frequentist%2Cbayesian"
+        "offset": "0",
+        "limit": "21",
+        "indexPrefix": "cts_e2e%20ab",
+        "indexSuffix": "t",
+        "direction": "asc",
+        "methods": "frequentist%2Cbayesian"
       }.to_a,
       req.query_params.to_a
     )

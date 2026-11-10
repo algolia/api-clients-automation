@@ -170,7 +170,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", req.path)
-    assert_equal({:"compatibilityMode" => "ai-sdk-4"}.to_a, req.query_params.to_a)
+    assert_equal({"compatibilityMode": "ai-sdk-4"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"),
@@ -208,7 +208,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/tasks", req.path)
-    assert_equal({:"stream" => "false", :"cache" => "false", :"analytics" => "false"}.to_a, req.query_params.to_a)
+    assert_equal({"stream": "false", "cache": "false", "analytics": "false"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
@@ -355,7 +355,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/agent-studio/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -379,7 +379,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/test/all", req.path)
-    assert_equal({:"query" => "parameters%20with%20space"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters%20with%20space"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -402,11 +402,11 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/test/all", req.path)
     assert_equal(
-      {:"query" => "parameters%20with%20space", :"and%20an%20array" => "array%2Cwith%20spaces"}.to_a,
+      {"query": "parameters%20with%20space", "and%20an%20array": "array%2Cwith%20spaces"}.to_a,
       req.query_params.to_a
     )
     assert(
-      ({:"x-header-1" => "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-header-1": "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
 
@@ -430,7 +430,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -446,7 +446,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -462,7 +462,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"query2" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "query2": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -478,9 +478,9 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -497,9 +497,9 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -516,7 +516,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"isItWorking" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "isItWorking": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -532,7 +532,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -548,7 +548,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -564,7 +564,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -580,7 +580,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/agent-studio/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "1%2C2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "1%2C2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -602,7 +602,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/agent-studio/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -641,7 +641,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", req.path)
-    assert_equal({:"startDate" => "2024-01-01", :"endDate" => "2024-06-30"}.to_a, req.query_params.to_a)
+    assert_equal({"startDate": "2024-01-01", "endDate": "2024-06-30"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -738,7 +738,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export", req.path)
-    assert_equal({:"startDate" => "2024-01-01", :"endDate" => "2024-12-31"}.to_a, req.query_params.to_a)
+    assert_equal({"startDate": "2024-01-01", "endDate": "2024-12-31"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -933,7 +933,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/cache", req.path)
-    assert_equal({:"before" => "2024-12-01"}.to_a, req.query_params.to_a)
+    assert_equal({"before": "2024-12-01"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -996,21 +996,21 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", req.path)
     assert_equal(
       {
-        :"startDate" => "2024-01-01",
-        :"endDate" => "2024-12-31",
-        :"includeFeedback" => "true",
-        :"feedbackVote" => "1",
-        :"page" => "2",
-        :"limit" => "10",
-        :"includeImpactAnalytics" => "true",
-        :"clicked" => "true",
-        :"converted" => "false",
-        :"hasAlgoliaSearch" => "true"
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31",
+        "includeFeedback": "true",
+        "feedbackVote": "1",
+        "page": "2",
+        "limit": "10",
+        "includeImpactAnalytics": "true",
+        "clicked": "true",
+        "converted": "false",
+        "hasAlgoliaSearch": "true"
       }.to_a,
       req.query_params.to_a
     )
     assert(
-      ({:"x-algolia-secure-user-token" => "secure-user-token"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-secure-user-token": "secure-user-token"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
 
@@ -1048,7 +1048,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/agents", req.path)
     assert_equal(
-      {:"page" => "2", :"limit" => "5", :"providerId" => "c2905529-b933-4b69-87ec-75f9829d5f59"}.to_a,
+      {"page": "2", "limit": "5", "providerId": "c2905529-b933-4b69-87ec-75f9829d5f59"}.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -1062,7 +1062,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/agents", req.path)
-    assert_equal({:"page" => "1", :"limit" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "1", "limit": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1134,7 +1134,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/providers", req.path)
-    assert_equal({:"page" => "2", :"limit" => "5"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "2", "limit": "5"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1146,7 +1146,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/providers", req.path)
-    assert_equal({:"page" => "1", :"limit" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "1", "limit": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1170,7 +1170,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/secret-keys", req.path)
-    assert_equal({:"page" => "2", :"limit" => "5"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "2", "limit": "5"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1182,7 +1182,7 @@ class TestAgentStudioClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/secret-keys", req.path)
-    assert_equal({:"page" => "1", :"limit" => "10"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "1", "limit": "10"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")

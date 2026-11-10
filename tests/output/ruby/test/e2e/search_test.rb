@@ -46,7 +46,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(res.status, 200)
     res = @client.get_rule("cts_e2e_browse", "qr-1725004648916")
     expected_body = JSON.parse(
-      "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]}}"
+      "{\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\",\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]}}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
@@ -266,7 +266,7 @@ class TestSearchClientE2E < Test::Unit::TestCase
     assert_equal(res.status, 200)
     res = @client.search_rules("cts_e2e_browse", Algolia::Search::SearchRulesParams.new(query: "zorro"))
     expected_body = JSON.parse(
-      "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"\u00C6on Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
+      "{\"hits\":[{\"conditions\":[{\"alternatives\":true,\"anchoring\":\"contains\",\"pattern\":\"zorro\"}],\"consequence\":{\"params\":{\"ignorePlurals\":\"true\"},\"filterPromotes\":true,\"promote\":[{\"objectIDs\":[\"Æon Flux\"],\"position\":0}]},\"description\":\"test_rule\",\"enabled\":true,\"objectID\":\"qr-1725004648916\"}],\"nbHits\":1,\"nbPages\":1,\"page\":0}"
     )
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end

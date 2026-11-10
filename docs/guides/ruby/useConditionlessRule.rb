@@ -6,8 +6,8 @@ object_id = "a-rule-id"
 
 rule = Algolia::Search::Rule.new(
   object_id: object_id,
-  consequence: Algolia::Search::Consequence.new
   # Set relevant consequence
+  consequence: Algolia::Search::Consequence.new
 )
 
 # Set validity (optional)

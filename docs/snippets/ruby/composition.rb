@@ -657,10 +657,10 @@ def snippet_for_multiple_batch2
                       hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                         add_item_key: true,
                         extra: {
-                          :"my-string" => "string",
-                          :"my-bool" => true,
-                          :"my-number" => 42,
-                          :"my-object" => {:"sub-key" => "sub-value"}
+                          'my-string': "string",
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': {'sub-key': "sub-value"}
                         }
                       )
                     )
@@ -679,10 +679,10 @@ def snippet_for_multiple_batch2
                       hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                         add_item_key: true,
                         extra: {
-                          :"my-string" => "string",
-                          :"my-bool" => true,
-                          :"my-number" => 42,
-                          :"my-object" => {:"sub-key" => "sub-value"}
+                          'my-string': "string",
+                          'my-bool': true,
+                          'my-number': 42,
+                          'my-object': {'sub-key': "sub-value"}
                         }
                       )
                     )
@@ -878,10 +878,10 @@ def snippet_for_put_composition2
                 hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                   add_item_key: true,
                   extra: {
-                    :"my-string" => "string",
-                    :"my-bool" => true,
-                    :"my-number" => 42,
-                    :"my-object" => {:"sub-key" => "sub-value"}
+                    'my-string': "string",
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': {'sub-key': "sub-value"}
                   }
                 )
               )
@@ -900,10 +900,10 @@ def snippet_for_put_composition2
                 hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                   add_item_key: true,
                   extra: {
-                    :"my-string" => "string",
-                    :"my-bool" => true,
-                    :"my-number" => 42,
-                    :"my-object" => {:"sub-key" => "sub-value"}
+                    'my-string': "string",
+                    'my-bool': true,
+                    'my-number': 42,
+                    'my-object': {'sub-key': "sub-value"}
                   }
                 )
               )
@@ -980,7 +980,7 @@ def snippet_for_put_composition4
     Algolia::Composition::Composition.new(
       algolia_object_id: "my-compo",
       name: "my composition",
-      sorting_strategy: {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"},
+      sorting_strategy: {'Price-asc': "products-low-to-high", 'Price-desc': "products-high-to-low"},
       behavior: Algolia::Composition::CompositionInjectionBehavior.new(
         injection: Algolia::Composition::Injection.new(
           main: Algolia::Composition::InjectionMain.new(
@@ -1377,10 +1377,10 @@ def snippet_for_put_composition_rule1
                   hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                     add_item_key: true,
                     extra: {
-                      :"my-string" => "string",
-                      :"my-bool" => true,
-                      :"my-number" => 42,
-                      :"my-object" => {:"sub-key" => "sub-value"}
+                      'my-string': "string",
+                      'my-bool': true,
+                      'my-number': 42,
+                      'my-object': {'sub-key': "sub-value"}
                     }
                   )
                 )
@@ -1637,10 +1637,10 @@ def snippet_for_save_rules1
                         hits: Algolia::Composition::InjectedItemHitsMetadata.new(
                           add_item_key: true,
                           extra: {
-                            :"my-string" => "string",
-                            :"my-bool" => true,
-                            :"my-number" => 42,
-                            :"my-object" => {:"sub-key" => "sub-value"}
+                            'my-string': "string",
+                            'my-bool': true,
+                            'my-number': 42,
+                            'my-object': {'sub-key': "sub-value"}
                           }
                         )
                       )
@@ -1990,16 +1990,16 @@ def snippet_for_search1
       params: Algolia::Composition::Params.new(
         query: "batman",
         injected_items: {
-          :"my-unique-external-group-key" => Algolia::Composition::ExternalInjectedItem.new(
+          'my-unique-external-group-key': Algolia::Composition::ExternalInjectedItem.new(
             items: [
               Algolia::Composition::ExternalInjection.new(algolia_object_id: "my-object-1"),
               Algolia::Composition::ExternalInjection.new(
                 algolia_object_id: "my-object-2",
                 metadata: {
-                  :"my-string" => "string",
-                  :"my-bool" => true,
-                  :"my-number" => 42,
-                  :"my-object" => {:"sub-key" => "sub-value"}
+                  'my-string': "string",
+                  'my-bool': true,
+                  'my-number': 42,
+                  'my-object': {'sub-key': "sub-value"}
                 }
               )
             ]
@@ -2182,7 +2182,7 @@ def snippet_for_update_sorting_strategy_composition
   # Call the API
   response = client.update_sorting_strategy_composition(
     "my-compo",
-    {:"Price-asc" => "products-low-to-high", :"Price-desc" => "products-high-to-low"}
+    {'Price-asc': "products-low-to-high", 'Price-desc': "products-high-to-low"}
   )
 
   # >LOG

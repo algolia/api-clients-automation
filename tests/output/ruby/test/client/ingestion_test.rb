@@ -81,7 +81,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/long-wait")
-    assert_equal({:"message" => "OK"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "OK"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # endpoint level timeout
@@ -142,7 +142,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.48.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.49.0\).*/))
   end
 
   # handles 204 No Content responses correctly
@@ -223,7 +223,7 @@ class TestClientIngestionClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/request-id/negative/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # switch API key
@@ -245,10 +245,10 @@ class TestClientIngestionClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("check-api-key/1")
-    assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
     req = client.custom_get("check-api-key/2")
-    assert_equal({:"headerAPIKeyValue" => "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
 end

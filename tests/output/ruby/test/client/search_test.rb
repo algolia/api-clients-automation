@@ -76,7 +76,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/retry/ruby")
-    assert_equal({:"message" => "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "ok test server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # tests the retry strategy on timeout
@@ -140,7 +140,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_post("1/test/error/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # test the compression strategy
@@ -171,9 +171,9 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"message" => "ok compression test server response",
-        :"body" => {
-          :"message" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
+        "message": "ok compression test server response",
+        "body": {
+          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris pharetra blandit sapien."
         }
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
@@ -201,8 +201,8 @@ class TestClientSearchClient < Test::Unit::TestCase
     req = client.custom_get("1/test/gzip-response")
     assert_equal(
       {
-        :"message" => "ok decompression test server response",
-        :"data" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "message": "ok decompression test server response",
+        "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -254,7 +254,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
     req = client.get_settings("cts_e2e_unknownField_ruby")
     assert_equal(
-      {:"minWordSizefor1Typo" => 12, :"minWordSizefor2Typos" => 13, :"hitsPerPage" => 14},
+      {"minWordSizefor1Typo": 12, "minWordSizefor2Typos": 13, "hitsPerPage": 14},
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
@@ -279,7 +279,7 @@ class TestClientSearchClient < Test::Unit::TestCase
 
     req = client.get_rule("cts_e2e_unknownFieldNested_ruby", "ruleObjectID")
     assert_equal(
-      {:"objectID" => "ruleObjectID", :"consequence" => {:"promote" => [{:"objectID" => "1", :"position" => 10}]}},
+      {"objectID": "ruleObjectID", "consequence": {"promote": [{"objectID": "1", "position": 10}]}},
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
@@ -309,9 +309,9 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/calling/ruby")
-    assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     req = client.custom_get("1/test/calling/ruby")
-    assert_equal({:"message" => "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "success server response"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # retries 429 on the same host using Retry-After
@@ -339,7 +339,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/rate-limit/retry-after/ruby")
-    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # retries 429 with a 1s wait when Retry-After is missing
@@ -361,7 +361,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/rate-limit/missing-header/ruby")
-    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # retries 429 with a 1s wait when Retry-After is invalid
@@ -383,7 +383,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/rate-limit/invalid-header/ruby")
-    assert_equal({:"message" => "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"message": "ok rate limit retry"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # returns 429 after maxRateLimitRetries is used up
@@ -476,7 +476,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {requester: Algolia::Transport::EchoRequester.new}
     )
     req = client.custom_post_with_http_info("1/test")
-    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.48.0\).*/))
+    assert(req.headers["user-agent"].match(/^Algolia for Ruby \(3.49.0\).*/))
   end
 
   # call deleteObjects without error
@@ -498,7 +498,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.delete_objects("cts_e2e_deleteObjects_ruby", ["1", "2"])
-    assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal([{"taskID": 666, "objectIDs": ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # api key basic
@@ -649,7 +649,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         ]
       )
     )
-    assert_equal({:"results" => [{:"objectID" => "foo"}, nil]}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"results": [{"objectID": "foo"}, nil]}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # indexExists
@@ -897,7 +897,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
       true
     )
-    assert_equal([{:"taskID" => 444, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal([{"taskID": 444, "objectIDs": ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # call partialUpdateObjects with createIfNotExists=false
@@ -923,7 +923,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       [{objectID: "3", name: "Cyril"}, {objectID: "4", name: "David"}],
       false
     )
-    assert_equal([{:"taskID" => 555, :"objectIDs" => ["3", "4"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal([{"taskID": 555, "objectIDs": ["3", "4"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # call partialUpdateObjectsWithTransformation with createIfNotExists=true
@@ -976,10 +976,10 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(
       [
         {
-          :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-          :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82925",
-          :"message" => "OK",
-          :"createdAt" => "2022-05-12T06:24:30.049Z"
+          "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+          "eventID": "113b2068-6337-4c85-b5c2-e7b213d82925",
+          "message": "OK",
+          "createdAt": "2022-05-12T06:24:30.049Z"
         }
       ],
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
@@ -1022,14 +1022,14 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
-        :"batchResponses" => [
-          {:"taskID" => 127, :"objectIDs" => ["1", "2", "3"]},
-          {:"taskID" => 130, :"objectIDs" => ["4", "5", "6"]},
-          {:"taskID" => 133, :"objectIDs" => ["7", "8", "9"]},
-          {:"taskID" => 134, :"objectIDs" => ["10"]}
+        "copyOperationResponse": {"taskID": 125, "updatedAt": "2021-01-01T00:00:00.000Z"},
+        "batchResponses": [
+          {"taskID": 127, "objectIDs": ["1", "2", "3"]},
+          {"taskID": 130, "objectIDs": ["4", "5", "6"]},
+          {"taskID": 133, "objectIDs": ["7", "8", "9"]},
+          {"taskID": 134, "objectIDs": ["10"]}
         ],
-        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+        "moveOperationResponse": {"taskID": 777, "updatedAt": "2021-01-01T00:00:00.000Z"}
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -1061,9 +1061,9 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
-        :"batchResponses" => [{:"taskID" => 126, :"objectIDs" => ["1", "2"]}],
-        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+        "copyOperationResponse": {"taskID": 125, "updatedAt": "2021-01-01T00:00:00.000Z"},
+        "batchResponses": [{"taskID": 126, "objectIDs": ["1", "2"]}],
+        "moveOperationResponse": {"taskID": 777, "updatedAt": "2021-01-01T00:00:00.000Z"}
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -1151,34 +1151,34 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"copyOperationResponse" => {:"taskID" => 125, :"updatedAt" => "2021-01-01T00:00:00.000Z"},
-        :"watchResponses" => [
+        "copyOperationResponse": {"taskID": 125, "updatedAt": "2021-01-01T00:00:00.000Z"},
+        "watchResponses": [
           {
-            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82921",
-            :"message" => "OK",
-            :"createdAt" => "2022-05-12T06:24:30.049Z"
+            "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            "eventID": "113b2068-6337-4c85-b5c2-e7b213d82921",
+            "message": "OK",
+            "createdAt": "2022-05-12T06:24:30.049Z"
           },
           {
-            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82922",
-            :"message" => "OK",
-            :"createdAt" => "2022-05-12T06:24:30.049Z"
+            "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            "eventID": "113b2068-6337-4c85-b5c2-e7b213d82922",
+            "message": "OK",
+            "createdAt": "2022-05-12T06:24:30.049Z"
           },
           {
-            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82923",
-            :"message" => "OK",
-            :"createdAt" => "2022-05-12T06:24:30.049Z"
+            "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            "eventID": "113b2068-6337-4c85-b5c2-e7b213d82923",
+            "message": "OK",
+            "createdAt": "2022-05-12T06:24:30.049Z"
           },
           {
-            :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-            :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82924",
-            :"message" => "OK",
-            :"createdAt" => "2022-05-12T06:24:30.049Z"
+            "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+            "eventID": "113b2068-6337-4c85-b5c2-e7b213d82924",
+            "message": "OK",
+            "createdAt": "2022-05-12T06:24:30.049Z"
           }
         ],
-        :"moveOperationResponse" => {:"taskID" => 777, :"updatedAt" => "2021-01-01T00:00:00.000Z"}
+        "moveOperationResponse": {"taskID": 777, "updatedAt": "2021-01-01T00:00:00.000Z"}
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -1215,7 +1215,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_post("1/test/request-id/retry/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # each call mints a fresh Request-ID
@@ -1237,9 +1237,9 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("1/test/request-id/fresh/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     req = client.custom_get("1/test/request-id/fresh/ruby")
-    assert_equal({:"status" => "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "ok"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # a caller-supplied Request-ID is never overwritten
@@ -1265,7 +1265,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       {},
       {:header_params => {"request-id" => "CtsUserProvided"}}
     )
-    assert_equal({:"requestId" => "CtsUserProvided"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"requestId": "CtsUserProvided"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # every request of one helper call shares one Request-ID
@@ -1298,7 +1298,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       2
     )
     assert_equal(
-      [{:"taskID" => 42, :"objectIDs" => ["1", "2"]}, {:"taskID" => 42, :"objectIDs" => ["3", "4"]}],
+      [{"taskID": 42, "objectIDs": ["1", "2"]}, {"taskID": 42, "objectIDs": ["3", "4"]}],
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
     req = client.save_objects(
@@ -1313,7 +1313,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       2
     )
     assert_equal(
-      [{:"taskID" => 42, :"objectIDs" => ["5", "6"]}, {:"taskID" => 42, :"objectIDs" => ["7", "8"]}],
+      [{"taskID": 42, "objectIDs": ["5", "6"]}, {"taskID": 42, "objectIDs": ["7", "8"]}],
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
@@ -1372,7 +1372,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       "cts_e2e_saveObjects_ruby",
       [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
     )
-    assert_equal([{:"taskID" => 333, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal([{"taskID": 333, "objectIDs": ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # saveObjects should report errors
@@ -1394,10 +1394,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     begin
-      client.save_objects(
-        "cts_e2e_saveObjects_ruby",
-        [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
-      )
+      client.save_objects("cts_e2e_saveObjects_ruby", [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}])
       assert(false, "An error should have been raised")
     rescue => e
       assert_equal(
@@ -1526,10 +1523,10 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(
       [
         {
-          :"runID" => "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
-          :"eventID" => "113b2068-6337-4c85-b5c2-e7b213d82925",
-          :"message" => "OK",
-          :"createdAt" => "2022-05-12T06:24:30.049Z"
+          "runID": "b1b7a982-524c-40d2-bb7f-48aab075abda_ruby",
+          "eventID": "113b2068-6337-4c85-b5c2-e7b213d82925",
+          "message": "OK",
+          "createdAt": "2022-05-12T06:24:30.049Z"
         }
       ],
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
@@ -1644,10 +1641,10 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.custom_get("check-api-key/1")
-    assert_equal({:"headerAPIKeyValue" => "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "test-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     client.set_client_api_key("updated-api-key")
     req = client.custom_get("check-api-key/2")
-    assert_equal({:"headerAPIKeyValue" => "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"headerAPIKeyValue": "updated-api-key"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # wait for api key helper - add
@@ -1671,13 +1668,13 @@ class TestClientSearchClient < Test::Unit::TestCase
     req = client.wait_for_api_key("api-key-add-operation-test-ruby", "add")
     assert_equal(
       {
-        :"value" => "api-key-add-operation-test-ruby",
-        :"description" => "my new api key",
-        :"acl" => ["search", "addObject"],
-        :"validity" => 300,
-        :"maxQueriesPerIPPerHour" => 100,
-        :"maxHitsPerQuery" => 20,
-        :"createdAt" => 1720094400
+        "value": "api-key-add-operation-test-ruby",
+        "description": "my new api key",
+        "acl": ["search", "addObject"],
+        "validity": 300,
+        "maxQueriesPerIPPerHour": 100,
+        "maxHitsPerQuery": 20,
+        "createdAt": 1720094400
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -1716,15 +1713,15 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       {
-        :"value" => "api-key-update-operation-test-ruby",
-        :"description" => "my updated api key",
-        :"acl" => ["search", "addObject", "deleteObject"],
-        :"indexes" => ["Movies", "Books"],
-        :"referers" => ["*google.com", "*algolia.com"],
-        :"validity" => 305,
-        :"maxQueriesPerIPPerHour" => 95,
-        :"maxHitsPerQuery" => 20,
-        :"createdAt" => 1720094400
+        "value": "api-key-update-operation-test-ruby",
+        "description": "my updated api key",
+        "acl": ["search", "addObject", "deleteObject"],
+        "indexes": ["Movies", "Books"],
+        "referers": ["*google.com", "*algolia.com"],
+        "validity": 305,
+        "maxQueriesPerIPPerHour": 95,
+        "maxHitsPerQuery": 20,
+        "createdAt": 1720094400
       },
       req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
@@ -1771,7 +1768,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.wait_for_app_task(123)
-    assert_equal({:"status" => "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
   # wait for task
@@ -1793,7 +1790,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
 
     req = client.wait_for_task("wait-task-ruby", 123)
-    assert_equal({:"status" => "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
+    assert_equal({"status": "published"}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
 end

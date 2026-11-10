@@ -719,7 +719,7 @@
       "default": "client.set_client_api_key(\"updated-api-key\")"
     },
     "updateSortingStrategyComposition": {
-      "default": "response = client.update_sorting_strategy_composition(\n  \"my-compo\",\n  {:\"Price-asc\" => \"products-low-to-high\", :\"Price-desc\" => \"products-high-to-low\"}\n)"
+      "default": "response = client.update_sorting_strategy_composition(\n  \"my-compo\",\n  {'Price-asc': \"products-low-to-high\", 'Price-desc': \"products-high-to-low\"}\n)"
     },
     "init": {
       "default": "client = Algolia::CompositionClient.create(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")"
