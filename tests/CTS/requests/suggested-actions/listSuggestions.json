@@ -2,7 +2,7 @@
   {
     "testName": "listSuggestions with required parameters",
     "parameters": {
-      "targetPeriodappId": "MY_APP_ID"
+      "targetAppId": "MY_APP_ID"
     },
     "request": {
       "path": "/2/suggested-actions",
@@ -15,8 +15,8 @@
   {
     "testName": "listSuggestions with all parameters",
     "parameters": {
-      "targetPeriodappId": "MY_APP_ID",
-      "targetPeriodindex": "products",
+      "targetAppId": "MY_APP_ID",
+      "targetIndex": "products",
       "userId": "42",
       "excludeDismissed": true
     },
