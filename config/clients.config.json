@@ -217,6 +217,11 @@
         "name": "agent-studio",
         "output": "clients/algoliasearch-client-javascript/packages/agent-studio",
         "isStandaloneClient": true
+      },
+      {
+        "name": "suggested-actions",
+        "output": "clients/algoliasearch-client-javascript/packages/suggested-actions",
+        "isStandaloneClient": true
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",

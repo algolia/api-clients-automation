@@ -394,6 +394,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@algolia/suggested-actions@link:../../../clients/algoliasearch-client-javascript/packages/suggested-actions::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode":
+  version: 0.0.0-use.local
+  resolution: "@algolia/suggested-actions@link:../../../clients/algoliasearch-client-javascript/packages/suggested-actions::locator=javascript-playground%40workspace%3Aplayground%2Fjavascript%2Fnode"
+  languageName: node
+  linkType: soft
+
 "@apidevtools/json-schema-ref-parser@npm:^9.0.9":
   version: 9.1.2
   resolution: "@apidevtools/json-schema-ref-parser@npm:9.1.2"
@@ -6130,6 +6136,7 @@ __metadata:
     "@algolia/monitoring": "link:../../../clients/algoliasearch-client-javascript/packages/monitoring"
     "@algolia/recommend": "link:../../../clients/algoliasearch-client-javascript/packages/recommend"
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
+    "@algolia/suggested-actions": "link:../../../clients/algoliasearch-client-javascript/packages/suggested-actions"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     typescript: "npm:5.9.3"
   languageName: unknown

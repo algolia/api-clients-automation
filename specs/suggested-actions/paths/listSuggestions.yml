@@ -1,0 +1,30 @@
+get:
+  tags:
+    - suggestions
+  operationId: listSuggestions
+  x-mcp-tool: true
+  # TODO: provisional ACL, confirm with the sact team which ACL the endpoint requires.
+  x-acl:
+    - search
+  summary: List suggestions
+  description: |
+    Lists the active suggestions for an application, optionally narrowed to one index.
+    Suggestions are sorted from most recently created to oldest.
+  parameters:
+    - $ref: '../common/parameters.yml#/TargetAppId'
+    - $ref: '../common/parameters.yml#/TargetIndex'
+    - $ref: '../common/parameters.yml#/UserId'
+    - $ref: '../common/parameters.yml#/ExcludeDismissed'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ListSuggestionsResponse.yml'
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '403':
+      $ref: '../common/responses/Forbidden.yml'

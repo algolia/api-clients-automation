@@ -1,0 +1,15 @@
+type: object
+additionalProperties: false
+description: Set once the suggestion is completed, whoever completed it.
+properties:
+  completedBy:
+    type: string
+    minLength: 1
+    maxLength: 256
+    description: |
+      Who completed the suggestion, such as a dashboard user ID.
+      Empty when the observer detected the adoption.
+  source:
+    $ref: './Source.yml'
+  completedAt:
+    $ref: './Timestamp.yml'

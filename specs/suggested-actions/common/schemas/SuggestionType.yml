@@ -1,0 +1,8 @@
+type: string
+description: Registered definition from which the service derives the suggestion's description and options.
+enum:
+  - SUGGESTION_TYPE_UNSPECIFIED
+  - ACTIVATE_DYNAMIC_RE_RANKING
+  - ACTIVATE_PERSONALIZATION
+  - ACTIVATE_NEURAL_SEARCH
+  - ACTIVATE_ADVANCED_PERSONALIZATION

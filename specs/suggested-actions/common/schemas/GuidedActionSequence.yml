@@ -1,0 +1,11 @@
+type: object
+additionalProperties: false
+properties:
+  description:
+    type: string
+    description: Description of the sequence.
+  actions:
+    type: array
+    description: Steps to follow, in order.
+    items:
+      $ref: './GuidedAction.yml'

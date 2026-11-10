@@ -1,0 +1,12 @@
+type: object
+additionalProperties: false
+required:
+  - sources
+description: Where the evidence for the suggestion comes from.
+properties:
+  sources:
+    type: array
+    minItems: 1
+    maxItems: 20
+    items:
+      $ref: './EvidenceSource.yml'
