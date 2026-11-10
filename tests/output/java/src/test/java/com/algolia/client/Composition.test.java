@@ -128,17 +128,16 @@ class CompositionClientClientTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"Lorem" +
-          " ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor" +
-          " leo vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam." +
-          " Donec sit amet risus eget eros sollicitudin sagittis at et enim. Donec" +
-          " mattis tortor at placerat pharetra. In lorem tellus, dapibus sit amet dui" +
-          " tincidunt, tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a" +
-          " tempus est ornare quis. Interdum et malesuada fames ac ante ipsum primis in" +
-          " faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam" +
-          " nunc ligula, vulputate eget ligula vitae, vestibulum sollicitudin dolor." +
-          " Sed non suscipit ante. Cras consectetur, tellus ac aliquam varius, nibh" +
-          " neque vestibulum neque, eget faucibus lectus nibh sed metus. Mauris" +
-          " pharetra blandit sapien.\"}}",
+          " ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus porttitor leo" +
+          " vel porta. Sed tincidunt dolor elementum, blandit enim a, aliquet diam. Donec" +
+          " sit amet risus eget eros sollicitudin sagittis at et enim. Donec mattis tortor" +
+          " at placerat pharetra. In lorem tellus, dapibus sit amet dui tincidunt," +
+          " tincidunt ullamcorper lacus. Vivamus accumsan enim diam, a tempus est ornare" +
+          " quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et" +
+          " malesuada fames ac ante ipsum primis in faucibus. Nam nunc ligula, vulputate" +
+          " eget ligula vitae, vestibulum sollicitudin dolor. Sed non suscipit ante. Cras" +
+          " consectetur, tellus ac aliquam varius, nibh neque vestibulum neque, eget" +
+          " faucibus lectus nibh sed metus. Mauris pharetra blandit sapien.\"}}",
         json.writeValueAsString(res),
         JSONCompareMode.STRICT
       )
@@ -168,8 +167,8 @@ class CompositionClientClientTests {
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum" +
-          " dolor sit amet, consectetur adipiscing elit.\"}",
+        "{\"message\":\"ok decompression test server response\",\"data\":\"Lorem ipsum dolor" +
+          " sit amet, consectetur adipiscing elit.\"}",
         json.writeValueAsString(res),
         JSONCompareMode.STRICT
       )
@@ -204,7 +203,7 @@ class CompositionClientClientTests {
     client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
-      String regexp = "^Algolia for Java \\(4.47.0\\).*";
+      String regexp = "^Algolia for Java \\(4.48.0\\).*";
       assertTrue(
         result.headers.get("user-agent").matches(regexp),
         "Expected " + result.headers.get("user-agent") + " to match the following regex: " + regexp

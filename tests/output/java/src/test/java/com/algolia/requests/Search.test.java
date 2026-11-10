@@ -69,7 +69,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new" + " api key\"}",
+        "{\"acl\":[\"search\",\"addObject\",\"nluReadProject\"],\"description\":\"my new api" + " key\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2776,8 +2776,8 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb'" +
-          " OR 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
+        "{\"objectID\":\"diet-rule\",\"consequence\":{\"params\":{\"filters\":\"'low-carb' OR" +
+          " 'low-fat'\",\"query\":{\"edits\":[{\"type\":\"remove\",\"delete\":\"diet\"}]}}}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -4241,7 +4241,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"facetFilters\":[\"publisher:Penguin\",[\"author:Stephen" + " King\",\"genre:Horror\"]]}",
+        "{\"facetFilters\":[\"publisher:Penguin\",[\"author:Stephen King\",\"genre:Horror\"]]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -4857,8 +4857,8 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi" +
-          " Stormare Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}",
+        "{\"query\":\"\",\"similarQuery\":\"Comedy Drama Crime McDormand Macy Buscemi Stormare" +
+          " Presnell Coen\",\"filters\":\"year:1991 TO 2001\"}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -4948,8 +4948,8 @@ class SearchClientRequestsTests {
         new SearchParamsObject()
           .setQuery("query")
           .setFilters(
-            "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published" +
-              " AND publication_date:1441745506 TO 1441755506 AND inStock > 0 AND" +
+            "available = 1 AND (category:Book OR NOT category:Ebook) AND _tags:published AND" +
+              " publication_date:1441745506 TO 1441755506 AND inStock > 0 AND" +
               " author:\"John Doe\""
           ),
         Hit.class
@@ -5090,7 +5090,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:-John" + " Doe\"]}",
+        "{\"query\":\"query\",\"optionalFilters\":[\"category:Book\",\"author:-John Doe\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -8518,7 +8518,7 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in" + " your index\"}}",
+        "{\"userData\":{\"extraData\":\"This is the custom data that you want to store in your" + " index\"}}",
         req.body,
         JSONCompareMode.STRICT
       )
