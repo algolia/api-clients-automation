@@ -58,7 +58,8 @@
     "publint": "0.3.25",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.11"
+    "vite": "8.3.6",
+    "vitest": "5.1.0"
   },
   "engines": {
     "node": ">= 14.0.0"

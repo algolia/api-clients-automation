@@ -1,32 +1,12 @@
-import { builtinModules } from 'node:module';
-
-import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
-import type { Plugin } from 'vitest/config';
+import { cloudflareTest } from '@cloudflare/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 
 const compatibilityDate = '2026-04-08';
-
-// Vitest 4 mistakes a bare builtin id (e.g. `stream`) for one of its own files when the id starts with the tail of its
-// install path past `root`, which happens when yarn hoists vitest to the monorepo root. The `node:` prefix avoids that.
-const prefixNodeBuiltins: Plugin = {
-  name: 'prefix-node-builtins',
-  config: () => ({
-    resolve: {
-      alias: [
-        {
-          find: new RegExp(`^(${builtinModules.filter((name) => !name.startsWith('_')).join('|')})$`),
-          replacement: 'node:$1',
-        },
-      ],
-    },
-  }),
-};
 
 export default defineConfig({
   test: {
     projects: [
       {
-        plugins: [prefixNodeBuiltins],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/node',
@@ -39,7 +19,6 @@ export default defineConfig({
         },
       },
       {
-        plugins: [prefixNodeBuiltins],
         resolve: {
           alias: {
             '@algolia/abtesting': '../../abtesting/builds/browser',
@@ -61,7 +40,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [prefixNodeBuiltins, cloudflareTest({ miniflare: { compatibilityDate } })],
+        plugins: [cloudflareTest({ miniflare: { compatibilityDate } })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/fetch',
@@ -73,7 +52,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [prefixNodeBuiltins, cloudflareTest({ miniflare: { compatibilityDate } })],
+        plugins: [cloudflareTest({ miniflare: { compatibilityDate } })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/worker',
