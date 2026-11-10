@@ -1,3 +1,7 @@
+## [1.58.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.57.0...1.58.0)
+
+- [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [1.57.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.56.0...1.57.0)
 
 - [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
