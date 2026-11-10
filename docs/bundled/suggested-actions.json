@@ -1,0 +1,835 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Suggested Actions API",
+    "summary": "The Suggested Actions API returns recommended actions that can improve your search",
+    "description": "Suggested Actions are recommendations, such as turning on a feature, that can improve the search experience of an Algolia application.\n\n## Base URLs\n\nBase URLs for the Suggested Actions API:\n\n- `https://sact.us.algolia.com`\n- `https://sact.eu.algolia.com`\n\nUse the URL that matches the region of your application.\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Response status and errors\n\nResponse bodies are JSON objects.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nThe current version of the Suggested Actions API is version 2, indicated by the `/2/` in each endpoint's URL.\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://sact.{region}.algolia.com",
+      "description": "The region where your Algolia application is hosted.",
+      "variables": {
+        "region": {
+          "description": "The region where your Algolia application is hosted.",
+          "enum": [
+            "us",
+            "eu"
+          ],
+          "default": "us"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "appId": [],
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "suggestions",
+      "x-displayName": "Suggestions",
+      "description": "Retrieve suggested actions for an application."
+    }
+  ],
+  "paths": {
+    "/{path}": {
+      "get": {
+        "operationId": "customGet",
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "customPost",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "put": {
+        "operationId": "customPut",
+        "requestBody": {
+          "description": "Parameters to send with the custom request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "customDelete",
+        "summary": "Send requests to the Algolia REST API",
+        "description": "This method lets you send requests to the Algolia REST API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PathInPath"
+          },
+          {
+            "$ref": "#/components/parameters/Parameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "402": {
+            "$ref": "#/components/responses/FeatureNotEnabled"
+          },
+          "403": {
+            "$ref": "#/components/responses/MethodNotAllowed"
+          },
+          "404": {
+            "$ref": "#/components/responses/IndexNotFound"
+          }
+        }
+      }
+    },
+    "/2/suggested-actions": {
+      "get": {
+        "tags": [
+          "suggestions"
+        ],
+        "operationId": "listSuggestions",
+        "x-mcp-tool": true,
+        "x-acl": [
+          "search"
+        ],
+        "summary": "List suggestions",
+        "description": "Lists the active suggestions for an application, optionally narrowed to one index.\nSuggestions are sorted from most recently created to oldest.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TargetAppId"
+          },
+          {
+            "$ref": "#/components/parameters/TargetIndex"
+          },
+          {
+            "$ref": "#/components/parameters/UserId"
+          },
+          {
+            "$ref": "#/components/parameters/ExcludeDismissed"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListSuggestionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest-2"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/2/suggested-actions/{suggestionID}": {
+      "get": {
+        "tags": [
+          "suggestions"
+        ],
+        "operationId": "getSuggestion",
+        "x-mcp-tool": true,
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Retrieve a suggestion",
+        "description": "Retrieves a suggestion by its ID.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SuggestionID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Suggestion"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/setClientApiKey": {
+      "get": {
+        "x-helper": true,
+        "x-asynchronous-helper": false,
+        "x-acl": [],
+        "tags": [
+          "Api Key"
+        ],
+        "operationId": "setClientApiKey",
+        "summary": "Switch the API key used to authenticate requests",
+        "description": "Switch the API key used to authenticate requests.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "apiKey",
+            "description": "API key to use for subsequent requests.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "appId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-algolia-application-id",
+        "description": "Your Algolia application ID."
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-algolia-api-key",
+        "description": "Your Algolia API key with the necessary permissions to make the request.\nPermissions are controlled through access control lists (ACL) and access restrictions.\nThe required ACL to make a request is listed in each endpoint's reference.\n"
+      }
+    },
+    "parameters": {
+      "PathInPath": {
+        "name": "path",
+        "in": "path",
+        "description": "Path of the endpoint, for example `1/newFeature`.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "/keys"
+        }
+      },
+      "Parameters": {
+        "name": "parameters",
+        "in": "query",
+        "description": "Query parameters to apply to the current query.",
+        "schema": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "TargetAppId": {
+        "name": "target.appId",
+        "in": "query",
+        "required": true,
+        "description": "Algolia application ID to list suggestions for.",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        }
+      },
+      "TargetIndex": {
+        "name": "target.index",
+        "in": "query",
+        "description": "Only list suggestions that target this index.",
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "UserId": {
+        "name": "userId",
+        "in": "query",
+        "description": "ID of the user viewing the suggestions.\nWhen set, suggestions that this user dismissed within the dismissal cooldown include `dismissedAt`.\n",
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "ExcludeDismissed": {
+        "name": "excludeDismissed",
+        "in": "query",
+        "description": "Whether to leave out the suggestions that `userId` dismissed.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "SuggestionID": {
+        "name": "suggestionID",
+        "in": "path",
+        "required": true,
+        "description": "Unique identifier of the suggestion.",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "schemas": {
+      "ErrorBase": {
+        "description": "Error.",
+        "type": "object",
+        "x-keep-model": true,
+        "additionalProperties": true,
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid Application-Id or API-Key"
+          }
+        }
+      },
+      "SuggestionType": {
+        "type": "string",
+        "description": "Registered definition from which the service derives the suggestion's description and options.",
+        "enum": [
+          "SUGGESTION_TYPE_UNSPECIFIED",
+          "ACTIVATE_DYNAMIC_RE_RANKING",
+          "ACTIVATE_PERSONALIZATION",
+          "ACTIVATE_NEURAL_SEARCH",
+          "ACTIVATE_ADVANCED_PERSONALIZATION"
+        ]
+      },
+      "Target": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "appId"
+        ],
+        "properties": {
+          "appId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Algolia application ID the suggestion applies to."
+          },
+          "index": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Index the suggestion applies to, if it targets one index."
+          }
+        }
+      },
+      "OpenDashboardPageAction": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Opens a page of the Algolia dashboard.",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL of the dashboard page."
+          }
+        }
+      },
+      "GuidedAction": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the step."
+          },
+          "openDashboardPage": {
+            "$ref": "#/components/schemas/OpenDashboardPageAction"
+          }
+        }
+      },
+      "GuidedActionSequence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the sequence."
+          },
+          "actions": {
+            "type": "array",
+            "description": "Steps to follow, in order.",
+            "items": {
+              "$ref": "#/components/schemas/GuidedAction"
+            }
+          }
+        }
+      },
+      "SuggestionOption": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guidedActionSequence": {
+            "$ref": "#/components/schemas/GuidedActionSequence"
+          }
+        }
+      },
+      "EvidenceSourceKind": {
+        "type": "string",
+        "enum": [
+          "EVIDENCE_SOURCE_KIND_UNSPECIFIED",
+          "FEATURE_QUALIFIER",
+          "FEATURE_FIT",
+          "OFFLINE_EVALUATION"
+        ]
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Date and time in RFC 3339 format.",
+        "example": "2026-11-09T10:17:47Z"
+      },
+      "EvidenceSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "id",
+          "evidence"
+        ],
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/EvidenceSourceKind"
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Identifier of the specific source result, such as a feature qualifier or feature fit result ID.\nTogether with `kind`, it identifies the evidence source.\n"
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Version of the source."
+          },
+          "observedAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Evidence that the source produced."
+          }
+        }
+      },
+      "Provenance": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sources"
+        ],
+        "description": "Where the evidence for the suggestion comes from.",
+        "properties": {
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/EvidenceSource"
+            }
+          }
+        }
+      },
+      "SuggestionState": {
+        "type": "string",
+        "description": "Lifecycle state of the suggestion.",
+        "enum": [
+          "SUGGESTION_STATE_UNSPECIFIED",
+          "ACTIVE",
+          "EXPIRED",
+          "WITHDRAWN",
+          "COMPLETED"
+        ]
+      },
+      "Source": {
+        "type": "string",
+        "description": "Who created or completed a suggestion.",
+        "enum": [
+          "SOURCE_UNSPECIFIED",
+          "AUTOPILOT",
+          "ASSIST",
+          "DASHBOARD",
+          "OBSERVER"
+        ]
+      },
+      "Completion": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Set once the suggestion is completed, whoever completed it.",
+        "properties": {
+          "completedBy": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "Who completed the suggestion, such as a dashboard user ID.\nEmpty when the observer detected the adoption.\n"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "completedAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          }
+        }
+      },
+      "Creation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "createdBy": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "The caller's login, or the user's ID when a user's action created the suggestion."
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        }
+      },
+      "Suggestion": {
+        "type": "object",
+        "description": "A recommended action for an application or an index.",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the suggestion."
+          },
+          "type": {
+            "$ref": "#/components/schemas/SuggestionType"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the suggestion."
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the suggestion."
+          },
+          "target": {
+            "$ref": "#/components/schemas/Target"
+          },
+          "directAdoption": {
+            "$ref": "#/components/schemas/SuggestionOption"
+          },
+          "abTest": {
+            "$ref": "#/components/schemas/SuggestionOption"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SuggestionState"
+          },
+          "createdAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "expiresAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "adoptionDetectedAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "dismissedAt": {
+            "description": "Set when the `userId` passed to the list request dismissed this suggestion within the dismissal cooldown.",
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "withdrawnAt": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The change the suggestion makes, in the payload format of its type."
+          },
+          "completion": {
+            "$ref": "#/components/schemas/Completion"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Context the creator stored with the suggestion. The service doesn't interpret it."
+          },
+          "creation": {
+            "$ref": "#/components/schemas/Creation"
+          }
+        }
+      },
+      "ListSuggestionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "suggestions": {
+            "type": "array",
+            "description": "Active suggestions sorted from most recently created to oldest.",
+            "items": {
+              "$ref": "#/components/schemas/Suggestion"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "description": "Error returned by the Suggested Actions API.",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "Description of the error."
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request or request arguments.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "FeatureNotEnabled": {
+        "description": "This feature is not enabled on your Algolia account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "MethodNotAllowed": {
+        "description": "Method not allowed with this API key.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "IndexNotFound": {
+        "description": "Index not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorBase"
+            }
+          }
+        }
+      },
+      "BadRequest-2": {
+        "description": "Bad request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "status": 400,
+              "message": "Bad request."
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "status": 401,
+              "message": "Unauthorized."
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "status": 403,
+              "message": "Forbidden."
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "status": 404,
+              "message": "Not found."
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-beta": true,
+  "x-tagGroups": [
+    {
+      "name": "Suggestions",
+      "tags": [
+        "suggestions"
+      ]
+    }
+  ]
+}

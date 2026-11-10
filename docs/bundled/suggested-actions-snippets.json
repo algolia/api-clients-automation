@@ -1,0 +1,56 @@
+{
+  "csharp": {},
+  "dart": {},
+  "go": {},
+  "java": {},
+  "javascript": {
+    "import": {
+      "default": "import { suggestedActionsClient } from '@algolia/suggested-actions';"
+    },
+    "customDelete": {
+      "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
+      "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
+    },
+    "customGet": {
+      "allow get method for a custom path with minimal parameters": "const response = await client.customGet({ path: 'test/minimal' });",
+      "allow get method for a custom path with all parameters": "const response = await client.customGet({ path: 'test/all', parameters: { query: 'parameters with space' } });",
+      "requestOptions should be escaped too": "const response = await client.customGet(\n  { path: 'test/all', parameters: { query: 'to be overridden' } },\n  {\n    queryParameters: { query: 'parameters with space', 'and an array': ['array', 'with spaces'] },\n    headers: { 'x-header-1': 'spaces are left alone' },\n  },\n);"
+    },
+    "customPost": {
+      "allow post method for a custom path with minimal parameters": "const response = await client.customPost({ path: 'test/minimal' });",
+      "allow post method for a custom path with all parameters": "const response = await client.customPost({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});",
+      "requestOptions can override default query parameters": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query: 'myQueryParameter' },\n  },\n);",
+      "requestOptions merges query parameters with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { query2: 'myQueryParameter' },\n  },\n);",
+      "requestOptions can override default headers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions merges headers with default ones": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    headers: { 'x-algolia-api-key': 'ALGOLIA_API_KEY' },\n  },\n);",
+      "requestOptions queryParameters accepts booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { isItWorking: true },\n  },\n);",
+      "requestOptions queryParameters accepts integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: 2 },\n  },\n);",
+      "requestOptions queryParameters accepts list of string": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: ['b and c', 'd'] },\n  },\n);",
+      "requestOptions queryParameters accepts list of booleans": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [true, true, false] },\n  },\n);",
+      "requestOptions queryParameters accepts list of integers": "const response = await client.customPost(\n  { path: 'test/requestOptions', parameters: { query: 'parameters' }, body: { facet: 'filters' } },\n  {\n    queryParameters: { myParam: [1, 2] },\n  },\n);"
+    },
+    "customPut": {
+      "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
+      "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
+    },
+    "getSuggestion": {
+      "default": "const response = await client.getSuggestion({ suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15' });"
+    },
+    "listSuggestions": {
+      "listSuggestions with required parameters": "const response = await client.listSuggestions({ targetAppId: 'MY_APP_ID' });",
+      "listSuggestions with all parameters": "const response = await client.listSuggestions({\n  targetAppId: 'MY_APP_ID',\n  targetIndex: 'products',\n  userId: '42',\n  excludeDismissed: true,\n});"
+    },
+    "setClientApiKey": {
+      "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "init": {
+      "default": "// Replace 'us' with your Algolia Application Region\nconst client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
+    }
+  },
+  "kotlin": {},
+  "php": {},
+  "python": {},
+  "ruby": {},
+  "scala": {},
+  "swift": {}
+}
