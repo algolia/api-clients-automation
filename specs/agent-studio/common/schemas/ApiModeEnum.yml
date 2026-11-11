@@ -1,0 +1,5 @@
+ApiModeEnum:
+  type: string
+  enum:
+    - dated
+    - v1

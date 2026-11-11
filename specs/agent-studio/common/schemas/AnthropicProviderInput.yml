@@ -10,6 +10,13 @@ AnthropicProviderInput:
           minLength: 1
         - type: 'null'
       title: baseurl
+    workspaceId:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: workspaceid
+      description: Required for API keys not scoped to a single workspace (sk-ant-usr-...).
+        Sent as the anthropic-workspace-id header on every request.
   type: object
   required:
     - apiKey

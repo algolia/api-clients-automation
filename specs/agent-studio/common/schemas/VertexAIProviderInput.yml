@@ -1,0 +1,25 @@
+VertexAIProviderInput:
+  properties:
+    apiKey:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: apikey
+    project:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: project
+    location:
+      oneOf:
+        - type: string
+        - type: 'null'
+      title: location
+    serviceAccountKey:
+      oneOf:
+        - $ref: 'GoogleServiceAccountKey.yml#/GoogleServiceAccountKey'
+        - type: 'null'
+  type: object
+  title: vertexAIProviderInput
+  description: 'Vertex AI provider input: an API key (Express Mode) or GCP service-account
+    credentials.'
