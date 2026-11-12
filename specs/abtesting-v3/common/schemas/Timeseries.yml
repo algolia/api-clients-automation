@@ -77,5 +77,7 @@ MetricName:
     - avg_purchase_rate_per_user
     - avg_add_to_cart_rate_per_user
     - avg_click_position_per_user
+    - average_click_position_per_user
     - winsorized_revenue_per_user
+    - revenue_per_user
     - winsorized_revenue_per_purchaser
