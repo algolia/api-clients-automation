@@ -63,10 +63,10 @@ class SnippetAbtestingV3Client {
 
   /** Snippet for the addABTests method.
     *
-    * addABTests with Bayesian configuration
+    * addABTests with Bayesian no-results user rate
     */
   def snippetForAbtestingV3ClientAddABTests1(): Unit = {
-    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -82,7 +82,7 @@ class SnippetAbtestingV3Client {
           name = "myABTest",
           metrics = Seq(
             CreateMetric(
-              name = "conversionRate"
+              name = "usersWithNoResultsRate"
             )
           ),
           variants = Seq(
@@ -98,7 +98,7 @@ class SnippetAbtestingV3Client {
           configuration = Some(
             ABTestConfiguration(
               method = Some(AnalysisMethod.withName("bayesian")),
-              primaryMetric = Some(PrimaryMetric.withName("conversion_rate"))
+              primaryMetric = Some(PrimaryMetric.withName("users_with_no_results_rate"))
             )
           )
         )
@@ -957,7 +957,13 @@ class SnippetAbtestingV3Client {
         id = 42,
         startDate = Some("1999-09-19"),
         endDate = Some("2001-01-01"),
-        metric = Some(Seq(MetricName.withName("clicked_users_rate"), MetricName.withName("converted_users_rate"))),
+        metric = Some(
+          Seq(
+            MetricName.withName("clicked_users_rate"),
+            MetricName.withName("converted_users_rate"),
+            MetricName.withName("users_with_no_results_rate")
+          )
+        ),
         methods = Some(Seq(AnalysisMethod.withName("bayesian")))
       ),
       Duration(100, "sec")

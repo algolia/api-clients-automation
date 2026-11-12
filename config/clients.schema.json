@@ -23,6 +23,7 @@
                 "advanced-personalization",
                 "query-suggestions",
                 "recommend",
+                "suggested-actions",
                 "search"
               ]
             }
@@ -48,6 +49,7 @@
                     "advanced-personalization",
                     "query-suggestions",
                     "recommend",
+                    "suggested-actions",
                     "search"
                   ]
                 },

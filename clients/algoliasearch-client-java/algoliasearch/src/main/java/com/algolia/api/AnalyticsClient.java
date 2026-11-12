@@ -2785,9 +2785,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2810,9 +2813,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2835,9 +2841,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2853,9 +2862,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2871,9 +2883,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2886,9 +2901,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2901,9 +2919,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2913,9 +2934,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
-   * a daily breakdown. It also returns the number of tracked searches and tracked searches without
-   * clicks. By default, the analyzed period includes the last eight days including the current day.
+   * Retrieves the fraction of searches whose query didn't lead to any click within a time range,
+   * including a daily breakdown. Only tracked searches with at least one result are counted. A
+   * search counts as a search without clicks only when no search for the same query got a click in
+   * the time range, so the rate for a whole time range is usually lower than its daily rates. It
+   * also returns the number of these searches and of searches without clicks. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2925,10 +2949,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2962,10 +2988,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -2999,10 +3027,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3018,10 +3048,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
@@ -3037,10 +3069,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3053,10 +3087,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3069,10 +3105,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3082,10 +3120,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
-   * range, including a daily breakdown. It also returns the number of tracked searches and tracked
-   * searches without clicks. By default, the analyzed period includes the last eight days including
-   * the current day.
+   * (asynchronously) Retrieves the fraction of searches whose query didn't lead to any click within
+   * a time range, including a daily breakdown. Only tracked searches with at least one result are
+   * counted. A search counts as a search without clicks only when no search for the same query got
+   * a click in the time range, so the rate for a whole time range is usually lower than its daily
+   * rates. It also returns the number of these searches and of searches without clicks. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

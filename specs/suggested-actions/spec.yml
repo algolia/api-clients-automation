@@ -1,0 +1,83 @@
+openapi: 3.0.2
+info:
+  title: Suggested Actions API
+  summary: The Suggested Actions API returns recommended actions that can improve your search
+  description: |
+    Suggested Actions are recommendations, such as turning on a feature, that can improve the search experience of an Algolia application.
+
+    ## Base URLs
+
+    Base URLs for the Suggested Actions API:
+
+    - `https://sact.us.algolia.com`
+    - `https://sact.eu.algolia.com`
+
+    Use the URL that matches the region of your application.
+
+    **All requests must use HTTPS.**
+
+    ## Authentication
+
+    Add these headers to authenticate requests:
+
+    - `x-algolia-application-id`. Your Algolia application ID.
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
+
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).
+
+    ## Response status and errors
+
+    Response bodies are JSON objects.
+
+    Successful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.
+    Error responses have a `message` property with more information.
+
+    ## Version
+
+    The current version of the Suggested Actions API is version 2, indicated by the `/2/` in each endpoint's URL.
+  version: 1.0.0
+x-beta: true
+components:
+  securitySchemes:
+    appId:
+      $ref: '../common/securitySchemes.yml#/appId'
+    apiKey:
+      $ref: '../common/securitySchemes.yml#/apiKey'
+servers:
+  - url: https://sact.{region}.algolia.com
+    description: The region where your Algolia application is hosted.
+    variables:
+      region:
+        description: The region where your Algolia application is hosted.
+        enum:
+          - us
+          - eu
+        default: us
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: suggestions
+    x-displayName: Suggestions
+    description: Retrieve suggested actions for an application.
+x-tagGroups:
+  - name: Suggestions
+    tags:
+      - suggestions
+paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
+
+  /2/suggested-actions:
+    $ref: 'paths/listSuggestions.yml'
+  /2/suggested-actions/{suggestionID}:
+    $ref: 'paths/getSuggestion.yml'
+
+  # ###############
+  # ### Helpers ###
+  # ###############
+  /setClientApiKey:
+    $ref: '../common/helpers/setClientApiKey.yml#/method'

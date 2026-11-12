@@ -38,20 +38,20 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     )
   end
 
-  # addABTests with Bayesian configuration
+  # addABTests with Bayesian no-results user rate
   def test_add_ab_tests1
     req = @client.add_ab_tests_with_http_info(
       Algolia::AbtestingV3::AddABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
         name: "myABTest",
-        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "conversionRate")],
+        metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "usersWithNoResultsRate")],
         variants: [
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
           Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
         ],
         configuration: Algolia::AbtestingV3::ABTestConfiguration.new(
           method: "bayesian",
-          primary_metric: "conversion_rate"
+          primary_metric: "users_with_no_results_rate"
         )
       )
     )
@@ -62,7 +62,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}"
+        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"usersWithNoResultsRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"users_with_no_results_rate\"}}"
       ),
       JSON.parse(req.body)
     )
@@ -494,7 +494,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
       42,
       "1999-09-19",
       "2001-01-01",
-      ["clicked_users_rate", "converted_users_rate"],
+      ["clicked_users_rate", "converted_users_rate", "users_with_no_results_rate"],
       ["bayesian"]
     )
 
@@ -504,7 +504,7 @@ class TestAbtestingV3Client < Test::Unit::TestCase
       {
         :"startDate" => "1999-09-19",
         :"endDate" => "2001-01-01",
-        :"metric" => "clicked_users_rate%2Cconverted_users_rate",
+        :"metric" => "clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate",
         :"methods" => "bayesian"
       }.to_a,
       req.query_params.to_a

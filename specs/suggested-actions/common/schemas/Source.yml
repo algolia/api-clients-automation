@@ -1,0 +1,8 @@
+type: string
+description: Who created or completed a suggestion.
+enum:
+  - SOURCE_UNSPECIFIED
+  - AUTOPILOT
+  - ASSIST
+  - DASHBOARD
+  - OBSERVER

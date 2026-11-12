@@ -64,7 +64,7 @@ class AbtestingV3Test {
   }
 
   @Test
-  fun `addABTests with Bayesian configuration1`() = runTest {
+  fun `addABTests with Bayesian no-results user rate1`() = runTest {
     client.runTest(
       call = {
         addABTests(
@@ -75,7 +75,7 @@ class AbtestingV3Test {
               metrics =
                 listOf(
                   CreateMetric(
-                    name = "conversionRate",
+                    name = "usersWithNoResultsRate",
                   ),
                 ),
               variants =
@@ -92,7 +92,8 @@ class AbtestingV3Test {
               configuration =
                 ABTestConfiguration(
                   method = AnalysisMethod.entries.first { it.value == "bayesian" },
-                  primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
+                  primaryMetric =
+                    PrimaryMetric.entries.first { it.value == "users_with_no_results_rate" },
                 ),
             ),
         )
@@ -101,7 +102,7 @@ class AbtestingV3Test {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}""",
+          """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}""",
           it.body,
         )
       },
@@ -833,6 +834,7 @@ class AbtestingV3Test {
             listOf(
               MetricName.entries.first { it.value == "clicked_users_rate" },
               MetricName.entries.first { it.value == "converted_users_rate" },
+              MetricName.entries.first { it.value == "users_with_no_results_rate" },
             ),
           methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
         )
@@ -841,7 +843,7 @@ class AbtestingV3Test {
         assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
-          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}""",
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate","methods":"bayesian"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)

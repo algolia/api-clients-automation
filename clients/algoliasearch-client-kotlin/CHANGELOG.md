@@ -1,3 +1,21 @@
+## [3.54.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.53.0...3.54.0)
+
+- [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
+
+## [3.53.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.52.0...3.53.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+- [575c3ab5c6](https://github.com/algolia/api-clients-automation/commit/575c3ab5c6) fix(ci): move macOS jobs off the retired macos-14 runner label ([#7224](https://github.com/algolia/api-clients-automation/pull/7224)) by [@Fluf22](https://github.com/Fluf22/)
+- [3e85edd42f](https://github.com/algolia/api-clients-automation/commit/3e85edd42f) docs(specs): describe the analytics no click rate per query ([#7225](https://github.com/algolia/api-clients-automation/pull/7225)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+
+## [3.52.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.51.0...3.52.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+
 ## [3.51.0](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.50.0...3.51.0)
 
 - [e6d5471f15](https://github.com/algolia/api-clients-automation/commit/e6d5471f15) fix(scripts): avoid swift CTS deadlock when running in docker ([#7146](https://github.com/algolia/api-clients-automation/pull/7146)) by [@Fluf22](https://github.com/Fluf22/)
