@@ -32,7 +32,7 @@
     {
       "name": "suggestions",
       "x-displayName": "Suggestions",
-      "description": "Retrieve suggested actions for an application."
+      "description": "Retrieve, create and dismiss suggested actions for an application."
     }
   ],
   "paths": {
@@ -253,6 +253,49 @@
             "$ref": "#/components/responses/Forbidden"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "suggestions"
+        ],
+        "operationId": "createSuggestion",
+        "x-mcp-tool": true,
+        "x-acl": [
+          "editSettings"
+        ],
+        "summary": "Create a suggestion",
+        "description": "Creates a suggestion of the given type for an application or an index.\n\nWith an API key, you can only create the types of suggestion that come from user actions, and the request must say who created it with `creation`.\nIf a matching active suggestion already exists, its lifetime isn't changed.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSuggestionParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Suggestion"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest-2"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
       }
     },
     "/2/suggested-actions/{suggestionID}": {
@@ -282,6 +325,112 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/2/suggested-actions/{suggestionID}:dismiss": {
+      "post": {
+        "tags": [
+          "suggestions"
+        ],
+        "operationId": "dismissSuggestion",
+        "x-mcp-tool": true,
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Dismiss a suggestion",
+        "description": "Dismisses a suggestion for a user.\nUntil the dismissal cooldown ends, the suggestion includes `dismissedAt` in the list for that user.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SuggestionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest-2"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/2/suggested-actions/{suggestionID}:undoDismiss": {
+      "post": {
+        "tags": [
+          "suggestions"
+        ],
+        "operationId": "undoSuggestionDismissal",
+        "x-mcp-tool": true,
+        "x-acl": [
+          "search"
+        ],
+        "summary": "Undo the dismissal of a suggestion",
+        "description": "Restores a suggestion that a user dismissed, so it's no longer marked as dismissed for that user.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SuggestionID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest-2"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -392,7 +541,7 @@
       "ExcludeDismissed": {
         "name": "excludeDismissed",
         "in": "query",
-        "description": "Whether to leave out the suggestions that `userId` dismissed.",
+        "description": "Whether to leave out the suggestions that `userId` dismissed.\nRequires `userId`.\n",
         "schema": {
           "type": "boolean"
         }
@@ -429,7 +578,8 @@
           "ACTIVATE_DYNAMIC_RE_RANKING",
           "ACTIVATE_PERSONALIZATION",
           "ACTIVATE_NEURAL_SEARCH",
-          "ACTIVATE_ADVANCED_PERSONALIZATION"
+          "ACTIVATE_ADVANCED_PERSONALIZATION",
+          "UPDATE_INDEX_SETTINGS"
         ]
       },
       "Target": {
@@ -722,6 +872,80 @@
             "description": "Description of the error."
           }
         }
+      },
+      "CreateSuggestionParams": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "target"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/SuggestionType"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Target"
+          },
+          "provenance": {
+            "description": "Required unless the suggestion is created already completed.",
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "validFor": {
+            "type": "string",
+            "description": "How long the new suggestion stays active, as a number of seconds followed by `s`.\nThe service default applies when omitted. It must not exceed the service maximum.\nIt doesn't change a matching active suggestion.\n",
+            "example": "3600s"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Title of the suggestion."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "description": "Description of the suggestion."
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The change the suggestion makes, in the payload format of its type."
+          },
+          "completion": {
+            "description": "Creates the suggestion already completed.",
+            "$ref": "#/components/schemas/Completion"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Context to store with the suggestion. The service doesn't interpret it."
+          },
+          "creation": {
+            "description": "Who created the suggestion and from where. Required when you use an API key.",
+            "$ref": "#/components/schemas/Creation"
+          }
+        }
+      },
+      "UserParams": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ID of the user, such as a dashboard user ID."
+          }
+        }
+      },
+      "EmptyResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Empty response body."
       }
     },
     "responses": {

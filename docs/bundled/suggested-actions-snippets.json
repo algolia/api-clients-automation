@@ -7,6 +7,10 @@
     "import": {
       "default": "import { suggestedActionsClient } from '@algolia/suggested-actions';"
     },
+    "createSuggestion": {
+      "createSuggestion with required parameters": "const response = await client.createSuggestion({ type: 'ACTIVATE_NEURAL_SEARCH', target: { appId: 'MY_APP_ID' } });",
+      "createSuggestion with all parameters": "const response = await client.createSuggestion({\n  type: 'UPDATE_INDEX_SETTINGS',\n  target: { appId: 'MY_APP_ID', index: 'products' },\n  validFor: '3600s',\n  title: 'Rank in stock products first',\n  description: 'Adds inStock to the custom ranking.',\n  payload: { settings: { customRanking: ['desc(inStock)'] } },\n  metadata: { origin: 'assist' },\n  creation: { createdBy: '42', source: 'ASSIST' },\n});"
+    },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
       "allow del method for a custom path with all parameters": "const response = await client.customDelete({ path: 'test/all', parameters: { query: 'parameters' } });"
@@ -33,6 +37,9 @@
       "allow put method for a custom path with minimal parameters": "const response = await client.customPut({ path: 'test/minimal' });",
       "allow put method for a custom path with all parameters": "const response = await client.customPut({\n  path: 'test/all',\n  parameters: { query: 'parameters' },\n  body: { body: 'parameters' },\n});"
     },
+    "dismissSuggestion": {
+      "default": "const response = await client.dismissSuggestion({\n  suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  userParams: { userId: '42' },\n});"
+    },
     "getSuggestion": {
       "default": "const response = await client.getSuggestion({ suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15' });"
     },
@@ -42,6 +49,9 @@
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
+    },
+    "undoSuggestionDismissal": {
+      "default": "const response = await client.undoSuggestionDismissal({\n  suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  userParams: { userId: '42' },\n});"
     },
     "init": {
       "default": "// Replace 'us' with your Algolia Application Region\nconst client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');"
