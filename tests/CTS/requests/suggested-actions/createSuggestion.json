@@ -1,0 +1,72 @@
+[
+  {
+    "testName": "createSuggestion with required parameters",
+    "parameters": {
+      "type": "ACTIVATE_NEURAL_SEARCH",
+      "target": {
+        "appId": "MY_APP_ID"
+      }
+    },
+    "request": {
+      "path": "/2/suggested-actions",
+      "method": "POST",
+      "body": {
+        "type": "ACTIVATE_NEURAL_SEARCH",
+        "target": {
+          "appId": "MY_APP_ID"
+        }
+      }
+    }
+  },
+  {
+    "testName": "createSuggestion with all parameters",
+    "parameters": {
+      "type": "UPDATE_INDEX_SETTINGS",
+      "target": {
+        "appId": "MY_APP_ID",
+        "index": "products"
+      },
+      "validFor": "3600s",
+      "title": "Rank in stock products first",
+      "description": "Adds inStock to the custom ranking.",
+      "payload": {
+        "settings": {
+          "customRanking": ["desc(inStock)"]
+        }
+      },
+      "metadata": {
+        "origin": "assist"
+      },
+      "creation": {
+        "createdBy": "42",
+        "source": "ASSIST"
+      }
+    },
+    "request": {
+      "path": "/2/suggested-actions",
+      "method": "POST",
+      "body": {
+        "type": "UPDATE_INDEX_SETTINGS",
+        "target": {
+          "appId": "MY_APP_ID",
+          "index": "products"
+        },
+        "validFor": "3600s",
+        "title": "Rank in stock products first",
+        "description": "Adds inStock to the custom ranking.",
+        "payload": {
+          "settings": {
+            "customRanking": ["desc(inStock)"]
+          }
+        },
+        "metadata": {
+          "origin": "assist"
+        },
+        "creation": {
+          "createdBy": "42",
+          "source": "ASSIST"
+        }
+      }
+    }
+  }
+]

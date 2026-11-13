@@ -1,0 +1,62 @@
+get:
+  tags:
+    - suggestions
+  operationId: listSuggestions
+  x-mcp-tool: true
+  # TODO: provisional ACL, confirm with the sact team which ACL the endpoint requires.
+  x-acl:
+    - search
+  summary: List suggestions
+  description: |
+    Lists the active suggestions for an application, optionally narrowed to one index.
+    Suggestions are sorted from most recently created to oldest.
+  parameters:
+    - $ref: '../common/parameters.yml#/TargetAppId'
+    - $ref: '../common/parameters.yml#/TargetIndex'
+    - $ref: '../common/parameters.yml#/UserId'
+    - $ref: '../common/parameters.yml#/ExcludeDismissed'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/ListSuggestionsResponse.yml'
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '403':
+      $ref: '../common/responses/Forbidden.yml'
+post:
+  tags:
+    - suggestions
+  operationId: createSuggestion
+  # TODO: provisional ACL, from the sact proto comment. Confirm with the sact team.
+  x-acl:
+    - editSettings
+  summary: Create a suggestion
+  description: |
+    Creates a suggestion of the given type for an application or an index.
+
+    With an API key, you can only create the types of suggestion that come from user actions, and the request must say who created it with `creation`.
+    If a matching active suggestion already exists, its lifetime isn't changed.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../common/schemas/CreateSuggestionParams.yml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/Suggestion.yml'
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '403':
+      $ref: '../common/responses/Forbidden.yml'

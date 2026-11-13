@@ -1,0 +1,18 @@
+[
+  {
+    "testName": "dismissSuggestion",
+    "parameters": {
+      "suggestionID": "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "userParams": {
+        "userId": "42"
+      }
+    },
+    "request": {
+      "path": "/2/suggested-actions/76710f1b-8231-42e5-b0d1-f43aac618e15:dismiss",
+      "method": "POST",
+      "body": {
+        "userId": "42"
+      }
+    }
+  }
+]

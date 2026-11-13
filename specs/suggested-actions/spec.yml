@@ -59,7 +59,7 @@ security:
 tags:
   - name: suggestions
     x-displayName: Suggestions
-    description: Retrieve suggested actions for an application.
+    description: Retrieve, create and dismiss suggested actions for an application.
 x-tagGroups:
   - name: Suggestions
     tags:
@@ -72,9 +72,13 @@ paths:
     $ref: '../common/paths/customRequest.yml'
 
   /2/suggested-actions:
-    $ref: 'paths/listSuggestions.yml'
+    $ref: 'paths/suggestedActions.yml'
   /2/suggested-actions/{suggestionID}:
     $ref: 'paths/getSuggestion.yml'
+  /2/suggested-actions/{suggestionID}:dismiss:
+    $ref: 'paths/dismissSuggestion.yml'
+  /2/suggested-actions/{suggestionID}:undoDismiss:
+    $ref: 'paths/undoSuggestionDismissal.yml'
 
   # ###############
   # ### Helpers ###
