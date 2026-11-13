@@ -2,6 +2,7 @@ post:
   tags:
     - suggestions
   operationId: undoSuggestionDismissal
+  x-mcp-tool: true
   # TODO: provisional ACL, confirm with the sact team which ACL the endpoint requires.
   x-acl:
     - search

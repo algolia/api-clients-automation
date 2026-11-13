@@ -32,6 +32,7 @@ post:
   tags:
     - suggestions
   operationId: createSuggestion
+  x-mcp-tool: true
   # TODO: provisional ACL, from the sact proto comment. Confirm with the sact team.
   x-acl:
     - editSettings
