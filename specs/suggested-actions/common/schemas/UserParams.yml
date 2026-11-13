@@ -1,0 +1,9 @@
+type: object
+additionalProperties: false
+required:
+  - userId
+properties:
+  userId:
+    type: string
+    minLength: 1
+    description: ID of the user, such as a dashboard user ID.

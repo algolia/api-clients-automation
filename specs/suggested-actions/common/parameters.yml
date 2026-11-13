@@ -29,7 +29,9 @@ UserId:
 ExcludeDismissed:
   name: excludeDismissed
   in: query
-  description: Whether to leave out the suggestions that `userId` dismissed.
+  description: |
+    Whether to leave out the suggestions that `userId` dismissed.
+    Requires `userId`.
   schema:
     type: boolean
 

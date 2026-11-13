@@ -1,0 +1,44 @@
+type: object
+additionalProperties: false
+required:
+  - type
+  - target
+properties:
+  type:
+    $ref: './SuggestionType.yml'
+  target:
+    $ref: './Target.yml'
+  provenance:
+    description: Required unless the suggestion is created already completed.
+    $ref: './Provenance.yml'
+  validFor:
+    type: string
+    description: |
+      How long the new suggestion stays active, as a number of seconds followed by `s`.
+      The service default applies when omitted. It must not exceed the service maximum.
+      It doesn't change a matching active suggestion.
+    example: 3600s
+  title:
+    type: string
+    minLength: 1
+    maxLength: 200
+    description: Title of the suggestion.
+  description:
+    type: string
+    minLength: 1
+    maxLength: 1000
+    description: Description of the suggestion.
+  payload:
+    type: object
+    additionalProperties: true
+    description: The change the suggestion makes, in the payload format of its type.
+  completion:
+    description: Creates the suggestion already completed.
+    $ref: './Completion.yml'
+  metadata:
+    type: object
+    additionalProperties: true
+    description: Context to store with the suggestion. The service doesn't interpret it.
+  creation:
+    description: Who created the suggestion and from where. Required when you use an API key.
+    $ref: './Creation.yml'
