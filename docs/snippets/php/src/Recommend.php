@@ -18,7 +18,7 @@ class SnippetRecommendClient
      */
     public function snippetForBatchRecommendRules(): void
     {
-        // >SEPARATOR batchRecommendRules default
+        // >SEPARATOR batchRecommendRules batch recommend rules
         // Initialize the client
         $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -26,6 +26,93 @@ class SnippetRecommendClient
         $response = $client->batchRecommendRules(
             '<YOUR_INDEX_NAME>',
             'related-products',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the BatchRecommendRules method.
+     *
+     * batch recommend rules for trending items with request scopes
+     */
+    public function snippetForBatchRecommendRules1(): void
+    {
+        // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->batchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'trending-items',
+            [
+                ['objectID' => 'global-rule',
+                    'condition' => ['requestScope' => ['global' => true,
+                    ],
+                    ],
+                    'consequence' => ['promote' => [
+                        ['objectID' => 'item-1',
+                            'position' => 0,
+                        ],
+                    ],
+                    ],
+                ],
+
+                ['objectID' => 'facet-rule',
+                    'condition' => ['context' => 'mobile',
+                        'requestScope' => ['facetName' => 'brand',
+                            'facetValue' => 'acme',
+                        ],
+                    ],
+                    'consequence' => ['hide' => [
+                        ['objectID' => 'item-2',
+                        ],
+                    ],
+                        'params' => ['filters' => 'inStock:true',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the BatchRecommendRules method.
+     *
+     * batch recommend rules for looking similar
+     */
+    public function snippetForBatchRecommendRules2(): void
+    {
+        // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->batchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'looking-similar',
+            [
+                ['objectID' => 'looking-similar-rule',
+                    'condition' => ['filters' => 'brand:acme',
+                    ],
+                    'consequence' => ['params' => ['automaticFacetFilters' => [
+                        ['facet' => 'category',
+                            'negative' => false,
+                        ],
+                    ],
+                    ],
+                    ],
+                ],
+            ],
         );
 
         // >LOG
@@ -562,7 +649,7 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendRule(): void
     {
-        // >SEPARATOR getRecommendRule default
+        // >SEPARATOR getRecommendRule getRecommendRule
         // Initialize the client
         $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -570,6 +657,54 @@ class SnippetRecommendClient
         $response = $client->getRecommendRule(
             '<YOUR_INDEX_NAME>',
             'related-products',
+            'objectID',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetRecommendRule method.
+     *
+     * get recommend rule for trending items
+     */
+    public function snippetForGetRecommendRule1(): void
+    {
+        // >SEPARATOR getRecommendRule get recommend rule for trending items
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getRecommendRule(
+            '<YOUR_INDEX_NAME>',
+            'trending-items',
+            'objectID',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetRecommendRule method.
+     *
+     * get recommend rule for looking similar
+     */
+    public function snippetForGetRecommendRule2(): void
+    {
+        // >SEPARATOR getRecommendRule get recommend rule for looking similar
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->getRecommendRule(
+            '<YOUR_INDEX_NAME>',
+            'looking-similar',
             'objectID',
         );
 
@@ -904,7 +1039,7 @@ class SnippetRecommendClient
      */
     public function snippetForSearchRecommendRules(): void
     {
-        // >SEPARATOR searchRecommendRules default
+        // >SEPARATOR searchRecommendRules searchRecommendRules
         // Initialize the client
         $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -912,6 +1047,52 @@ class SnippetRecommendClient
         $response = $client->searchRecommendRules(
             '<YOUR_INDEX_NAME>',
             'related-products',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchRecommendRules method.
+     *
+     * search recommend rules for trending items
+     */
+    public function snippetForSearchRecommendRules1(): void
+    {
+        // >SEPARATOR searchRecommendRules search recommend rules for trending items
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'trending-items',
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the SearchRecommendRules method.
+     *
+     * search recommend rules for looking similar
+     */
+    public function snippetForSearchRecommendRules2(): void
+    {
+        // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+        // Initialize the client
+        $client = RecommendClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->searchRecommendRules(
+            '<YOUR_INDEX_NAME>',
+            'looking-similar',
         );
 
         // >LOG

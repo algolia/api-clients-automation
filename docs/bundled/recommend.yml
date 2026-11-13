@@ -3219,6 +3219,16 @@ paths:
         - Consequence `automaticFacetFilters` doesn't require a facet value
         placeholder (it tries to match the data source item's attributes
         instead).
+
+
+        Trending Items requests have no source item, so rules for the
+        `trending-items` model differ:
+
+        - Condition `filters` and consequence `automaticFacetFilters` are
+        unavailable.
+
+        - Condition `requestScope` applies the rule to requests without a facet,
+        or to requests for a specific facet.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/Models'
@@ -3481,7 +3491,10 @@ paths:
                 "objectID": "lorem",
                 "condition": {
                   "filters": "(category:Book OR category:Ebook) AND _tags:published",
-                  "context": "mobile"
+                  "context": "mobile",
+                  "requestScope": {
+                    "global": true
+                  }
                 },
                 "consequence": {
                   "hide": [
@@ -7254,8 +7267,8 @@ components:
       enum:
         - related-products
         - bought-together
-        - trending-facets
         - trending-items
+        - looking-similar
     updatedAt:
       type: string
       example: '2023-07-04T12:49:15Z'
@@ -7276,6 +7289,58 @@ components:
 
         A rule context must only contain alphanumeric characters.
       example: mobile
+    GlobalRequestScope:
+      type: object
+      title: Global request scope
+      description: >-
+        Apply the rule only to Trending Items requests without `facetName` and
+        `facetValue`.
+      additionalProperties: false
+      properties:
+        global:
+          type: boolean
+          description: >-
+            Whether the rule applies to requests without a facet. Must be
+            `true`.
+      required:
+        - global
+      x-discriminator-fields:
+        - global
+    FacetRequestScope:
+      type: object
+      title: Facet request scope
+      description: >-
+        Apply the rule only to Trending Items requests with the same `facetName`
+        and `facetValue`.
+      additionalProperties: false
+      properties:
+        facetName:
+          type: string
+          description: Facet attribute of the Trending Items request.
+          minLength: 1
+          maxLength: 1000
+          example: brand
+        facetValue:
+          type: string
+          description: Facet value of the Trending Items request.
+          minLength: 1
+          maxLength: 1000
+          example: acme
+      required:
+        - facetName
+        - facetValue
+      x-discriminator-fields:
+        - facetName
+        - facetValue
+    RequestScope:
+      description: |
+        Facet that a Trending Items request must target for the rule to apply.
+
+        Only available for the `trending-items` model.
+        Rules without `requestScope` apply to all Trending Items requests.
+      oneOf:
+        - $ref: '#/components/schemas/GlobalRequestScope'
+        - $ref: '#/components/schemas/FacetRequestScope'
     Condition:
       type: object
       description: |
@@ -7286,6 +7351,8 @@ components:
           $ref: '#/components/schemas/context'
         filters:
           $ref: '#/components/schemas/filters'
+        requestScope:
+          $ref: '#/components/schemas/RequestScope'
     HideConsequenceObject:
       type: object
       description: Object ID of the recommendation you want to exclude.

@@ -632,7 +632,7 @@
           "editSettings"
         ],
         "summary": "Create or update a batch of Recommend Rules",
-        "description": "Create or update a batch of Recommend Rules.\n\nEach Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists.\nYou may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.\n\nRecommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following:\n- Conditions `pattern` and `anchoring` are unavailable.\n- Condition `filters` triggers if the source item matches the specified filters.\n- Condition `filters` accepts numeric filters.\n- Consequence `params` only covers filtering parameters.\n- Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).\n",
+        "description": "Create or update a batch of Recommend Rules.\n\nEach Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists.\nYou may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.\n\nRecommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following:\n- Conditions `pattern` and `anchoring` are unavailable.\n- Condition `filters` triggers if the source item matches the specified filters.\n- Condition `filters` accepts numeric filters.\n- Consequence `params` only covers filtering parameters.\n- Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).\n\nTrending Items requests have no source item, so rules for the `trending-items` model differ:\n- Condition `filters` and consequence `automaticFacetFilters` are unavailable.\n- Condition `requestScope` applies the rule to requests without a facet, or to requests for a specific facet.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/IndexName"
@@ -3382,8 +3382,8 @@
         "enum": [
           "related-products",
           "bought-together",
-          "trending-facets",
-          "trending-items"
+          "trending-items",
+          "looking-similar"
         ]
       },
       "updatedAt": {
@@ -3402,6 +3402,65 @@
         "description": "An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter.\nFor example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.\nA rule context must only contain alphanumeric characters.\n",
         "example": "mobile"
       },
+      "GlobalRequestScope": {
+        "type": "object",
+        "title": "Global request scope",
+        "description": "Apply the rule only to Trending Items requests without `facetName` and `facetValue`.",
+        "additionalProperties": false,
+        "properties": {
+          "global": {
+            "type": "boolean",
+            "description": "Whether the rule applies to requests without a facet. Must be `true`."
+          }
+        },
+        "required": [
+          "global"
+        ],
+        "x-discriminator-fields": [
+          "global"
+        ]
+      },
+      "FacetRequestScope": {
+        "type": "object",
+        "title": "Facet request scope",
+        "description": "Apply the rule only to Trending Items requests with the same `facetName` and `facetValue`.",
+        "additionalProperties": false,
+        "properties": {
+          "facetName": {
+            "type": "string",
+            "description": "Facet attribute of the Trending Items request.",
+            "minLength": 1,
+            "maxLength": 1000,
+            "example": "brand"
+          },
+          "facetValue": {
+            "type": "string",
+            "description": "Facet value of the Trending Items request.",
+            "minLength": 1,
+            "maxLength": 1000,
+            "example": "acme"
+          }
+        },
+        "required": [
+          "facetName",
+          "facetValue"
+        ],
+        "x-discriminator-fields": [
+          "facetName",
+          "facetValue"
+        ]
+      },
+      "RequestScope": {
+        "description": "Facet that a Trending Items request must target for the rule to apply.\n\nOnly available for the `trending-items` model.\nRules without `requestScope` apply to all Trending Items requests.\n",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/GlobalRequestScope"
+          },
+          {
+            "$ref": "#/components/schemas/FacetRequestScope"
+          }
+        ]
+      },
       "Condition": {
         "type": "object",
         "description": "Condition that triggers the rule.\nIf not specified, the rule is triggered for all recommendations.\n",
@@ -3411,6 +3470,9 @@
           },
           "context": {
             "$ref": "#/components/schemas/context"
+          },
+          "requestScope": {
+            "$ref": "#/components/schemas/RequestScope"
           }
         }
       },

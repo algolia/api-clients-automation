@@ -12,9 +12,9 @@ public enum RecommendModels {
 
   BOUGHT_TOGETHER("bought-together"),
 
-  TRENDING_FACETS("trending-facets"),
+  TRENDING_ITEMS("trending-items"),
 
-  TRENDING_ITEMS("trending-items");
+  LOOKING_SIMILAR("looking-similar");
 
   private final String value;
 

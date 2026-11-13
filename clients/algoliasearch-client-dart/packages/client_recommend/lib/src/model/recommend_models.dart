@@ -6,8 +6,8 @@ import 'package:json_annotation/json_annotation.dart';
 enum RecommendModels {
   relatedProducts(r'related-products'),
   boughtTogether(r'bought-together'),
-  trendingFacets(r'trending-facets'),
-  trendingItems(r'trending-items');
+  trendingItems(r'trending-items'),
+  lookingSimilar(r'looking-similar');
 
   const RecommendModels(this.raw);
   final dynamic raw;

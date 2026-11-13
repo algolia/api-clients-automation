@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/** CompositionsSearchResponse */
+/**
+ * Information about the compositions processed by the run request. Only present when
+ * `getRankingInfo` is `true`.
+ */
 public class CompositionsSearchResponse {
 
   @JsonProperty("run")

@@ -50,5 +50,6 @@ package algoliasearch.recommend
   */
 case class Condition(
     filters: Option[String] = scala.None,
-    context: Option[String] = scala.None
+    context: Option[String] = scala.None,
+    requestScope: Option[RequestScope] = scala.None
 )

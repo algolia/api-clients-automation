@@ -41,6 +41,101 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// batch recommend rules for trending items with request scopes
+    func testBatchRecommendRulesTest1() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.batchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.trendingItems,
+            recommendRule: [
+                RecommendRule(
+                    objectID: "global-rule",
+                    condition: RecommendCondition(requestScope: RequestScope
+                        .globalRequestScope(GlobalRequestScope(global: true))),
+                    consequence: RecommendConsequence(promote: [PromoteConsequenceObject(
+                        objectID: "item-1",
+                        position: 0
+                    )])
+                ),
+                RecommendRule(
+                    objectID: "facet-rule",
+                    condition: RecommendCondition(
+                        context: "mobile",
+                        requestScope: RequestScope.facetRequestScope(FacetRequestScope(
+                            facetName: "brand",
+                            facetValue: "acme"
+                        ))
+                    ),
+                    consequence: RecommendConsequence(
+                        hide: [HideConsequenceObject(objectID: "item-2")],
+                        params: ParamsConsequence(filters: "inStock:true")
+                    )
+                ),
+            ]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "[{\"objectID\":\"global-rule\",\"condition\":{\"requestScope\":{\"global\":true}},\"consequence\":{\"promote\":[{\"objectID\":\"item-1\",\"position\":0}]}},{\"objectID\":\"facet-rule\",\"condition\":{\"context\":\"mobile\",\"requestScope\":{\"facetName\":\"brand\",\"facetValue\":\"acme\"}},\"consequence\":{\"hide\":[{\"objectID\":\"item-2\"}],\"params\":{\"filters\":\"inStock:true\"}}}]"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/trending-items/recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// batch recommend rules for looking similar
+    func testBatchRecommendRulesTest2() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.batchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.lookingSimilar,
+            recommendRule: [RecommendRule(
+                objectID: "looking-similar-rule",
+                condition: RecommendCondition(filters: "brand:acme"),
+                consequence: RecommendConsequence(params: ParamsConsequence(automaticFacetFilters: [AutoFacetFilter(
+                    facet: "category",
+                    negative: false
+                )]))
+            )]
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "[{\"objectID\":\"looking-similar-rule\",\"condition\":{\"filters\":\"brand:acme\"},\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"category\",\"negative\":false}]}}}]"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/looking-similar/recommend/rules/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest() async throws {
         let configuration = try RecommendClientConfiguration(
@@ -747,6 +842,56 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// get recommend rule for trending items
+    func testGetRecommendRuleTest1() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getRecommendRuleWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.trendingItems,
+            objectID: "objectID"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/trending-items/recommend/rules/objectID")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// get recommend rule for looking similar
+    func testGetRecommendRuleTest2() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getRecommendRuleWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.lookingSimilar,
+            objectID: "objectID"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/looking-similar/recommend/rules/objectID")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// getRecommendStatus
     func testGetRecommendStatusTest() async throws {
         let configuration = try RecommendClientConfiguration(
@@ -1154,6 +1299,66 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
         XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/related-products/recommend/rules/search")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search recommend rules for trending items
+    func testSearchRecommendRulesTest1() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.trendingItems
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/trending-items/recommend/rules/search")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// search recommend rules for looking similar
+    func testSearchRecommendRulesTest2() async throws {
+        let configuration = try RecommendClientConfiguration(
+            appID: RecommendClientRequestsTests.APPLICATION_ID,
+            apiKey: RecommendClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = RecommendClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.searchRecommendRulesWithHTTPInfo(
+            indexName: "indexName",
+            model: RecommendModels.lookingSimilar
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{}".data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/looking-similar/recommend/rules/search")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)

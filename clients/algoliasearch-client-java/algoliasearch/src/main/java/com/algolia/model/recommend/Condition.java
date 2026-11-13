@@ -19,6 +19,9 @@ public class Condition {
   @JsonProperty("context")
   private String context;
 
+  @JsonProperty("requestScope")
+  private RequestScope requestScope;
+
   public Condition setFilters(String filters) {
     this.filters = filters;
     return this;
@@ -62,6 +65,17 @@ public class Condition {
     return context;
   }
 
+  public Condition setRequestScope(RequestScope requestScope) {
+    this.requestScope = requestScope;
+    return this;
+  }
+
+  /** Get requestScope */
+  @javax.annotation.Nullable
+  public RequestScope getRequestScope() {
+    return requestScope;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -71,12 +85,16 @@ public class Condition {
       return false;
     }
     Condition condition = (Condition) o;
-    return Objects.equals(this.filters, condition.filters) && Objects.equals(this.context, condition.context);
+    return (
+      Objects.equals(this.filters, condition.filters) &&
+      Objects.equals(this.context, condition.context) &&
+      Objects.equals(this.requestScope, condition.requestScope)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(filters, context);
+    return Objects.hash(filters, context, requestScope);
   }
 
   @Override
@@ -85,6 +103,7 @@ public class Condition {
     sb.append("class Condition {\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
+    sb.append("    requestScope: ").append(toIndentedString(requestScope)).append("\n");
     sb.append("}");
     return sb.toString();
   }

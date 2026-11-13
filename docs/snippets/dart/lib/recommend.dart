@@ -8,7 +8,7 @@ import 'package:algolia_client_recommend/algolia_client_recommend.dart';
 //
 // batch recommend rules
 void snippetForbatchRecommendRules() async {
-  // >SEPARATOR batchRecommendRules default
+  // >SEPARATOR batchRecommendRules batch recommend rules
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -17,6 +17,102 @@ void snippetForbatchRecommendRules() async {
   final response = await client.batchRecommendRules(
     indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules for trending items with request scopes
+void snippetForbatchRecommendRules1() async {
+  // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.batchRecommendRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("trending-items"),
+    recommendRule: [
+      RecommendRule(
+        objectID: "global-rule",
+        condition: Condition(
+          requestScope: GlobalRequestScope(
+            global: true,
+          ),
+        ),
+        consequence: Consequence(
+          promote: [
+            PromoteConsequenceObject(
+              objectID: "item-1",
+              position: 0,
+            ),
+          ],
+        ),
+      ),
+      RecommendRule(
+        objectID: "facet-rule",
+        condition: Condition(
+          context: "mobile",
+          requestScope: FacetRequestScope(
+            facetName: "brand",
+            facetValue: "acme",
+          ),
+        ),
+        consequence: Consequence(
+          hide: [
+            HideConsequenceObject(
+              objectID: "item-2",
+            ),
+          ],
+          params: ParamsConsequence(
+            filters: "inStock:true",
+          ),
+        ),
+      ),
+    ],
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules for looking similar
+void snippetForbatchRecommendRules2() async {
+  // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.batchRecommendRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("looking-similar"),
+    recommendRule: [
+      RecommendRule(
+        objectID: "looking-similar-rule",
+        condition: Condition(
+          filters: "brand:acme",
+        ),
+        consequence: Consequence(
+          params: ParamsConsequence(
+            automaticFacetFilters: [
+              AutoFacetFilter(
+                facet: "category",
+                negative: false,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
   );
   // >LOG
   // print the response
@@ -533,7 +629,7 @@ void snippetFordeleteRecommendRule() async {
 //
 // getRecommendRule
 void snippetForgetRecommendRule() async {
-  // >SEPARATOR getRecommendRule default
+  // >SEPARATOR getRecommendRule getRecommendRule
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -542,6 +638,48 @@ void snippetForgetRecommendRule() async {
   final response = await client.getRecommendRule(
     indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
+    objectID: "objectID",
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendRule method.
+//
+// get recommend rule for trending items
+void snippetForgetRecommendRule1() async {
+  // >SEPARATOR getRecommendRule get recommend rule for trending items
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("trending-items"),
+    objectID: "objectID",
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendRule method.
+//
+// get recommend rule for looking similar
+void snippetForgetRecommendRule2() async {
+  // >SEPARATOR getRecommendRule get recommend rule for looking similar
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.getRecommendRule(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("looking-similar"),
     objectID: "objectID",
   );
   // >LOG
@@ -869,7 +1007,7 @@ void snippetForgetRecommendations7() async {
 //
 // searchRecommendRules
 void snippetForsearchRecommendRules() async {
-  // >SEPARATOR searchRecommendRules default
+  // >SEPARATOR searchRecommendRules searchRecommendRules
   // Initialize the client
   final client = RecommendClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -878,6 +1016,46 @@ void snippetForsearchRecommendRules() async {
   final response = await client.searchRecommendRules(
     indexName: "<YOUR_INDEX_NAME>",
     model: RecommendModels.fromJson("related-products"),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchRecommendRules method.
+//
+// search recommend rules for trending items
+void snippetForsearchRecommendRules1() async {
+  // >SEPARATOR searchRecommendRules search recommend rules for trending items
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchRecommendRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("trending-items"),
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchRecommendRules method.
+//
+// search recommend rules for looking similar
+void snippetForsearchRecommendRules2() async {
+  // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+  // Initialize the client
+  final client = RecommendClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.searchRecommendRules(
+    indexName: "<YOUR_INDEX_NAME>",
+    model: RecommendModels.fromJson("looking-similar"),
   );
   // >LOG
   // print the response
