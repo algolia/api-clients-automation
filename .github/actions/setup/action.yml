@@ -87,7 +87,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-tags depName=golangci/golangci-lint
-        GOLANGCI_LINT_PIN: v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
+        GOLANGCI_LINT_PIN: v2.15.0@25c5369a93aacb8cccea0d46e1569ca4a194564d
       run: |
         curl --retry 3 -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" -o /tmp/golangci-install.sh
         sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}"
