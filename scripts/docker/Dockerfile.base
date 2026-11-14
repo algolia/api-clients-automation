@@ -57,7 +57,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 # the installer is fetched by commit like nvm above, then checks the release archive against the release checksums
 # renovate: datasource=github-tags depName=golangci/golangci-lint
-ARG GOLANGCI_LINT_PIN=v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
+ARG GOLANGCI_LINT_PIN=v2.15.0@25c5369a93aacb8cccea0d46e1569ca4a194564d
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
   && curl -sSfL --retry 3 -o /tmp/golangci-install.sh "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" \
   && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}" && rm /tmp/golangci-install.sh \
