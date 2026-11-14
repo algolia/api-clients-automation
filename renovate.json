@@ -31,6 +31,11 @@
   ],
   "packageRules": [
     {
+      "description": "Updating json_serializable requires updating json_annotation, which raises the minimum Dart SDK and breaks customers on older Dart. Minor bumps would otherwise be automerged by the shared preset, so these updates are disabled.",
+      "matchDepNames": ["json_serializable"],
+      "enabled": false
+    },
+    {
       "description": "Keep the docker image digests in scripts/docker/ pinned and up to date",
       "matchDatasources": [
         "docker"
@@ -213,13 +218,6 @@
       "registryUrls": [
         "https://maven-central.storage-download.googleapis.com/maven2/"
       ]
-    },
-    {
-      "description": "@cloudflare/vitest-pool-workers (used by the JavaScript client to run tests in workerd) declares a vitest ^4.1.0 peer range, and vitest 5 removed the published @vitest/runner package it depends on. No released pool version supports vitest 5 yet, so the workerd pool fails to start. Lift this once @cloudflare/vitest-pool-workers supports vitest 5.",
-      "matchPackageNames": [
-        "vitest"
-      ],
-      "allowedVersions": "<5"
     }
   ],
   "customManagers": [
