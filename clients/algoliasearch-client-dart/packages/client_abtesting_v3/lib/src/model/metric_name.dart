@@ -31,6 +31,7 @@ enum MetricName {
   convertedUsersRate(r'converted_users_rate'),
   addToCartUsersRate(r'add_to_cart_users_rate'),
   purchaseUsersRate(r'purchase_users_rate'),
+  usersWithNoResultsRate(r'users_with_no_results_rate'),
   avgClickThroughRatePerUser(r'avg_click_through_rate_per_user'),
   avgConversionRatePerUser(r'avg_conversion_rate_per_user'),
   avgPurchaseRatePerUser(r'avg_purchase_rate_per_user'),

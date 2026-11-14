@@ -48,11 +48,11 @@ public class SnippetAbtestingV3Client
   /// <summary>
   /// Snippet for the AddABTests method.
   ///
-  /// addABTests with Bayesian configuration
+  /// addABTests with Bayesian no-results user rate
   /// </summary>
   public async Task SnippetForAbtestingV3ClientAddABTests1()
   {
-    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     // Initialize the client
     var client = new AbtestingV3Client(
       new AbtestingV3Config(
@@ -68,7 +68,7 @@ public class SnippetAbtestingV3Client
       {
         EndAt = "2022-12-31T00:00:00.000Z",
         Name = "myABTest",
-        Metrics = new List<CreateMetric> { new CreateMetric { Name = "conversionRate" } },
+        Metrics = new List<CreateMetric> { new CreateMetric { Name = "usersWithNoResultsRate" } },
         Variants = new List<AddABTestsVariant>
         {
           new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30 }),
@@ -77,7 +77,7 @@ public class SnippetAbtestingV3Client
         Configuration = new ABTestConfiguration
         {
           Method = Enum.Parse<AnalysisMethod>("Bayesian"),
-          PrimaryMetric = Enum.Parse<PrimaryMetric>("ConversionRate"),
+          PrimaryMetric = Enum.Parse<PrimaryMetric>("UsersWithNoResultsRate"),
         },
       }
     );
@@ -914,6 +914,7 @@ public class SnippetAbtestingV3Client
       {
         Enum.Parse<MetricName>("ClickedUsersRate"),
         Enum.Parse<MetricName>("ConvertedUsersRate"),
+        Enum.Parse<MetricName>("UsersWithNoResultsRate"),
       },
       new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>("Bayesian") }
     );

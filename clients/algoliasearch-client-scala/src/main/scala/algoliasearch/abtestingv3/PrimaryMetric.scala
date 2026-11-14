@@ -31,8 +31,9 @@ sealed trait PrimaryMetric
   * defaults to `bayesian`, the default primary metric is `conversion_rate`, or the first metric in `metrics` that
   * supports Bayesian analysis if `metrics` doesn't include conversion rate. If the request includes a non-empty
   * `metrics` list, this metric must be in that list. User-level rates (`*_users_rate`) are the share of tracked users
-  * with at least one such search. Add-to-cart rates, purchase rates, and revenue per search require access to revenue
-  * analytics.
+  * with at least one such search. For `users_with_no_results_rate`, this is the share of tracked users with at least
+  * one search returning no results. Lower values are better. Add-to-cart rates, purchase rates, and revenue per search
+  * require access to revenue analytics.
   */
 object PrimaryMetric {
   case object AddToCartRate extends PrimaryMetric {
@@ -62,6 +63,9 @@ object PrimaryMetric {
   case object PurchaseUsersRate extends PrimaryMetric {
     override def toString = "purchase_users_rate"
   }
+  case object UsersWithNoResultsRate extends PrimaryMetric {
+    override def toString = "users_with_no_results_rate"
+  }
   val values: Seq[PrimaryMetric] = Seq(
     AddToCartRate,
     ClickThroughRate,
@@ -71,7 +75,8 @@ object PrimaryMetric {
     AddToCartUsersRate,
     ClickedUsersRate,
     ConvertedUsersRate,
-    PurchaseUsersRate
+    PurchaseUsersRate,
+    UsersWithNoResultsRate
   )
 
   def withName(name: String): PrimaryMetric = PrimaryMetric.values

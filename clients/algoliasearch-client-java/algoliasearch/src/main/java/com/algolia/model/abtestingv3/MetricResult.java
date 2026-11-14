@@ -133,8 +133,8 @@ public class MetricResult {
   }
 
   /**
-   * Dimension defined during test creation. For revenue metrics, including `revenue_per_search`,
-   * this is the currency.
+   * Dimension defined during test creation. For revenue metrics, including `revenue_per_search` and
+   * `winsorized_revenue_per_user`, this is the currency.
    */
   @javax.annotation.Nullable
   public String getDimension() {

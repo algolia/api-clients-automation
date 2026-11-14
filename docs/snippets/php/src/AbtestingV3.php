@@ -51,11 +51,11 @@ class SnippetAbtestingV3Client
     /**
      * Snippet for the AddABTests method.
      *
-     * addABTests with Bayesian configuration
+     * addABTests with Bayesian no-results user rate
      */
     public function snippetForAddABTests1(): void
     {
-        // >SEPARATOR addABTests addABTests with Bayesian configuration
+        // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
         // Initialize the client
         $client = AbtestingV3Client::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'ALGOLIA_APPLICATION_REGION');
 
@@ -64,7 +64,7 @@ class SnippetAbtestingV3Client
             ['endAt' => '2022-12-31T00:00:00.000Z',
                 'name' => 'myABTest',
                 'metrics' => [
-                    ['name' => 'conversionRate',
+                    ['name' => 'usersWithNoResultsRate',
                     ],
                 ],
                 'variants' => [
@@ -77,7 +77,7 @@ class SnippetAbtestingV3Client
                     ],
                 ],
                 'configuration' => ['method' => 'bayesian',
-                    'primaryMetric' => 'conversion_rate',
+                    'primaryMetric' => 'users_with_no_results_rate',
                 ],
             ],
         );
@@ -841,6 +841,8 @@ class SnippetAbtestingV3Client
                 'clicked_users_rate',
 
                 'converted_users_rate',
+
+                'users_with_no_results_rate',
             ],
             [
                 'bayesian',

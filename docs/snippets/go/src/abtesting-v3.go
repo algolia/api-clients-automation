@@ -44,10 +44,10 @@ func SnippetForAddABTestsOfAbtestingV31() {
 	/*
 	   Snippet for the addABTests method.
 
-	   addABTests with Bayesian configuration
+	   addABTests with Bayesian no-results user rate
 	*/
 
-	// >SEPARATOR addABTests addABTests with Bayesian configuration
+	// >SEPARATOR addABTests addABTests with Bayesian no-results user rate
 	// Initialize the client with your application region, eg. abtestingV3.ALGOLIA_APPLICATION_REGION
 	client, err := abtestingV3.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", abtestingV3.US)
 	if err != nil {
@@ -59,13 +59,13 @@ func SnippetForAddABTestsOfAbtestingV31() {
 	response, err := client.AddABTests(client.NewApiAddABTestsRequest(
 
 		abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
-			[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("conversionRate")}).SetVariants(
+			[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("usersWithNoResultsRate")}).SetVariants(
 			[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
 				abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}).SetConfiguration(
 			abtestingV3.NewEmptyABTestConfiguration().
 				SetMethod(abtestingV3.AnalysisMethod("bayesian")).
-				SetPrimaryMetric(abtestingV3.PrimaryMetric("conversion_rate")),
+				SetPrimaryMetric(abtestingV3.PrimaryMetric("users_with_no_results_rate")),
 		),
 	))
 	if err != nil {
@@ -907,8 +907,13 @@ func SnippetForGetTimeseriesOfAbtestingV32() {
 	// Call the API
 	response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
 		42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
-		[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
-		[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+		[]abtestingV3.MetricName{
+			abtestingV3.MetricName("clicked_users_rate"),
+			abtestingV3.MetricName("converted_users_rate"),
+			abtestingV3.MetricName("users_with_no_results_rate"),
+		}).
+		WithMethods(
+			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

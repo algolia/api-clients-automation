@@ -52,7 +52,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        val regexp = "^Algolia for Kotlin \\(3.52.0\\).*".toRegex()
+        val regexp = "^Algolia for Kotlin \\(3.54.0\\).*".toRegex()
         val header = it.headers["User-Agent"].orEmpty()
         assertTrue(
           actual = header.matches(regexp),
