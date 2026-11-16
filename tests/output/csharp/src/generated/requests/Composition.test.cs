@@ -2825,6 +2825,49 @@ public class CompositionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "search")]
+  public async Task SearchTest5()
+  {
+    await client.SearchAsync<Hit>(
+      "foo",
+      new RequestBody
+      {
+        Params = new Params { Query = "shoes", Filters = "brand:acme" },
+        Feeds = new Dictionary<string, FeedRequest>
+        {
+          {
+            "organic",
+            new FeedRequest
+            {
+              Params = new FeedParams
+              {
+                Filters = "brand:acme AND inStock:true",
+                SortBy = "Price (asc)",
+              },
+            }
+          },
+          {
+            "banner",
+            new FeedRequest
+            {
+              Params = new FeedParams { Query = "shoes sale", Filters = "" },
+            }
+          },
+        },
+        FeedsOrder = new List<string> { "banner", "organic" },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/compositions/foo/run", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"params\":{\"query\":\"shoes\",\"filters\":\"brand:acme\"},\"feeds\":{\"organic\":{\"params\":{\"filters\":\"brand:acme AND inStock:true\",\"sortBy\":\"Price (asc)\"}},\"banner\":{\"params\":{\"query\":\"shoes sale\",\"filters\":\"\"}}},\"feedsOrder\":[\"banner\",\"organic\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "searchCompositionRules")]
   public async Task SearchCompositionRulesTest()
   {

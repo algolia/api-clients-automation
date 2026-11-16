@@ -6745,36 +6745,13 @@ export function snippetForSetClientApiKey(): void {
 //
 // get setDictionarySettings results with minimal parameters
 export async function snippetForSetDictionarySettings(): Promise<void> {
-  // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+  // >SEPARATOR setDictionarySettings default
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
   // Call the API
   const response = await client.setDictionarySettings({
-    disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
-  });
-
-  // >LOG
-  // print the response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the setDictionarySettings method.
-//
-// get setDictionarySettings results with all parameters
-export async function snippetForSetDictionarySettings1(): Promise<void> {
-  // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-  // Initialize the client
-  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
-
-  // Call the API
-  const response = await client.setDictionarySettings({
-    disableStandardEntries: {
-      plurals: { fr: false, en: false, ru: true },
-      stopwords: { fr: false },
-      compounds: { ru: true },
-    },
+    disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } },
   });
 
   // >LOG

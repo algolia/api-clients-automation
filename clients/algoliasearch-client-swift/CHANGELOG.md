@@ -1,3 +1,30 @@
+## [9.54.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.53.0...9.54.0)
+
+- [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
+- [32131b43c5](https://github.com/algolia/api-clients-automation/commit/32131b43c5) fix(swift): quote CocoaPods warning step so release.yml parses ([#7308](https://github.com/algolia/api-clients-automation/pull/7308)) by [@Fluf22](https://github.com/Fluf22/)
+
+## [9.53.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.52.0...9.53.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [af6b0913d3](https://github.com/algolia/api-clients-automation/commit/af6b0913d3) ci(swift): make CocoaPods publish non-blocking and report it in Slack ([#7208](https://github.com/algolia/api-clients-automation/pull/7208)) by [@Fluf22](https://github.com/Fluf22/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+- [575c3ab5c6](https://github.com/algolia/api-clients-automation/commit/575c3ab5c6) fix(ci): move macOS jobs off the retired macos-14 runner label ([#7224](https://github.com/algolia/api-clients-automation/pull/7224)) by [@Fluf22](https://github.com/Fluf22/)
+- [3e85edd42f](https://github.com/algolia/api-clients-automation/commit/3e85edd42f) docs(specs): describe the analytics no click rate per query ([#7225](https://github.com/algolia/api-clients-automation/pull/7225)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+
+## [9.52.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.51.0...9.52.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [af6b0913d3](https://github.com/algolia/api-clients-automation/commit/af6b0913d3) ci(swift): make CocoaPods publish non-blocking and report it in Slack ([#7208](https://github.com/algolia/api-clients-automation/pull/7208)) by [@Fluf22](https://github.com/Fluf22/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+
+## [9.51.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.50.1...9.51.0)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+- [75e309924e](https://github.com/algolia/api-clients-automation/commit/75e309924e) clients(clients): cache host state only on change ([#7202](https://github.com/algolia/api-clients-automation/pull/7202)) by [@zigzagdev](https://github.com/zigzagdev/)
+- [e7642ce951](https://github.com/algolia/api-clients-automation/commit/e7642ce951) feat(specs): add user metrics to abtesting-v3 timeseries enum ([#7181](https://github.com/algolia/api-clients-automation/pull/7181)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [9.50.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.50.0...9.50.1)
 
 - [f2854eb518](https://github.com/algolia/api-clients-automation/commit/f2854eb518) chore(ci): bump ruby/setup-ruby to v1.329.0 to support Ruby 4.0.7 ([#7142](https://github.com/algolia/api-clients-automation/pull/7142)) by [@Fluf22](https://github.com/Fluf22/)

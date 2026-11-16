@@ -2586,6 +2586,52 @@ def snippet_for_search4():
     # SEPARATOR<
 
 
+def snippet_for_search5():
+    """
+    Snippet for the search method.
+
+    search
+    """
+    # >SEPARATOR search search
+    # Initialize the client
+    # In an asynchronous context, you can use CompositionClient instead, which exposes the exact same methods.
+    client = CompositionClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.search(
+        composition_id="foo",
+        request_body={
+            "params": {
+                "query": "shoes",
+                "filters": "brand:acme",
+            },
+            "feeds": {
+                "organic": {
+                    "params": {
+                        "filters": "brand:acme AND inStock:true",
+                        "sortBy": "Price (asc)",
+                    },
+                },
+                "banner": {
+                    "params": {
+                        "query": "shoes sale",
+                        "filters": "",
+                    },
+                },
+            },
+            "feedsOrder": [
+                "banner",
+                "organic",
+            ],
+        },
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
 def snippet_for_search_composition_rules():
     """
     Snippet for the searchCompositionRules method.

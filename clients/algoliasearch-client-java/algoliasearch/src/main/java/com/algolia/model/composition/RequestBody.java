@@ -6,7 +6,9 @@ package com.algolia.model.composition;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /** RequestBody */
@@ -20,6 +22,9 @@ public class RequestBody {
 
   @JsonProperty("externalProvider")
   private ExternalProvider externalProvider;
+
+  @JsonProperty("feeds")
+  private Map<String, FeedRequest> feeds;
 
   public RequestBody setParams(Params params) {
     this.params = params;
@@ -68,6 +73,35 @@ public class RequestBody {
     return externalProvider;
   }
 
+  public RequestBody setFeeds(Map<String, FeedRequest> feeds) {
+    this.feeds = feeds;
+    return this;
+  }
+
+  public RequestBody putFeeds(String key, FeedRequest feedsItem) {
+    if (this.feeds == null) {
+      this.feeds = new HashMap<>();
+    }
+    this.feeds.put(key, feedsItem);
+    return this;
+  }
+
+  /**
+   * Per-feed parameters for `multifeed` compositions. Each key is a feed ID. Feed `params` take
+   * precedence over the root `params`. A feed inherits every root key it doesn't set. A feed value
+   * replaces the root value instead of combining with it. This applies to every key, including
+   * `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`. For example, `filters` must
+   * repeat the common values. An empty value such as `filters: \"\"` discards the root value. The
+   * API validates feed `params` like the root `params`. An unsupported parameter returns a 400
+   * error. A feed ID may not exist in the composition (for example, because a rule removed it). The
+   * response reports it in the `errors` field but request still succeeds. Rules match once per
+   * request, against the root `params` only.
+   */
+  @javax.annotation.Nullable
+  public Map<String, FeedRequest> getFeeds() {
+    return feeds;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -80,13 +114,14 @@ public class RequestBody {
     return (
       Objects.equals(this.params, requestBody.params) &&
       Objects.equals(this.feedsOrder, requestBody.feedsOrder) &&
-      Objects.equals(this.externalProvider, requestBody.externalProvider)
+      Objects.equals(this.externalProvider, requestBody.externalProvider) &&
+      Objects.equals(this.feeds, requestBody.feeds)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(params, feedsOrder, externalProvider);
+    return Objects.hash(params, feedsOrder, externalProvider, feeds);
   }
 
   @Override
@@ -96,6 +131,7 @@ public class RequestBody {
     sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("    feedsOrder: ").append(toIndentedString(feedsOrder)).append("\n");
     sb.append("    externalProvider: ").append(toIndentedString(externalProvider)).append("\n");
+    sb.append("    feeds: ").append(toIndentedString(feeds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

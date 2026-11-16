@@ -2,9 +2,15 @@
 
 namespace Algolia\AlgoliaSearch\Tests;
 
+use Algolia\AlgoliaSearch\Configuration\SearchConfig;
+use Algolia\AlgoliaSearch\Exceptions\RetriableException;
 use Algolia\AlgoliaSearch\Exceptions\TimeoutException;
+use Algolia\AlgoliaSearch\Exceptions\UnreachableException;
 use Algolia\AlgoliaSearch\Http\GuzzleHttpClient;
 use Algolia\AlgoliaSearch\Http\Psr7\Request;
+use Algolia\AlgoliaSearch\RequestOptions\RequestOptionsFactory;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -29,7 +35,7 @@ use Psr\Http\Message\RequestInterface;
 class GuzzleHttpClientTest extends TestCase
 {
     /**
-     * @dataProvider retriableTransferFailures
+     * @dataProvider timeoutTransferFailures
      */
     public function testTransferFailuresAreRaisedAsTimeouts(\Throwable $failure, string $expectedMessage): void
     {
@@ -39,11 +45,9 @@ class GuzzleHttpClientTest extends TestCase
         $this->transportFailingWith($failure)->sendRequest(self::request(), 5, 2);
     }
 
-    public static function retriableTransferFailures(): iterable
+    public static function timeoutTransferFailures(): iterable
     {
         $request = self::request();
-
-        yield 'connection refused' => [new ConnectException('connection refused', $request), 'connection refused'];
 
         if (8 > ClientInterface::MAJOR_VERSION) {
             yield 'curl timeout (errno 28)' => [new ConnectException('cURL error 28: operation timed out', $request, null, ['errno' => CURLE_OPERATION_TIMEDOUT]), 'Connection timed out'];
@@ -53,13 +57,38 @@ class GuzzleHttpClientTest extends TestCase
 
         yield 'connect timeout' => [new ConnectTimeoutException('connect timed out', $request), 'Connection timed out'];
 
-        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request), 'connection reset by peer'];
-
         yield 'network timeout before headers' => [new NetworkTimeoutException('operation timed out', $request), 'Connection timed out'];
 
         yield 'read timeout after headers' => [new ResponseTimeoutException('operation timed out', $request, new GuzzleResponse(200, [], '{"hits":[')), 'Connection timed out'];
 
         yield 'handler closed mid-transfer' => [new HandlerClosedException('handler closed', $request), 'handler closed'];
+    }
+
+    /**
+     * A host that cannot be reached is not a timeout: it comes back as a status 0 response, which
+     * the retry strategy treats as an unreachable host and marks down.
+     *
+     * @dataProvider unreachableTransferFailures
+     */
+    public function testUnreachableHostsReturnAStatusZeroResponse(\Throwable $failure, string $expectedReason): void
+    {
+        $response = $this->transportFailingWith($failure)->sendRequest(self::request(), 5, 2);
+
+        $this->assertSame(0, $response->getStatusCode());
+        $this->assertSame($expectedReason, $response->getReasonPhrase());
+    }
+
+    public static function unreachableTransferFailures(): iterable
+    {
+        $request = self::request();
+
+        yield 'connection refused' => [new ConnectException('connection refused', $request), 'connection refused'];
+
+        if (8 > ClientInterface::MAJOR_VERSION) {
+            return;
+        }
+
+        yield 'network failure before headers' => [new NetworkException('connection reset by peer', $request), 'connection reset by peer'];
     }
 
     public function testFailuresCarryingAResponseReturnThatResponse(): void
@@ -82,9 +111,83 @@ class GuzzleHttpClientTest extends TestCase
         $this->assertSame('could not create the response', $response->getReasonPhrase());
     }
 
+    public function testUnreachableHostIsMarkedDownInsteadOfTimedOut(): void
+    {
+        [$wrapper, $clusterHosts] = $this->wrapperFailingWith(new ConnectException('connection refused', self::request()));
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $errors = $e->getErrors();
+            $this->assertCount(1, $errors);
+            $this->assertInstanceOf(RetriableException::class, $errors[0]['error']);
+            $this->assertStringContainsString('connection refused', $errors[0]['error']->getMessage());
+        }
+
+        $this->assertSame(['host-two.invalid'], $clusterHosts->read());
+        $this->assertSame(0, $clusterHosts->getRetryCount('host-one.invalid', true));
+    }
+
+    public function testTimedOutHostStaysUpWithAnIncrementedRetryCount(): void
+    {
+        [$wrapper, $clusterHosts] = $this->wrapperFailingWith(self::timeoutFailure());
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertInstanceOf(TimeoutException::class, $e->getErrors()[0]['error']);
+        }
+
+        $this->assertSame(['host-one.invalid', 'host-two.invalid'], $clusterHosts->read());
+        $this->assertSame(1, $clusterHosts->getRetryCount('host-one.invalid', true));
+    }
+
+    public function testUnreachableHostMessageDoesNotLeakTheApiKey(): void
+    {
+        $failure = new ConnectException(
+            'cURL error 6: Could not resolve host: host-one.invalid for https://host-one.invalid/1/test?x-algolia-api-key=SECRET-KEY',
+            self::request()
+        );
+        [$wrapper] = $this->wrapperFailingWith($failure);
+
+        try {
+            $wrapper->send('GET', '/1/test', [], 'host-one.invalid');
+            $this->fail('Expected UnreachableException to be thrown');
+        } catch (UnreachableException $e) {
+            $this->assertStringNotContainsString('SECRET-KEY', $e->getMessage());
+            $this->assertStringNotContainsString('SECRET-KEY', $e->getErrors()[0]['error']->getMessage());
+            $this->assertStringContainsString('x-algolia-api-key=[FILTERED]', $e->getMessage());
+        }
+    }
+
     private static function request(): RequestInterface
     {
         return new Request('GET', 'http://localhost/1/indexes/test/query');
+    }
+
+    private static function timeoutFailure(): \Throwable
+    {
+        if (8 > ClientInterface::MAJOR_VERSION) {
+            return new ConnectException('cURL error 28: operation timed out', self::request(), null, ['errno' => CURLE_OPERATION_TIMEDOUT]);
+        }
+
+        return new ConnectTimeoutException('connect timed out', self::request());
+    }
+
+    /**
+     * @return array{0: ApiWrapper, 1: ClusterHosts}
+     */
+    private function wrapperFailingWith(\Throwable $failure): array
+    {
+        $clusterHosts = ClusterHosts::create(['host-one.invalid', 'host-two.invalid']);
+        $config = SearchConfig::create('test-app-id', 'test-api-key');
+
+        return [
+            new ApiWrapper($this->transportFailingWith($failure), $config, $clusterHosts, new RequestOptionsFactory($config)),
+            $clusterHosts,
+        ];
     }
 
     private function transportFailingWith(\Throwable $failure): GuzzleHttpClient

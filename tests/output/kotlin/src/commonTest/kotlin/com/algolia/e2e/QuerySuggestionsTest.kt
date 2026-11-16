@@ -41,7 +41,9 @@ class QuerySuggestionsTest {
   fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
       call = {
-        getConfig(indexName = "cts_e2e_browse_query_suggestions")
+        getConfig(
+          indexName = "cts_e2e_browse_query_suggestions",
+        )
       },
       response = {
         lenientJsonAssert(

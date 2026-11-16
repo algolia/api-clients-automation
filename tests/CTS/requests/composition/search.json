@@ -156,5 +156,62 @@
         }
       }
     }
+  },
+  {
+    "parameters": {
+      "compositionID": "foo",
+      "requestBody": {
+        "params": {
+          "query": "shoes",
+          "filters": "brand:acme"
+        },
+        "feeds": {
+          "organic": {
+            "params": {
+              "filters": "brand:acme AND inStock:true",
+              "sortBy": "Price (asc)"
+            }
+          },
+          "banner": {
+            "params": {
+              "query": "shoes sale",
+              "filters": ""
+            }
+          }
+        },
+        "feedsOrder": [
+          "banner",
+          "organic"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/compositions/foo/run",
+      "method": "POST",
+      "body": {
+        "params": {
+          "query": "shoes",
+          "filters": "brand:acme"
+        },
+        "feeds": {
+          "organic": {
+            "params": {
+              "filters": "brand:acme AND inStock:true",
+              "sortBy": "Price (asc)"
+            }
+          },
+          "banner": {
+            "params": {
+              "query": "shoes sale",
+              "filters": ""
+            }
+          }
+        },
+        "feedsOrder": [
+          "banner",
+          "organic"
+        ]
+      }
+    }
   }
 ]

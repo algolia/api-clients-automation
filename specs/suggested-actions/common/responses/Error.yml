@@ -1,0 +1,12 @@
+type: object
+description: Error returned by the Suggested Actions API.
+required:
+  - status
+  - message
+properties:
+  status:
+    type: integer
+    description: HTTP status code.
+  message:
+    type: string
+    description: Description of the error.

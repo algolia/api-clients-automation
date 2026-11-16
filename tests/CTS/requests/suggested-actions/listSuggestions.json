@@ -1,0 +1,34 @@
+[
+  {
+    "testName": "listSuggestions with required parameters",
+    "parameters": {
+      "targetAppId": "MY_APP_ID"
+    },
+    "request": {
+      "path": "/2/suggested-actions",
+      "method": "GET",
+      "queryParameters": {
+        "target.appId": "MY_APP_ID"
+      }
+    }
+  },
+  {
+    "testName": "listSuggestions with all parameters",
+    "parameters": {
+      "targetAppId": "MY_APP_ID",
+      "targetIndex": "products",
+      "userId": "42",
+      "excludeDismissed": true
+    },
+    "request": {
+      "path": "/2/suggested-actions",
+      "method": "GET",
+      "queryParameters": {
+        "target.appId": "MY_APP_ID",
+        "target.index": "products",
+        "userId": "42",
+        "excludeDismissed": "true"
+      }
+    }
+  }
+]

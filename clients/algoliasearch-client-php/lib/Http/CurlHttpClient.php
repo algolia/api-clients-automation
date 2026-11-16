@@ -55,21 +55,10 @@ final class CurlHttpClient implements HttpClientInterface
         //        curl_setopt($curlHandle, CURLOPT_CAINFO, $this->caInfoPath);
 
         curl_setopt($curlHandle, CURLOPT_URL, (string) $request->getUri());
-        $version = curl_version();
-        if (
-            version_compare($version['version'], '7.16.2', '>=')
-            && $connectTimeout < 1
-        ) {
-            curl_setopt(
-                $curlHandle,
-                CURLOPT_CONNECTTIMEOUT_MS,
-                $connectTimeout * 1000
-            );
-            curl_setopt($curlHandle, CURLOPT_TIMEOUT_MS, $timeout * 1000);
-        } else {
-            curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, $connectTimeout);
-            curl_setopt($curlHandle, CURLOPT_TIMEOUT, $timeout);
-        }
+        // Timeouts are in seconds and may be fractional: the second-based options truncate them to
+        // integers (0.5 would become 0, which curl treats as no timeout), so always use milliseconds.
+        curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT_MS, (int) round($connectTimeout * 1000));
+        curl_setopt($curlHandle, CURLOPT_TIMEOUT_MS, (int) round($timeout * 1000));
 
         // The problem is that on (Li|U)nix, when libcurl uses the standard name resolver,
         // a SIGALRM is raised during name resolution which libcurl thinks is the timeout alarm.
@@ -84,25 +73,14 @@ final class CurlHttpClient implements HttpClientInterface
         });
 
         $method = $request->getMethod();
+        $body = (string) $request->getBody();
+        curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, $method);
+
         if ('GET' === $method) {
-            curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($curlHandle, CURLOPT_HTTPGET, true);
-            curl_setopt($curlHandle, CURLOPT_POST, false);
-        } else {
-            if ('POST' === $method) {
-                $body = (string) $request->getBody();
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'POST');
-                curl_setopt($curlHandle, CURLOPT_POST, true);
-                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
-            } elseif ('DELETE' === $method) {
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                curl_setopt($curlHandle, CURLOPT_POST, false);
-            } elseif ('PUT' === $method) {
-                $body = (string) $request->getBody();
-                curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
-                curl_setopt($curlHandle, CURLOPT_POST, true);
-            }
+        } elseif (in_array($method, ['POST', 'PUT', 'PATCH'], true) || '' !== $body) {
+            // POSTFIELDS sends the body (and a `Content-Length`, even when empty), CUSTOMREQUEST keeps the method
+            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $body);
         }
         $mhandle = $this->getMHandle($curlHandle);
 
@@ -121,19 +99,38 @@ final class CurlHttpClient implements HttpClientInterface
             } while (CURLM_CALL_MULTI_PERFORM === $mrc);
         }
 
+        // curl_multi only reports the transfer result (curl_errno / curl_error) once it is read here
+        $errorCode = null;
+        while (false !== ($info = curl_multi_info_read($mhandle))) {
+            if ($info['handle'] === $curlHandle) {
+                $errorCode = $info['result'];
+
+                break;
+            }
+        }
+
         $statusCode = (int) curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
         $responseBody = curl_multi_getcontent($curlHandle);
         $error = curl_error($curlHandle);
-        $errorCode = curl_errno($curlHandle);
 
         $this->releaseMHandle($curlHandle);
 
-        // detect timeout: explicit timeout error OR no response with no error (curl_multi behavior)
-        $isTimeout = (CURLE_OPERATION_TIMEDOUT === $errorCode)
-            || (0 === $statusCode && 0 === $errorCode);
+        // curl_multi_exec failed before the transfer completed: there is no result to read, and
+        // the host is treated as unreachable rather than as a timeout
+        if (null === $errorCode) {
+            $reason = CURLM_OK !== $mrc ? curl_multi_strerror($mrc) : null;
 
-        if ($isTimeout) {
+            return new Response(0, [], null, '1.1', $reason ?? 'Transfer did not complete');
+        }
+
+        if (CURLE_OPERATION_TIMEDOUT === $errorCode) {
             throw new TimeoutException('Connection timed out');
+        }
+
+        // any other transfer failure (refused connection, unknown host, TLS error, ...) means the host
+        // could not be reached: a status 0 response, which the retry strategy marks down
+        if (CURLE_OK !== $errorCode) {
+            return new Response(0, [], null, '1.1', $error);
         }
 
         return new Response(

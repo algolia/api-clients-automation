@@ -51,6 +51,8 @@ export 'src/model/facet_hits.dart';
 export 'src/model/facet_ordering.dart';
 export 'src/model/facet_stats.dart';
 export 'src/model/feed_injection.dart';
+export 'src/model/feed_params.dart';
+export 'src/model/feed_request.dart';
 export 'src/model/get_task_response.dart';
 export 'src/model/highlight_result_option.dart';
 export 'src/model/hit.dart';

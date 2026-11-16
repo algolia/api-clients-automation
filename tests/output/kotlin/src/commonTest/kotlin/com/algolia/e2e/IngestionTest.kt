@@ -41,7 +41,9 @@ class IngestionTest {
   fun `enableTask`() = runTest {
     client.runTest(
       call = {
-        enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        enableTask(
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -56,7 +58,9 @@ class IngestionTest {
   fun `enableTaskV1`() = runTest {
     client.runTest(
       call = {
-        enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        enableTaskV1(
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -71,7 +75,9 @@ class IngestionTest {
   fun `getSource`() = runTest {
     client.runTest(
       call = {
-        getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+        getSource(
+          sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        )
       },
       response = {
         lenientJsonAssert(
@@ -120,8 +126,8 @@ class IngestionTest {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                )
-            )
+                ),
+            ),
         )
       },
       response = {
@@ -145,8 +151,8 @@ class IngestionTest {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                )
-            )
+                ),
+            ),
         )
       },
       response = {

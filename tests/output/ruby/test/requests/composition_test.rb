@@ -1918,6 +1918,36 @@ class TestCompositionClient < Test::Unit::TestCase
     )
   end
 
+  # search
+  def test_search5
+    req = @client.search_with_http_info(
+      "foo",
+      Algolia::Composition::RequestBody.new(
+        params: Algolia::Composition::Params.new(query: "shoes", filters: "brand:acme"),
+        feeds: {
+          organic: Algolia::Composition::FeedRequest.new(
+            params: Algolia::Composition::FeedParams.new(filters: "brand:acme AND inStock:true", sort_by: "Price (asc)")
+          ),
+          banner: Algolia::Composition::FeedRequest.new(
+            params: Algolia::Composition::FeedParams.new(query: "shoes sale", filters: "")
+          )
+        },
+        feeds_order: ["banner", "organic"]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/compositions/foo/run", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "{\"params\":{\"query\":\"shoes\",\"filters\":\"brand:acme\"},\"feeds\":{\"organic\":{\"params\":{\"filters\":\"brand:acme AND inStock:true\",\"sortBy\":\"Price (asc)\"}},\"banner\":{\"params\":{\"query\":\"shoes sale\",\"filters\":\"\"}}},\"feedsOrder\":[\"banner\",\"organic\"]}"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # searchCompositionRules
   def test_search_composition_rules
     req = @client.search_composition_rules_with_http_info(

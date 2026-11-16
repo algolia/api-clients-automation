@@ -1,3 +1,30 @@
+## [5.64.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.63.0...5.64.0)
+
+- [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
+- [230877e2a2](https://github.com/algolia/api-clients-automation/commit/230877e2a2) feat(specs): add Suggested Actions API spec ([#7303](https://github.com/algolia/api-clients-automation/pull/7303)) by [@kennyh-alg](https://github.com/kennyh-alg/)
+
+## [5.63.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.62.0...5.63.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+- [575c3ab5c6](https://github.com/algolia/api-clients-automation/commit/575c3ab5c6) fix(ci): move macOS jobs off the retired macos-14 runner label ([#7224](https://github.com/algolia/api-clients-automation/pull/7224)) by [@Fluf22](https://github.com/Fluf22/)
+- [3e85edd42f](https://github.com/algolia/api-clients-automation/commit/3e85edd42f) docs(specs): describe the analytics no click rate per query ([#7225](https://github.com/algolia/api-clients-automation/pull/7225)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+
+## [5.62.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.61.0...5.62.0)
+
+- [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)
+- [0a3cbbb29b](https://github.com/algolia/api-clients-automation/commit/0a3cbbb29b) feat(specs): add per-feed params to Composition run request ([#7199](https://github.com/algolia/api-clients-automation/pull/7199)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8456d9eb14](https://github.com/algolia/api-clients-automation/commit/8456d9eb14) feat(specs): support `algoliaDefined` ordering in external sources ([#7212](https://github.com/algolia/api-clients-automation/pull/7212)) by [@aiordache](https://github.com/aiordache/)
+
+## [5.61.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.60.0...5.61.0)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+- [8b2ad07687](https://github.com/algolia/api-clients-automation/commit/8b2ad07687) chore(deps): dependencies 2026-10-12 ([#7135](https://github.com/algolia/api-clients-automation/pull/7135)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [479b0cc1c9](https://github.com/algolia/api-clients-automation/commit/479b0cc1c9) fix(javascript): mask API key in ApiError stack trace ([#7182](https://github.com/algolia/api-clients-automation/pull/7182)) by [@bblair31](https://github.com/bblair31/)
+- [75e309924e](https://github.com/algolia/api-clients-automation/commit/75e309924e) clients(clients): cache host state only on change ([#7202](https://github.com/algolia/api-clients-automation/pull/7202)) by [@zigzagdev](https://github.com/zigzagdev/)
+- [e7642ce951](https://github.com/algolia/api-clients-automation/commit/e7642ce951) feat(specs): add user metrics to abtesting-v3 timeseries enum ([#7181](https://github.com/algolia/api-clients-automation/pull/7181)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [5.60.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.59.0...5.60.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, Agent Studio API). See below for more details.

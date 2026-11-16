@@ -50,9 +50,9 @@ class RecommendTest {
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 20.0,
                     maxRecommendations = 2,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       response = {

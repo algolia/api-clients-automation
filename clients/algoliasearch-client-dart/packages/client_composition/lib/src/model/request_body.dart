@@ -2,6 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:algolia_client_composition/src/model/params.dart';
 import 'package:algolia_client_composition/src/model/external_provider.dart';
+import 'package:algolia_client_composition/src/model/feed_request.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,6 +15,7 @@ final class RequestBody {
     this.params,
     this.feedsOrder,
     this.externalProvider,
+    this.feeds,
   });
 
   @JsonKey(name: r'params')
@@ -26,17 +28,25 @@ final class RequestBody {
   @JsonKey(name: r'externalProvider')
   final ExternalProvider? externalProvider;
 
+  /// Per-feed parameters for `multifeed` compositions. Each key is a feed ID.  Feed `params` take precedence over the root `params`. A feed inherits every root key it doesn't set. A feed value replaces the root value instead of combining with it. This applies to every key, including `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`. For example, `filters` must repeat the common values. An empty value such as `filters: \"\"` discards the root value.  The API validates feed `params` like the root `params`. An unsupported parameter returns a 400 error.  A feed ID may not exist in the composition (for example, because a rule removed it). The response reports it in the `errors` field but request still succeeds.  Rules match once per request, against the root `params` only.
+  @JsonKey(name: r'feeds')
+  final Map<String, FeedRequest>? feeds;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is RequestBody &&
           other.params == params &&
           other.feedsOrder == feedsOrder &&
-          other.externalProvider == externalProvider;
+          other.externalProvider == externalProvider &&
+          other.feeds == feeds;
 
   @override
   int get hashCode =>
-      params.hashCode + feedsOrder.hashCode + externalProvider.hashCode;
+      params.hashCode +
+      feedsOrder.hashCode +
+      externalProvider.hashCode +
+      feeds.hashCode;
 
   factory RequestBody.fromJson(Map<String, dynamic> json) =>
       _$RequestBodyFromJson(json);

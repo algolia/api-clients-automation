@@ -39,6 +39,97 @@ public class RecommendClientRequestTests
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
 
+  [Fact(DisplayName = "batch recommend rules for trending items with request scopes")]
+  public async Task BatchRecommendRulesTest1()
+  {
+    await client.BatchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("TrendingItems"),
+      new List<RecommendRule>
+      {
+        new RecommendRule
+        {
+          ObjectID = "global-rule",
+          Condition = new Condition
+          {
+            RequestScope = new RequestScope(new GlobalRequestScope { Global = true }),
+          },
+          Consequence = new Consequence
+          {
+            Promote = new List<PromoteConsequenceObject>
+            {
+              new PromoteConsequenceObject { ObjectID = "item-1", Position = 0 },
+            },
+          },
+        },
+        new RecommendRule
+        {
+          ObjectID = "facet-rule",
+          Condition = new Condition
+          {
+            Context = "mobile",
+            RequestScope = new RequestScope(
+              new FacetRequestScope { FacetName = "brand", FacetValue = "acme" }
+            ),
+          },
+          Consequence = new Consequence
+          {
+            Hide = new List<HideConsequenceObject>
+            {
+              new HideConsequenceObject { ObjectID = "item-2" },
+            },
+            Params = new ParamsConsequence { Filters = "inStock:true" },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/trending-items/recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "[{\"objectID\":\"global-rule\",\"condition\":{\"requestScope\":{\"global\":true}},\"consequence\":{\"promote\":[{\"objectID\":\"item-1\",\"position\":0}]}},{\"objectID\":\"facet-rule\",\"condition\":{\"context\":\"mobile\",\"requestScope\":{\"facetName\":\"brand\",\"facetValue\":\"acme\"}},\"consequence\":{\"hide\":[{\"objectID\":\"item-2\"}],\"params\":{\"filters\":\"inStock:true\"}}}]",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "batch recommend rules for looking similar")]
+  public async Task BatchRecommendRulesTest2()
+  {
+    await client.BatchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("LookingSimilar"),
+      new List<RecommendRule>
+      {
+        new RecommendRule
+        {
+          ObjectID = "looking-similar-rule",
+          Condition = new Condition { Filters = "brand:acme" },
+          Consequence = new Consequence
+          {
+            Params = new ParamsConsequence
+            {
+              AutomaticFacetFilters = new List<AutoFacetFilter>
+              {
+                new AutoFacetFilter { Facet = "category", Negative = false },
+              },
+            },
+          },
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/looking-similar/recommend/rules/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "[{\"objectID\":\"looking-similar-rule\",\"condition\":{\"filters\":\"brand:acme\"},\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"category\",\"negative\":false}]}}}]",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
@@ -568,6 +659,36 @@ public class RecommendClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "get recommend rule for trending items")]
+  public async Task GetRecommendRuleTest1()
+  {
+    await client.GetRecommendRuleAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("TrendingItems"),
+      "objectID"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/trending-items/recommend/rules/objectID", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "get recommend rule for looking similar")]
+  public async Task GetRecommendRuleTest2()
+  {
+    await client.GetRecommendRuleAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("LookingSimilar"),
+      "objectID"
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/looking-similar/recommend/rules/objectID", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "getRecommendStatus")]
   public async Task GetRecommendStatusTest()
   {
@@ -925,6 +1046,34 @@ public class RecommendClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/indexes/indexName/related-products/recommend/rules/search", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "search recommend rules for trending items")]
+  public async Task SearchRecommendRulesTest1()
+  {
+    await client.SearchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("TrendingItems")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/trending-items/recommend/rules/search", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "search recommend rules for looking similar")]
+  public async Task SearchRecommendRulesTest2()
+  {
+    await client.SearchRecommendRulesAsync(
+      "indexName",
+      Enum.Parse<RecommendModels>("LookingSimilar")
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/indexName/looking-similar/recommend/rules/search", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }

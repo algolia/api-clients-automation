@@ -9906,7 +9906,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 	   get setDictionarySettings results with minimal parameters
 	*/
 
-	// >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+	// >SEPARATOR setDictionarySettings default
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -9918,43 +9918,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 	response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
 
 		search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-			search.NewEmptyStandardEntries().SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}))))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// >LOG
-	// print the response
-	print(response)
-	// SEPARATOR<
-}
-
-func SnippetForSetDictionarySettingsOfSearch1() {
-	/*
-	   Snippet for the setDictionarySettings method.
-
-	   get setDictionarySettings results with all parameters
-	*/
-
-	// >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-	// Initialize the client
-	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.SetDictionarySettings(client.NewApiSetDictionarySettingsRequest(
-
-		search.NewEmptyDictionarySettingsParams().SetDisableStandardEntries(
-			search.NewEmptyStandardEntries().
-				SetPlurals(map[string]bool{"fr": false, "en": false, "ru": true}).
-				SetStopwords(map[string]bool{"fr": false}).
-				SetCompounds(map[string]bool{"ru": true}),
-		),
-	))
+			search.NewEmptyStandardEntries().SetStopwords(map[string]bool{"fr": false, "en": false, "ru": true}))))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

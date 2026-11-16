@@ -72,21 +72,23 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
-  @DisplayName("addABTests with Bayesian configuration")
+  @DisplayName("addABTests with Bayesian no-results user rate")
   void addABTestsTest1() {
     assertDoesNotThrow(() -> {
       client.addABTests(
         new AddABTestsRequest()
           .setEndAt("2022-12-31T00:00:00.000Z")
           .setName("myABTest")
-          .setMetrics(Arrays.asList(new CreateMetric().setName("conversionRate")))
+          .setMetrics(Arrays.asList(new CreateMetric().setName("usersWithNoResultsRate")))
           .setVariants(
             Arrays.asList(
               new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(30),
               new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
             )
           )
-          .setConfiguration(new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.CONVERSION_RATE))
+          .setConfiguration(
+            new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.USERS_WITH_NO_RESULTS_RATE)
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -94,7 +96,7 @@ class AbtestingV3ClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}",
+        "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"usersWithNoResultsRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"users_with_no_results_rate\"}}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -776,6 +778,37 @@ class AbtestingV3ClientRequestsTests {
   }
 
   @Test
+  @DisplayName("estimate AB Test sample size for a user-level rate")
+  void estimateABTestTest1() {
+    assertDoesNotThrow(() -> {
+      client.estimateABTest(
+        new EstimateABTestRequest()
+          .setConfiguration(
+            new EstimateConfiguration().setMinimumDetectableEffect(
+              new MinimumDetectableEffect().setSize(0.03).setMetric(EffectMetric.CONVERTED_USERS_RATE)
+            )
+          )
+          .setVariants(
+            Arrays.asList(
+              new AbTestsVariant().setIndex("AB_TEST_1").setTrafficPercentage(50),
+              new AbTestsVariant().setIndex("AB_TEST_2").setTrafficPercentage(50)
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/estimate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"configuration\":{\"minimumDetectableEffect\":{\"size\":0.03,\"metric\":\"convertedUsersRate\"}},\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":50},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("getABTest")
   void getABTestTest() {
     assertDoesNotThrow(() -> {
@@ -858,6 +891,39 @@ class AbtestingV3ClientRequestsTests {
     try {
       Map<String, String> expectedQuery = json.readValue(
         "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"revenue_per_search\",\"methods\":\"bayesian\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("getTimeseries with user-based metrics")
+  void getTimeseriesTest2() {
+    assertDoesNotThrow(() -> {
+      client.getTimeseries(
+        42,
+        "1999-09-19",
+        "2001-01-01",
+        Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE, MetricName.USERS_WITH_NO_RESULTS_RATE),
+        Arrays.asList(AnalysisMethod.BAYESIAN)
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/3/abtests/42/timeseries", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate\",\"methods\":\"bayesian\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;

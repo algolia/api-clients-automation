@@ -1423,6 +1423,26 @@ func TestComposition_Search(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"params":{"query":"batman"},"externalProvider":{"configurationParams":{"customer_id":"customer123"}}}`)
 	})
+	t.Run("search", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+			"foo",
+			composition.NewEmptyRequestBody().SetParams(
+				composition.NewEmptyParams().
+					SetQuery("shoes").
+					SetFilters("brand:acme"),
+			).
+				SetFeeds(map[string]composition.FeedRequest{"organic": *composition.NewEmptyFeedRequest().SetParams(
+					composition.NewEmptyFeedParams().SetFilters("brand:acme AND inStock:true").SetSortBy("Price (asc)")), "banner": *composition.NewEmptyFeedRequest().SetParams(
+					composition.NewEmptyFeedParams().SetQuery("shoes sale").SetFilters(""))}).SetFeedsOrder(
+				[]string{"banner", "organic"})))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/compositions/foo/run", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).
+			Assertf(*echo.Body, "%s", `{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}`)
+	})
 }
 
 func TestComposition_SearchCompositionRules(t *testing.T) {

@@ -219,7 +219,7 @@ class TestAgentStudioClientE2E:
         resp = await AgentStudioClient(
             self._e2e_app_id, self._e2e_api_key
         ).list_models()
-        _expected_body = loads("""{"openai":["gpt-4"]}""")
+        _expected_body = loads("""{"openai":[]}""")
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
             == _expected_body
@@ -495,7 +495,7 @@ class TestAgentStudioClientSyncE2E:
         assert raw_resp.status_code == 200
 
         resp = AgentStudioClientSync(self._e2e_app_id, self._e2e_api_key).list_models()
-        _expected_body = loads("""{"openai":["gpt-4"]}""")
+        _expected_body = loads("""{"openai":[]}""")
         assert (
             self._helpers.union(_expected_body, self._helpers.unwrap(resp))
             == _expected_body

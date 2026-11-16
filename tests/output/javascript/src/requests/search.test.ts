@@ -4503,33 +4503,12 @@ describe('searchUserIds', () => {
 describe('setDictionarySettings', () => {
   test('get setDictionarySettings results with minimal parameters', async () => {
     const req = (await client.setDictionarySettings({
-      disableStandardEntries: { plurals: { fr: false, en: false, ru: true } },
+      disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } },
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/dictionaries/*/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ disableStandardEntries: { plurals: { fr: false, en: false, ru: true } } });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('get setDictionarySettings results with all parameters', async () => {
-    const req = (await client.setDictionarySettings({
-      disableStandardEntries: {
-        plurals: { fr: false, en: false, ru: true },
-        stopwords: { fr: false },
-        compounds: { ru: true },
-      },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/dictionaries/*/settings');
-    expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({
-      disableStandardEntries: {
-        plurals: { fr: false, en: false, ru: true },
-        stopwords: { fr: false },
-        compounds: { ru: true },
-      },
-    });
+    expect(req.data).toEqual({ disableStandardEntries: { stopwords: { fr: false, en: false, ru: true } } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

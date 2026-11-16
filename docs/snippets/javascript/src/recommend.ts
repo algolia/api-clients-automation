@@ -8,12 +8,71 @@ import { algoliasearch } from 'algoliasearch';
 //
 // batch recommend rules
 export async function snippetForBatchRecommendRules(): Promise<void> {
-  // >SEPARATOR batchRecommendRules default
+  // >SEPARATOR batchRecommendRules batch recommend rules
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
 
   // Call the API
   const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules for trending items with request scopes
+export async function snippetForBatchRecommendRules1(): Promise<void> {
+  // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.batchRecommendRules({
+    indexName: 'indexName',
+    model: 'trending-items',
+    recommendRule: [
+      {
+        objectID: 'global-rule',
+        condition: { requestScope: { global: true } },
+        consequence: { promote: [{ objectID: 'item-1', position: 0 }] },
+      },
+      {
+        objectID: 'facet-rule',
+        condition: { context: 'mobile', requestScope: { facetName: 'brand', facetValue: 'acme' } },
+        consequence: { hide: [{ objectID: 'item-2' }], params: { filters: 'inStock:true' } },
+      },
+    ],
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the batchRecommendRules method.
+//
+// batch recommend rules for looking similar
+export async function snippetForBatchRecommendRules2(): Promise<void> {
+  // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.batchRecommendRules({
+    indexName: 'indexName',
+    model: 'looking-similar',
+    recommendRule: [
+      {
+        objectID: 'looking-similar-rule',
+        condition: { filters: 'brand:acme' },
+        consequence: { params: { automaticFacetFilters: [{ facet: 'category', negative: false }] } },
+      },
+    ],
+  });
 
   // >LOG
   // print the response
@@ -411,7 +470,7 @@ export async function snippetForDeleteRecommendRule(): Promise<void> {
 //
 // getRecommendRule
 export async function snippetForGetRecommendRule(): Promise<void> {
-  // >SEPARATOR getRecommendRule default
+  // >SEPARATOR getRecommendRule getRecommendRule
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
 
@@ -419,6 +478,48 @@ export async function snippetForGetRecommendRule(): Promise<void> {
   const response = await client.getRecommendRule({
     indexName: 'indexName',
     model: 'related-products',
+    objectID: 'objectID',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendRule method.
+//
+// get recommend rule for trending items
+export async function snippetForGetRecommendRule1(): Promise<void> {
+  // >SEPARATOR getRecommendRule get recommend rule for trending items
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.getRecommendRule({
+    indexName: 'indexName',
+    model: 'trending-items',
+    objectID: 'objectID',
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRecommendRule method.
+//
+// get recommend rule for looking similar
+export async function snippetForGetRecommendRule2(): Promise<void> {
+  // >SEPARATOR getRecommendRule get recommend rule for looking similar
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.getRecommendRule({
+    indexName: 'indexName',
+    model: 'looking-similar',
     objectID: 'objectID',
   });
 
@@ -658,12 +759,46 @@ export async function snippetForGetRecommendations7(): Promise<void> {
 //
 // searchRecommendRules
 export async function snippetForSearchRecommendRules(): Promise<void> {
-  // >SEPARATOR searchRecommendRules default
+  // >SEPARATOR searchRecommendRules searchRecommendRules
   // Initialize the client
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
 
   // Call the API
   const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchRecommendRules method.
+//
+// search recommend rules for trending items
+export async function snippetForSearchRecommendRules1(): Promise<void> {
+  // >SEPARATOR searchRecommendRules search recommend rules for trending items
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'trending-items' });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the searchRecommendRules method.
+//
+// search recommend rules for looking similar
+export async function snippetForSearchRecommendRules2(): Promise<void> {
+  // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+  // Initialize the client
+  const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initRecommend();
+
+  // Call the API
+  const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'looking-similar' });
 
   // >LOG
   // print the response

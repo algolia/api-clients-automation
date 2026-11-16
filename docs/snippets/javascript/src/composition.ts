@@ -1799,6 +1799,33 @@ export async function snippetForSearch4(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the search method.
+//
+// search
+export async function snippetForSearch5(): Promise<void> {
+  // >SEPARATOR search search
+  // Initialize the client
+  const client = compositionClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.search({
+    compositionID: 'foo',
+    requestBody: {
+      params: { query: 'shoes', filters: 'brand:acme' },
+      feeds: {
+        organic: { params: { filters: 'brand:acme AND inStock:true', sortBy: 'Price (asc)' } },
+        banner: { params: { query: 'shoes sale', filters: '' } },
+      },
+      feedsOrder: ['banner', 'organic'],
+    },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the searchCompositionRules method.
 //
 // searchCompositionRules

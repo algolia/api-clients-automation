@@ -36,6 +36,7 @@ Map<String, dynamic> _$BaseExternalSourceToJson(BaseExternalSource instance) {
 }
 
 const _$ExternalOrderingEnumMap = {
+  ExternalOrdering.algoliaDefined: 'algoliaDefined',
   ExternalOrdering.default_: 'default',
   ExternalOrdering.userDefined: 'userDefined',
 };

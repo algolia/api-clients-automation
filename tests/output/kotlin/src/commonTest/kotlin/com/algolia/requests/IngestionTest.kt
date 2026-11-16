@@ -38,7 +38,7 @@ class IngestionTest {
                   clientId = "myID",
                   clientSecret = "mySecret",
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -66,7 +66,7 @@ class IngestionTest {
                   appID = "ALGOLIA_APPLICATION_ID",
                   apiKey = "ALGOLIA_API_KEY",
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -91,9 +91,12 @@ class IngestionTest {
             DestinationCreate(
               type = DestinationType.entries.first { it.value == "search" },
               name = "destinationName",
-              input = DestinationInput(indexName = "full_name______"),
+              input =
+                DestinationInput(
+                  indexName = "full_name______",
+                ),
               authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
+            ),
         )
       },
       intercept = {
@@ -116,9 +119,12 @@ class IngestionTest {
             DestinationCreate(
               type = DestinationType.entries.first { it.value == "search" },
               name = "destinationName",
-              input = DestinationInput(indexName = "full_name______"),
+              input =
+                DestinationInput(
+                  indexName = "full_name______",
+                ),
               transformationIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f"),
-            )
+            ),
         )
       },
       intercept = {
@@ -153,7 +159,7 @@ class IngestionTest {
                     "masterVariant(attributes(name=\"Brand\" and value=\"Algolia\"))",
                 ),
               authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
+            ),
         )
       },
       intercept = {
@@ -176,7 +182,7 @@ class IngestionTest {
             SourceCreate(
               type = SourceType.entries.first { it.value == "push" },
               name = "pushezpourentrer",
-            )
+            ),
         )
       },
       intercept = {
@@ -199,7 +205,7 @@ class IngestionTest {
               sourceID = "search",
               destinationID = "destinationID",
               action = ActionType.entries.first { it.value == "replace" },
-            )
+            ),
         )
       },
       intercept = {
@@ -224,9 +230,18 @@ class IngestionTest {
               destinationID = "destinationID",
               cron = "* * * * *",
               action = ActionType.entries.first { it.value == "replace" },
-              notifications = Notifications(email = EmailNotifications(enabled = true)),
-              policies = Policies(criticalThreshold = 8),
-            )
+              notifications =
+                Notifications(
+                  email =
+                    EmailNotifications(
+                      enabled = true,
+                    ),
+                ),
+              policies =
+                Policies(
+                  criticalThreshold = 8,
+                ),
+            ),
         )
       },
       intercept = {
@@ -259,10 +274,10 @@ class IngestionTest {
                         name = "foo",
                         syncMode =
                           DockerStreamsSyncMode.entries.first { it.value == "incremental" },
-                      )
-                    )
+                      ),
+                    ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -289,10 +304,10 @@ class IngestionTest {
               destinationID = "destinationName",
               trigger =
                 OnDemandTriggerInput(
-                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" }
+                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
                 ),
               action = ActionType.entries.first { it.value == "replace" },
-            )
+            ),
         )
       },
       intercept = {
@@ -321,7 +336,7 @@ class IngestionTest {
                   cron = "* * * * *",
                 ),
               action = ActionType.entries.first { it.value == "replace" },
-            )
+            ),
         )
       },
       intercept = {
@@ -346,10 +361,10 @@ class IngestionTest {
               destinationID = "destinationName",
               trigger =
                 OnDemandTriggerInput(
-                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" }
+                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
                 ),
               action = ActionType.entries.first { it.value == "replace" },
-            )
+            ),
         )
       },
       intercept = {
@@ -374,7 +389,7 @@ class IngestionTest {
               destinationID = "destinationName",
               trigger =
                 OnDemandTriggerInput(
-                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" }
+                  type = OnDemandTriggerType.entries.first { it.value == "onDemand" },
                 ),
               action = ActionType.entries.first { it.value == "replace" },
               input =
@@ -385,10 +400,10 @@ class IngestionTest {
                         name = "foo",
                         syncMode =
                           DockerStreamsSyncMode.entries.first { it.value == "incremental" },
-                      )
-                    )
+                      ),
+                    ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -411,11 +426,14 @@ class IngestionTest {
         createTransformation(
           transformationCreate =
             TransformationCreate(
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               type = TransformationType.entries.first { it.value == "code" },
               name = "bar",
               description = "baz",
-            )
+            ),
         )
       },
       intercept = {
@@ -435,7 +453,9 @@ class IngestionTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -469,7 +489,9 @@ class IngestionTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -537,7 +559,9 @@ class IngestionTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -591,7 +615,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -623,7 +647,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -658,7 +682,7 @@ class IngestionTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -691,7 +715,7 @@ class IngestionTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -724,7 +748,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -759,7 +783,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -791,7 +815,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -826,7 +850,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -861,7 +885,7 @@ class IngestionTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -880,7 +904,9 @@ class IngestionTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -921,7 +947,9 @@ class IngestionTest {
   fun `deleteAuthentication`() = runTest {
     client.runTest(
       call = {
-        deleteAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteAuthentication(
+          authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -940,7 +968,9 @@ class IngestionTest {
   fun `deleteDestination`() = runTest {
     client.runTest(
       call = {
-        deleteDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteDestination(
+          destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -959,7 +989,9 @@ class IngestionTest {
   fun `deleteSource`() = runTest {
     client.runTest(
       call = {
-        deleteSource(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteSource(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -978,7 +1010,9 @@ class IngestionTest {
   fun `deleteTask`() = runTest {
     client.runTest(
       call = {
-        deleteTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -997,7 +1031,9 @@ class IngestionTest {
   fun `deleteTaskV1`() = runTest {
     client.runTest(
       call = {
-        deleteTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1016,7 +1052,9 @@ class IngestionTest {
   fun `deleteTransformation`() = runTest {
     client.runTest(
       call = {
-        deleteTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        deleteTransformation(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1035,7 +1073,9 @@ class IngestionTest {
   fun `disableTask`() = runTest {
     client.runTest(
       call = {
-        disableTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        disableTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1054,7 +1094,9 @@ class IngestionTest {
   fun `disableTaskV1`() = runTest {
     client.runTest(
       call = {
-        disableTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        disableTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1073,7 +1115,9 @@ class IngestionTest {
   fun `enableTask`() = runTest {
     client.runTest(
       call = {
-        enableTask(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        enableTask(
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
       },
       intercept = {
         assertEquals(
@@ -1092,7 +1136,9 @@ class IngestionTest {
   fun `enableTaskV1`() = runTest {
     client.runTest(
       call = {
-        enableTaskV1(taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        enableTaskV1(
+          taskID = "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        )
       },
       intercept = {
         assertEquals(
@@ -1111,7 +1157,9 @@ class IngestionTest {
   fun `getAuthentication`() = runTest {
     client.runTest(
       call = {
-        getAuthentication(authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getAuthentication(
+          authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1130,7 +1178,9 @@ class IngestionTest {
   fun `getDestination`() = runTest {
     client.runTest(
       call = {
-        getDestination(destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getDestination(
+          destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1172,7 +1222,9 @@ class IngestionTest {
   fun `getRun`() = runTest {
     client.runTest(
       call = {
-        getRun(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getRun(
+          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1191,7 +1243,9 @@ class IngestionTest {
   fun `getSource`() = runTest {
     client.runTest(
       call = {
-        getSource(sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
+        getSource(
+          sourceID = "75eeb306-51d3-4e5e-a279-3c92bd8893ac",
+        )
       },
       intercept = {
         assertEquals(
@@ -1210,7 +1264,9 @@ class IngestionTest {
   fun `getTask`() = runTest {
     client.runTest(
       call = {
-        getTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1229,7 +1285,9 @@ class IngestionTest {
   fun `getTaskV1`() = runTest {
     client.runTest(
       call = {
-        getTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1248,7 +1306,9 @@ class IngestionTest {
   fun `getTransformation`() = runTest {
     client.runTest(
       call = {
-        getTransformation(transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        getTransformation(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1328,7 +1388,9 @@ class IngestionTest {
   fun `getEvents`() = runTest {
     client.runTest(
       call = {
-        listEvents(runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        listEvents(
+          runID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1668,8 +1730,17 @@ class IngestionTest {
               destinationID = "destinationID",
               cron = "* * * * *",
               action = ActionType.entries.first { it.value == "replace" },
-              notifications = Notifications(email = EmailNotifications(enabled = true)),
-              policies = Policies(criticalThreshold = 8),
+              notifications =
+                Notifications(
+                  email =
+                    EmailNotifications(
+                      enabled = true,
+                    ),
+                ),
+              policies =
+                Policies(
+                  criticalThreshold = 8,
+                ),
             ),
         )
       },
@@ -1706,8 +1777,8 @@ class IngestionTest {
                         name = "foo",
                         syncMode =
                           DockerStreamsSyncMode.entries.first { it.value == "incremental" },
-                      )
-                    )
+                      ),
+                    ),
                 ),
             ),
         )
@@ -1762,7 +1833,9 @@ class IngestionTest {
   fun `runTask`() = runTest {
     client.runTest(
       call = {
-        runTask(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        runTask(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1781,7 +1854,9 @@ class IngestionTest {
   fun `runTaskV1`() = runTest {
     client.runTest(
       call = {
-        runTaskV1(taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        runTaskV1(
+          taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1807,8 +1882,8 @@ class IngestionTest {
                 listOf(
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1835,8 +1910,8 @@ class IngestionTest {
                 listOf(
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1863,8 +1938,8 @@ class IngestionTest {
                 listOf(
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1892,8 +1967,8 @@ class IngestionTest {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1921,8 +1996,8 @@ class IngestionTest {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1950,8 +2025,8 @@ class IngestionTest {
                   "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                   "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
                   "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -1971,7 +2046,9 @@ class IngestionTest {
   fun `triggerDockerSourceDiscover`() = runTest {
     client.runTest(
       call = {
-        triggerDockerSourceDiscover(sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        triggerDockerSourceDiscover(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
       },
       intercept = {
         assertEquals(
@@ -1994,7 +2071,10 @@ class IngestionTest {
           transformationTry =
             TransformationTry(
               type = TransformationType.entries.first { it.value == "code" },
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               sampleRecord =
                 buildJsonObject {
                   put(
@@ -2002,7 +2082,7 @@ class IngestionTest {
                     JsonPrimitive("baz"),
                   )
                 },
-            )
+            ),
         )
       },
       intercept = {
@@ -2024,7 +2104,10 @@ class IngestionTest {
           transformationTry =
             TransformationTry(
               type = TransformationType.entries.first { it.value == "code" },
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               sampleRecord =
                 buildJsonObject {
                   put(
@@ -2043,9 +2126,9 @@ class IngestionTest {
                         clientId = "myID",
                         clientSecret = "mySecret",
                       ),
-                  )
+                  ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -2070,7 +2153,10 @@ class IngestionTest {
           transformationTry =
             TransformationTry(
               type = TransformationType.entries.first { it.value == "code" },
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               sampleRecord =
                 buildJsonObject {
                   put(
@@ -2104,7 +2190,10 @@ class IngestionTest {
           transformationTry =
             TransformationTry(
               type = TransformationType.entries.first { it.value == "code" },
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               sampleRecord =
                 buildJsonObject {
                   put(
@@ -2123,7 +2212,7 @@ class IngestionTest {
                         clientId = "myID",
                         clientSecret = "mySecret",
                       ),
-                  )
+                  ),
                 ),
             ),
         )
@@ -2150,7 +2239,10 @@ class IngestionTest {
       call = {
         updateAuthentication(
           authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          authenticationUpdate = AuthenticationUpdate(name = "newName"),
+          authenticationUpdate =
+            AuthenticationUpdate(
+              name = "newName",
+            ),
         )
       },
       intercept = {
@@ -2172,7 +2264,10 @@ class IngestionTest {
       call = {
         updateDestination(
           destinationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          destinationUpdate = DestinationUpdate(name = "newName"),
+          destinationUpdate =
+            DestinationUpdate(
+              name = "newName",
+            ),
         )
       },
       intercept = {
@@ -2194,7 +2289,10 @@ class IngestionTest {
       call = {
         updateSource(
           sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          sourceUpdate = SourceUpdate(name = "newName"),
+          sourceUpdate =
+            SourceUpdate(
+              name = "newName",
+            ),
         )
       },
       intercept = {
@@ -2242,7 +2340,10 @@ class IngestionTest {
       call = {
         updateTaskV1(
           taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          taskUpdate = TaskUpdateV1(enabled = false),
+          taskUpdate =
+            TaskUpdateV1(
+              enabled = false,
+            ),
         )
       },
       intercept = {
@@ -2266,7 +2367,10 @@ class IngestionTest {
           transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
           transformationCreate =
             TransformationCreate(
-              input = TransformationCode(code = "foo"),
+              input =
+                TransformationCode(
+                  code = "foo",
+                ),
               type = TransformationType.entries.first { it.value == "code" },
               name = "bar",
               description = "baz",
@@ -2306,7 +2410,7 @@ class IngestionTest {
                   projectKey = "keyID",
                 ),
               authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
+            ),
         )
       },
       intercept = {
@@ -2328,7 +2432,10 @@ class IngestionTest {
       call = {
         validateSourceBeforeUpdate(
           sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-          sourceUpdate = SourceUpdate(name = "newName"),
+          sourceUpdate =
+            SourceUpdate(
+              name = "newName",
+            ),
         )
       },
       intercept = {

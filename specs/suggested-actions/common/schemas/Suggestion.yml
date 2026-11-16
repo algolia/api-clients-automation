@@ -1,0 +1,48 @@
+type: object
+description: A recommended action for an application or an index.
+additionalProperties: false
+properties:
+  id:
+    type: string
+    description: Unique identifier of the suggestion.
+  type:
+    $ref: './SuggestionType.yml'
+  description:
+    type: string
+    description: Description of the suggestion.
+  title:
+    type: string
+    description: Title of the suggestion.
+  target:
+    $ref: './Target.yml'
+  directAdoption:
+    $ref: './SuggestionOption.yml'
+  abTest:
+    $ref: './SuggestionOption.yml'
+  provenance:
+    $ref: './Provenance.yml'
+  state:
+    $ref: './SuggestionState.yml'
+  createdAt:
+    $ref: './Timestamp.yml'
+  expiresAt:
+    $ref: './Timestamp.yml'
+  adoptionDetectedAt:
+    $ref: './Timestamp.yml'
+  dismissedAt:
+    description: Set when the `userId` passed to the list request dismissed this suggestion within the dismissal cooldown.
+    $ref: './Timestamp.yml'
+  withdrawnAt:
+    $ref: './Timestamp.yml'
+  payload:
+    type: object
+    additionalProperties: true
+    description: The change the suggestion makes, in the payload format of its type.
+  completion:
+    $ref: './Completion.yml'
+  metadata:
+    type: object
+    additionalProperties: true
+    description: Context the creator stored with the suggestion. The service doesn't interpret it.
+  creation:
+    $ref: './Creation.yml'

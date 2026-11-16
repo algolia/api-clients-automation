@@ -44,6 +44,8 @@ import 'package:algolia_client_composition/src/model/facet_hits.dart';
 import 'package:algolia_client_composition/src/model/facet_ordering.dart';
 import 'package:algolia_client_composition/src/model/facet_stats.dart';
 import 'package:algolia_client_composition/src/model/feed_injection.dart';
+import 'package:algolia_client_composition/src/model/feed_params.dart';
+import 'package:algolia_client_composition/src/model/feed_request.dart';
 import 'package:algolia_client_composition/src/model/get_task_response.dart';
 import 'package:algolia_client_composition/src/model/highlight_result_option.dart';
 import 'package:algolia_client_composition/src/model/hit.dart';
@@ -254,6 +256,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FeedInjection':
       return FeedInjection.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'FeedParams':
+      return FeedParams.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'FeedRequest':
+      return FeedRequest.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'GetTaskResponse':
       return GetTaskResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;

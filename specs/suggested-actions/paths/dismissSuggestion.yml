@@ -1,0 +1,35 @@
+post:
+  tags:
+    - suggestions
+  operationId: dismissSuggestion
+  x-mcp-tool: true
+  # TODO: provisional ACL, confirm with the sact team which ACL the endpoint requires.
+  x-acl:
+    - search
+  summary: Dismiss a suggestion
+  description: |
+    Dismisses a suggestion for a user.
+    Until the dismissal cooldown ends, the suggestion includes `dismissedAt` in the list for that user.
+  parameters:
+    - $ref: '../common/parameters.yml#/SuggestionID'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../common/schemas/UserParams.yml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/EmptyResponse.yml'
+    '400':
+      $ref: '../common/responses/BadRequest.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '403':
+      $ref: '../common/responses/Forbidden.yml'
+    '404':
+      $ref: '../common/responses/NotFound.yml'

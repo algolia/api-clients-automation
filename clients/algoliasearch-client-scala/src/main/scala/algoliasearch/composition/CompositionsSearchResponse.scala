@@ -29,7 +29,7 @@ package algoliasearch.composition
 
 import org.json4s._
 
-/** CompositionsSearchResponse
+/** Information about the compositions processed by the run request. Only present when `getRankingInfo` is `true`.
   */
 case class CompositionsSearchResponse(
     run: Seq[CompositionRunSearchResponse],

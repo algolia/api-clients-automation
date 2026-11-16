@@ -32,7 +32,12 @@ class AbtestingV3Test {
             AddABTestsRequest(
               endAt = "2022-12-31T00:00:00.000Z",
               name = "myABTest",
-              metrics = listOf(CreateMetric(name = "myMetric")),
+              metrics =
+                listOf(
+                  CreateMetric(
+                    name = "myMetric",
+                  ),
+                ),
               variants =
                 listOf(
                   AbTestsVariant(
@@ -44,7 +49,7 @@ class AbtestingV3Test {
                     trafficPercentage = 50,
                   ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -59,7 +64,7 @@ class AbtestingV3Test {
   }
 
   @Test
-  fun `addABTests with Bayesian configuration1`() = runTest {
+  fun `addABTests with Bayesian no-results user rate1`() = runTest {
     client.runTest(
       call = {
         addABTests(
@@ -67,7 +72,12 @@ class AbtestingV3Test {
             AddABTestsRequest(
               endAt = "2022-12-31T00:00:00.000Z",
               name = "myABTest",
-              metrics = listOf(CreateMetric(name = "conversionRate")),
+              metrics =
+                listOf(
+                  CreateMetric(
+                    name = "usersWithNoResultsRate",
+                  ),
+                ),
               variants =
                 listOf(
                   AbTestsVariant(
@@ -82,16 +92,17 @@ class AbtestingV3Test {
               configuration =
                 ABTestConfiguration(
                   method = AnalysisMethod.entries.first { it.value == "bayesian" },
-                  primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
+                  primaryMetric =
+                    PrimaryMetric.entries.first { it.value == "users_with_no_results_rate" },
                 ),
-            )
+            ),
         )
       },
       intercept = {
         assertEquals("/3/abtests".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody(
-          """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}""",
+          """{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}""",
           it.body,
         )
       },
@@ -123,7 +134,9 @@ class AbtestingV3Test {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -157,7 +170,9 @@ class AbtestingV3Test {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -225,7 +240,9 @@ class AbtestingV3Test {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -279,7 +296,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -311,7 +328,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -346,7 +363,7 @@ class AbtestingV3Test {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -379,7 +396,7 @@ class AbtestingV3Test {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -412,7 +429,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -447,7 +464,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -479,7 +496,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -514,7 +531,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -549,7 +566,7 @@ class AbtestingV3Test {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -568,7 +585,9 @@ class AbtestingV3Test {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -609,7 +628,9 @@ class AbtestingV3Test {
   fun `deleteABTest`() = runTest {
     client.runTest(
       call = {
-        deleteABTest(id = 42)
+        deleteABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -634,7 +655,7 @@ class AbtestingV3Test {
                     MinimumDetectableEffect(
                       size = 0.03,
                       metric = EffectMetric.entries.first { it.value == "conversionRate" },
-                    )
+                    ),
                 ),
               variants =
                 listOf(
@@ -647,7 +668,7 @@ class AbtestingV3Test {
                     trafficPercentage = 50,
                   ),
                 ),
-            )
+            ),
         )
       },
       intercept = {
@@ -661,13 +682,55 @@ class AbtestingV3Test {
     )
   }
 
+  @Test
+  fun `estimate AB Test sample size for a user-level rate1`() = runTest {
+    client.runTest(
+      call = {
+        estimateABTest(
+          estimateABTestRequest =
+            EstimateABTestRequest(
+              configuration =
+                EstimateConfiguration(
+                  minimumDetectableEffect =
+                    MinimumDetectableEffect(
+                      size = 0.03,
+                      metric = EffectMetric.entries.first { it.value == "convertedUsersRate" },
+                    ),
+                ),
+              variants =
+                listOf(
+                  AbTestsVariant(
+                    index = "AB_TEST_1",
+                    trafficPercentage = 50,
+                  ),
+                  AbTestsVariant(
+                    index = "AB_TEST_2",
+                    trafficPercentage = 50,
+                  ),
+                ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/estimate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """{"configuration":{"minimumDetectableEffect":{"size":0.03,"metric":"convertedUsersRate"}},"variants":[{"index":"AB_TEST_1","trafficPercentage":50},{"index":"AB_TEST_2","trafficPercentage":50}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // getABTest
 
   @Test
   fun `getABTest`() = runTest {
     client.runTest(
       call = {
-        getABTest(id = 42)
+        getABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42".toPathSegments(), it.url.pathSegments)
@@ -705,7 +768,9 @@ class AbtestingV3Test {
   fun `getABTestSettings`() = runTest {
     client.runTest(
       call = {
-        getABTestSettings(id = 42)
+        getABTestSettings(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/settings".toPathSegments(), it.url.pathSegments)
@@ -721,7 +786,9 @@ class AbtestingV3Test {
   fun `getTimeseries`() = runTest {
     client.runTest(
       call = {
-        getTimeseries(id = 42)
+        getTimeseries(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
@@ -748,6 +815,35 @@ class AbtestingV3Test {
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
           """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"revenue_per_search","methods":"bayesian"}""",
+          it.url.encodedParameters,
+        )
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `getTimeseries with user-based metrics2`() = runTest {
+    client.runTest(
+      call = {
+        getTimeseries(
+          id = 42,
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          metric =
+            listOf(
+              MetricName.entries.first { it.value == "clicked_users_rate" },
+              MetricName.entries.first { it.value == "converted_users_rate" },
+              MetricName.entries.first { it.value == "users_with_no_results_rate" },
+            ),
+          methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
+        )
+      },
+      intercept = {
+        assertEquals("/3/abtests/42/timeseries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams(
+          """{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate","methods":"bayesian"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
@@ -809,7 +905,10 @@ class AbtestingV3Test {
         saveVariantSettings(
           id = 42,
           variantId = 2,
-          saveSettingsRequest = SaveSettingsRequest(saveFeaturesSettings = true),
+          saveSettingsRequest =
+            SaveSettingsRequest(
+              saveFeaturesSettings = true,
+            ),
         )
       },
       intercept = {
@@ -844,7 +943,9 @@ class AbtestingV3Test {
   fun `stopABTest`() = runTest {
     client.runTest(
       call = {
-        stopABTest(id = 42)
+        stopABTest(
+          id = 42,
+        )
       },
       intercept = {
         assertEquals("/3/abtests/42/stop".toPathSegments(), it.url.pathSegments)

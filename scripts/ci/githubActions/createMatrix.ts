@@ -11,6 +11,11 @@ import { COMMON_DEPENDENCIES, DEPENDENCIES, getVersionFileForLanguage, isBaseCha
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
 
+// The macOS runner only ships Xcode 16+: its SDK cannot be imported by swift < 6.0, and swift 6.0 cannot run the tests
+// against its XCTest, so we match the swift version bundled with Xcode 16.4.
+// This is only the CI toolchain, the minimum supported version stays in config/.swift-version and is checked on linux.
+const SWIFT_MACOS_CI_VERSION = '6.1';
+
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
   // PRs have origin/* as a baseBranch, main is always running from a specific commit
@@ -128,7 +133,10 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         // Swift requires the benchmark folder to have files in it
         languageMatrix.testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
+        // the linux job reads SWIFT_DATA and builds with the minimum supported version
         setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
+        // the matrix entry (macOS job) is the only one using the macOS toolchain
+        languageMatrix.version = SWIFT_MACOS_CI_VERSION;
         break;
       default:
         break;

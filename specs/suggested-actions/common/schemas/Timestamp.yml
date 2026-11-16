@@ -1,0 +1,4 @@
+type: string
+format: date-time
+description: Date and time in RFC 3339 format.
+example: '2026-11-09T10:17:47Z'

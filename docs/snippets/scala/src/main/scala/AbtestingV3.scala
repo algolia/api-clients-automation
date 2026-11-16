@@ -63,10 +63,10 @@ class SnippetAbtestingV3Client {
 
   /** Snippet for the addABTests method.
     *
-    * addABTests with Bayesian configuration
+    * addABTests with Bayesian no-results user rate
     */
   def snippetForAbtestingV3ClientAddABTests1(): Unit = {
-    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -82,7 +82,7 @@ class SnippetAbtestingV3Client {
           name = "myABTest",
           metrics = Seq(
             CreateMetric(
-              name = "conversionRate"
+              name = "usersWithNoResultsRate"
             )
           ),
           variants = Seq(
@@ -98,7 +98,7 @@ class SnippetAbtestingV3Client {
           configuration = Some(
             ABTestConfiguration(
               method = Some(AnalysisMethod.withName("bayesian")),
-              primaryMetric = Some(PrimaryMetric.withName("conversion_rate"))
+              primaryMetric = Some(PrimaryMetric.withName("users_with_no_results_rate"))
             )
           )
         )
@@ -722,7 +722,7 @@ class SnippetAbtestingV3Client {
     * estimate AB Test sample size
     */
   def snippetForAbtestingV3ClientEstimateABTest(): Unit = {
-    // >SEPARATOR estimateABTest default
+    // >SEPARATOR estimateABTest estimate AB Test sample size
     // Initialize the client
     val client = AbtestingV3Client(
       appId = "ALGOLIA_APPLICATION_ID",
@@ -738,6 +738,49 @@ class SnippetAbtestingV3Client {
             minimumDetectableEffect = MinimumDetectableEffect(
               size = 0.03,
               metric = EffectMetric.withName("conversionRate")
+            )
+          ),
+          variants = Seq(
+            AbTestsVariant(
+              index = "AB_TEST_1",
+              trafficPercentage = 50
+            ),
+            AbTestsVariant(
+              index = "AB_TEST_2",
+              trafficPercentage = 50
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the estimateABTest method.
+    *
+    * estimate AB Test sample size for a user-level rate
+    */
+  def snippetForAbtestingV3ClientEstimateABTest1(): Unit = {
+    // >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.estimateABTest(
+        estimateABTestRequest = EstimateABTestRequest(
+          configuration = EstimateConfiguration(
+            minimumDetectableEffect = MinimumDetectableEffect(
+              size = 0.03,
+              metric = EffectMetric.withName("convertedUsersRate")
             )
           ),
           variants = Seq(
@@ -885,6 +928,42 @@ class SnippetAbtestingV3Client {
         startDate = Some("1999-09-19"),
         endDate = Some("2001-01-01"),
         metric = Some(Seq(MetricName.withName("revenue_per_search"))),
+        methods = Some(Seq(AnalysisMethod.withName("bayesian")))
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTimeseries method.
+    *
+    * getTimeseries with user-based metrics
+    */
+  def snippetForAbtestingV3ClientGetTimeseries2(): Unit = {
+    // >SEPARATOR getTimeseries getTimeseries with user-based metrics
+    // Initialize the client
+    val client = AbtestingV3Client(
+      appId = "ALGOLIA_APPLICATION_ID",
+      apiKey = "ALGOLIA_API_KEY",
+      region = Option("ALGOLIA_APPLICATION_REGION")
+    )
+
+    // Call the API
+    val response = Await.result(
+      client.getTimeseries(
+        id = 42,
+        startDate = Some("1999-09-19"),
+        endDate = Some("2001-01-01"),
+        metric = Some(
+          Seq(
+            MetricName.withName("clicked_users_rate"),
+            MetricName.withName("converted_users_rate"),
+            MetricName.withName("users_with_no_results_rate")
+          )
+        ),
         methods = Some(Seq(AnalysisMethod.withName("bayesian")))
       ),
       Duration(100, "sec")

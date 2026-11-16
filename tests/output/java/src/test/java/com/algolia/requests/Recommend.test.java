@@ -55,6 +55,78 @@ class RecommendClientRequestsTests {
   }
 
   @Test
+  @DisplayName("batch recommend rules for trending items with request scopes")
+  void batchRecommendRulesTest1() {
+    assertDoesNotThrow(() -> {
+      client.batchRecommendRules(
+        "indexName",
+        RecommendModels.TRENDING_ITEMS,
+        Arrays.asList(
+          new RecommendRule()
+            .setObjectID("global-rule")
+            .setCondition(new Condition().setRequestScope(new GlobalRequestScope().setGlobal(true)))
+            .setConsequence(
+              new Consequence().setPromote(Arrays.asList(new PromoteConsequenceObject().setObjectID("item-1").setPosition(0)))
+            ),
+          new RecommendRule()
+            .setObjectID("facet-rule")
+            .setCondition(
+              new Condition().setContext("mobile").setRequestScope(new FacetRequestScope().setFacetName("brand").setFacetValue("acme"))
+            )
+            .setConsequence(
+              new Consequence()
+                .setHide(Arrays.asList(new HideConsequenceObject().setObjectID("item-2")))
+                .setParams(new ParamsConsequence().setFilters("inStock:true"))
+            )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/trending-items/recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "[{\"objectID\":\"global-rule\",\"condition\":{\"requestScope\":{\"global\":true}},\"consequence\":{\"promote\":[{\"objectID\":\"item-1\",\"position\":0}]}},{\"objectID\":\"facet-rule\",\"condition\":{\"context\":\"mobile\",\"requestScope\":{\"facetName\":\"brand\",\"facetValue\":\"acme\"}},\"consequence\":{\"hide\":[{\"objectID\":\"item-2\"}],\"params\":{\"filters\":\"inStock:true\"}}}]",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("batch recommend rules for looking similar")
+  void batchRecommendRulesTest2() {
+    assertDoesNotThrow(() -> {
+      client.batchRecommendRules(
+        "indexName",
+        RecommendModels.LOOKING_SIMILAR,
+        Arrays.asList(
+          new RecommendRule()
+            .setObjectID("looking-similar-rule")
+            .setCondition(new Condition().setFilters("brand:acme"))
+            .setConsequence(
+              new Consequence().setParams(
+                new ParamsConsequence().setAutomaticFacetFilters(
+                  Arrays.asList(new AutoFacetFilter().setFacet("category").setNegative(false))
+                )
+              )
+            )
+        )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/looking-similar/recommend/rules/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "[{\"objectID\":\"looking-similar-rule\",\"condition\":{\"filters\":\"brand:acme\"},\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"category\",\"negative\":false}]}}}]",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {
@@ -698,6 +770,30 @@ class RecommendClientRequestsTests {
   }
 
   @Test
+  @DisplayName("get recommend rule for trending items")
+  void getRecommendRuleTest1() {
+    assertDoesNotThrow(() -> {
+      client.getRecommendRule("indexName", RecommendModels.TRENDING_ITEMS, "objectID");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/trending-items/recommend/rules/objectID", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("get recommend rule for looking similar")
+  void getRecommendRuleTest2() {
+    assertDoesNotThrow(() -> {
+      client.getRecommendRule("indexName", RecommendModels.LOOKING_SIMILAR, "objectID");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/looking-similar/recommend/rules/objectID", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("getRecommendStatus")
   void getRecommendStatusTest() {
     assertDoesNotThrow(() -> {
@@ -996,6 +1092,30 @@ class RecommendClientRequestsTests {
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/related-products/recommend/rules/search", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("search recommend rules for trending items")
+  void searchRecommendRulesTest1() {
+    assertDoesNotThrow(() -> {
+      client.searchRecommendRules("indexName", RecommendModels.TRENDING_ITEMS);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/trending-items/recommend/rules/search", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("search recommend rules for looking similar")
+  void searchRecommendRulesTest2() {
+    assertDoesNotThrow(() -> {
+      client.searchRecommendRules("indexName", RecommendModels.LOOKING_SIMILAR);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/indexName/looking-similar/recommend/rules/search", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }

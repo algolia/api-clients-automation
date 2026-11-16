@@ -1,0 +1,25 @@
+get:
+  tags:
+    - suggestions
+  operationId: getSuggestion
+  x-mcp-tool: true
+  # TODO: provisional ACL, confirm with the sact team which ACL the endpoint requires.
+  x-acl:
+    - search
+  summary: Retrieve a suggestion
+  description: Retrieves a suggestion by its ID.
+  parameters:
+    - $ref: '../common/parameters.yml#/SuggestionID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../common/schemas/Suggestion.yml'
+    '401':
+      $ref: '../common/responses/Unauthorized.yml'
+    '403':
+      $ref: '../common/responses/Forbidden.yml'
+    '404':
+      $ref: '../common/responses/NotFound.yml'

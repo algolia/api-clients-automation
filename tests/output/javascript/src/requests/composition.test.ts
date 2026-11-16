@@ -2060,6 +2060,32 @@ describe('search', () => {
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('search', async () => {
+    const req = (await client.search({
+      compositionID: 'foo',
+      requestBody: {
+        params: { query: 'shoes', filters: 'brand:acme' },
+        feeds: {
+          organic: { params: { filters: 'brand:acme AND inStock:true', sortBy: 'Price (asc)' } },
+          banner: { params: { query: 'shoes sale', filters: '' } },
+        },
+        feedsOrder: ['banner', 'organic'],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/compositions/foo/run');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      params: { query: 'shoes', filters: 'brand:acme' },
+      feeds: {
+        organic: { params: { filters: 'brand:acme AND inStock:true', sortBy: 'Price (asc)' } },
+        banner: { params: { query: 'shoes sale', filters: '' } },
+      },
+      feedsOrder: ['banner', 'organic'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('searchCompositionRules', () => {

@@ -2236,6 +2236,39 @@ class SnippetCompositionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the search method.
+  //
+  // search
+  void snippetForSearch5() throws Exception {
+    // >SEPARATOR search search
+    // Initialize the client
+    CompositionClient client = new CompositionClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    SearchResponse response = client.search(
+      "foo",
+      new RequestBody()
+        .setParams(new Params().setQuery("shoes").setFilters("brand:acme"))
+        .setFeeds(
+          new HashMap() {
+            {
+              put(
+                "organic",
+                new FeedRequest().setParams(new FeedParams().setFilters("brand:acme AND inStock:true").setSortBy("Price (asc)"))
+              );
+              put("banner", new FeedRequest().setParams(new FeedParams().setQuery("shoes sale").setFilters("")));
+            }
+          }
+        )
+        .setFeedsOrder(Arrays.asList("banner", "organic")),
+      Hit.class
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the searchCompositionRules method.
   //
   // searchCompositionRules

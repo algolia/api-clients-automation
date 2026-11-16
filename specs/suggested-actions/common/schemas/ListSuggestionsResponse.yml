@@ -1,0 +1,8 @@
+type: object
+additionalProperties: false
+properties:
+  suggestions:
+    type: array
+    description: Active suggestions sorted from most recently created to oldest.
+    items:
+      $ref: './Suggestion.yml'

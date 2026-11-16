@@ -2652,6 +2652,53 @@ class CompositionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("search5") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      compositionID = "foo",
+      requestBody = RequestBody(
+        params = Some(
+          Params(
+            query = Some("shoes"),
+            filters = Some("brand:acme")
+          )
+        ),
+        feeds = Some(
+          Map(
+            "organic" -> FeedRequest(
+              params = Some(
+                FeedParams(
+                  filters = Some("brand:acme AND inStock:true"),
+                  sortBy = Some("Price (asc)")
+                )
+              )
+            ),
+            "banner" -> FeedRequest(
+              params = Some(
+                FeedParams(
+                  query = Some("shoes sale"),
+                  filters = Some("")
+                )
+              )
+            )
+          )
+        ),
+        feedsOrder = Some(Seq("banner", "organic"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/compositions/foo/run")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"params":{"query":"shoes","filters":"brand:acme"},"feeds":{"organic":{"params":{"filters":"brand:acme AND inStock:true","sortBy":"Price (asc)"}},"banner":{"params":{"query":"shoes sale","filters":""}}},"feedsOrder":["banner","organic"]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("searchCompositionRules") {
     val (client, echo) = testClient()
     val future = client.searchCompositionRules(

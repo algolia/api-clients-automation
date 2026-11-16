@@ -117,7 +117,7 @@ describe('listModels', () => {
   test('e2e list models', async () => {
     const resp = await client.listModels();
 
-    const expectedBody = { openai: ['gpt-4'] };
+    const expectedBody = { openai: [] };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
   });

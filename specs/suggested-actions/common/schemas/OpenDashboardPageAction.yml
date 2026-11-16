@@ -1,0 +1,7 @@
+type: object
+additionalProperties: false
+description: Opens a page of the Algolia dashboard.
+properties:
+  url:
+    type: string
+    description: URL of the dashboard page.

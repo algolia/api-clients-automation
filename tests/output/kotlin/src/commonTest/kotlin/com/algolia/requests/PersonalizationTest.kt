@@ -27,7 +27,9 @@ class PersonalizationTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -61,7 +63,9 @@ class PersonalizationTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -129,7 +133,9 @@ class PersonalizationTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -183,7 +189,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -215,7 +221,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -250,7 +256,7 @@ class PersonalizationTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -283,7 +289,7 @@ class PersonalizationTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -316,7 +322,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -351,7 +357,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -383,7 +389,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -418,7 +424,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -453,7 +459,7 @@ class PersonalizationTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -472,7 +478,9 @@ class PersonalizationTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -513,7 +521,9 @@ class PersonalizationTest {
   fun `delete deleteUserProfile`() = runTest {
     client.runTest(
       call = {
-        deleteUserProfile(userToken = "UserToken")
+        deleteUserProfile(
+          userToken = "UserToken",
+        )
       },
       intercept = {
         assertEquals("/1/profiles/UserToken".toPathSegments(), it.url.pathSegments)
@@ -545,7 +555,9 @@ class PersonalizationTest {
   fun `get getUserTokenProfile`() = runTest {
     client.runTest(
       call = {
-        getUserTokenProfile(userToken = "UserToken")
+        getUserTokenProfile(
+          userToken = "UserToken",
+        )
       },
       intercept = {
         assertEquals("/1/profiles/personalization/UserToken".toPathSegments(), it.url.pathSegments)
@@ -570,17 +582,17 @@ class PersonalizationTest {
                     score = 42,
                     eventName = "Algolia",
                     eventType = EventType.entries.first { it.value == "click" },
-                  )
+                  ),
                 ),
               facetsScoring =
                 listOf(
                   FacetsScoring(
                     score = 42,
                     facetName = "Event",
-                  )
+                  ),
                 ),
               personalizationImpact = 42,
-            )
+            ),
         )
       },
       intercept = {

@@ -35,13 +35,18 @@ class QuerySuggestionsTest {
                 listOf(
                   SourceIndex(
                     indexName = "testIndex",
-                    facets = listOf(Facet(attribute = "test")),
+                    facets =
+                      listOf(
+                        Facet(
+                          attribute = "test",
+                        ),
+                      ),
                     generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
-                  )
+                  ),
                 ),
               languages = Languages.of(listOf("french")),
               exclude = listOf("test"),
-            )
+            ),
         )
       },
       intercept = {
@@ -61,7 +66,9 @@ class QuerySuggestionsTest {
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -95,7 +102,9 @@ class QuerySuggestionsTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -163,7 +172,9 @@ class QuerySuggestionsTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -217,7 +228,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -249,7 +260,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -284,7 +295,7 @@ class QuerySuggestionsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -317,7 +328,7 @@ class QuerySuggestionsTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -350,7 +361,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -385,7 +396,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -417,7 +428,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -452,7 +463,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -487,7 +498,7 @@ class QuerySuggestionsTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -506,7 +517,9 @@ class QuerySuggestionsTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -547,7 +560,9 @@ class QuerySuggestionsTest {
   fun `deleteConfig`() = runTest {
     client.runTest(
       call = {
-        deleteConfig(indexName = "theIndexName")
+        deleteConfig(
+          indexName = "theIndexName",
+        )
       },
       intercept = {
         assertEquals("/1/configs/theIndexName".toPathSegments(), it.url.pathSegments)
@@ -579,7 +594,9 @@ class QuerySuggestionsTest {
   fun `Retrieve QS config e2e`() = runTest {
     client.runTest(
       call = {
-        getConfig(indexName = "cts_e2e_browse_query_suggestions")
+        getConfig(
+          indexName = "cts_e2e_browse_query_suggestions",
+        )
       },
       intercept = {
         assertEquals(
@@ -598,7 +615,9 @@ class QuerySuggestionsTest {
   fun `getConfigStatus`() = runTest {
     client.runTest(
       call = {
-        getConfigStatus(indexName = "theIndexName")
+        getConfigStatus(
+          indexName = "theIndexName",
+        )
       },
       intercept = {
         assertEquals("/1/configs/theIndexName/status".toPathSegments(), it.url.pathSegments)
@@ -614,7 +633,9 @@ class QuerySuggestionsTest {
   fun `getLogFile`() = runTest {
     client.runTest(
       call = {
-        getLogFile(indexName = "theIndexName")
+        getLogFile(
+          indexName = "theIndexName",
+        )
       },
       intercept = {
         assertEquals("/1/logs/theIndexName".toPathSegments(), it.url.pathSegments)
@@ -638,9 +659,14 @@ class QuerySuggestionsTest {
                 listOf(
                   SourceIndex(
                     indexName = "testIndex",
-                    facets = listOf(Facet(attribute = "test")),
+                    facets =
+                      listOf(
+                        Facet(
+                          attribute = "test",
+                        ),
+                      ),
                     generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
-                  )
+                  ),
                 ),
               languages = Languages.of(listOf("french")),
               exclude = listOf("test"),

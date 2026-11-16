@@ -2231,6 +2231,46 @@ class SnippetCompositionClient
     }
 
     /**
+     * Snippet for the Search method.
+     *
+     * search
+     */
+    public function snippetForSearch5(): void
+    {
+        // >SEPARATOR search search
+        // Initialize the client
+        $client = CompositionClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->search(
+            'foo',
+            ['params' => ['query' => 'shoes',
+                'filters' => 'brand:acme',
+            ],
+                'feeds' => ['organic' => ['params' => ['filters' => 'brand:acme AND inStock:true',
+                    'sortBy' => 'Price (asc)',
+                ],
+                ],
+                    'banner' => ['params' => ['query' => 'shoes sale',
+                        'filters' => '',
+                    ],
+                    ],
+                ],
+                'feedsOrder' => [
+                    'banner',
+
+                    'organic',
+                ],
+            ],
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the SearchCompositionRules method.
      *
      * searchCompositionRules

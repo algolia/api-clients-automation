@@ -43,7 +43,7 @@ class CompositionTest {
               headers =
                 buildMap {
                   put("request-id", "CtsE2eEcho4")
-                }
+                },
             ),
         )
       },
@@ -59,7 +59,7 @@ class CompositionTest {
             headers =
               buildMap {
                 put("request-id", "CtsE2eEcho4")
-              }
+              },
           ),
       )
     val correlationId =
@@ -84,7 +84,7 @@ class CompositionTest {
               urlParameters =
                 buildMap {
                   put("x-algolia-request-id", "CtsE2eEchoQ")
-                }
+                },
             ),
         )
       },
@@ -100,7 +100,7 @@ class CompositionTest {
             urlParameters =
               buildMap {
                 put("x-algolia-request-id", "CtsE2eEchoQ")
-              }
+              },
           ),
       )
     val correlationId =

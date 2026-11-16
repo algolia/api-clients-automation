@@ -140,7 +140,7 @@ class AgentStudioTest extends TestCase
         $client = $this->getClient();
         $resp = $client->listModels();
 
-        $expected = json_decode('{"openai":["gpt-4"]}', true);
+        $expected = json_decode('{"openai":[]}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }

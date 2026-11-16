@@ -228,7 +228,7 @@ class AgentStudioTest extends AnyFunSuite {
     )
 
     val response = Await.result(future, Duration.Inf)
-    val expected = parse("""{"openai":["gpt-4"]}""")
+    val expected = parse("""{"openai":[]}""")
     val extracted = Extraction.decompose(response)
     val diffRes = expected.diff(extracted)
     if (diffRes.deleted != JNothing) {

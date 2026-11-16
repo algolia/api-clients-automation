@@ -28,8 +28,9 @@ package algoliasearch.abtestingv3
   * @param description
   *   Description for this variant.
   * @param estimatedSampleSize
-  *   Estimated number of searches required to achieve the desired statistical significance. The A/B test configuration
-  *   must include a `minimumDetectableEffect` setting for this number to be included in the response.
+  *   Estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve
+  *   the desired statistical significance. The A/B test configuration must include a `minimumDetectableEffect` setting
+  *   for this number to be included in the response.
   * @param index
   *   Index name of the A/B test variant (case-sensitive).
   * @param trafficPercentage

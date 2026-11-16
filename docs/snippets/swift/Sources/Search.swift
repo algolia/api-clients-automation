@@ -7054,41 +7054,18 @@ final class SearchClientSnippet {
     ///
     /// get setDictionarySettings results with minimal parameters
     func snippetForSetDictionarySettings() async throws {
-        // >SEPARATOR setDictionarySettings get setDictionarySettings results with minimal parameters
+        // >SEPARATOR setDictionarySettings default
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
         // Call the API
         let response = try await client
             .setDictionarySettings(
-                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(stopwords: [
                     "fr": false,
                     "en": false,
                     "ru": true,
                 ]))
-            )
-        // >LOG
-        // print the response
-        print(response)
-        // SEPARATOR<
-    }
-
-    /// Snippet for the setDictionarySettings method.
-    ///
-    /// get setDictionarySettings results with all parameters
-    func snippetForSetDictionarySettings1() async throws {
-        // >SEPARATOR setDictionarySettings get setDictionarySettings results with all parameters
-        // Initialize the client
-        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
-
-        // Call the API
-        let response = try await client
-            .setDictionarySettings(
-                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(
-                    plurals: ["fr": false, "en": false, "ru": true],
-                    stopwords: ["fr": false],
-                    compounds: ["ru": true]
-                ))
             )
         // >LOG
         // print the response

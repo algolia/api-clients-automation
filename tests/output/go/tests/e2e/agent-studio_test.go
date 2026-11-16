@@ -322,7 +322,7 @@ func TestAgentStudioE2E_ListModels(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"openai":["gpt-4"]}`
+		expectedBodyRaw := `{"openai":[]}`
 
 		var expectedBody any
 

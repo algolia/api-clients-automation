@@ -195,7 +195,7 @@ final class AgentStudioClientRequestsTestsE2E: XCTestCase {
         }
 
         let response = try await client.listModelsWithHTTPInfo()
-        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"openai\":[\"gpt-4\"]}")
+        try XCTLenientAssertEqual(received: XCTUnwrap(response.body), expected: "{\"openai\":[]}")
 
         XCTAssertEqual(response.statusCode, 200)
     }

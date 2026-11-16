@@ -42,13 +42,132 @@ class RecommendTest {
     )
   }
 
+  @Test
+  fun `batch recommend rules for trending items with request scopes1`() = runTest {
+    client.runTest(
+      call = {
+        batchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+          recommendRule =
+            listOf(
+              RecommendRule(
+                objectID = "global-rule",
+                condition =
+                  Condition(
+                    requestScope =
+                      GlobalRequestScope(
+                        global = true,
+                      ),
+                  ),
+                consequence =
+                  Consequence(
+                    promote =
+                      listOf(
+                        PromoteConsequenceObject(
+                          objectID = "item-1",
+                          position = 0,
+                        ),
+                      ),
+                  ),
+              ),
+              RecommendRule(
+                objectID = "facet-rule",
+                condition =
+                  Condition(
+                    context = "mobile",
+                    requestScope =
+                      FacetRequestScope(
+                        facetName = "brand",
+                        facetValue = "acme",
+                      ),
+                  ),
+                consequence =
+                  Consequence(
+                    hide =
+                      listOf(
+                        HideConsequenceObject(
+                          objectID = "item-2",
+                        ),
+                      ),
+                    params =
+                      ParamsConsequence(
+                        filters = "inStock:true",
+                      ),
+                  ),
+              ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `batch recommend rules for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        batchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+          recommendRule =
+            listOf(
+              RecommendRule(
+                objectID = "looking-similar-rule",
+                condition =
+                  Condition(
+                    filters = "brand:acme",
+                  ),
+                consequence =
+                  Consequence(
+                    params =
+                      ParamsConsequence(
+                        automaticFacetFilters =
+                          listOf(
+                            AutoFacetFilter(
+                              facet = "category",
+                              negative = false,
+                            ),
+                          ),
+                      ),
+                  ),
+              ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // customDelete
 
   @Test
   fun `allow del method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customDelete(path = "test/minimal")
+        customDelete(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -82,7 +201,9 @@ class RecommendTest {
   fun `allow get method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customGet(path = "test/minimal")
+        customGet(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -150,7 +271,9 @@ class RecommendTest {
   fun `allow post method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPost(path = "test/minimal")
+        customPost(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -204,7 +327,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("query", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -236,7 +359,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("query2", "myQueryParameter")
-                }
+                },
             ),
         )
       },
@@ -271,7 +394,7 @@ class RecommendTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -304,7 +427,7 @@ class RecommendTest {
               headers =
                 buildMap {
                   put("x-algolia-api-key", "ALGOLIA_API_KEY")
-                }
+                },
             ),
         )
       },
@@ -337,7 +460,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("isItWorking", true)
-                }
+                },
             ),
         )
       },
@@ -372,7 +495,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", 2)
-                }
+                },
             ),
         )
       },
@@ -404,7 +527,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf("b and c", "d"))
-                }
+                },
             ),
         )
       },
@@ -439,7 +562,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(true, true, false))
-                }
+                },
             ),
         )
       },
@@ -474,7 +597,7 @@ class RecommendTest {
               urlParameters =
                 buildMap {
                   put("myParam", listOf(1, 2))
-                }
+                },
             ),
         )
       },
@@ -493,7 +616,9 @@ class RecommendTest {
   fun `allow put method for a custom path with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        customPut(path = "test/minimal")
+        customPut(
+          path = "test/minimal",
+        )
       },
       intercept = {
         assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
@@ -574,6 +699,48 @@ class RecommendTest {
     )
   }
 
+  @Test
+  fun `get recommend rule for trending items1`() = runTest {
+    client.runTest(
+      call = {
+        getRecommendRule(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+          objectID = "objectID",
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/objectID".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get recommend rule for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        getRecommendRule(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+          objectID = "objectID",
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/objectID".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getRecommendStatus
 
   @Test
@@ -613,9 +780,9 @@ class RecommendTest {
                     objectID = "objectID",
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 42.1,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -644,9 +811,9 @@ class RecommendTest {
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 20.0,
                     maxRecommendations = 2,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -688,9 +855,9 @@ class RecommendTest {
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                         facetFilters = FacetFilters.of(listOf(FacetFilters.of("brand:apple"))),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -719,9 +886,9 @@ class RecommendTest {
                     threshold = 42.1,
                     facetName = "facet",
                     facetValue = "value",
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -763,9 +930,9 @@ class RecommendTest {
                         optionalFilters =
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:samsung"))),
                       ),
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -800,8 +967,8 @@ class RecommendTest {
                     model = RelatedModel.entries.first { it.value == "related-products" },
                     threshold = 21.7,
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -862,8 +1029,8 @@ class RecommendTest {
                           OptionalFilters.of(listOf(OptionalFilters.of("brand:microsoft"))),
                       ),
                   ),
-                )
-            )
+                ),
+            ),
         )
       },
       intercept = {
@@ -891,9 +1058,9 @@ class RecommendTest {
                     objectID = "objectID1",
                     model = FbtModel.entries.first { it.value == "bought-together" },
                     threshold = 42.7,
-                  )
-                )
-            )
+                  ),
+                ),
+            ),
         )
       },
       intercept = {
@@ -921,6 +1088,46 @@ class RecommendTest {
       intercept = {
         assertEquals(
           "/1/indexes/indexName/related-products/recommend/rules/search".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search recommend rules for trending items1`() = runTest {
+    client.runTest(
+      call = {
+        searchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/search".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search recommend rules for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        searchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/search".toPathSegments(),
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("POST"), it.method)

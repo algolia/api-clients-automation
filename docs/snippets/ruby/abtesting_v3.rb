@@ -33,9 +33,9 @@ end
 
 # Snippet for the addABTests method.
 #
-# addABTests with Bayesian configuration
+# addABTests with Bayesian no-results user rate
 def snippet_for_add_ab_tests1
-  # >SEPARATOR addABTests addABTests with Bayesian configuration
+  # >SEPARATOR addABTests addABTests with Bayesian no-results user rate
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -44,14 +44,14 @@ def snippet_for_add_ab_tests1
     Algolia::AbtestingV3::AddABTestsRequest.new(
       end_at: "2022-12-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "conversionRate")],
+      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "usersWithNoResultsRate")],
       variants: [
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
       ],
       configuration: Algolia::AbtestingV3::ABTestConfiguration.new(
         method: "bayesian",
-        primary_metric: "conversion_rate"
+        primary_metric: "users_with_no_results_rate"
       )
     )
   )
@@ -458,7 +458,7 @@ end
 #
 # estimate AB Test sample size
 def snippet_for_estimate_ab_test
-  # >SEPARATOR estimateABTest default
+  # >SEPARATOR estimateABTest estimate AB Test sample size
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -469,6 +469,36 @@ def snippet_for_estimate_ab_test
         minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(
           size: 0.03,
           metric: "conversionRate"
+        )
+      ),
+      variants: [
+        Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 50),
+        Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
+      ]
+    )
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the estimateABTest method.
+#
+# estimate AB Test sample size for a user-level rate
+def snippet_for_estimate_ab_test1
+  # >SEPARATOR estimateABTest estimate AB Test sample size for a user-level rate
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.estimate_ab_test(
+    Algolia::AbtestingV3::EstimateABTestRequest.new(
+      configuration: Algolia::AbtestingV3::EstimateConfiguration.new(
+        minimum_detectable_effect: Algolia::AbtestingV3::MinimumDetectableEffect.new(
+          size: 0.03,
+          metric: "convertedUsersRate"
         )
       ),
       variants: [
@@ -562,6 +592,29 @@ def snippet_for_get_timeseries1
 
   # Call the API
   response = client.get_timeseries(42, "1999-09-19", "2001-01-01", ["revenue_per_search"], ["bayesian"])
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the getTimeseries method.
+#
+# getTimeseries with user-based metrics
+def snippet_for_get_timeseries2
+  # >SEPARATOR getTimeseries getTimeseries with user-based metrics
+  # Initialize the client
+  client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
+
+  # Call the API
+  response = client.get_timeseries(
+    42,
+    "1999-09-19",
+    "2001-01-01",
+    ["clicked_users_rate", "converted_users_rate", "users_with_no_results_rate"],
+    ["bayesian"]
+  )
 
   # >LOG
   # print the response
