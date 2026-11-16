@@ -4,9 +4,9 @@ FROM ruby:4.0.9-trixie@sha256:07042b74555ff2eef7365abd72d39cba6e499ab63e2d2942fd
 
 # one pin per platform archive, the build platform picks it below
 # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
-ARG RUBYFMT_PIN_X86_64=v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
+ARG RUBYFMT_PIN_X86_64=v0.14.1@9590cc3b8b2ed37a250a5f7c22a542ce014f13954f613c93a72230de8a74fbbd
 # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-aarch64.tar.gz
-ARG RUBYFMT_PIN_AARCH64=v0.10.0@619535a281c64874a4fc74dd55ebbdbc5b9d788a063bfca47bc2e25b5c18464a
+ARG RUBYFMT_PIN_AARCH64=v0.14.1@fc429195d1315bb96b25beb6898bf2bec749e3f8d3c9b8dbb3be37c25752c3bd
 RUN arch="$(uname -m)" && \
   case "$arch" in \
     x86_64) pin="$RUBYFMT_PIN_X86_64" ;; \
