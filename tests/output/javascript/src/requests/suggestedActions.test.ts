@@ -11,6 +11,47 @@ const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 // this makes sure the types are correctly exported
 const client = suggestedActionsClient(appId, apiKey, 'us', { requester: nodeEchoRequester() });
 
+describe('createSuggestion', () => {
+  test('createSuggestion with required parameters', async () => {
+    const req = (await client.createSuggestion({
+      type: 'ACTIVATE_NEURAL_SEARCH',
+      target: { appId: 'MY_APP_ID' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/suggested-actions');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ type: 'ACTIVATE_NEURAL_SEARCH', target: { appId: 'MY_APP_ID' } });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('createSuggestion with all parameters', async () => {
+    const req = (await client.createSuggestion({
+      type: 'UPDATE_INDEX_SETTINGS',
+      target: { appId: 'MY_APP_ID', index: 'products' },
+      validFor: '3600s',
+      title: 'Rank in stock products first',
+      description: 'Adds inStock to the custom ranking.',
+      payload: { settings: { customRanking: ['desc(inStock)'] } },
+      metadata: { origin: 'assist' },
+      creation: { createdBy: '42', source: 'ASSIST' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/suggested-actions');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      type: 'UPDATE_INDEX_SETTINGS',
+      target: { appId: 'MY_APP_ID', index: 'products' },
+      validFor: '3600s',
+      title: 'Rank in stock products first',
+      description: 'Adds inStock to the custom ranking.',
+      payload: { settings: { customRanking: ['desc(inStock)'] } },
+      metadata: { origin: 'assist' },
+      creation: { createdBy: '42', source: 'ASSIST' },
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({ path: 'test/minimal' })) as unknown as EchoResponse;
@@ -252,6 +293,20 @@ describe('customPut', () => {
   });
 });
 
+describe('dismissSuggestion', () => {
+  test('dismissSuggestion', async () => {
+    const req = (await client.dismissSuggestion({
+      suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      userParams: { userId: '42' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/suggested-actions/76710f1b-8231-42e5-b0d1-f43aac618e15:dismiss');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ userId: '42' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getSuggestion', () => {
   test('getSuggestion', async () => {
     const req = (await client.getSuggestion({
@@ -292,5 +347,19 @@ describe('listSuggestions', () => {
       userId: '42',
       excludeDismissed: 'true',
     });
+  });
+});
+
+describe('undoSuggestionDismissal', () => {
+  test('undoSuggestionDismissal', async () => {
+    const req = (await client.undoSuggestionDismissal({
+      suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      userParams: { userId: '42' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/suggested-actions/76710f1b-8231-42e5-b0d1-f43aac618e15:undoDismiss');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ userId: '42' });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });

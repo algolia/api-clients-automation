@@ -4,6 +4,51 @@
 import { suggestedActionsClient } from '@algolia/suggested-actions';
 // IMPORT<
 
+// Snippet for the createSuggestion method.
+//
+// createSuggestion with required parameters
+export async function snippetForCreateSuggestion(): Promise<void> {
+  // >SEPARATOR createSuggestion createSuggestion with required parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');
+
+  // Call the API
+  const response = await client.createSuggestion({ type: 'ACTIVATE_NEURAL_SEARCH', target: { appId: 'MY_APP_ID' } });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the createSuggestion method.
+//
+// createSuggestion with all parameters
+export async function snippetForCreateSuggestion1(): Promise<void> {
+  // >SEPARATOR createSuggestion createSuggestion with all parameters
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');
+
+  // Call the API
+  const response = await client.createSuggestion({
+    type: 'UPDATE_INDEX_SETTINGS',
+    target: { appId: 'MY_APP_ID', index: 'products' },
+    validFor: '3600s',
+    title: 'Rank in stock products first',
+    description: 'Adds inStock to the custom ranking.',
+    payload: { settings: { customRanking: ['desc(inStock)'] } },
+    metadata: { origin: 'assist' },
+    creation: { createdBy: '42', source: 'ASSIST' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
@@ -387,6 +432,27 @@ export async function snippetForCustomPut1(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the dismissSuggestion method.
+//
+// dismissSuggestion
+export async function snippetForDismissSuggestion(): Promise<void> {
+  // >SEPARATOR dismissSuggestion default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');
+
+  // Call the API
+  const response = await client.dismissSuggestion({
+    suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    userParams: { userId: '42' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getSuggestion method.
 //
 // getSuggestion
@@ -459,5 +525,26 @@ export function snippetForSetClientApiKey(): void {
   client.setClientApiKey({ apiKey: 'updated-api-key' });
 
   // >LOG
+  // SEPARATOR<
+}
+
+// Snippet for the undoSuggestionDismissal method.
+//
+// undoSuggestionDismissal
+export async function snippetForUndoSuggestionDismissal(): Promise<void> {
+  // >SEPARATOR undoSuggestionDismissal default
+  // Initialize the client
+  // Replace 'us' with your Algolia Application Region
+  const client = suggestedActionsClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY', 'us');
+
+  // Call the API
+  const response = await client.undoSuggestionDismissal({
+    suggestionID: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    userParams: { userId: '42' },
+  });
+
+  // >LOG
+  // print the response
+  console.log(response);
   // SEPARATOR<
 }
