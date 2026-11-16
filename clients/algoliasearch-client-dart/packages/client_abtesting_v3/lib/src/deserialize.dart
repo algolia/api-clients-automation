@@ -29,6 +29,7 @@ import 'package:algolia_client_abtesting_v3/src/model/metric_metadata.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_name.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metric_result.dart';
 import 'package:algolia_client_abtesting_v3/src/model/metrics_filter.dart';
+import 'package:algolia_client_abtesting_v3/src/model/metrics_filter_parameters.dart';
 import 'package:algolia_client_abtesting_v3/src/model/minimum_detectable_effect.dart';
 import 'package:algolia_client_abtesting_v3/src/model/outliers_filter.dart';
 import 'package:algolia_client_abtesting_v3/src/model/primary_metric.dart';
@@ -139,6 +140,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return MetricResult.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MetricsFilter':
       return MetricsFilter.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'MetricsFilterParameters':
+      return MetricsFilterParameters.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'MinimumDetectableEffect':
       return MinimumDetectableEffect.fromJson(value as Map<String, dynamic>)
