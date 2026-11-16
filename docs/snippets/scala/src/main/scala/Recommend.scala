@@ -22,7 +22,7 @@ class SnippetRecommendClient {
     * batch recommend rules
     */
   def snippetForRecommendClientBatchRecommendRules(): Unit = {
-    // >SEPARATOR batchRecommendRules default
+    // >SEPARATOR batchRecommendRules batch recommend rules
     // Initialize the client
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -31,6 +31,138 @@ class SnippetRecommendClient {
       client.batchRecommendRules(
         indexName = "<YOUR_INDEX_NAME>",
         model = RecommendModels.withName("related-products")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the batchRecommendRules method.
+    *
+    * batch recommend rules for trending items with request scopes
+    */
+  def snippetForRecommendClientBatchRecommendRules1(): Unit = {
+    // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.batchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("trending-items"),
+        recommendRule = Some(
+          Seq(
+            RecommendRule(
+              objectID = Some("global-rule"),
+              condition = Some(
+                Condition(
+                  requestScope = Some(
+                    GlobalRequestScope(
+                      global = true
+                    )
+                  )
+                )
+              ),
+              consequence = Some(
+                Consequence(
+                  promote = Some(
+                    Seq(
+                      PromoteConsequenceObject(
+                        objectID = Some("item-1"),
+                        position = Some(0)
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+            RecommendRule(
+              objectID = Some("facet-rule"),
+              condition = Some(
+                Condition(
+                  context = Some("mobile"),
+                  requestScope = Some(
+                    FacetRequestScope(
+                      facetName = "brand",
+                      facetValue = "acme"
+                    )
+                  )
+                )
+              ),
+              consequence = Some(
+                Consequence(
+                  hide = Some(
+                    Seq(
+                      HideConsequenceObject(
+                        objectID = Some("item-2")
+                      )
+                    )
+                  ),
+                  params = Some(
+                    ParamsConsequence(
+                      filters = Some("inStock:true")
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the batchRecommendRules method.
+    *
+    * batch recommend rules for looking similar
+    */
+  def snippetForRecommendClientBatchRecommendRules2(): Unit = {
+    // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.batchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("looking-similar"),
+        recommendRule = Some(
+          Seq(
+            RecommendRule(
+              objectID = Some("looking-similar-rule"),
+              condition = Some(
+                Condition(
+                  filters = Some("brand:acme")
+                )
+              ),
+              consequence = Some(
+                Consequence(
+                  params = Some(
+                    ParamsConsequence(
+                      automaticFacetFilters = Some(
+                        Seq(
+                          AutoFacetFilter(
+                            facet = Some("category"),
+                            negative = Some(false)
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
       ),
       Duration(100, "sec")
     )
@@ -552,7 +684,7 @@ class SnippetRecommendClient {
     * getRecommendRule
     */
   def snippetForRecommendClientGetRecommendRule(): Unit = {
-    // >SEPARATOR getRecommendRule default
+    // >SEPARATOR getRecommendRule getRecommendRule
     // Initialize the client
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -561,6 +693,54 @@ class SnippetRecommendClient {
       client.getRecommendRule(
         indexName = "<YOUR_INDEX_NAME>",
         model = RecommendModels.withName("related-products"),
+        objectID = "objectID"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getRecommendRule method.
+    *
+    * get recommend rule for trending items
+    */
+  def snippetForRecommendClientGetRecommendRule1(): Unit = {
+    // >SEPARATOR getRecommendRule get recommend rule for trending items
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getRecommendRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("trending-items"),
+        objectID = "objectID"
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getRecommendRule method.
+    *
+    * get recommend rule for looking similar
+    */
+  def snippetForRecommendClientGetRecommendRule2(): Unit = {
+    // >SEPARATOR getRecommendRule get recommend rule for looking similar
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.getRecommendRule(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("looking-similar"),
         objectID = "objectID"
       ),
       Duration(100, "sec")
@@ -916,7 +1096,7 @@ class SnippetRecommendClient {
     * searchRecommendRules
     */
   def snippetForRecommendClientSearchRecommendRules(): Unit = {
-    // >SEPARATOR searchRecommendRules default
+    // >SEPARATOR searchRecommendRules searchRecommendRules
     // Initialize the client
     val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -925,6 +1105,52 @@ class SnippetRecommendClient {
       client.searchRecommendRules(
         indexName = "<YOUR_INDEX_NAME>",
         model = RecommendModels.withName("related-products")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchRecommendRules method.
+    *
+    * search recommend rules for trending items
+    */
+  def snippetForRecommendClientSearchRecommendRules1(): Unit = {
+    // >SEPARATOR searchRecommendRules search recommend rules for trending items
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("trending-items")
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the searchRecommendRules method.
+    *
+    * search recommend rules for looking similar
+    */
+  def snippetForRecommendClientSearchRecommendRules2(): Unit = {
+    // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+    // Initialize the client
+    val client = RecommendClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.searchRecommendRules(
+        indexName = "<YOUR_INDEX_NAME>",
+        model = RecommendModels.withName("looking-similar")
       ),
       Duration(100, "sec")
     )

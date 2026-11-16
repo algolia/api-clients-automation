@@ -30,6 +30,96 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
+    async def test_batch_recommend_rules_1(self):
+        """
+        batch recommend rules for trending items with request scopes
+        """
+        _req = await self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+            recommend_rule=[
+                {
+                    "objectID": "global-rule",
+                    "condition": {
+                        "requestScope": {
+                            "global": True,
+                        },
+                    },
+                    "consequence": {
+                        "promote": [
+                            {
+                                "objectID": "item-1",
+                                "position": 0,
+                            },
+                        ],
+                    },
+                },
+                {
+                    "objectID": "facet-rule",
+                    "condition": {
+                        "context": "mobile",
+                        "requestScope": {
+                            "facetName": "brand",
+                            "facetValue": "acme",
+                        },
+                    },
+                    "consequence": {
+                        "hide": [
+                            {
+                                "objectID": "item-2",
+                            },
+                        ],
+                        "params": {
+                            "filters": "inStock:true",
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/indexName/trending-items/recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]"""
+        )
+
+    async def test_batch_recommend_rules_2(self):
+        """
+        batch recommend rules for looking similar
+        """
+        _req = await self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+            recommend_rule=[
+                {
+                    "objectID": "looking-similar-rule",
+                    "condition": {
+                        "filters": "brand:acme",
+                    },
+                    "consequence": {
+                        "params": {
+                            "automaticFacetFilters": [
+                                {
+                                    "facet": "category",
+                                    "negative": False,
+                                },
+                            ],
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]"""
+        )
+
     async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
@@ -455,6 +545,42 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_recommend_rule_1(self):
+        """
+        get recommend rule for trending items
+        """
+        _req = await self._client.get_recommend_rule_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+            object_id="objectID",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/trending-items/recommend/rules/objectID"
+        )
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_recommend_rule_2(self):
+        """
+        get recommend rule for looking similar
+        """
+        _req = await self._client.get_recommend_rule_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+            object_id="objectID",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/objectID"
+        )
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_recommend_status_(self):
         """
         getRecommendStatus
@@ -758,6 +884,38 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
 
+    async def test_search_recommend_rules_1(self):
+        """
+        search recommend rules for trending items
+        """
+        _req = await self._client.search_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+        )
+
+        assert _req.path == "/1/indexes/indexName/trending-items/recommend/rules/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    async def test_search_recommend_rules_2(self):
+        """
+        search recommend rules for looking similar
+        """
+        _req = await self._client.search_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/search"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
 
 class TestRecommendClientSync:
     _config = RecommendConfig("test_app_id", "test_api_key")
@@ -781,6 +939,96 @@ class TestRecommendClientSync:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{}""")
+
+    def test_batch_recommend_rules_1(self):
+        """
+        batch recommend rules for trending items with request scopes
+        """
+        _req = self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+            recommend_rule=[
+                {
+                    "objectID": "global-rule",
+                    "condition": {
+                        "requestScope": {
+                            "global": True,
+                        },
+                    },
+                    "consequence": {
+                        "promote": [
+                            {
+                                "objectID": "item-1",
+                                "position": 0,
+                            },
+                        ],
+                    },
+                },
+                {
+                    "objectID": "facet-rule",
+                    "condition": {
+                        "context": "mobile",
+                        "requestScope": {
+                            "facetName": "brand",
+                            "facetValue": "acme",
+                        },
+                    },
+                    "consequence": {
+                        "hide": [
+                            {
+                                "objectID": "item-2",
+                            },
+                        ],
+                        "params": {
+                            "filters": "inStock:true",
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/indexName/trending-items/recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]"""
+        )
+
+    def test_batch_recommend_rules_2(self):
+        """
+        batch recommend rules for looking similar
+        """
+        _req = self._client.batch_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+            recommend_rule=[
+                {
+                    "objectID": "looking-similar-rule",
+                    "condition": {
+                        "filters": "brand:acme",
+                    },
+                    "consequence": {
+                        "params": {
+                            "automaticFacetFilters": [
+                                {
+                                    "facet": "category",
+                                    "negative": False,
+                                },
+                            ],
+                        },
+                    },
+                },
+            ],
+        )
+
+        assert _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]"""
+        )
 
     def test_custom_delete_(self):
         """
@@ -1207,6 +1455,42 @@ class TestRecommendClientSync:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    def test_get_recommend_rule_1(self):
+        """
+        get recommend rule for trending items
+        """
+        _req = self._client.get_recommend_rule_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+            object_id="objectID",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/trending-items/recommend/rules/objectID"
+        )
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_get_recommend_rule_2(self):
+        """
+        get recommend rule for looking similar
+        """
+        _req = self._client.get_recommend_rule_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+            object_id="objectID",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/objectID"
+        )
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     def test_get_recommend_status_(self):
         """
         getRecommendStatus
@@ -1504,6 +1788,38 @@ class TestRecommendClientSync:
 
         assert (
             _req.path == "/1/indexes/indexName/related-products/recommend/rules/search"
+        )
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    def test_search_recommend_rules_1(self):
+        """
+        search recommend rules for trending items
+        """
+        _req = self._client.search_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="trending-items",
+        )
+
+        assert _req.path == "/1/indexes/indexName/trending-items/recommend/rules/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{}""")
+
+    def test_search_recommend_rules_2(self):
+        """
+        search recommend rules for looking similar
+        """
+        _req = self._client.search_recommend_rules_with_http_info(
+            index_name="indexName",
+            model="looking-similar",
+        )
+
+        assert (
+            _req.path == "/1/indexes/indexName/looking-similar/recommend/rules/search"
         )
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()

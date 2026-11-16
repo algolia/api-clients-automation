@@ -4,7 +4,9 @@
       "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;\nusing Algolia.Search.Models.Recommend;"
     },
     "batchRecommendRules": {
-      "default": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);"
+      "batch recommend rules": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);",
+      "batch recommend rules for trending items with request scopes": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"TrendingItems\"),\n  new List<RecommendRule>\n  {\n    new RecommendRule\n    {\n      ObjectID = \"global-rule\",\n      Condition = new Condition\n      {\n        RequestScope = new RequestScope(new GlobalRequestScope { Global = true }),\n      },\n      Consequence = new Consequence\n      {\n        Promote = new List<PromoteConsequenceObject>\n        {\n          new PromoteConsequenceObject { ObjectID = \"item-1\", Position = 0 },\n        },\n      },\n    },\n    new RecommendRule\n    {\n      ObjectID = \"facet-rule\",\n      Condition = new Condition\n      {\n        Context = \"mobile\",\n        RequestScope = new RequestScope(\n          new FacetRequestScope { FacetName = \"brand\", FacetValue = \"acme\" }\n        ),\n      },\n      Consequence = new Consequence\n      {\n        Hide = new List<HideConsequenceObject>\n        {\n          new HideConsequenceObject { ObjectID = \"item-2\" },\n        },\n        Params = new ParamsConsequence { Filters = \"inStock:true\" },\n      },\n    },\n  }\n);",
+      "batch recommend rules for looking similar": "var response = await client.BatchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"LookingSimilar\"),\n  new List<RecommendRule>\n  {\n    new RecommendRule\n    {\n      ObjectID = \"looking-similar-rule\",\n      Condition = new Condition { Filters = \"brand:acme\" },\n      Consequence = new Consequence\n      {\n        Params = new ParamsConsequence\n        {\n          AutomaticFacetFilters = new List<AutoFacetFilter>\n          {\n            new AutoFacetFilter { Facet = \"category\", Negative = false },\n          },\n        },\n      },\n    },\n  }\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = await client.CustomDeleteAsync(\"test/minimal\");",
@@ -36,7 +38,9 @@
       "default": "var response = await client.DeleteRecommendRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\"),\n  \"objectID\"\n);"
     },
     "getRecommendRule": {
-      "default": "var response = await client.GetRecommendRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\"),\n  \"objectID\"\n);"
+      "getRecommendRule": "var response = await client.GetRecommendRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\"),\n  \"objectID\"\n);",
+      "get recommend rule for trending items": "var response = await client.GetRecommendRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"TrendingItems\"),\n  \"objectID\"\n);",
+      "get recommend rule for looking similar": "var response = await client.GetRecommendRuleAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"LookingSimilar\"),\n  \"objectID\"\n);"
     },
     "getRecommendStatus": {
       "default": "var response = await client.GetRecommendStatusAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\"),\n  12345L\n);"
@@ -52,7 +56,9 @@
       "get frequently bought together recommendations": "var response = await client.GetRecommendationsAsync(\n  new GetRecommendationsParams\n  {\n    Requests = new List<RecommendationsRequest>\n    {\n      new RecommendationsRequest(\n        new BoughtTogetherQuery\n        {\n          IndexName = \"<YOUR_INDEX_NAME>\",\n          ObjectID = \"objectID1\",\n          Model = Enum.Parse<FbtModel>(\"BoughtTogether\"),\n          Threshold = 42.7,\n        }\n      ),\n    },\n  }\n);"
     },
     "searchRecommendRules": {
-      "default": "var response = await client.SearchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);"
+      "searchRecommendRules": "var response = await client.SearchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"RelatedProducts\")\n);",
+      "search recommend rules for trending items": "var response = await client.SearchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"TrendingItems\")\n);",
+      "search recommend rules for looking similar": "var response = await client.SearchRecommendRulesAsync(\n  \"<YOUR_INDEX_NAME>\",\n  Enum.Parse<RecommendModels>(\"LookingSimilar\")\n);"
     },
     "setClientApiKey": {
       "default": "client.SetClientApiKey(\"updated-api-key\");"
@@ -66,7 +72,9 @@
       "default": "import 'package:algolia_client_recommend/algolia_client_recommend.dart';"
     },
     "batchRecommendRules": {
-      "default": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);"
+      "batch recommend rules": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);",
+      "batch recommend rules for trending items with request scopes": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"trending-items\"),\n  recommendRule: [\n    RecommendRule(\n      objectID: \"global-rule\",\n      condition: Condition(\n        requestScope: GlobalRequestScope(\n          global: true,\n        ),\n      ),\n      consequence: Consequence(\n        promote: [\n          PromoteConsequenceObject(\n            objectID: \"item-1\",\n            position: 0,\n          ),\n        ],\n      ),\n    ),\n    RecommendRule(\n      objectID: \"facet-rule\",\n      condition: Condition(\n        context: \"mobile\",\n        requestScope: FacetRequestScope(\n          facetName: \"brand\",\n          facetValue: \"acme\",\n        ),\n      ),\n      consequence: Consequence(\n        hide: [\n          HideConsequenceObject(\n            objectID: \"item-2\",\n          ),\n        ],\n        params: ParamsConsequence(\n          filters: \"inStock:true\",\n        ),\n      ),\n    ),\n  ],\n);",
+      "batch recommend rules for looking similar": "final response = await client.batchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"looking-similar\"),\n  recommendRule: [\n    RecommendRule(\n      objectID: \"looking-similar-rule\",\n      condition: Condition(\n        filters: \"brand:acme\",\n      ),\n      consequence: Consequence(\n        params: ParamsConsequence(\n          automaticFacetFilters: [\n            AutoFacetFilter(\n              facet: \"category\",\n              negative: false,\n            ),\n          ],\n        ),\n      ),\n    ),\n  ],\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "final response = await client.customDelete(\n  path: \"test/minimal\",\n);",
@@ -98,7 +106,9 @@
       "default": "final response = await client.deleteRecommendRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n  objectID: \"objectID\",\n);"
     },
     "getRecommendRule": {
-      "default": "final response = await client.getRecommendRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n  objectID: \"objectID\",\n);"
+      "getRecommendRule": "final response = await client.getRecommendRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n  objectID: \"objectID\",\n);",
+      "get recommend rule for trending items": "final response = await client.getRecommendRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"trending-items\"),\n  objectID: \"objectID\",\n);",
+      "get recommend rule for looking similar": "final response = await client.getRecommendRule(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"looking-similar\"),\n  objectID: \"objectID\",\n);"
     },
     "getRecommendStatus": {
       "default": "final response = await client.getRecommendStatus(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n  taskID: 12345,\n);"
@@ -114,7 +124,9 @@
       "get frequently bought together recommendations": "final response = await client.getRecommendations(\n  getRecommendationsParams: GetRecommendationsParams(\n    requests: [\n      BoughtTogetherQuery(\n        indexName: \"<YOUR_INDEX_NAME>\",\n        objectID: \"objectID1\",\n        model: FbtModel.fromJson(\"bought-together\"),\n        threshold: 42.7,\n      ),\n    ],\n  ),\n);"
     },
     "searchRecommendRules": {
-      "default": "final response = await client.searchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);"
+      "searchRecommendRules": "final response = await client.searchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"related-products\"),\n);",
+      "search recommend rules for trending items": "final response = await client.searchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"trending-items\"),\n);",
+      "search recommend rules for looking similar": "final response = await client.searchRecommendRules(\n  indexName: \"<YOUR_INDEX_NAME>\",\n  model: RecommendModels.fromJson(\"looking-similar\"),\n);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey: \"updated-api-key\",\n);"
@@ -128,7 +140,9 @@
       "default": "import (\n\t\"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend\""
     },
     "batchRecommendRules": {
-      "default": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "batch recommend rules": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "batch recommend rules for trending items with request scopes": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"trending-items\")).WithRecommendRule(\n  []recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID(\"global-rule\").SetCondition(\n    recommend.NewEmptyCondition().SetRequestScope(recommend.GlobalRequestScopeAsRequestScope(\n      recommend.NewEmptyGlobalRequestScope().SetGlobal(true)))).SetConsequence(\n    recommend.NewEmptyConsequence().SetPromote(\n      []recommend.PromoteConsequenceObject{*recommend.NewEmptyPromoteConsequenceObject().SetObjectID(\"item-1\").SetPosition(0)})), *recommend.NewEmptyRecommendRule().SetObjectID(\"facet-rule\").SetCondition(\n    recommend.NewEmptyCondition().SetContext(\"mobile\").SetRequestScope(recommend.FacetRequestScopeAsRequestScope(\n      recommend.NewEmptyFacetRequestScope().SetFacetName(\"brand\").SetFacetValue(\"acme\")))).SetConsequence(\n    recommend.NewEmptyConsequence().SetHide(\n      []recommend.HideConsequenceObject{*recommend.NewEmptyHideConsequenceObject().SetObjectID(\"item-2\")}).SetParams(\n      recommend.NewEmptyParamsConsequence().SetFilters(\"inStock:true\")))}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "batch recommend rules for looking similar": "response, err := client.BatchRecommendRules(client.NewApiBatchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"looking-similar\")).WithRecommendRule(\n  []recommend.RecommendRule{*recommend.NewEmptyRecommendRule().SetObjectID(\"looking-similar-rule\").SetCondition(\n    recommend.NewEmptyCondition().SetFilters(\"brand:acme\")).SetConsequence(\n    recommend.NewEmptyConsequence().SetParams(\n      recommend.NewEmptyParamsConsequence().SetAutomaticFacetFilters(\n        []recommend.AutoFacetFilter{*recommend.NewEmptyAutoFacetFilter().SetFacet(\"category\").SetNegative(false)})))}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -160,7 +174,9 @@
       "default": "response, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"), \"objectID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRecommendRule": {
-      "default": "response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"), \"objectID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getRecommendRule": "response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"), \"objectID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "get recommend rule for trending items": "response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"trending-items\"), \"objectID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "get recommend rule for looking similar": "response, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"looking-similar\"), \"objectID\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getRecommendStatus": {
       "default": "response, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\"), 12345))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -176,7 +192,9 @@
       "get frequently bought together recommendations": "response, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(\n\n  recommend.NewEmptyGetRecommendationsParams().SetRequests(\n    []recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(\n      recommend.NewEmptyBoughtTogetherQuery().SetIndexName(\"<YOUR_INDEX_NAME>\").SetObjectID(\"objectID1\").SetModel(recommend.FbtModel(\"bought-together\")).SetThreshold(42.7))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "searchRecommendRules": {
-      "default": "response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "searchRecommendRules": "response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"related-products\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "search recommend rules for trending items": "response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"trending-items\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "search recommend rules for looking similar": "response, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(\n  \"<YOUR_INDEX_NAME>\", recommend.RecommendModels(\"looking-similar\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "setClientApiKey": {
       "default": "err = client.SetClientApiKey(\n  \"updated-api-key\")\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -190,7 +208,9 @@
       "default": "import com.algolia.api.RecommendClient;\nimport com.algolia.config.*;"
     },
     "batchRecommendRules": {
-      "default": "RecommendUpdatedAtResponse response = client.batchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);"
+      "batch recommend rules": "RecommendUpdatedAtResponse response = client.batchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);",
+      "batch recommend rules for trending items with request scopes": "RecommendUpdatedAtResponse response = client.batchRecommendRules(\n  \"<YOUR_INDEX_NAME>\",\n  RecommendModels.TRENDING_ITEMS,\n  Arrays.asList(\n    new RecommendRule()\n      .setObjectID(\"global-rule\")\n      .setCondition(new Condition().setRequestScope(new GlobalRequestScope().setGlobal(true)))\n      .setConsequence(new Consequence().setPromote(Arrays.asList(new PromoteConsequenceObject().setObjectID(\"item-1\").setPosition(0)))),\n    new RecommendRule()\n      .setObjectID(\"facet-rule\")\n      .setCondition(\n        new Condition().setContext(\"mobile\").setRequestScope(new FacetRequestScope().setFacetName(\"brand\").setFacetValue(\"acme\"))\n      )\n      .setConsequence(\n        new Consequence()\n          .setHide(Arrays.asList(new HideConsequenceObject().setObjectID(\"item-2\")))\n          .setParams(new ParamsConsequence().setFilters(\"inStock:true\"))\n      )\n  )\n);",
+      "batch recommend rules for looking similar": "RecommendUpdatedAtResponse response = client.batchRecommendRules(\n  \"<YOUR_INDEX_NAME>\",\n  RecommendModels.LOOKING_SIMILAR,\n  Arrays.asList(\n    new RecommendRule()\n      .setObjectID(\"looking-similar-rule\")\n      .setCondition(new Condition().setFilters(\"brand:acme\"))\n      .setConsequence(\n        new Consequence().setParams(\n          new ParamsConsequence().setAutomaticFacetFilters(Arrays.asList(new AutoFacetFilter().setFacet(\"category\").setNegative(false)))\n        )\n      )\n  )\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "Object response = client.customDelete(\"test/minimal\");",
@@ -222,7 +242,9 @@
       "default": "DeletedAtResponse response = client.deleteRecommendRule(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS, \"objectID\");"
     },
     "getRecommendRule": {
-      "default": "RecommendRule response = client.getRecommendRule(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS, \"objectID\");"
+      "getRecommendRule": "RecommendRule response = client.getRecommendRule(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS, \"objectID\");",
+      "get recommend rule for trending items": "RecommendRule response = client.getRecommendRule(\"<YOUR_INDEX_NAME>\", RecommendModels.TRENDING_ITEMS, \"objectID\");",
+      "get recommend rule for looking similar": "RecommendRule response = client.getRecommendRule(\"<YOUR_INDEX_NAME>\", RecommendModels.LOOKING_SIMILAR, \"objectID\");"
     },
     "getRecommendStatus": {
       "default": "GetRecommendTaskResponse response = client.getRecommendStatus(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS, 12345L);"
@@ -238,7 +260,9 @@
       "get frequently bought together recommendations": "GetRecommendationsResponse response = client.getRecommendations(\n  new GetRecommendationsParams().setRequests(\n    Arrays.asList(\n      new BoughtTogetherQuery()\n        .setIndexName(\"<YOUR_INDEX_NAME>\")\n        .setObjectID(\"objectID1\")\n        .setModel(FbtModel.BOUGHT_TOGETHER)\n        .setThreshold(42.7)\n    )\n  )\n);"
     },
     "searchRecommendRules": {
-      "default": "SearchRecommendRulesResponse response = client.searchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);"
+      "searchRecommendRules": "SearchRecommendRulesResponse response = client.searchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.RELATED_PRODUCTS);",
+      "search recommend rules for trending items": "SearchRecommendRulesResponse response = client.searchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.TRENDING_ITEMS);",
+      "search recommend rules for looking similar": "SearchRecommendRulesResponse response = client.searchRecommendRules(\"<YOUR_INDEX_NAME>\", RecommendModels.LOOKING_SIMILAR);"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\"updated-api-key\");"
@@ -252,7 +276,9 @@
       "default": "import { algoliasearch } from 'algoliasearch';"
     },
     "batchRecommendRules": {
-      "default": "const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });"
+      "batch recommend rules": "const response = await client.batchRecommendRules({ indexName: 'indexName', model: 'related-products' });",
+      "batch recommend rules for trending items with request scopes": "const response = await client.batchRecommendRules({\n  indexName: 'indexName',\n  model: 'trending-items',\n  recommendRule: [\n    {\n      objectID: 'global-rule',\n      condition: { requestScope: { global: true } },\n      consequence: { promote: [{ objectID: 'item-1', position: 0 }] },\n    },\n    {\n      objectID: 'facet-rule',\n      condition: { context: 'mobile', requestScope: { facetName: 'brand', facetValue: 'acme' } },\n      consequence: { hide: [{ objectID: 'item-2' }], params: { filters: 'inStock:true' } },\n    },\n  ],\n});",
+      "batch recommend rules for looking similar": "const response = await client.batchRecommendRules({\n  indexName: 'indexName',\n  model: 'looking-similar',\n  recommendRule: [\n    {\n      objectID: 'looking-similar-rule',\n      condition: { filters: 'brand:acme' },\n      consequence: { params: { automaticFacetFilters: [{ facet: 'category', negative: false }] } },\n    },\n  ],\n});"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "const response = await client.customDelete({ path: 'test/minimal' });",
@@ -284,7 +310,9 @@
       "default": "const response = await client.deleteRecommendRule({\n  indexName: 'indexName',\n  model: 'related-products',\n  objectID: 'objectID',\n});"
     },
     "getRecommendRule": {
-      "default": "const response = await client.getRecommendRule({\n  indexName: 'indexName',\n  model: 'related-products',\n  objectID: 'objectID',\n});"
+      "getRecommendRule": "const response = await client.getRecommendRule({\n  indexName: 'indexName',\n  model: 'related-products',\n  objectID: 'objectID',\n});",
+      "get recommend rule for trending items": "const response = await client.getRecommendRule({\n  indexName: 'indexName',\n  model: 'trending-items',\n  objectID: 'objectID',\n});",
+      "get recommend rule for looking similar": "const response = await client.getRecommendRule({\n  indexName: 'indexName',\n  model: 'looking-similar',\n  objectID: 'objectID',\n});"
     },
     "getRecommendStatus": {
       "default": "const response = await client.getRecommendStatus({\n  indexName: 'indexName',\n  model: 'related-products',\n  taskID: 12345,\n});"
@@ -300,7 +328,9 @@
       "get frequently bought together recommendations": "const response = await client.getRecommendations({\n  requests: [{ indexName: 'indexName1', objectID: 'objectID1', model: 'bought-together', threshold: 42.7 }],\n});"
     },
     "searchRecommendRules": {
-      "default": "const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });"
+      "searchRecommendRules": "const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'related-products' });",
+      "search recommend rules for trending items": "const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'trending-items' });",
+      "search recommend rules for looking similar": "const response = await client.searchRecommendRules({ indexName: 'indexName', model: 'looking-similar' });"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey({ apiKey: 'updated-api-key' });"
@@ -311,7 +341,9 @@
   },
   "kotlin": {
     "batchRecommendRules": {
-      "default": "var response =\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n  )"
+      "batch recommend rules": "var response =\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n  )",
+      "batch recommend rules for trending items with request scopes": "var response =\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"trending-items\" },\n    recommendRule =\n      listOf(\n        RecommendRule(\n          objectID = \"global-rule\",\n          condition = Condition(requestScope = GlobalRequestScope(global = true)),\n          consequence =\n            Consequence(\n              promote = listOf(PromoteConsequenceObject(objectID = \"item-1\", position = 0))\n            ),\n        ),\n        RecommendRule(\n          objectID = \"facet-rule\",\n          condition =\n            Condition(\n              context = \"mobile\",\n              requestScope = FacetRequestScope(facetName = \"brand\", facetValue = \"acme\"),\n            ),\n          consequence =\n            Consequence(\n              hide = listOf(HideConsequenceObject(objectID = \"item-2\")),\n              params = ParamsConsequence(filters = \"inStock:true\"),\n            ),\n        ),\n      ),\n  )",
+      "batch recommend rules for looking similar": "var response =\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"looking-similar\" },\n    recommendRule =\n      listOf(\n        RecommendRule(\n          objectID = \"looking-similar-rule\",\n          condition = Condition(filters = \"brand:acme\"),\n          consequence =\n            Consequence(\n              params =\n                ParamsConsequence(\n                  automaticFacetFilters =\n                    listOf(AutoFacetFilter(facet = \"category\", negative = false))\n                )\n            ),\n        )\n      ),\n  )"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "var response = client.customDelete(path = \"test/minimal\")",
@@ -343,7 +375,9 @@
       "default": "var response =\n  client.deleteRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n    objectID = \"objectID\",\n  )"
     },
     "getRecommendRule": {
-      "default": "var response =\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n    objectID = \"objectID\",\n  )"
+      "getRecommendRule": "var response =\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n    objectID = \"objectID\",\n  )",
+      "get recommend rule for trending items": "var response =\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"trending-items\" },\n    objectID = \"objectID\",\n  )",
+      "get recommend rule for looking similar": "var response =\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"looking-similar\" },\n    objectID = \"objectID\",\n  )"
     },
     "getRecommendStatus": {
       "default": "var response =\n  client.getRecommendStatus(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n    taskID = 12345L,\n  )"
@@ -359,7 +393,9 @@
       "get frequently bought together recommendations": "var response =\n  client.getRecommendations(\n    getRecommendationsParams =\n      GetRecommendationsParams(\n        requests =\n          listOf(\n            BoughtTogetherQuery(\n              indexName = \"<YOUR_INDEX_NAME>\",\n              objectID = \"objectID1\",\n              model = FbtModel.entries.first { it.value == \"bought-together\" },\n              threshold = 42.7,\n            )\n          )\n      )\n  )"
     },
     "searchRecommendRules": {
-      "default": "var response =\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n  )"
+      "searchRecommendRules": "var response =\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"related-products\" },\n  )",
+      "search recommend rules for trending items": "var response =\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"trending-items\" },\n  )",
+      "search recommend rules for looking similar": "var response =\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.entries.first { it.value == \"looking-similar\" },\n  )"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(apiKey = \"updated-api-key\")"
@@ -373,7 +409,9 @@
       "default": "use Algolia\\AlgoliaSearch\\Api\\RecommendClient;"
     },
     "batchRecommendRules": {
-      "default": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);"
+      "batch recommend rules": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);",
+      "batch recommend rules for trending items with request scopes": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'trending-items',\n    [\n        ['objectID' => 'global-rule',\n            'condition' => ['requestScope' => ['global' => true,\n            ],\n            ],\n            'consequence' => ['promote' => [\n                ['objectID' => 'item-1',\n                    'position' => 0,\n                ],\n            ],\n            ],\n        ],\n\n        ['objectID' => 'facet-rule',\n            'condition' => ['context' => 'mobile',\n                'requestScope' => ['facetName' => 'brand',\n                    'facetValue' => 'acme',\n                ],\n            ],\n            'consequence' => ['hide' => [\n                ['objectID' => 'item-2',\n                ],\n            ],\n                'params' => ['filters' => 'inStock:true',\n                ],\n            ],\n        ],\n    ],\n);",
+      "batch recommend rules for looking similar": "$response = $client->batchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'looking-similar',\n    [\n        ['objectID' => 'looking-similar-rule',\n            'condition' => ['filters' => 'brand:acme',\n            ],\n            'consequence' => ['params' => ['automaticFacetFilters' => [\n                ['facet' => 'category',\n                    'negative' => false,\n                ],\n            ],\n            ],\n            ],\n        ],\n    ],\n);"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "$response = $client->customDelete(\n    'test/minimal',\n);",
@@ -405,7 +443,9 @@
       "default": "$response = $client->deleteRecommendRule(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n    'objectID',\n);"
     },
     "getRecommendRule": {
-      "default": "$response = $client->getRecommendRule(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n    'objectID',\n);"
+      "getRecommendRule": "$response = $client->getRecommendRule(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n    'objectID',\n);",
+      "get recommend rule for trending items": "$response = $client->getRecommendRule(\n    '<YOUR_INDEX_NAME>',\n    'trending-items',\n    'objectID',\n);",
+      "get recommend rule for looking similar": "$response = $client->getRecommendRule(\n    '<YOUR_INDEX_NAME>',\n    'looking-similar',\n    'objectID',\n);"
     },
     "getRecommendStatus": {
       "default": "$response = $client->getRecommendStatus(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n    12345,\n);"
@@ -421,7 +461,9 @@
       "get frequently bought together recommendations": "$response = $client->getRecommendations(\n    ['requests' => [\n        ['indexName' => '<YOUR_INDEX_NAME>',\n            'objectID' => 'objectID1',\n            'model' => 'bought-together',\n            'threshold' => 42.7,\n        ],\n    ],\n    ],\n);"
     },
     "searchRecommendRules": {
-      "default": "$response = $client->searchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);"
+      "searchRecommendRules": "$response = $client->searchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'related-products',\n);",
+      "search recommend rules for trending items": "$response = $client->searchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'trending-items',\n);",
+      "search recommend rules for looking similar": "$response = $client->searchRecommendRules(\n    '<YOUR_INDEX_NAME>',\n    'looking-similar',\n);"
     },
     "setClientApiKey": {
       "default": "$client->setClientApiKey(\n    'updated-api-key',\n);"
@@ -435,7 +477,9 @@
       "default": "from algoliasearch.recommend.client import RecommendClientSync\nfrom json import loads"
     },
     "batchRecommendRules": {
-      "default": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)"
+      "batch recommend rules": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)",
+      "batch recommend rules for trending items with request scopes": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"trending-items\",\n    recommend_rule=[\n        {\n            \"objectID\": \"global-rule\",\n            \"condition\": {\n                \"requestScope\": {\n                    \"global\": True,\n                },\n            },\n            \"consequence\": {\n                \"promote\": [\n                    {\n                        \"objectID\": \"item-1\",\n                        \"position\": 0,\n                    },\n                ],\n            },\n        },\n        {\n            \"objectID\": \"facet-rule\",\n            \"condition\": {\n                \"context\": \"mobile\",\n                \"requestScope\": {\n                    \"facetName\": \"brand\",\n                    \"facetValue\": \"acme\",\n                },\n            },\n            \"consequence\": {\n                \"hide\": [\n                    {\n                        \"objectID\": \"item-2\",\n                    },\n                ],\n                \"params\": {\n                    \"filters\": \"inStock:true\",\n                },\n            },\n        },\n    ],\n)",
+      "batch recommend rules for looking similar": "response = client.batch_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"looking-similar\",\n    recommend_rule=[\n        {\n            \"objectID\": \"looking-similar-rule\",\n            \"condition\": {\n                \"filters\": \"brand:acme\",\n            },\n            \"consequence\": {\n                \"params\": {\n                    \"automaticFacetFilters\": [\n                        {\n                            \"facet\": \"category\",\n                            \"negative\": False,\n                        },\n                    ],\n                },\n            },\n        },\n    ],\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\n    path=\"test/minimal\",\n)",
@@ -467,7 +511,9 @@
       "default": "response = client.delete_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)"
     },
     "getRecommendRule": {
-      "default": "response = client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)"
+      "getRecommendRule": "response = client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    object_id=\"objectID\",\n)",
+      "get recommend rule for trending items": "response = client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"trending-items\",\n    object_id=\"objectID\",\n)",
+      "get recommend rule for looking similar": "response = client.get_recommend_rule(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"looking-similar\",\n    object_id=\"objectID\",\n)"
     },
     "getRecommendStatus": {
       "default": "response = client.get_recommend_status(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n    task_id=12345,\n)"
@@ -483,7 +529,9 @@
       "get frequently bought together recommendations": "response = client.get_recommendations(\n    get_recommendations_params={\n        \"requests\": [\n            {\n                \"indexName\": \"<YOUR_INDEX_NAME>\",\n                \"objectID\": \"objectID1\",\n                \"model\": \"bought-together\",\n                \"threshold\": 42.7,\n            },\n        ],\n    },\n)"
     },
     "searchRecommendRules": {
-      "default": "response = client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)"
+      "searchRecommendRules": "response = client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"related-products\",\n)",
+      "search recommend rules for trending items": "response = client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"trending-items\",\n)",
+      "search recommend rules for looking similar": "response = client.search_recommend_rules(\n    index_name=\"<YOUR_INDEX_NAME>\",\n    model=\"looking-similar\",\n)"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\n    api_key=\"updated-api-key\",\n)"
@@ -497,7 +545,9 @@
       "default": "require \"algolia\""
     },
     "batchRecommendRules": {
-      "default": "response = client.batch_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")"
+      "batch recommend rules": "response = client.batch_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")",
+      "batch recommend rules for trending items with request scopes": "response = client.batch_recommend_rules(\n  \"<YOUR_INDEX_NAME>\",\n  \"trending-items\",\n  [\n    Algolia::Recommend::RecommendRule.new(\n      algolia_object_id: \"global-rule\",\n      condition: Algolia::Recommend::Condition.new(\n        request_scope: Algolia::Recommend::GlobalRequestScope.new(global: true)\n      ),\n      consequence: Algolia::Recommend::Consequence.new(\n        promote: [Algolia::Recommend::PromoteConsequenceObject.new(algolia_object_id: \"item-1\", position: 0)]\n      )\n    ),\n    Algolia::Recommend::RecommendRule.new(\n      algolia_object_id: \"facet-rule\",\n      condition: Algolia::Recommend::Condition.new(\n        context: \"mobile\",\n        request_scope: Algolia::Recommend::FacetRequestScope.new(facet_name: \"brand\", facet_value: \"acme\")\n      ),\n      consequence: Algolia::Recommend::Consequence.new(\n        hide: [Algolia::Recommend::HideConsequenceObject.new(algolia_object_id: \"item-2\")],\n        params: Algolia::Recommend::ParamsConsequence.new(filters: \"inStock:true\")\n      )\n    )\n  ]\n)",
+      "batch recommend rules for looking similar": "response = client.batch_recommend_rules(\n  \"<YOUR_INDEX_NAME>\",\n  \"looking-similar\",\n  [\n    Algolia::Recommend::RecommendRule.new(\n      algolia_object_id: \"looking-similar-rule\",\n      condition: Algolia::Recommend::Condition.new(filters: \"brand:acme\"),\n      consequence: Algolia::Recommend::Consequence.new(\n        params: Algolia::Recommend::ParamsConsequence.new(\n          automatic_facet_filters: [Algolia::Recommend::AutoFacetFilter.new(facet: \"category\", negative: false)]\n        )\n      )\n    )\n  ]\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "response = client.custom_delete(\"test/minimal\")",
@@ -529,7 +579,9 @@
       "default": "response = client.delete_recommend_rule(\"<YOUR_INDEX_NAME>\", \"related-products\", \"objectID\")"
     },
     "getRecommendRule": {
-      "default": "response = client.get_recommend_rule(\"<YOUR_INDEX_NAME>\", \"related-products\", \"objectID\")"
+      "getRecommendRule": "response = client.get_recommend_rule(\"<YOUR_INDEX_NAME>\", \"related-products\", \"objectID\")",
+      "get recommend rule for trending items": "response = client.get_recommend_rule(\"<YOUR_INDEX_NAME>\", \"trending-items\", \"objectID\")",
+      "get recommend rule for looking similar": "response = client.get_recommend_rule(\"<YOUR_INDEX_NAME>\", \"looking-similar\", \"objectID\")"
     },
     "getRecommendStatus": {
       "default": "response = client.get_recommend_status(\"<YOUR_INDEX_NAME>\", \"related-products\", 12345)"
@@ -545,7 +597,9 @@
       "get frequently bought together recommendations": "response = client.get_recommendations(\n  Algolia::Recommend::GetRecommendationsParams.new(\n    requests: [\n      Algolia::Recommend::BoughtTogetherQuery.new(\n        index_name: \"<YOUR_INDEX_NAME>\",\n        algolia_object_id: \"objectID1\",\n        model: \"bought-together\",\n        threshold: 42.7\n      )\n    ]\n  )\n)"
     },
     "searchRecommendRules": {
-      "default": "response = client.search_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")"
+      "searchRecommendRules": "response = client.search_recommend_rules(\"<YOUR_INDEX_NAME>\", \"related-products\")",
+      "search recommend rules for trending items": "response = client.search_recommend_rules(\"<YOUR_INDEX_NAME>\", \"trending-items\")",
+      "search recommend rules for looking similar": "response = client.search_recommend_rules(\"<YOUR_INDEX_NAME>\", \"looking-similar\")"
     },
     "setClientApiKey": {
       "default": "client.set_client_api_key(\"updated-api-key\")"
@@ -559,7 +613,9 @@
       "default": "import algoliasearch.api.RecommendClient\nimport algoliasearch.config.*"
     },
     "batchRecommendRules": {
-      "default": "val response = Await.result(\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\")\n  ),\n  Duration(100, \"sec\")\n)"
+      "batch recommend rules": "val response = Await.result(\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "batch recommend rules for trending items with request scopes": "val response = Await.result(\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"trending-items\"),\n    recommendRule = Some(\n      Seq(\n        RecommendRule(\n          objectID = Some(\"global-rule\"),\n          condition = Some(\n            Condition(\n              requestScope = Some(\n                GlobalRequestScope(\n                  global = true\n                )\n              )\n            )\n          ),\n          consequence = Some(\n            Consequence(\n              promote = Some(\n                Seq(\n                  PromoteConsequenceObject(\n                    objectID = Some(\"item-1\"),\n                    position = Some(0)\n                  )\n                )\n              )\n            )\n          )\n        ),\n        RecommendRule(\n          objectID = Some(\"facet-rule\"),\n          condition = Some(\n            Condition(\n              context = Some(\"mobile\"),\n              requestScope = Some(\n                FacetRequestScope(\n                  facetName = \"brand\",\n                  facetValue = \"acme\"\n                )\n              )\n            )\n          ),\n          consequence = Some(\n            Consequence(\n              hide = Some(\n                Seq(\n                  HideConsequenceObject(\n                    objectID = Some(\"item-2\")\n                  )\n                )\n              ),\n              params = Some(\n                ParamsConsequence(\n                  filters = Some(\"inStock:true\")\n                )\n              )\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "batch recommend rules for looking similar": "val response = Await.result(\n  client.batchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"looking-similar\"),\n    recommendRule = Some(\n      Seq(\n        RecommendRule(\n          objectID = Some(\"looking-similar-rule\"),\n          condition = Some(\n            Condition(\n              filters = Some(\"brand:acme\")\n            )\n          ),\n          consequence = Some(\n            Consequence(\n              params = Some(\n                ParamsConsequence(\n                  automaticFacetFilters = Some(\n                    Seq(\n                      AutoFacetFilter(\n                        facet = Some(\"category\"),\n                        negative = Some(false)\n                      )\n                    )\n                  )\n                )\n              )\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "val response = Await.result(\n  client.customDelete[JObject](\n    path = \"test/minimal\"\n  ),\n  Duration(100, \"sec\")\n)",
@@ -591,7 +647,9 @@
       "default": "val response = Await.result(\n  client.deleteRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\"),\n    objectID = \"objectID\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRecommendRule": {
-      "default": "val response = Await.result(\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\"),\n    objectID = \"objectID\"\n  ),\n  Duration(100, \"sec\")\n)"
+      "getRecommendRule": "val response = Await.result(\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\"),\n    objectID = \"objectID\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get recommend rule for trending items": "val response = Await.result(\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"trending-items\"),\n    objectID = \"objectID\"\n  ),\n  Duration(100, \"sec\")\n)",
+      "get recommend rule for looking similar": "val response = Await.result(\n  client.getRecommendRule(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"looking-similar\"),\n    objectID = \"objectID\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getRecommendStatus": {
       "default": "val response = Await.result(\n  client.getRecommendStatus(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\"),\n    taskID = 12345L\n  ),\n  Duration(100, \"sec\")\n)"
@@ -607,7 +665,9 @@
       "get frequently bought together recommendations": "val response = Await.result(\n  client.getRecommendations(\n    getRecommendationsParams = GetRecommendationsParams(\n      requests = Seq(\n        BoughtTogetherQuery(\n          indexName = \"<YOUR_INDEX_NAME>\",\n          objectID = \"objectID1\",\n          model = FbtModel.withName(\"bought-together\"),\n          threshold = 42.7\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "searchRecommendRules": {
-      "default": "val response = Await.result(\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\")\n  ),\n  Duration(100, \"sec\")\n)"
+      "searchRecommendRules": "val response = Await.result(\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"related-products\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "search recommend rules for trending items": "val response = Await.result(\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"trending-items\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "search recommend rules for looking similar": "val response = Await.result(\n  client.searchRecommendRules(\n    indexName = \"<YOUR_INDEX_NAME>\",\n    model = RecommendModels.withName(\"looking-similar\")\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "setClientApiKey": {
       "default": "client.setClientApiKey(\n  apiKey = \"updated-api-key\"\n)"
@@ -621,7 +681,9 @@
       "default": "import AlgoliaRecommend"
     },
     "batchRecommendRules": {
-      "default": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)"
+      "batch recommend rules": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)",
+      "batch recommend rules for trending items with request scopes": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.trendingItems,\n    recommendRule: [\n        RecommendRule(\n            objectID: \"global-rule\",\n            condition: RecommendCondition(requestScope: RequestScope\n                .globalRequestScope(GlobalRequestScope(global: true))),\n            consequence: RecommendConsequence(promote: [PromoteConsequenceObject(\n                objectID: \"item-1\",\n                position: 0\n            )])\n        ),\n        RecommendRule(\n            objectID: \"facet-rule\",\n            condition: RecommendCondition(\n                context: \"mobile\",\n                requestScope: RequestScope.facetRequestScope(FacetRequestScope(\n                    facetName: \"brand\",\n                    facetValue: \"acme\"\n                ))\n            ),\n            consequence: RecommendConsequence(\n                hide: [HideConsequenceObject(objectID: \"item-2\")],\n                params: ParamsConsequence(filters: \"inStock:true\")\n            )\n        ),\n    ]\n)",
+      "batch recommend rules for looking similar": "let response = try await client.batchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.lookingSimilar,\n    recommendRule: [RecommendRule(\n        objectID: \"looking-similar-rule\",\n        condition: RecommendCondition(filters: \"brand:acme\"),\n        consequence: RecommendConsequence(params: ParamsConsequence(automaticFacetFilters: [AutoFacetFilter(\n            facet: \"category\",\n            negative: false\n        )]))\n    )]\n)"
     },
     "customDelete": {
       "allow del method for a custom path with minimal parameters": "let response = try await client.customDelete(path: \"test/minimal\")",
@@ -653,7 +715,9 @@
       "default": "let response = try await client.deleteRecommendRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts,\n    objectID: \"objectID\"\n)"
     },
     "getRecommendRule": {
-      "default": "let response = try await client.getRecommendRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts,\n    objectID: \"objectID\"\n)"
+      "getRecommendRule": "let response = try await client.getRecommendRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts,\n    objectID: \"objectID\"\n)",
+      "get recommend rule for trending items": "let response = try await client.getRecommendRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.trendingItems,\n    objectID: \"objectID\"\n)",
+      "get recommend rule for looking similar": "let response = try await client.getRecommendRule(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.lookingSimilar,\n    objectID: \"objectID\"\n)"
     },
     "getRecommendStatus": {
       "default": "let response = try await client.getRecommendStatus(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts,\n    taskID: Int64(12345)\n)"
@@ -669,7 +733,9 @@
       "get frequently bought together recommendations": "let response = try await client\n    .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [RecommendationsRequest\n            .boughtTogetherQuery(BoughtTogetherQuery(\n                indexName: \"<YOUR_INDEX_NAME>\",\n                threshold: 42.7,\n                model: FbtModel.boughtTogether,\n                objectID: \"objectID1\"\n            ))]))"
     },
     "searchRecommendRules": {
-      "default": "let response = try await client.searchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)"
+      "searchRecommendRules": "let response = try await client.searchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.relatedProducts\n)",
+      "search recommend rules for trending items": "let response = try await client.searchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.trendingItems\n)",
+      "search recommend rules for looking similar": "let response = try await client.searchRecommendRules(\n    indexName: \"<YOUR_INDEX_NAME>\",\n    model: RecommendModels.lookingSimilar\n)"
     },
     "setClientApiKey": {
       "default": "try client.setClientApiKey(apiKey: \"updated-api-key\")"

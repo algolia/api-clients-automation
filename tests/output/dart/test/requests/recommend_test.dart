@@ -26,6 +26,108 @@ void main() {
     ),
   );
 
+  // batchRecommendRules
+  test(
+    'batch recommend rules for trending items with request scopes',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.batchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("trending-items"),
+        recommendRule: [
+          RecommendRule(
+            objectID: "global-rule",
+            condition: Condition(
+              requestScope: GlobalRequestScope(
+                global: true,
+              ),
+            ),
+            consequence: Consequence(
+              promote: [
+                PromoteConsequenceObject(
+                  objectID: "item-1",
+                  position: 0,
+                ),
+              ],
+            ),
+          ),
+          RecommendRule(
+            objectID: "facet-rule",
+            condition: Condition(
+              context: "mobile",
+              requestScope: FacetRequestScope(
+                facetName: "brand",
+                facetValue: "acme",
+              ),
+            ),
+            consequence: Consequence(
+              hide: [
+                HideConsequenceObject(
+                  objectID: "item-2",
+                ),
+              ],
+              params: ParamsConsequence(
+                filters: "inStock:true",
+              ),
+            ),
+          ),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/trending-items/recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]""");
+      },
+    ),
+  );
+
+  // batchRecommendRules
+  test(
+    'batch recommend rules for looking similar',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.batchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("looking-similar"),
+        recommendRule: [
+          RecommendRule(
+            objectID: "looking-similar-rule",
+            condition: Condition(
+              filters: "brand:acme",
+            ),
+            consequence: Consequence(
+              params: ParamsConsequence(
+                automaticFacetFilters: [
+                  AutoFacetFilter(
+                    facet: "category",
+                    negative: false,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/looking-similar/recommend/rules/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]""");
+      },
+    ),
+  );
+
   // customDelete
   test(
     'allow del method for a custom path with minimal parameters',
@@ -596,6 +698,52 @@ void main() {
     ),
   );
 
+  // getRecommendRule
+  test(
+    'get recommend rule for trending items',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendRule(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("trending-items"),
+        objectID: "objectID",
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/trending-items/recommend/rules/objectID');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // getRecommendRule
+  test(
+    'get recommend rule for looking similar',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getRecommendRule(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("looking-similar"),
+        objectID: "objectID",
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/looking-similar/recommend/rules/objectID');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getRecommendStatus
   test(
     'getRecommendStatus',
@@ -945,6 +1093,50 @@ void main() {
       intercept: (request) {
         expectPath(request.path,
             '/1/indexes/indexName/related-products/recommend/rules/search');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // searchRecommendRules
+  test(
+    'search recommend rules for trending items',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("trending-items"),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/trending-items/recommend/rules/search');
+        expect(request.method, 'post');
+        expectBody(request.body, """{}""");
+      },
+    ),
+  );
+
+  // searchRecommendRules
+  test(
+    'search recommend rules for looking similar',
+    () => runTest(
+      builder: (requester) => RecommendClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.searchRecommendRules(
+        indexName: "indexName",
+        model: RecommendModels.fromJson("looking-similar"),
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/1/indexes/indexName/looking-similar/recommend/rules/search');
         expect(request.method, 'post');
         expectBody(request.body, """{}""");
       },
