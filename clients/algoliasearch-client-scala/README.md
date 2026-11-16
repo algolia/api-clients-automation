@@ -68,11 +68,22 @@ For snapshots, add the `sonatype` repository:
 </repositories>
 ```
 
-If you're using `sbt`, add the following dependency to your `build.sbt` file:
+If you're using `sbt`, add the following dependencies to your `build.sbt` file:
 
 ```scala
-libraryDependencies += "com.algolia" %% "algoliasearch-scala" % "[2,)"
+libraryDependencies ++= Seq(
+  "com.algolia" %% "algoliasearch-scala" % "[2,)",
+  // Required at runtime by the client's JSON layer but not declared by the client.
+  // Without it, the first request fails with NoClassDefFoundError: scala/quoted/staging.
+  "org.scala-lang" %% "scala3-staging" % scalaVersion.value
+)
 ```
+
+The Scala 3 artifact is compiled with a recent Scala 3 compiler (3.8.2 for version 2.43.1).
+Use that compiler version or newer, or the build fails with a TASTy version error.
+
+Don't add `org.json4s` to your dependencies.
+The client depends on the `io.github.json4s` fork, and the two collide.
 
 For snapshots, add the `sonatype` repository:
 ```scala
