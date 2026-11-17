@@ -251,9 +251,7 @@ export async function pushConfiguredRepositories(
     ([name]) => repositories.length === 0 || repositories.includes(name),
   );
 
-  const results = await Promise.allSettled(
-    selectedRepositories.map(([name, config]) => pushRepository(name, config)),
-  );
+  const results = await Promise.allSettled(selectedRepositories.map(([name, config]) => pushRepository(name, config)));
 
   return selectedRepositories.flatMap(([name], index) => (results[index].status === 'rejected' ? [name] : []));
 }

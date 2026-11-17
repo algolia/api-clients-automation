@@ -70,13 +70,9 @@ export type RepositoryConfiguration = {
 };
 
 export const pushToRepositoryConfiguration: {
-  [k in
-    | 'AlgoliaWeb'
-    | 'go'
-    | 'mcp-node'
-    | 'docs-new'
-    | 'n8n-nodes-algolia'
-    | 'api-clients-mcp']: RepositoryConfiguration;
+  [
+    k in 'AlgoliaWeb' | 'go' | 'mcp-node' | 'docs-new' | 'n8n-nodes-algolia' | 'api-clients-mcp'
+  ]: RepositoryConfiguration;
 } = {
   AlgoliaWeb: {
     baseBranch: 'develop',
