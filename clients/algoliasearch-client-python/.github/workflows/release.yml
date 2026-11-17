@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: Publish
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     environment:
       name: pypi
