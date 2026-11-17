@@ -27,7 +27,23 @@ jobs:
       - name: Compile
         run: sbt +compile
 
-      - run: sbt ci-release
+      # sbt 2.x runs `sbt <command>` through a thin client talking to a server
+      # started in the background by the first invocation. That server keeps the
+      # environment of the step that started it, so a later `sbt ci-release`
+      # would reuse it, never see the secrets below, and silently do nothing
+      # ("No access to secret variables, doing nothing").
+      - name: Shutdown sbt server
+        run: sbt shutdown
+
+      - name: Publish
+        run: |
+          for name in PGP_PASSPHRASE PGP_SECRET SONATYPE_USERNAME SONATYPE_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Secret for $name is empty, refusing to publish nothing"
+              exit 1
+            fi
+          done
+          sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
