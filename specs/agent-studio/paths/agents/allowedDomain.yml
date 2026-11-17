@@ -3,7 +3,7 @@ get:
     - Allowed Domains
   operationId: getAllowedDomain
   x-acl:
-    - settings
+    - editSettings
   summary: Get Allowed Domain
   description: Get a single allowed domain by id.
   parameters:

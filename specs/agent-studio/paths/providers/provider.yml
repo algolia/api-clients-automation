@@ -3,7 +3,7 @@ get:
     - Providers
   operationId: getProvider
   x-acl:
-    - settings
+    - editSettings
   summary: Get Provider
   description: Get Provider.
   parameters:

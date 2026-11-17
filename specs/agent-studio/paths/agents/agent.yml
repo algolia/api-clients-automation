@@ -3,7 +3,7 @@ get:
     - Agents
   operationId: getAgent
   x-acl:
-    - settings
+    - editSettings
   summary: Get Agent
   description: Retrieve details of the specified agent.
   parameters:

@@ -4,8 +4,11 @@ ProviderName:
     - openai
     - azure_openai
     - google_genai
+    - google_vertexai
     - deepseek
     - openai_compatible
+    - algolia_managed_llm
     - xai
     - anthropic
+    - mistralai
   title: providerName
