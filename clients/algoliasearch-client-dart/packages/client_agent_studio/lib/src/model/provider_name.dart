@@ -7,10 +7,13 @@ enum ProviderName {
   openai(r'openai'),
   azureOpenai(r'azure_openai'),
   googleGenai(r'google_genai'),
+  googleVertexai(r'google_vertexai'),
   deepseek(r'deepseek'),
   openaiCompatible(r'openai_compatible'),
+  algoliaManagedLlm(r'algolia_managed_llm'),
   xai(r'xai'),
-  anthropic(r'anthropic');
+  anthropic(r'anthropic'),
+  mistralai(r'mistralai');
 
   const ProviderName(this.raw);
   final dynamic raw;

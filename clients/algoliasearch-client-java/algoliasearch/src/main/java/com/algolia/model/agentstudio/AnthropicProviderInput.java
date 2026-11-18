@@ -9,13 +9,16 @@ import java.util.Objects;
 
 /** Anthropic-specific provider input. */
 @JsonDeserialize(as = AnthropicProviderInput.class)
-public class AnthropicProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
+public class AnthropicProviderInput implements InputUnion, InputUnionProviderAuthenticationResponse, ProviderInputNullable {
 
   @JsonProperty("apiKey")
   private String apiKey;
 
   @JsonProperty("baseUrl")
   private String baseUrl;
+
+  @JsonProperty("workspaceId")
+  private String workspaceId;
 
   public AnthropicProviderInput setApiKey(String apiKey) {
     this.apiKey = apiKey;
@@ -39,6 +42,20 @@ public class AnthropicProviderInput implements InputUnion, ProviderInputNullable
     return baseUrl;
   }
 
+  public AnthropicProviderInput setWorkspaceId(String workspaceId) {
+    this.workspaceId = workspaceId;
+    return this;
+  }
+
+  /**
+   * Required for API keys not scoped to a single workspace (sk-ant-usr-...). Sent as the
+   * anthropic-workspace-id header on every request.
+   */
+  @javax.annotation.Nullable
+  public String getWorkspaceId() {
+    return workspaceId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -48,12 +65,16 @@ public class AnthropicProviderInput implements InputUnion, ProviderInputNullable
       return false;
     }
     AnthropicProviderInput anthropicProviderInput = (AnthropicProviderInput) o;
-    return Objects.equals(this.apiKey, anthropicProviderInput.apiKey) && Objects.equals(this.baseUrl, anthropicProviderInput.baseUrl);
+    return (
+      Objects.equals(this.apiKey, anthropicProviderInput.apiKey) &&
+      Objects.equals(this.baseUrl, anthropicProviderInput.baseUrl) &&
+      Objects.equals(this.workspaceId, anthropicProviderInput.workspaceId)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(apiKey, baseUrl);
+    return Objects.hash(apiKey, baseUrl, workspaceId);
   }
 
   @Override
@@ -62,6 +83,7 @@ public class AnthropicProviderInput implements InputUnion, ProviderInputNullable
     sb.append("class AnthropicProviderInput {\n");
     sb.append("    apiKey: ").append(toIndentedString(apiKey)).append("\n");
     sb.append("    baseUrl: ").append(toIndentedString(baseUrl)).append("\n");
+    sb.append("    workspaceId: ").append(toIndentedString(workspaceId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Input for a provider with an OpenAI-compatible API. */
 @JsonDeserialize(as = OpenAICompatibleProviderInput.class)
-public class OpenAICompatibleProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
+public class OpenAICompatibleProviderInput implements InputUnion, InputUnionProviderAuthenticationResponse, ProviderInputNullable {
 
   @JsonProperty("apiKey")
   private String apiKey;

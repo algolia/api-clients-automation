@@ -9,11 +9,11 @@ part 'managed_provider_response_input.g.dart';
 final class ManagedProviderResponseInput {
   /// Returns a new [ManagedProviderResponseInput] instance.
   const ManagedProviderResponseInput({
-    this.defaultModel,
+    required this.defaultModel,
   });
 
   @JsonKey(name: r'defaultModel')
-  final String? defaultModel;
+  final String defaultModel;
 
   @override
   bool operator ==(Object other) =>
@@ -22,7 +22,7 @@ final class ManagedProviderResponseInput {
           other.defaultModel == defaultModel;
 
   @override
-  int get hashCode => (defaultModel == null ? 0 : defaultModel.hashCode);
+  int get hashCode => defaultModel.hashCode;
 
   factory ManagedProviderResponseInput.fromJson(Map<String, dynamic> json) =>
       _$ManagedProviderResponseInputFromJson(json);

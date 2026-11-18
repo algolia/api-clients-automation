@@ -15,6 +15,7 @@ AnthropicProviderInput _$AnthropicProviderInputFromJson(
         final val = AnthropicProviderInput(
           apiKey: $checkedConvert('apiKey', (v) => v as String),
           baseUrl: $checkedConvert('baseUrl', (v) => v as String?),
+          workspaceId: $checkedConvert('workspaceId', (v) => v as String?),
         );
         return val;
       },
@@ -33,5 +34,6 @@ Map<String, dynamic> _$AnthropicProviderInputToJson(
   }
 
   writeNotNull('baseUrl', instance.baseUrl);
+  writeNotNull('workspaceId', instance.workspaceId);
   return val;
 }

@@ -14,13 +14,19 @@ public enum ProviderName {
 
   GOOGLE_GENAI("google_genai"),
 
+  GOOGLE_VERTEXAI("google_vertexai"),
+
   DEEPSEEK("deepseek"),
 
   OPENAI_COMPATIBLE("openai_compatible"),
 
+  ALGOLIA_MANAGED_LLM("algolia_managed_llm"),
+
   XAI("xai"),
 
-  ANTHROPIC("anthropic");
+  ANTHROPIC("anthropic"),
+
+  MISTRALAI("mistralai");
 
   private final String value;
 

@@ -35,42 +35,13 @@
   */
 package algoliasearch.agentstudio
 
-import org.json4s._
-
-/** ProviderInput
+/** Vertex AI provider input: an API key (Express Mode) or GCP service-account credentials.
   */
-sealed trait ProviderInput
-
-trait ProviderInputTrait extends ProviderInput
-
-object ProviderInput {}
-
-object ProviderInputSerializer extends Serializer[ProviderInput] {
-  override def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), ProviderInput] = {
-
-    case (TypeInfo(clazz, _), json) if clazz == classOf[ProviderInput] =>
-      json match {
-        case value: JObject
-            if value.obj.exists(_._1 == "azureDeployment") && value.obj.exists(_._1 == "azureEndpoint") =>
-          Extraction.extract[AzureOpenAIProviderInput](value)
-        case value: JObject if value.obj.exists(_._1 == "baseUrl") && value.obj.exists(_._1 == "defaultModel") =>
-          Extraction.extract[OpenAICompatibleProviderInput](value)
-        case value: JObject => Extraction.extract[OpenAIProviderInput](value)
-        case value: JObject => Extraction.extract[BaseProviderInput](value)
-        case value: JObject => Extraction.extract[AnthropicProviderInput](value)
-        case value: JObject => Extraction.extract[XAIProviderInput](value)
-        case _              => throw new MappingException("Can't convert " + json + " to ProviderInput")
-      }
-  }
-
-  override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ProviderInput =>
-    value match {
-      case value: AzureOpenAIProviderInput      => Extraction.decompose(value)(format - this)
-      case value: OpenAICompatibleProviderInput => Extraction.decompose(value)(format - this)
-      case value: OpenAIProviderInput           => Extraction.decompose(value)(format - this)
-      case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
-      case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
-      case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
-    }
-  }
-}
+case class VertexAIProviderInput(
+    apiKey: Option[String] = scala.None,
+    project: Option[String] = scala.None,
+    location: Option[String] = scala.None,
+    serviceAccountKey: Option[GoogleServiceAccountKey] = scala.None
+) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
+    with ProviderInputNullableTrait

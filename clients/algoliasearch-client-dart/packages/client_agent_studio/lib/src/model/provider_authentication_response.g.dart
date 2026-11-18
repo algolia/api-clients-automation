@@ -20,8 +20,6 @@ ProviderAuthenticationResponse _$ProviderAuthenticationResponseFromJson(
           createdAt: $checkedConvert('createdAt', (v) => v as String),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
           lastUsedAt: $checkedConvert('lastUsedAt', (v) => v as String?),
-          isAlgoliaManaged:
-              $checkedConvert('isAlgoliaManaged', (v) => v as bool?),
         );
         return val;
       },
@@ -45,6 +43,5 @@ Map<String, dynamic> _$ProviderAuthenticationResponseToJson(
   val['createdAt'] = instance.createdAt;
   val['updatedAt'] = instance.updatedAt;
   writeNotNull('lastUsedAt', instance.lastUsedAt);
-  writeNotNull('isAlgoliaManaged', instance.isAlgoliaManaged);
   return val;
 }

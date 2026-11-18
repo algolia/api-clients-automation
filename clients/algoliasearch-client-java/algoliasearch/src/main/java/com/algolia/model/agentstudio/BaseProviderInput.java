@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Base input that all providers must have. */
 @JsonDeserialize(as = BaseProviderInput.class)
-public class BaseProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
+public class BaseProviderInput implements InputUnion, InputUnionProviderAuthenticationResponse, ProviderInputNullable {
 
   @JsonProperty("apiKey")
   private String apiKey;

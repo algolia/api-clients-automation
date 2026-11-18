@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /** Azure OpenAI-specific provider input. */
 @JsonDeserialize(as = AzureOpenAIProviderInput.class)
-public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullable, ProviderInput {
+public class AzureOpenAIProviderInput implements InputUnion, InputUnionProviderAuthenticationResponse, ProviderInputNullable {
 
   @JsonProperty("apiKey")
   private String apiKey;
@@ -19,6 +19,9 @@ public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullab
 
   @JsonProperty("azureDeployment")
   private String azureDeployment;
+
+  @JsonProperty("apiMode")
+  private ApiModeEnum apiMode;
 
   @JsonProperty("apiVersion")
   private String apiVersion;
@@ -56,6 +59,17 @@ public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullab
     return azureDeployment;
   }
 
+  public AzureOpenAIProviderInput setApiMode(ApiModeEnum apiMode) {
+    this.apiMode = apiMode;
+    return this;
+  }
+
+  /** Get apiMode */
+  @javax.annotation.Nullable
+  public ApiModeEnum getApiMode() {
+    return apiMode;
+  }
+
   public AzureOpenAIProviderInput setApiVersion(String apiVersion) {
     this.apiVersion = apiVersion;
     return this;
@@ -80,13 +94,14 @@ public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullab
       Objects.equals(this.apiKey, azureOpenAIProviderInput.apiKey) &&
       Objects.equals(this.azureEndpoint, azureOpenAIProviderInput.azureEndpoint) &&
       Objects.equals(this.azureDeployment, azureOpenAIProviderInput.azureDeployment) &&
+      Objects.equals(this.apiMode, azureOpenAIProviderInput.apiMode) &&
       Objects.equals(this.apiVersion, azureOpenAIProviderInput.apiVersion)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(apiKey, azureEndpoint, azureDeployment, apiVersion);
+    return Objects.hash(apiKey, azureEndpoint, azureDeployment, apiMode, apiVersion);
   }
 
   @Override
@@ -96,6 +111,7 @@ public class AzureOpenAIProviderInput implements InputUnion, ProviderInputNullab
     sb.append("    apiKey: ").append(toIndentedString(apiKey)).append("\n");
     sb.append("    azureEndpoint: ").append(toIndentedString(azureEndpoint)).append("\n");
     sb.append("    azureDeployment: ").append(toIndentedString(azureDeployment)).append("\n");
+    sb.append("    apiMode: ").append(toIndentedString(apiMode)).append("\n");
     sb.append("    apiVersion: ").append(toIndentedString(apiVersion)).append("\n");
     sb.append("}");
     return sb.toString();

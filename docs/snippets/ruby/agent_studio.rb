@@ -322,7 +322,7 @@ def snippet_for_create_provider1
     Algolia::AgentStudio::ProviderAuthenticationCreate.new(
       name: "My Azure Provider",
       provider_name: "azure_openai",
-      input: Algolia::AgentStudio::AzureOpenAIProviderInput.new(
+      input: Algolia::AgentStudio::AzureOpenAIProviderCreateInput.new(
         api_key: "az-test-key-5678",
         azure_endpoint: "https://my-resource.openai.azure.com",
         azure_deployment: "gpt-4o"

@@ -373,7 +373,7 @@ void snippetForcreateProvider1() async {
     providerAuthenticationCreate: ProviderAuthenticationCreate(
       name: "My Azure Provider",
       providerName: ProviderName.fromJson("azure_openai"),
-      input: AzureOpenAIProviderInput(
+      input: AzureOpenAIProviderCreateInput(
         apiKey: "az-test-key-5678",
         azureEndpoint: "https://my-resource.openai.azure.com",
         azureDeployment: "gpt-4o",

@@ -832,7 +832,7 @@ final class AgentStudioClient implements ApiClient {
   /// Retrieve details of the specified agent.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [agentId] The agentId.
@@ -864,7 +864,7 @@ final class AgentStudioClient implements ApiClient {
   /// Get a single allowed domain by id.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [domainId] The domainId.
@@ -990,7 +990,7 @@ final class AgentStudioClient implements ApiClient {
   /// Get Provider.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [providerId] The providerId.
@@ -1119,7 +1119,7 @@ final class AgentStudioClient implements ApiClient {
   /// List all allowed domain patterns for this agent.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [agentId] The agentId.
@@ -1223,7 +1223,7 @@ final class AgentStudioClient implements ApiClient {
   /// List all agents with pagination and filtering.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [page] Page number.
@@ -1284,7 +1284,7 @@ final class AgentStudioClient implements ApiClient {
   /// Get available models for a specific provider.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [providerId] The providerId.
@@ -1316,7 +1316,7 @@ final class AgentStudioClient implements ApiClient {
   /// List Providers.
   ///
   /// Required API Key ACLs:
-  ///   - settings
+  ///   - editSettings
   ///
   /// Parameters:
   /// * [page] Page number.

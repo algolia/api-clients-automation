@@ -16,7 +16,6 @@ final class ProviderAuthenticationResponse {
     required this.createdAt,
     required this.updatedAt,
     this.lastUsedAt,
-    this.isAlgoliaManaged,
   });
 
   @JsonKey(name: r'id')
@@ -29,7 +28,9 @@ final class ProviderAuthenticationResponse {
   final String providerName;
 
   /// One of types:
+  /// - [VertexAIProviderInput]
   /// - [AzureOpenAIProviderInput]
+  /// - [MistralProviderInput]
   /// - [AnthropicProviderInput]
   /// - [BaseProviderInput]
   /// - [OpenAIProviderInput]
@@ -48,9 +49,6 @@ final class ProviderAuthenticationResponse {
   @JsonKey(name: r'lastUsedAt')
   final String? lastUsedAt;
 
-  @JsonKey(name: r'isAlgoliaManaged')
-  final bool? isAlgoliaManaged;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,8 +59,7 @@ final class ProviderAuthenticationResponse {
           other.input == input &&
           other.createdAt == createdAt &&
           other.updatedAt == updatedAt &&
-          other.lastUsedAt == lastUsedAt &&
-          other.isAlgoliaManaged == isAlgoliaManaged;
+          other.lastUsedAt == lastUsedAt;
 
   @override
   int get hashCode =>
@@ -72,8 +69,7 @@ final class ProviderAuthenticationResponse {
       input.hashCode +
       createdAt.hashCode +
       updatedAt.hashCode +
-      (lastUsedAt == null ? 0 : lastUsedAt.hashCode) +
-      isAlgoliaManaged.hashCode;
+      (lastUsedAt == null ? 0 : lastUsedAt.hashCode);
 
   factory ProviderAuthenticationResponse.fromJson(Map<String, dynamic> json) =>
       _$ProviderAuthenticationResponseFromJson(json);

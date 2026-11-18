@@ -17,7 +17,9 @@ final class ProviderAuthenticationPatch {
   final String? name;
 
   /// One of types:
+  /// - [VertexAIProviderInput]
   /// - [AzureOpenAIProviderInput]
+  /// - [MistralProviderInput]
   /// - [AnthropicProviderInput]
   /// - [BaseProviderInput]
   /// - [OpenAIProviderInput]

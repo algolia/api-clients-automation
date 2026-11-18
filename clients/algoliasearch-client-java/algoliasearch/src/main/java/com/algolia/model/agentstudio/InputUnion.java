@@ -21,17 +21,6 @@ public interface InputUnion {
     @Override
     public InputUnion deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize AzureOpenAIProviderInput
-      if (tree.isObject() && tree.has("azureDeployment") && tree.has("azureEndpoint")) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(AzureOpenAIProviderInput.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf AzureOpenAIProviderInput (error: " + e.getMessage() + ") (type: AzureOpenAIProviderInput)"
-          );
-        }
-      }
       // deserialize OpenAICompatibleProviderInput
       if (tree.isObject() && tree.has("baseUrl") && tree.has("defaultModel")) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -45,6 +34,19 @@ public interface InputUnion {
           );
         }
       }
+      // deserialize AzureOpenAIProviderCreateInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AzureOpenAIProviderCreateInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AzureOpenAIProviderCreateInput (error: " +
+              e.getMessage() +
+              ") (type: AzureOpenAIProviderCreateInput)"
+          );
+        }
+      }
       // deserialize OpenAIProviderInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -52,6 +54,17 @@ public interface InputUnion {
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest("Failed to deserialize oneOf OpenAIProviderInput (error: " + e.getMessage() + ") (type: OpenAIProviderInput)");
+        }
+      }
+      // deserialize AzureOpenAIProviderInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AzureOpenAIProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AzureOpenAIProviderInput (error: " + e.getMessage() + ") (type: AzureOpenAIProviderInput)"
+          );
         }
       }
       // deserialize BaseProviderInput
@@ -83,14 +96,32 @@ public interface InputUnion {
           LOGGER.finest("Failed to deserialize oneOf XAIProviderInput (error: " + e.getMessage() + ") (type: XAIProviderInput)");
         }
       }
-      // deserialize ManagedProviderResponseInput
+      // deserialize MistralProviderInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ManagedProviderResponseInput.class);
+          return parser.readValueAs(MistralProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf MistralProviderInput (error: " + e.getMessage() + ") (type: MistralProviderInput)");
+        }
+      }
+      // deserialize VertexAIProviderInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(VertexAIProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf VertexAIProviderInput (error: " + e.getMessage() + ") (type: VertexAIProviderInput)");
+        }
+      }
+      // deserialize AlgoliaManagedLLMCreateInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AlgoliaManagedLLMCreateInput.class);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
-            "Failed to deserialize oneOf ManagedProviderResponseInput (error: " + e.getMessage() + ") (type: ManagedProviderResponseInput)"
+            "Failed to deserialize oneOf AlgoliaManagedLLMCreateInput (error: " + e.getMessage() + ") (type: AlgoliaManagedLLMCreateInput)"
           );
         }
       }

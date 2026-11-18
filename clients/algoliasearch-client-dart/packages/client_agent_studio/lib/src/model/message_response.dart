@@ -28,6 +28,7 @@ final class MessageResponse {
     this.turnContext,
     this.events,
     this.guardrail,
+    this.metadata,
   });
 
   @JsonKey(name: r'id')
@@ -86,6 +87,9 @@ final class MessageResponse {
   @JsonKey(name: r'guardrail')
   final GuardrailOutcome? guardrail;
 
+  @JsonKey(name: r'metadata')
+  final Map<String, Object>? metadata;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -105,7 +109,8 @@ final class MessageResponse {
           other.isCacheHit == isCacheHit &&
           other.turnContext == turnContext &&
           other.events == events &&
-          other.guardrail == guardrail;
+          other.guardrail == guardrail &&
+          other.metadata == metadata;
 
   @override
   int get hashCode =>
@@ -124,7 +129,8 @@ final class MessageResponse {
       (isCacheHit == null ? 0 : isCacheHit.hashCode) +
       (turnContext == null ? 0 : turnContext.hashCode) +
       events.hashCode +
-      (guardrail == null ? 0 : guardrail.hashCode);
+      (guardrail == null ? 0 : guardrail.hashCode) +
+      (metadata == null ? 0 : metadata.hashCode);
 
   factory MessageResponse.fromJson(Map<String, dynamic> json) =>
       _$MessageResponseFromJson(json);

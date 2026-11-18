@@ -411,7 +411,7 @@ class AgentStudioClientRequestsTests {
           .setName("My Azure Provider")
           .setProviderName(ProviderName.AZURE_OPENAI)
           .setInput(
-            new AzureOpenAIProviderInput()
+            new AzureOpenAIProviderCreateInput()
               .setApiKey("az-test-key-5678")
               .setAzureEndpoint("https://my-resource.openai.azure.com")
               .setAzureDeployment("gpt-4o")
