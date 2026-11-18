@@ -33,6 +33,17 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   }
 
   @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
+  }
+
+  @Override
   public void processOpts() {
     // generator specific options
     setLibrary("multiplatform");
@@ -209,6 +220,7 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     }
 
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    EmptyObject.markModels(openAPI, models);
 
     // Restore discriminator properties stripped by KotlinClientCodegen
     for (var entry : models.entrySet()) {
