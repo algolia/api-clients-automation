@@ -8,6 +8,7 @@ linters:
     - depguard
     - dupl
     - exhaustruct
+    - exhaustruct_v5
     - forcetypeassert
     - funlen
     - goconst
