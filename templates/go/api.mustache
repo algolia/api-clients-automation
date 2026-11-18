@@ -635,7 +635,7 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 	{{#returnType}}
 	err = c.decode(&returnValue, resBody)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}fmt.Errorf("%w", errs.NewDeserializationError(err, res.Header.Get("Correlation-ID")))
+		return {{#returnType}}returnValue, {{/returnType}}errs.NewDeserializationError(err, res.Header.Get("Correlation-ID")) //nolint:wrapcheck
 	}
 
 	{{/returnType}}
