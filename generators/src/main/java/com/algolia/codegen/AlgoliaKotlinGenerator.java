@@ -588,11 +588,6 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     return super.getTypeDeclaration(target);
   }
 
-  /**
-   * Only the item schema itself makes an item nullable. The parent also follows the nullability of
-   * a referenced schema, which turns a self-referencing nullable oneOf into `List<Foo?>` and breaks
-   * the oneOf wrapper names (`ListOfFoo?Value`).
-   */
   private String getItemsTypeDeclaration(Schema<?> items) {
     String declaration = getTypeDeclaration(items);
     return declaration + (Boolean.TRUE.equals(items.getNullable()) && !declaration.endsWith("?") ? "?" : "");
