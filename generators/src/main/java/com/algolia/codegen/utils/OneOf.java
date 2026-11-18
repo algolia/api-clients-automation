@@ -145,8 +145,9 @@ public class OneOf {
    * without manual spec annotations.
    */
   private static void inferDiscriminatorFields(Map<String, ModelsMap> models, List<CodegenProperty> oneOfs) {
-    // Collect required field names (JSON keys) for all model variants
+    // Collect required and declared field names (JSON keys) for all model variants
     var allRequired = new LinkedHashMap<CodegenProperty, Set<String>>();
+    var allDeclared = new HashMap<CodegenProperty, Set<String>>();
     for (var prop : oneOfs) {
       if (!prop.isModel) continue;
       var modelsMap = models.get(prop.dataType);
@@ -156,7 +157,12 @@ public class OneOf {
       for (var v : variantModel.requiredVars) {
         required.add(v.baseName);
       }
+      var declared = new HashSet<String>(required);
+      for (var v : variantModel.vars) {
+        declared.add(v.baseName);
+      }
       allRequired.put(prop, required);
+      allDeclared.put(prop, declared);
     }
 
     // For each variant without an explicit discriminator, compute unique required fields
@@ -171,6 +177,19 @@ public class OneOf {
       for (var other : allRequired.entrySet()) {
         if (other.getKey() == prop) continue;
         unique.removeAll(other.getValue());
+      }
+
+      // A key that another variant declares as optional can be present in its payloads too, so
+      // the check must also require keys that variant cannot carry, when there are any.
+      if (!unique.isEmpty()) {
+        for (var other : allDeclared.entrySet()) {
+          if (other.getKey() == prop || !other.getValue().containsAll(unique)) continue;
+          var missing = new HashSet<>(required);
+          missing.removeAll(other.getValue());
+          for (var field : missing) {
+            if (!unique.contains(field)) unique.add(field);
+          }
+        }
       }
 
       if (!unique.isEmpty()) {

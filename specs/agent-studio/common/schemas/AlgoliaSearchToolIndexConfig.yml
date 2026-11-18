@@ -6,7 +6,7 @@ AlgoliaSearchToolIndexConfig:
       title: index
       type: string
     description:
-      maxLength: 3000
+      maxLength: 10000
       minLength: 1
       title: description
       type: string

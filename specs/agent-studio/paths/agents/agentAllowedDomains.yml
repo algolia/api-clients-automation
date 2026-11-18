@@ -3,7 +3,7 @@ get:
     - Allowed Domains
   operationId: listAgentAllowedDomains
   x-acl:
-    - settings
+    - editSettings
   summary: List Allowed Domains
   description: List all allowed domain patterns for this agent.
   parameters:

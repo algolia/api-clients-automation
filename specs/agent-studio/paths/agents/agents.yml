@@ -3,7 +3,7 @@ get:
     - Agents
   operationId: listAgents
   x-acl:
-    - settings
+    - editSettings
   summary: List Agents
   description: List all agents with pagination and filtering.
   parameters:

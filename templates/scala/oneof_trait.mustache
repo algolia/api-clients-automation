@@ -198,11 +198,13 @@ object {{classname}}Serializer extends Serializer[{{classname}}] {
       {{#isModel}}
       case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
       {{/isModel}}
+      {{^isModel}}
       {{#isMap}}
       {{^isContainer}}
       case value: {{{datatypeWithEnum}}} => Extraction.decompose(value)(format - this)
       {{/isContainer}}
       {{/isMap}}
+      {{/isModel}}
       {{#isMap}}
       {{#isContainer}}
       case {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}(value) => JObject(value.map(kv => JField(kv._1, Extraction.decompose(kv._2)(format))).toList)

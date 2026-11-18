@@ -73,6 +73,12 @@ MessageResponse:
       oneOf:
         - $ref: 'GuardrailOutcome.yml#/GuardrailOutcome'
         - type: 'null'
+    metadata:
+      oneOf:
+        - additionalProperties: true
+          type: object
+        - type: 'null'
+      title: metadata
   type: object
   required:
     - id
