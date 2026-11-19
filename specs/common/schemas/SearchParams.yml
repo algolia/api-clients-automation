@@ -9,6 +9,14 @@ searchParamsObject:
   allOf:
     - $ref: '#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+    - $ref: '#/searchParamsAllowReRanking'
+
+searchParamsAllowReRanking:
+  type: object
+  additionalProperties: false
+  properties:
+    allowReRankingOnPersonalization:
+      $ref: '#/allowReRankingOnPersonalization'
 
 baseSearchParams:
   allOf:
