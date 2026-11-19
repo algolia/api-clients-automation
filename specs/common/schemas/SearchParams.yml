@@ -9,6 +9,17 @@ searchParamsObject:
   allOf:
     - $ref: '#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
+    - $ref: '#/searchParamsAllowReRanking'
+
+# Kept last in the `allOf` so that the parameter is appended to the generated models:
+# adding it to `baseSearchParamsWithoutQuery` would shift every following property,
+# which breaks positional constructors (Kotlin, Scala).
+searchParamsAllowReRanking:
+  type: object
+  additionalProperties: false
+  properties:
+    allowReRankingOnPersonalization:
+      $ref: '#/allowReRankingOnPersonalization'
 
 baseSearchParams:
   allOf:
@@ -85,8 +96,6 @@ baseSearchParamsWithoutQuery:
       $ref: '#/ruleContexts'
     personalizationImpact:
       $ref: '#/personalizationImpact'
-    allowReRankingOnPersonalization:
-      $ref: '#/allowReRankingOnPersonalization'
     userToken:
       $ref: '#/userToken'
     getRankingInfo:
