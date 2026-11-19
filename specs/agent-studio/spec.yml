@@ -158,6 +158,8 @@ paths:
     $ref: 'paths/agents/agentUnpublish.yml'
   /1/configuration:
     $ref: 'paths/configuration/configuration.yml'
+  /1/configuration/conversation-usage:
+    $ref: 'paths/configuration/conversationUsage.yml'
   /1/feedback:
     $ref: 'paths/feedback/feedback.yml'
   /1/providers:
