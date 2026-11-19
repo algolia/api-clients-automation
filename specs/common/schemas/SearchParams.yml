@@ -85,6 +85,8 @@ baseSearchParamsWithoutQuery:
       $ref: '#/ruleContexts'
     personalizationImpact:
       $ref: '#/personalizationImpact'
+    allowReRankingOnPersonalization:
+      $ref: '#/allowReRankingOnPersonalization'
     userToken:
       $ref: '#/userToken'
     getRankingInfo:
