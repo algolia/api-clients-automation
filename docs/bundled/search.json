@@ -6805,6 +6805,23 @@
           }
         }
       },
+      "allowReRankingOnPersonalization": {
+        "type": "boolean",
+        "description": "Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.\n\nDynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.\n",
+        "default": false,
+        "x-categories": [
+          "Personalization"
+        ]
+      },
+      "searchParamsAllowReRanking": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allowReRankingOnPersonalization": {
+            "$ref": "#/components/schemas/allowReRankingOnPersonalization"
+          }
+        }
+      },
       "searchParamsObject": {
         "title": "Search parameters as object",
         "description": "Each parameter value, including the `query` must not be larger than 512 bytes.",
@@ -6814,6 +6831,9 @@
           },
           {
             "$ref": "#/components/schemas/indexSettingsAsSearchParams"
+          },
+          {
+            "$ref": "#/components/schemas/searchParamsAllowReRanking"
           }
         ]
       },
@@ -8755,6 +8775,9 @@
           },
           {
             "$ref": "#/components/schemas/params"
+          },
+          {
+            "$ref": "#/components/schemas/searchParamsAllowReRanking"
           }
         ]
       },

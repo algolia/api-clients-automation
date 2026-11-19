@@ -303,6 +303,10 @@ import algoliasearch.search.TypoTolerance
   * @param enableReRanking
   *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking). This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+  * @param allowReRankingOnPersonalization
+  *   Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with
+  *   Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization`
+  *   is `true`.
   * @param facet
   *   Facet name.
   * @param indexName
@@ -389,6 +393,7 @@ case class SearchForFacets(
     renderingContent: Option[RenderingContent] = scala.None,
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
+    allowReRankingOnPersonalization: Option[Boolean] = scala.None,
     facet: String,
     indexName: String,
     facetQuery: Option[String] = scala.None,

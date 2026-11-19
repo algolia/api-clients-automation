@@ -93,6 +93,7 @@ final class BrowseParamsObject {
     this.renderingContent,
     this.enableReRanking,
     this.reRankingApplyFilter,
+    this.allowReRankingOnPersonalization,
     this.cursor,
   });
 
@@ -428,6 +429,10 @@ final class BrowseParamsObject {
   @JsonKey(name: r'reRankingApplyFilter')
   final dynamic reRankingApplyFilter;
 
+  /// Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+  @JsonKey(name: r'allowReRankingOnPersonalization')
+  final bool? allowReRankingOnPersonalization;
+
   /// Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
   @JsonKey(name: r'cursor')
   final String? cursor;
@@ -513,6 +518,8 @@ final class BrowseParamsObject {
           other.renderingContent == renderingContent &&
           other.enableReRanking == enableReRanking &&
           other.reRankingApplyFilter == reRankingApplyFilter &&
+          other.allowReRankingOnPersonalization ==
+              allowReRankingOnPersonalization &&
           other.cursor == cursor;
 
   @override
@@ -591,6 +598,7 @@ final class BrowseParamsObject {
       renderingContent.hashCode +
       enableReRanking.hashCode +
       (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
+      allowReRankingOnPersonalization.hashCode +
       cursor.hashCode;
 
   factory BrowseParamsObject.fromJson(Map<String, dynamic> json) =>

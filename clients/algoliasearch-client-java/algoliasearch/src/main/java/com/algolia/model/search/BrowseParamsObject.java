@@ -235,6 +235,9 @@ public class BrowseParamsObject implements BrowseParams {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("allowReRankingOnPersonalization")
+  private Boolean allowReRankingOnPersonalization;
+
   @JsonProperty("cursor")
   private String cursor;
 
@@ -1411,6 +1414,21 @@ public class BrowseParamsObject implements BrowseParams {
     return reRankingApplyFilter;
   }
 
+  public BrowseParamsObject setAllowReRankingOnPersonalization(Boolean allowReRankingOnPersonalization) {
+    this.allowReRankingOnPersonalization = allowReRankingOnPersonalization;
+    return this;
+  }
+
+  /**
+   * Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs
+   * concurrently with Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even
+   * if `allowReRankingOnPersonalization` is `true`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowReRankingOnPersonalization() {
+    return allowReRankingOnPersonalization;
+  }
+
   public BrowseParamsObject setCursor(String cursor) {
     this.cursor = cursor;
     return this;
@@ -1510,6 +1528,7 @@ public class BrowseParamsObject implements BrowseParams {
       Objects.equals(this.renderingContent, browseParamsObject.renderingContent) &&
       Objects.equals(this.enableReRanking, browseParamsObject.enableReRanking) &&
       Objects.equals(this.reRankingApplyFilter, browseParamsObject.reRankingApplyFilter) &&
+      Objects.equals(this.allowReRankingOnPersonalization, browseParamsObject.allowReRankingOnPersonalization) &&
       Objects.equals(this.cursor, browseParamsObject.cursor)
     );
   }
@@ -1591,6 +1610,7 @@ public class BrowseParamsObject implements BrowseParams {
       renderingContent,
       enableReRanking,
       reRankingApplyFilter,
+      allowReRankingOnPersonalization,
       cursor
     );
   }
@@ -1675,6 +1695,7 @@ public class BrowseParamsObject implements BrowseParams {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    allowReRankingOnPersonalization: ").append(toIndentedString(allowReRankingOnPersonalization)).append("\n");
     sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -164,6 +164,8 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('automaticFacetFilters', (v) => v),
           automaticOptionalFacetFilters:
               $checkedConvert('automaticOptionalFacetFilters', (v) => v),
+          allowReRankingOnPersonalization: $checkedConvert(
+              'allowReRankingOnPersonalization', (v) => v as bool?),
         );
         return val;
       },
@@ -267,6 +269,8 @@ Map<String, dynamic> _$ConsequenceParamsToJson(ConsequenceParams instance) {
   writeNotNull('automaticFacetFilters', instance.automaticFacetFilters);
   writeNotNull(
       'automaticOptionalFacetFilters', instance.automaticOptionalFacetFilters);
+  writeNotNull('allowReRankingOnPersonalization',
+      instance.allowReRankingOnPersonalization);
   return val;
 }
 

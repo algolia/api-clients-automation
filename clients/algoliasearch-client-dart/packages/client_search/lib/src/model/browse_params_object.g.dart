@@ -160,6 +160,8 @@ BrowseParamsObject _$BrowseParamsObjectFromJson(Map<String, dynamic> json) =>
               $checkedConvert('enableReRanking', (v) => v as bool?),
           reRankingApplyFilter:
               $checkedConvert('reRankingApplyFilter', (v) => v),
+          allowReRankingOnPersonalization: $checkedConvert(
+              'allowReRankingOnPersonalization', (v) => v as bool?),
           cursor: $checkedConvert('cursor', (v) => v as String?),
         );
         return val;
@@ -261,6 +263,8 @@ Map<String, dynamic> _$BrowseParamsObjectToJson(BrowseParamsObject instance) {
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  writeNotNull('allowReRankingOnPersonalization',
+      instance.allowReRankingOnPersonalization);
   writeNotNull('cursor', instance.cursor);
   return val;
 }

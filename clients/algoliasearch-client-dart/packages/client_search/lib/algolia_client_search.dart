@@ -144,6 +144,7 @@ export 'src/model/search_for_hits_options.dart';
 export 'src/model/search_hits.dart';
 export 'src/model/search_method_params.dart';
 export 'src/model/search_pagination.dart';
+export 'src/model/search_params_allow_re_ranking.dart';
 export 'src/model/search_params_object.dart';
 export 'src/model/search_params_query.dart';
 export 'src/model/search_params_string.dart';

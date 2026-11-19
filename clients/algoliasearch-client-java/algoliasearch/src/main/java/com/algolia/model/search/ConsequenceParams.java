@@ -240,6 +240,9 @@ public class ConsequenceParams {
   @JsonProperty("automaticOptionalFacetFilters")
   private AutomaticFacetFilters automaticOptionalFacetFilters;
 
+  @JsonProperty("allowReRankingOnPersonalization")
+  private Boolean allowReRankingOnPersonalization;
+
   public ConsequenceParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
@@ -1435,6 +1438,21 @@ public class ConsequenceParams {
     return automaticOptionalFacetFilters;
   }
 
+  public ConsequenceParams setAllowReRankingOnPersonalization(Boolean allowReRankingOnPersonalization) {
+    this.allowReRankingOnPersonalization = allowReRankingOnPersonalization;
+    return this;
+  }
+
+  /**
+   * Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs
+   * concurrently with Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even
+   * if `allowReRankingOnPersonalization` is `true`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowReRankingOnPersonalization() {
+    return allowReRankingOnPersonalization;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1520,7 +1538,8 @@ public class ConsequenceParams {
       Objects.equals(this.reRankingApplyFilter, consequenceParams.reRankingApplyFilter) &&
       Objects.equals(this.query, consequenceParams.query) &&
       Objects.equals(this.automaticFacetFilters, consequenceParams.automaticFacetFilters) &&
-      Objects.equals(this.automaticOptionalFacetFilters, consequenceParams.automaticOptionalFacetFilters)
+      Objects.equals(this.automaticOptionalFacetFilters, consequenceParams.automaticOptionalFacetFilters) &&
+      Objects.equals(this.allowReRankingOnPersonalization, consequenceParams.allowReRankingOnPersonalization)
     );
   }
 
@@ -1602,7 +1621,8 @@ public class ConsequenceParams {
       reRankingApplyFilter,
       query,
       automaticFacetFilters,
-      automaticOptionalFacetFilters
+      automaticOptionalFacetFilters,
+      allowReRankingOnPersonalization
     );
   }
 
@@ -1688,6 +1708,7 @@ public class ConsequenceParams {
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    automaticFacetFilters: ").append(toIndentedString(automaticFacetFilters)).append("\n");
     sb.append("    automaticOptionalFacetFilters: ").append(toIndentedString(automaticOptionalFacetFilters)).append("\n");
+    sb.append("    allowReRankingOnPersonalization: ").append(toIndentedString(allowReRankingOnPersonalization)).append("\n");
     sb.append("}");
     return sb.toString();
   }

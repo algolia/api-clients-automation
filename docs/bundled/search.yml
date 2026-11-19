@@ -2795,6 +2795,7 @@ paths:
               "reRankingApplyFilter": [
                 []
               ],
+              "allowReRankingOnPersonalization": false,
               "cursor": "jMDY3M2MwM2QwMWUxMmQwYWI0ZTN"
             }
             '
@@ -11904,7 +11905,8 @@ paths:
                       "score": 1,
                       "disjunctive": false
                     }
-                  ]
+                  ],
+                  "allowReRankingOnPersonalization": false
                 },
                 "promote": [
                   {
@@ -12992,7 +12994,8 @@ paths:
                         "score": 1,
                         "disjunctive": false
                       }
-                    ]
+                    ],
+                    "allowReRankingOnPersonalization": false
                   },
                   "promote": [
                     {
@@ -22597,6 +22600,25 @@ components:
           $ref: '#/components/schemas/sortFacetValuesBy'
         typoTolerance:
           $ref: '#/components/schemas/typoTolerance'
+    allowReRankingOnPersonalization:
+      type: boolean
+      description: >
+        Whether [Dynamic
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking)
+        runs concurrently with Personalization.
+
+
+        Dynamic Re-Ranking isn't applied when `distinct` > 1, even if
+        `allowReRankingOnPersonalization` is `true`.
+      default: false
+      x-categories:
+        - Personalization
+    searchParamsAllowReRanking:
+      type: object
+      additionalProperties: false
+      properties:
+        allowReRankingOnPersonalization:
+          $ref: '#/components/schemas/allowReRankingOnPersonalization'
     searchParamsObject:
       type: object
       properties:
@@ -22604,6 +22626,8 @@ components:
           $ref: '#/components/schemas/advancedSyntax'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
+        allowReRankingOnPersonalization:
+          $ref: '#/components/schemas/allowReRankingOnPersonalization'
         allowTyposOnNumericTokens:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:
@@ -23663,6 +23687,8 @@ components:
           $ref: '#/components/schemas/advancedSyntax'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
+        allowReRankingOnPersonalization:
+          $ref: '#/components/schemas/allowReRankingOnPersonalization'
         allowTyposOnNumericTokens:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:
@@ -26323,6 +26349,8 @@ components:
           $ref: '#/components/schemas/advancedSyntax'
         advancedSyntaxFeatures:
           $ref: '#/components/schemas/IndexSettings_advancedSyntaxFeatures'
+        allowReRankingOnPersonalization:
+          $ref: '#/components/schemas/allowReRankingOnPersonalization'
         allowTyposOnNumericTokens:
           $ref: '#/components/schemas/allowTyposOnNumericTokens'
         alternativesAsExact:

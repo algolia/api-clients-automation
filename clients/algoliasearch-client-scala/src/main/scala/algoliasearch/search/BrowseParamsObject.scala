@@ -285,6 +285,10 @@ import algoliasearch.search.SupportedLanguage._
   * @param enableReRanking
   *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking). This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+  * @param allowReRankingOnPersonalization
+  *   Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with
+  *   Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization`
+  *   is `true`.
   * @param cursor
   *   Cursor to get the next page of the response. The parameter must match the value returned in the response of a
   *   previous request. The last page of the response does not return a `cursor` attribute.
@@ -364,5 +368,6 @@ case class BrowseParamsObject(
     renderingContent: Option[RenderingContent] = scala.None,
     enableReRanking: Option[Boolean] = scala.None,
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
+    allowReRankingOnPersonalization: Option[Boolean] = scala.None,
     cursor: Option[String] = scala.None
 ) extends BrowseParamsTrait
