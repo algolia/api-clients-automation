@@ -1,0 +1,68 @@
+<?php
+
+// {{generationBanner}}
+
+namespace Algolia\AlgoliaSearch\Test\RequestE2EAlt;
+
+use Algolia\AlgoliaSearch\Api\{{client}};
+use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
+use Algolia\AlgoliaSearch\Http\Psr7\Response;
+use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use GuzzleHttp\Psr7\Query;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+
+use Dotenv\Dotenv;
+
+// we only read .env file if we run locally
+if (getenv('METIS_APPLICATION_ID')) {
+    $_ENV = getenv();
+} else {
+    $dotenv = Dotenv::createImmutable('tests');
+    $dotenv->load();
+}
+
+#[CoversClass({{client}}::class)]
+class {{clientPrefix}}AltTest extends TestCase
+{
+    protected function union($expected, $received): mixed
+    {
+        if (is_array($expected)) {
+            $res = [];
+            // array and object are the same thing in PHP (magic ✨)
+            foreach ($expected as $k => $v) {
+                $res[$k] = $this->union($v, $received[$k]);
+            }
+
+            return $res;
+        }
+        
+        return $received;
+    }
+
+    protected function getClient(): {{client}}
+    {
+        return {{client}}::create($_ENV['METIS_APPLICATION_ID'], $_ENV['METIS_API_KEY']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
+    }
+
+    {{#blocksE2E}}
+    {{#tests}}
+    #[TestDox('{{{testName}}}')]
+    public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}(): void
+    {
+        $client = $this->getClient();
+        $resp = {{> tests/method}};
+
+        {{#response}}
+        {{#body}}
+        $expected = json_decode('{{{.}}}', true);
+
+        $this->assertEquals($this->union($expected, $resp), $expected);
+        {{/body}}
+        {{/response}}
+    }
+    {{/tests}}
+    {{/blocksE2E}}
+}

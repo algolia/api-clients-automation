@@ -1,0 +1,56 @@
+// {{generationBanner}}
+package com.algolia.e2eAlt
+
+import com.algolia.client.api.{{client}}
+import com.algolia.client.model.{{import}}.*
+import com.algolia.client.configuration.*
+import com.algolia.client.transport.*
+import com.algolia.utils.*
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import io.ktor.http.*
+import io.github.cdimascio.dotenv.Dotenv
+import kotlinx.coroutines.test.*
+import kotlinx.serialization.json.*
+import kotlinx.serialization.encodeToString
+import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
+
+{{#isCompositionClient}}
+import com.algolia.client.model.{{import}}.RequestBody
+{{/isCompositionClient}}
+
+class {{clientPrefix}}AltTest {
+
+    var client: {{client}};
+
+    init {
+      if (System.getenv("CI") == "true") {
+        this.client = {{client}}(appId = System.getenv("METIS_APPLICATION_ID"), apiKey = System.getenv("METIS_API_KEY"){{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
+      } else {
+        val dotenv = Dotenv.configure().directory("../../").load()
+        this.client = {{client}}(appId = dotenv["METIS_APPLICATION_ID"], apiKey = dotenv["METIS_API_KEY"]{{#hasRegionalHost}}, region = "{{defaultRegion}}", {{/hasRegionalHost}});
+      }
+    }
+
+    {{#blocksE2E}}
+    {{#tests}}
+    @Test
+    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{testIndex}}{{/lambda.replaceBacktick}}`() = runTest {
+        client.runTest(
+            call = {
+                {{> tests/method}}
+            },
+            {{#response}}
+            {{#body}}
+            response = {
+              JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", Json.encodeToString(it), JSONCompareMode.LENIENT)
+            },
+            {{/body}}
+            {{/response}}
+        )
+    }
+
+    {{/tests}}
+    {{/blocksE2E}}
+}
