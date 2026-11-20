@@ -299,6 +299,67 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// createAgentCompletion with all parameters
+    func testCreateAgentCompletionTest1() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.createAgentCompletionWithHTTPInfo(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibilityMode: CompatibilityMode.aiSdk4,
+            agentCompletionRequest: AgentCompletionRequestUnion
+                .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnion
+                        .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                            role: "user",
+                            content: "Hello, how are you?"
+                        ))]))),
+            stream: false,
+            cache: false,
+            memory: false,
+            analytics: false,
+            xAlgoliaSecureUserToken: "secure-user-token",
+            ephemeral: true
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"compatibilityMode\":\"ai-sdk-4\",\"stream\":\"false\",\"cache\":\"false\",\"memory\":\"false\",\"analytics\":\"false\",\"ephemeral\":\"true\"}"
+                .data(using: .utf8)
+        )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+
+        let expectedHeaders = try XCTUnwrap("{\"x-algolia-secure-user-token\":\"secure-user-token\"}"
+            .data(using: .utf8))
+        let expectedHeadersMap = try CodableHelper.jsonDecoder.decode([String: String?].self, from: expectedHeaders)
+
+        let echoResponseHeaders = try XCTUnwrap(echoResponse.headers)
+        for header in expectedHeadersMap {
+            XCTAssertEqual(echoResponseHeaders[header.key.capitalized], header.value)
+        }
+    }
+
     /// createAgentTask with required parameters
     func testCreateAgentTaskTest() async throws {
         let configuration = try AgentStudioClientConfiguration(
@@ -1268,7 +1329,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteAgentConversations with date filters
+    /// deleteAgentConversations with all filters
     func testDeleteAgentConversationsTest1() async throws {
         let configuration = try AgentStudioClientConfiguration(
             appID: AgentStudioClientRequestsTests.APPLICATION_ID,
@@ -1280,7 +1341,8 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let response = try await client.deleteAgentConversationsWithHTTPInfo(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             startDate: "2024-01-01",
-            endDate: "2024-06-30"
+            endDate: "2024-06-30",
+            ephemeral: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1290,8 +1352,10 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.path, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\"}"
-            .data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\",\"ephemeral\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1441,7 +1505,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// exportConversations with date filters
+    /// exportConversations with all filters
     func testExportConversationsTest1() async throws {
         let configuration = try AgentStudioClientConfiguration(
             appID: AgentStudioClientRequestsTests.APPLICATION_ID,
@@ -1453,7 +1517,8 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         let response = try await client.exportConversationsWithHTTPInfo(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             startDate: "2024-01-01",
-            endDate: "2024-12-31"
+            endDate: "2024-12-31",
+            ephemeral: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1466,8 +1531,10 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         )
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
-        let expectedQueryParameters = try XCTUnwrap("{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\"}"
-            .data(using: .utf8))
+        let expectedQueryParameters = try XCTUnwrap(
+            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"ephemeral\":\"true\"}"
+                .data(using: .utf8)
+        )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
             [String: String?].self,
             from: expectedQueryParameters
@@ -1909,7 +1976,8 @@ final class AgentStudioClientRequestsTests: XCTestCase {
             clicked: true,
             converted: false,
             hasAlgoliaSearch: true,
-            xAlgoliaSecureUserToken: "secure-user-token"
+            xAlgoliaSecureUserToken: "secure-user-token",
+            ephemeral: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1920,7 +1988,7 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters = try XCTUnwrap(
-            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}"
+            "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\",\"ephemeral\":\"true\"}"
                 .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
@@ -2042,6 +2110,27 @@ final class AgentStudioClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// listConversationUsage
+    func testListConversationUsageTest() async throws {
+        let configuration = try AgentStudioClientConfiguration(
+            appID: AgentStudioClientRequestsTests.APPLICATION_ID,
+            apiKey: AgentStudioClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AgentStudioClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.listConversationUsageWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/agent-studio/1/configuration/conversation-usage")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// listModels

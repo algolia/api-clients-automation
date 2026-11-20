@@ -40,6 +40,7 @@ final class AgentTestConfiguration {
   /// - [AlgoliaGroupedResultsCompatToolConfig]
   /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaSearchToolConfig]
+  /// - [AlgoliaCompareProductsToolConfig]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
   /// - [AlgoliaGroupedResultsToolConfig]

@@ -266,6 +266,47 @@ public class SnippetAgentStudioClient
   }
 
   /// <summary>
+  /// Snippet for the CreateAgentCompletion method.
+  ///
+  /// createAgentCompletion with all parameters
+  /// </summary>
+  public async Task SnippetForAgentStudioClientCreateAgentCompletion1()
+  {
+    // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.CreateAgentCompletionAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      Enum.Parse<CompatibilityMode>("AiSdk4"),
+      new AgentCompletionRequestUnion(
+        new AgentCompletionRequest
+        {
+          Messages = new MessagesUnion(
+            new List<MessageV4>
+            {
+              new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            }
+          ),
+        }
+      ),
+      false,
+      false,
+      false,
+      false,
+      "secure-user-token",
+      true
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the CreateAgentTask method.
   ///
   /// createAgentTask with required parameters
@@ -1003,11 +1044,11 @@ public class SnippetAgentStudioClient
   /// <summary>
   /// Snippet for the DeleteAgentConversations method.
   ///
-  /// deleteAgentConversations with date filters
+  /// deleteAgentConversations with all filters
   /// </summary>
   public async Task SnippetForAgentStudioClientDeleteAgentConversations1()
   {
-    // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+    // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
     // Initialize the client
     var client = new AgentStudioClient(
       new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1017,7 +1058,8 @@ public class SnippetAgentStudioClient
     await client.DeleteAgentConversationsAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-06-30"
+      "2024-06-30",
+      true
     );
     // >LOG
     // SEPARATOR<
@@ -1148,11 +1190,11 @@ public class SnippetAgentStudioClient
   /// <summary>
   /// Snippet for the ExportConversations method.
   ///
-  /// exportConversations with date filters
+  /// exportConversations with all filters
   /// </summary>
   public async Task SnippetForAgentStudioClientExportConversations1()
   {
-    // >SEPARATOR exportConversations exportConversations with date filters
+    // >SEPARATOR exportConversations exportConversations with all filters
     // Initialize the client
     var client = new AgentStudioClient(
       new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1162,7 +1204,8 @@ public class SnippetAgentStudioClient
     var response = await client.ExportConversationsAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-12-31"
+      "2024-12-31",
+      true
     );
     // >LOG
     // print the response
@@ -1583,7 +1626,8 @@ public class SnippetAgentStudioClient
       true,
       false,
       true,
-      "secure-user-token"
+      "secure-user-token",
+      true
     );
     // >LOG
     // print the response
@@ -1669,6 +1713,27 @@ public class SnippetAgentStudioClient
 
     // Call the API
     var response = await client.ListAgentsAsync(1, 2, null);
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ListConversationUsage method.
+  ///
+  /// listConversationUsage
+  /// </summary>
+  public async Task SnippetForAgentStudioClientListConversationUsage()
+  {
+    // >SEPARATOR listConversationUsage default
+    // Initialize the client
+    var client = new AgentStudioClient(
+      new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+    );
+
+    // Call the API
+    var response = await client.ListConversationUsageAsync();
     // >LOG
     // print the response
     Console.WriteLine(response);
