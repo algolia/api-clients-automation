@@ -31,6 +31,10 @@ ConversationBaseResponse:
       type: boolean
       title: isfromdashboard
       default: false
+    isEphemeral:
+      type: boolean
+      title: isephemeral
+      default: false
     messageCount:
       type: integer
       title: messagecount
@@ -57,10 +61,6 @@ ConversationBaseResponse:
       oneOf:
         - $ref: 'ImpactAnalytics.yml#/ImpactAnalytics'
         - type: 'null'
-    isEphemeral:
-      type: boolean
-      title: isephemeral
-      default: false
   type: object
   required:
     - id
