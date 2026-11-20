@@ -1,5 +1,5 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "3.10.0"
+ThisBuild / scalaVersion := "3.10.1"
 
 val algoliasearch = ProjectRef(file("../../../clients/algoliasearch-client-scala"), "root")
 
