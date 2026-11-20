@@ -3069,10 +3069,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/folder-hash@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@types/folder-hash@npm:4.0.4"
-  checksum: 10/69ea717701c11a62f1cac9e85f5fddd6d80c7bf4d63edfa7b19f43756483ff6b8ad73ae18d0d618670a9dfda0e4568a4be9958da54dde8178d9f5594bfcd4c47
+"@types/folder-hash@npm:4.0.5":
+  version: 4.0.5
+  resolution: "@types/folder-hash@npm:4.0.5"
+  checksum: 10/ff8a8a87c3b3e637d83c458207b04f21fbdf0487ebcbe071985f96e9ec7400db4f376b21f18aa2f3785589b4b1a5f500124095db6254b1a20a80075a60848846
   languageName: node
   linkType: hard
 
@@ -8504,7 +8504,7 @@ __metadata:
     "@octokit/rest": "npm:22.0.1"
     "@readme/httpsnippet": "npm:11.4.1"
     "@types/express": "npm:5.0.6"
-    "@types/folder-hash": "npm:4.0.4"
+    "@types/folder-hash": "npm:4.0.5"
     "@types/fs-extra": "npm:11.0.4"
     "@types/node": "npm:26.6.6"
     "@types/semver": "npm:7.8.0"
