@@ -6331,7 +6331,7 @@ __metadata:
     react-instantsearch: "npm:7.54.0"
     typescript: "npm:5.9.3"
     typescript-eslint: "npm:8.72.1"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
   languageName: unknown
   linkType: soft
 
