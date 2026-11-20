@@ -72,6 +72,15 @@ post:
       description: 'Set to false to skip analytics for this completion (default: true).
         Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics,
         and query-suggestions training. Useful for offline-eval workflows.'
+    - name: X-Algolia-Secure-User-Token
+      in: header
+      required: false
+      schema:
+        oneOf:
+          - type: string
+          - type: 'null'
+        title: x-Algolia-Secure-User-Token
+      description: The X-Algolia-Secure-User-Token.
     - name: ephemeral
       in: query
       required: false
@@ -88,15 +97,6 @@ post:
         analyzed like any other, but removed by the next cleanup run instead of being
         kept in the history. Overrides the agent''s ephemeralConversations setting;
         omit to use it.'
-    - name: X-Algolia-Secure-User-Token
-      in: header
-      required: false
-      schema:
-        oneOf:
-          - type: string
-          - type: 'null'
-        title: x-Algolia-Secure-User-Token
-      description: The X-Algolia-Secure-User-Token.
   requestBody:
     required: true
     content:
