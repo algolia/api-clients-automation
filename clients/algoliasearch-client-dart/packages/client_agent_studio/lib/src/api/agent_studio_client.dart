@@ -19,6 +19,7 @@ import 'package:algolia_client_agent_studio/src/model/context_compact_request.da
 import 'package:algolia_client_agent_studio/src/model/context_response.dart';
 import 'package:algolia_client_agent_studio/src/model/context_trim_request.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_full_response.dart';
+import 'package:algolia_client_agent_studio/src/model/conversation_usage_response.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_creation_request.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_response.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_update_request.dart';
@@ -256,6 +257,7 @@ final class AgentStudioClient implements ApiClient {
   /// * [memory] Set to false to disable memory (enabled by default).
   /// * [analytics] Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
   /// * [xAlgoliaSecureUserToken] The X-Algolia-Secure-User-Token.
+  /// * [ephemeral] Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent's ephemeralConversations setting; omit to use it.
   /// * [requestOptions] additional request configuration.
   Future<Map<String, Object>> createAgentCompletion({
     required String agentId,
@@ -266,6 +268,7 @@ final class AgentStudioClient implements ApiClient {
     bool? memory,
     bool? analytics,
     String? xAlgoliaSecureUserToken,
+    bool? ephemeral,
     RequestOptions? requestOptions,
   }) async {
     if (agentId.isEmpty) {
@@ -286,6 +289,7 @@ final class AgentStudioClient implements ApiClient {
         if (cache != null) 'cache': cache,
         if (memory != null) 'memory': memory,
         if (analytics != null) 'analytics': analytics,
+        if (ephemeral != null) 'ephemeral': ephemeral,
       },
       body: agentCompletionRequest.toJson(),
     );
@@ -609,11 +613,13 @@ final class AgentStudioClient implements ApiClient {
   /// * [agentId] The agentId.
   /// * [startDate] Filter conversations created after this date (format: YYYY-MM-DD).
   /// * [endDate] Filter conversations created before this date (format: YYYY-MM-DD).
+  /// * [ephemeral] Filter by ephemeral (not retained) conversations; omit to include both.
   /// * [requestOptions] additional request configuration.
   Future<void> deleteAgentConversations({
     required String agentId,
     String? startDate,
     String? endDate,
+    bool? ephemeral,
     RequestOptions? requestOptions,
   }) async {
     if (agentId.isEmpty) {
@@ -627,6 +633,7 @@ final class AgentStudioClient implements ApiClient {
       queryParams: {
         if (startDate != null) 'startDate': startDate,
         if (endDate != null) 'endDate': endDate,
+        if (ephemeral != null) 'ephemeral': ephemeral,
       },
     );
     await _retryStrategy.execute(
@@ -797,11 +804,13 @@ final class AgentStudioClient implements ApiClient {
   /// * [agentId] The agentId.
   /// * [startDate] Filter conversations created after this date (format: YYYY-MM-DD).
   /// * [endDate] Filter conversations created before this date (format: YYYY-MM-DD).
+  /// * [ephemeral] Filter by ephemeral (not retained) conversations; omit to include both.
   /// * [requestOptions] additional request configuration.
   Future<List<ConversationFullResponse>> exportConversations({
     required String agentId,
     String? startDate,
     String? endDate,
+    bool? ephemeral,
     RequestOptions? requestOptions,
   }) async {
     if (agentId.isEmpty) {
@@ -815,6 +824,7 @@ final class AgentStudioClient implements ApiClient {
       queryParams: {
         if (startDate != null) 'startDate': startDate,
         if (endDate != null) 'endDate': endDate,
+        if (ephemeral != null) 'ephemeral': ephemeral,
       },
     );
     final response = await _retryStrategy.execute(
@@ -1166,6 +1176,7 @@ final class AgentStudioClient implements ApiClient {
   /// * [converted] Filter by conversations with at least one conversion.
   /// * [hasAlgoliaSearch] Filter by conversations where the search tool was used.
   /// * [xAlgoliaSecureUserToken] The X-Algolia-Secure-User-Token.
+  /// * [ephemeral] Filter by ephemeral (not retained) conversations; omit to include both.
   /// * [requestOptions] additional request configuration.
   Future<PaginatedConversationsResponse> listAgentConversations({
     required String agentId,
@@ -1180,6 +1191,7 @@ final class AgentStudioClient implements ApiClient {
     bool? converted,
     bool? hasAlgoliaSearch,
     String? xAlgoliaSecureUserToken,
+    bool? ephemeral,
     RequestOptions? requestOptions,
   }) async {
     if (agentId.isEmpty) {
@@ -1206,6 +1218,7 @@ final class AgentStudioClient implements ApiClient {
         if (clicked != null) 'clicked': clicked,
         if (converted != null) 'converted': converted,
         if (hasAlgoliaSearch != null) 'hasAlgoliaSearch': hasAlgoliaSearch,
+        if (ephemeral != null) 'ephemeral': ephemeral,
       },
     );
     final response = await _retryStrategy.execute(
@@ -1252,6 +1265,31 @@ final class AgentStudioClient implements ApiClient {
     return deserialize<PaginatedAgentsResponse, PaginatedAgentsResponse>(
       response,
       'PaginatedAgentsResponse',
+      growable: true,
+    );
+  }
+
+  /// Live conversations counted against the per-application limit.
+  ///
+  /// Required API Key ACLs:
+  ///   - logs
+  ///
+  /// Parameters:
+  /// * [requestOptions] additional request configuration.
+  Future<ConversationUsageResponse> listConversationUsage({
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/agent-studio/1/configuration/conversation-usage',
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<ConversationUsageResponse, ConversationUsageResponse>(
+      response,
+      'ConversationUsageResponse',
       growable: true,
     );
   }

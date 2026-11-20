@@ -191,6 +191,35 @@ def snippet_for_create_agent_completion
   # SEPARATOR<
 end
 
+# Snippet for the createAgentCompletion method.
+#
+# createAgentCompletion with all parameters
+def snippet_for_create_agent_completion1
+  # >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.create_agent_completion(
+    "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    "ai-sdk-4",
+    Algolia::AgentStudio::AgentCompletionRequest.new(
+      messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+    ),
+    false,
+    false,
+    false,
+    false,
+    "secure-user-token",
+    true
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
 # Snippet for the createAgentTask method.
 #
 # createAgentTask with required parameters
@@ -763,14 +792,14 @@ end
 
 # Snippet for the deleteAgentConversations method.
 #
-# deleteAgentConversations with date filters
+# deleteAgentConversations with all filters
 def snippet_for_delete_agent_conversations1
-  # >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+  # >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
   # Initialize the client
   client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  client.delete_agent_conversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30")
+  client.delete_agent_conversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30", true)
   # >LOG
   # SEPARATOR<
 end
@@ -864,14 +893,14 @@ end
 
 # Snippet for the exportConversations method.
 #
-# exportConversations with date filters
+# exportConversations with all filters
 def snippet_for_export_conversations1
-  # >SEPARATOR exportConversations exportConversations with date filters
+  # >SEPARATOR exportConversations exportConversations with all filters
   # Initialize the client
   client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.export_conversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31")
+  response = client.export_conversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31", true)
 
   # >LOG
   # print the response
@@ -1200,7 +1229,8 @@ def snippet_for_list_agent_conversations1
     true,
     false,
     true,
-    "secure-user-token"
+    "secure-user-token",
+    true
   )
 
   # >LOG
@@ -1270,6 +1300,23 @@ def snippet_for_list_agents2
 
   # Call the API
   response = client.list_agents(1, 2, nil)
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the listConversationUsage method.
+#
+# listConversationUsage
+def snippet_for_list_conversation_usage
+  # >SEPARATOR listConversationUsage default
+  # Initialize the client
+  client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.list_conversation_usage
 
   # >LOG
   # print the response

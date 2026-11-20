@@ -27,6 +27,7 @@ final class ConversationBaseResponse {
     this.conversationMetadata,
     this.feedback,
     this.impactAnalytics,
+    this.isEphemeral,
   });
 
   @JsonKey(name: r'id')
@@ -74,6 +75,9 @@ final class ConversationBaseResponse {
   @JsonKey(name: r'impactAnalytics')
   final ImpactAnalytics? impactAnalytics;
 
+  @JsonKey(name: r'isEphemeral')
+  final bool? isEphemeral;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -92,7 +96,8 @@ final class ConversationBaseResponse {
           other.totalTokens == totalTokens &&
           other.conversationMetadata == conversationMetadata &&
           other.feedback == feedback &&
-          other.impactAnalytics == impactAnalytics;
+          other.impactAnalytics == impactAnalytics &&
+          other.isEphemeral == isEphemeral;
 
   @override
   int get hashCode =>
@@ -110,7 +115,8 @@ final class ConversationBaseResponse {
       totalTokens.hashCode +
       (conversationMetadata == null ? 0 : conversationMetadata.hashCode) +
       (feedback == null ? 0 : feedback.hashCode) +
-      (impactAnalytics == null ? 0 : impactAnalytics.hashCode);
+      (impactAnalytics == null ? 0 : impactAnalytics.hashCode) +
+      isEphemeral.hashCode;
 
   factory ConversationBaseResponse.fromJson(Map<String, dynamic> json) =>
       _$ConversationBaseResponseFromJson(json);

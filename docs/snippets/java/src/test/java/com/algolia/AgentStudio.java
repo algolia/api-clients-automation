@@ -200,6 +200,34 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createAgentCompletion method.
+  //
+  // createAgentCompletion with all parameters
+  void snippetForCreateAgentCompletion1() throws Exception {
+    // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    Map response = client.createAgentCompletion(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      CompatibilityMode.AI_SDK_4,
+      new AgentCompletionRequest().setMessages(
+        MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+      ),
+      false,
+      false,
+      false,
+      false,
+      "secure-user-token",
+      true
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
   // Snippet for the createAgentTask method.
   //
   // createAgentTask with required parameters
@@ -864,14 +892,14 @@ class SnippetAgentStudioClient {
 
   // Snippet for the deleteAgentConversations method.
   //
-  // deleteAgentConversations with date filters
+  // deleteAgentConversations with all filters
   void snippetForDeleteAgentConversations1() throws Exception {
-    // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+    // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
     // Initialize the client
     AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    client.deleteAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30");
+    client.deleteAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30", true);
     // >LOG
     // SEPARATOR<
   }
@@ -964,14 +992,14 @@ class SnippetAgentStudioClient {
 
   // Snippet for the exportConversations method.
   //
-  // exportConversations with date filters
+  // exportConversations with all filters
   void snippetForExportConversations1() throws Exception {
-    // >SEPARATOR exportConversations exportConversations with date filters
+    // >SEPARATOR exportConversations exportConversations with all filters
     // Initialize the client
     AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
     // Call the API
-    List response = client.exportConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31");
+    List response = client.exportConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31", true);
     // >LOG
     // print the response
     System.out.println(response);
@@ -1289,7 +1317,8 @@ class SnippetAgentStudioClient {
       true,
       false,
       true,
-      "secure-user-token"
+      "secure-user-token",
+      true
     );
     // >LOG
     // print the response
@@ -1355,6 +1384,22 @@ class SnippetAgentStudioClient {
 
     // Call the API
     PaginatedAgentsResponse response = client.listAgents(1, 2, null);
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the listConversationUsage method.
+  //
+  // listConversationUsage
+  void snippetForListConversationUsage() throws Exception {
+    // >SEPARATOR listConversationUsage default
+    // Initialize the client
+    AgentStudioClient client = new AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ConversationUsageResponse response = client.listConversationUsage();
     // >LOG
     // print the response
     System.out.println(response);

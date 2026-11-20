@@ -206,6 +206,43 @@ func TestAgentStudio_CreateAgentCompletion(t *testing.T) {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 	})
+	t.Run("createAgentCompletion with all parameters", func(t *testing.T) {
+		_, err := client.CreateAgentCompletion(client.NewApiCreateAgentCompletionRequest(
+			"76710f1b-8231-42e5-b0d1-f43aac618e15",
+			agentStudio.CompatibilityMode("ai-sdk-4"),
+			agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+				agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+					[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+						agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+		).WithStream(false).WithCache(false).WithMemory(false).WithAnalytics(false).WithXAlgoliaSecureUserToken("secure-user-token").WithEphemeral(true))
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		jsonassert.New(t).Assertf(*echo.Body, "%s", `{"messages":[{"role":"user","content":"Hello, how are you?"}]}`)
+
+		headers := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"x-algolia-secure-user-token":"secure-user-token"}`), &headers))
+
+		for k, v := range headers {
+			require.Equal(t, v, echo.Header.Get(k))
+		}
+
+		queryParams := map[string]string{}
+		require.NoError(
+			t,
+			json.Unmarshal(
+				[]byte(`{"compatibilityMode":"ai-sdk-4","stream":"false","cache":"false","memory":"false","analytics":"false","ephemeral":"true"}`),
+				&queryParams,
+			),
+		)
+		require.Len(t, queryParams, len(echo.Query))
+
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
 	t.Run("createAgentCompletion streaming with simple messages", func(t *testing.T) {
 		decoder, err := client.CreateAgentCompletionStreamRaw(client.NewApiCreateAgentCompletionRequest(
 			"76710f1b-8231-42e5-b0d1-f43aac618e15",
@@ -931,9 +968,9 @@ func TestAgentStudio_DeleteAgentConversations(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
-	t.Run("deleteAgentConversations with date filters", func(t *testing.T) {
+	t.Run("deleteAgentConversations with all filters", func(t *testing.T) {
 		err := client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-06-30"))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-06-30").WithEphemeral(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", echo.Path)
@@ -942,7 +979,7 @@ func TestAgentStudio_DeleteAgentConversations(t *testing.T) {
 		require.Nil(t, echo.Body)
 
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"startDate":"2024-01-01","endDate":"2024-06-30"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"startDate":"2024-01-01","endDate":"2024-06-30","ephemeral":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 
 		for k, v := range queryParams {
@@ -1061,9 +1098,9 @@ func TestAgentStudio_ExportConversations(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 	})
-	t.Run("exportConversations with date filters", func(t *testing.T) {
+	t.Run("exportConversations with all filters", func(t *testing.T) {
 		_, err := client.ExportConversations(client.NewApiExportConversationsRequest(
-			"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-12-31"))
+			"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithEphemeral(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export", echo.Path)
@@ -1072,7 +1109,7 @@ func TestAgentStudio_ExportConversations(t *testing.T) {
 		require.Nil(t, echo.Body)
 
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"startDate":"2024-01-01","endDate":"2024-12-31"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"startDate":"2024-01-01","endDate":"2024-12-31","ephemeral":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 
 		for k, v := range queryParams {
@@ -1356,7 +1393,7 @@ func TestAgentStudio_ListAgentConversations(t *testing.T) {
 	t.Run("listAgentConversations with all parameters", func(t *testing.T) {
 		_, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(
 			"76710f1b-8231-42e5-b0d1-f43aac618e15",
-		).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token"))
+		).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token").WithEphemeral(true))
 		require.NoError(t, err)
 
 		require.Equal(t, "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", echo.Path)
@@ -1376,7 +1413,7 @@ func TestAgentStudio_ListAgentConversations(t *testing.T) {
 			t,
 			json.Unmarshal(
 				[]byte(
-					`{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}`,
+					`{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true","ephemeral":"true"}`,
 				),
 				&queryParams,
 			),
@@ -1447,6 +1484,23 @@ func TestAgentStudio_ListAgents(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
+	})
+}
+
+func TestAgentStudio_ListConversationUsage(t *testing.T) {
+	t.Parallel()
+
+	client, echo := createAgentStudioClient(t)
+	_ = echo
+
+	t.Run("listConversationUsage", func(t *testing.T) {
+		_, err := client.ListConversationUsage()
+		require.NoError(t, err)
+
+		require.Equal(t, "/agent-studio/1/configuration/conversation-usage", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
 	})
 }
 

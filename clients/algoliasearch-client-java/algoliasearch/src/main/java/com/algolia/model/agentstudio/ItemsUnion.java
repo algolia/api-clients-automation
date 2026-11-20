@@ -52,6 +52,11 @@ public interface ItemsUnion {
       JsonNode discriminatorNode = tree.get("type");
       if (discriminatorNode != null && discriminatorNode.isTextual()) {
         String discriminatorValue = discriminatorNode.asText();
+        if ("algolia_compare_products".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(AlgoliaCompareProductsToolConfig.class);
+          }
+        }
         if ("algolia_display_results".equals(discriminatorValue)) {
           try (JsonParser parser = tree.traverse(jp.getCodec())) {
             return parser.readValueAs(AlgoliaGroupedResultsCompatToolConfig.class);
@@ -151,6 +156,19 @@ public interface ItemsUnion {
             "Failed to deserialize oneOf AlgoliaGroupedResultsCompatToolConfig (error: " +
               e.getMessage() +
               ") (type: AlgoliaGroupedResultsCompatToolConfig)"
+          );
+        }
+      }
+      // deserialize AlgoliaCompareProductsToolConfig
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AlgoliaCompareProductsToolConfig.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AlgoliaCompareProductsToolConfig (error: " +
+              e.getMessage() +
+              ") (type: AlgoliaCompareProductsToolConfig)"
           );
         }
       }
