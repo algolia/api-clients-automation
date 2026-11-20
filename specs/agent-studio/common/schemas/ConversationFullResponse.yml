@@ -31,10 +31,6 @@ ConversationFullResponse:
       type: boolean
       title: isfromdashboard
       default: false
-    isEphemeral:
-      type: boolean
-      title: isephemeral
-      default: false
     messageCount:
       type: integer
       title: messagecount
@@ -69,6 +65,10 @@ ConversationFullResponse:
     analyticsDegraded:
       type: boolean
       title: analyticsdegraded
+      default: false
+    isEphemeral:
+      type: boolean
+      title: isephemeral
       default: false
   type: object
   required:
