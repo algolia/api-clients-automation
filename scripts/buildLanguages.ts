@@ -65,7 +65,7 @@ async function buildLanguage(
 
       let fileNames = '';
 
-      if (buildType !== 'guides') {
+      if (buildType !== 'guides' && buildType !== 'playground') {
         fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
       }
 
