@@ -66,6 +66,10 @@ ConversationFullResponse:
       type: boolean
       title: analyticsdegraded
       default: false
+    isEphemeral:
+      type: boolean
+      title: isephemeral
+      default: false
   type: object
   required:
     - id

@@ -57,6 +57,10 @@ ConversationBaseResponse:
       oneOf:
         - $ref: 'ImpactAnalytics.yml#/ImpactAnalytics'
         - type: 'null'
+    isEphemeral:
+      type: boolean
+      title: isephemeral
+      default: false
   type: object
   required:
     - id

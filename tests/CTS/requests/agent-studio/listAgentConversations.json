@@ -23,7 +23,8 @@
       "clicked": true,
       "converted": false,
       "hasAlgoliaSearch": true,
-      "xAlgoliaSecureUserToken": "secure-user-token"
+      "xAlgoliaSecureUserToken": "secure-user-token",
+      "ephemeral": true
     },
     "request": {
       "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations",
@@ -38,7 +39,8 @@
         "includeImpactAnalytics": "true",
         "clicked": "true",
         "converted": "false",
-        "hasAlgoliaSearch": "true"
+        "hasAlgoliaSearch": "true",
+        "ephemeral": "true"
       },
       "headers": {
         "x-algolia-secure-user-token": "secure-user-token"
