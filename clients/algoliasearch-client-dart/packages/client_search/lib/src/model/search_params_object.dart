@@ -93,6 +93,7 @@ final class SearchParamsObject {
     this.renderingContent,
     this.enableReRanking,
     this.reRankingApplyFilter,
+    this.allowReRankingOnPersonalization,
   });
 
   /// Search query.
@@ -427,6 +428,10 @@ final class SearchParamsObject {
   @JsonKey(name: r'reRankingApplyFilter')
   final dynamic reRankingApplyFilter;
 
+  /// Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+  @JsonKey(name: r'allowReRankingOnPersonalization')
+  final bool? allowReRankingOnPersonalization;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -507,7 +512,9 @@ final class SearchParamsObject {
           other.attributeCriteriaComputedBy == attributeCriteriaComputedBy &&
           other.renderingContent == renderingContent &&
           other.enableReRanking == enableReRanking &&
-          other.reRankingApplyFilter == reRankingApplyFilter;
+          other.reRankingApplyFilter == reRankingApplyFilter &&
+          other.allowReRankingOnPersonalization ==
+              allowReRankingOnPersonalization;
 
   @override
   int get hashCode =>
@@ -584,7 +591,8 @@ final class SearchParamsObject {
       attributeCriteriaComputedBy.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
+      allowReRankingOnPersonalization.hashCode;
 
   factory SearchParamsObject.fromJson(Map<String, dynamic> json) =>
       _$SearchParamsObjectFromJson(json);

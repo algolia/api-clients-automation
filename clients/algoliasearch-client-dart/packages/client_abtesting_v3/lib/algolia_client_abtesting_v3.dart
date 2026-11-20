@@ -36,6 +36,7 @@ export 'src/model/metric_metadata.dart';
 export 'src/model/metric_name.dart';
 export 'src/model/metric_result.dart';
 export 'src/model/metrics_filter.dart';
+export 'src/model/metrics_filter_parameters.dart';
 export 'src/model/minimum_detectable_effect.dart';
 export 'src/model/outliers_filter.dart';
 export 'src/model/primary_metric.dart';

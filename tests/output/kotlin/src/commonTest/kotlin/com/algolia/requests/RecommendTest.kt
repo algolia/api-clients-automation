@@ -42,6 +42,123 @@ class RecommendTest {
     )
   }
 
+  @Test
+  fun `batch recommend rules for trending items with request scopes1`() = runTest {
+    client.runTest(
+      call = {
+        batchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+          recommendRule =
+            listOf(
+              RecommendRule(
+                objectID = "global-rule",
+                condition =
+                  Condition(
+                    requestScope =
+                      GlobalRequestScope(
+                        global = true,
+                      ),
+                  ),
+                consequence =
+                  Consequence(
+                    promote =
+                      listOf(
+                        PromoteConsequenceObject(
+                          objectID = "item-1",
+                          position = 0,
+                        ),
+                      ),
+                  ),
+              ),
+              RecommendRule(
+                objectID = "facet-rule",
+                condition =
+                  Condition(
+                    context = "mobile",
+                    requestScope =
+                      FacetRequestScope(
+                        facetName = "brand",
+                        facetValue = "acme",
+                      ),
+                  ),
+                consequence =
+                  Consequence(
+                    hide =
+                      listOf(
+                        HideConsequenceObject(
+                          objectID = "item-2",
+                        ),
+                      ),
+                    params =
+                      ParamsConsequence(
+                        filters = "inStock:true",
+                      ),
+                  ),
+              ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """[{"objectID":"global-rule","condition":{"requestScope":{"global":true}},"consequence":{"promote":[{"objectID":"item-1","position":0}]}},{"objectID":"facet-rule","condition":{"context":"mobile","requestScope":{"facetName":"brand","facetValue":"acme"}},"consequence":{"hide":[{"objectID":"item-2"}],"params":{"filters":"inStock:true"}}}]""",
+          it.body,
+        )
+      },
+    )
+  }
+
+  @Test
+  fun `batch recommend rules for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        batchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+          recommendRule =
+            listOf(
+              RecommendRule(
+                objectID = "looking-similar-rule",
+                condition =
+                  Condition(
+                    filters = "brand:acme",
+                  ),
+                consequence =
+                  Consequence(
+                    params =
+                      ParamsConsequence(
+                        automaticFacetFilters =
+                          listOf(
+                            AutoFacetFilter(
+                              facet = "category",
+                              negative = false,
+                            ),
+                          ),
+                      ),
+                  ),
+              ),
+            ),
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/batch".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody(
+          """[{"objectID":"looking-similar-rule","condition":{"filters":"brand:acme"},"consequence":{"params":{"automaticFacetFilters":[{"facet":"category","negative":false}]}}}]""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // customDelete
 
   @Test
@@ -582,6 +699,48 @@ class RecommendTest {
     )
   }
 
+  @Test
+  fun `get recommend rule for trending items1`() = runTest {
+    client.runTest(
+      call = {
+        getRecommendRule(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+          objectID = "objectID",
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/objectID".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get recommend rule for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        getRecommendRule(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+          objectID = "objectID",
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/objectID".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getRecommendStatus
 
   @Test
@@ -929,6 +1088,46 @@ class RecommendTest {
       intercept = {
         assertEquals(
           "/1/indexes/indexName/related-products/recommend/rules/search".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search recommend rules for trending items1`() = runTest {
+    client.runTest(
+      call = {
+        searchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "trending-items" },
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/trending-items/recommend/rules/search".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search recommend rules for looking similar2`() = runTest {
+    client.runTest(
+      call = {
+        searchRecommendRules(
+          indexName = "indexName",
+          model = RecommendModels.entries.first { it.value == "looking-similar" },
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/1/indexes/indexName/looking-similar/recommend/rules/search".toPathSegments(),
           it.url.pathSegments,
         )
         assertEquals(HttpMethod.parse("POST"), it.method)

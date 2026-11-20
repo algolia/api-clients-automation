@@ -13,6 +13,7 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Condition(
           filters: $checkedConvert('filters', (v) => v as String?),
           context: $checkedConvert('context', (v) => v as String?),
+          requestScope: $checkedConvert('requestScope', (v) => v),
         );
         return val;
       },
@@ -29,5 +30,6 @@ Map<String, dynamic> _$ConditionToJson(Condition instance) {
 
   writeNotNull('filters', instance.filters);
   writeNotNull('context', instance.context);
+  writeNotNull('requestScope', instance.requestScope);
   return val;
 }

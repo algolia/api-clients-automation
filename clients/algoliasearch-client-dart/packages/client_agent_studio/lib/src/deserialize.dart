@@ -10,6 +10,7 @@ import 'package:algolia_client_agent_studio/src/model/agui_completion_request.da
 import 'package:algolia_client_agent_studio/src/model/agui_resume.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_compat_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_tool_config.dart';
+import 'package:algolia_client_agent_studio/src/model/algolia_managed_llm_create_input.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_recommend_tool_index_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_search_tool_config.dart';
@@ -21,11 +22,13 @@ import 'package:algolia_client_agent_studio/src/model/allowed_domain_list_respon
 import 'package:algolia_client_agent_studio/src/model/allowed_domain_response.dart';
 import 'package:algolia_client_agent_studio/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_agent_studio/src/model/anthropic_provider_input.dart';
+import 'package:algolia_client_agent_studio/src/model/api_mode_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/application_config_patch.dart';
 import 'package:algolia_client_agent_studio/src/model/application_config_response.dart';
 import 'package:algolia_client_agent_studio/src/model/assistant_message_agui.dart';
 import 'package:algolia_client_agent_studio/src/model/assistant_message_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/assistant_message_v5.dart';
+import 'package:algolia_client_agent_studio/src/model/azure_open_ai_provider_create_input.dart';
 import 'package:algolia_client_agent_studio/src/model/azure_open_ai_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/base_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/boolean_param.dart';
@@ -52,6 +55,7 @@ import 'package:algolia_client_agent_studio/src/model/feedback_response.dart';
 import 'package:algolia_client_agent_studio/src/model/feedback_update_request.dart';
 import 'package:algolia_client_agent_studio/src/model/forwarded_props.dart';
 import 'package:algolia_client_agent_studio/src/model/function_call_agui.dart';
+import 'package:algolia_client_agent_studio/src/model/google_service_account_key.dart';
 import 'package:algolia_client_agent_studio/src/model/guardrail_outcome.dart';
 import 'package:algolia_client_agent_studio/src/model/guardrail_violation_data_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/http_validation_error.dart';
@@ -65,6 +69,7 @@ import 'package:algolia_client_agent_studio/src/model/memory_type.dart';
 import 'package:algolia_client_agent_studio/src/model/message_event.dart';
 import 'package:algolia_client_agent_studio/src/model/message_response.dart';
 import 'package:algolia_client_agent_studio/src/model/message_role.dart';
+import 'package:algolia_client_agent_studio/src/model/mistral_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/mode_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/number_param.dart';
 import 'package:algolia_client_agent_studio/src/model/number_param_constraint.dart';
@@ -131,6 +136,7 @@ import 'package:algolia_client_agent_studio/src/model/user_message_metadata_v5.d
 import 'package:algolia_client_agent_studio/src/model/user_message_v4.dart';
 import 'package:algolia_client_agent_studio/src/model/user_message_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/validation_error.dart';
+import 'package:algolia_client_agent_studio/src/model/vertex_ai_provider_input.dart';
 import 'package:algolia_client_agent_studio/src/model/vote_enum.dart';
 import 'package:algolia_client_agent_studio/src/model/xai_provider_input.dart';
 
@@ -186,6 +192,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AlgoliaGroupedResultsToolConfig':
       return AlgoliaGroupedResultsToolConfig.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'AlgoliaManagedLLMCreateInput':
+      return AlgoliaManagedLLMCreateInput.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AlgoliaRecommendToolConfig':
       return AlgoliaRecommendToolConfig.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -218,6 +227,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AnthropicProviderInput':
       return AnthropicProviderInput.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ApiModeEnum':
+      return ApiModeEnum.fromJson(value) as ReturnType;
     case 'ApplicationConfigPatch':
       return ApplicationConfigPatch.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -233,6 +244,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AssistantMessageV5':
       return AssistantMessageV5.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AzureOpenAIProviderCreateInput':
+      return AzureOpenAIProviderCreateInput.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AzureOpenAIProviderInput':
       return AzureOpenAIProviderInput.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -302,6 +316,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'FunctionCallAGUI':
       return FunctionCallAGUI.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'GoogleServiceAccountKey':
+      return GoogleServiceAccountKey.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'GuardrailOutcome':
       return GuardrailOutcome.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -337,6 +354,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MessageRole':
       return MessageRole.fromJson(value) as ReturnType;
+    case 'MistralProviderInput':
+      return MistralProviderInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ModeEnum':
       return ModeEnum.fromJson(value) as ReturnType;
     case 'NumberParam':
@@ -511,6 +531,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ValidationError':
       return ValidationError.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'VertexAIProviderInput':
+      return VertexAIProviderInput.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'VoteEnum':
       return VoteEnum.fromJson(value) as ReturnType;

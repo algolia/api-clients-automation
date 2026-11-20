@@ -81,6 +81,22 @@ post:
           - type: 'null'
         title: x-Algolia-Secure-User-Token
       description: The X-Algolia-Secure-User-Token.
+    - name: ephemeral
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: 'Set to true to not retain the conversation: it is processed and
+          analyzed like any other, but removed by the next cleanup run instead of being
+          kept in the history. Overrides the agent''s ephemeralConversations setting;
+          omit to use it.'
+        title: ephemeral
+      description: 'Set to true to not retain the conversation: it is processed and
+        analyzed like any other, but removed by the next cleanup run instead of being
+        kept in the history. Overrides the agent''s ephemeralConversations setting;
+        omit to use it.'
   requestBody:
     required: true
     content:

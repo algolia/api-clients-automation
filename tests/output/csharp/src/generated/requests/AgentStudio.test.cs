@@ -383,7 +383,7 @@ public class AgentStudioClientRequestTests
       {
         Name = "My OpenAI Provider",
         ProviderName = Enum.Parse<ProviderName>("Openai"),
-        Input = new ProviderInput(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
+        Input = new InputUnion(new OpenAIProviderInput { ApiKey = "sk-test-key-1234" }),
       }
     );
 
@@ -405,8 +405,8 @@ public class AgentStudioClientRequestTests
       {
         Name = "My Azure Provider",
         ProviderName = Enum.Parse<ProviderName>("AzureOpenai"),
-        Input = new ProviderInput(
-          new AzureOpenAIProviderInput
+        Input = new InputUnion(
+          new AzureOpenAIProviderCreateInput
           {
             ApiKey = "az-test-key-5678",
             AzureEndpoint = "https://my-resource.openai.azure.com",

@@ -24,6 +24,66 @@ describe('batchRecommendRules', () => {
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('batch recommend rules for trending items with request scopes', async () => {
+    const req = (await client.batchRecommendRules({
+      indexName: 'indexName',
+      model: 'trending-items',
+      recommendRule: [
+        {
+          objectID: 'global-rule',
+          condition: { requestScope: { global: true } },
+          consequence: { promote: [{ objectID: 'item-1', position: 0 }] },
+        },
+        {
+          objectID: 'facet-rule',
+          condition: { context: 'mobile', requestScope: { facetName: 'brand', facetValue: 'acme' } },
+          consequence: { hide: [{ objectID: 'item-2' }], params: { filters: 'inStock:true' } },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/trending-items/recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual([
+      {
+        objectID: 'global-rule',
+        condition: { requestScope: { global: true } },
+        consequence: { promote: [{ objectID: 'item-1', position: 0 }] },
+      },
+      {
+        objectID: 'facet-rule',
+        condition: { context: 'mobile', requestScope: { facetName: 'brand', facetValue: 'acme' } },
+        consequence: { hide: [{ objectID: 'item-2' }], params: { filters: 'inStock:true' } },
+      },
+    ]);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('batch recommend rules for looking similar', async () => {
+    const req = (await client.batchRecommendRules({
+      indexName: 'indexName',
+      model: 'looking-similar',
+      recommendRule: [
+        {
+          objectID: 'looking-similar-rule',
+          condition: { filters: 'brand:acme' },
+          consequence: { params: { automaticFacetFilters: [{ facet: 'category', negative: false }] } },
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/looking-similar/recommend/rules/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual([
+      {
+        objectID: 'looking-similar-rule',
+        condition: { filters: 'brand:acme' },
+        consequence: { params: { automaticFacetFilters: [{ facet: 'category', negative: false }] } },
+      },
+    ]);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('customDelete', () => {
@@ -295,6 +355,32 @@ describe('getRecommendRule', () => {
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
   });
+
+  test('get recommend rule for trending items', async () => {
+    const req = (await client.getRecommendRule({
+      indexName: 'indexName',
+      model: 'trending-items',
+      objectID: 'objectID',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/trending-items/recommend/rules/objectID');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('get recommend rule for looking similar', async () => {
+    const req = (await client.getRecommendRule({
+      indexName: 'indexName',
+      model: 'looking-similar',
+      objectID: 'objectID',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/looking-similar/recommend/rules/objectID');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
 });
 
 describe('getRecommendStatus', () => {
@@ -532,6 +618,30 @@ describe('searchRecommendRules', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/indexName/related-products/recommend/rules/search');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search recommend rules for trending items', async () => {
+    const req = (await client.searchRecommendRules({
+      indexName: 'indexName',
+      model: 'trending-items',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/trending-items/recommend/rules/search');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({});
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search recommend rules for looking similar', async () => {
+    const req = (await client.searchRecommendRules({
+      indexName: 'indexName',
+      model: 'looking-similar',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/looking-similar/recommend/rules/search');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);

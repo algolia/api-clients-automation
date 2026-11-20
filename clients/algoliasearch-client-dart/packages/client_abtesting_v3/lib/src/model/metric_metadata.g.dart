@@ -15,6 +15,7 @@ MetricMetadata _$MetricMetadataFromJson(Map<String, dynamic> json) =>
           winsorizedValue: $checkedConvert(
               'winsorizedValue', (v) => (v as num?)?.toDouble()),
           mean: $checkedConvert('mean', (v) => (v as num?)?.toDouble()),
+          userCount: $checkedConvert('userCount', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -31,5 +32,6 @@ Map<String, dynamic> _$MetricMetadataToJson(MetricMetadata instance) {
 
   writeNotNull('winsorizedValue', instance.winsorizedValue);
   writeNotNull('mean', instance.mean);
+  writeNotNull('userCount', instance.userCount);
   return val;
 }

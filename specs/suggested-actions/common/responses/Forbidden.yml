@@ -1,0 +1,8 @@
+description: Forbidden.
+content:
+  application/json:
+    schema:
+      $ref: './Error.yml'
+    example:
+      status: 403
+      message: Forbidden.

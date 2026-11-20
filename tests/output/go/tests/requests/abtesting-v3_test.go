@@ -53,17 +53,17 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 		jsonassert.New(t).
 			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"myMetric"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}]}`)
 	})
-	t.Run("addABTests with Bayesian configuration", func(t *testing.T) {
+	t.Run("addABTests with Bayesian no-results user rate", func(t *testing.T) {
 		_, err := client.AddABTests(client.NewApiAddABTestsRequest(
 
 			abtestingV3.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetMetrics(
-				[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("conversionRate")}).SetVariants(
+				[]abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName("usersWithNoResultsRate")}).SetVariants(
 				[]abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(
 					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_1").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(
 					abtestingV3.NewEmptyAbTestsVariant().SetIndex("AB_TEST_2").SetTrafficPercentage(50))}).SetConfiguration(
 				abtestingV3.NewEmptyABTestConfiguration().
 					SetMethod(abtestingV3.AnalysisMethod("bayesian")).
-					SetPrimaryMetric(abtestingV3.PrimaryMetric("conversion_rate")),
+					SetPrimaryMetric(abtestingV3.PrimaryMetric("users_with_no_results_rate")),
 			),
 		))
 		require.NoError(t, err)
@@ -72,7 +72,7 @@ func TestAbtestingV3_AddABTests(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		jsonassert.New(t).
-			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}`)
+			Assertf(*echo.Body, "%s", `{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}`)
 	})
 }
 
@@ -617,8 +617,13 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 	t.Run("getTimeseries with user-based metrics", func(t *testing.T) {
 		_, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(
 			42).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithMetric(
-			[]abtestingV3.MetricName{abtestingV3.MetricName("clicked_users_rate"), abtestingV3.MetricName("converted_users_rate")}).WithMethods(
-			[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
+			[]abtestingV3.MetricName{
+				abtestingV3.MetricName("clicked_users_rate"),
+				abtestingV3.MetricName("converted_users_rate"),
+				abtestingV3.MetricName("users_with_no_results_rate"),
+			}).
+			WithMethods(
+				[]abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod("bayesian")}))
 		require.NoError(t, err)
 
 		require.Equal(t, "/3/abtests/42/timeseries", echo.Path)
@@ -630,7 +635,9 @@ func TestAbtestingV3_GetTimeseries(t *testing.T) {
 		require.NoError(
 			t,
 			json.Unmarshal(
-				[]byte(`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}`),
+				[]byte(
+					`{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate","methods":"bayesian"}`,
+				),
 				&queryParams,
 			),
 		)

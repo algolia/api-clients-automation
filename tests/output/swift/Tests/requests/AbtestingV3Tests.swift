@@ -54,7 +54,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// addABTests with Bayesian configuration
+    /// addABTests with Bayesian no-results user rate
     func testAddABTestsTest1() async throws {
         let configuration = try AbtestingV3ClientConfiguration(
             appID: AbtestingV3ClientRequestsTests.APPLICATION_ID,
@@ -76,10 +76,10 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
                     trafficPercentage: 50
                 )),
             ],
-            metrics: [CreateMetric(name: "conversionRate")],
+            metrics: [CreateMetric(name: "usersWithNoResultsRate")],
             configuration: AbtestingV3ABTestConfiguration(
                 method: AnalysisMethod.bayesian,
-                primaryMetric: PrimaryMetric.conversionRate
+                primaryMetric: PrimaryMetric.usersWithNoResultsRate
             ),
             endAt: "2022-12-31T00:00:00.000Z"
         ))
@@ -89,7 +89,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"conversionRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"conversion_rate\"}}"
+        let expectedBodyData = "{\"endAt\":\"2022-12-31T00:00:00.000Z\",\"name\":\"myABTest\",\"metrics\":[{\"name\":\"usersWithNoResultsRate\"}],\"variants\":[{\"index\":\"AB_TEST_1\",\"trafficPercentage\":30},{\"index\":\"AB_TEST_2\",\"trafficPercentage\":50}],\"configuration\":{\"method\":\"bayesian\",\"primaryMetric\":\"users_with_no_results_rate\"}}"
             .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1061,7 +1061,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
             id: 42,
             startDate: "1999-09-19",
             endDate: "2001-01-01",
-            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],
+            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate, MetricName.usersWithNoResultsRate],
             methods: [AnalysisMethod.bayesian]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -1073,7 +1073,7 @@ final class AbtestingV3ClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters = try XCTUnwrap(
-            "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate\",\"methods\":\"bayesian\"}"
+            "{\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"metric\":\"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate\",\"methods\":\"bayesian\"}"
                 .data(using: .utf8)
         )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(

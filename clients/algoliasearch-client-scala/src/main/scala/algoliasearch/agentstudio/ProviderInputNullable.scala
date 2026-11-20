@@ -35,6 +35,8 @@
   */
 package algoliasearch.agentstudio
 
+import algoliasearch.agentstudio.ApiModeEnum._
+
 import org.json4s._
 
 /** ProviderInputNullable
@@ -59,6 +61,8 @@ object ProviderInputNullableSerializer extends Serializer[ProviderInputNullable]
         case value: JObject => Extraction.extract[BaseProviderInput](value)
         case value: JObject => Extraction.extract[AnthropicProviderInput](value)
         case value: JObject => Extraction.extract[XAIProviderInput](value)
+        case value: JObject => Extraction.extract[MistralProviderInput](value)
+        case value: JObject => Extraction.extract[VertexAIProviderInput](value)
         case _              => throw new MappingException("Can't convert " + json + " to ProviderInputNullable")
       }
   }
@@ -72,6 +76,8 @@ object ProviderInputNullableSerializer extends Serializer[ProviderInputNullable]
         case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
         case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
         case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
+        case value: MistralProviderInput          => Extraction.decompose(value)(format - this)
+        case value: VertexAIProviderInput         => Extraction.decompose(value)(format - this)
       }
   }
 }

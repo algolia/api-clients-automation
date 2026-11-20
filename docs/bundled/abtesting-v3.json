@@ -1186,6 +1186,12 @@
             "format": "double",
             "description": "Mean value for this metric.",
             "example": 53.7
+          },
+          "userCount": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Only present for `winsorized_revenue_per_user`.\nNumber of tracked users in this variant with a tracked purchase in the metric's currency (`dimension`), plus tracked users with no tracked purchase in any currency.\nUsers who purchased only in other currencies are excluded.\nIt's the sample size behind the mean, p-value, and intervals, and differs from the overall `user_count` metric.\nOmitted when the variant has no record for that currency.\n",
+            "example": 4100
           }
         },
         "example": {
@@ -1277,7 +1283,7 @@
           },
           "dimension": {
             "type": "string",
-            "description": "Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency."
+            "description": "Dimension defined during test creation. For revenue metrics, including `revenue_per_search` and `winsorized_revenue_per_user`, this is the currency."
           },
           "metadata": {
             "$ref": "#/components/schemas/metricMetadata"
@@ -1353,6 +1359,16 @@
               "evidence": {
                 "status": "unavailable"
               }
+            }
+          },
+          {
+            "name": "winsorized_revenue_per_user",
+            "dimension": "USD",
+            "updatedAt": "2025-05-15T17:52:15.644906Z",
+            "value": 53.7,
+            "metadata": {
+              "mean": 53.7,
+              "userCount": 4100
             }
           }
         ]
@@ -1503,6 +1519,25 @@
           "metric"
         ]
       },
+      "MetricsFilterParameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Values for a filter that needs them.\nThe `core.hasExactCategoryFilter` filter requires both properties and matches the searches that had the exact filter `<filterAttribute>:<filterValue>`.\nOptional filters and filters in an OR group don't match.\nWith `includes` false or omitted, the test counts every search except those searches.\nA test can have at most one `core.hasExactCategoryFilter` filter.\nOther filters don't accept parameters.\n",
+        "properties": {
+          "filterAttribute": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Facet attribute of the category, for example `categories.lvl0`. Hierarchical facets have one attribute for each level.",
+            "example": "categories.lvl0"
+          },
+          "filterValue": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Facet value of the category, exactly as the search sends it.",
+            "example": "Shoes"
+          }
+        }
+      },
       "MetricsFilter": {
         "type": "object",
         "additionalProperties": false,
@@ -1510,7 +1545,7 @@
         "properties": {
           "domain": {
             "type": "string",
-            "description": "Metric domain (for example `abtesting`, `personalization`).",
+            "description": "Metric domain (for example `abtesting`, `core`, `personalization`).",
             "example": "abtesting"
           },
           "name": {
@@ -1520,11 +1555,14 @@
           },
           "trackEffects": {
             "type": "boolean",
-            "description": "Whether the experiment should record the effects of this filter."
+            "description": "Whether the experiment should record the effects of this filter. Not supported by `core.hasExactCategoryFilter`."
           },
           "includes": {
             "type": "boolean",
-            "description": "If true, keep items that match the filter; if false, exclude them."
+            "description": "If true, keep items that match the filter; if false, exclude them. Defaults to false."
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/MetricsFilterParameters"
           }
         },
         "required": [
@@ -1549,7 +1587,7 @@
       },
       "PrimaryMetric": {
         "type": "string",
-        "description": "Primary metric for Bayesian analysis. Required when `method` is `bayesian`.\nWhen `method` is omitted and the test defaults to `bayesian`, the default primary metric is `conversion_rate`,\nor the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include conversion rate.\nIf the request includes a non-empty `metrics` list, this metric must be in that list.\nUser-level rates (`*_users_rate`) are the share of tracked users with at least one such search.\nAdd-to-cart rates, purchase rates, and revenue per search require access to revenue analytics.\n",
+        "description": "Primary metric for Bayesian analysis. Required when `method` is `bayesian`.\nWhen `method` is omitted and the test defaults to `bayesian`, the default primary metric is `conversion_rate`,\nor the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include conversion rate.\nIf the request includes a non-empty `metrics` list, this metric must be in that list.\nUser-level rates (`*_users_rate`) are the share of tracked users with at least one such search.\nFor `users_with_no_results_rate`, this is the share of tracked users with at least one search returning no results. Lower values are better.\nAdd-to-cart rates, purchase rates, and revenue per search require access to revenue analytics.\n",
         "example": "conversion_rate",
         "enum": [
           "add_to_cart_rate",
@@ -1560,7 +1598,8 @@
           "add_to_cart_users_rate",
           "clicked_users_rate",
           "converted_users_rate",
-          "purchase_users_rate"
+          "purchase_users_rate",
+          "users_with_no_results_rate"
         ]
       },
       "ABTestConfiguration": {
@@ -1839,6 +1878,7 @@
           "converted_users_rate",
           "add_to_cart_users_rate",
           "purchase_users_rate",
+          "users_with_no_results_rate",
           "avg_click_through_rate_per_user",
           "avg_conversion_rate_per_user",
           "avg_purchase_rate_per_user",

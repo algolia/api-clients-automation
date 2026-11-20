@@ -62,6 +62,9 @@ public class MessageResponse {
   @JsonProperty("guardrail")
   private GuardrailOutcome guardrail;
 
+  @JsonProperty("metadata")
+  private Map<String, Object> metadata;
+
   public MessageResponse setId(String id) {
     this.id = id;
     return this;
@@ -275,6 +278,25 @@ public class MessageResponse {
     return guardrail;
   }
 
+  public MessageResponse setMetadata(Map<String, Object> metadata) {
+    this.metadata = metadata;
+    return this;
+  }
+
+  public MessageResponse putMetadata(String key, Object metadataItem) {
+    if (this.metadata == null) {
+      this.metadata = new HashMap<>();
+    }
+    this.metadata.put(key, metadataItem);
+    return this;
+  }
+
+  /** Get metadata */
+  @javax.annotation.Nullable
+  public Map<String, Object> getMetadata() {
+    return metadata;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -300,7 +322,8 @@ public class MessageResponse {
       Objects.equals(this.isCacheHit, messageResponse.isCacheHit) &&
       Objects.equals(this.turnContext, messageResponse.turnContext) &&
       Objects.equals(this.events, messageResponse.events) &&
-      Objects.equals(this.guardrail, messageResponse.guardrail)
+      Objects.equals(this.guardrail, messageResponse.guardrail) &&
+      Objects.equals(this.metadata, messageResponse.metadata)
     );
   }
 
@@ -322,7 +345,8 @@ public class MessageResponse {
       isCacheHit,
       turnContext,
       events,
-      guardrail
+      guardrail,
+      metadata
     );
   }
 
@@ -346,6 +370,7 @@ public class MessageResponse {
     sb.append("    turnContext: ").append(toIndentedString(turnContext)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("    guardrail: ").append(toIndentedString(guardrail)).append("\n");
+    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("}");
     return sb.toString();
   }

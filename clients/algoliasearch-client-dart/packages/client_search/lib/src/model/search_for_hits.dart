@@ -96,6 +96,7 @@ final class SearchForHits {
     this.renderingContent,
     this.enableReRanking,
     this.reRankingApplyFilter,
+    this.allowReRankingOnPersonalization,
     required this.indexName,
     this.type,
     this.extensions,
@@ -437,6 +438,10 @@ final class SearchForHits {
   @JsonKey(name: r'reRankingApplyFilter')
   final dynamic reRankingApplyFilter;
 
+  /// Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+  @JsonKey(name: r'allowReRankingOnPersonalization')
+  final bool? allowReRankingOnPersonalization;
+
   /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
@@ -529,6 +534,8 @@ final class SearchForHits {
           other.renderingContent == renderingContent &&
           other.enableReRanking == enableReRanking &&
           other.reRankingApplyFilter == reRankingApplyFilter &&
+          other.allowReRankingOnPersonalization ==
+              allowReRankingOnPersonalization &&
           other.indexName == indexName &&
           other.type == type &&
           other.extensions == extensions;
@@ -610,6 +617,7 @@ final class SearchForHits {
       renderingContent.hashCode +
       enableReRanking.hashCode +
       (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
+      allowReRankingOnPersonalization.hashCode +
       indexName.hashCode +
       type.hashCode +
       extensions.hashCode;

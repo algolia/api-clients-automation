@@ -180,7 +180,7 @@ paths:
         - agent-studio
       operationId: listAgents
       x-acl:
-        - settings
+        - editSettings
       summary: List Agents
       description: List all agents with pagination and filtering.
       parameters:
@@ -260,7 +260,7 @@ paths:
         - agent-studio
       operationId: getAgent
       x-acl:
-        - settings
+        - editSettings
       summary: Get Agent
       description: Retrieve details of the specified agent.
       parameters:
@@ -350,7 +350,7 @@ paths:
         - agent-studio
       operationId: listAgentAllowedDomains
       x-acl:
-        - settings
+        - editSettings
       summary: List Allowed Domains
       description: List all allowed domain patterns for this agent.
       parameters:
@@ -484,7 +484,7 @@ paths:
         - agent-studio
       operationId: getAllowedDomain
       x-acl:
-        - settings
+        - editSettings
       summary: Get Allowed Domain
       description: Get a single allowed domain by id.
       parameters:
@@ -1306,7 +1306,7 @@ paths:
         - agent-studio
       operationId: listProviders
       x-acl:
-        - settings
+        - editSettings
       summary: List Providers
       description: List Providers.
       parameters:
@@ -1403,7 +1403,7 @@ paths:
         - agent-studio
       operationId: getProvider
       x-acl:
-        - settings
+        - editSettings
       summary: Get Provider
       description: Get Provider.
       parameters:
@@ -1493,7 +1493,7 @@ paths:
         - agent-studio
       operationId: listProviderModels
       x-acl:
-        - settings
+        - editSettings
       summary: Get Provider Models By Id
       description: Get available models for a specific provider.
       parameters:
@@ -2885,7 +2885,7 @@ components:
           title: index
           type: string
         description:
-          maxLength: 3000
+          maxLength: 10000
           minLength: 1
           title: description
           type: string
@@ -5233,6 +5233,12 @@ components:
           oneOf:
             - $ref: '#/components/schemas/GuardrailOutcome'
             - type: 'null'
+        metadata:
+          oneOf:
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          title: metadata
       type: object
       required:
         - id
@@ -5476,6 +5482,11 @@ components:
         - apiKey
       title: openAIProviderInput
       description: OpenAI-specific provider input.
+    ApiModeEnum:
+      type: string
+      enum:
+        - dated
+        - v1
     AzureOpenAIProviderInput:
       properties:
         apiKey:
@@ -5491,6 +5502,8 @@ components:
           minLength: 1
           title: azuredeployment
           description: Azure model deployment name.
+        apiMode:
+          $ref: '#/components/schemas/ApiModeEnum'
         apiVersion:
           oneOf:
             - type: string
@@ -5550,6 +5563,15 @@ components:
               minLength: 1
             - type: 'null'
           title: baseurl
+        workspaceId:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: workspaceid
+          description: >-
+            Required for API keys not scoped to a single workspace
+            (sk-ant-usr-...). Sent as the anthropic-workspace-id header on every
+            request.
       type: object
       required:
         - apiKey
@@ -5580,17 +5602,96 @@ components:
 
         completion time). An unusable base_url fails when you create the
         provider, not at completion.
-    ManagedProviderResponseInput:
+    MistralProviderInput:
       properties:
-        defaultModel:
+        apiKey:
+          type: string
+          title: apikey
+        baseUrl:
+          oneOf:
+            - type: string
+              maxLength: 2083
+              minLength: 1
+            - type: 'null'
+          title: baseurl
+      type: object
+      required:
+        - apiKey
+      title: mistralProviderInput
+      description: >-
+        Mistral-specific provider input.
+
+
+        api_key only, with an optional base_url override (defaults to
+        https://api.mistral.ai/v1), e.g.
+
+        the EU or US regional endpoint
+        (https://docs.mistral.ai/inference/regional-inference.md).
+    GoogleServiceAccountKey:
+      properties:
+        type:
+          type: string
+          const: service_account
+          title: type
+        projectId:
+          type: string
+          title: projectid
+        privateKey:
+          type: string
+          title: privatekey
+        clientEmail:
+          type: string
+          title: clientemail
+        tokenUri:
+          type: string
+          title: tokenuri
+      additionalProperties: true
+      type: object
+      required:
+        - type
+        - projectId
+        - privateKey
+        - clientEmail
+        - tokenUri
+      title: googleServiceAccountKey
+      description: A GCP service-account JSON key file.
+    VertexAIProviderInput:
+      properties:
+        apiKey:
           oneOf:
             - type: string
             - type: 'null'
+          title: apikey
+        project:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: project
+        location:
+          oneOf:
+            - type: string
+            - type: 'null'
+          title: location
+        serviceAccountKey:
+          oneOf:
+            - $ref: '#/components/schemas/GoogleServiceAccountKey'
+            - type: 'null'
+      type: object
+      title: vertexAIProviderInput
+      description: >-
+        Vertex AI provider input: an API key (Express Mode) or GCP
+        service-account credentials.
+    ManagedProviderResponseInput:
+      properties:
+        defaultModel:
+          type: string
           title: defaultmodel
       type: object
+      required:
+        - defaultModel
       title: managedProviderResponseInput
       description: Response input for the Algolia-hosted provider. Limited by design.
-    InputUnion:
+    InputUnionProviderAuthenticationResponse:
       oneOf:
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
@@ -5598,6 +5699,8 @@ components:
         - $ref: '#/components/schemas/BaseProviderInput'
         - $ref: '#/components/schemas/AnthropicProviderInput'
         - $ref: '#/components/schemas/XAIProviderInput'
+        - $ref: '#/components/schemas/MistralProviderInput'
+        - $ref: '#/components/schemas/VertexAIProviderInput'
         - $ref: '#/components/schemas/ManagedProviderResponseInput'
     ProviderAuthenticationResponse:
       properties:
@@ -5611,7 +5714,7 @@ components:
           type: string
           title: providername
         input:
-          $ref: '#/components/schemas/InputUnion'
+          $ref: '#/components/schemas/InputUnionProviderAuthenticationResponse'
         createdAt:
           type: string
           title: createdat
@@ -5623,10 +5726,6 @@ components:
             - type: string
             - type: 'null'
           title: lastusedat
-        isAlgoliaManaged:
-          type: boolean
-          title: isalgoliamanaged
-          default: false
       type: object
       required:
         - id
@@ -5656,19 +5755,60 @@ components:
         - openai
         - azure_openai
         - google_genai
+        - google_vertexai
         - deepseek
         - openai_compatible
+        - algolia_managed_llm
         - xai
         - anthropic
+        - mistralai
       title: providerName
-    ProviderInput:
+    AzureOpenAIProviderCreateInput:
+      properties:
+        apiKey:
+          type: string
+          title: apikey
+        azureEndpoint:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          title: azureendpoint
+        azureDeployment:
+          type: string
+          minLength: 1
+          title: azuredeployment
+          description: Azure model deployment name.
+        apiMode:
+          $ref: '#/components/schemas/ApiModeEnum'
+        apiVersion:
+          type: string
+          title: apiversion
+          default: 2024-12-01-preview
+      type: object
+      required:
+        - apiKey
+        - azureEndpoint
+        - azureDeployment
+      title: azureOpenAIProviderCreateInput
+      description: New Azure providers default to v1; saved inputs keep the dated fallback.
+    AlgoliaManagedLLMCreateInput:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: algoliaManagedLLMCreateInput
+      description: Empty request settings for provisioning the server-managed provider.
+    InputUnion:
       oneOf:
+        - $ref: '#/components/schemas/AzureOpenAIProviderCreateInput'
         - $ref: '#/components/schemas/OpenAIProviderInput'
         - $ref: '#/components/schemas/AzureOpenAIProviderInput'
         - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
         - $ref: '#/components/schemas/BaseProviderInput'
         - $ref: '#/components/schemas/AnthropicProviderInput'
         - $ref: '#/components/schemas/XAIProviderInput'
+        - $ref: '#/components/schemas/MistralProviderInput'
+        - $ref: '#/components/schemas/VertexAIProviderInput'
+        - $ref: '#/components/schemas/AlgoliaManagedLLMCreateInput'
     ProviderAuthenticationCreate:
       properties:
         name:
@@ -5679,7 +5819,7 @@ components:
         providerName:
           $ref: '#/components/schemas/ProviderName'
         input:
-          $ref: '#/components/schemas/ProviderInput'
+          $ref: '#/components/schemas/InputUnion'
       additionalProperties: false
       type: object
       required:
@@ -5695,6 +5835,8 @@ components:
         - $ref: '#/components/schemas/BaseProviderInput'
         - $ref: '#/components/schemas/AnthropicProviderInput'
         - $ref: '#/components/schemas/XAIProviderInput'
+        - $ref: '#/components/schemas/MistralProviderInput'
+        - $ref: '#/components/schemas/VertexAIProviderInput'
         - type: 'null'
     ProviderAuthenticationPatch:
       properties:

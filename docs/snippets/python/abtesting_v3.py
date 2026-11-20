@@ -51,9 +51,9 @@ def snippet_for_add_ab_tests1():
     """
     Snippet for the addABTests method.
 
-    addABTests with Bayesian configuration
+    addABTests with Bayesian no-results user rate
     """
-    # >SEPARATOR addABTests addABTests with Bayesian configuration
+    # >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     # Initialize the client
     # In an asynchronous context, you can use AbtestingV3Client instead, which exposes the exact same methods.
     client = AbtestingV3ClientSync(
@@ -67,7 +67,7 @@ def snippet_for_add_ab_tests1():
             "name": "myABTest",
             "metrics": [
                 {
-                    "name": "conversionRate",
+                    "name": "usersWithNoResultsRate",
                 },
             ],
             "variants": [
@@ -82,7 +82,7 @@ def snippet_for_add_ab_tests1():
             ],
             "configuration": {
                 "method": "bayesian",
-                "primaryMetric": "conversion_rate",
+                "primaryMetric": "users_with_no_results_rate",
             },
         },
     )
@@ -915,6 +915,7 @@ def snippet_for_get_timeseries2():
         metric=[
             "clicked_users_rate",
             "converted_users_rate",
+            "users_with_no_results_rate",
         ],
         methods=[
             "bayesian",

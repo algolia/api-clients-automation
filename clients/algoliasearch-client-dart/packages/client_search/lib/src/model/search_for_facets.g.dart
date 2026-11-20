@@ -161,6 +161,8 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('enableReRanking', (v) => v as bool?),
           reRankingApplyFilter:
               $checkedConvert('reRankingApplyFilter', (v) => v),
+          allowReRankingOnPersonalization: $checkedConvert(
+              'allowReRankingOnPersonalization', (v) => v as bool?),
           facet: $checkedConvert('facet', (v) => v as String),
           indexName: $checkedConvert('indexName', (v) => v as String),
           facetQuery: $checkedConvert('facetQuery', (v) => v as String?),
@@ -269,6 +271,8 @@ Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  writeNotNull('allowReRankingOnPersonalization',
+      instance.allowReRankingOnPersonalization);
   val['facet'] = instance.facet;
   val['indexName'] = instance.indexName;
   writeNotNull('facetQuery', instance.facetQuery);

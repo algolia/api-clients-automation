@@ -27,7 +27,18 @@ jobs:
       - name: Compile
         run: sbt +compile
 
-      - run: sbt ci-release
+      - name: Shutdown sbt server
+        run: sbt shutdown
+
+      - name: Publish
+        run: |
+          missing=0
+          [ -n "$PGP_PASSPHRASE" ] || { echo "::error::PGP_PASSPHRASE secret is empty"; missing=1; }
+          [ -n "$PGP_SECRET" ] || { echo "::error::PGP_SECRET secret is empty"; missing=1; }
+          [ -n "$SONATYPE_USERNAME" ] || { echo "::error::MAVEN_CENTRAL_USERNAME secret is empty"; missing=1; }
+          [ -n "$SONATYPE_PASSWORD" ] || { echo "::error::MAVEN_CENTRAL_PASSWORD secret is empty"; missing=1; }
+          [ "$missing" -eq 0 ] || exit 1
+          sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}

@@ -40,13 +40,13 @@ object RecommendModels {
   case object BoughtTogether extends RecommendModels {
     override def toString = "bought-together"
   }
-  case object TrendingFacets extends RecommendModels {
-    override def toString = "trending-facets"
-  }
   case object TrendingItems extends RecommendModels {
     override def toString = "trending-items"
   }
-  val values: Seq[RecommendModels] = Seq(RelatedProducts, BoughtTogether, TrendingFacets, TrendingItems)
+  case object LookingSimilar extends RecommendModels {
+    override def toString = "looking-similar"
+  }
+  val values: Seq[RecommendModels] = Seq(RelatedProducts, BoughtTogether, TrendingItems, LookingSimilar)
 
   def withName(name: String): RecommendModels = RecommendModels.values
     .find(_.toString == name)

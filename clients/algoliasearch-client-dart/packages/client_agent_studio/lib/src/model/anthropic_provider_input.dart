@@ -11,6 +11,7 @@ final class AnthropicProviderInput {
   const AnthropicProviderInput({
     required this.apiKey,
     this.baseUrl,
+    this.workspaceId,
   });
 
   @JsonKey(name: r'apiKey')
@@ -19,16 +20,23 @@ final class AnthropicProviderInput {
   @JsonKey(name: r'baseUrl')
   final String? baseUrl;
 
+  /// Required for API keys not scoped to a single workspace (sk-ant-usr-...). Sent as the anthropic-workspace-id header on every request.
+  @JsonKey(name: r'workspaceId')
+  final String? workspaceId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AnthropicProviderInput &&
           other.apiKey == apiKey &&
-          other.baseUrl == baseUrl;
+          other.baseUrl == baseUrl &&
+          other.workspaceId == workspaceId;
 
   @override
   int get hashCode =>
-      apiKey.hashCode + (baseUrl == null ? 0 : baseUrl.hashCode);
+      apiKey.hashCode +
+      (baseUrl == null ? 0 : baseUrl.hashCode) +
+      (workspaceId == null ? 0 : workspaceId.hashCode);
 
   factory AnthropicProviderInput.fromJson(Map<String, dynamic> json) =>
       _$AnthropicProviderInputFromJson(json);

@@ -679,7 +679,7 @@ func SnippetForCreateProviderOfAgentStudio() {
 		agentStudio.NewEmptyProviderAuthenticationCreate().
 			SetName("My OpenAI Provider").
 			SetProviderName(agentStudio.ProviderName("openai")).
-			SetInput(agentStudio.OpenAIProviderInputAsProviderInput(
+			SetInput(agentStudio.OpenAIProviderInputAsInputUnion(
 				agentStudio.NewEmptyOpenAIProviderInput().SetApiKey("sk-test-key-1234"))),
 	))
 	if err != nil {
@@ -713,8 +713,8 @@ func SnippetForCreateProviderOfAgentStudio1() {
 		agentStudio.NewEmptyProviderAuthenticationCreate().
 			SetName("My Azure Provider").
 			SetProviderName(agentStudio.ProviderName("azure_openai")).
-			SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(
-				agentStudio.NewEmptyAzureOpenAIProviderInput().
+			SetInput(agentStudio.AzureOpenAIProviderCreateInputAsInputUnion(
+				agentStudio.NewEmptyAzureOpenAIProviderCreateInput().
 					SetApiKey("az-test-key-5678").
 					SetAzureEndpoint("https://my-resource.openai.azure.com").
 					SetAzureDeployment("gpt-4o"),

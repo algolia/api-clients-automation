@@ -5,7 +5,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"myMetric\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n  }\n);",
-      "addABTests with Bayesian configuration": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"conversionRate\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n    Configuration = new ABTestConfiguration\n    {\n      Method = Enum.Parse<AnalysisMethod>(\"Bayesian\"),\n      PrimaryMetric = Enum.Parse<PrimaryMetric>(\"ConversionRate\"),\n    },\n  }\n);"
+      "addABTests with Bayesian no-results user rate": "var response = await client.AddABTestsAsync(\n  new AddABTestsRequest\n  {\n    EndAt = \"2022-12-31T00:00:00.000Z\",\n    Name = \"myABTest\",\n    Metrics = new List<CreateMetric> { new CreateMetric { Name = \"usersWithNoResultsRate\" } },\n    Variants = new List<AddABTestsVariant>\n    {\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_1\", TrafficPercentage = 30 }),\n      new AddABTestsVariant(new AbTestsVariant { Index = \"AB_TEST_2\", TrafficPercentage = 50 }),\n    },\n    Configuration = new ABTestConfiguration\n    {\n      Method = Enum.Parse<AnalysisMethod>(\"Bayesian\"),\n      PrimaryMetric = Enum.Parse<PrimaryMetric>(\"UsersWithNoResultsRate\"),\n    },\n  }\n);"
     },
     "applyVariantSettings": {
       "default": "await client.ApplyVariantSettingsAsync(42, 2);"
@@ -53,7 +53,7 @@
     "getTimeseries": {
       "getTimeseries": "var response = await client.GetTimeseriesAsync(42);",
       "getTimeseries with Bayesian revenue per search": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName> { Enum.Parse<MetricName>(\"RevenuePerSearch\") },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);",
-      "getTimeseries with user-based metrics": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName>\n  {\n    Enum.Parse<MetricName>(\"ClickedUsersRate\"),\n    Enum.Parse<MetricName>(\"ConvertedUsersRate\"),\n  },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
+      "getTimeseries with user-based metrics": "var response = await client.GetTimeseriesAsync(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  new List<MetricName>\n  {\n    Enum.Parse<MetricName>(\"ClickedUsersRate\"),\n    Enum.Parse<MetricName>(\"ConvertedUsersRate\"),\n    Enum.Parse<MetricName>(\"UsersWithNoResultsRate\"),\n  },\n  new List<AnalysisMethod> { Enum.Parse<AnalysisMethod>(\"Bayesian\") }\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = await client.ListABTestsAsync();",
@@ -79,7 +79,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "final response = await client.addABTests(\n  addABTestsRequest: AddABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"myMetric\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n  ),\n);",
-      "addABTests with Bayesian configuration": "final response = await client.addABTests(\n  addABTestsRequest: AddABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"conversionRate\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n    configuration: ABTestConfiguration(\n      method: AnalysisMethod.fromJson(\"bayesian\"),\n      primaryMetric: PrimaryMetric.fromJson(\"conversion_rate\"),\n    ),\n  ),\n);"
+      "addABTests with Bayesian no-results user rate": "final response = await client.addABTests(\n  addABTestsRequest: AddABTestsRequest(\n    endAt: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [\n      CreateMetric(\n        name: \"usersWithNoResultsRate\",\n      ),\n    ],\n    variants: [\n      AbTestsVariant(\n        index: \"AB_TEST_1\",\n        trafficPercentage: 30,\n      ),\n      AbTestsVariant(\n        index: \"AB_TEST_2\",\n        trafficPercentage: 50,\n      ),\n    ],\n    configuration: ABTestConfiguration(\n      method: AnalysisMethod.fromJson(\"bayesian\"),\n      primaryMetric: PrimaryMetric.fromJson(\"users_with_no_results_rate\"),\n    ),\n  ),\n);"
     },
     "applyVariantSettings": {
       "default": "await client.applyVariantSettings(\n  id: 42,\n  variantId: 2,\n);"
@@ -127,7 +127,7 @@
     "getTimeseries": {
       "getTimeseries": "final response = await client.getTimeseries(\n  id: 42,\n);",
       "getTimeseries with Bayesian revenue per search": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"revenue_per_search\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);",
-      "getTimeseries with user-based metrics": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"clicked_users_rate\"),\n    MetricName.fromJson(\"converted_users_rate\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
+      "getTimeseries with user-based metrics": "final response = await client.getTimeseries(\n  id: 42,\n  startDate: \"1999-09-19\",\n  endDate: \"2001-01-01\",\n  metric: [\n    MetricName.fromJson(\"clicked_users_rate\"),\n    MetricName.fromJson(\"converted_users_rate\"),\n    MetricName.fromJson(\"users_with_no_results_rate\"),\n  ],\n  methods: [\n    AnalysisMethod.fromJson(\"bayesian\"),\n  ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "final response = await client.listABTests();",
@@ -153,7 +153,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtestingV3.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"myMetric\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))})))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "addABTests with Bayesian configuration": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtestingV3.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"conversionRate\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}).SetConfiguration(\n    abtestingV3.NewEmptyABTestConfiguration().\n      SetMethod(abtestingV3.AnalysisMethod(\"bayesian\")).\n      SetPrimaryMetric(abtestingV3.PrimaryMetric(\"conversion_rate\")),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "addABTests with Bayesian no-results user rate": "response, err := client.AddABTests(client.NewApiAddABTestsRequest(\n\n  abtestingV3.NewEmptyAddABTestsRequest().SetEndAt(\"2022-12-31T00:00:00.000Z\").SetName(\"myABTest\").SetMetrics(\n    []abtestingV3.CreateMetric{*abtestingV3.NewEmptyCreateMetric().SetName(\"usersWithNoResultsRate\")}).SetVariants(\n    []abtestingV3.AddABTestsVariant{*abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_1\").SetTrafficPercentage(30)), *abtestingV3.AbTestsVariantAsAddABTestsVariant(\n      abtestingV3.NewEmptyAbTestsVariant().SetIndex(\"AB_TEST_2\").SetTrafficPercentage(50))}).SetConfiguration(\n    abtestingV3.NewEmptyABTestConfiguration().\n      SetMethod(abtestingV3.AnalysisMethod(\"bayesian\")).\n      SetPrimaryMetric(abtestingV3.PrimaryMetric(\"users_with_no_results_rate\")),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "applyVariantSettings": {
       "default": "err = client.ApplyVariantSettings(client.NewApiApplyVariantSettingsRequest(\n  42, 2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -201,7 +201,7 @@
     "getTimeseries": {
       "getTimeseries": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "getTimeseries with Bayesian revenue per search": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"revenue_per_search\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "getTimeseries with user-based metrics": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{abtestingV3.MetricName(\"clicked_users_rate\"), abtestingV3.MetricName(\"converted_users_rate\")}).WithMethods(\n  []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "getTimeseries with user-based metrics": "response, err := client.GetTimeseries(client.NewApiGetTimeseriesRequest(\n  42).WithStartDate(\"1999-09-19\").WithEndDate(\"2001-01-01\").WithMetric(\n  []abtestingV3.MetricName{\n    abtestingV3.MetricName(\"clicked_users_rate\"),\n    abtestingV3.MetricName(\"converted_users_rate\"),\n    abtestingV3.MetricName(\"users_with_no_results_rate\"),\n  }).\n  WithMethods(\n    []abtestingV3.AnalysisMethod{abtestingV3.AnalysisMethod(\"bayesian\")}))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response, err := client.ListABTests(client.NewApiListABTestsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -227,7 +227,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "ABTestResponse response = client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"myMetric\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n);",
-      "addABTests with Bayesian configuration": "ABTestResponse response = client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"conversionRate\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n    .setConfiguration(new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.CONVERSION_RATE))\n);"
+      "addABTests with Bayesian no-results user rate": "ABTestResponse response = client.addABTests(\n  new AddABTestsRequest()\n    .setEndAt(\"2022-12-31T00:00:00.000Z\")\n    .setName(\"myABTest\")\n    .setMetrics(Arrays.asList(new CreateMetric().setName(\"usersWithNoResultsRate\")))\n    .setVariants(\n      Arrays.asList(\n        new AbTestsVariant().setIndex(\"AB_TEST_1\").setTrafficPercentage(30),\n        new AbTestsVariant().setIndex(\"AB_TEST_2\").setTrafficPercentage(50)\n      )\n    )\n    .setConfiguration(\n      new ABTestConfiguration().setMethod(AnalysisMethod.BAYESIAN).setPrimaryMetric(PrimaryMetric.USERS_WITH_NO_RESULTS_RATE)\n    )\n);"
     },
     "applyVariantSettings": {
       "default": "client.applyVariantSettings(42, 2);"
@@ -275,7 +275,7 @@
     "getTimeseries": {
       "getTimeseries": "Timeseries response = client.getTimeseries(42);",
       "getTimeseries with Bayesian revenue per search": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.REVENUE_PER_SEARCH),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);",
-      "getTimeseries with user-based metrics": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
+      "getTimeseries with user-based metrics": "Timeseries response = client.getTimeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  Arrays.asList(MetricName.CLICKED_USERS_RATE, MetricName.CONVERTED_USERS_RATE, MetricName.USERS_WITH_NO_RESULTS_RATE),\n  Arrays.asList(AnalysisMethod.BAYESIAN)\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "ListABTestsResponse response = client.listABTests();",
@@ -301,7 +301,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'myMetric' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n});",
-      "addABTests with Bayesian configuration": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'conversionRate' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n  configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },\n});"
+      "addABTests with Bayesian no-results user rate": "const response = await client.addABTests({\n  endAt: '2022-12-31T00:00:00.000Z',\n  name: 'myABTest',\n  metrics: [{ name: 'usersWithNoResultsRate' }],\n  variants: [\n    { index: 'AB_TEST_1', trafficPercentage: 30 },\n    { index: 'AB_TEST_2', trafficPercentage: 50 },\n  ],\n  configuration: { method: 'bayesian', primaryMetric: 'users_with_no_results_rate' },\n});"
     },
     "applyVariantSettings": {
       "default": "await client.applyVariantSettings({ id: 42, variantId: 2 });"
@@ -349,7 +349,7 @@
     "getTimeseries": {
       "getTimeseries": "const response = await client.getTimeseries({ id: 42 });",
       "getTimeseries with Bayesian revenue per search": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['revenue_per_search'],\n  methods: ['bayesian'],\n});",
-      "getTimeseries with user-based metrics": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['clicked_users_rate', 'converted_users_rate'],\n  methods: ['bayesian'],\n});"
+      "getTimeseries with user-based metrics": "const response = await client.getTimeseries({\n  id: 42,\n  startDate: '1999-09-19',\n  endDate: '2001-01-01',\n  metric: ['clicked_users_rate', 'converted_users_rate', 'users_with_no_results_rate'],\n  methods: ['bayesian'],\n});"
     },
     "listABTests": {
       "listABTests with minimal parameters": "const response = await client.listABTests();",
@@ -372,7 +372,7 @@
   "kotlin": {
     "addABTests": {
       "addABTests with minimal parameters": "var response =\n  client.addABTests(\n    addABTestsRequest =\n      AddABTestsRequest(\n        endAt = \"2022-12-31T00:00:00.000Z\",\n        name = \"myABTest\",\n        metrics = listOf(CreateMetric(name = \"myMetric\")),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 30),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n      )\n  )",
-      "addABTests with Bayesian configuration": "var response =\n  client.addABTests(\n    addABTestsRequest =\n      AddABTestsRequest(\n        endAt = \"2022-12-31T00:00:00.000Z\",\n        name = \"myABTest\",\n        metrics = listOf(CreateMetric(name = \"conversionRate\")),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 30),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n        configuration =\n          ABTestConfiguration(\n            method = AnalysisMethod.entries.first { it.value == \"bayesian\" },\n            primaryMetric = PrimaryMetric.entries.first { it.value == \"conversion_rate\" },\n          ),\n      )\n  )"
+      "addABTests with Bayesian no-results user rate": "var response =\n  client.addABTests(\n    addABTestsRequest =\n      AddABTestsRequest(\n        endAt = \"2022-12-31T00:00:00.000Z\",\n        name = \"myABTest\",\n        metrics = listOf(CreateMetric(name = \"usersWithNoResultsRate\")),\n        variants =\n          listOf(\n            AbTestsVariant(index = \"AB_TEST_1\", trafficPercentage = 30),\n            AbTestsVariant(index = \"AB_TEST_2\", trafficPercentage = 50),\n          ),\n        configuration =\n          ABTestConfiguration(\n            method = AnalysisMethod.entries.first { it.value == \"bayesian\" },\n            primaryMetric =\n              PrimaryMetric.entries.first { it.value == \"users_with_no_results_rate\" },\n          ),\n      )\n  )"
     },
     "applyVariantSettings": {
       "default": "client.applyVariantSettings(id = 42, variantId = 2)"
@@ -420,7 +420,7 @@
     "getTimeseries": {
       "getTimeseries": "var response = client.getTimeseries(id = 42)",
       "getTimeseries with Bayesian revenue per search": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric = listOf(MetricName.entries.first { it.value == \"revenue_per_search\" }),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )",
-      "getTimeseries with user-based metrics": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric =\n      listOf(\n        MetricName.entries.first { it.value == \"clicked_users_rate\" },\n        MetricName.entries.first { it.value == \"converted_users_rate\" },\n      ),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
+      "getTimeseries with user-based metrics": "var response =\n  client.getTimeseries(\n    id = 42,\n    startDate = \"1999-09-19\",\n    endDate = \"2001-01-01\",\n    metric =\n      listOf(\n        MetricName.entries.first { it.value == \"clicked_users_rate\" },\n        MetricName.entries.first { it.value == \"converted_users_rate\" },\n        MetricName.entries.first { it.value == \"users_with_no_results_rate\" },\n      ),\n    methods = listOf(AnalysisMethod.entries.first { it.value == \"bayesian\" }),\n  )"
     },
     "listABTests": {
       "listABTests with minimal parameters": "var response = client.listABTests()",
@@ -446,7 +446,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'myMetric',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n    ],\n);",
-      "addABTests with Bayesian configuration": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'conversionRate',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n        'configuration' => ['method' => 'bayesian',\n            'primaryMetric' => 'conversion_rate',\n        ],\n    ],\n);"
+      "addABTests with Bayesian no-results user rate": "$response = $client->addABTests(\n    ['endAt' => '2022-12-31T00:00:00.000Z',\n        'name' => 'myABTest',\n        'metrics' => [\n            ['name' => 'usersWithNoResultsRate',\n            ],\n        ],\n        'variants' => [\n            ['index' => 'AB_TEST_1',\n                'trafficPercentage' => 30,\n            ],\n\n            ['index' => 'AB_TEST_2',\n                'trafficPercentage' => 50,\n            ],\n        ],\n        'configuration' => ['method' => 'bayesian',\n            'primaryMetric' => 'users_with_no_results_rate',\n        ],\n    ],\n);"
     },
     "applyVariantSettings": {
       "default": "$client->applyVariantSettings(\n    42,\n    2,\n);"
@@ -494,7 +494,7 @@
     "getTimeseries": {
       "getTimeseries": "$response = $client->getTimeseries(\n    42,\n);",
       "getTimeseries with Bayesian revenue per search": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'revenue_per_search',\n    ],\n    [\n        'bayesian',\n    ],\n);",
-      "getTimeseries with user-based metrics": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'clicked_users_rate',\n\n        'converted_users_rate',\n    ],\n    [\n        'bayesian',\n    ],\n);"
+      "getTimeseries with user-based metrics": "$response = $client->getTimeseries(\n    42,\n    '1999-09-19',\n    '2001-01-01',\n    [\n        'clicked_users_rate',\n\n        'converted_users_rate',\n\n        'users_with_no_results_rate',\n    ],\n    [\n        'bayesian',\n    ],\n);"
     },
     "listABTests": {
       "listABTests with minimal parameters": "$response = $client->listABTests();",
@@ -520,7 +520,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"myMetric\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n    },\n)",
-      "addABTests with Bayesian configuration": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"conversionRate\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n        \"configuration\": {\n            \"method\": \"bayesian\",\n            \"primaryMetric\": \"conversion_rate\",\n        },\n    },\n)"
+      "addABTests with Bayesian no-results user rate": "response = client.add_ab_tests(\n    add_ab_tests_request={\n        \"endAt\": \"2022-12-31T00:00:00.000Z\",\n        \"name\": \"myABTest\",\n        \"metrics\": [\n            {\n                \"name\": \"usersWithNoResultsRate\",\n            },\n        ],\n        \"variants\": [\n            {\n                \"index\": \"AB_TEST_1\",\n                \"trafficPercentage\": 30,\n            },\n            {\n                \"index\": \"AB_TEST_2\",\n                \"trafficPercentage\": 50,\n            },\n        ],\n        \"configuration\": {\n            \"method\": \"bayesian\",\n            \"primaryMetric\": \"users_with_no_results_rate\",\n        },\n    },\n)"
     },
     "applyVariantSettings": {
       "default": "client.apply_variant_settings(\n    id=42,\n    variant_id=2,\n)"
@@ -568,7 +568,7 @@
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(\n    id=42,\n)",
       "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"revenue_per_search\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)",
-      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"clicked_users_rate\",\n        \"converted_users_rate\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n    id=42,\n    start_date=\"1999-09-19\",\n    end_date=\"2001-01-01\",\n    metric=[\n        \"clicked_users_rate\",\n        \"converted_users_rate\",\n        \"users_with_no_results_rate\",\n    ],\n    methods=[\n        \"bayesian\",\n    ],\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests()",
@@ -594,7 +594,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "response = client.add_ab_tests(\n  Algolia::AbtestingV3::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"myMetric\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ]\n  )\n)",
-      "addABTests with Bayesian configuration": "response = client.add_ab_tests(\n  Algolia::AbtestingV3::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"conversionRate\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ],\n    configuration: Algolia::AbtestingV3::ABTestConfiguration.new(\n      method: \"bayesian\",\n      primary_metric: \"conversion_rate\"\n    )\n  )\n)"
+      "addABTests with Bayesian no-results user rate": "response = client.add_ab_tests(\n  Algolia::AbtestingV3::AddABTestsRequest.new(\n    end_at: \"2022-12-31T00:00:00.000Z\",\n    name: \"myABTest\",\n    metrics: [Algolia::AbtestingV3::CreateMetric.new(name: \"usersWithNoResultsRate\")],\n    variants: [\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_1\", traffic_percentage: 30),\n      Algolia::AbtestingV3::AbTestsVariant.new(index: \"AB_TEST_2\", traffic_percentage: 50)\n    ],\n    configuration: Algolia::AbtestingV3::ABTestConfiguration.new(\n      method: \"bayesian\",\n      primary_metric: \"users_with_no_results_rate\"\n    )\n  )\n)"
     },
     "applyVariantSettings": {
       "default": "client.apply_variant_settings(42, 2)"
@@ -642,7 +642,7 @@
     "getTimeseries": {
       "getTimeseries": "response = client.get_timeseries(42)",
       "getTimeseries with Bayesian revenue per search": "response = client.get_timeseries(42, \"1999-09-19\", \"2001-01-01\", [\"revenue_per_search\"], [\"bayesian\"])",
-      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  [\"clicked_users_rate\", \"converted_users_rate\"],\n  [\"bayesian\"]\n)"
+      "getTimeseries with user-based metrics": "response = client.get_timeseries(\n  42,\n  \"1999-09-19\",\n  \"2001-01-01\",\n  [\"clicked_users_rate\", \"converted_users_rate\", \"users_with_no_results_rate\"],\n  [\"bayesian\"]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "response = client.list_ab_tests",
@@ -668,7 +668,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"myMetric\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "addABTests with Bayesian configuration": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"conversionRate\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      ),\n      configuration = Some(\n        ABTestConfiguration(\n          method = Some(AnalysisMethod.withName(\"bayesian\")),\n          primaryMetric = Some(PrimaryMetric.withName(\"conversion_rate\"))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "addABTests with Bayesian no-results user rate": "val response = Await.result(\n  client.addABTests(\n    addABTestsRequest = AddABTestsRequest(\n      endAt = \"2022-12-31T00:00:00.000Z\",\n      name = \"myABTest\",\n      metrics = Seq(\n        CreateMetric(\n          name = \"usersWithNoResultsRate\"\n        )\n      ),\n      variants = Seq(\n        AbTestsVariant(\n          index = \"AB_TEST_1\",\n          trafficPercentage = 30\n        ),\n        AbTestsVariant(\n          index = \"AB_TEST_2\",\n          trafficPercentage = 50\n        )\n      ),\n      configuration = Some(\n        ABTestConfiguration(\n          method = Some(AnalysisMethod.withName(\"bayesian\")),\n          primaryMetric = Some(PrimaryMetric.withName(\"users_with_no_results_rate\"))\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "applyVariantSettings": {
       "default": "Await.result(\n  client.applyVariantSettings(\n    id = 42,\n    variantId = 2\n  ),\n  Duration(100, \"sec\")\n)"
@@ -716,7 +716,7 @@
     "getTimeseries": {
       "getTimeseries": "val response = Await.result(\n  client.getTimeseries(\n    id = 42\n  ),\n  Duration(100, \"sec\")\n)",
       "getTimeseries with Bayesian revenue per search": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"revenue_per_search\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)",
-      "getTimeseries with user-based metrics": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(Seq(MetricName.withName(\"clicked_users_rate\"), MetricName.withName(\"converted_users_rate\"))),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
+      "getTimeseries with user-based metrics": "val response = Await.result(\n  client.getTimeseries(\n    id = 42,\n    startDate = Some(\"1999-09-19\"),\n    endDate = Some(\"2001-01-01\"),\n    metric = Some(\n      Seq(\n        MetricName.withName(\"clicked_users_rate\"),\n        MetricName.withName(\"converted_users_rate\"),\n        MetricName.withName(\"users_with_no_results_rate\")\n      )\n    ),\n    methods = Some(Seq(AnalysisMethod.withName(\"bayesian\")))\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "val response = Await.result(\n  client.listABTests(\n  ),\n  Duration(100, \"sec\")\n)",
@@ -742,7 +742,7 @@
     },
     "addABTests": {
       "addABTests with minimal parameters": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"myMetric\")],\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))",
-      "addABTests with Bayesian configuration": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"conversionRate\")],\n    configuration: AbtestingV3ABTestConfiguration(\n        method: AnalysisMethod.bayesian,\n        primaryMetric: PrimaryMetric.conversionRate\n    ),\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
+      "addABTests with Bayesian no-results user rate": "let response = try await client.addABTests(addABTestsRequest: AbtestingV3AddABTestsRequest(\n    name: \"myABTest\",\n    variants: [\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_1\",\n            trafficPercentage: 30\n        )),\n        AbtestingV3AddABTestsVariant.abtestingV3AbTestsVariant(AbtestingV3AbTestsVariant(\n            index: \"AB_TEST_2\",\n            trafficPercentage: 50\n        )),\n    ],\n    metrics: [CreateMetric(name: \"usersWithNoResultsRate\")],\n    configuration: AbtestingV3ABTestConfiguration(\n        method: AnalysisMethod.bayesian,\n        primaryMetric: PrimaryMetric.usersWithNoResultsRate\n    ),\n    endAt: \"2022-12-31T00:00:00.000Z\"\n))"
     },
     "applyVariantSettings": {
       "default": "try await client.applyVariantSettings(id: 42, variantId: 2)"
@@ -790,7 +790,7 @@
     "getTimeseries": {
       "getTimeseries": "let response = try await client.getTimeseries(id: 42)",
       "getTimeseries with Bayesian revenue per search": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.revenuePerSearch],\n    methods: [AnalysisMethod.bayesian]\n)",
-      "getTimeseries with user-based metrics": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],\n    methods: [AnalysisMethod.bayesian]\n)"
+      "getTimeseries with user-based metrics": "let response = try await client.getTimeseries(\n    id: 42,\n    startDate: \"1999-09-19\",\n    endDate: \"2001-01-01\",\n    metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate, MetricName.usersWithNoResultsRate],\n    methods: [AnalysisMethod.bayesian]\n)"
     },
     "listABTests": {
       "listABTests with minimal parameters": "let response = try await client.listABTests()",

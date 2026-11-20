@@ -1563,7 +1563,11 @@ paths:
                     "domain": "abtesting",
                     "name": "isOutlier",
                     "trackEffects": true,
-                    "includes": true
+                    "includes": true,
+                    "parameters": {
+                      "filterAttribute": "categories.lvl0",
+                      "filterValue": "Shoes"
+                    }
                   }
                 ],
                 "errorCorrection": "bonferroni",
@@ -3118,7 +3122,11 @@ paths:
                     "domain": "abtesting",
                     "name": "isOutlier",
                     "trackEffects": true,
-                    "includes": true
+                    "includes": true,
+                    "parameters": {
+                      "filterAttribute": "categories.lvl0",
+                      "filterValue": "Shoes"
+                    }
                   }
                 ],
                 "minimumDetectableEffect": {
@@ -4395,6 +4403,23 @@ components:
           format: double
           description: Mean value for this metric.
           example: 53.7
+        userCount:
+          type: integer
+          format: int64
+          description: >
+            Only present for `winsorized_revenue_per_user`.
+
+            Number of tracked users in this variant with a tracked purchase in
+            the metric's currency (`dimension`), plus tracked users with no
+            tracked purchase in any currency.
+
+            Users who purchased only in other currencies are excluded.
+
+            It's the sample size behind the mean, p-value, and intervals, and
+            differs from the overall `user_count` metric.
+
+            Omitted when the variant has no record for that currency.
+          example: 4100
         winsorizedValue:
           type: number
           format: double
@@ -4517,7 +4542,8 @@ components:
           type: string
           description: >-
             Dimension defined during test creation. For revenue metrics,
-            including `revenue_per_search`, this is the currency.
+            including `revenue_per_search` and `winsorized_revenue_per_user`,
+            this is the currency.
         metadata:
           $ref: '#/components/schemas/metricMetadata'
         pValue:
@@ -4603,6 +4629,13 @@ components:
             relativeEffectCIHigh: 0.39
             evidence:
               status: unavailable
+        - name: winsorized_revenue_per_user
+          dimension: USD
+          updatedAt: '2025-05-15T17:52:15.644906Z'
+          value: 53.7
+          metadata:
+            mean: 53.7
+            userCount: 4100
     metrics:
       type: array
       description: All ABTest metrics that were defined during test creation.
@@ -4749,6 +4782,37 @@ components:
       required:
         - size
         - metric
+    MetricsFilterParameters:
+      type: object
+      additionalProperties: false
+      description: >
+        Values for a filter that needs them.
+
+        The `core.hasExactCategoryFilter` filter requires both properties and
+        matches the searches that had the exact filter
+        `<filterAttribute>:<filterValue>`.
+
+        Optional filters and filters in an OR group don't match.
+
+        With `includes` false or omitted, the test counts every search except
+        those searches.
+
+        A test can have at most one `core.hasExactCategoryFilter` filter.
+
+        Other filters don't accept parameters.
+      properties:
+        filterAttribute:
+          type: string
+          minLength: 1
+          description: >-
+            Facet attribute of the category, for example `categories.lvl0`.
+            Hierarchical facets have one attribute for each level.
+          example: categories.lvl0
+        filterValue:
+          type: string
+          minLength: 1
+          description: Facet value of the category, exactly as the search sends it.
+          example: Shoes
     MetricsFilter:
       type: object
       additionalProperties: false
@@ -4761,7 +4825,7 @@ components:
       properties:
         domain:
           type: string
-          description: Metric domain (for example `abtesting`, `personalization`).
+          description: Metric domain (for example `abtesting`, `core`, `personalization`).
           example: abtesting
         name:
           type: string
@@ -4769,10 +4833,16 @@ components:
           example: isOutlier
         includes:
           type: boolean
-          description: If true, keep items that match the filter; if false, exclude them.
+          description: >-
+            If true, keep items that match the filter; if false, exclude them.
+            Defaults to false.
+        parameters:
+          $ref: '#/components/schemas/MetricsFilterParameters'
         trackEffects:
           type: boolean
-          description: Whether the experiment should record the effects of this filter.
+          description: >-
+            Whether the experiment should record the effects of this filter. Not
+            supported by `core.hasExactCategoryFilter`.
       required:
         - domain
         - name
@@ -4807,6 +4877,9 @@ components:
         User-level rates (`*_users_rate`) are the share of tracked users with at
         least one such search.
 
+        For `users_with_no_results_rate`, this is the share of tracked users
+        with at least one search returning no results. Lower values are better.
+
         Add-to-cart rates, purchase rates, and revenue per search require access
         to revenue analytics.
       example: conversion_rate
@@ -4820,6 +4893,7 @@ components:
         - clicked_users_rate
         - converted_users_rate
         - purchase_users_rate
+        - users_with_no_results_rate
     ABTestConfiguration:
       title: configuration
       type: object
@@ -5047,6 +5121,7 @@ components:
         - converted_users_rate
         - add_to_cart_users_rate
         - purchase_users_rate
+        - users_with_no_results_rate
         - avg_click_through_rate_per_user
         - avg_conversion_rate_per_user
         - avg_purchase_rate_per_user

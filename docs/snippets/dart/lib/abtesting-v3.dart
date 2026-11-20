@@ -45,9 +45,9 @@ void snippetForaddABTests() async {
 
 // Snippet for the addABTests method.
 //
-// addABTests with Bayesian configuration
+// addABTests with Bayesian no-results user rate
 void snippetForaddABTests1() async {
-  // >SEPARATOR addABTests addABTests with Bayesian configuration
+  // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
   // Initialize the client
   final client = AbtestingV3Client(
       appId: 'ALGOLIA_APPLICATION_ID',
@@ -61,7 +61,7 @@ void snippetForaddABTests1() async {
       name: "myABTest",
       metrics: [
         CreateMetric(
-          name: "conversionRate",
+          name: "usersWithNoResultsRate",
         ),
       ],
       variants: [
@@ -76,7 +76,7 @@ void snippetForaddABTests1() async {
       ],
       configuration: ABTestConfiguration(
         method: AnalysisMethod.fromJson("bayesian"),
-        primaryMetric: PrimaryMetric.fromJson("conversion_rate"),
+        primaryMetric: PrimaryMetric.fromJson("users_with_no_results_rate"),
       ),
     ),
   );
@@ -859,6 +859,7 @@ void snippetForgetTimeseries2() async {
     metric: [
       MetricName.fromJson("clicked_users_rate"),
       MetricName.fromJson("converted_users_rate"),
+      MetricName.fromJson("users_with_no_results_rate"),
     ],
     methods: [
       AnalysisMethod.fromJson("bayesian"),

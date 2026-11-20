@@ -47,7 +47,7 @@ class SnippetAbtestingV3Client {
   }
 
   suspend fun snippetForAddABTests1() {
-    // >SEPARATOR addABTests addABTests with Bayesian configuration
+    // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
     // Initialize the client
     val client =
       AbtestingV3Client(
@@ -63,7 +63,7 @@ class SnippetAbtestingV3Client {
           AddABTestsRequest(
             endAt = "2022-12-31T00:00:00.000Z",
             name = "myABTest",
-            metrics = listOf(CreateMetric(name = "conversionRate")),
+            metrics = listOf(CreateMetric(name = "usersWithNoResultsRate")),
             variants =
               listOf(
                 AbTestsVariant(index = "AB_TEST_1", trafficPercentage = 30),
@@ -72,7 +72,8 @@ class SnippetAbtestingV3Client {
             configuration =
               ABTestConfiguration(
                 method = AnalysisMethod.entries.first { it.value == "bayesian" },
-                primaryMetric = PrimaryMetric.entries.first { it.value == "conversion_rate" },
+                primaryMetric =
+                  PrimaryMetric.entries.first { it.value == "users_with_no_results_rate" },
               ),
           )
       )
@@ -806,6 +807,7 @@ class SnippetAbtestingV3Client {
           listOf(
             MetricName.entries.first { it.value == "clicked_users_rate" },
             MetricName.entries.first { it.value == "converted_users_rate" },
+            MetricName.entries.first { it.value == "users_with_no_results_rate" },
           ),
         methods = listOf(AnalysisMethod.entries.first { it.value == "bayesian" }),
       )

@@ -17,6 +17,8 @@ AzureOpenAIProviderInput _$AzureOpenAIProviderInputFromJson(
           azureEndpoint: $checkedConvert('azureEndpoint', (v) => v as String),
           azureDeployment:
               $checkedConvert('azureDeployment', (v) => v as String),
+          apiMode: $checkedConvert(
+              'apiMode', (v) => $enumDecodeNullable(_$ApiModeEnumEnumMap, v)),
           apiVersion: $checkedConvert('apiVersion', (v) => v as String?),
         );
         return val;
@@ -37,6 +39,12 @@ Map<String, dynamic> _$AzureOpenAIProviderInputToJson(
     }
   }
 
+  writeNotNull('apiMode', instance.apiMode?.toJson());
   writeNotNull('apiVersion', instance.apiVersion);
   return val;
 }
+
+const _$ApiModeEnumEnumMap = {
+  ApiModeEnum.dated: 'dated',
+  ApiModeEnum.v1: 'v1',
+};

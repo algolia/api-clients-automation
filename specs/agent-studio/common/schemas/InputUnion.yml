@@ -1,9 +1,12 @@
 InputUnion:
   oneOf:
+    - $ref: 'AzureOpenAIProviderCreateInput.yml#/AzureOpenAIProviderCreateInput'
     - $ref: 'OpenAIProviderInput.yml#/OpenAIProviderInput'
     - $ref: 'AzureOpenAIProviderInput.yml#/AzureOpenAIProviderInput'
     - $ref: 'OpenAICompatibleProviderInput.yml#/OpenAICompatibleProviderInput'
     - $ref: 'BaseProviderInput.yml#/BaseProviderInput'
     - $ref: 'AnthropicProviderInput.yml#/AnthropicProviderInput'
     - $ref: 'XAIProviderInput.yml#/XAIProviderInput'
-    - $ref: 'ManagedProviderResponseInput.yml#/ManagedProviderResponseInput'
+    - $ref: 'MistralProviderInput.yml#/MistralProviderInput'
+    - $ref: 'VertexAIProviderInput.yml#/VertexAIProviderInput'
+    - $ref: 'AlgoliaManagedLLMCreateInput.yml#/AlgoliaManagedLLMCreateInput'

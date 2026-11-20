@@ -373,7 +373,7 @@ class AgentStudioTest extends AnyFunSuite {
       providerAuthenticationCreate = ProviderAuthenticationCreate(
         name = "My Azure Provider",
         providerName = ProviderName.withName("azure_openai"),
-        input = AzureOpenAIProviderInput(
+        input = AzureOpenAIProviderCreateInput(
           apiKey = "az-test-key-5678",
           azureEndpoint = "https://my-resource.openai.azure.com",
           azureDeployment = "gpt-4o"

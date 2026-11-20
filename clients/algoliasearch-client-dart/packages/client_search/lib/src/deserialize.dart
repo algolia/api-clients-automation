@@ -137,6 +137,7 @@ import 'package:algolia_client_search/src/model/search_for_hits_options.dart';
 import 'package:algolia_client_search/src/model/search_hits.dart';
 import 'package:algolia_client_search/src/model/search_method_params.dart';
 import 'package:algolia_client_search/src/model/search_pagination.dart';
+import 'package:algolia_client_search/src/model/search_params_allow_re_ranking.dart';
 import 'package:algolia_client_search/src/model/search_params_object.dart';
 import 'package:algolia_client_search/src/model/search_params_query.dart';
 import 'package:algolia_client_search/src/model/search_params_string.dart';
@@ -555,6 +556,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SearchPagination':
       return SearchPagination.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchParamsAllowReRanking':
+      return SearchParamsAllowReRanking.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchParamsObject':
       return SearchParamsObject.fromJson(value as Map<String, dynamic>)

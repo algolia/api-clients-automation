@@ -8,5 +8,27 @@
       "path": "/1/indexes/indexName/related-products/recommend/rules/search",
       "method": "POST"
     }
+  },
+  {
+    "testName": "search recommend rules for trending items",
+    "parameters": {
+      "indexName": "indexName",
+      "model": "trending-items"
+    },
+    "request": {
+      "path": "/1/indexes/indexName/trending-items/recommend/rules/search",
+      "method": "POST"
+    }
+  },
+  {
+    "testName": "search recommend rules for looking similar",
+    "parameters": {
+      "indexName": "indexName",
+      "model": "looking-similar"
+    },
+    "request": {
+      "path": "/1/indexes/indexName/looking-similar/recommend/rules/search",
+      "method": "POST"
+    }
   }
 ]

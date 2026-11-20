@@ -32,8 +32,8 @@
       "createFeedback with all parameters": "var response = await client.CreateFeedbackAsync(\n  new FeedbackCreationRequest\n  {\n    MessageId = \"msg-abc123\",\n    AgentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    Vote = Enum.Parse<VoteEnum>(\"0\"),\n    Tags = new List<string> { \"unhelpful\", \"off-topic\" },\n    Notes = \"The response did not address my question.\",\n  }\n);"
     },
     "createProvider": {
-      "createProvider with OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My OpenAI Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"Openai\"),\n    Input = new ProviderInput(new OpenAIProviderInput { ApiKey = \"sk-test-key-1234\" }),\n  }\n);",
-      "createProvider with Azure OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My Azure Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"AzureOpenai\"),\n    Input = new ProviderInput(\n      new AzureOpenAIProviderInput\n      {\n        ApiKey = \"az-test-key-5678\",\n        AzureEndpoint = \"https://my-resource.openai.azure.com\",\n        AzureDeployment = \"gpt-4o\",\n      }\n    ),\n  }\n);"
+      "createProvider with OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My OpenAI Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"Openai\"),\n    Input = new InputUnion(new OpenAIProviderInput { ApiKey = \"sk-test-key-1234\" }),\n  }\n);",
+      "createProvider with Azure OpenAI": "var response = await client.CreateProviderAsync(\n  new ProviderAuthenticationCreate\n  {\n    Name = \"My Azure Provider\",\n    ProviderName = Enum.Parse<ProviderName>(\"AzureOpenai\"),\n    Input = new InputUnion(\n      new AzureOpenAIProviderCreateInput\n      {\n        ApiKey = \"az-test-key-5678\",\n        AzureEndpoint = \"https://my-resource.openai.azure.com\",\n        AzureDeployment = \"gpt-4o\",\n      }\n    ),\n  }\n);"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "var response = await client.CreateSecretKeyAsync(\n  new SecretKeyCreate { Name = \"my-secret-key\" }\n);",
@@ -223,7 +223,7 @@
     },
     "createProvider": {
       "createProvider with OpenAI": "final response = await client.createProvider(\n  providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My OpenAI Provider\",\n    providerName: ProviderName.fromJson(\"openai\"),\n    input: OpenAIProviderInput(\n      apiKey: \"sk-test-key-1234\",\n    ),\n  ),\n);",
-      "createProvider with Azure OpenAI": "final response = await client.createProvider(\n  providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My Azure Provider\",\n    providerName: ProviderName.fromJson(\"azure_openai\"),\n    input: AzureOpenAIProviderInput(\n      apiKey: \"az-test-key-5678\",\n      azureEndpoint: \"https://my-resource.openai.azure.com\",\n      azureDeployment: \"gpt-4o\",\n    ),\n  ),\n);"
+      "createProvider with Azure OpenAI": "final response = await client.createProvider(\n  providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My Azure Provider\",\n    providerName: ProviderName.fromJson(\"azure_openai\"),\n    input: AzureOpenAIProviderCreateInput(\n      apiKey: \"az-test-key-5678\",\n      azureEndpoint: \"https://my-resource.openai.azure.com\",\n      azureDeployment: \"gpt-4o\",\n    ),\n  ),\n);"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "final response = await client.createSecretKey(\n  secretKeyCreate: SecretKeyCreate(\n    name: \"my-secret-key\",\n  ),\n);",
@@ -416,8 +416,8 @@
       "createFeedback with all parameters": "response, err := client.CreateFeedback(client.NewApiCreateFeedbackRequest(\n  agentStudio.NewEmptyFeedbackCreationRequest().\n    SetMessageId(\"msg-abc123\").\n    SetAgentId(\"76710f1b-8231-42e5-b0d1-f43aac618e15\").\n    SetVote(agentStudio.VoteEnum(0)).\n    SetTags(\n      []string{\"unhelpful\", \"off-topic\"}).\n    SetNotes(\"The response did not address my question.\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createProvider": {
-      "createProvider with OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My OpenAI Provider\").\n    SetProviderName(agentStudio.ProviderName(\"openai\")).\n    SetInput(agentStudio.OpenAIProviderInputAsProviderInput(\n      agentStudio.NewEmptyOpenAIProviderInput().SetApiKey(\"sk-test-key-1234\"))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "createProvider with Azure OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My Azure Provider\").\n    SetProviderName(agentStudio.ProviderName(\"azure_openai\")).\n    SetInput(agentStudio.AzureOpenAIProviderInputAsProviderInput(\n      agentStudio.NewEmptyAzureOpenAIProviderInput().\n        SetApiKey(\"az-test-key-5678\").\n        SetAzureEndpoint(\"https://my-resource.openai.azure.com\").\n        SetAzureDeployment(\"gpt-4o\"),\n    ),\n    ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "createProvider with OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My OpenAI Provider\").\n    SetProviderName(agentStudio.ProviderName(\"openai\")).\n    SetInput(agentStudio.OpenAIProviderInputAsInputUnion(\n      agentStudio.NewEmptyOpenAIProviderInput().SetApiKey(\"sk-test-key-1234\"))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "createProvider with Azure OpenAI": "response, err := client.CreateProvider(client.NewApiCreateProviderRequest(\n  agentStudio.NewEmptyProviderAuthenticationCreate().\n    SetName(\"My Azure Provider\").\n    SetProviderName(agentStudio.ProviderName(\"azure_openai\")).\n    SetInput(agentStudio.AzureOpenAIProviderCreateInputAsInputUnion(\n      agentStudio.NewEmptyAzureOpenAIProviderCreateInput().\n        SetApiKey(\"az-test-key-5678\").\n        SetAzureEndpoint(\"https://my-resource.openai.azure.com\").\n        SetAzureDeployment(\"gpt-4o\"),\n    ),\n    ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "response, err := client.CreateSecretKey(client.NewApiCreateSecretKeyRequest(\n\n  agentStudio.NewEmptySecretKeyCreate().SetName(\"my-secret-key\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -607,7 +607,7 @@
     },
     "createProvider": {
       "createProvider with OpenAI": "ProviderAuthenticationResponse response = client.createProvider(\n  new ProviderAuthenticationCreate()\n    .setName(\"My OpenAI Provider\")\n    .setProviderName(ProviderName.OPENAI)\n    .setInput(new OpenAIProviderInput().setApiKey(\"sk-test-key-1234\"))\n);",
-      "createProvider with Azure OpenAI": "ProviderAuthenticationResponse response = client.createProvider(\n  new ProviderAuthenticationCreate()\n    .setName(\"My Azure Provider\")\n    .setProviderName(ProviderName.AZURE_OPENAI)\n    .setInput(\n      new AzureOpenAIProviderInput()\n        .setApiKey(\"az-test-key-5678\")\n        .setAzureEndpoint(\"https://my-resource.openai.azure.com\")\n        .setAzureDeployment(\"gpt-4o\")\n    )\n);"
+      "createProvider with Azure OpenAI": "ProviderAuthenticationResponse response = client.createProvider(\n  new ProviderAuthenticationCreate()\n    .setName(\"My Azure Provider\")\n    .setProviderName(ProviderName.AZURE_OPENAI)\n    .setInput(\n      new AzureOpenAIProviderCreateInput()\n        .setApiKey(\"az-test-key-5678\")\n        .setAzureEndpoint(\"https://my-resource.openai.azure.com\")\n        .setAzureDeployment(\"gpt-4o\")\n    )\n);"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "SecretKeyResponse response = client.createSecretKey(new SecretKeyCreate().setName(\"my-secret-key\"));",
@@ -988,7 +988,7 @@
     },
     "createProvider": {
       "createProvider with OpenAI": "var response =\n  client.createProvider(\n    providerAuthenticationCreate =\n      ProviderAuthenticationCreate(\n        name = \"My OpenAI Provider\",\n        providerName = ProviderName.entries.first { it.value == \"openai\" },\n        input = OpenAIProviderInput(apiKey = \"sk-test-key-1234\"),\n      )\n  )",
-      "createProvider with Azure OpenAI": "var response =\n  client.createProvider(\n    providerAuthenticationCreate =\n      ProviderAuthenticationCreate(\n        name = \"My Azure Provider\",\n        providerName = ProviderName.entries.first { it.value == \"azure_openai\" },\n        input =\n          AzureOpenAIProviderInput(\n            apiKey = \"az-test-key-5678\",\n            azureEndpoint = \"https://my-resource.openai.azure.com\",\n            azureDeployment = \"gpt-4o\",\n          ),\n      )\n  )"
+      "createProvider with Azure OpenAI": "var response =\n  client.createProvider(\n    providerAuthenticationCreate =\n      ProviderAuthenticationCreate(\n        name = \"My Azure Provider\",\n        providerName = ProviderName.entries.first { it.value == \"azure_openai\" },\n        input =\n          AzureOpenAIProviderCreateInput(\n            apiKey = \"az-test-key-5678\",\n            azureEndpoint = \"https://my-resource.openai.azure.com\",\n            azureDeployment = \"gpt-4o\",\n          ),\n      )\n  )"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "var response = client.createSecretKey(secretKeyCreate = SecretKeyCreate(name = \"my-secret-key\"))",
@@ -1562,7 +1562,7 @@
     },
     "createProvider": {
       "createProvider with OpenAI": "response = client.create_provider(\n  Algolia::AgentStudio::ProviderAuthenticationCreate.new(\n    name: \"My OpenAI Provider\",\n    provider_name: \"openai\",\n    input: Algolia::AgentStudio::OpenAIProviderInput.new(api_key: \"sk-test-key-1234\")\n  )\n)",
-      "createProvider with Azure OpenAI": "response = client.create_provider(\n  Algolia::AgentStudio::ProviderAuthenticationCreate.new(\n    name: \"My Azure Provider\",\n    provider_name: \"azure_openai\",\n    input: Algolia::AgentStudio::AzureOpenAIProviderInput.new(\n      api_key: \"az-test-key-5678\",\n      azure_endpoint: \"https://my-resource.openai.azure.com\",\n      azure_deployment: \"gpt-4o\"\n    )\n  )\n)"
+      "createProvider with Azure OpenAI": "response = client.create_provider(\n  Algolia::AgentStudio::ProviderAuthenticationCreate.new(\n    name: \"My Azure Provider\",\n    provider_name: \"azure_openai\",\n    input: Algolia::AgentStudio::AzureOpenAIProviderCreateInput.new(\n      api_key: \"az-test-key-5678\",\n      azure_endpoint: \"https://my-resource.openai.azure.com\",\n      azure_deployment: \"gpt-4o\"\n    )\n  )\n)"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "response = client.create_secret_key(Algolia::AgentStudio::SecretKeyCreate.new(name: \"my-secret-key\"))",
@@ -1752,7 +1752,7 @@
     },
     "createProvider": {
       "createProvider with OpenAI": "val response = Await.result(\n  client.createProvider(\n    providerAuthenticationCreate = ProviderAuthenticationCreate(\n      name = \"My OpenAI Provider\",\n      providerName = ProviderName.withName(\"openai\"),\n      input = OpenAIProviderInput(\n        apiKey = \"sk-test-key-1234\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
-      "createProvider with Azure OpenAI": "val response = Await.result(\n  client.createProvider(\n    providerAuthenticationCreate = ProviderAuthenticationCreate(\n      name = \"My Azure Provider\",\n      providerName = ProviderName.withName(\"azure_openai\"),\n      input = AzureOpenAIProviderInput(\n        apiKey = \"az-test-key-5678\",\n        azureEndpoint = \"https://my-resource.openai.azure.com\",\n        azureDeployment = \"gpt-4o\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "createProvider with Azure OpenAI": "val response = Await.result(\n  client.createProvider(\n    providerAuthenticationCreate = ProviderAuthenticationCreate(\n      name = \"My Azure Provider\",\n      providerName = ProviderName.withName(\"azure_openai\"),\n      input = AzureOpenAIProviderCreateInput(\n        apiKey = \"az-test-key-5678\",\n        azureEndpoint = \"https://my-resource.openai.azure.com\",\n        azureDeployment = \"gpt-4o\"\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "val response = Await.result(\n  client.createSecretKey(\n    secretKeyCreate = SecretKeyCreate(\n      name = \"my-secret-key\"\n    )\n  ),\n  Duration(100, \"sec\")\n)",
@@ -1941,8 +1941,8 @@
       "createFeedback with all parameters": "let response = try await client.createFeedback(feedbackCreationRequest: FeedbackCreationRequest(\n    messageId: \"msg-abc123\",\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    vote: VoteEnum(rawValue: 0)!,\n    tags: [\"unhelpful\", \"off-topic\"],\n    notes: \"The response did not address my question.\"\n))"
     },
     "createProvider": {
-      "createProvider with OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My OpenAI Provider\",\n    providerName: ProviderName.openai,\n    input: ProviderInput.openAIProviderInput(OpenAIProviderInput(apiKey: \"sk-test-key-1234\"))\n))",
-      "createProvider with Azure OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My Azure Provider\",\n    providerName: ProviderName.azureOpenai,\n    input: ProviderInput.azureOpenAIProviderInput(AzureOpenAIProviderInput(\n        apiKey: \"az-test-key-5678\",\n        azureEndpoint: \"https://my-resource.openai.azure.com\",\n        azureDeployment: \"gpt-4o\"\n    ))\n))"
+      "createProvider with OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My OpenAI Provider\",\n    providerName: ProviderName.openai,\n    input: InputUnion.openAIProviderInput(OpenAIProviderInput(apiKey: \"sk-test-key-1234\"))\n))",
+      "createProvider with Azure OpenAI": "let response = try await client.createProvider(providerAuthenticationCreate: ProviderAuthenticationCreate(\n    name: \"My Azure Provider\",\n    providerName: ProviderName.azureOpenai,\n    input: InputUnion.azureOpenAIProviderCreateInput(AzureOpenAIProviderCreateInput(\n        apiKey: \"az-test-key-5678\",\n        azureEndpoint: \"https://my-resource.openai.azure.com\",\n        azureDeployment: \"gpt-4o\"\n    ))\n))"
     },
     "createSecretKey": {
       "createSecretKey with minimal parameters": "let response = try await client.createSecretKey(secretKeyCreate: SecretKeyCreate(name: \"my-secret-key\"))",

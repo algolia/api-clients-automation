@@ -45,5 +45,5 @@ case class OpenAICompatibleProviderInput(
     baseUrl: String,
     defaultModel: String
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

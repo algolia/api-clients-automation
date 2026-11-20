@@ -39,9 +39,9 @@ final class AbtestingV3ClientSnippet {
 
     /// Snippet for the addABTests method.
     ///
-    /// addABTests with Bayesian configuration
+    /// addABTests with Bayesian no-results user rate
     func snippetForAddABTests1() async throws {
-        // >SEPARATOR addABTests addABTests with Bayesian configuration
+        // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
         // Initialize the client
         let client = try AbtestingV3Client(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY", region: .us)
 
@@ -58,10 +58,10 @@ final class AbtestingV3ClientSnippet {
                     trafficPercentage: 50
                 )),
             ],
-            metrics: [CreateMetric(name: "conversionRate")],
+            metrics: [CreateMetric(name: "usersWithNoResultsRate")],
             configuration: AbtestingV3ABTestConfiguration(
                 method: AnalysisMethod.bayesian,
-                primaryMetric: PrimaryMetric.conversionRate
+                primaryMetric: PrimaryMetric.usersWithNoResultsRate
             ),
             endAt: "2022-12-31T00:00:00.000Z"
         ))
@@ -635,7 +635,7 @@ final class AbtestingV3ClientSnippet {
             id: 42,
             startDate: "1999-09-19",
             endDate: "2001-01-01",
-            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate],
+            metric: [MetricName.clickedUsersRate, MetricName.convertedUsersRate, MetricName.usersWithNoResultsRate],
             methods: [AnalysisMethod.bayesian]
         )
         // >LOG

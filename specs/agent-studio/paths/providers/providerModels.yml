@@ -3,7 +3,7 @@ get:
     - Providers
   operationId: listProviderModels
   x-acl:
-    - settings
+    - editSettings
   summary: Get Provider Models By Id
   description: Get available models for a specific provider.
   parameters:

@@ -63,7 +63,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('addABTests with Bayesian configuration')]
+    #[TestDox('addABTests with Bayesian no-results user rate')]
     public function testAddABTests1(): void
     {
         $client = $this->getClient();
@@ -71,7 +71,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             ['endAt' => '2022-12-31T00:00:00.000Z',
                 'name' => 'myABTest',
                 'metrics' => [
-                    ['name' => 'conversionRate',
+                    ['name' => 'usersWithNoResultsRate',
                     ],
                 ],
                 'variants' => [
@@ -84,7 +84,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                     ],
                 ],
                 'configuration' => ['method' => 'bayesian',
-                    'primaryMetric' => 'conversion_rate',
+                    'primaryMetric' => 'users_with_no_results_rate',
                 ],
             ],
         );
@@ -93,7 +93,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
             [
                 'path' => '/3/abtests',
                 'method' => 'POST',
-                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"conversionRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"conversion_rate"}}'),
+                'body' => json_decode('{"endAt":"2022-12-31T00:00:00.000Z","name":"myABTest","metrics":[{"name":"usersWithNoResultsRate"}],"variants":[{"index":"AB_TEST_1","trafficPercentage":30},{"index":"AB_TEST_2","trafficPercentage":50}],"configuration":{"method":"bayesian","primaryMetric":"users_with_no_results_rate"}}'),
             ],
         ]);
     }
@@ -729,6 +729,8 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'clicked_users_rate',
 
                 'converted_users_rate',
+
+                'users_with_no_results_rate',
             ],
             [
                 'bayesian',
@@ -740,7 +742,7 @@ class AbtestingV3Test extends TestCase implements HttpClientInterface
                 'path' => '/3/abtests/42/timeseries',
                 'method' => 'GET',
                 'expectEmptyBody' => true,
-                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate","methods":"bayesian"}', true),
+                'queryParameters' => json_decode('{"startDate":"1999-09-19","endDate":"2001-01-01","metric":"clicked_users_rate%2Cconverted_users_rate%2Cusers_with_no_results_rate","methods":"bayesian"}', true),
             ],
         ]);
     }

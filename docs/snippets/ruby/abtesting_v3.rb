@@ -33,9 +33,9 @@ end
 
 # Snippet for the addABTests method.
 #
-# addABTests with Bayesian configuration
+# addABTests with Bayesian no-results user rate
 def snippet_for_add_ab_tests1
-  # >SEPARATOR addABTests addABTests with Bayesian configuration
+  # >SEPARATOR addABTests addABTests with Bayesian no-results user rate
   # Initialize the client
   client = Algolia::AbtestingV3Client.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY", "ALGOLIA_APPLICATION_REGION")
 
@@ -44,14 +44,14 @@ def snippet_for_add_ab_tests1
     Algolia::AbtestingV3::AddABTestsRequest.new(
       end_at: "2022-12-31T00:00:00.000Z",
       name: "myABTest",
-      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "conversionRate")],
+      metrics: [Algolia::AbtestingV3::CreateMetric.new(name: "usersWithNoResultsRate")],
       variants: [
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_1", traffic_percentage: 30),
         Algolia::AbtestingV3::AbTestsVariant.new(index: "AB_TEST_2", traffic_percentage: 50)
       ],
       configuration: Algolia::AbtestingV3::ABTestConfiguration.new(
         method: "bayesian",
-        primary_metric: "conversion_rate"
+        primary_metric: "users_with_no_results_rate"
       )
     )
   )
@@ -612,7 +612,7 @@ def snippet_for_get_timeseries2
     42,
     "1999-09-19",
     "2001-01-01",
-    ["clicked_users_rate", "converted_users_rate"],
+    ["clicked_users_rate", "converted_users_rate", "users_with_no_results_rate"],
     ["bayesian"]
   )
 

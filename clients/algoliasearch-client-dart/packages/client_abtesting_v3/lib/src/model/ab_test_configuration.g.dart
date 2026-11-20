@@ -73,4 +73,5 @@ const _$PrimaryMetricEnumMap = {
   PrimaryMetric.clickedUsersRate: 'clicked_users_rate',
   PrimaryMetric.convertedUsersRate: 'converted_users_rate',
   PrimaryMetric.purchaseUsersRate: 'purchase_users_rate',
+  PrimaryMetric.usersWithNoResultsRate: 'users_with_no_results_rate',
 };

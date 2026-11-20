@@ -160,6 +160,8 @@ SearchParamsObject _$SearchParamsObjectFromJson(Map<String, dynamic> json) =>
               $checkedConvert('enableReRanking', (v) => v as bool?),
           reRankingApplyFilter:
               $checkedConvert('reRankingApplyFilter', (v) => v),
+          allowReRankingOnPersonalization: $checkedConvert(
+              'allowReRankingOnPersonalization', (v) => v as bool?),
         );
         return val;
       },
@@ -260,6 +262,8 @@ Map<String, dynamic> _$SearchParamsObjectToJson(SearchParamsObject instance) {
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  writeNotNull('allowReRankingOnPersonalization',
+      instance.allowReRankingOnPersonalization);
   return val;
 }
 

@@ -22,12 +22,16 @@ final class ProviderAuthenticationCreate {
   final ProviderName providerName;
 
   /// One of types:
+  /// - [VertexAIProviderInput]
   /// - [AzureOpenAIProviderInput]
+  /// - [MistralProviderInput]
   /// - [AnthropicProviderInput]
   /// - [BaseProviderInput]
   /// - [OpenAIProviderInput]
   /// - [OpenAICompatibleProviderInput]
+  /// - [AzureOpenAIProviderCreateInput]
   /// - [XAIProviderInput]
+  /// - [AlgoliaManagedLLMCreateInput]
   @JsonKey(name: r'input')
   final dynamic input;
 

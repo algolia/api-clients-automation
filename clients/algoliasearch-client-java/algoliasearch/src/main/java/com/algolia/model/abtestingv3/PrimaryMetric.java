@@ -12,8 +12,9 @@ import com.fasterxml.jackson.databind.annotation.*;
  * the first metric in `metrics` that supports Bayesian analysis if `metrics` doesn't include
  * conversion rate. If the request includes a non-empty `metrics` list, this metric must be in that
  * list. User-level rates (`*_users_rate`) are the share of tracked users with at least one such
- * search. Add-to-cart rates, purchase rates, and revenue per search require access to revenue
- * analytics.
+ * search. For `users_with_no_results_rate`, this is the share of tracked users with at least one
+ * search returning no results. Lower values are better. Add-to-cart rates, purchase rates, and
+ * revenue per search require access to revenue analytics.
  */
 public enum PrimaryMetric {
   ADD_TO_CART_RATE("add_to_cart_rate"),
@@ -32,7 +33,9 @@ public enum PrimaryMetric {
 
   CONVERTED_USERS_RATE("converted_users_rate"),
 
-  PURCHASE_USERS_RATE("purchase_users_rate");
+  PURCHASE_USERS_RATE("purchase_users_rate"),
+
+  USERS_WITH_NO_RESULTS_RATE("users_with_no_results_rate");
 
   private final String value;
 

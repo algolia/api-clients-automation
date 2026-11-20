@@ -95,6 +95,7 @@ final class SearchForFacets {
     this.renderingContent,
     this.enableReRanking,
     this.reRankingApplyFilter,
+    this.allowReRankingOnPersonalization,
     required this.facet,
     required this.indexName,
     this.facetQuery,
@@ -438,6 +439,10 @@ final class SearchForFacets {
   @JsonKey(name: r'reRankingApplyFilter')
   final dynamic reRankingApplyFilter;
 
+  /// Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+  @JsonKey(name: r'allowReRankingOnPersonalization')
+  final bool? allowReRankingOnPersonalization;
+
   /// Facet name.
   @JsonKey(name: r'facet')
   final String facet;
@@ -540,6 +545,8 @@ final class SearchForFacets {
           other.renderingContent == renderingContent &&
           other.enableReRanking == enableReRanking &&
           other.reRankingApplyFilter == reRankingApplyFilter &&
+          other.allowReRankingOnPersonalization ==
+              allowReRankingOnPersonalization &&
           other.facet == facet &&
           other.indexName == indexName &&
           other.facetQuery == facetQuery &&
@@ -623,6 +630,7 @@ final class SearchForFacets {
       renderingContent.hashCode +
       enableReRanking.hashCode +
       (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
+      allowReRankingOnPersonalization.hashCode +
       facet.hashCode +
       indexName.hashCode +
       facetQuery.hashCode +

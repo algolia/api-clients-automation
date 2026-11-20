@@ -3,7 +3,7 @@ get:
     - Providers
   operationId: listProviders
   x-acl:
-    - settings
+    - editSettings
   summary: List Providers
   description: List Providers.
   parameters:

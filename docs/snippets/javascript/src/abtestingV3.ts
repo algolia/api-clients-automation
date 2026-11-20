@@ -32,9 +32,9 @@ export async function snippetForAddABTests(): Promise<void> {
 
 // Snippet for the addABTests method.
 //
-// addABTests with Bayesian configuration
+// addABTests with Bayesian no-results user rate
 export async function snippetForAddABTests1(): Promise<void> {
-  // >SEPARATOR addABTests addABTests with Bayesian configuration
+  // >SEPARATOR addABTests addABTests with Bayesian no-results user rate
   // Initialize the client
   // Replace 'us' with your Algolia Application Region
   const client = algoliasearch('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY').initAbtestingV3({ region: 'us' });
@@ -43,12 +43,12 @@ export async function snippetForAddABTests1(): Promise<void> {
   const response = await client.addABTests({
     endAt: '2022-12-31T00:00:00.000Z',
     name: 'myABTest',
-    metrics: [{ name: 'conversionRate' }],
+    metrics: [{ name: 'usersWithNoResultsRate' }],
     variants: [
       { index: 'AB_TEST_1', trafficPercentage: 30 },
       { index: 'AB_TEST_2', trafficPercentage: 50 },
     ],
-    configuration: { method: 'bayesian', primaryMetric: 'conversion_rate' },
+    configuration: { method: 'bayesian', primaryMetric: 'users_with_no_results_rate' },
   });
 
   // >LOG
@@ -632,7 +632,7 @@ export async function snippetForGetTimeseries2(): Promise<void> {
     id: 42,
     startDate: '1999-09-19',
     endDate: '2001-01-01',
-    metric: ['clicked_users_rate', 'converted_users_rate'],
+    metric: ['clicked_users_rate', 'converted_users_rate', 'users_with_no_results_rate'],
     methods: ['bayesian'],
   });
 

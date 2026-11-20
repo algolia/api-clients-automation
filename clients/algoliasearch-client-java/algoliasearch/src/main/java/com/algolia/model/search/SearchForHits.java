@@ -238,6 +238,9 @@ public class SearchForHits implements SearchQuery {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("allowReRankingOnPersonalization")
+  private Boolean allowReRankingOnPersonalization;
+
   @JsonProperty("indexName")
   private String indexName;
 
@@ -1431,6 +1434,21 @@ public class SearchForHits implements SearchQuery {
     return reRankingApplyFilter;
   }
 
+  public SearchForHits setAllowReRankingOnPersonalization(Boolean allowReRankingOnPersonalization) {
+    this.allowReRankingOnPersonalization = allowReRankingOnPersonalization;
+    return this;
+  }
+
+  /**
+   * Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs
+   * concurrently with Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even
+   * if `allowReRankingOnPersonalization` is `true`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowReRankingOnPersonalization() {
+    return allowReRankingOnPersonalization;
+  }
+
   public SearchForHits setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
@@ -1549,6 +1567,7 @@ public class SearchForHits implements SearchQuery {
       Objects.equals(this.renderingContent, searchForHits.renderingContent) &&
       Objects.equals(this.enableReRanking, searchForHits.enableReRanking) &&
       Objects.equals(this.reRankingApplyFilter, searchForHits.reRankingApplyFilter) &&
+      Objects.equals(this.allowReRankingOnPersonalization, searchForHits.allowReRankingOnPersonalization) &&
       Objects.equals(this.indexName, searchForHits.indexName) &&
       Objects.equals(this.type, searchForHits.type) &&
       Objects.equals(this.extensions, searchForHits.extensions)
@@ -1633,6 +1652,7 @@ public class SearchForHits implements SearchQuery {
       renderingContent,
       enableReRanking,
       reRankingApplyFilter,
+      allowReRankingOnPersonalization,
       indexName,
       type,
       extensions
@@ -1720,6 +1740,7 @@ public class SearchForHits implements SearchQuery {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    allowReRankingOnPersonalization: ").append(toIndentedString(allowReRankingOnPersonalization)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    extensions: ").append(toIndentedString(extensions)).append("\n");

@@ -163,6 +163,7 @@ consequenceParams:
     - $ref: '../../../../common/schemas/SearchParams.yml#/baseSearchParamsWithoutQuery'
     - $ref: '../../../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
     - $ref: '#/params'
+    - $ref: '../../../../common/schemas/SearchParams.yml#/searchParamsAllowReRanking'
 
 promote:
   oneOf:

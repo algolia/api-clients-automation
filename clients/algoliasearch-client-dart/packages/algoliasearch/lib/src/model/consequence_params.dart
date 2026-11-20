@@ -95,6 +95,7 @@ final class ConsequenceParams {
     this.query,
     this.automaticFacetFilters,
     this.automaticOptionalFacetFilters,
+    this.allowReRankingOnPersonalization,
   });
 
   /// Keywords to be used instead of the search query to conduct a more broader search. Using the `similarQuery` parameter changes other settings - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`. Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
@@ -443,6 +444,10 @@ final class ConsequenceParams {
   @JsonKey(name: r'automaticOptionalFacetFilters')
   final dynamic automaticOptionalFacetFilters;
 
+  /// Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+  @JsonKey(name: r'allowReRankingOnPersonalization')
+  final bool? allowReRankingOnPersonalization;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -525,7 +530,10 @@ final class ConsequenceParams {
           other.reRankingApplyFilter == reRankingApplyFilter &&
           other.query == query &&
           other.automaticFacetFilters == automaticFacetFilters &&
-          other.automaticOptionalFacetFilters == automaticOptionalFacetFilters;
+          other.automaticOptionalFacetFilters ==
+              automaticOptionalFacetFilters &&
+          other.allowReRankingOnPersonalization ==
+              allowReRankingOnPersonalization;
 
   @override
   int get hashCode =>
@@ -604,7 +612,8 @@ final class ConsequenceParams {
       (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       query.hashCode +
       automaticFacetFilters.hashCode +
-      automaticOptionalFacetFilters.hashCode;
+      automaticOptionalFacetFilters.hashCode +
+      allowReRankingOnPersonalization.hashCode;
 
   factory ConsequenceParams.fromJson(Map<String, dynamic> json) =>
       _$ConsequenceParamsFromJson(json);

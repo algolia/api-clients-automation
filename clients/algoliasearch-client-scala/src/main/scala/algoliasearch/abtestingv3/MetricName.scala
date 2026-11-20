@@ -111,6 +111,9 @@ object MetricName {
   case object PurchaseUsersRate extends MetricName {
     override def toString = "purchase_users_rate"
   }
+  case object UsersWithNoResultsRate extends MetricName {
+    override def toString = "users_with_no_results_rate"
+  }
   case object AvgClickThroughRatePerUser extends MetricName {
     override def toString = "avg_click_through_rate_per_user"
   }
@@ -160,6 +163,7 @@ object MetricName {
     ConvertedUsersRate,
     AddToCartUsersRate,
     PurchaseUsersRate,
+    UsersWithNoResultsRate,
     AvgClickThroughRatePerUser,
     AvgConversionRatePerUser,
     AvgPurchaseRatePerUser,

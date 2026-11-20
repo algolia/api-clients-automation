@@ -1363,7 +1363,7 @@ class AgentStudioClient(
   /** Retrieve details of the specified agent.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param agentId
     *   The agentId.
@@ -1377,7 +1377,7 @@ class AgentStudioClient(
   /** Variant of `getAgent` that returns the full HTTP response: status code, headers, raw body and deserialized data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param agentId
     *   The agentId.
@@ -1404,7 +1404,7 @@ class AgentStudioClient(
   /** Get a single allowed domain by id.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param domainId
     *   The domainId.
@@ -1421,7 +1421,7 @@ class AgentStudioClient(
     * data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param domainId
     *   The domainId.
@@ -1596,7 +1596,7 @@ class AgentStudioClient(
   /** Get Provider.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param providerId
     *   The providerId.
@@ -1611,7 +1611,7 @@ class AgentStudioClient(
     * data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param providerId
     *   The providerId.
@@ -1774,7 +1774,7 @@ class AgentStudioClient(
   /** List all allowed domain patterns for this agent.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param agentId
     *   The agentId.
@@ -1789,7 +1789,7 @@ class AgentStudioClient(
     * deserialized data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param agentId
     *   The agentId.
@@ -1987,7 +1987,7 @@ class AgentStudioClient(
   /** List all agents with pagination and filtering.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param page
     *   Page number.
@@ -2011,7 +2011,7 @@ class AgentStudioClient(
   /** Variant of `listAgents` that returns the full HTTP response: status code, headers, raw body and deserialized data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param page
     *   Page number.
@@ -2086,7 +2086,7 @@ class AgentStudioClient(
   /** Get available models for a specific provider.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param providerId
     *   The providerId.
@@ -2101,7 +2101,7 @@ class AgentStudioClient(
     * deserialized data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param providerId
     *   The providerId.
@@ -2129,7 +2129,7 @@ class AgentStudioClient(
   /** List Providers.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param page
     *   Page number.
@@ -2149,7 +2149,7 @@ class AgentStudioClient(
     * data.
     *
     * Required API Key ACLs:
-    *   - settings
+    *   - editSettings
     *
     * @param page
     *   Page number.

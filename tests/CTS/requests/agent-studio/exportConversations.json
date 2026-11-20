@@ -10,18 +10,20 @@
     }
   },
   {
-    "testName": "exportConversations with date filters",
+    "testName": "exportConversations with all filters",
     "parameters": {
       "agentId": "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "startDate": "2024-01-01",
-      "endDate": "2024-12-31"
+      "endDate": "2024-12-31",
+      "ephemeral": true
     },
     "request": {
       "path": "/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export",
       "method": "GET",
       "queryParameters": {
         "startDate": "2024-01-01",
-        "endDate": "2024-12-31"
+        "endDate": "2024-12-31",
+        "ephemeral": "true"
       }
     }
   },

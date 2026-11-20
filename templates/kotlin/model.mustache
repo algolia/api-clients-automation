@@ -3,6 +3,6 @@ package {{modelPackage}}
 
 {{#models}}
 {{#model}}
-{{#isEnum}}{{> enum_class}}{{/isEnum}}{{^isEnum}}{{#vendorExtensions.x-is-one-of}}{{> oneof_interface}}{{/vendorExtensions.x-is-one-of}}{{^vendorExtensions.x-is-one-of}}{{#isAlias}}typealias {{classname}} = {{{dataType}}}{{/isAlias}}{{^isAlias}}{{> data_class}}{{/isAlias}}{{/vendorExtensions.x-is-one-of}}{{/isEnum}}
+{{#isEnum}}{{> enum_class}}{{/isEnum}}{{^isEnum}}{{#vendorExtensions.x-is-one-of}}{{> oneof_interface}}{{/vendorExtensions.x-is-one-of}}{{^vendorExtensions.x-is-one-of}}{{#isAlias}}typealias {{classname}} = {{{dataType}}}{{/isAlias}}{{^isAlias}}{{#vendorExtensions.x-is-empty-object}}{{> data_object}}{{/vendorExtensions.x-is-empty-object}}{{^vendorExtensions.x-is-empty-object}}{{> data_class}}{{/vendorExtensions.x-is-empty-object}}{{/isAlias}}{{/vendorExtensions.x-is-one-of}}{{/isEnum}}
 {{/model}}
 {{/models}}

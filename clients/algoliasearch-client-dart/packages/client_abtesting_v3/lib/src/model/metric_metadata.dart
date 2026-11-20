@@ -11,6 +11,7 @@ final class MetricMetadata {
   const MetricMetadata({
     this.winsorizedValue,
     this.mean,
+    this.userCount,
   });
 
   /// Only present for `revenue` metrics. It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance. It is tied to a per revenue-currency pair contrary to other global filter effects (such as outliers and empty search count).
@@ -21,15 +22,21 @@ final class MetricMetadata {
   @JsonKey(name: r'mean')
   final double? mean;
 
+  /// Only present for `winsorized_revenue_per_user`. Number of tracked users in this variant with a tracked purchase in the metric's currency (`dimension`), plus tracked users with no tracked purchase in any currency. Users who purchased only in other currencies are excluded. It's the sample size behind the mean, p-value, and intervals, and differs from the overall `user_count` metric. Omitted when the variant has no record for that currency.
+  @JsonKey(name: r'userCount')
+  final int? userCount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MetricMetadata &&
           other.winsorizedValue == winsorizedValue &&
-          other.mean == mean;
+          other.mean == mean &&
+          other.userCount == userCount;
 
   @override
-  int get hashCode => winsorizedValue.hashCode + mean.hashCode;
+  int get hashCode =>
+      winsorizedValue.hashCode + mean.hashCode + userCount.hashCode;
 
   factory MetricMetadata.fromJson(Map<String, dynamic> json) =>
       _$MetricMetadataFromJson(json);

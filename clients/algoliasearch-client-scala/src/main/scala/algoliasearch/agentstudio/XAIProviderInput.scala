@@ -42,5 +42,5 @@ case class XAIProviderInput(
     apiKey: String,
     baseUrl: Option[String] = scala.None
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

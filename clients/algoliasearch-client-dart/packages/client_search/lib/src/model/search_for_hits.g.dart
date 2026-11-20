@@ -161,6 +161,8 @@ SearchForHits _$SearchForHitsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('enableReRanking', (v) => v as bool?),
           reRankingApplyFilter:
               $checkedConvert('reRankingApplyFilter', (v) => v),
+          allowReRankingOnPersonalization: $checkedConvert(
+              'allowReRankingOnPersonalization', (v) => v as bool?),
           indexName: $checkedConvert('indexName', (v) => v as String),
           type: $checkedConvert('type',
               (v) => $enumDecodeNullable(_$SearchTypeDefaultEnumMap, v)),
@@ -270,6 +272,8 @@ Map<String, dynamic> _$SearchForHitsToJson(SearchForHits instance) {
   writeNotNull('renderingContent', instance.renderingContent?.toJson());
   writeNotNull('enableReRanking', instance.enableReRanking);
   writeNotNull('reRankingApplyFilter', instance.reRankingApplyFilter);
+  writeNotNull('allowReRankingOnPersonalization',
+      instance.allowReRankingOnPersonalization);
   val['indexName'] = instance.indexName;
   writeNotNull('type', instance.type?.toJson());
   writeNotNull('extensions', instance.extensions?.toJson());

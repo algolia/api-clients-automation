@@ -128,6 +128,18 @@ get:
           - type: 'null'
         title: x-Algolia-Secure-User-Token
       description: The X-Algolia-Secure-User-Token.
+    - name: ephemeral
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Filter by ephemeral (not retained) conversations; omit to include
+          both.
+        title: ephemeral
+      description: Filter by ephemeral (not retained) conversations; omit to include
+        both.
   responses:
     '200':
       description: Successful Response.
@@ -177,6 +189,18 @@ delete:
         description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
         title: enddate
       description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+    - name: ephemeral
+      in: query
+      required: false
+      schema:
+        oneOf:
+          - type: boolean
+          - type: 'null'
+        description: Filter by ephemeral (not retained) conversations; omit to include
+          both.
+        title: ephemeral
+      description: Filter by ephemeral (not retained) conversations; omit to include
+        both.
   responses:
     '204':
       description: Successful Response.

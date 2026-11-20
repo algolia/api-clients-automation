@@ -1,0 +1,8 @@
+type: object
+additionalProperties: false
+properties:
+  description:
+    type: string
+    description: Description of the step.
+  openDashboardPage:
+    $ref: './OpenDashboardPageAction.yml'

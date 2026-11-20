@@ -35,6 +35,8 @@
   */
 package algoliasearch.agentstudio
 
+import algoliasearch.agentstudio.ApiModeEnum._
+
 import org.json4s._
 
 /** InputUnion
@@ -50,29 +52,33 @@ object InputUnionSerializer extends Serializer[InputUnion] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[InputUnion] =>
       json match {
-        case value: JObject
-            if value.obj.exists(_._1 == "azureDeployment") && value.obj.exists(_._1 == "azureEndpoint") =>
-          Extraction.extract[AzureOpenAIProviderInput](value)
         case value: JObject if value.obj.exists(_._1 == "baseUrl") && value.obj.exists(_._1 == "defaultModel") =>
           Extraction.extract[OpenAICompatibleProviderInput](value)
+        case value: JObject => Extraction.extract[AzureOpenAIProviderCreateInput](value)
         case value: JObject => Extraction.extract[OpenAIProviderInput](value)
+        case value: JObject => Extraction.extract[AzureOpenAIProviderInput](value)
         case value: JObject => Extraction.extract[BaseProviderInput](value)
         case value: JObject => Extraction.extract[AnthropicProviderInput](value)
         case value: JObject => Extraction.extract[XAIProviderInput](value)
-        case value: JObject => Extraction.extract[ManagedProviderResponseInput](value)
+        case value: JObject => Extraction.extract[MistralProviderInput](value)
+        case value: JObject => Extraction.extract[VertexAIProviderInput](value)
+        case value: JObject => Extraction.extract[AlgoliaManagedLLMCreateInput](value)
         case _              => throw new MappingException("Can't convert " + json + " to InputUnion")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: InputUnion =>
     value match {
-      case value: AzureOpenAIProviderInput      => Extraction.decompose(value)(format - this)
-      case value: OpenAICompatibleProviderInput => Extraction.decompose(value)(format - this)
-      case value: OpenAIProviderInput           => Extraction.decompose(value)(format - this)
-      case value: BaseProviderInput             => Extraction.decompose(value)(format - this)
-      case value: AnthropicProviderInput        => Extraction.decompose(value)(format - this)
-      case value: XAIProviderInput              => Extraction.decompose(value)(format - this)
-      case value: ManagedProviderResponseInput  => Extraction.decompose(value)(format - this)
+      case value: OpenAICompatibleProviderInput  => Extraction.decompose(value)(format - this)
+      case value: AzureOpenAIProviderCreateInput => Extraction.decompose(value)(format - this)
+      case value: OpenAIProviderInput            => Extraction.decompose(value)(format - this)
+      case value: AzureOpenAIProviderInput       => Extraction.decompose(value)(format - this)
+      case value: BaseProviderInput              => Extraction.decompose(value)(format - this)
+      case value: AnthropicProviderInput         => Extraction.decompose(value)(format - this)
+      case value: XAIProviderInput               => Extraction.decompose(value)(format - this)
+      case value: MistralProviderInput           => Extraction.decompose(value)(format - this)
+      case value: VertexAIProviderInput          => Extraction.decompose(value)(format - this)
+      case value: AlgoliaManagedLLMCreateInput   => Extraction.decompose(value)(format - this)
     }
   }
 }

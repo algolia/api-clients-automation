@@ -238,6 +238,9 @@ public class SearchForFacets implements SearchQuery {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("allowReRankingOnPersonalization")
+  private Boolean allowReRankingOnPersonalization;
+
   @JsonProperty("facet")
   private String facet;
 
@@ -1437,6 +1440,21 @@ public class SearchForFacets implements SearchQuery {
     return reRankingApplyFilter;
   }
 
+  public SearchForFacets setAllowReRankingOnPersonalization(Boolean allowReRankingOnPersonalization) {
+    this.allowReRankingOnPersonalization = allowReRankingOnPersonalization;
+    return this;
+  }
+
+  /**
+   * Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs
+   * concurrently with Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even
+   * if `allowReRankingOnPersonalization` is `true`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowReRankingOnPersonalization() {
+    return allowReRankingOnPersonalization;
+  }
+
   public SearchForFacets setFacet(String facet) {
     this.facet = facet;
     return this;
@@ -1581,6 +1599,7 @@ public class SearchForFacets implements SearchQuery {
       Objects.equals(this.renderingContent, searchForFacets.renderingContent) &&
       Objects.equals(this.enableReRanking, searchForFacets.enableReRanking) &&
       Objects.equals(this.reRankingApplyFilter, searchForFacets.reRankingApplyFilter) &&
+      Objects.equals(this.allowReRankingOnPersonalization, searchForFacets.allowReRankingOnPersonalization) &&
       Objects.equals(this.facet, searchForFacets.facet) &&
       Objects.equals(this.indexName, searchForFacets.indexName) &&
       Objects.equals(this.facetQuery, searchForFacets.facetQuery) &&
@@ -1667,6 +1686,7 @@ public class SearchForFacets implements SearchQuery {
       renderingContent,
       enableReRanking,
       reRankingApplyFilter,
+      allowReRankingOnPersonalization,
       facet,
       indexName,
       facetQuery,
@@ -1756,6 +1776,7 @@ public class SearchForFacets implements SearchQuery {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    allowReRankingOnPersonalization: ").append(toIndentedString(allowReRankingOnPersonalization)).append("\n");
     sb.append("    facet: ").append(toIndentedString(facet)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    facetQuery: ").append(toIndentedString(facetQuery)).append("\n");

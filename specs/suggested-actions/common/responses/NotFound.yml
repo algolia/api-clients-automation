@@ -1,0 +1,8 @@
+description: Not found.
+content:
+  application/json:
+    schema:
+      $ref: './Error.yml'
+    example:
+      status: 404
+      message: Not found.

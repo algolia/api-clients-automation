@@ -11,7 +11,7 @@ final class RecommendClientSnippet {
     ///
     /// batch recommend rules
     func snippetForBatchRecommendRules() async throws {
-        // >SEPARATOR batchRecommendRules default
+        // >SEPARATOR batchRecommendRules batch recommend rules
         // Initialize the client
         let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -19,6 +19,77 @@ final class RecommendClientSnippet {
         let response = try await client.batchRecommendRules(
             indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the batchRecommendRules method.
+    ///
+    /// batch recommend rules for trending items with request scopes
+    func snippetForBatchRecommendRules1() async throws {
+        // >SEPARATOR batchRecommendRules batch recommend rules for trending items with request scopes
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.batchRecommendRules(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.trendingItems,
+            recommendRule: [
+                RecommendRule(
+                    objectID: "global-rule",
+                    condition: RecommendCondition(requestScope: RequestScope
+                        .globalRequestScope(GlobalRequestScope(global: true))),
+                    consequence: RecommendConsequence(promote: [PromoteConsequenceObject(
+                        objectID: "item-1",
+                        position: 0
+                    )])
+                ),
+                RecommendRule(
+                    objectID: "facet-rule",
+                    condition: RecommendCondition(
+                        context: "mobile",
+                        requestScope: RequestScope.facetRequestScope(FacetRequestScope(
+                            facetName: "brand",
+                            facetValue: "acme"
+                        ))
+                    ),
+                    consequence: RecommendConsequence(
+                        hide: [HideConsequenceObject(objectID: "item-2")],
+                        params: ParamsConsequence(filters: "inStock:true")
+                    )
+                ),
+            ]
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the batchRecommendRules method.
+    ///
+    /// batch recommend rules for looking similar
+    func snippetForBatchRecommendRules2() async throws {
+        // >SEPARATOR batchRecommendRules batch recommend rules for looking similar
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.batchRecommendRules(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.lookingSimilar,
+            recommendRule: [RecommendRule(
+                objectID: "looking-similar-rule",
+                condition: RecommendCondition(filters: "brand:acme"),
+                consequence: RecommendConsequence(params: ParamsConsequence(automaticFacetFilters: [AutoFacetFilter(
+                    facet: "category",
+                    negative: false
+                )]))
+            )]
         )
         // >LOG
         // print the response
@@ -420,7 +491,7 @@ final class RecommendClientSnippet {
     ///
     /// getRecommendRule
     func snippetForGetRecommendRule() async throws {
-        // >SEPARATOR getRecommendRule default
+        // >SEPARATOR getRecommendRule getRecommendRule
         // Initialize the client
         let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -428,6 +499,46 @@ final class RecommendClientSnippet {
         let response = try await client.getRecommendRule(
             indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts,
+            objectID: "objectID"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getRecommendRule method.
+    ///
+    /// get recommend rule for trending items
+    func snippetForGetRecommendRule1() async throws {
+        // >SEPARATOR getRecommendRule get recommend rule for trending items
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getRecommendRule(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.trendingItems,
+            objectID: "objectID"
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getRecommendRule method.
+    ///
+    /// get recommend rule for looking similar
+    func snippetForGetRecommendRule2() async throws {
+        // >SEPARATOR getRecommendRule get recommend rule for looking similar
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.getRecommendRule(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.lookingSimilar,
             objectID: "objectID"
         )
         // >LOG
@@ -707,7 +818,7 @@ final class RecommendClientSnippet {
     ///
     /// searchRecommendRules
     func snippetForSearchRecommendRules() async throws {
-        // >SEPARATOR searchRecommendRules default
+        // >SEPARATOR searchRecommendRules searchRecommendRules
         // Initialize the client
         let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -715,6 +826,44 @@ final class RecommendClientSnippet {
         let response = try await client.searchRecommendRules(
             indexName: "<YOUR_INDEX_NAME>",
             model: RecommendModels.relatedProducts
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchRecommendRules method.
+    ///
+    /// search recommend rules for trending items
+    func snippetForSearchRecommendRules1() async throws {
+        // >SEPARATOR searchRecommendRules search recommend rules for trending items
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.searchRecommendRules(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.trendingItems
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the searchRecommendRules method.
+    ///
+    /// search recommend rules for looking similar
+    func snippetForSearchRecommendRules2() async throws {
+        // >SEPARATOR searchRecommendRules search recommend rules for looking similar
+        // Initialize the client
+        let client = try RecommendClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.searchRecommendRules(
+            indexName: "<YOUR_INDEX_NAME>",
+            model: RecommendModels.lookingSimilar
         )
         // >LOG
         // print the response

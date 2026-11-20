@@ -36,10 +36,15 @@
 package algoliasearch.agentstudio
 
 /** Anthropic-specific provider input.
+  *
+  * @param workspaceId
+  *   Required for API keys not scoped to a single workspace (sk-ant-usr-...). Sent as the anthropic-workspace-id header
+  *   on every request.
   */
 case class AnthropicProviderInput(
     apiKey: String,
-    baseUrl: Option[String] = scala.None
+    baseUrl: Option[String] = scala.None,
+    workspaceId: Option[String] = scala.None
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

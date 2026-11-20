@@ -23,6 +23,77 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal(JSON.parse("{}"), JSON.parse(req.body))
   end
 
+  # batch recommend rules for trending items with request scopes
+  def test_batch_recommend_rules1
+    req = @client.batch_recommend_rules_with_http_info(
+      "indexName",
+      "trending-items",
+      [
+        Algolia::Recommend::RecommendRule.new(
+          algolia_object_id: "global-rule",
+          condition: Algolia::Recommend::Condition.new(
+            request_scope: Algolia::Recommend::GlobalRequestScope.new(global: true)
+          ),
+          consequence: Algolia::Recommend::Consequence.new(
+            promote: [Algolia::Recommend::PromoteConsequenceObject.new(algolia_object_id: "item-1", position: 0)]
+          )
+        ),
+        Algolia::Recommend::RecommendRule.new(
+          algolia_object_id: "facet-rule",
+          condition: Algolia::Recommend::Condition.new(
+            context: "mobile",
+            request_scope: Algolia::Recommend::FacetRequestScope.new(facet_name: "brand", facet_value: "acme")
+          ),
+          consequence: Algolia::Recommend::Consequence.new(
+            hide: [Algolia::Recommend::HideConsequenceObject.new(algolia_object_id: "item-2")],
+            params: Algolia::Recommend::ParamsConsequence.new(filters: "inStock:true")
+          )
+        )
+      ]
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/trending-items/recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "[{\"objectID\":\"global-rule\",\"condition\":{\"requestScope\":{\"global\":true}},\"consequence\":{\"promote\":[{\"objectID\":\"item-1\",\"position\":0}]}},{\"objectID\":\"facet-rule\",\"condition\":{\"context\":\"mobile\",\"requestScope\":{\"facetName\":\"brand\",\"facetValue\":\"acme\"}},\"consequence\":{\"hide\":[{\"objectID\":\"item-2\"}],\"params\":{\"filters\":\"inStock:true\"}}}]"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
+  # batch recommend rules for looking similar
+  def test_batch_recommend_rules2
+    req = @client.batch_recommend_rules_with_http_info(
+      "indexName",
+      "looking-similar",
+      [
+        Algolia::Recommend::RecommendRule.new(
+          algolia_object_id: "looking-similar-rule",
+          condition: Algolia::Recommend::Condition.new(filters: "brand:acme"),
+          consequence: Algolia::Recommend::Consequence.new(
+            params: Algolia::Recommend::ParamsConsequence.new(
+              automatic_facet_filters: [Algolia::Recommend::AutoFacetFilter.new(facet: "category", negative: false)]
+            )
+          )
+        )
+      ]
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/looking-similar/recommend/rules/batch", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(
+        "[{\"objectID\":\"looking-similar-rule\",\"condition\":{\"filters\":\"brand:acme\"},\"consequence\":{\"params\":{\"automaticFacetFilters\":[{\"facet\":\"category\",\"negative\":false}]}}}]"
+      ),
+      JSON.parse(req.body)
+    )
+  end
+
   # allow del method for a custom path with minimal parameters
   def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
@@ -317,6 +388,30 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
+  # get recommend rule for trending items
+  def test_get_recommend_rule1
+    req = @client.get_recommend_rule_with_http_info("indexName", "trending-items", "objectID")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/indexes/indexName/trending-items/recommend/rules/objectID", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # get recommend rule for looking similar
+  def test_get_recommend_rule2
+    req = @client.get_recommend_rule_with_http_info("indexName", "looking-similar", "objectID")
+
+    assert_equal(:get, req.method)
+    assert_equal("/1/indexes/indexName/looking-similar/recommend/rules/objectID", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
   # getRecommendStatus
   def test_get_recommend_status
     req = @client.get_recommend_status_with_http_info("indexName", "related-products", 12345)
@@ -603,6 +698,28 @@ class TestRecommendClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/indexName/related-products/recommend/rules/search", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
+  # search recommend rules for trending items
+  def test_search_recommend_rules1
+    req = @client.search_recommend_rules_with_http_info("indexName", "trending-items")
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/trending-items/recommend/rules/search", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse("{}"), JSON.parse(req.body))
+  end
+
+  # search recommend rules for looking similar
+  def test_search_recommend_rules2
+    req = @client.search_recommend_rules_with_http_info("indexName", "looking-similar")
+
+    assert_equal(:post, req.method)
+    assert_equal("/1/indexes/indexName/looking-similar/recommend/rules/search", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{}"), JSON.parse(req.body))

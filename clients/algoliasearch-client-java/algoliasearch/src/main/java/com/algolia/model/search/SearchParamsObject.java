@@ -235,6 +235,9 @@ public class SearchParamsObject implements SearchParams {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
+  @JsonProperty("allowReRankingOnPersonalization")
+  private Boolean allowReRankingOnPersonalization;
+
   public SearchParamsObject setQuery(String query) {
     this.query = query;
     return this;
@@ -1408,6 +1411,21 @@ public class SearchParamsObject implements SearchParams {
     return reRankingApplyFilter;
   }
 
+  public SearchParamsObject setAllowReRankingOnPersonalization(Boolean allowReRankingOnPersonalization) {
+    this.allowReRankingOnPersonalization = allowReRankingOnPersonalization;
+    return this;
+  }
+
+  /**
+   * Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs
+   * concurrently with Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even
+   * if `allowReRankingOnPersonalization` is `true`.
+   */
+  @javax.annotation.Nullable
+  public Boolean getAllowReRankingOnPersonalization() {
+    return allowReRankingOnPersonalization;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -1491,7 +1509,8 @@ public class SearchParamsObject implements SearchParams {
       Objects.equals(this.attributeCriteriaComputedBy, searchParamsObject.attributeCriteriaComputedBy) &&
       Objects.equals(this.renderingContent, searchParamsObject.renderingContent) &&
       Objects.equals(this.enableReRanking, searchParamsObject.enableReRanking) &&
-      Objects.equals(this.reRankingApplyFilter, searchParamsObject.reRankingApplyFilter)
+      Objects.equals(this.reRankingApplyFilter, searchParamsObject.reRankingApplyFilter) &&
+      Objects.equals(this.allowReRankingOnPersonalization, searchParamsObject.allowReRankingOnPersonalization)
     );
   }
 
@@ -1571,7 +1590,8 @@ public class SearchParamsObject implements SearchParams {
       attributeCriteriaComputedBy,
       renderingContent,
       enableReRanking,
-      reRankingApplyFilter
+      reRankingApplyFilter,
+      allowReRankingOnPersonalization
     );
   }
 
@@ -1655,6 +1675,7 @@ public class SearchParamsObject implements SearchParams {
     sb.append("    renderingContent: ").append(toIndentedString(renderingContent)).append("\n");
     sb.append("    enableReRanking: ").append(toIndentedString(enableReRanking)).append("\n");
     sb.append("    reRankingApplyFilter: ").append(toIndentedString(reRankingApplyFilter)).append("\n");
+    sb.append("    allowReRankingOnPersonalization: ").append(toIndentedString(allowReRankingOnPersonalization)).append("\n");
     sb.append("}");
     return sb.toString();
   }

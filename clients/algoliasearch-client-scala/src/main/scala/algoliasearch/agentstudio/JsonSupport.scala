@@ -42,6 +42,7 @@ object JsonSupport {
     new AdvancedSyntaxFeaturesSerializer() :+
     new AgentStatusSerializer() :+
     new AlternativesAsExactSerializer() :+
+    new ApiModeEnumSerializer() :+
     new CompatibilityModeSerializer() :+
     new ExactOnSingleWordQuerySerializer() :+
     new MemoryTypeSerializer() :+
@@ -71,6 +72,7 @@ object JsonSupport {
     FacetsUnionSerializer :+
     IgnorePluralsUnionSerializer :+
     InputUnionSerializer :+
+    InputUnionProviderAuthenticationResponseSerializer :+
     InsideBoundingBoxUnionSerializer :+
     InsidePolygonUnionSerializer :+
     ItemsUnionSerializer :+
@@ -84,7 +86,6 @@ object JsonSupport {
     NumericFiltersUnionSerializer :+
     OptionalFiltersUnionSerializer :+
     OptionalWordsUnionSerializer :+
-    ProviderInputSerializer :+
     ProviderInputNullableSerializer :+
     ReRankingApplyFilterUnionSerializer :+
     RemoveStopWordsUnionSerializer :+
@@ -97,6 +98,7 @@ object JsonSupport {
   private def classMapSerializers: Seq[Serializer[?]] = Seq[Serializer[?]]() :+
     new ErrorBaseSerializer() :+
     new FacetsSerializer() :+
+    new GoogleServiceAccountKeySerializer() :+
     new GuardrailViolationDataV5Serializer() :+
     new MemoryRecordSerializer() :+
     new UnknownToolConfigSerializer() :+

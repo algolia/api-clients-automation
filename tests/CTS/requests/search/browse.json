@@ -22,6 +22,7 @@
   },
   {
     "testName": "browse with search parameters",
+    "isCodeSample": true,
     "parameters": {
       "indexName": "indexName",
       "browseParams": {

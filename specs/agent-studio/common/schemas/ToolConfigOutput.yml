@@ -3,11 +3,13 @@ ToolConfigOutput:
     - $ref: 'ClientSideToolConfig.yml#/ClientSideToolConfig'
     - $ref: 'AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig'
     - $ref: 'AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig'
+    - $ref: 'AlgoliaCompareProductsToolConfig.yml#/AlgoliaCompareProductsToolConfig'
     - $ref: 'McpServerToolConfig.yml#/McpServerToolConfig'
     - $ref: 'UnknownToolConfig.yml#/UnknownToolConfig'
   discriminator:
     propertyName: type
     mapping:
+      algolia_compare_products: AlgoliaCompareProductsToolConfig.yml#/AlgoliaCompareProductsToolConfig
       algolia_recommend: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig
       algolia_search_index: AlgoliaSearchToolConfig.yml#/AlgoliaSearchToolConfig
       client_side: ClientSideToolConfig.yml#/ClientSideToolConfig

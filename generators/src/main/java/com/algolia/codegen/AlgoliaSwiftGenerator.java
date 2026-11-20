@@ -124,8 +124,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "renderingcontent",
     "rerankingapplyfilter",
     "resultcard",
-    "scheduleabtestresponse",
-    "scheduleabtestsrequest",
     "searchpagination",
     "searchparams",
     "searchparamsobject",
@@ -203,6 +201,17 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public String getName() {
     return "algolia-swift";
+  }
+
+  @Override
+  public io.swagger.v3.oas.models.media.Schema unaliasSchema(io.swagger.v3.oas.models.media.Schema schema) {
+    return EmptyObject.unalias(openAPI, schema, super::unaliasSchema);
+  }
+
+  @Override
+  public void preprocessOpenAPI(io.swagger.v3.oas.models.OpenAPI openAPI) {
+    EmptyObject.markNotFreeForm(openAPI);
+    super.preprocessOpenAPI(openAPI);
   }
 
   public static String getClientName(String client) {
@@ -357,6 +366,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     GenericPropagator.propagateGenericsToModels("swift", CLIENT, models);
     OneOf.updateModelsOneOf(models, modelPackage);
     OneOf.addOneOfMetadata(models);
+    EmptyObject.markModels(openAPI, models);
     return models;
   }
 
@@ -422,7 +432,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   // Stolen from the SwiftCombineGenerator, as it works way better
   @Override
   public String getTypeDeclaration(Schema p) {
-    Schema<?> schema = ModelUtils.unaliasSchema(this.openAPI, p, importMapping);
+    Schema<?> schema = EmptyObject.unalias(openAPI, p, s -> ModelUtils.unaliasSchema(this.openAPI, s, importMapping));
     Schema<?> target = ModelUtils.isGenerateAliasAsModel() ? p : schema;
     if (ModelUtils.isArraySchema(target)) {
       Schema<?> items = ModelUtils.getSchemaItems(schema);

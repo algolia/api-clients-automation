@@ -1,0 +1,17 @@
+ConversationUsageResponse:
+  properties:
+    liveConversations:
+      type: integer
+      title: liveconversations
+    limit:
+      type: integer
+      title: limit
+    atLimit:
+      type: boolean
+      title: atlimit
+  type: object
+  required:
+    - liveConversations
+    - limit
+    - atLimit
+  title: conversationUsageResponse

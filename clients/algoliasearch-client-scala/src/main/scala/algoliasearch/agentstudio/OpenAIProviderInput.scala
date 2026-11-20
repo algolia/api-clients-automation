@@ -41,5 +41,5 @@ case class OpenAIProviderInput(
     apiKey: String,
     baseUrl: Option[String] = scala.None
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait

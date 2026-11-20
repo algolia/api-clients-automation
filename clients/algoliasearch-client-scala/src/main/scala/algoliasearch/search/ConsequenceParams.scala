@@ -283,6 +283,10 @@ import algoliasearch.search.SupportedLanguage._
   * @param enableReRanking
   *   Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking). This
   *   setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+  * @param allowReRankingOnPersonalization
+  *   Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with
+  *   Personalization. Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization`
+  *   is `true`.
   */
 case class ConsequenceParams(
     similarQuery: Option[String] = scala.None,
@@ -360,5 +364,6 @@ case class ConsequenceParams(
     reRankingApplyFilter: Option[ReRankingApplyFilter] = scala.None,
     query: Option[ConsequenceQuery] = scala.None,
     automaticFacetFilters: Option[AutomaticFacetFilters] = scala.None,
-    automaticOptionalFacetFilters: Option[AutomaticFacetFilters] = scala.None
+    automaticOptionalFacetFilters: Option[AutomaticFacetFilters] = scala.None,
+    allowReRankingOnPersonalization: Option[Boolean] = scala.None
 )

@@ -5,10 +5,12 @@ ItemsUnion:
     - $ref: 'AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig'
     - $ref: 'AlgoliaGroupedResultsToolConfig.yml#/AlgoliaGroupedResultsToolConfig'
     - $ref: 'AlgoliaGroupedResultsCompatToolConfig.yml#/AlgoliaGroupedResultsCompatToolConfig'
+    - $ref: 'AlgoliaCompareProductsToolConfig.yml#/AlgoliaCompareProductsToolConfig'
     - $ref: 'McpServerToolConfig.yml#/McpServerToolConfig'
     - $ref: 'UnknownToolConfig.yml#/UnknownToolConfig'
   discriminator:
     mapping:
+      algolia_compare_products: AlgoliaCompareProductsToolConfig.yml#/AlgoliaCompareProductsToolConfig
       algolia_display_results: AlgoliaGroupedResultsCompatToolConfig.yml#/AlgoliaGroupedResultsCompatToolConfig
       algolia_grouped_results: AlgoliaGroupedResultsToolConfig.yml#/AlgoliaGroupedResultsToolConfig
       algolia_recommend: AlgoliaRecommendToolConfig.yml#/AlgoliaRecommendToolConfig

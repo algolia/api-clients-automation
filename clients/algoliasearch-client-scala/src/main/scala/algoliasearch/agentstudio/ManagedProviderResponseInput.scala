@@ -38,5 +38,5 @@ package algoliasearch.agentstudio
 /** Response input for the Algolia-hosted provider. Limited by design.
   */
 case class ManagedProviderResponseInput(
-    defaultModel: Option[String] = scala.None
-) extends InputUnionTrait
+    defaultModel: String
+) extends InputUnionProviderAuthenticationResponseTrait

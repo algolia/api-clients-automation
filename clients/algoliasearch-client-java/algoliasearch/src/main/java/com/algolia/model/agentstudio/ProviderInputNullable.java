@@ -83,6 +83,24 @@ public interface ProviderInputNullable {
           LOGGER.finest("Failed to deserialize oneOf XAIProviderInput (error: " + e.getMessage() + ") (type: XAIProviderInput)");
         }
       }
+      // deserialize MistralProviderInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(MistralProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf MistralProviderInput (error: " + e.getMessage() + ") (type: MistralProviderInput)");
+        }
+      }
+      // deserialize VertexAIProviderInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(VertexAIProviderInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf VertexAIProviderInput (error: " + e.getMessage() + ") (type: VertexAIProviderInput)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

@@ -35,6 +35,8 @@
   */
 package algoliasearch.agentstudio
 
+import algoliasearch.agentstudio.ApiModeEnum._
+
 /** Azure OpenAI-specific provider input.
   *
   * @param azureDeployment
@@ -44,7 +46,8 @@ case class AzureOpenAIProviderInput(
     apiKey: String,
     azureEndpoint: String,
     azureDeployment: String,
+    apiMode: Option[ApiModeEnum] = scala.None,
     apiVersion: Option[String] = scala.None
 ) extends InputUnionTrait
+    with InputUnionProviderAuthenticationResponseTrait
     with ProviderInputNullableTrait
-    with ProviderInputTrait
