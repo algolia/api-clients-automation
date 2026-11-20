@@ -28,7 +28,7 @@
     "@octokit/rest": "22.0.1",
     "@readme/httpsnippet": "11.4.1",
     "@types/express": "5.0.6",
-    "@types/folder-hash": "4.0.4",
+    "@types/folder-hash": "4.0.5",
     "@types/fs-extra": "11.0.4",
     "@types/node": "26.6.6",
     "@types/semver": "7.8.0",
