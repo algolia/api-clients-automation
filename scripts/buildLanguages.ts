@@ -65,7 +65,9 @@ async function buildLanguage(
 
       let fileNames = '';
 
-      if (buildType !== 'guides') {
+      // TypeScript 6 errors (TS5112) when files are passed on the command line next to a tsconfig.json.
+      // The playground has one that already includes all its files, so let tsc load it.
+      if (buildType !== 'guides' && buildType !== 'playground') {
         fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
       }
 
