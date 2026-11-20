@@ -247,6 +247,57 @@ class AgentStudioTest extends AnyFunSuite {
     }
   }
 
+  test("createAgentCompletion with all parameters1") {
+    val (client, echo) = testClient()
+    val future = client.createAgentCompletion(
+      agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      compatibilityMode = CompatibilityMode.withName("ai-sdk-4"),
+      agentCompletionRequest = AgentCompletionRequest(
+        messages = Some(
+          MessagesUnion(
+            Seq(
+              UserMessageV4(
+                role = "user",
+                content = "Hello, how are you?"
+              )
+            )
+          )
+        )
+      ),
+      stream = Some(false),
+      cache = Some(false),
+      memory = Some(false),
+      analytics = Some(false),
+      xAlgoliaSecureUserToken = Some("secure-user-token"),
+      ephemeral = Some(true)
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"messages":[{"role":"user","content":"Hello, how are you?"}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val expectedQuery = parse(
+      """{"compatibilityMode":"ai-sdk-4","stream":"false","cache":"false","memory":"false","analytics":"false","ephemeral":"true"}"""
+    ).asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+    val expectedHeaders =
+      parse("""{"x-algolia-secure-user-token":"secure-user-token"}""").asInstanceOf[JObject].obj.toMap
+    val actualHeaders = res.headers
+    for ((k, v) <- expectedHeaders) {
+      assert(actualHeaders.contains(k))
+      assert(actualHeaders(k) == v.asInstanceOf[JString].s)
+    }
+  }
+
   test("createAgentTask with required parameters") {
     val (client, echo) = testClient()
     val future = client.createAgentTask(
@@ -943,12 +994,13 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteAgentConversations with date filters1") {
+  test("deleteAgentConversations with all filters1") {
     val (client, echo) = testClient()
     val future = client.deleteAgentConversations(
       agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
       startDate = Some("2024-01-01"),
-      endDate = Some("2024-06-30")
+      endDate = Some("2024-06-30"),
+      ephemeral = Some(true)
     )
 
     Await.ready(future, Duration.Inf)
@@ -957,7 +1009,8 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
-    val expectedQuery = parse("""{"startDate":"2024-01-01","endDate":"2024-06-30"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery =
+      parse("""{"startDate":"2024-01-01","endDate":"2024-06-30","ephemeral":"true"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -1054,12 +1107,13 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("exportConversations with date filters1") {
+  test("exportConversations with all filters1") {
     val (client, echo) = testClient()
     val future = client.exportConversations(
       agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
       startDate = Some("2024-01-01"),
-      endDate = Some("2024-12-31")
+      endDate = Some("2024-12-31"),
+      ephemeral = Some(true)
     )
 
     Await.ready(future, Duration.Inf)
@@ -1068,7 +1122,8 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.path == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val expectedQuery = parse("""{"startDate":"2024-01-01","endDate":"2024-12-31"}""").asInstanceOf[JObject].obj.toMap
+    val expectedQuery =
+      parse("""{"startDate":"2024-01-01","endDate":"2024-12-31","ephemeral":"true"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -1356,7 +1411,8 @@ class AgentStudioTest extends AnyFunSuite {
       clicked = Some(true),
       converted = Some(false),
       hasAlgoliaSearch = Some(true),
-      xAlgoliaSecureUserToken = Some("secure-user-token")
+      xAlgoliaSecureUserToken = Some("secure-user-token"),
+      ephemeral = Some(true)
     )
 
     Await.ready(future, Duration.Inf)
@@ -1366,7 +1422,7 @@ class AgentStudioTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}"""
+      """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true","ephemeral":"true"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
@@ -1457,6 +1513,19 @@ class AgentStudioTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
+  }
+
+  test("listConversationUsage") {
+    val (client, echo) = testClient()
+    val future = client.listConversationUsage(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/agent-studio/1/configuration/conversation-usage")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
   }
 
   test("listModels") {

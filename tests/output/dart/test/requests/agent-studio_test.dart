@@ -251,6 +251,47 @@ void main() {
     ),
   );
 
+  // createAgentCompletion
+  test(
+    'createAgentCompletion with all parameters',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.createAgentCompletion(
+        agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        compatibilityMode: CompatibilityMode.fromJson("ai-sdk-4"),
+        agentCompletionRequest: AgentCompletionRequest(
+          messages: [
+            UserMessageV4(
+              role: "user",
+              content: "Hello, how are you?",
+            ),
+          ],
+        ),
+        stream: false,
+        cache: false,
+        memory: false,
+        analytics: false,
+        xAlgoliaSecureUserToken: "secure-user-token",
+        ephemeral: true,
+      ),
+      intercept: (request) {
+        expectPath(request.path,
+            '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions');
+        expect(request.method, 'post');
+        expectHeaders(request.headers,
+            """{"x-algolia-secure-user-token":"secure-user-token"}""");
+        expectParams(request.queryParameters,
+            """{"compatibilityMode":"ai-sdk-4","stream":"false","cache":"false","memory":"false","analytics":"false","ephemeral":"true"}""");
+        expectBody(request.body,
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""");
+      },
+    ),
+  );
+
   // createAgentTask
   test(
     'createAgentTask with required parameters',
@@ -1038,7 +1079,7 @@ void main() {
 
   // deleteAgentConversations
   test(
-    'deleteAgentConversations with date filters',
+    'deleteAgentConversations with all filters',
     () => runTest(
       builder: (requester) => AgentStudioClient(
         appId: 'appId',
@@ -1049,13 +1090,14 @@ void main() {
         agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
         startDate: "2024-01-01",
         endDate: "2024-06-30",
+        ephemeral: true,
       ),
       intercept: (request) {
         expectPath(request.path,
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations');
         expect(request.method, 'delete');
         expectParams(request.queryParameters,
-            """{"startDate":"2024-01-01","endDate":"2024-06-30"}""");
+            """{"startDate":"2024-01-01","endDate":"2024-06-30","ephemeral":"true"}""");
         expect(request.body, null);
       },
     ),
@@ -1190,7 +1232,7 @@ void main() {
 
   // exportConversations
   test(
-    'exportConversations with date filters',
+    'exportConversations with all filters',
     () => runTest(
       builder: (requester) => AgentStudioClient(
         appId: 'appId',
@@ -1201,13 +1243,14 @@ void main() {
         agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
         startDate: "2024-01-01",
         endDate: "2024-12-31",
+        ephemeral: true,
       ),
       intercept: (request) {
         expectPath(request.path,
             '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export');
         expect(request.method, 'get');
         expectParams(request.queryParameters,
-            """{"startDate":"2024-01-01","endDate":"2024-12-31"}""");
+            """{"startDate":"2024-01-01","endDate":"2024-12-31","ephemeral":"true"}""");
         expect(request.body, null);
       },
     ),
@@ -1611,6 +1654,7 @@ void main() {
         converted: false,
         hasAlgoliaSearch: true,
         xAlgoliaSecureUserToken: "secure-user-token",
+        ephemeral: true,
       ),
       intercept: (request) {
         expectPath(request.path,
@@ -1619,7 +1663,7 @@ void main() {
         expectHeaders(request.headers,
             """{"x-algolia-secure-user-token":"secure-user-token"}""");
         expectParams(request.queryParameters,
-            """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}""");
+            """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true","ephemeral":"true"}""");
         expect(request.body, null);
       },
     ),
@@ -1706,6 +1750,25 @@ void main() {
         expectPath(request.path, '/agent-studio/1/agents');
         expect(request.method, 'get');
         expectParams(request.queryParameters, """{"page":"1","limit":"2"}""");
+        expect(request.body, null);
+      },
+    ),
+  );
+
+  // listConversationUsage
+  test(
+    'listConversationUsage',
+    () => runTest(
+      builder: (requester) => AgentStudioClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.listConversationUsage(),
+      intercept: (request) {
+        expectPath(
+            request.path, '/agent-studio/1/configuration/conversation-usage');
+        expect(request.method, 'get');
         expect(request.body, null);
       },
     ),

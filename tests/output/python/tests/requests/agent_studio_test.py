@@ -229,6 +229,53 @@ class TestAgentStudioClient:
 
     async def test_create_agent_completion_1(self):
         """
+        createAgentCompletion with all parameters
+        """
+        _req = await self._client.create_agent_completion_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibility_mode="ai-sdk-4",
+            agent_completion_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+            stream=False,
+            cache=False,
+            memory=False,
+            analytics=False,
+            x_algolia_secure_user_token="secure-user-token",
+            ephemeral=True,
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions"
+        )
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "compatibilityMode": "ai-sdk-4",
+                "stream": "false",
+                "cache": "false",
+                "memory": "false",
+                "analytics": "false",
+                "ephemeral": "true",
+            }.items()
+        )
+        assert (
+            _req.headers.items()
+            >= {"x-algolia-secure-user-token": "secure-user-token"}.items()
+        )
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    async def test_create_agent_completion_2(self):
+        """
         createAgentCompletion streaming with simple messages
         """
         _events = []
@@ -262,7 +309,7 @@ class TestAgentStudioClient:
             """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
         )
 
-    async def test_create_agent_completion_2(self):
+    async def test_create_agent_completion_3(self):
         """
         createAgentCompletion streaming with v5 messages and all query params
         """
@@ -311,7 +358,7 @@ class TestAgentStudioClient:
             """{"messages":[{"role":"user","parts":[{"type":"text","text":"What is Algolia?"}]}],"id":"test-conversation-id"}"""
         )
 
-    async def test_create_agent_completion_3(self):
+    async def test_create_agent_completion_4(self):
         """
         createAgentCompletion streaming with test configuration
         """
@@ -362,7 +409,7 @@ class TestAgentStudioClient:
             """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}}"""
         )
 
-    async def test_create_agent_completion_4(self):
+    async def test_create_agent_completion_5(self):
         """
         createAgentCompletion streaming raw events
         """
@@ -1005,12 +1052,13 @@ class TestAgentStudioClient:
 
     async def test_delete_agent_conversations_1(self):
         """
-        deleteAgentConversations with date filters
+        deleteAgentConversations with all filters
         """
         _req = await self._client.delete_agent_conversations_with_http_info(
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
             start_date="2024-01-01",
             end_date="2024-06-30",
+            ephemeral=True,
         )
 
         assert (
@@ -1020,7 +1068,11 @@ class TestAgentStudioClient:
         assert _req.verb == "DELETE"
         assert (
             _req.query_parameters.items()
-            == {"startDate": "2024-01-01", "endDate": "2024-06-30"}.items()
+            == {
+                "startDate": "2024-01-01",
+                "endDate": "2024-06-30",
+                "ephemeral": "true",
+            }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -1128,12 +1180,13 @@ class TestAgentStudioClient:
 
     async def test_export_conversations_1(self):
         """
-        exportConversations with date filters
+        exportConversations with all filters
         """
         _req = await self._client.export_conversations_with_http_info(
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
             start_date="2024-01-01",
             end_date="2024-12-31",
+            ephemeral=True,
         )
 
         assert (
@@ -1143,7 +1196,11 @@ class TestAgentStudioClient:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            == {"startDate": "2024-01-01", "endDate": "2024-12-31"}.items()
+            == {
+                "startDate": "2024-01-01",
+                "endDate": "2024-12-31",
+                "ephemeral": "true",
+            }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -1460,6 +1517,7 @@ class TestAgentStudioClient:
             converted=False,
             has_algolia_search=True,
             x_algolia_secure_user_token="secure-user-token",
+            ephemeral=True,
         )
 
         assert (
@@ -1480,6 +1538,7 @@ class TestAgentStudioClient:
                 "clicked": "true",
                 "converted": "false",
                 "hasAlgoliaSearch": "true",
+                "ephemeral": "true",
             }.items()
         )
         assert (
@@ -1553,6 +1612,18 @@ class TestAgentStudioClient:
         assert _req.path == "/agent-studio/1/agents"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {"page": "1", "limit": "2"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_list_conversation_usage_(self):
+        """
+        listConversationUsage
+        """
+        _req = await self._client.list_conversation_usage_with_http_info()
+
+        assert _req.path == "/agent-studio/1/configuration/conversation-usage"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
@@ -2195,6 +2266,53 @@ class TestAgentStudioClientSync:
 
     def test_create_agent_completion_1(self):
         """
+        createAgentCompletion with all parameters
+        """
+        _req = self._client.create_agent_completion_with_http_info(
+            agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibility_mode="ai-sdk-4",
+            agent_completion_request={
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": "Hello, how are you?",
+                    },
+                ],
+            },
+            stream=False,
+            cache=False,
+            memory=False,
+            analytics=False,
+            x_algolia_secure_user_token="secure-user-token",
+            ephemeral=True,
+        )
+
+        assert (
+            _req.path
+            == "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions"
+        )
+        assert _req.verb == "POST"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "compatibilityMode": "ai-sdk-4",
+                "stream": "false",
+                "cache": "false",
+                "memory": "false",
+                "analytics": "false",
+                "ephemeral": "true",
+            }.items()
+        )
+        assert (
+            _req.headers.items()
+            >= {"x-algolia-secure-user-token": "secure-user-token"}.items()
+        )
+        assert loads(_req.data) == loads(
+            """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
+        )
+
+    def test_create_agent_completion_2(self):
+        """
         createAgentCompletion streaming with simple messages
         """
         _events = []
@@ -2228,7 +2346,7 @@ class TestAgentStudioClientSync:
             """{"messages":[{"role":"user","content":"Hello, how are you?"}]}"""
         )
 
-    def test_create_agent_completion_2(self):
+    def test_create_agent_completion_3(self):
         """
         createAgentCompletion streaming with v5 messages and all query params
         """
@@ -2277,7 +2395,7 @@ class TestAgentStudioClientSync:
             """{"messages":[{"role":"user","parts":[{"type":"text","text":"What is Algolia?"}]}],"id":"test-conversation-id"}"""
         )
 
-    def test_create_agent_completion_3(self):
+    def test_create_agent_completion_4(self):
         """
         createAgentCompletion streaming with test configuration
         """
@@ -2328,7 +2446,7 @@ class TestAgentStudioClientSync:
             """{"messages":[{"role":"user","content":"Hello"}],"configuration":{"instructions":"Test instructions override","config":{"temperature":0.2},"tools":[{"type":"client_side","name":"start","description":"Start a conversation","inputSchema":{"type":"object"}}]}}"""
         )
 
-    def test_create_agent_completion_4(self):
+    def test_create_agent_completion_5(self):
         """
         createAgentCompletion streaming raw events
         """
@@ -2971,12 +3089,13 @@ class TestAgentStudioClientSync:
 
     def test_delete_agent_conversations_1(self):
         """
-        deleteAgentConversations with date filters
+        deleteAgentConversations with all filters
         """
         _req = self._client.delete_agent_conversations_with_http_info(
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
             start_date="2024-01-01",
             end_date="2024-06-30",
+            ephemeral=True,
         )
 
         assert (
@@ -2986,7 +3105,11 @@ class TestAgentStudioClientSync:
         assert _req.verb == "DELETE"
         assert (
             _req.query_parameters.items()
-            == {"startDate": "2024-01-01", "endDate": "2024-06-30"}.items()
+            == {
+                "startDate": "2024-01-01",
+                "endDate": "2024-06-30",
+                "ephemeral": "true",
+            }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -3094,12 +3217,13 @@ class TestAgentStudioClientSync:
 
     def test_export_conversations_1(self):
         """
-        exportConversations with date filters
+        exportConversations with all filters
         """
         _req = self._client.export_conversations_with_http_info(
             agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
             start_date="2024-01-01",
             end_date="2024-12-31",
+            ephemeral=True,
         )
 
         assert (
@@ -3109,7 +3233,11 @@ class TestAgentStudioClientSync:
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
-            == {"startDate": "2024-01-01", "endDate": "2024-12-31"}.items()
+            == {
+                "startDate": "2024-01-01",
+                "endDate": "2024-12-31",
+                "ephemeral": "true",
+            }.items()
         )
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
@@ -3426,6 +3554,7 @@ class TestAgentStudioClientSync:
             converted=False,
             has_algolia_search=True,
             x_algolia_secure_user_token="secure-user-token",
+            ephemeral=True,
         )
 
         assert (
@@ -3446,6 +3575,7 @@ class TestAgentStudioClientSync:
                 "clicked": "true",
                 "converted": "false",
                 "hasAlgoliaSearch": "true",
+                "ephemeral": "true",
             }.items()
         )
         assert (
@@ -3519,6 +3649,18 @@ class TestAgentStudioClientSync:
         assert _req.path == "/agent-studio/1/agents"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {"page": "1", "limit": "2"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    def test_list_conversation_usage_(self):
+        """
+        listConversationUsage
+        """
+        _req = self._client.list_conversation_usage_with_http_info()
+
+        assert _req.path == "/agent-studio/1/configuration/conversation-usage"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 

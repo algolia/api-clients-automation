@@ -52,5 +52,6 @@ case class ConversationBaseResponse(
     totalTokens: Option[Int] = scala.None,
     conversationMetadata: Option[ConversationMetadata] = scala.None,
     feedback: Option[Seq[FeedbackResponse]] = scala.None,
-    impactAnalytics: Option[ImpactAnalytics] = scala.None
+    impactAnalytics: Option[ImpactAnalytics] = scala.None,
+    isEphemeral: Option[Boolean] = scala.None
 )

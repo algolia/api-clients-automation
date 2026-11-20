@@ -99,10 +99,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal("/1/clusters/mapping", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
-    assert(
-      ({:"x-algolia-user-id" => "user42"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
-      req.headers.to_s
-    )
+    assert(({"x-algolia-user-id": "user42"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"cluster\":\"d4242-eu\"}"), JSON.parse(req.body))
   end
 
@@ -117,7 +114,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/clusters/mapping", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-user-id" => "user id with spaces"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-user-id": "user id with spaces"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"cluster\":\"cluster with spaces\"}"), JSON.parse(req.body))
@@ -271,10 +268,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:post, req.method)
     assert_equal("/1/clusters/mapping/batch", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
-    assert(
-      ({:"x-algolia-user-id" => "userID"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
-      req.headers.to_s
-    )
+    assert(({"x-algolia-user-id": "userID"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"cluster\":\"theCluster\",\"users\":[\"user1\",\"user2\"]}"), JSON.parse(req.body))
   end
 
@@ -469,7 +463,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:delete, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -493,7 +487,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters%20with%20space"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters%20with%20space"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -516,11 +510,11 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/test/all", req.path)
     assert_equal(
-      {:"query" => "parameters%20with%20space", :"and%20an%20array" => "array%2Cwith%20spaces"}.to_a,
+      {"query": "parameters%20with%20space", "and%20an%20array": "array%2Cwith%20spaces"}.to_a,
       req.query_params.to_a
     )
     assert(
-      ({:"x-header-1" => "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-header-1": "spaces are left alone"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
 
@@ -544,7 +538,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -560,7 +554,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -576,7 +570,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"query2" => "myQueryParameter"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "query2": "myQueryParameter"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -592,9 +586,9 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -611,9 +605,9 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-algolia-api-key" => "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-algolia-api-key": "ALGOLIA_API_KEY"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
@@ -630,7 +624,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"isItWorking" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "isItWorking": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -646,7 +640,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -662,7 +656,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "b%20and%20c%2Cd"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -678,7 +672,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "true%2Ctrue%2Cfalse"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -694,7 +688,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/test/requestOptions", req.path)
-    assert_equal({:"query" => "parameters", :"myParam" => "1%2C2"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters", "myParam": "1%2C2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"facet\":\"filters\"}"), JSON.parse(req.body))
   end
@@ -716,7 +710,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/test/all", req.path)
-    assert_equal({:"query" => "parameters"}.to_a, req.query_params.to_a)
+    assert_equal({"query": "parameters"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"body\":\"parameters\"}"), JSON.parse(req.body))
   end
@@ -886,7 +880,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/1/logs", req.path)
     assert_equal(
-      {:"offset" => "5", :"length" => "10", :"indexName" => "theIndexName", :"type" => "all"}.to_a,
+      {"offset": "5", "length": "10", "indexName": "theIndexName", "type": "all"}.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -900,7 +894,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/indexes/theIndexName/uniqueID", req.path)
-    assert_equal({:"attributesToRetrieve" => "attr1%2Cattr2"}.to_a, req.query_params.to_a)
+    assert_equal({"attributesToRetrieve": "attr1%2Cattr2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1003,7 +997,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
-    assert_equal({:"getVersion" => "2"}.to_a, req.query_params.to_a)
+    assert_equal({"getVersion": "2"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1099,7 +1093,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/clusters/mapping/pending", req.path)
-    assert_equal({:"getClusters" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"getClusters": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1147,7 +1141,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/indexes", req.path)
-    assert_equal({:"page" => "8", :"hitsPerPage" => "3"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "8", "hitsPerPage": "3"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1171,7 +1165,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal("/1/clusters/mapping", req.path)
-    assert_equal({:"page" => "8", :"hitsPerPage" => "100"}.to_a, req.query_params.to_a)
+    assert_equal({"page": "8", "hitsPerPage": "100"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -1503,7 +1497,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/indexName/rules/id1", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
@@ -2125,7 +2119,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path)
-    assert_equal({:"forwardToReplicas" => "false", :"clearExistingRules" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "false", "clearExistingRules": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
@@ -2180,7 +2174,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path)
-    assert_equal({:"forwardToReplicas" => "true", :"clearExistingRules" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true", "clearExistingRules": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
@@ -2275,7 +2269,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/indexName/synonyms/id1", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse("{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]}"),
@@ -2306,7 +2300,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch", req.path)
-    assert_equal({:"forwardToReplicas" => "true", :"replaceExistingSynonyms" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true", "replaceExistingSynonyms": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse(
@@ -2953,7 +2947,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:post, req.method)
     assert_equal("/1/indexes/cts_e2e_browse/rules/search", req.path)
-    assert_equal({:"x-algolia-request-id" => "CtsE2eQry11"}.to_a, req.query_params.to_a)
+    assert_equal({"x-algolia-request-id": "CtsE2eQry11"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert(
       req.headers.keys.none? { |k| k.to_s.casecmp?("request-id") },
@@ -4415,7 +4409,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/indexName/query", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-forwarded-for" => "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-forwarded-for": "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{\"query\":\"query\",\"aroundLatLngViaIP\":true}"), JSON.parse(req.body))
@@ -4433,7 +4427,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/indexName/query", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(
-      ({:"x-forwarded-for" => "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      ({"x-forwarded-for": "XX.XXX.XXX.XXX"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
       req.headers.to_s
     )
     assert_equal(JSON.parse("{}"), JSON.parse(req.body))
@@ -5245,7 +5239,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/cts_e2e_settings/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"paginationLimitedTo\":10,\"typoTolerance\":\"false\"}"), JSON.parse(req.body))
   end
@@ -5260,7 +5254,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"typoTolerance\":true}"), JSON.parse(req.body))
   end
@@ -5275,7 +5269,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"typoTolerance\":\"min\"}"), JSON.parse(req.body))
   end
@@ -5290,7 +5284,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"ignorePlurals\":true}"), JSON.parse(req.body))
   end
@@ -5305,7 +5299,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"ignorePlurals\":[\"fr\"]}"), JSON.parse(req.body))
   end
@@ -5320,7 +5314,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"removeStopWords\":true}"), JSON.parse(req.body))
   end
@@ -5335,7 +5329,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"removeStopWords\":[\"fr\"]}"), JSON.parse(req.body))
   end
@@ -5346,7 +5340,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"distinct\":true}"), JSON.parse(req.body))
   end
@@ -5357,7 +5351,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"distinct\":1}"), JSON.parse(req.body))
   end
@@ -5901,7 +5895,7 @@ class TestSearchClient < Test::Unit::TestCase
 
     assert_equal(:put, req.method)
     assert_equal("/1/indexes/theIndexName/settings", req.path)
-    assert_equal({:"forwardToReplicas" => "true"}.to_a, req.query_params.to_a)
+    assert_equal({"forwardToReplicas": "true"}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse("{\"searchableAttributes\":[\"name\",\"description\"]}"), JSON.parse(req.body))
   end
@@ -6128,7 +6122,7 @@ class TestSearchClient < Test::Unit::TestCase
         sort_facet_values_by: "date",
         typo_tolerance: false,
         unretrievable_attributes: ["foo"],
-        user_data: {:"user" => "data"}
+        user_data: {'user': "data"}
       )
     )
 
@@ -6619,7 +6613,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/theIndexName/settings", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"snippetEllipsisText\":\"\u2026\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"snippetEllipsisText\":\"…\"}"), JSON.parse(req.body))
   end
 
   # enable_restrict_highlight_and_snippet_arrays_by_default
@@ -6847,7 +6841,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/theIndexName/settings", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"keepDiacriticsOnCharacters\":\"\u00F8\u00E9\"}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"keepDiacriticsOnCharacters\":\"øé\"}"), JSON.parse(req.body))
   end
 
   # set_custom_normalization
@@ -6861,7 +6855,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal("/1/indexes/theIndexName/settings", req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse("{\"customNormalization\":{\"default\":{\"\u00E4\":\"ae\"}}}"), JSON.parse(req.body))
+    assert_equal(JSON.parse("{\"customNormalization\":{\"default\":{\"ä\":\"ae\"}}}"), JSON.parse(req.body))
   end
 
   # set_querylanguage_both
@@ -7174,7 +7168,7 @@ class TestSearchClient < Test::Unit::TestCase
     req = @client.set_settings_with_http_info(
       "theIndexName",
       Algolia::Search::IndexSettings.new(
-        user_data: {:"extraData" => "This is the custom data that you want to store in your index"}
+        user_data: {'extraData': "This is the custom data that you want to store in your index"}
       )
     )
 

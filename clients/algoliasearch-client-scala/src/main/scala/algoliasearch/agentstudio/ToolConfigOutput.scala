@@ -54,6 +54,13 @@ object ToolConfigOutputSerializer extends Serializer[ToolConfigOutput] {
       (json match {
         case jobject: JObject =>
           (jobject \ "type") match {
+            case JString("algolia_compare_products") =>
+              Some(
+                Extraction.extract[AlgoliaCompareProductsToolConfig](jobject)(
+                  format - this,
+                  manifest[AlgoliaCompareProductsToolConfig]
+                )
+              )
             case JString("algolia_recommend") =>
               Some(
                 Extraction
@@ -81,6 +88,7 @@ object ToolConfigOutputSerializer extends Serializer[ToolConfigOutput] {
           case value: JObject if value.obj.exists(_._1 == "indices") =>
             Extraction.extract[AlgoliaSearchToolConfig](value)
           case value: JObject => Extraction.extract[AlgoliaRecommendToolConfig](value)
+          case value: JObject => Extraction.extract[AlgoliaCompareProductsToolConfig](value)
           case value: JObject => Extraction.extract[UnknownToolConfig](value)
           case _              => throw new MappingException("Can't convert " + json + " to ToolConfigOutput")
         }
@@ -89,11 +97,12 @@ object ToolConfigOutputSerializer extends Serializer[ToolConfigOutput] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: ToolConfigOutput =>
     value match {
-      case value: ClientSideToolConfig       => Extraction.decompose(value)(format - this)
-      case value: McpServerToolConfig        => Extraction.decompose(value)(format - this)
-      case value: AlgoliaSearchToolConfig    => Extraction.decompose(value)(format - this)
-      case value: AlgoliaRecommendToolConfig => Extraction.decompose(value)(format - this)
-      case value: UnknownToolConfig          => Extraction.decompose(value)(format - this)
+      case value: ClientSideToolConfig             => Extraction.decompose(value)(format - this)
+      case value: McpServerToolConfig              => Extraction.decompose(value)(format - this)
+      case value: AlgoliaSearchToolConfig          => Extraction.decompose(value)(format - this)
+      case value: AlgoliaRecommendToolConfig       => Extraction.decompose(value)(format - this)
+      case value: AlgoliaCompareProductsToolConfig => Extraction.decompose(value)(format - this)
+      case value: UnknownToolConfig                => Extraction.decompose(value)(format - this)
     }
   }
 }

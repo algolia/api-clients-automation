@@ -54,6 +54,13 @@ object ItemsUnionSerializer extends Serializer[ItemsUnion] {
       (json match {
         case jobject: JObject =>
           (jobject \ "type") match {
+            case JString("algolia_compare_products") =>
+              Some(
+                Extraction.extract[AlgoliaCompareProductsToolConfig](jobject)(
+                  format - this,
+                  manifest[AlgoliaCompareProductsToolConfig]
+                )
+              )
             case JString("algolia_display_results") =>
               Some(
                 Extraction.extract[AlgoliaGroupedResultsCompatToolConfig](jobject)(
@@ -97,6 +104,7 @@ object ItemsUnionSerializer extends Serializer[ItemsUnion] {
           case value: JObject => Extraction.extract[AlgoliaRecommendToolConfig](value)
           case value: JObject => Extraction.extract[AlgoliaGroupedResultsToolConfig](value)
           case value: JObject => Extraction.extract[AlgoliaGroupedResultsCompatToolConfig](value)
+          case value: JObject => Extraction.extract[AlgoliaCompareProductsToolConfig](value)
           case value: JObject => Extraction.extract[UnknownToolConfig](value)
           case _              => throw new MappingException("Can't convert " + json + " to ItemsUnion")
         }
@@ -111,6 +119,7 @@ object ItemsUnionSerializer extends Serializer[ItemsUnion] {
       case value: AlgoliaRecommendToolConfig            => Extraction.decompose(value)(format - this)
       case value: AlgoliaGroupedResultsToolConfig       => Extraction.decompose(value)(format - this)
       case value: AlgoliaGroupedResultsCompatToolConfig => Extraction.decompose(value)(format - this)
+      case value: AlgoliaCompareProductsToolConfig      => Extraction.decompose(value)(format - this)
       case value: UnknownToolConfig                     => Extraction.decompose(value)(format - this)
     }
   }
