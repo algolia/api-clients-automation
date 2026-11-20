@@ -223,6 +223,39 @@ class SnippetAgentStudioClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateAgentCompletion1() {
+    // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.createAgentCompletion(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        compatibilityMode = CompatibilityMode.entries.first { it.value == "ai-sdk-4" },
+        agentCompletionRequest =
+          AgentCompletionRequest(
+            messages =
+              MessagesUnion.ofListOfMessageV4(
+                listOf(UserMessageV4(role = "user", content = "Hello, how are you?"))
+              )
+          ),
+        stream = false,
+        cache = false,
+        memory = false,
+        analytics = false,
+        xAlgoliaSecureUserToken = "secure-user-token",
+        ephemeral = true,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCreateAgentTask() {
     // >SEPARATOR createAgentTask createAgentTask with required parameters
     // Initialize the client
@@ -826,7 +859,7 @@ class SnippetAgentStudioClient {
   }
 
   suspend fun snippetForDeleteAgentConversations1() {
-    // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+    // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
     // Initialize the client
     val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -835,6 +868,7 @@ class SnippetAgentStudioClient {
       agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
       startDate = "2024-01-01",
       endDate = "2024-06-30",
+      ephemeral = true,
     )
 
     // >LOG
@@ -936,7 +970,7 @@ class SnippetAgentStudioClient {
   }
 
   suspend fun snippetForExportConversations1() {
-    // >SEPARATOR exportConversations exportConversations with date filters
+    // >SEPARATOR exportConversations exportConversations with all filters
     // Initialize the client
     val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -946,6 +980,7 @@ class SnippetAgentStudioClient {
         agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
         startDate = "2024-01-01",
         endDate = "2024-12-31",
+        ephemeral = true,
       )
 
     // >LOG
@@ -1275,6 +1310,7 @@ class SnippetAgentStudioClient {
         converted = false,
         hasAlgoliaSearch = true,
         xAlgoliaSecureUserToken = "secure-user-token",
+        ephemeral = true,
       )
 
     // >LOG
@@ -1341,6 +1377,22 @@ class SnippetAgentStudioClient {
 
     // Call the API
     var response = client.listAgents(page = 1, limit = 2)
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForListConversationUsage() {
+    // >SEPARATOR listConversationUsage default
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response = client.listConversationUsage()
 
     // >LOG
     // print the response

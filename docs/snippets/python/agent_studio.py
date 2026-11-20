@@ -255,6 +255,41 @@ def snippet_for_create_agent_completion1():
     """
     Snippet for the createAgentCompletion method.
 
+    createAgentCompletion with all parameters
+    """
+    # >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Use the streaming variant to iterate over events
+    for event in client.create_agent_completion_stream(
+        agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
+        compatibility_mode="ai-sdk-4",
+        agent_completion_request={
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hello, how are you?",
+                },
+            ],
+        },
+        stream=False,
+        cache=False,
+        memory=False,
+        analytics=False,
+        x_algolia_secure_user_token="secure-user-token",
+        ephemeral=True,
+    ):
+        # >LOG
+        print(event.data)
+    # SEPARATOR<
+
+
+def snippet_for_create_agent_completion2():
+    """
+    Snippet for the createAgentCompletion method.
+
     createAgentCompletion streaming with simple messages
     """
     # >SEPARATOR createAgentCompletion createAgentCompletion streaming with simple messages
@@ -280,7 +315,7 @@ def snippet_for_create_agent_completion1():
     # SEPARATOR<
 
 
-def snippet_for_create_agent_completion2():
+def snippet_for_create_agent_completion3():
     """
     Snippet for the createAgentCompletion method.
 
@@ -318,7 +353,7 @@ def snippet_for_create_agent_completion2():
     # SEPARATOR<
 
 
-def snippet_for_create_agent_completion3():
+def snippet_for_create_agent_completion4():
     """
     Snippet for the createAgentCompletion method.
 
@@ -363,7 +398,7 @@ def snippet_for_create_agent_completion3():
     # SEPARATOR<
 
 
-def snippet_for_create_agent_completion4():
+def snippet_for_create_agent_completion5():
     """
     Snippet for the createAgentCompletion method.
 
@@ -1163,9 +1198,9 @@ def snippet_for_delete_agent_conversations1():
     """
     Snippet for the deleteAgentConversations method.
 
-    deleteAgentConversations with date filters
+    deleteAgentConversations with all filters
     """
-    # >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+    # >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
     # Initialize the client
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1175,6 +1210,7 @@ def snippet_for_delete_agent_conversations1():
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
         start_date="2024-01-01",
         end_date="2024-06-30",
+        ephemeral=True,
     )
 
     # >LOG
@@ -1309,9 +1345,9 @@ def snippet_for_export_conversations1():
     """
     Snippet for the exportConversations method.
 
-    exportConversations with date filters
+    exportConversations with all filters
     """
-    # >SEPARATOR exportConversations exportConversations with date filters
+    # >SEPARATOR exportConversations exportConversations with all filters
     # Initialize the client
     # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
     client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -1321,6 +1357,7 @@ def snippet_for_export_conversations1():
         agent_id="76710f1b-8231-42e5-b0d1-f43aac618e15",
         start_date="2024-01-01",
         end_date="2024-12-31",
+        ephemeral=True,
     )
 
     # >LOG
@@ -1746,6 +1783,7 @@ def snippet_for_list_agent_conversations1():
         converted=False,
         has_algolia_search=True,
         x_algolia_secure_user_token="secure-user-token",
+        ephemeral=True,
     )
 
     # >LOG
@@ -1837,6 +1875,26 @@ def snippet_for_list_agents2():
         limit=2,
         provider_id=None,
     )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_list_conversation_usage():
+    """
+    Snippet for the listConversationUsage method.
+
+    listConversationUsage
+    """
+    # >SEPARATOR listConversationUsage default
+    # Initialize the client
+    # In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.
+    client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.list_conversation_usage()
 
     # >LOG
     # print the response

@@ -2281,10 +2281,7 @@ def snippet_for_save_objects2
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.save_objects(
-    "<YOUR_INDEX_NAME>",
-    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
-  )
+  response = client.save_objects("<YOUR_INDEX_NAME>", [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}])
   # response is an array of BatchResponse objects
 
   # >LOG
@@ -2302,10 +2299,7 @@ def snippet_for_save_objects3
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
   # Call the API
-  response = client.save_objects(
-    "<YOUR_INDEX_NAME>",
-    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}]
-  )
+  response = client.save_objects("<YOUR_INDEX_NAME>", [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}])
   # response is an array of BatchResponse objects
 
   # >LOG
@@ -8139,7 +8133,7 @@ def snippet_for_set_settings55
       sort_facet_values_by: "date",
       typo_tolerance: false,
       unretrievable_attributes: ["foo"],
-      user_data: {:"user" => "data"}
+      user_data: {'user': "data"}
     )
   )
 
@@ -9493,7 +9487,7 @@ def snippet_for_set_settings125
   response = client.set_settings(
     "<YOUR_INDEX_NAME>",
     Algolia::Search::IndexSettings.new(
-      user_data: {:"extraData" => "This is the custom data that you want to store in your index"}
+      user_data: {'extraData': "This is the custom data that you want to store in your index"}
     )
   )
 

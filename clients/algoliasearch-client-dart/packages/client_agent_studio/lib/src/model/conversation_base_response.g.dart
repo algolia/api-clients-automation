@@ -47,6 +47,7 @@ ConversationBaseResponse _$ConversationBaseResponseFromJson(
               (v) => v == null
                   ? null
                   : ImpactAnalytics.fromJson(v as Map<String, dynamic>)),
+          isEphemeral: $checkedConvert('isEphemeral', (v) => v as bool?),
         );
         return val;
       },
@@ -78,5 +79,6 @@ Map<String, dynamic> _$ConversationBaseResponseToJson(
   writeNotNull('conversationMetadata', instance.conversationMetadata?.toJson());
   writeNotNull('feedback', instance.feedback?.map((e) => e.toJson()).toList());
   writeNotNull('impactAnalytics', instance.impactAnalytics?.toJson());
+  writeNotNull('isEphemeral', instance.isEphemeral);
   return val;
 }

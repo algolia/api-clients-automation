@@ -63,6 +63,9 @@ public class ConversationFullResponse {
   @JsonProperty("analyticsDegraded")
   private Boolean analyticsDegraded;
 
+  @JsonProperty("isEphemeral")
+  private Boolean isEphemeral;
+
   public ConversationFullResponse setId(String id) {
     this.id = id;
     return this;
@@ -263,6 +266,17 @@ public class ConversationFullResponse {
     return analyticsDegraded;
   }
 
+  public ConversationFullResponse setIsEphemeral(Boolean isEphemeral) {
+    this.isEphemeral = isEphemeral;
+    return this;
+  }
+
+  /** Get isEphemeral */
+  @javax.annotation.Nullable
+  public Boolean getIsEphemeral() {
+    return isEphemeral;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -289,7 +303,8 @@ public class ConversationFullResponse {
       Objects.equals(this.feedback, conversationFullResponse.feedback) &&
       Objects.equals(this.impactAnalytics, conversationFullResponse.impactAnalytics) &&
       Objects.equals(this.messages, conversationFullResponse.messages) &&
-      Objects.equals(this.analyticsDegraded, conversationFullResponse.analyticsDegraded)
+      Objects.equals(this.analyticsDegraded, conversationFullResponse.analyticsDegraded) &&
+      Objects.equals(this.isEphemeral, conversationFullResponse.isEphemeral)
     );
   }
 
@@ -312,7 +327,8 @@ public class ConversationFullResponse {
       feedback,
       impactAnalytics,
       messages,
-      analyticsDegraded
+      analyticsDegraded,
+      isEphemeral
     );
   }
 
@@ -337,6 +353,7 @@ public class ConversationFullResponse {
     sb.append("    impactAnalytics: ").append(toIndentedString(impactAnalytics)).append("\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
     sb.append("    analyticsDegraded: ").append(toIndentedString(analyticsDegraded)).append("\n");
+    sb.append("    isEphemeral: ").append(toIndentedString(isEphemeral)).append("\n");
     sb.append("}");
     return sb.toString();
   }
