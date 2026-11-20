@@ -334,7 +334,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.5.1"
+    "@types/node": "npm:26.6.6"
     publint: "npm:0.3.25"
     rollup: "npm:4.63.6"
     tsup: "npm:8.5.1"
