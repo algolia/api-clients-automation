@@ -1293,8 +1293,18 @@ paths:
 
             // Call the API
 
-            var response = await
-            client.SearchSingleIndexAsync<Hit>("<YOUR_INDEX_NAME>");
+            var response = await client.SearchSingleIndexAsync<Hit>(
+              "<YOUR_INDEX_NAME>",
+              new SearchParams(
+                new SearchParamsObject
+                {
+                  Query = "myQuery",
+                  FacetFilters = new FacetFilters(
+                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
+                  ),
+                }
+              )
+            );
 
 
             // print the response
@@ -1310,6 +1320,12 @@ paths:
             // Call the API
             final response = await client.searchSingleIndex(
               indexName: "<YOUR_INDEX_NAME>",
+              searchParams: SearchParamsObject(
+                query: "myQuery",
+                facetFilters: [
+                  "tags:algolia",
+                ],
+              ),
             );
 
             // print the response
@@ -1332,7 +1348,9 @@ paths:
 
             response, err :=
             client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
-              "<YOUR_INDEX_NAME>"))
+              "<YOUR_INDEX_NAME>").WithSearchParams(search.SearchParamsObjectAsSearchParams(
+              search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1354,8 +1372,11 @@ paths:
 
             // Call the API
 
-            SearchResponse response =
-            client.searchSingleIndex("<YOUR_INDEX_NAME>", Hit.class);
+            SearchResponse response = client.searchSingleIndex(
+              "<YOUR_INDEX_NAME>",
+              new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
+              Hit.class
+            );
 
 
             // print the response
@@ -1372,8 +1393,10 @@ paths:
 
             // Call the API
 
-            const response = await client.searchSingleIndex({ indexName:
-            'indexName' });
+            const response = await client.searchSingleIndex({
+              indexName: 'indexName',
+              searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+            });
 
 
 
@@ -1391,9 +1414,15 @@ paths:
 
             // Call the API
 
-            var response = client.searchSingleIndex(indexName =
-            "<YOUR_INDEX_NAME>")
-
+            var response =
+              client.searchSingleIndex(
+                indexName = "<YOUR_INDEX_NAME>",
+                searchParams =
+                  SearchParamsObject(
+                    query = "myQuery",
+                    facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+                  ),
+              )
 
 
             // print the response
@@ -1412,6 +1441,11 @@ paths:
 
             $response = $client->searchSingleIndex(
                 '<YOUR_INDEX_NAME>',
+                ['query' => 'myQuery',
+                    'facetFilters' => [
+                        'tags:algolia',
+                    ],
+                ],
             );
 
 
@@ -1435,6 +1469,12 @@ paths:
 
             response = client.search_single_index(
                 index_name="<YOUR_INDEX_NAME>",
+                search_params={
+                    "query": "myQuery",
+                    "facetFilters": [
+                        "tags:algolia",
+                    ],
+                },
             )
 
 
@@ -1453,7 +1493,10 @@ paths:
 
             # Call the API
 
-            response = client.search_single_index("<YOUR_INDEX_NAME>")
+            response = client.search_single_index(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::SearchParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+            )
 
 
 
@@ -1473,7 +1516,13 @@ paths:
 
             val response = Await.result(
               client.searchSingleIndex(
-                indexName = "<YOUR_INDEX_NAME>"
+                indexName = "<YOUR_INDEX_NAME>",
+                searchParams = Some(
+                  SearchParamsObject(
+                    query = Some("myQuery"),
+                    facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+                  )
+                )
               ),
               Duration(100, "sec")
             )
@@ -1494,7 +1543,13 @@ paths:
             // Call the API
 
             let response: SearchResponse<Hit> = try await
-            client.searchSingleIndex(indexName: "<YOUR_INDEX_NAME>")
+            client.searchSingleIndex(
+                indexName: "<YOUR_INDEX_NAME>",
+                searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
+                    query: "myQuery",
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
+                ))
+            )
 
 
             // print the response
@@ -2042,8 +2097,11 @@ paths:
 
             // Call the API
 
-            var response = await
-            client.SearchForFacetValuesAsync("<YOUR_INDEX_NAME>", "facetName");
+            var response = await client.SearchForFacetValuesAsync(
+              "<YOUR_INDEX_NAME>",
+              "author",
+              new SearchForFacetValuesRequest { FacetQuery = "stephen" }
+            );
 
 
             // print the response
@@ -2059,7 +2117,10 @@ paths:
             // Call the API
             final response = await client.searchForFacetValues(
               indexName: "<YOUR_INDEX_NAME>",
-              facetName: "facetName",
+              facetName: "author",
+              searchForFacetValuesRequest: SearchForFacetValuesRequest(
+                facetQuery: "stephen",
+              ),
             );
 
             // print the response
@@ -2082,7 +2143,8 @@ paths:
 
             response, err :=
             client.SearchForFacetValues(client.NewApiSearchForFacetValuesRequest(
-              "<YOUR_INDEX_NAME>", "facetName"))
+              "<YOUR_INDEX_NAME>", "author").WithSearchForFacetValuesRequest(
+              search.NewEmptySearchForFacetValuesRequest().SetFacetQuery("stephen")))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2104,8 +2166,11 @@ paths:
 
             // Call the API
 
-            SearchForFacetValuesResponse response =
-            client.searchForFacetValues("<YOUR_INDEX_NAME>", "facetName");
+            SearchForFacetValuesResponse response = client.searchForFacetValues(
+              "<YOUR_INDEX_NAME>",
+              "author",
+              new SearchForFacetValuesRequest().setFacetQuery("stephen")
+            );
 
 
             // print the response
@@ -2122,8 +2187,11 @@ paths:
 
             // Call the API
 
-            const response = await client.searchForFacetValues({ indexName:
-            'indexName', facetName: 'facetName' });
+            const response = await client.searchForFacetValues({
+              indexName: 'indexName',
+              facetName: 'author',
+              searchForFacetValuesRequest: { facetQuery: 'stephen' },
+            });
 
 
 
@@ -2142,7 +2210,11 @@ paths:
             // Call the API
 
             var response =
-              client.searchForFacetValues(indexName = "<YOUR_INDEX_NAME>", facetName = "facetName")
+              client.searchForFacetValues(
+                indexName = "<YOUR_INDEX_NAME>",
+                facetName = "author",
+                searchForFacetValuesRequest = SearchForFacetValuesRequest(facetQuery = "stephen"),
+              )
 
 
             // print the response
@@ -2161,7 +2233,9 @@ paths:
 
             $response = $client->searchForFacetValues(
                 '<YOUR_INDEX_NAME>',
-                'facetName',
+                'author',
+                ['facetQuery' => 'stephen',
+                ],
             );
 
 
@@ -2185,7 +2259,10 @@ paths:
 
             response = client.search_for_facet_values(
                 index_name="<YOUR_INDEX_NAME>",
-                facet_name="facetName",
+                facet_name="author",
+                search_for_facet_values_request={
+                    "facetQuery": "stephen",
+                },
             )
 
 
@@ -2204,8 +2281,11 @@ paths:
 
             # Call the API
 
-            response = client.search_for_facet_values("<YOUR_INDEX_NAME>",
-            "facetName")
+            response = client.search_for_facet_values(
+              "<YOUR_INDEX_NAME>",
+              "author",
+              Algolia::Search::SearchForFacetValuesRequest.new(facet_query: "stephen")
+            )
 
 
 
@@ -2226,7 +2306,12 @@ paths:
             val response = Await.result(
               client.searchForFacetValues(
                 indexName = "<YOUR_INDEX_NAME>",
-                facetName = "facetName"
+                facetName = "author",
+                searchForFacetValuesRequest = Some(
+                  SearchForFacetValuesRequest(
+                    facetQuery = Some("stephen")
+                  )
+                )
               ),
               Duration(100, "sec")
             )
@@ -2246,8 +2331,11 @@ paths:
 
             // Call the API
 
-            let response = try await client.searchForFacetValues(indexName:
-            "<YOUR_INDEX_NAME>", facetName: "facetName")
+            let response = try await client.searchForFacetValues(
+                indexName: "<YOUR_INDEX_NAME>",
+                facetName: "author",
+                searchForFacetValuesRequest: SearchForFacetValuesRequest(facetQuery: "stephen")
+            )
 
 
             // print the response
@@ -2363,7 +2451,18 @@ paths:
 
             // Call the API
 
-            var response = await client.BrowseAsync<Hit>("<YOUR_INDEX_NAME>");
+            var response = await client.BrowseAsync<Hit>(
+              "<YOUR_INDEX_NAME>",
+              new BrowseParams(
+                new BrowseParamsObject
+                {
+                  Query = "myQuery",
+                  FacetFilters = new FacetFilters(
+                    new List<FacetFilters> { new FacetFilters("tags:algolia") }
+                  ),
+                }
+              )
+            );
 
 
             // print the response
@@ -2379,6 +2478,12 @@ paths:
             // Call the API
             final response = await client.browse(
               indexName: "<YOUR_INDEX_NAME>",
+              browseParams: BrowseParamsObject(
+                query: "myQuery",
+                facetFilters: [
+                  "tags:algolia",
+                ],
+              ),
             );
 
             // print the response
@@ -2400,7 +2505,9 @@ paths:
             // Call the API
 
             response, err := client.Browse(client.NewApiBrowseRequest(
-              "<YOUR_INDEX_NAME>"))
+              "<YOUR_INDEX_NAME>").WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
+              search.NewEmptyBrowseParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+                []search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -2422,8 +2529,11 @@ paths:
 
             // Call the API
 
-            BrowseResponse response = client.browse("<YOUR_INDEX_NAME>",
-            Hit.class);
+            BrowseResponse response = client.browse(
+              "<YOUR_INDEX_NAME>",
+              new BrowseParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(Arrays.asList(FacetFilters.of("tags:algolia")))),
+              Hit.class
+            );
 
 
             // print the response
@@ -2440,7 +2550,9 @@ paths:
 
             // Call the API
 
-            const response = await client.browse({ indexName: 'cts_e2e_browse'
+            const response = await client.browse({
+              indexName: 'indexName',
+              browseParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
             });
 
 
@@ -2459,8 +2571,15 @@ paths:
 
             // Call the API
 
-            var response = client.browse(indexName = "<YOUR_INDEX_NAME>")
-
+            var response =
+              client.browse(
+                indexName = "<YOUR_INDEX_NAME>",
+                browseParams =
+                  BrowseParamsObject(
+                    query = "myQuery",
+                    facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
+                  ),
+              )
 
 
             // print the response
@@ -2479,6 +2598,11 @@ paths:
 
             $response = $client->browse(
                 '<YOUR_INDEX_NAME>',
+                ['query' => 'myQuery',
+                    'facetFilters' => [
+                        'tags:algolia',
+                    ],
+                ],
             );
 
 
@@ -2502,6 +2626,12 @@ paths:
 
             response = client.browse(
                 index_name="<YOUR_INDEX_NAME>",
+                browse_params={
+                    "query": "myQuery",
+                    "facetFilters": [
+                        "tags:algolia",
+                    ],
+                },
             )
 
 
@@ -2520,7 +2650,10 @@ paths:
 
             # Call the API
 
-            response = client.browse("<YOUR_INDEX_NAME>")
+            response = client.browse(
+              "<YOUR_INDEX_NAME>",
+              Algolia::Search::BrowseParamsObject.new(query: "myQuery", facet_filters: ["tags:algolia"])
+            )
 
 
 
@@ -2540,7 +2673,13 @@ paths:
 
             val response = Await.result(
               client.browse(
-                indexName = "<YOUR_INDEX_NAME>"
+                indexName = "<YOUR_INDEX_NAME>",
+                browseParams = Some(
+                  BrowseParamsObject(
+                    query = Some("myQuery"),
+                    facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
+                  )
+                )
               ),
               Duration(100, "sec")
             )
@@ -2560,8 +2699,13 @@ paths:
 
             // Call the API
 
-            let response: BrowseResponse<Hit> = try await
-            client.browse(indexName: "<YOUR_INDEX_NAME>")
+            let response: BrowseResponse<Hit> = try await client.browse(
+                indexName: "<YOUR_INDEX_NAME>",
+                browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(
+                    query: "myQuery",
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
+                ))
+            )
 
 
             // print the response
@@ -6901,10 +7045,22 @@ paths:
               "<YOUR_INDEX_NAME>",
               new IndexSettings
               {
-                PaginationLimitedTo = 10L,
-                TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("False")),
-              },
-              true
+                SearchableAttributes = new List<string>
+                {
+                  "brand",
+                  "name",
+                  "categories",
+                  "unordered(description)",
+                },
+                CustomRanking = new List<string> { "desc(popularity)" },
+                AttributesForFaceting = new List<string>
+                {
+                  "searchable(brand)",
+                  "type",
+                  "categories",
+                  "price",
+                },
+              }
             );
 
 
@@ -6922,10 +7078,22 @@ paths:
             final response = await client.setSettings(
               indexName: "<YOUR_INDEX_NAME>",
               indexSettings: IndexSettings(
-                paginationLimitedTo: 10,
-                typoTolerance: TypoToleranceEnum.fromJson("false"),
+                searchableAttributes: [
+                  "brand",
+                  "name",
+                  "categories",
+                  "unordered(description)",
+                ],
+                customRanking: [
+                  "desc(popularity)",
+                ],
+                attributesForFaceting: [
+                  "searchable(brand)",
+                  "type",
+                  "categories",
+                  "price",
+                ],
               ),
-              forwardToReplicas: true,
             );
 
             // print the response
@@ -6948,11 +7116,10 @@ paths:
 
             response, err := client.SetSettings(client.NewApiSetSettingsRequest(
               "<YOUR_INDEX_NAME>",
-              search.NewEmptyIndexSettings().
-                SetPaginationLimitedTo(10).
-                SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("false"))),
-            ).WithForwardToReplicas(true))
-
+              search.NewEmptyIndexSettings().SetSearchableAttributes(
+                []string{"brand", "name", "categories", "unordered(description)"}).SetCustomRanking(
+                []string{"desc(popularity)"}).SetAttributesForFaceting(
+                []string{"searchable(brand)", "type", "categories", "price"})))
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -6976,8 +7143,10 @@ paths:
 
             UpdatedAtResponse response = client.setSettings(
               "<YOUR_INDEX_NAME>",
-              new IndexSettings().setPaginationLimitedTo(10L).setTypoTolerance(TypoToleranceEnum.FALSE),
-              true
+              new IndexSettings()
+                .setSearchableAttributes(Arrays.asList("brand", "name", "categories", "unordered(description)"))
+                .setCustomRanking(Arrays.asList("desc(popularity)"))
+                .setAttributesForFaceting(Arrays.asList("searchable(brand)", "type", "categories", "price"))
             );
 
 
@@ -6996,9 +7165,12 @@ paths:
             // Call the API
 
             const response = await client.setSettings({
-              indexName: 'cts_e2e_settings',
-              indexSettings: { paginationLimitedTo: 10, typoTolerance: 'false' },
-              forwardToReplicas: true,
+              indexName: 'theIndexName',
+              indexSettings: {
+                searchableAttributes: ['brand', 'name', 'categories', 'unordered(description)'],
+                customRanking: ['desc(popularity)'],
+                attributesForFaceting: ['searchable(brand)', 'type', 'categories', 'price'],
+              },
             });
 
 
@@ -7022,10 +7194,10 @@ paths:
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings =
                   IndexSettings(
-                    paginationLimitedTo = 10L,
-                    typoTolerance = TypoToleranceEnum.entries.first { it.value == "false" },
+                    searchableAttributes = listOf("brand", "name", "categories", "unordered(description)"),
+                    customRanking = listOf("desc(popularity)"),
+                    attributesForFaceting = listOf("searchable(brand)", "type", "categories", "price"),
                   ),
-                forwardToReplicas = true,
               )
 
 
@@ -7045,10 +7217,28 @@ paths:
 
             $response = $client->setSettings(
                 '<YOUR_INDEX_NAME>',
-                ['paginationLimitedTo' => 10,
-                    'typoTolerance' => 'false',
+                ['searchableAttributes' => [
+                    'brand',
+
+                    'name',
+
+                    'categories',
+
+                    'unordered(description)',
                 ],
-                true,
+                    'customRanking' => [
+                        'desc(popularity)',
+                    ],
+                    'attributesForFaceting' => [
+                        'searchable(brand)',
+
+                        'type',
+
+                        'categories',
+
+                        'price',
+                    ],
+                ],
             );
 
 
@@ -7073,10 +7263,22 @@ paths:
             response = client.set_settings(
                 index_name="<YOUR_INDEX_NAME>",
                 index_settings={
-                    "paginationLimitedTo": 10,
-                    "typoTolerance": "false",
+                    "searchableAttributes": [
+                        "brand",
+                        "name",
+                        "categories",
+                        "unordered(description)",
+                    ],
+                    "customRanking": [
+                        "desc(popularity)",
+                    ],
+                    "attributesForFaceting": [
+                        "searchable(brand)",
+                        "type",
+                        "categories",
+                        "price",
+                    ],
                 },
-                forward_to_replicas=True,
             )
 
 
@@ -7097,8 +7299,11 @@ paths:
 
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              Algolia::Search::IndexSettings.new(pagination_limited_to: 10, typo_tolerance: "false"),
-              true
+              Algolia::Search::IndexSettings.new(
+                searchable_attributes: ["brand", "name", "categories", "unordered(description)"],
+                custom_ranking: ["desc(popularity)"],
+                attributes_for_faceting: ["searchable(brand)", "type", "categories", "price"]
+              )
             )
 
 
@@ -7121,10 +7326,10 @@ paths:
               client.setSettings(
                 indexName = "<YOUR_INDEX_NAME>",
                 indexSettings = IndexSettings(
-                  paginationLimitedTo = Some(10L),
-                  typoTolerance = Some(TypoToleranceEnum.withName("false"))
-                ),
-                forwardToReplicas = Some(true)
+                  searchableAttributes = Some(Seq("brand", "name", "categories", "unordered(description)")),
+                  customRanking = Some(Seq("desc(popularity)")),
+                  attributesForFaceting = Some(Seq("searchable(brand)", "type", "categories", "price"))
+                )
               ),
               Duration(100, "sec")
             )
@@ -7147,10 +7352,10 @@ paths:
             let response = try await client.setSettings(
                 indexName: "<YOUR_INDEX_NAME>",
                 indexSettings: IndexSettings(
-                    paginationLimitedTo: Int64(10),
-                    typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.`false`)
-                ),
-                forwardToReplicas: true
+                    attributesForFaceting: ["searchable(brand)", "type", "categories", "price"],
+                    searchableAttributes: ["brand", "name", "categories", "unordered(description)"],
+                    customRanking: ["desc(popularity)"]
+                )
             )
 
 
