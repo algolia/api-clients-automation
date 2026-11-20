@@ -101,7 +101,7 @@ __metadata:
     ts-node: "npm:10.9.2"
     tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
     vitest: "npm:5.1.0"
   languageName: unknown
   linkType: soft
@@ -220,7 +220,7 @@ __metadata:
     ts-node: "npm:10.9.2"
     tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
     vitest: "npm:5.1.0"
   languageName: unknown
   linkType: soft
@@ -270,7 +270,7 @@ __metadata:
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
     vitest: "npm:5.1.0"
     xhr-mock: "npm:2.5.1"
   languageName: unknown
@@ -288,7 +288,7 @@ __metadata:
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
     vitest: "npm:5.1.0"
   languageName: unknown
   linkType: soft
@@ -304,7 +304,7 @@ __metadata:
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
-    vite: "npm:8.3.6"
+    vite: "npm:8.3.8"
     vitest: "npm:5.1.0"
   languageName: unknown
   linkType: soft
@@ -8680,7 +8680,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rolldown@npm:~1.2.16, rolldown@npm:~1.2.18":
+"rolldown@npm:~1.2.18":
   version: 1.2.18
   resolution: "rolldown@npm:1.2.18"
   dependencies:
@@ -10314,15 +10314,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:8.3.6":
-  version: 8.3.6
-  resolution: "vite@npm:8.3.6"
+"vite@npm:8.3.8":
+  version: 8.3.8
+  resolution: "vite@npm:8.3.8"
   dependencies:
     fsevents: "npm:~2.3.3"
     lightningcss: "npm:^1.33.0"
     picomatch: "npm:^4.0.7"
     postcss: "npm:^8.5.32"
-    rolldown: "npm:~1.2.16"
+    rolldown: "npm:~1.2.18"
     tinyglobby: "npm:^0.2.17"
   peerDependencies:
     "@types/node": ^20.19.0 || >=22.12.0
@@ -10367,7 +10367,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/94d44b037ede5510d7f9732a9f1748df6994d1530b8a0160ecbdd555fb5e2181dd4d9a702c6143da67abfc816d87b27f507062e030fa0be166bc21232455ad1f
+  checksum: 10/8444028a3515debb9b3c05fe5428c382b1fa7158321789d94e6f844f231a81c3d5ee0eadd92487492924ad5d24f85e48dd96982de4c7b623a3beb1939622af96
   languageName: node
   linkType: hard
 
