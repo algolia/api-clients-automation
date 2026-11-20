@@ -24,6 +24,7 @@
   },
   {
     "testName": "search with searchParams",
+    "isCodeSample": true,
     "parameters": {
       "indexName": "indexName",
       "searchParams": {

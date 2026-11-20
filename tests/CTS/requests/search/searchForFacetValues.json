@@ -33,6 +33,7 @@
   },
   {
     "testName": "facetName and facetQuery",
+    "isCodeSample": true,
     "parameters": {
       "indexName": "indexName",
       "facetName": "author",
