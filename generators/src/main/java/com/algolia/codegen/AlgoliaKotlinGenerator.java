@@ -5,6 +5,8 @@ import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import org.openapitools.codegen.languages.KotlinClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.utils.ModelUtils;
 
 public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
 
@@ -577,6 +580,29 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
+  }
+
+  @Override
+  public String getTypeDeclaration(Schema p) {
+    Schema<?> schema = unaliasSchema(p);
+    Schema<?> target = ModelUtils.isGenerateAliasAsModel() ? p : schema;
+    if (ModelUtils.isArraySchema(target)) {
+      Schema<?> items = ModelUtils.getSchemaItems(schema);
+      return getSchemaType(target) + "<" + getItemsTypeDeclaration(items) + ">";
+    } else if (ModelUtils.isMapSchema(target)) {
+      Schema<?> inner = ModelUtils.getAdditionalProperties(target);
+      if (inner == null) {
+        inner = new StringSchema().description("TODO default missing map inner type to string");
+        p.setAdditionalProperties(inner);
+      }
+      return getSchemaType(target) + "<kotlin.String, " + getItemsTypeDeclaration(inner) + ">";
+    }
+    return super.getTypeDeclaration(target);
+  }
+
+  private String getItemsTypeDeclaration(Schema<?> items) {
+    String declaration = getTypeDeclaration(items);
+    return declaration + (Boolean.TRUE.equals(items.getNullable()) && !declaration.endsWith("?") ? "?" : "");
   }
 
   @Override

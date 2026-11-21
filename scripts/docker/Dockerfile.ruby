@@ -1,12 +1,12 @@
-# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1.29.0@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
 # version must stay in sync with config/.ruby-version, CI checks the drift
-FROM ruby:4.0.7-trixie@sha256:f5d60242cdd3f17245399384a3f14b83f148cd9c948aed97329f5a0e6dc97a3b
+FROM ruby:4.0.10-trixie@sha256:84e854507d7f2ffc9061e32d47c16d7413bcb1fa55ec29c1927f9e4d62fa6cf3
 
 # one pin per platform archive, the build platform picks it below
 # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
-ARG RUBYFMT_PIN_X86_64=v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
+ARG RUBYFMT_PIN_X86_64=v0.14.1@9590cc3b8b2ed37a250a5f7c22a542ce014f13954f613c93a72230de8a74fbbd
 # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-aarch64.tar.gz
-ARG RUBYFMT_PIN_AARCH64=v0.10.0@619535a281c64874a4fc74dd55ebbdbc5b9d788a063bfca47bc2e25b5c18464a
+ARG RUBYFMT_PIN_AARCH64=v0.14.1@fc429195d1315bb96b25beb6898bf2bec749e3f8d3c9b8dbb3be37c25752c3bd
 RUN arch="$(uname -m)" && \
   case "$arch" in \
     x86_64) pin="$RUBYFMT_PIN_X86_64" ;; \

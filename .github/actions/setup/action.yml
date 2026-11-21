@@ -19,14 +19,14 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+      uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
-      uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       with:
         validate-wrappers: true
         cache-provider: basic
@@ -37,7 +37,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
-        JAVA_FORMATTER_PIN: v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+        JAVA_FORMATTER_PIN: v1.37.0@834b2a0c38cb774953322a84b5ca3f2f40dd3156650b3cd44d3b744345962f7a
       run: |
         version="${JAVA_FORMATTER_PIN%@*}"
         curl -f --retry 3 -L "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" -o /tmp/java-formatter.jar
@@ -45,7 +45,7 @@ runs:
 
     # JavaScript for monorepo and tooling
     - name: Install Node
-      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version-file: .nvmrc
         cache: yarn
@@ -57,14 +57,14 @@ runs:
     # Csharp
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}
-      uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+      uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
       with:
         dotnet-version: ${{ inputs.version }}
 
     # Dart
     - name: Install dart
       if: ${{ inputs.language == 'dart' }}
-      uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+      uses: dart-lang/setup-dart@2286a0c042b44434fe26d292bbce8d34f7ec662b # v1.8.2
       with:
         sdk: ${{ inputs.version }}
         problem-matcher: 'false'
@@ -77,7 +77,7 @@ runs:
     # Golang
     - name: Install golang
       if: ${{ inputs.language == 'go' }}
-      uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+      uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
       with:
         cache-dependency-path: clients/algoliasearch-client-go/go.sum
         go-version: ${{ inputs.version }}
@@ -87,7 +87,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-tags depName=golangci/golangci-lint
-        GOLANGCI_LINT_PIN: v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
+        GOLANGCI_LINT_PIN: v2.15.0@25c5369a93aacb8cccea0d46e1569ca4a194564d
       run: |
         curl --retry 3 -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" -o /tmp/golangci-install.sh
         sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}"
@@ -123,7 +123,7 @@ runs:
     # PHP
     - name: Install PHP
       if: ${{ inputs.language == 'php' }}
-      uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+      uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
       with:
         php-version: ${{ inputs.version }}
         tools: composer
@@ -141,7 +141,7 @@ runs:
       shell: bash
       run: pipx install poetry==2
 
-    - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+    - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
       if: ${{ inputs.language == 'python' }}
       with:
         python-version: ${{ inputs.version }}
@@ -155,7 +155,7 @@ runs:
     # Ruby
     - name: Install Ruby
       if: ${{ inputs.language == 'ruby' }}
-      uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+      uses: ruby/setup-ruby@20eb24b0d509e2b9ed9b6d42ddfeb992915e0564 # v1.341.0
       with:
         ruby-version: ${{ inputs.version }}
         bundler-cache: true
@@ -165,7 +165,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=github-release-attachments depName=fables-tales/rubyfmt asset=rubyfmt-{tag}-Linux-x86_64.tar.gz
-        RUBYFMT_PIN_X86_64: v0.10.0@c72f5dc2bc320b758cf963e7338d27ab71dc1cff894a4b139e3fdcefb2e23c17
+        RUBYFMT_PIN_X86_64: v0.14.1@9590cc3b8b2ed37a250a5f7c22a542ce014f13954f613c93a72230de8a74fbbd
       run: |
         version="${RUBYFMT_PIN_X86_64%@*}"
         curl -f --retry 3 -L "https://github.com/fables-tales/rubyfmt/releases/download/${version}/rubyfmt-${version}-Linux-x86_64.tar.gz" -o rubyfmt.tar.gz
@@ -177,7 +177,7 @@ runs:
     # Scala
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
-      uses: sbt/setup-sbt@ecad189dd245444b9ae0a0cd5922fd938b88906f # v1.5.12
+      uses: sbt/setup-sbt@7e114eae4f32ec3f93c851c2793376a77f384409 # v1.5.15
 
     # Swift deps
     - name: Install swift
@@ -199,7 +199,7 @@ runs:
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
       shell: bash
-      run: echo "SWIFTFORMAT_VERSION=0.63.1" >> $GITHUB_OUTPUT
+      run: echo "SWIFTFORMAT_VERSION=0.64.7" >> $GITHUB_OUTPUT
 
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
@@ -215,7 +215,7 @@ runs:
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: swiftformat/.build
-        key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}-${{ runner.os }}
+        key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}-${{ runner.os }}-swift-${{ inputs.version }}
 
     - name: Build swiftformat
       if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}

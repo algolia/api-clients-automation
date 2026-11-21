@@ -1,11 +1,11 @@
-# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1.29.0@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
 # versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
-FROM dart:3.11.6@sha256:2ed474dc085f267ca692261ce35b23a0ae039e317beebef854be886c8b57832d AS dart-builder
-FROM mcr.microsoft.com/dotnet/sdk:10.0.402@sha256:0d99ebf1ccad15037b5c98c9fe8979d6b8dbac23812feae2277a0b277b5c5ffa AS csharp-builder
-FROM golang:1.27.2-alpine@sha256:f92b6ef800e499660581efdabdf25d9d817a9d124eaf900924f0504e7e27e12d AS go-builder
+FROM dart:3.14.0@sha256:c78970229c8944bd6076caf4e5977ef569ba66750d301a2149f63b41a6725cec AS dart-builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0.404@sha256:fe0fd4e93bd2fbb47c883b7a6369e5c8d3db8bf01cdc5981f6ee35fbdf3ff4fb AS csharp-builder
+FROM golang:1.27.4-alpine@sha256:0a5f7fe796599ff487605987432e7619ae45beeb2fba4c2ce0b907879932aebf AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
-FROM composer:2.10.3@sha256:af98f42dfff7c68ba8d53c2164fd9fde1087b7d449514baa38c418b1f6bc4bac AS composer-builder
-FROM php:8.5.12-trixie@sha256:635a4b998025ab269194639a5549c6fdcd9b4f88ec8cd761b092de8653d40663 AS builder
+FROM composer:2.11.2@sha256:5bcb28b8d0edc4091125f8218f9d088f998bdfc843f8fbb9a4beb4dcd8625684 AS composer-builder
+FROM php:8.5.12-trixie@sha256:50956f094e90a716d43bea28087d447555ad80510e386ab8c9c10d8c70d781a9 AS builder
 
 SHELL ["/bin/bash", "--login", "-c"]
 
@@ -20,7 +20,7 @@ RUN apt-get update \
 COPY .nvmrc .nvmrc
 # the installer is fetched by the commit of its release tag, which cannot change under it
 # renovate: datasource=github-tags depName=nvm-sh/nvm
-ARG NVM_PIN=v0.39.7@bab86d5de571015b63fd8fc30b47bbe072a1290e
+ARG NVM_PIN=v0.41.0@4e8758a801eea9479b32a904f31093e410ddaba4
 RUN curl -sSfL --retry 3 -o /tmp/nvm-install.sh "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_PIN#*@}/install.sh" \
   && bash /tmp/nvm-install.sh && rm /tmp/nvm-install.sh && source ~/.profile \
   && nvm install \
@@ -36,7 +36,7 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" \
 
 # Java formatter
 # renovate: datasource=github-release-attachments depName=google/google-java-format asset=google-java-format-{version}-all-deps.jar
-ARG JAVA_FORMATTER_PIN=v1.36.1@25b400f003089d23cc5320cdaf1a16cabee19b8aa3434d0ff021b3d9f42154b4
+ARG JAVA_FORMATTER_PIN=v1.37.0@834b2a0c38cb774953322a84b5ca3f2f40dd3156650b3cd44d3b744345962f7a
 RUN version="${JAVA_FORMATTER_PIN%@*}" \
   && curl -sSfL --retry 3 -o /tmp/java-formatter.jar "https://github.com/google/google-java-format/releases/download/${version}/google-java-format-${version#v}-all-deps.jar" \
   && echo "${JAVA_FORMATTER_PIN#*@}  /tmp/java-formatter.jar" | sha256sum -c -
@@ -57,7 +57,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --from=go-builder /usr/local/go/ /usr/local/go/
 # the installer is fetched by commit like nvm above, then checks the release archive against the release checksums
 # renovate: datasource=github-tags depName=golangci/golangci-lint
-ARG GOLANGCI_LINT_PIN=v2.10.1@5d1e709b7be35cb2025444e19de266b056b7b7ee
+ARG GOLANGCI_LINT_PIN=v2.15.0@25c5369a93aacb8cccea0d46e1569ca4a194564d
 RUN echo "export PATH=$PATH:/usr/local/go/bin:/root/go/bin" >> ~/.profile && source ~/.profile \
   && curl -sSfL --retry 3 -o /tmp/golangci-install.sh "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_PIN#*@}/install.sh" \
   && sh /tmp/golangci-install.sh -b $(go env GOPATH)/bin "${GOLANGCI_LINT_PIN%@*}" && rm /tmp/golangci-install.sh \
