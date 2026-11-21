@@ -27,8 +27,8 @@ public partial class ToolConfigInput : AbstractSchema
   /// <param name="actualInstance">An instance of ClientSideToolConfig.</param>
   public ToolConfigInput(ClientSideToolConfig actualInstance)
   {
-    ActualInstance =
-      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -38,8 +38,8 @@ public partial class ToolConfigInput : AbstractSchema
   /// <param name="actualInstance">An instance of McpServerToolConfig.</param>
   public ToolConfigInput(McpServerToolConfig actualInstance)
   {
-    ActualInstance =
-      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -49,8 +49,8 @@ public partial class ToolConfigInput : AbstractSchema
   /// <param name="actualInstance">An instance of AlgoliaSearchToolConfig.</param>
   public ToolConfigInput(AlgoliaSearchToolConfig actualInstance)
   {
-    ActualInstance =
-      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -60,8 +60,19 @@ public partial class ToolConfigInput : AbstractSchema
   /// <param name="actualInstance">An instance of AlgoliaRecommendToolConfig.</param>
   public ToolConfigInput(AlgoliaRecommendToolConfig actualInstance)
   {
-    ActualInstance =
-      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the ToolConfigInput class
+  /// with a AlgoliaCompareProductsToolConfig
+  /// </summary>
+  /// <param name="actualInstance">An instance of AlgoliaCompareProductsToolConfig.</param>
+  public ToolConfigInput(AlgoliaCompareProductsToolConfig actualInstance)
+  {
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -71,8 +82,8 @@ public partial class ToolConfigInput : AbstractSchema
   /// <param name="actualInstance">An instance of UnknownToolConfig.</param>
   public ToolConfigInput(UnknownToolConfig actualInstance)
   {
-    ActualInstance =
-      actualInstance ?? throw new ArgumentException("Invalid instance found. Must not be null.");
+    ActualInstance = actualInstance
+      ?? throw new ArgumentException("Invalid instance found. Must not be null.");
   }
 
   /// <summary>
@@ -121,6 +132,16 @@ public partial class ToolConfigInput : AbstractSchema
   }
 
   /// <summary>
+  /// Get the actual instance of `AlgoliaCompareProductsToolConfig`. If the actual instance is not `AlgoliaCompareProductsToolConfig`,
+  /// the InvalidClassException will be thrown
+  /// </summary>
+  /// <returns>An instance of AlgoliaCompareProductsToolConfig</returns>
+  public AlgoliaCompareProductsToolConfig AsAlgoliaCompareProductsToolConfig()
+  {
+    return (AlgoliaCompareProductsToolConfig)ActualInstance;
+  }
+
+  /// <summary>
   /// Get the actual instance of `UnknownToolConfig`. If the actual instance is not `UnknownToolConfig`,
   /// the InvalidClassException will be thrown
   /// </summary>
@@ -164,6 +185,15 @@ public partial class ToolConfigInput : AbstractSchema
   public bool IsAlgoliaRecommendToolConfig()
   {
     return ActualInstance.GetType() == typeof(AlgoliaRecommendToolConfig);
+  }
+
+  /// <summary>
+  /// Check if the actual instance is of `AlgoliaCompareProductsToolConfig` type.
+  /// </summary>
+  /// <returns>Whether or not the instance is the type</returns>
+  public bool IsAlgoliaCompareProductsToolConfig()
+  {
+    return ActualInstance.GetType() == typeof(AlgoliaCompareProductsToolConfig);
   }
 
   /// <summary>
@@ -261,6 +291,12 @@ public class ToolConfigInputJsonConverter : JsonConverter<ToolConfigInput>
     if (root.TryGetProperty("type", out JsonElement discriminatorElement))
     {
       string discriminatorValue = discriminatorElement.GetString();
+      if (discriminatorValue == "algolia_compare_products")
+      {
+        return new ToolConfigInput(
+          jsonDocument.Deserialize<AlgoliaCompareProductsToolConfig>(JsonConfig.Options)
+        );
+      }
       if (discriminatorValue == "algolia_recommend")
       {
         return new ToolConfigInput(
@@ -359,6 +395,22 @@ public class ToolConfigInputJsonConverter : JsonConverter<ToolConfigInput>
         // deserialization failed, try the next one
         System.Diagnostics.Debug.WriteLine(
           $"Failed to deserialize into AlgoliaRecommendToolConfig: {exception}"
+        );
+      }
+    }
+    if (root.ValueKind == JsonValueKind.Object)
+    {
+      try
+      {
+        return new ToolConfigInput(
+          jsonDocument.Deserialize<AlgoliaCompareProductsToolConfig>(JsonConfig.Options)
+        );
+      }
+      catch (Exception exception)
+      {
+        // deserialization failed, try the next one
+        System.Diagnostics.Debug.WriteLine(
+          $"Failed to deserialize into AlgoliaCompareProductsToolConfig: {exception}"
         );
       }
     }

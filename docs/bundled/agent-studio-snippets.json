@@ -21,7 +21,8 @@
       "default": "var response = await client.CreateAgentAllowedDomainAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new AllowedDomainCreate { Domain = \"https://app.example.com\" }\n);"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  )\n);"
+      "createAgentCompletion with v4 messages": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  )\n);",
+      "createAgentCompletion with all parameters": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  ),\n  false,\n  false,\n  false,\n  false,\n  \"secure-user-token\",\n  true\n);"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "var response = await client.CreateAgentTaskAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new TaskRequest\n  {\n    Input = new Dictionary<string, object>\n    {\n      { \"pageType\", \"pdp\" },\n      { \"title\", \"acmePhone128Gb\" },\n    },\n  }\n);",
@@ -70,7 +71,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "await client.DeleteAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "deleteAgentConversations with date filters": "await client.DeleteAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-06-30\"\n);"
+      "deleteAgentConversations with all filters": "await client.DeleteAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-06-30\",\n  true\n);"
     },
     "deleteAllowedDomain": {
       "default": "await client.DeleteAllowedDomainAsync(\n  \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n);"
@@ -89,7 +90,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "var response = await client.ExportConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "exportConversations with date filters": "var response = await client.ExportConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\"\n);",
+      "exportConversations with all filters": "var response = await client.ExportConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true\n);",
       "e2e export conversations": "var response = await client.ExportConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "getAgent": {
@@ -128,13 +129,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "var response = await client.ListAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "listAgentConversations with all parameters": "var response = await client.ListAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\"\n);",
+      "listAgentConversations with all parameters": "var response = await client.ListAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\",\n  true\n);",
       "e2e list agent conversations": "var response = await client.ListAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "listAgents": {
       "list agents with no params": "var response = await client.ListAgentsAsync();",
       "list agents with all parameters": "var response = await client.ListAgentsAsync(2, 5, \"c2905529-b933-4b69-87ec-75f9829d5f59\");",
       "e2e list agents": "var response = await client.ListAgentsAsync(1, 2, null);"
+    },
+    "listConversationUsage": {
+      "default": "var response = await client.ListConversationUsageAsync();"
     },
     "listModels": {
       "listModels": "var response = await client.ListModelsAsync();",
