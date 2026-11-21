@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Ruby
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
+        uses: ruby/setup-ruby@341b6d4d1c7bdbe628940ab4e27cbdc9c97950cc # v1.340.0
         with:
           ruby-version: 4.0.10
           bundler-cache: true
