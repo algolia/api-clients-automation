@@ -177,8 +177,33 @@ export async function snippetForCreateAgentCompletion(): Promise<void> {
 
 // Snippet for the createAgentCompletion method.
 //
-// createAgentCompletion streaming with simple messages
+// createAgentCompletion with all parameters
 export async function snippetForCreateAgentCompletion1(): Promise<void> {
+  // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Use the streaming variant to iterate over events
+  for await (const event of client.createAgentCompletionStream({
+    agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+    compatibilityMode: 'ai-sdk-4',
+    agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },
+    stream: false,
+    cache: false,
+    memory: false,
+    analytics: false,
+    xAlgoliaSecureUserToken: 'secure-user-token',
+    ephemeral: true,
+  })) {
+    console.log(event.data);
+  }
+  // SEPARATOR<
+}
+
+// Snippet for the createAgentCompletion method.
+//
+// createAgentCompletion streaming with simple messages
+export async function snippetForCreateAgentCompletion2(): Promise<void> {
   // >SEPARATOR createAgentCompletion createAgentCompletion streaming with simple messages
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -197,7 +222,7 @@ export async function snippetForCreateAgentCompletion1(): Promise<void> {
 // Snippet for the createAgentCompletion method.
 //
 // createAgentCompletion streaming with v5 messages and all query params
-export async function snippetForCreateAgentCompletion2(): Promise<void> {
+export async function snippetForCreateAgentCompletion3(): Promise<void> {
   // >SEPARATOR createAgentCompletion createAgentCompletion streaming with v5 messages and all query params
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -222,7 +247,7 @@ export async function snippetForCreateAgentCompletion2(): Promise<void> {
 // Snippet for the createAgentCompletion method.
 //
 // createAgentCompletion streaming with test configuration
-export async function snippetForCreateAgentCompletion3(): Promise<void> {
+export async function snippetForCreateAgentCompletion4(): Promise<void> {
   // >SEPARATOR createAgentCompletion createAgentCompletion streaming with test configuration
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -250,7 +275,7 @@ export async function snippetForCreateAgentCompletion3(): Promise<void> {
 // Snippet for the createAgentCompletion method.
 //
 // createAgentCompletion streaming raw events
-export async function snippetForCreateAgentCompletion4(): Promise<void> {
+export async function snippetForCreateAgentCompletion5(): Promise<void> {
   // >SEPARATOR createAgentCompletion createAgentCompletion streaming raw events
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
@@ -833,9 +858,9 @@ export async function snippetForDeleteAgentConversations(): Promise<void> {
 
 // Snippet for the deleteAgentConversations method.
 //
-// deleteAgentConversations with date filters
+// deleteAgentConversations with all filters
 export async function snippetForDeleteAgentConversations1(): Promise<void> {
-  // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+  // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -844,6 +869,7 @@ export async function snippetForDeleteAgentConversations1(): Promise<void> {
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
     startDate: '2024-01-01',
     endDate: '2024-06-30',
+    ephemeral: true,
   });
 
   // >LOG
@@ -950,9 +976,9 @@ export async function snippetForExportConversations(): Promise<void> {
 
 // Snippet for the exportConversations method.
 //
-// exportConversations with date filters
+// exportConversations with all filters
 export async function snippetForExportConversations1(): Promise<void> {
-  // >SEPARATOR exportConversations exportConversations with date filters
+  // >SEPARATOR exportConversations exportConversations with all filters
   // Initialize the client
   const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -961,6 +987,7 @@ export async function snippetForExportConversations1(): Promise<void> {
     agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
     startDate: '2024-01-01',
     endDate: '2024-12-31',
+    ephemeral: true,
   });
 
   // >LOG
@@ -1302,6 +1329,7 @@ export async function snippetForListAgentConversations1(): Promise<void> {
     converted: false,
     hasAlgoliaSearch: true,
     xAlgoliaSecureUserToken: 'secure-user-token',
+    ephemeral: true,
   });
 
   // >LOG
@@ -1371,6 +1399,23 @@ export async function snippetForListAgents2(): Promise<void> {
 
   // Call the API
   const response = await client.listAgents({ page: 1, limit: 2 });
+
+  // >LOG
+  // print the response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listConversationUsage method.
+//
+// listConversationUsage
+export async function snippetForListConversationUsage(): Promise<void> {
+  // >SEPARATOR listConversationUsage default
+  // Initialize the client
+  const client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+  // Call the API
+  const response = await client.listConversationUsage();
 
   // >LOG
   // print the response
