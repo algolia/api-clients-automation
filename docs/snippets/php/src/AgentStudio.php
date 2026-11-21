@@ -248,6 +248,41 @@ class SnippetAgentStudioClient
     }
 
     /**
+     * Snippet for the CreateAgentCompletion method.
+     *
+     * createAgentCompletion with all parameters
+     */
+    public function snippetForCreateAgentCompletion1(): void
+    {
+        // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->createAgentCompletion(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            'ai-sdk-4',
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+            ],
+            ],
+            false,
+            false,
+            false,
+            false,
+            'secure-user-token',
+            true,
+        );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CreateAgentTask method.
      *
      * createAgentTask with required parameters
@@ -1003,11 +1038,11 @@ class SnippetAgentStudioClient
     /**
      * Snippet for the DeleteAgentConversations method.
      *
-     * deleteAgentConversations with date filters
+     * deleteAgentConversations with all filters
      */
     public function snippetForDeleteAgentConversations1(): void
     {
-        // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+        // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
         // Initialize the client
         $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1016,6 +1051,7 @@ class SnippetAgentStudioClient
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
             '2024-01-01',
             '2024-06-30',
+            true,
         );
 
         // >LOG
@@ -1149,11 +1185,11 @@ class SnippetAgentStudioClient
     /**
      * Snippet for the ExportConversations method.
      *
-     * exportConversations with date filters
+     * exportConversations with all filters
      */
     public function snippetForExportConversations1(): void
     {
-        // >SEPARATOR exportConversations exportConversations with date filters
+        // >SEPARATOR exportConversations exportConversations with all filters
         // Initialize the client
         $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
 
@@ -1162,6 +1198,7 @@ class SnippetAgentStudioClient
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
             '2024-01-01',
             '2024-12-31',
+            true,
         );
 
         // >LOG
@@ -1587,6 +1624,7 @@ class SnippetAgentStudioClient
             false,
             true,
             'secure-user-token',
+            true,
         );
 
         // >LOG
@@ -1678,6 +1716,26 @@ class SnippetAgentStudioClient
             2,
             null,
         );
+
+        // >LOG
+        // print the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ListConversationUsage method.
+     *
+     * listConversationUsage
+     */
+    public function snippetForListConversationUsage(): void
+    {
+        // >SEPARATOR listConversationUsage default
+        // Initialize the client
+        $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');
+
+        // Call the API
+        $response = $client->listConversationUsage();
 
         // >LOG
         // print the response

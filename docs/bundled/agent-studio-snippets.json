@@ -21,7 +21,8 @@
       "default": "var response = await client.CreateAgentAllowedDomainAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new AllowedDomainCreate { Domain = \"https://app.example.com\" }\n);"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  )\n);"
+      "createAgentCompletion with v4 messages": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  )\n);",
+      "createAgentCompletion with all parameters": "var response = await client.CreateAgentCompletionAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Enum.Parse<CompatibilityMode>(\"AiSdk4\"),\n  new AgentCompletionRequestUnion(\n    new AgentCompletionRequest\n    {\n      Messages = new MessagesUnion(\n        new List<MessageV4>\n        {\n          new MessageV4(new UserMessageV4 { Role = \"user\", Content = \"Hello, how are you?\" }),\n        }\n      ),\n    }\n  ),\n  false,\n  false,\n  false,\n  false,\n  \"secure-user-token\",\n  true\n);"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "var response = await client.CreateAgentTaskAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new TaskRequest\n  {\n    Input = new Dictionary<string, object>\n    {\n      { \"pageType\", \"pdp\" },\n      { \"title\", \"acmePhone128Gb\" },\n    },\n  }\n);",
@@ -70,7 +71,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "await client.DeleteAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "deleteAgentConversations with date filters": "await client.DeleteAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-06-30\"\n);"
+      "deleteAgentConversations with all filters": "await client.DeleteAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-06-30\",\n  true\n);"
     },
     "deleteAllowedDomain": {
       "default": "await client.DeleteAllowedDomainAsync(\n  \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n);"
@@ -89,7 +90,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "var response = await client.ExportConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "exportConversations with date filters": "var response = await client.ExportConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\"\n);",
+      "exportConversations with all filters": "var response = await client.ExportConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true\n);",
       "e2e export conversations": "var response = await client.ExportConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "getAgent": {
@@ -128,13 +129,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "var response = await client.ListAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "listAgentConversations with all parameters": "var response = await client.ListAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\"\n);",
+      "listAgentConversations with all parameters": "var response = await client.ListAgentConversationsAsync(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\",\n  true\n);",
       "e2e list agent conversations": "var response = await client.ListAgentConversationsAsync(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "listAgents": {
       "list agents with no params": "var response = await client.ListAgentsAsync();",
       "list agents with all parameters": "var response = await client.ListAgentsAsync(2, 5, \"c2905529-b933-4b69-87ec-75f9829d5f59\");",
       "e2e list agents": "var response = await client.ListAgentsAsync(1, 2, null);"
+    },
+    "listConversationUsage": {
+      "default": "var response = await client.ListConversationUsageAsync();"
     },
     "listModels": {
       "listModels": "var response = await client.ListModelsAsync();",
@@ -211,7 +215,8 @@
       "default": "final response = await client.createAgentAllowedDomain(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  allowedDomainCreate: AllowedDomainCreate(\n    domain: \"https://app.example.com\",\n  ),\n);"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "final response = await client.createAgentCompletion(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  compatibilityMode: CompatibilityMode.fromJson(\"ai-sdk-4\"),\n  agentCompletionRequest: AgentCompletionRequest(\n    messages: [\n      UserMessageV4(\n        role: \"user\",\n        content: \"Hello, how are you?\",\n      ),\n    ],\n  ),\n);"
+      "createAgentCompletion with v4 messages": "final response = await client.createAgentCompletion(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  compatibilityMode: CompatibilityMode.fromJson(\"ai-sdk-4\"),\n  agentCompletionRequest: AgentCompletionRequest(\n    messages: [\n      UserMessageV4(\n        role: \"user\",\n        content: \"Hello, how are you?\",\n      ),\n    ],\n  ),\n);",
+      "createAgentCompletion with all parameters": "final response = await client.createAgentCompletion(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  compatibilityMode: CompatibilityMode.fromJson(\"ai-sdk-4\"),\n  agentCompletionRequest: AgentCompletionRequest(\n    messages: [\n      UserMessageV4(\n        role: \"user\",\n        content: \"Hello, how are you?\",\n      ),\n    ],\n  ),\n  stream: false,\n  cache: false,\n  memory: false,\n  analytics: false,\n  xAlgoliaSecureUserToken: \"secure-user-token\",\n  ephemeral: true,\n);"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "final response = await client.createAgentTask(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  taskRequest: TaskRequest(\n    input: {\n      'pageType': \"pdp\",\n      'title': \"acmePhone128Gb\",\n    },\n  ),\n);",
@@ -260,7 +265,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "await client.deleteAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);",
-      "deleteAgentConversations with date filters": "await client.deleteAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-06-30\",\n);"
+      "deleteAgentConversations with all filters": "await client.deleteAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-06-30\",\n  ephemeral: true,\n);"
     },
     "deleteAllowedDomain": {
       "default": "await client.deleteAllowedDomain(\n  domainId: \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);"
@@ -279,7 +284,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "final response = await client.exportConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);",
-      "exportConversations with date filters": "final response = await client.exportConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-12-31\",\n);",
+      "exportConversations with all filters": "final response = await client.exportConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-12-31\",\n  ephemeral: true,\n);",
       "e2e export conversations": "final response = await client.exportConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);"
     },
     "getAgent": {
@@ -318,13 +323,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "final response = await client.listAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);",
-      "listAgentConversations with all parameters": "final response = await client.listAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-12-31\",\n  includeFeedback: true,\n  feedbackVote: 1,\n  page: 2,\n  limit: 10,\n  includeImpactAnalytics: true,\n  clicked: true,\n  converted: false,\n  hasAlgoliaSearch: true,\n  xAlgoliaSecureUserToken: \"secure-user-token\",\n);",
+      "listAgentConversations with all parameters": "final response = await client.listAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate: \"2024-01-01\",\n  endDate: \"2024-12-31\",\n  includeFeedback: true,\n  feedbackVote: 1,\n  page: 2,\n  limit: 10,\n  includeImpactAnalytics: true,\n  clicked: true,\n  converted: false,\n  hasAlgoliaSearch: true,\n  xAlgoliaSecureUserToken: \"secure-user-token\",\n  ephemeral: true,\n);",
       "e2e list agent conversations": "final response = await client.listAgentConversations(\n  agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n);"
     },
     "listAgents": {
       "list agents with no params": "final response = await client.listAgents();",
       "list agents with all parameters": "final response = await client.listAgents(\n  page: 2,\n  limit: 5,\n  providerId: \"c2905529-b933-4b69-87ec-75f9829d5f59\",\n);",
       "e2e list agents": "final response = await client.listAgents(\n  page: 1,\n  limit: 2,\n  providerId: null,\n);"
+    },
+    "listConversationUsage": {
+      "default": "final response = await client.listConversationUsage();"
     },
     "listModels": {
       "listModels": "final response = await client.listModels();",
@@ -402,6 +410,7 @@
     },
     "createAgentCompletion": {
       "createAgentCompletion with v4 messages": "// Initialize the client\nclient, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Use the streaming variant to iterate over events\nstream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  agentStudio.CompatibilityMode(\"ai-sdk-4\"),\n  agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(\n    agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n      []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n        agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello, how are you?\"))}))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\ndefer func() { _ = stream.Close() }()\n\nfor stream.Next() {\n  event := stream.Current()\n  if event.Err != nil {\n    // handle the eventual per-event deserialization error\n    continue\n  }\n\n  fmt.Println(*event.Data)\n}\n\nerr = stream.Err()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n",
+      "createAgentCompletion with all parameters": "// Initialize the client\nclient, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Use the streaming variant to iterate over events\nstream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  agentStudio.CompatibilityMode(\"ai-sdk-4\"),\n  agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(\n    agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n      []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n        agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello, how are you?\"))}))),\n).WithStream(false).WithCache(false).WithMemory(false).WithAnalytics(false).WithXAlgoliaSecureUserToken(\"secure-user-token\").WithEphemeral(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\ndefer func() { _ = stream.Close() }()\n\nfor stream.Next() {\n  event := stream.Current()\n  if event.Err != nil {\n    // handle the eventual per-event deserialization error\n    continue\n  }\n\n  fmt.Println(*event.Data)\n}\n\nerr = stream.Err()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n",
       "createAgentCompletion streaming with simple messages": "// Initialize the client\nclient, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Use the streaming variant to iterate over events\nstream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  agentStudio.CompatibilityMode(\"ai-sdk-5\"),\n  agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(\n    agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n      []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n        agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello, how are you?\"))}))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\ndefer func() { _ = stream.Close() }()\n\nfor stream.Next() {\n  event := stream.Current()\n  if event.Err != nil {\n    // handle the eventual per-event deserialization error\n    continue\n  }\n\n  fmt.Println(*event.Data)\n}\n\nerr = stream.Err()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n",
       "createAgentCompletion streaming with v5 messages and all query params": "// Initialize the client\nclient, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Use the streaming variant to iterate over events\nstream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  agentStudio.CompatibilityMode(\"ai-sdk-5\"),\n  agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(\n    agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV5AsMessagesUnion(\n      []agentStudio.MessageV5{*agentStudio.UserMessageV5AsMessageV5(\n        agentStudio.NewEmptyUserMessageV5().SetRole(\"user\").SetParts(\n          []agentStudio.TextPartV5{*agentStudio.NewEmptyTextPartV5().SetType(\"text\").SetText(\"What is Algolia?\")}))})).SetId(\"test-conversation-id\")),\n).WithStream(false).WithCache(false).WithMemory(false))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\ndefer func() { _ = stream.Close() }()\n\nfor stream.Next() {\n  event := stream.Current()\n  if event.Err != nil {\n    // handle the eventual per-event deserialization error\n    continue\n  }\n\n  fmt.Println(*event.Data)\n}\n\nerr = stream.Err()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n",
       "createAgentCompletion streaming with test configuration": "// Initialize the client\nclient, err := agentStudio.NewClient(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Use the streaming variant to iterate over events\nstream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  agentStudio.CompatibilityMode(\"ai-sdk-5\"),\n  agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(\n    agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(\n      []agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(\n        agentStudio.NewEmptyUserMessageV4().SetRole(\"user\").SetContent(\"Hello\"))})).SetConfiguration(\n      agentStudio.NewEmptyAgentTestConfiguration().\n        SetInstructions(\"Test instructions override\").\n        SetConfig(map[string]any{\"temperature\": 0.2}).\n        SetTools(\n          []agentStudio.ItemsUnion{*agentStudio.ClientSideToolConfigAsItemsUnion(\n            agentStudio.NewEmptyClientSideToolConfig().SetType(\"client_side\").SetName(\"start\").SetDescription(\"Start a conversation\").SetInputSchema(\n              agentStudio.NewEmptyClientToolsArgsSchema().SetType(\"object\")))}),\n    ),\n  ),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\ndefer func() { _ = stream.Close() }()\n\nfor stream.Next() {\n  event := stream.Current()\n  if event.Err != nil {\n    // handle the eventual per-event deserialization error\n    continue\n  }\n\n  fmt.Println(*event.Data)\n}\n\nerr = stream.Err()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n",
@@ -454,7 +463,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "deleteAgentConversations with date filters": "err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-06-30\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+      "deleteAgentConversations with all filters": "err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-06-30\").WithEphemeral(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "deleteAllowedDomain": {
       "default": "err = client.DeleteAllowedDomain(client.NewApiDeleteAllowedDomainRequest(\n  \"a1b2c3d4-5678-90ab-cdef-123456789abc\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
@@ -473,7 +482,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "exportConversations with date filters": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "exportConversations with all filters": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\").WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\").WithEphemeral(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "e2e export conversations": "response, err := client.ExportConversations(client.NewApiExportConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "getAgent": {
@@ -512,13 +521,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
-      "listAgentConversations with all parameters": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n).WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken(\"secure-user-token\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
+      "listAgentConversations with all parameters": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n).WithStartDate(\"2024-01-01\").WithEndDate(\"2024-12-31\").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken(\"secure-user-token\").WithEphemeral(true))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "e2e list agent conversations": "response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\"))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listAgents": {
       "list agents with no params": "response, err := client.ListAgents(client.NewApiListAgentsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "list agents with all parameters": "response, err := client.ListAgents(\n  client.NewApiListAgentsRequest().WithPage(2).WithLimit(5).WithProviderId(\"c2905529-b933-4b69-87ec-75f9829d5f59\"),\n)\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
       "e2e list agents": "response, err := client.ListAgents(client.NewApiListAgentsRequest().WithPage(1).WithLimit(2))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
+    },
+    "listConversationUsage": {
+      "default": "response, err := client.ListConversationUsage()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}"
     },
     "listModels": {
       "listModels": "response, err := client.ListModels()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}",
@@ -595,7 +607,8 @@
       "default": "AllowedDomainResponse response = client.createAgentAllowedDomain(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new AllowedDomainCreate().setDomain(\"https://app.example.com\")\n);"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "Map response = client.createAgentCompletion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  CompatibilityMode.AI_SDK_4,\n  new AgentCompletionRequest().setMessages(\n    MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole(\"user\").setContent(\"Hello, how are you?\")))\n  )\n);"
+      "createAgentCompletion with v4 messages": "Map response = client.createAgentCompletion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  CompatibilityMode.AI_SDK_4,\n  new AgentCompletionRequest().setMessages(\n    MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole(\"user\").setContent(\"Hello, how are you?\")))\n  )\n);",
+      "createAgentCompletion with all parameters": "Map response = client.createAgentCompletion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  CompatibilityMode.AI_SDK_4,\n  new AgentCompletionRequest().setMessages(\n    MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole(\"user\").setContent(\"Hello, how are you?\")))\n  ),\n  false,\n  false,\n  false,\n  false,\n  \"secure-user-token\",\n  true\n);"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "TaskResponse response = client.createAgentTask(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  new TaskRequest().setInput(\n    new HashMap() {\n      {\n        put(\"pageType\", \"pdp\");\n        put(\"title\", \"acmePhone128Gb\");\n      }\n    }\n  )\n);",
@@ -644,7 +657,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "client.deleteAgentConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "deleteAgentConversations with date filters": "client.deleteAgentConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-06-30\");"
+      "deleteAgentConversations with all filters": "client.deleteAgentConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-06-30\", true);"
     },
     "deleteAllowedDomain": {
       "default": "client.deleteAllowedDomain(\"a1b2c3d4-5678-90ab-cdef-123456789abc\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
@@ -663,7 +676,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "List response = client.exportConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "exportConversations with date filters": "List response = client.exportConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-12-31\");",
+      "exportConversations with all filters": "List response = client.exportConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-12-31\", true);",
       "e2e export conversations": "List response = client.exportConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "getAgent": {
@@ -702,13 +715,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "PaginatedConversationsResponse response = client.listAgentConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");",
-      "listAgentConversations with all parameters": "PaginatedConversationsResponse response = client.listAgentConversations(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\"\n);",
+      "listAgentConversations with all parameters": "PaginatedConversationsResponse response = client.listAgentConversations(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\",\n  true\n);",
       "e2e list agent conversations": "PaginatedConversationsResponse response = client.listAgentConversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\");"
     },
     "listAgents": {
       "list agents with no params": "PaginatedAgentsResponse response = client.listAgents();",
       "list agents with all parameters": "PaginatedAgentsResponse response = client.listAgents(2, 5, \"c2905529-b933-4b69-87ec-75f9829d5f59\");",
       "e2e list agents": "PaginatedAgentsResponse response = client.listAgents(1, 2, null);"
+    },
+    "listConversationUsage": {
+      "default": "ConversationUsageResponse response = client.listConversationUsage();"
     },
     "listModels": {
       "listModels": "Map response = client.listModels();",
@@ -786,6 +802,7 @@
     },
     "createAgentCompletion": {
       "createAgentCompletion with v4 messages": "// Initialize the client\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');\n\n// Use the streaming variant to iterate over events\nfor await (const event of client.createAgentCompletionStream({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  compatibilityMode: 'ai-sdk-4',\n  agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },\n})) {\n  console.log(event.data);\n}\n",
+      "createAgentCompletion with all parameters": "// Initialize the client\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');\n\n// Use the streaming variant to iterate over events\nfor await (const event of client.createAgentCompletionStream({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  compatibilityMode: 'ai-sdk-4',\n  agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },\n  stream: false,\n  cache: false,\n  memory: false,\n  analytics: false,\n  xAlgoliaSecureUserToken: 'secure-user-token',\n  ephemeral: true,\n})) {\n  console.log(event.data);\n}\n",
       "createAgentCompletion streaming with simple messages": "// Initialize the client\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');\n\n// Use the streaming variant to iterate over events\nfor await (const event of client.createAgentCompletionStream({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  compatibilityMode: 'ai-sdk-5',\n  agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },\n})) {\n  console.log(event.data);\n}\n",
       "createAgentCompletion streaming with v5 messages and all query params": "// Initialize the client\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');\n\n// Use the streaming variant to iterate over events\nfor await (const event of client.createAgentCompletionStream({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  compatibilityMode: 'ai-sdk-5',\n  agentCompletionRequest: {\n    messages: [{ role: 'user', parts: [{ type: 'text', text: 'What is Algolia?' }] }],\n    id: 'test-conversation-id',\n  },\n  stream: false,\n  cache: false,\n  memory: false,\n})) {\n  console.log(event.data);\n}\n",
       "createAgentCompletion streaming with test configuration": "// Initialize the client\nconst client = agentStudioClient('ALGOLIA_APPLICATION_ID', 'ALGOLIA_API_KEY');\n\n// Use the streaming variant to iterate over events\nfor await (const event of client.createAgentCompletionStream({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  compatibilityMode: 'ai-sdk-5',\n  agentCompletionRequest: {\n    messages: [{ role: 'user', content: 'Hello' }],\n    configuration: {\n      instructions: 'Test instructions override',\n      config: { temperature: 0.2 },\n      tools: [\n        { type: 'client_side', name: 'start', description: 'Start a conversation', inputSchema: { type: 'object' } },\n      ],\n    },\n  },\n})) {\n  console.log(event.data);\n}\n",
@@ -838,7 +855,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "await client.deleteAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });",
-      "deleteAgentConversations with date filters": "await client.deleteAgentConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-06-30',\n});"
+      "deleteAgentConversations with all filters": "await client.deleteAgentConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-06-30',\n  ephemeral: true,\n});"
     },
     "deleteAllowedDomain": {
       "default": "await client.deleteAllowedDomain({\n  domainId: 'a1b2c3d4-5678-90ab-cdef-123456789abc',\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n});"
@@ -857,7 +874,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "const response = await client.exportConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });",
-      "exportConversations with date filters": "const response = await client.exportConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n});",
+      "exportConversations with all filters": "const response = await client.exportConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n  ephemeral: true,\n});",
       "e2e export conversations": "const response = await client.exportConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });"
     },
     "getAgent": {
@@ -896,13 +913,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "const response = await client.listAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });",
-      "listAgentConversations with all parameters": "const response = await client.listAgentConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n  includeFeedback: true,\n  feedbackVote: 1,\n  page: 2,\n  limit: 10,\n  includeImpactAnalytics: true,\n  clicked: true,\n  converted: false,\n  hasAlgoliaSearch: true,\n  xAlgoliaSecureUserToken: 'secure-user-token',\n});",
+      "listAgentConversations with all parameters": "const response = await client.listAgentConversations({\n  agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',\n  startDate: '2024-01-01',\n  endDate: '2024-12-31',\n  includeFeedback: true,\n  feedbackVote: 1,\n  page: 2,\n  limit: 10,\n  includeImpactAnalytics: true,\n  clicked: true,\n  converted: false,\n  hasAlgoliaSearch: true,\n  xAlgoliaSecureUserToken: 'secure-user-token',\n  ephemeral: true,\n});",
       "e2e list agent conversations": "const response = await client.listAgentConversations({ agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15' });"
     },
     "listAgents": {
       "list agents with no params": "const response = await client.listAgents();",
       "list agents with all parameters": "const response = await client.listAgents({ page: 2, limit: 5, providerId: 'c2905529-b933-4b69-87ec-75f9829d5f59' });",
       "e2e list agents": "const response = await client.listAgents({ page: 1, limit: 2 });"
+    },
+    "listConversationUsage": {
+      "default": "const response = await client.listConversationUsage();"
     },
     "listModels": {
       "listModels": "const response = await client.listModels();",
@@ -976,7 +996,8 @@
       "default": "var response =\n  client.createAgentAllowedDomain(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    allowedDomainCreate = AllowedDomainCreate(domain = \"https://app.example.com\"),\n  )"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "var response =\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-4\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV4(\n            listOf(UserMessageV4(role = \"user\", content = \"Hello, how are you?\"))\n          )\n      ),\n  )"
+      "createAgentCompletion with v4 messages": "var response =\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-4\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV4(\n            listOf(UserMessageV4(role = \"user\", content = \"Hello, how are you?\"))\n          )\n      ),\n  )",
+      "createAgentCompletion with all parameters": "var response =\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.entries.first { it.value == \"ai-sdk-4\" },\n    agentCompletionRequest =\n      AgentCompletionRequest(\n        messages =\n          MessagesUnion.ofListOfMessageV4(\n            listOf(UserMessageV4(role = \"user\", content = \"Hello, how are you?\"))\n          )\n      ),\n    stream = false,\n    cache = false,\n    memory = false,\n    analytics = false,\n    xAlgoliaSecureUserToken = \"secure-user-token\",\n    ephemeral = true,\n  )"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "var response =\n  client.createAgentTask(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    taskRequest =\n      TaskRequest(\n        input =\n          buildJsonObject {\n            put(\"pageType\", JsonPrimitive(\"pdp\"))\n            put(\"title\", JsonPrimitive(\"acmePhone128Gb\"))\n          }\n      ),\n  )",
@@ -1025,7 +1046,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "client.deleteAgentConversations(agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "deleteAgentConversations with date filters": "client.deleteAgentConversations(\n  agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate = \"2024-01-01\",\n  endDate = \"2024-06-30\",\n)"
+      "deleteAgentConversations with all filters": "client.deleteAgentConversations(\n  agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  startDate = \"2024-01-01\",\n  endDate = \"2024-06-30\",\n  ephemeral = true,\n)"
     },
     "deleteAllowedDomain": {
       "default": "client.deleteAllowedDomain(\n  domainId = \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n  agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
@@ -1044,7 +1065,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "var response = client.exportConversations(agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "exportConversations with date filters": "var response =\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n  )",
+      "exportConversations with all filters": "var response =\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n    ephemeral = true,\n  )",
       "e2e export conversations": "var response = client.exportConversations(agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "getAgent": {
@@ -1083,13 +1104,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "var response = client.listAgentConversations(agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "listAgentConversations with all parameters": "var response =\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n    includeFeedback = true,\n    feedbackVote = 1,\n    page = 2,\n    limit = 10,\n    includeImpactAnalytics = true,\n    clicked = true,\n    converted = false,\n    hasAlgoliaSearch = true,\n    xAlgoliaSecureUserToken = \"secure-user-token\",\n  )",
+      "listAgentConversations with all parameters": "var response =\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = \"2024-01-01\",\n    endDate = \"2024-12-31\",\n    includeFeedback = true,\n    feedbackVote = 1,\n    page = 2,\n    limit = 10,\n    includeImpactAnalytics = true,\n    clicked = true,\n    converted = false,\n    hasAlgoliaSearch = true,\n    xAlgoliaSecureUserToken = \"secure-user-token\",\n    ephemeral = true,\n  )",
       "e2e list agent conversations": "var response = client.listAgentConversations(agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "listAgents": {
       "list agents with no params": "var response = client.listAgents()",
       "list agents with all parameters": "var response =\n  client.listAgents(page = 2, limit = 5, providerId = \"c2905529-b933-4b69-87ec-75f9829d5f59\")",
       "e2e list agents": "var response = client.listAgents(page = 1, limit = 2)"
+    },
+    "listConversationUsage": {
+      "default": "var response = client.listConversationUsage()"
     },
     "listModels": {
       "listModels": "var response = client.listModels()",
@@ -1166,7 +1190,8 @@
       "default": "$response = $client->createAgentAllowedDomain(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    ['domain' => 'https://app.example.com',\n    ],\n);"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "$response = $client->createAgentCompletion(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    'ai-sdk-4',\n    ['messages' => [\n        ['role' => 'user',\n            'content' => 'Hello, how are you?',\n        ],\n    ],\n    ],\n);"
+      "createAgentCompletion with v4 messages": "$response = $client->createAgentCompletion(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    'ai-sdk-4',\n    ['messages' => [\n        ['role' => 'user',\n            'content' => 'Hello, how are you?',\n        ],\n    ],\n    ],\n);",
+      "createAgentCompletion with all parameters": "$response = $client->createAgentCompletion(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    'ai-sdk-4',\n    ['messages' => [\n        ['role' => 'user',\n            'content' => 'Hello, how are you?',\n        ],\n    ],\n    ],\n    false,\n    false,\n    false,\n    false,\n    'secure-user-token',\n    true,\n);"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "$response = $client->createAgentTask(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    ['input' => ['pageType' => 'pdp',\n        'title' => 'acmePhone128Gb',\n    ],\n    ],\n);",
@@ -1215,7 +1240,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "$client->deleteAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);",
-      "deleteAgentConversations with date filters": "$client->deleteAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-06-30',\n);"
+      "deleteAgentConversations with all filters": "$client->deleteAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-06-30',\n    true,\n);"
     },
     "deleteAllowedDomain": {
       "default": "$client->deleteAllowedDomain(\n    'a1b2c3d4-5678-90ab-cdef-123456789abc',\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);"
@@ -1234,7 +1259,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "$response = $client->exportConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);",
-      "exportConversations with date filters": "$response = $client->exportConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-12-31',\n);",
+      "exportConversations with all filters": "$response = $client->exportConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-12-31',\n    true,\n);",
       "e2e export conversations": "$response = $client->exportConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);"
     },
     "getAgent": {
@@ -1273,13 +1298,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "$response = $client->listAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);",
-      "listAgentConversations with all parameters": "$response = $client->listAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-12-31',\n    true,\n    1,\n    2,\n    10,\n    true,\n    true,\n    false,\n    true,\n    'secure-user-token',\n);",
+      "listAgentConversations with all parameters": "$response = $client->listAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n    '2024-01-01',\n    '2024-12-31',\n    true,\n    1,\n    2,\n    10,\n    true,\n    true,\n    false,\n    true,\n    'secure-user-token',\n    true,\n);",
       "e2e list agent conversations": "$response = $client->listAgentConversations(\n    '76710f1b-8231-42e5-b0d1-f43aac618e15',\n);"
     },
     "listAgents": {
       "list agents with no params": "$response = $client->listAgents();",
       "list agents with all parameters": "$response = $client->listAgents(\n    2,\n    5,\n    'c2905529-b933-4b69-87ec-75f9829d5f59',\n);",
       "e2e list agents": "$response = $client->listAgents(\n    1,\n    2,\n    null,\n);"
+    },
+    "listConversationUsage": {
+      "default": "$response = $client->listConversationUsage();"
     },
     "listModels": {
       "listModels": "$response = $client->listModels();",
@@ -1357,6 +1385,7 @@
     },
     "createAgentCompletion": {
       "createAgentCompletion with v4 messages": "# Initialize the client\n# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n\n# Use the streaming variant to iterate over events\nfor event in client.create_agent_completion_stream(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibility_mode=\"ai-sdk-4\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello, how are you?\",\n            },\n        ],\n    },\n):\n    print(event.data)\n",
+      "createAgentCompletion with all parameters": "# Initialize the client\n# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n\n# Use the streaming variant to iterate over events\nfor event in client.create_agent_completion_stream(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibility_mode=\"ai-sdk-4\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello, how are you?\",\n            },\n        ],\n    },\n    stream=False,\n    cache=False,\n    memory=False,\n    analytics=False,\n    x_algolia_secure_user_token=\"secure-user-token\",\n    ephemeral=True,\n):\n    print(event.data)\n",
       "createAgentCompletion streaming with simple messages": "# Initialize the client\n# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n\n# Use the streaming variant to iterate over events\nfor event in client.create_agent_completion_stream(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibility_mode=\"ai-sdk-5\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello, how are you?\",\n            },\n        ],\n    },\n):\n    print(event.data)\n",
       "createAgentCompletion streaming with v5 messages and all query params": "# Initialize the client\n# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n\n# Use the streaming variant to iterate over events\nfor event in client.create_agent_completion_stream(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibility_mode=\"ai-sdk-5\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"parts\": [\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"What is Algolia?\",\n                    },\n                ],\n            },\n        ],\n        \"id\": \"test-conversation-id\",\n    },\n    stream=False,\n    cache=False,\n    memory=False,\n):\n    print(event.data)\n",
       "createAgentCompletion streaming with test configuration": "# Initialize the client\n# In an asynchronous context, you can use AgentStudioClient instead, which exposes the exact same methods.\nclient = AgentStudioClientSync(\"ALGOLIA_APPLICATION_ID\", \"ALGOLIA_API_KEY\")\n\n# Use the streaming variant to iterate over events\nfor event in client.create_agent_completion_stream(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibility_mode=\"ai-sdk-5\",\n    agent_completion_request={\n        \"messages\": [\n            {\n                \"role\": \"user\",\n                \"content\": \"Hello\",\n            },\n        ],\n        \"configuration\": {\n            \"instructions\": \"Test instructions override\",\n            \"config\": {\n                \"temperature\": 0.2,\n            },\n            \"tools\": [\n                {\n                    \"type\": \"client_side\",\n                    \"name\": \"start\",\n                    \"description\": \"Start a conversation\",\n                    \"inputSchema\": {\n                        \"type\": \"object\",\n                    },\n                },\n            ],\n        },\n    },\n):\n    print(event.data)\n",
@@ -1409,7 +1438,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "client.delete_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)",
-      "deleteAgentConversations with date filters": "client.delete_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-06-30\",\n)"
+      "deleteAgentConversations with all filters": "client.delete_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-06-30\",\n    ephemeral=True,\n)"
     },
     "deleteAllowedDomain": {
       "default": "client.delete_allowed_domain(\n    domain_id=\"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
@@ -1428,7 +1457,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "response = client.export_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)",
-      "exportConversations with date filters": "response = client.export_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n)",
+      "exportConversations with all filters": "response = client.export_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n    ephemeral=True,\n)",
       "e2e export conversations": "response = client.export_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
     },
     "getAgent": {
@@ -1467,13 +1496,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "response = client.list_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)",
-      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n    include_feedback=True,\n    feedback_vote=1,\n    page=2,\n    limit=10,\n    include_impact_analytics=True,\n    clicked=True,\n    converted=False,\n    has_algolia_search=True,\n    x_algolia_secure_user_token=\"secure-user-token\",\n)",
+      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    start_date=\"2024-01-01\",\n    end_date=\"2024-12-31\",\n    include_feedback=True,\n    feedback_vote=1,\n    page=2,\n    limit=10,\n    include_impact_analytics=True,\n    clicked=True,\n    converted=False,\n    has_algolia_search=True,\n    x_algolia_secure_user_token=\"secure-user-token\",\n    ephemeral=True,\n)",
       "e2e list agent conversations": "response = client.list_agent_conversations(\n    agent_id=\"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n)"
     },
     "listAgents": {
       "list agents with no params": "response = client.list_agents()",
       "list agents with all parameters": "response = client.list_agents(\n    page=2,\n    limit=5,\n    provider_id=\"c2905529-b933-4b69-87ec-75f9829d5f59\",\n)",
       "e2e list agents": "response = client.list_agents(\n    page=1,\n    limit=2,\n    provider_id=None,\n)"
+    },
+    "listConversationUsage": {
+      "default": "response = client.list_conversation_usage()"
     },
     "listModels": {
       "listModels": "response = client.list_models()",
@@ -1550,7 +1582,8 @@
       "default": "response = client.create_agent_allowed_domain(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Algolia::AgentStudio::AllowedDomainCreate.new(domain: \"https://app.example.com\")\n)"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "response = client.create_agent_completion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"ai-sdk-4\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [Algolia::AgentStudio::UserMessageV4.new(role: \"user\", content: \"Hello, how are you?\")]\n  )\n)"
+      "createAgentCompletion with v4 messages": "response = client.create_agent_completion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"ai-sdk-4\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [Algolia::AgentStudio::UserMessageV4.new(role: \"user\", content: \"Hello, how are you?\")]\n  )\n)",
+      "createAgentCompletion with all parameters": "response = client.create_agent_completion(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"ai-sdk-4\",\n  Algolia::AgentStudio::AgentCompletionRequest.new(\n    messages: [Algolia::AgentStudio::UserMessageV4.new(role: \"user\", content: \"Hello, how are you?\")]\n  ),\n  false,\n  false,\n  false,\n  false,\n  \"secure-user-token\",\n  true\n)"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "response = client.create_agent_task(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  Algolia::AgentStudio::TaskRequest.new(input: {pageType: \"pdp\", title: \"acmePhone128Gb\"})\n)",
@@ -1599,7 +1632,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "client.delete_agent_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "deleteAgentConversations with date filters": "client.delete_agent_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-06-30\")"
+      "deleteAgentConversations with all filters": "client.delete_agent_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-06-30\", true)"
     },
     "deleteAllowedDomain": {
       "default": "client.delete_allowed_domain(\"a1b2c3d4-5678-90ab-cdef-123456789abc\", \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
@@ -1618,7 +1651,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "response = client.export_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "exportConversations with date filters": "response = client.export_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-12-31\")",
+      "exportConversations with all filters": "response = client.export_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\", \"2024-01-01\", \"2024-12-31\", true)",
       "e2e export conversations": "response = client.export_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "getAgent": {
@@ -1657,13 +1690,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "response = client.list_agent_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\"\n)",
+      "listAgentConversations with all parameters": "response = client.list_agent_conversations(\n  \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n  \"2024-01-01\",\n  \"2024-12-31\",\n  true,\n  1,\n  2,\n  10,\n  true,\n  true,\n  false,\n  true,\n  \"secure-user-token\",\n  true\n)",
       "e2e list agent conversations": "response = client.list_agent_conversations(\"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "listAgents": {
       "list agents with no params": "response = client.list_agents",
       "list agents with all parameters": "response = client.list_agents(2, 5, \"c2905529-b933-4b69-87ec-75f9829d5f59\")",
       "e2e list agents": "response = client.list_agents(1, 2, nil)"
+    },
+    "listConversationUsage": {
+      "default": "response = client.list_conversation_usage"
     },
     "listModels": {
       "listModels": "response = client.list_models",
@@ -1740,7 +1776,8 @@
       "default": "val response = Await.result(\n  client.createAgentAllowedDomain(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    allowedDomainCreate = AllowedDomainCreate(\n      domain = \"https://app.example.com\"\n    )\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-4\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = Some(\n        MessagesUnion(\n          Seq(\n            UserMessageV4(\n              role = \"user\",\n              content = \"Hello, how are you?\"\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)"
+      "createAgentCompletion with v4 messages": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-4\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = Some(\n        MessagesUnion(\n          Seq(\n            UserMessageV4(\n              role = \"user\",\n              content = \"Hello, how are you?\"\n            )\n          )\n        )\n      )\n    )\n  ),\n  Duration(100, \"sec\")\n)",
+      "createAgentCompletion with all parameters": "val response = Await.result(\n  client.createAgentCompletion(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode = CompatibilityMode.withName(\"ai-sdk-4\"),\n    agentCompletionRequest = AgentCompletionRequest(\n      messages = Some(\n        MessagesUnion(\n          Seq(\n            UserMessageV4(\n              role = \"user\",\n              content = \"Hello, how are you?\"\n            )\n          )\n        )\n      )\n    ),\n    stream = Some(false),\n    cache = Some(false),\n    memory = Some(false),\n    analytics = Some(false),\n    xAlgoliaSecureUserToken = Some(\"secure-user-token\"),\n    ephemeral = Some(true)\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "val response = Await.result(\n  client.createAgentTask(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    taskRequest = TaskRequest(\n      input = Map(\"pageType\" -> \"pdp\", \"title\" -> \"acmePhone128Gb\")\n    )\n  ),\n  Duration(100, \"sec\")\n)",
@@ -1789,7 +1826,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "Await.result(\n  client.deleteAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)",
-      "deleteAgentConversations with date filters": "Await.result(\n  client.deleteAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-06-30\")\n  ),\n  Duration(100, \"sec\")\n)"
+      "deleteAgentConversations with all filters": "Await.result(\n  client.deleteAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-06-30\"),\n    ephemeral = Some(true)\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "deleteAllowedDomain": {
       "default": "Await.result(\n  client.deleteAllowedDomain(\n    domainId = \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)"
@@ -1808,7 +1845,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)",
-      "exportConversations with date filters": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "exportConversations with all filters": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\"),\n    ephemeral = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "e2e export conversations": "val response = Await.result(\n  client.exportConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "getAgent": {
@@ -1847,13 +1884,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)",
-      "listAgentConversations with all parameters": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\"),\n    includeFeedback = Some(true),\n    feedbackVote = Some(1),\n    page = Some(2),\n    limit = Some(10),\n    includeImpactAnalytics = Some(true),\n    clicked = Some(true),\n    converted = Some(false),\n    hasAlgoliaSearch = Some(true),\n    xAlgoliaSecureUserToken = Some(\"secure-user-token\")\n  ),\n  Duration(100, \"sec\")\n)",
+      "listAgentConversations with all parameters": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate = Some(\"2024-01-01\"),\n    endDate = Some(\"2024-12-31\"),\n    includeFeedback = Some(true),\n    feedbackVote = Some(1),\n    page = Some(2),\n    limit = Some(10),\n    includeImpactAnalytics = Some(true),\n    clicked = Some(true),\n    converted = Some(false),\n    hasAlgoliaSearch = Some(true),\n    xAlgoliaSecureUserToken = Some(\"secure-user-token\"),\n    ephemeral = Some(true)\n  ),\n  Duration(100, \"sec\")\n)",
       "e2e list agent conversations": "val response = Await.result(\n  client.listAgentConversations(\n    agentId = \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listAgents": {
       "list agents with no params": "val response = Await.result(\n  client.listAgents(\n  ),\n  Duration(100, \"sec\")\n)",
       "list agents with all parameters": "val response = Await.result(\n  client.listAgents(\n    page = Some(2),\n    limit = Some(5),\n    providerId = Some(\"c2905529-b933-4b69-87ec-75f9829d5f59\")\n  ),\n  Duration(100, \"sec\")\n)",
       "e2e list agents": "val response = Await.result(\n  client.listAgents(\n    page = Some(1),\n    limit = Some(2),\n    providerId = None\n  ),\n  Duration(100, \"sec\")\n)"
+    },
+    "listConversationUsage": {
+      "default": "val response = Await.result(\n  client.listConversationUsage(\n  ),\n  Duration(100, \"sec\")\n)"
     },
     "listModels": {
       "listModels": "val response = Await.result(\n  client.listModels(\n  ),\n  Duration(100, \"sec\")\n)",
@@ -1930,7 +1970,8 @@
       "default": "let response = try await client.createAgentAllowedDomain(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    allowedDomainCreate: AllowedDomainCreate(domain: \"https://app.example.com\")\n)"
     },
     "createAgentCompletion": {
-      "createAgentCompletion with v4 messages": "let response = try await client.createAgentCompletion(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode: CompatibilityMode.aiSdk4,\n    agentCompletionRequest: AgentCompletionRequestUnion\n        .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnion\n                .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(\n                    role: \"user\",\n                    content: \"Hello, how are you?\"\n                ))])))\n)"
+      "createAgentCompletion with v4 messages": "let response = try await client.createAgentCompletion(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode: CompatibilityMode.aiSdk4,\n    agentCompletionRequest: AgentCompletionRequestUnion\n        .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnion\n                .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(\n                    role: \"user\",\n                    content: \"Hello, how are you?\"\n                ))])))\n)",
+      "createAgentCompletion with all parameters": "let response = try await client.createAgentCompletion(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    compatibilityMode: CompatibilityMode.aiSdk4,\n    agentCompletionRequest: AgentCompletionRequestUnion\n        .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnion\n                .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(\n                    role: \"user\",\n                    content: \"Hello, how are you?\"\n                ))]))),\n    stream: false,\n    cache: false,\n    memory: false,\n    analytics: false,\n    xAlgoliaSecureUserToken: \"secure-user-token\",\n    ephemeral: true\n)"
     },
     "createAgentTask": {
       "createAgentTask with required parameters": "let response = try await client.createAgentTask(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    taskRequest: TaskRequest(input: [\"pageType\": AnyCodable(\"pdp\"), \"title\": AnyCodable(\"acmePhone128Gb\")])\n)",
@@ -1979,7 +2020,7 @@
     },
     "deleteAgentConversations": {
       "deleteAgentConversations without filters": "try await client.deleteAgentConversations(agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "deleteAgentConversations with date filters": "try await client.deleteAgentConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-06-30\"\n)"
+      "deleteAgentConversations with all filters": "try await client.deleteAgentConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-06-30\",\n    ephemeral: true\n)"
     },
     "deleteAllowedDomain": {
       "default": "try await client.deleteAllowedDomain(\n    domainId: \"a1b2c3d4-5678-90ab-cdef-123456789abc\",\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\"\n)"
@@ -1998,7 +2039,7 @@
     },
     "exportConversations": {
       "exportConversations without filters": "let response = try await client.exportConversations(agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "exportConversations with date filters": "let response = try await client.exportConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\"\n)",
+      "exportConversations with all filters": "let response = try await client.exportConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\",\n    ephemeral: true\n)",
       "e2e export conversations": "let response = try await client.exportConversations(agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "getAgent": {
@@ -2037,13 +2078,16 @@
     },
     "listAgentConversations": {
       "listAgentConversations with minimal parameters": "let response = try await client.listAgentConversations(agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\")",
-      "listAgentConversations with all parameters": "let response = try await client.listAgentConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\",\n    includeFeedback: true,\n    feedbackVote: 1,\n    page: 2,\n    limit: 10,\n    includeImpactAnalytics: true,\n    clicked: true,\n    converted: false,\n    hasAlgoliaSearch: true,\n    xAlgoliaSecureUserToken: \"secure-user-token\"\n)",
+      "listAgentConversations with all parameters": "let response = try await client.listAgentConversations(\n    agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\",\n    startDate: \"2024-01-01\",\n    endDate: \"2024-12-31\",\n    includeFeedback: true,\n    feedbackVote: 1,\n    page: 2,\n    limit: 10,\n    includeImpactAnalytics: true,\n    clicked: true,\n    converted: false,\n    hasAlgoliaSearch: true,\n    xAlgoliaSecureUserToken: \"secure-user-token\",\n    ephemeral: true\n)",
       "e2e list agent conversations": "let response = try await client.listAgentConversations(agentId: \"76710f1b-8231-42e5-b0d1-f43aac618e15\")"
     },
     "listAgents": {
       "list agents with no params": "let response = try await client.listAgents()",
       "list agents with all parameters": "let response = try await client.listAgents(\n    page: 2,\n    limit: 5,\n    providerId: \"c2905529-b933-4b69-87ec-75f9829d5f59\"\n)",
       "e2e list agents": "let response = try await client.listAgents(page: 1, limit: 2, providerId: nil)"
+    },
+    "listConversationUsage": {
+      "default": "let response = try await client.listConversationUsage()"
     },
     "listModels": {
       "listModels": "let response = try await client.listModels()",

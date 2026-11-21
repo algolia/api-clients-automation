@@ -296,6 +296,56 @@ func SnippetForCreateAgentCompletionOfAgentStudio1() {
 	/*
 	   Snippet for the createAgentCompletion method.
 
+	   createAgentCompletion with all parameters
+	*/
+
+	// >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Use the streaming variant to iterate over events
+	stream, err := client.CreateAgentCompletionStream(client.NewApiCreateAgentCompletionRequest(
+		"76710f1b-8231-42e5-b0d1-f43aac618e15",
+		agentStudio.CompatibilityMode("ai-sdk-4"),
+		agentStudio.AgentCompletionRequestAsAgentCompletionRequestUnion(
+			agentStudio.NewEmptyAgentCompletionRequest().SetMessages(agentStudio.ArrayOfMessageV4AsMessagesUnion(
+				[]agentStudio.MessageV4{*agentStudio.UserMessageV4AsMessageV4(
+					agentStudio.NewEmptyUserMessageV4().SetRole("user").SetContent("Hello, how are you?"))}))),
+	).WithStream(false).WithCache(false).WithMemory(false).WithAnalytics(false).WithXAlgoliaSecureUserToken("secure-user-token").WithEphemeral(true))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	defer func() { _ = stream.Close() }()
+
+	for stream.Next() {
+		event := stream.Current()
+		if event.Err != nil {
+			// handle the eventual per-event deserialization error
+			continue
+		}
+
+		// >LOG
+		fmt.Println(*event.Data)
+	}
+
+	err = stream.Err()
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+	// SEPARATOR<
+}
+
+func SnippetForCreateAgentCompletionOfAgentStudio2() {
+	/*
+	   Snippet for the createAgentCompletion method.
+
 	   createAgentCompletion streaming with simple messages
 	*/
 
@@ -342,7 +392,7 @@ func SnippetForCreateAgentCompletionOfAgentStudio1() {
 	// SEPARATOR<
 }
 
-func SnippetForCreateAgentCompletionOfAgentStudio2() {
+func SnippetForCreateAgentCompletionOfAgentStudio3() {
 	/*
 	   Snippet for the createAgentCompletion method.
 
@@ -393,7 +443,7 @@ func SnippetForCreateAgentCompletionOfAgentStudio2() {
 	// SEPARATOR<
 }
 
-func SnippetForCreateAgentCompletionOfAgentStudio3() {
+func SnippetForCreateAgentCompletionOfAgentStudio4() {
 	/*
 	   Snippet for the createAgentCompletion method.
 
@@ -452,7 +502,7 @@ func SnippetForCreateAgentCompletionOfAgentStudio3() {
 	// SEPARATOR<
 }
 
-func SnippetForCreateAgentCompletionOfAgentStudio4() {
+func SnippetForCreateAgentCompletionOfAgentStudio5() {
 	/*
 	   Snippet for the createAgentCompletion method.
 
@@ -1387,10 +1437,10 @@ func SnippetForDeleteAgentConversationsOfAgentStudio1() {
 	/*
 	   Snippet for the deleteAgentConversations method.
 
-	   deleteAgentConversations with date filters
+	   deleteAgentConversations with all filters
 	*/
 
-	// >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+	// >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
 	// Initialize the client
 	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1400,7 +1450,7 @@ func SnippetForDeleteAgentConversationsOfAgentStudio1() {
 
 	// Call the API
 	err = client.DeleteAgentConversations(client.NewApiDeleteAgentConversationsRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-06-30"))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-06-30").WithEphemeral(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -1578,10 +1628,10 @@ func SnippetForExportConversationsOfAgentStudio1() {
 	/*
 	   Snippet for the exportConversations method.
 
-	   exportConversations with date filters
+	   exportConversations with all filters
 	*/
 
-	// >SEPARATOR exportConversations exportConversations with date filters
+	// >SEPARATOR exportConversations exportConversations with all filters
 	// Initialize the client
 	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -1591,7 +1641,7 @@ func SnippetForExportConversationsOfAgentStudio1() {
 
 	// Call the API
 	response, err := client.ExportConversations(client.NewApiExportConversationsRequest(
-		"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-12-31"))
+		"76710f1b-8231-42e5-b0d1-f43aac618e15").WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithEphemeral(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2137,7 +2187,7 @@ func SnippetForListAgentConversationsOfAgentStudio1() {
 	// Call the API
 	response, err := client.ListAgentConversations(client.NewApiListAgentConversationsRequest(
 		"76710f1b-8231-42e5-b0d1-f43aac618e15",
-	).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token"))
+	).WithStartDate("2024-01-01").WithEndDate("2024-12-31").WithIncludeFeedback(true).WithFeedbackVote(1).WithPage(2).WithLimit(10).WithIncludeImpactAnalytics(true).WithClicked(true).WithConverted(false).WithHasAlgoliaSearch(true).WithXAlgoliaSecureUserToken("secure-user-token").WithEphemeral(true))
 	if err != nil {
 		// handle the eventual error
 		panic(err)
@@ -2253,6 +2303,34 @@ func SnippetForListAgentsOfAgentStudio2() {
 
 	// Call the API
 	response, err := client.ListAgents(client.NewApiListAgentsRequest().WithPage(1).WithLimit(2))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForListConversationUsageOfAgentStudio() {
+	/*
+	   Snippet for the listConversationUsage method.
+
+	   listConversationUsage
+	*/
+
+	// >SEPARATOR listConversationUsage default
+	// Initialize the client
+	client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ListConversationUsage()
 	if err != nil {
 		// handle the eventual error
 		panic(err)

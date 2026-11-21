@@ -187,6 +187,37 @@ final class AgentStudioClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the createAgentCompletion method.
+    ///
+    /// createAgentCompletion with all parameters
+    func snippetForCreateAgentCompletion1() async throws {
+        // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.createAgentCompletion(
+            agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+            compatibilityMode: CompatibilityMode.aiSdk4,
+            agentCompletionRequest: AgentCompletionRequestUnion
+                .agentCompletionRequest(AgentCompletionRequest(messages: MessagesUnion
+                        .arrayOfMessageV4([MessageV4.userMessageV4(UserMessageV4(
+                            role: "user",
+                            content: "Hello, how are you?"
+                        ))]))),
+            stream: false,
+            cache: false,
+            memory: false,
+            analytics: false,
+            xAlgoliaSecureUserToken: "secure-user-token",
+            ephemeral: true
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
     /// Snippet for the createAgentTask method.
     ///
     /// createAgentTask with required parameters
@@ -753,9 +784,9 @@ final class AgentStudioClientSnippet {
 
     /// Snippet for the deleteAgentConversations method.
     ///
-    /// deleteAgentConversations with date filters
+    /// deleteAgentConversations with all filters
     func snippetForDeleteAgentConversations1() async throws {
-        // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+        // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
         // Initialize the client
         let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -763,7 +794,8 @@ final class AgentStudioClientSnippet {
         try await client.deleteAgentConversations(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             startDate: "2024-01-01",
-            endDate: "2024-06-30"
+            endDate: "2024-06-30",
+            ephemeral: true
         )
         // >LOG
         // SEPARATOR<
@@ -863,9 +895,9 @@ final class AgentStudioClientSnippet {
 
     /// Snippet for the exportConversations method.
     ///
-    /// exportConversations with date filters
+    /// exportConversations with all filters
     func snippetForExportConversations1() async throws {
-        // >SEPARATOR exportConversations exportConversations with date filters
+        // >SEPARATOR exportConversations exportConversations with all filters
         // Initialize the client
         let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -873,7 +905,8 @@ final class AgentStudioClientSnippet {
         let response = try await client.exportConversations(
             agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
             startDate: "2024-01-01",
-            endDate: "2024-12-31"
+            endDate: "2024-12-31",
+            ephemeral: true
         )
         // >LOG
         // print the response
@@ -1195,7 +1228,8 @@ final class AgentStudioClientSnippet {
             clicked: true,
             converted: false,
             hasAlgoliaSearch: true,
-            xAlgoliaSecureUserToken: "secure-user-token"
+            xAlgoliaSecureUserToken: "secure-user-token",
+            ephemeral: true
         )
         // >LOG
         // print the response
@@ -1265,6 +1299,22 @@ final class AgentStudioClientSnippet {
 
         // Call the API
         let response = try await client.listAgents(page: 1, limit: 2, providerId: nil)
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the listConversationUsage method.
+    ///
+    /// listConversationUsage
+    func snippetForListConversationUsage() async throws {
+        // >SEPARATOR listConversationUsage default
+        // Initialize the client
+        let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.listConversationUsage()
         // >LOG
         // print the response
         print(response)

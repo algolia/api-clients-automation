@@ -5,10 +5,7 @@ final class Image {
   final String objectID;
   List<Map<String, dynamic>> objects;
 
-  Image(String imageUrl, String objectID, List<Map<String, dynamic>> objects)
-      : imageUrl = imageUrl,
-        objectID = objectID,
-        objects = objects;
+  Image(this.imageUrl, this.objectID, this.objects);
 }
 
 Future<Map<String, dynamic>> getImageLabels(

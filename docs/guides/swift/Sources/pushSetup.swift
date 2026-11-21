@@ -1,10 +1,9 @@
+import AlgoliaCore
+import AlgoliaIngestion
 import Foundation
 #if os(Linux) // For linux interop
     import FoundationNetworking
 #endif
-
-import AlgoliaCore
-import AlgoliaIngestion
 
 func pushSetup() async throws {
     do {

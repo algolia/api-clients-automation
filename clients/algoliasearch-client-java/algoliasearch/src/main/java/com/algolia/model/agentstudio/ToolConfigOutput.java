@@ -52,6 +52,11 @@ public interface ToolConfigOutput {
       JsonNode discriminatorNode = tree.get("type");
       if (discriminatorNode != null && discriminatorNode.isTextual()) {
         String discriminatorValue = discriminatorNode.asText();
+        if ("algolia_compare_products".equals(discriminatorValue)) {
+          try (JsonParser parser = tree.traverse(jp.getCodec())) {
+            return parser.readValueAs(AlgoliaCompareProductsToolConfig.class);
+          }
+        }
         if ("algolia_recommend".equals(discriminatorValue)) {
           try (JsonParser parser = tree.traverse(jp.getCodec())) {
             return parser.readValueAs(AlgoliaRecommendToolConfig.class);
@@ -115,6 +120,19 @@ public interface ToolConfigOutput {
           // deserialization failed, continue
           LOGGER.finest(
             "Failed to deserialize oneOf AlgoliaRecommendToolConfig (error: " + e.getMessage() + ") (type: AlgoliaRecommendToolConfig)"
+          );
+        }
+      }
+      // deserialize AlgoliaCompareProductsToolConfig
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AlgoliaCompareProductsToolConfig.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AlgoliaCompareProductsToolConfig (error: " +
+              e.getMessage() +
+              ") (type: AlgoliaCompareProductsToolConfig)"
           );
         }
       }

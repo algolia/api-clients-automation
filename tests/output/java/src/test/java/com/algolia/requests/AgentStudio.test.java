@@ -261,6 +261,61 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
+  @DisplayName("createAgentCompletion with all parameters")
+  void createAgentCompletionTest1() {
+    assertDoesNotThrow(() -> {
+      client.createAgentCompletion(
+        "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        CompatibilityMode.AI_SDK_4,
+        new AgentCompletionRequest().setMessages(
+          MessagesUnion.ofListOfMessageV4(Arrays.asList(new UserMessageV4().setRole("user").setContent("Hello, how are you?")))
+        ),
+        false,
+        false,
+        false,
+        false,
+        "secure-user-token",
+        true
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}", req.body, JSONCompareMode.STRICT)
+    );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"compatibilityMode\":\"ai-sdk-4\",\"stream\":\"false\",\"cache\":\"false\",\"memory\":\"false\",\"analytics\":\"false\",\"ephemeral\":\"true\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+
+    try {
+      Map<String, String> expectedHeaders = json.readValue(
+        "{\"x-algolia-secure-user-token\":\"secure-user-token\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, String> actualHeaders = req.headers;
+
+      for (Map.Entry<String, String> p : expectedHeaders.entrySet()) {
+        assertEquals(p.getValue(), actualHeaders.get(p.getKey()));
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse headers json");
+    }
+  }
+
+  @Test
   @DisplayName("createAgentTask with required parameters")
   void createAgentTaskTest() {
     assertDoesNotThrow(() -> {
@@ -1107,10 +1162,10 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteAgentConversations with date filters")
+  @DisplayName("deleteAgentConversations with all filters")
   void deleteAgentConversationsTest1() {
     assertDoesNotThrow(() -> {
-      client.deleteAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30");
+      client.deleteAgentConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-06-30", true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", req.path);
@@ -1119,7 +1174,7 @@ class AgentStudioClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\"}",
+        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\",\"ephemeral\":\"true\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1209,10 +1264,10 @@ class AgentStudioClientRequestsTests {
   }
 
   @Test
-  @DisplayName("exportConversations with date filters")
+  @DisplayName("exportConversations with all filters")
   void exportConversationsTest1() {
     assertDoesNotThrow(() -> {
-      client.exportConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31");
+      client.exportConversations("76710f1b-8231-42e5-b0d1-f43aac618e15", "2024-01-01", "2024-12-31", true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export", req.path);
@@ -1221,7 +1276,7 @@ class AgentStudioClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\"}",
+        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"ephemeral\":\"true\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1485,7 +1540,8 @@ class AgentStudioClientRequestsTests {
         true,
         false,
         true,
-        "secure-user-token"
+        "secure-user-token",
+        true
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1495,7 +1551,7 @@ class AgentStudioClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}",
+        "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\",\"ephemeral\":\"true\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1599,6 +1655,18 @@ class AgentStudioClientRequestsTests {
     } catch (JsonProcessingException e) {
       fail("failed to parse queryParameters json");
     }
+  }
+
+  @Test
+  @DisplayName("listConversationUsage")
+  void listConversationUsageTest() {
+    assertDoesNotThrow(() -> {
+      client.listConversationUsage();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/agent-studio/1/configuration/conversation-usage", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
   }
 
   @Test

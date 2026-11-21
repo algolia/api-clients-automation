@@ -30,6 +30,7 @@ final class ConversationFullResponse {
     this.impactAnalytics,
     required this.messages,
     this.analyticsDegraded,
+    this.isEphemeral,
   });
 
   @JsonKey(name: r'id')
@@ -83,6 +84,9 @@ final class ConversationFullResponse {
   @JsonKey(name: r'analyticsDegraded')
   final bool? analyticsDegraded;
 
+  @JsonKey(name: r'isEphemeral')
+  final bool? isEphemeral;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -103,7 +107,8 @@ final class ConversationFullResponse {
           other.feedback == feedback &&
           other.impactAnalytics == impactAnalytics &&
           other.messages == messages &&
-          other.analyticsDegraded == analyticsDegraded;
+          other.analyticsDegraded == analyticsDegraded &&
+          other.isEphemeral == isEphemeral;
 
   @override
   int get hashCode =>
@@ -123,7 +128,8 @@ final class ConversationFullResponse {
       (feedback == null ? 0 : feedback.hashCode) +
       (impactAnalytics == null ? 0 : impactAnalytics.hashCode) +
       messages.hashCode +
-      analyticsDegraded.hashCode;
+      analyticsDegraded.hashCode +
+      isEphemeral.hashCode;
 
   factory ConversationFullResponse.fromJson(Map<String, dynamic> json) =>
       _$ConversationFullResponseFromJson(json);
