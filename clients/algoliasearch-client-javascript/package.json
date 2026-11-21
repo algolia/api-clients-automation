@@ -20,7 +20,7 @@
     "bundlewatch": "1.2.0",
     "execa": "10.2.1",
     "lerna": "9.0.7",
-    "rollup": "4.68.6",
+    "rollup": "4.68.7",
     "typescript": "5.9.3"
   },
   "bundlewatch": {
