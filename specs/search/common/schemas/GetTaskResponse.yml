@@ -4,5 +4,10 @@ additionalProperties: false
 properties:
   status:
     $ref: '../../../common/responses/common.yml#/taskStatus'
+  pendingTask:
+    type: boolean
+    deprecated: true
+    default: false
+    description: Indicates whether the index has pending tasks. This value is deprecated and always `false`. Don't use it.
 required:
   - status
