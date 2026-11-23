@@ -142,7 +142,7 @@ __metadata:
     lint-staged: "npm:17.6.1"
     oxlint: "npm:1.91.0"
     prettier: "npm:3.10.1"
-    prettier-plugin-java: "npm:2.11.0"
+    prettier-plugin-java: "npm:2.12.0"
     prettier-plugin-organize-imports: "npm:4.3.0"
     renovate-config-algolia: "npm:2.2.0"
     typescript: "npm:5.9.3"
@@ -7893,14 +7893,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.11.0":
-  version: 2.11.0
-  resolution: "prettier-plugin-java@npm:2.11.0"
+"prettier-plugin-java@npm:2.12.0":
+  version: 2.12.0
+  resolution: "prettier-plugin-java@npm:2.12.0"
   dependencies:
-    web-tree-sitter: "npm:0.27.0"
+    web-tree-sitter: "npm:0.27.2"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10/30e1337c24814835df2bbad692fd7b9678eaa3702aa91558dc7f9465a271f4037f8798c39462c3fb47a1b0793f449b173c5e3c018beeb7eca736a1d29b8d7128
+  checksum: 10/a2a30a8f27ae0a204a8721a602d7703822e7ad1fb7eba5503948f7ff7a12ea92f5f97c30fdebb370d59c0d9b447feb69a665f3f32d00b909cf1569e0ed6cfc13
   languageName: node
   linkType: hard
 
@@ -9665,10 +9665,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-tree-sitter@npm:0.27.0":
-  version: 0.27.0
-  resolution: "web-tree-sitter@npm:0.27.0"
-  checksum: 10/059491036d2dba863ea8fe0ea3e75cc51f826f8f0caf12619a1eaac8268902cdbcf1d0ca7f44f3c85721786a79f4d07230a3db5894c58f9a1e14c943fd48add7
+"web-tree-sitter@npm:0.27.2":
+  version: 0.27.2
+  resolution: "web-tree-sitter@npm:0.27.2"
+  checksum: 10/3423863a2c2267bff20cb8e952bbf437fdb08f198bac7d4f319ce659f513948570ce9555423dc1934b9c13d9cd32c12f7620935098f071cbd307a1d70b04b7c1
   languageName: node
   linkType: hard
 
