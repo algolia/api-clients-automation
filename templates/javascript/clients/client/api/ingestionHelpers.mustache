@@ -57,7 +57,7 @@ async chunkedPush(
           });
         },
         validate: (response) => {
-          if (response === undefined || response.status === null || ['created', 'started', 'retried'].includes(response.status)) {
+          if (response === undefined || !response.status || ['created', 'started', 'retried'].includes(response.status)) {
             return false;
           }
 
