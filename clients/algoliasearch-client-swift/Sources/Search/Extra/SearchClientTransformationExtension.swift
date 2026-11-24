@@ -320,7 +320,7 @@ private func waitForIngestionEvent(
     var retryCount = 0
 
     _ = try await createIterable(
-        execute: { _ in
+        execute: { (_: IngestionEvent??) -> IngestionEvent? in
             let event: IngestionEvent
             do {
                 event = try await ingestionClient.getEvent(
