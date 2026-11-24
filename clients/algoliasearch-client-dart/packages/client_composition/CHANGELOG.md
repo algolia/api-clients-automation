@@ -1,3 +1,8 @@
+## [1.59.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.59.0...1.59.1)
+
+- [9b61f611bc](https://github.com/algolia/api-clients-automation/commit/9b61f611bc) fix(specs): sync agent-studio OpenAPI from conversational-ai ([#7132](https://github.com/algolia/api-clients-automation/pull/7132)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [4828557271](https://github.com/algolia/api-clients-automation/commit/4828557271) fix(specs): add allowReRankingOnPersonalization to search params ([#7330](https://github.com/algolia/api-clients-automation/pull/7330)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [1.59.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.58.0...1.59.0)
 
 - [ebfd070ba0](https://github.com/algolia/api-clients-automation/commit/ebfd070ba0) feat(specs): update Recommend rules to support trending-items [PRED-5025] ([#7188](https://github.com/algolia/api-clients-automation/pull/7188)) by [@raed667](https://github.com/raed667/)

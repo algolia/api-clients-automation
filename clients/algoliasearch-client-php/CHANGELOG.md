@@ -1,3 +1,8 @@
+## [4.55.1](https://github.com/algolia/algoliasearch-client-php/compare/4.55.0...4.55.1)
+
+- [9b61f611bc](https://github.com/algolia/api-clients-automation/commit/9b61f611bc) fix(specs): sync agent-studio OpenAPI from conversational-ai ([#7132](https://github.com/algolia/api-clients-automation/pull/7132)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [4828557271](https://github.com/algolia/api-clients-automation/commit/4828557271) fix(specs): add allowReRankingOnPersonalization to search params ([#7330](https://github.com/algolia/api-clients-automation/pull/7330)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [4.55.0](https://github.com/algolia/algoliasearch-client-php/compare/4.54.0...4.55.0)
 
 - [27351e7432](https://github.com/algolia/api-clients-automation/commit/27351e7432) chore(specs): add description for Composition run response ([#7315](https://github.com/algolia/api-clients-automation/pull/7315)) by [@ClaraMuller](https://github.com/ClaraMuller/)

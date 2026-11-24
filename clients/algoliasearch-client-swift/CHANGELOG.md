@@ -1,3 +1,9 @@
+## [9.55.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.55.0...9.55.1)
+
+- [0e5a6b0bec](https://github.com/algolia/api-clients-automation/commit/0e5a6b0bec) docs(specs): Note Java waitForTasks overloads and fix Scala and Swift install notes [DOC-1971] ([#7325](https://github.com/algolia/api-clients-automation/pull/7325)) by [@gazconroy](https://github.com/gazconroy/)
+- [9b61f611bc](https://github.com/algolia/api-clients-automation/commit/9b61f611bc) fix(specs): sync agent-studio OpenAPI from conversational-ai ([#7132](https://github.com/algolia/api-clients-automation/pull/7132)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [4828557271](https://github.com/algolia/api-clients-automation/commit/4828557271) fix(specs): add allowReRankingOnPersonalization to search params ([#7330](https://github.com/algolia/api-clients-automation/pull/7330)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.55.0](https://github.com/algolia/algoliasearch-client-swift/compare/9.54.0...9.55.0)
 
 - [27351e7432](https://github.com/algolia/api-clients-automation/commit/27351e7432) chore(specs): add description for Composition run response ([#7315](https://github.com/algolia/api-clients-automation/pull/7315)) by [@ClaraMuller](https://github.com/ClaraMuller/)
