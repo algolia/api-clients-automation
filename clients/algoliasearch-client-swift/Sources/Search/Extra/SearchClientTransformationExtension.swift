@@ -106,9 +106,14 @@ public extension SearchClient {
 
         if waitForTasks {
             for response in responses {
-                guard let eventID = response.eventID else { continue }
+                guard let eventID = response.eventID else {
+                    throw AlgoliaError.runtimeError(
+                        "received unexpected response from the push endpoint, eventID must not be undefined"
+                    )
+                }
                 try await waitForIngestionEvent(
                     ingestionClient: ingestionClient,
+                    indexName: indexName,
                     runID: response.runID,
                     eventID: eventID,
                     maxRetries: chunkedOptions.maxRetries,
@@ -306,6 +311,7 @@ public extension SearchClient {
 
 private func waitForIngestionEvent(
     ingestionClient: IngestionClient,
+    indexName: String,
     runID: String,
     eventID: String,
     maxRetries: Int = ChunkedHelperOptions.defaultMaxRetries,
@@ -315,8 +321,9 @@ private func waitForIngestionEvent(
 
     _ = try await createIterable(
         execute: { _ in
+            let event: IngestionEvent
             do {
-                return try await ingestionClient.getEvent(
+                event = try await ingestionClient.getEvent(
                     runID: runID,
                     eventID: eventID,
                     requestOptions: requestOptions
@@ -324,9 +331,18 @@ private func waitForIngestionEvent(
             } catch let AlgoliaError.httpError(error) where error.statusCode == 404 {
                 return nil
             }
+
+            switch event.status {
+            case .none, .created, .started, .retried, .succeeded:
+                return event
+            case let .some(status):
+                throw AlgoliaError.runtimeError(
+                    "ingestion push to index \(indexName) did not succeed: event \(eventID) of run \(runID) has status \(status.rawValue)"
+                )
+            }
         },
         validate: { response in
-            response != nil
+            response?.status == .succeeded
         },
         aggregator: { _ in
             retryCount += 1

@@ -65,6 +65,7 @@ extension Transformation on SearchClient {
         if (waitForTasks && (responses.length % pollInterval == 0 || isLast)) {
           await _pollBatch(
             transporter: transporter,
+            indexName: indexName,
             responses: responses,
             from: polledUpTo,
             to: responses.length,
@@ -237,6 +238,7 @@ extension Transformation on SearchClient {
 
 Future<void> _pollBatch({
   required ingestion.IngestionClient transporter,
+  required String indexName,
   required List<WatchResponse> responses,
   required int from,
   required int to,
@@ -245,9 +247,13 @@ Future<void> _pollBatch({
 }) async {
   for (final resp in responses.sublist(from, to)) {
     final eventID = resp.eventID;
-    if (eventID == null) continue;
+    if (eventID == null) {
+      throw StateError(
+          'received unexpected response from the push endpoint, eventID must not be undefined');
+    }
     await _waitForEvent(
       transporter: transporter,
+      indexName: indexName,
       runID: resp.runID,
       eventID: eventID,
       maxRetries: maxRetries,
@@ -256,10 +262,12 @@ Future<void> _pollBatch({
   }
 }
 
-/// Polls the Ingestion API for a single event until it becomes available,
-/// retrying while `getEvent` returns a 404.
+/// Polls the Ingestion API for a single event until it succeeds, retrying
+/// while `getEvent` returns a 404 or the event is still in progress, and
+/// throwing a [StateError] when the event reaches any other status.
 Future<void> _waitForEvent({
   required ingestion.IngestionClient transporter,
+  required String indexName,
   required String runID,
   required String eventID,
   required int maxRetries,
@@ -278,7 +286,20 @@ Future<void> _waitForEvent({
         rethrow;
       }
     },
-    until: (event) => event != null,
+    until: (event) {
+      final status = event?.status;
+      if (status == null ||
+          status == ingestion.EventStatus.created ||
+          status == ingestion.EventStatus.started ||
+          status == ingestion.EventStatus.retried) {
+        return false;
+      }
+      if (status != ingestion.EventStatus.succeeded) {
+        throw StateError(
+            'ingestion push to index $indexName did not succeed: event $eventID of run $runID has status $status');
+      }
+      return true;
+    },
     params: WaitParams(maxRetries: maxRetries),
   );
 }

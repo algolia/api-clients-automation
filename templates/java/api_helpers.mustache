@@ -135,7 +135,30 @@ public <T> List<WatchResponse> chunkedPush(
               }
             },
             (Event resp) -> {
-              return resp != null;
+              if (
+                resp == null ||
+                resp.getStatus() == null ||
+                resp.getStatus() == EventStatus.CREATED ||
+                resp.getStatus() == EventStatus.STARTED ||
+                resp.getStatus() == EventStatus.RETRIED
+              ) {
+                return false;
+              }
+
+              if (resp.getStatus() != EventStatus.SUCCEEDED) {
+                throw new AlgoliaRuntimeException(
+                  "ingestion push to index " +
+                  indexName +
+                  " did not succeed: event " +
+                  response.getEventID() +
+                  " of run " +
+                  response.getRunID() +
+                  " has status " +
+                  resp.getStatus()
+                );
+              }
+
+              return true;
             },
             maxRetries,
             (retries) -> Math.min(retries * 1500, 5000)
@@ -1838,7 +1861,11 @@ public <T> ReplaceAllObjectsWithTransformationResponse replaceAllObjectsWithTran
       .setWatchResponses(ingestionResponseToSearchResponse(watchResponses))
       .setMoveOperationResponse(moveOperationResponse);
   } catch (Exception e) {
-    deleteIndex(tmpIndexName, helperRequestOptions);
+    try {
+      deleteIndex(tmpIndexName, helperRequestOptions);
+    } catch (Exception deleteException) {
+      e.addSuppressed(deleteException);
+    }
 
     throw e;
   }

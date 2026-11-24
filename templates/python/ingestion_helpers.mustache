@@ -47,7 +47,13 @@
                     _retry_count += 1
 
                 def _validate(_resp: Event | None) -> bool:
-                    return _resp is not None
+                    if _resp is None or _resp.status is None or _resp.status in ("created", "started", "retried"):
+                        return False
+                    if _resp.status != "succeeded":
+                        raise AlgoliaException(
+                            f"ingestion push to index {index_name} did not succeed: event {response.event_id} of run {response.run_id} has status {_resp.status}"
+                        )
+                    return True
 
                 {{^isSyncClient}}await {{/isSyncClient}}create_iterable{{#isSyncClient}}_sync{{/isSyncClient}}(
                     func=_func,

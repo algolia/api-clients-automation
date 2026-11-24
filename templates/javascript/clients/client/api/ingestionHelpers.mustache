@@ -56,7 +56,17 @@ async chunkedPush(
             throw error;
           });
         },
-        validate: (response) => response !== undefined,
+        validate: (response) => {
+          if (response === undefined || response.status === null || ['created', 'started', 'retried'].includes(response.status)) {
+            return false;
+          }
+
+          if (response.status !== 'succeeded') {
+            throw new Error(`ingestion push to index ${indexName} did not succeed: event ${resp.eventID} of run ${resp.runID} has status ${response.status}`);
+          }
+
+          return true;
+        },
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,

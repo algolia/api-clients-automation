@@ -6,6 +6,7 @@ import com.algolia.client.exception.AlgoliaClientException
 import com.algolia.client.extensions.internal.retryUntil
 import com.algolia.client.model.ingestion.Action
 import com.algolia.client.model.ingestion.Event
+import com.algolia.client.model.ingestion.EventStatus
 import com.algolia.client.model.ingestion.PushTaskPayload
 import com.algolia.client.model.ingestion.PushTaskRecords
 import com.algolia.client.model.ingestion.WatchResponse
@@ -64,7 +65,7 @@ public suspend fun IngestionClient.chunkedPush(
     responses += pushed
 
     if (waitForTasks) {
-      pushed.forEach { pollEvent(it, maxRetries, requestOptions) }
+      pushed.forEach { pollEvent(indexName, it, maxRetries, requestOptions) }
     }
   }
 
@@ -85,6 +86,7 @@ private fun JsonObject.toPushTaskRecord(): PushTaskRecords {
 }
 
 private suspend fun IngestionClient.pollEvent(
+  indexName: String,
   response: WatchResponse,
   maxRetries: Int,
   requestOptions: RequestOptions?,
@@ -102,7 +104,19 @@ private suspend fun IngestionClient.pollEvent(
           if (e.httpErrorCode == 404) Result.failure(e) else throw e
         }
       },
-      until = { it.isSuccess },
+      until = { result ->
+        when (val status = result.getOrNull()?.status) {
+          null,
+          EventStatus.Created,
+          EventStatus.Started,
+          EventStatus.Retried -> false
+          EventStatus.Succeeded -> true
+          else ->
+            throw AlgoliaClientException(
+              "ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status"
+            )
+        }
+      },
       maxRetries = maxRetries,
       timeout = Duration.INFINITE,
       initialDelay = 1500.milliseconds,

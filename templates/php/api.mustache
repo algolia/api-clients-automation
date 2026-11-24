@@ -7,6 +7,7 @@ namespace {{apiPackage}};
 use {{invokerPackage}}\Algolia;
 use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Configuration\{{configClassname}};
+use {{invokerPackage}}\Exceptions\AlgoliaException;
 use {{invokerPackage}}\Exceptions\ExceededRetriesException;
 use {{invokerPackage}}\Exceptions\ValidUntilNotFoundException;
 use {{invokerPackage}}\Iterators\ObjectIterator;
@@ -459,18 +460,25 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
         $logger->info('Algolia API client: Batch operation started: '.$action.' on '.$indexName);
 
         // Polls every task in the `[$start, $end)` window of `$responses` until it completes.
-        $waitForBatch = function ($start, $end) use (&$responses, $maxRetries) {
+        $waitForBatch = function ($start, $end) use (&$responses, $maxRetries, $indexName) {
             foreach (array_slice($responses, $start, $end - $start) as $response) {
                 $retry = 0;
                 $ok = false;
 
                 while ($retry < $maxRetries) {
                     try {
-                        $this->getEvent($response['runID'], $response['eventID']);
+                        $event = $this->getEvent($response['runID'], $response['eventID']);
+                        $status = $event['status'] ?? null;
 
-                        $ok = true;
+                        if ('succeeded' === $status) {
+                            $ok = true;
 
-                        break;
+                            break;
+                        }
+
+                        if (!in_array($status, [null, 'created', 'started', 'retried'], true)) {
+                            throw new AlgoliaException('ingestion push to index '.$indexName.' did not succeed: event '.$response['eventID'].' of run '.$response['runID'].' has status '.$status);
+                        }
                     } catch (NotFoundException $e) {
                         // just retry
                     }
@@ -824,7 +832,11 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
             'moveOperationResponse' => $moveOperationResponse,
           ];
         } catch (\Throwable $e) {
-          $this->deleteIndex($tmpIndexName, $searchRequestOptions);
+          try {
+            $this->deleteIndex($tmpIndexName, $searchRequestOptions);
+          } catch (\Throwable $deleteException) {
+            // best effort cleanup, the original error is rethrown below
+          }
 
           throw $e;
         }

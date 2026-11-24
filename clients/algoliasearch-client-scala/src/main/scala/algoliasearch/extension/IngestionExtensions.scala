@@ -9,6 +9,7 @@ import algoliasearch.ingestion.{
   PushTaskRecords,
   Action => IngestionAction,
   Event => IngestionEvent,
+  EventStatus => IngestionEventStatus,
   WatchResponse => IngestionWatchResponse
 }
 import org.json4s.{Extraction, Formats, jvalue2extractable}
@@ -85,7 +86,7 @@ trait IngestionExtensions {
             _ <-
               if (waitForTasks)
                 pushed.foldLeft(Future.unit) { (a, r) =>
-                  a.flatMap(_ => pollEvent(r, requestOptions, chunkedOptions.maxRetries).map(_ => ()))
+                  a.flatMap(_ => pollEvent(indexName, r, requestOptions, chunkedOptions.maxRetries).map(_ => ()))
                 }
               else Future.unit
           } yield responsesSoFar ++ pushed
@@ -94,6 +95,7 @@ trait IngestionExtensions {
     }
 
     private def pollEvent(
+        indexName: String,
         response: IngestionWatchResponse,
         requestOptions: Option[RequestOptions],
         maxRetries: Int
@@ -114,7 +116,17 @@ trait IngestionExtensions {
                 .recover {
                   case e: AlgoliaApiException if e.httpErrorCode == 404 => None
                 },
-            until = (event: Option[IngestionEvent]) => event.isDefined,
+            until = (event: Option[IngestionEvent]) =>
+              event.flatMap(_.status) match {
+                case None | Some(null) | Some(IngestionEventStatus.Created) | Some(IngestionEventStatus.Started) |
+                    Some(IngestionEventStatus.Retried) =>
+                  false
+                case Some(IngestionEventStatus.Succeeded) => true
+                case Some(status) =>
+                  throw new AlgoliaClientException(
+                    s"ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status"
+                  )
+              },
             maxRetries = maxRetries,
             delay = retries => math.min(retries * 1500, 5000L)
           )

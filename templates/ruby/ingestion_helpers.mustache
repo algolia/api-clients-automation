@@ -37,7 +37,12 @@ def chunked_push(index_name, objects, action = Ingestion::Action::ADD_OBJECT, wa
         loop do
           begin
             event = get_event(watch_response.run_id, watch_response.event_id, request_options)
-            break if event
+            status = event&.status
+            break if status == Ingestion::EventStatus::SUCCEEDED
+
+            unless [nil, Ingestion::EventStatus::CREATED, Ingestion::EventStatus::STARTED, Ingestion::EventStatus::RETRIED].include?(status)
+              raise AlgoliaError, "ingestion push to index #{index_name} did not succeed: event #{watch_response.event_id} of run #{watch_response.run_id} has status #{status}"
+            end
           rescue AlgoliaHttpError => e
             raise e unless e.code == 404
           end
