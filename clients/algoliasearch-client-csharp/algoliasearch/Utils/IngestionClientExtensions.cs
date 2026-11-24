@@ -169,24 +169,20 @@ public partial class IngestionClient : IIngestionClient
               eventResponse =>
               {
                 var status = eventResponse?.Status;
-                if (
-                  status is null
-                  or EventStatus.Created
-                  or EventStatus.Started
-                  or EventStatus.Retried
-                )
+                switch (status)
                 {
-                  return false;
+                  case null:
+                  case EventStatus.Created:
+                  case EventStatus.Started:
+                  case EventStatus.Retried:
+                    return false;
+                  case EventStatus.Succeeded:
+                    return true;
+                  default:
+                    throw new AlgoliaException(
+                      $"ingestion push to index {indexName} did not succeed: event {resp.EventID} of run {resp.RunID} has status {status.ToString().ToLowerInvariant()}"
+                    );
                 }
-
-                if (status != EventStatus.Succeeded)
-                {
-                  throw new AlgoliaException(
-                    $"ingestion push to index {indexName} did not succeed: event {resp.EventID} of run {resp.RunID} has status {status.ToString().ToLowerInvariant()}"
-                  );
-                }
-
-                return true;
               },
               maxRetries: maxRetries,
               timeout: retryCount => Math.Min(retryCount * 1500, 5000),
