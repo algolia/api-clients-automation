@@ -20,7 +20,15 @@
 
           XCTFail("Expected an error to be thrown")
         } catch {
+          {{#isErrorRegex}}
+          XCTAssertNotNil(
+            error.localizedDescription.range(of: "^(?:{{{expectedError}}})$", options: .regularExpression),
+            error.localizedDescription
+          )
+          {{/isErrorRegex}}
+          {{^isErrorRegex}}
           XCTAssertEqual(error.localizedDescription, "{{{expectedError}}}")
+          {{/isErrorRegex}}
         }
       {{/isError}}
       {{^isError}}

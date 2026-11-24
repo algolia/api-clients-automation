@@ -225,12 +225,18 @@ public class TestsClient extends TestsGenerator {
                     throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
                 }
               }
-              if (step.expected.error != null) {
+              if (step.expected.error != null && step.expected.errorRegex != null) {
+                throw new CTSException("`error` and `errorRegex` are mutually exclusive", test.testName);
+              }
+              // errorRegex must match the whole error message.
+              Object expectedError = step.expected.error != null ? step.expected.error : step.expected.errorRegex;
+              if (expectedError != null) {
                 stepOut.put("isError", true);
-                if (step.expected.error instanceof Map errorMap) {
+                stepOut.put("isErrorRegex", step.expected.errorRegex != null);
+                if (expectedError instanceof Map errorMap) {
                   stepOut.put("expectedError", errorMap.getOrDefault(language, "<missing error for " + language + ">"));
                 } else {
-                  stepOut.put("expectedError", step.expected.error);
+                  stepOut.put("expectedError", expectedError);
                 }
                 if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID

@@ -15,7 +15,12 @@ void {{testType}}Test{{testIndex}}() {
         Exception exception = assertThrows(Exception.class, () -> {
           {{#dynamicTemplate}}{{/dynamicTemplate}}
         });
+        {{#isErrorRegex}}
+        assertTrue(exception.getMessage().matches("{{{expectedError}}}"), exception.getMessage());
+        {{/isErrorRegex}}
+        {{^isErrorRegex}}
         assertEquals("{{{expectedError}}}", exception.getMessage());
+        {{/isErrorRegex}}
       }
     {{/isError}}
     {{^isError}}

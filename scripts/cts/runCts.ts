@@ -17,6 +17,7 @@ import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.ts'
 import { assertValidReplaceAllObjectsFailed } from './testServer/replaceAllObjectsFailed.ts';
 import { assertValidReplaceAllObjectsScopes } from './testServer/replaceAllObjectsScopes.ts';
 import { assertValidReplaceAllObjectsWithTransformation } from './testServer/replaceAllObjectsWithTransformation.ts';
+import { assertValidReplaceAllObjectsWithTransformationFailed } from './testServer/replaceAllObjectsWithTransformationFailed.ts';
 import { assertNoRequestIdLeaks, assertValidRequestIds, REQUEST_ID_LANGUAGES } from './testServer/requestId.ts';
 import { assertSuccessServerCalled } from './testServer/success.ts';
 import { assertValidTimeouts } from './testServer/timeout.ts';
@@ -209,6 +210,7 @@ export async function runCts(
     assertChunkWrapperValid(languages.length - skip('dart'));
     assertValidReplaceAllObjects(languages.length - skip('dart'));
     assertValidReplaceAllObjectsWithTransformation(languages.length);
+    assertValidReplaceAllObjectsWithTransformationFailed(languages.length);
     assertValidAccountCopyIndex(only('javascript'));
     const requestIdLanguages = languages.filter((lang) => REQUEST_ID_LANGUAGES.includes(lang));
     assertValidRequestIds(requestIdLanguages.length, requestIdLanguages.filter((lang) => lang !== 'dart').length);

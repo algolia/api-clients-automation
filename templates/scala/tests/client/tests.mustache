@@ -10,7 +10,7 @@
     for (i <- 1 to {{times}}) {
     {{/times}}
     {{#isError}}
-    assertError("{{{expectedError}}}") {
+    {{#isErrorRegex}}assertErrorMatches{{/isErrorRegex}}{{^isErrorRegex}}assertError{{/isErrorRegex}}("{{{expectedError}}}") {
       {{#dynamicTemplate}}{{/dynamicTemplate}}
     }
     {{/isError}}

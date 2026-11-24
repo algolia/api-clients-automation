@@ -22,7 +22,7 @@ void main() {
     {{/autoCreateClient}}
     {{#steps}}
     {{#isError}}
-    await expectError(
+    await {{#isErrorRegex}}expectErrorMatches{{/isErrorRegex}}{{^isErrorRegex}}expectError{{/isErrorRegex}}(
       '{{{expectedError}}}',
       () async {
         {{#dynamicTemplate}}{{/dynamicTemplate}}
