@@ -541,10 +541,20 @@ jobs:
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
 
-  # builds with the minimum supported swift version (config/.swift-version), the macOS job in client_gen runs a newer one
+  # builds with the CI toolchain (config/.swift-ci-version) on ubuntu-24.04, and with the minimum supported swift version
+  # (config/.swift-version) on ubuntu-22.04 because swift 5.9 has no ubuntu-24.04 toolchain.
+  # the macOS job in client_gen runs a newer one
   swift_build_linux:
     timeout-minutes: 10
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
+          - runner: ubuntu-22.04
+            version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).minimumVersion }}
     needs:
       - setup
       - specs
@@ -561,9 +571,7 @@ jobs:
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
     permissions:
       contents: read
-    outputs:
-      success: ${{ steps.setoutput.outputs.success }}
-    name: client swift${{ format('@{0}', fromJSON(needs.setup.outputs.SWIFT_DATA).version) }} linux
+    name: client swift@${{ matrix.version }} linux
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -577,17 +585,13 @@ jobs:
         uses: ./.github/actions/setup
         with:
           language: swift
-          version: ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).version }}
+          version: ${{ matrix.version }}
 
       - name: Generate clients
         run: yarn cli generate swift
 
       - name: Build clients
         run: yarn cli build clients swift
-
-      - name: Set output
-        id: setoutput
-        run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   codegen:
     runs-on: ubuntu-26.04
@@ -863,7 +867,7 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") || ("${{ needs.docker_images.result }}" != "skipped" && "${{ needs.docker_images.result }}" != "success") || ("${{ needs.docker_digests.result }}" != "skipped" && "${{ needs.docker_digests.result }}" != "success") ]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_build_linux.result }}" != "skipped" && "${{ needs.swift_build_linux.result }}" != "success") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true") || ("${{ needs.action_pins.result }}" != "success") || ("${{ needs.docker_images.result }}" != "skipped" && "${{ needs.docker_images.result }}" != "success") || ("${{ needs.docker_digests.result }}" != "skipped" && "${{ needs.docker_digests.result }}" != "success") ]]; then
             echo "a needed step failed"
             exit 1
           fi

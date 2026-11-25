@@ -6,7 +6,13 @@ import { createClientName, exists, GENERATORS, LANGUAGES, toAbsolutePath } from 
 import { getClientsConfigField, getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.ts';
 
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.ts';
-import { COMMON_DEPENDENCIES, DEPENDENCIES, getVersionFileForLanguage, isBaseChanged } from './utils.ts';
+import {
+  COMMON_DEPENDENCIES,
+  DEPENDENCIES,
+  getVersionFileForLanguage,
+  isBaseChanged,
+  SWIFT_CI_VERSION_FILE,
+} from './utils.ts';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -14,6 +20,7 @@ const EMPTY_MATRIX = { client: ['no-run'] };
 // The macOS runner only ships Xcode 16+: its SDK cannot be imported by swift < 6.0, and swift 6.0 cannot run the tests
 // against its XCTest, so we match the swift version bundled with Xcode 16.4.
 // This is only the CI toolchain, the minimum supported version stays in config/.swift-version and is checked on linux.
+// The other linux job builds with the toolchain from config/.swift-ci-version.
 const SWIFT_MACOS_CI_VERSION = '6.1';
 
 async function createClientMatrix(baseBranch: string): Promise<void> {
@@ -133,8 +140,15 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         // Swift requires the benchmark folder to have files in it
         languageMatrix.testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/e2e`;
         languageMatrix.testsToStore = `${languageMatrix.testsToStore} ${testsRootFolder}/Package.swift`;
-        // the linux job reads SWIFT_DATA and builds with the minimum supported version
-        setOutput('SWIFT_DATA', JSON.stringify(languageMatrix));
+        // the linux jobs read SWIFT_DATA: `version` is the CI toolchain, `minimumVersion` the minimum we publish
+        setOutput(
+          'SWIFT_DATA',
+          JSON.stringify({
+            ...languageMatrix,
+            version: (await fsp.readFile(toAbsolutePath(SWIFT_CI_VERSION_FILE))).toString().trim(),
+            minimumVersion: languageMatrix.version?.trim(),
+          }),
+        );
         // the matrix entry (macOS job) is the only one using the macOS toolchain
         languageMatrix.version = SWIFT_MACOS_CI_VERSION;
         break;

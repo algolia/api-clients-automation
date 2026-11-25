@@ -5,6 +5,8 @@ import { getLanguageFolder } from '../../config.ts';
 import type { Language } from '../../types.ts';
 import { getNbGitDiff } from '../utils.ts';
 
+export const SWIFT_CI_VERSION_FILE = 'config/.swift-ci-version';
+
 // changes here affect every image, so they belong to all three per image lists
 const DOCKER_COMPOSE_DEPENDENCIES = ['docker-compose.yml', 'scripts/docker/setup.sh'];
 
@@ -55,6 +57,7 @@ export const DEPENDENCIES = {
         // language related files
         langFolder,
         getVersionFileForLanguage(lang),
+        ...(lang === 'swift' ? [SWIFT_CI_VERSION_FILE] : []),
         `tests/output/${lang}`,
         `:!${langFolder}/.github`,
         `:!${langFolder}/README.md`,
@@ -91,7 +94,7 @@ export const DEPENDENCIES = {
     'clients/algoliasearch-client-java/.java-version',
   ],
   DOCKER_RUBY_CHANGED: [...DOCKER_COMPOSE_DEPENDENCIES, 'scripts/docker/Dockerfile.ruby', 'config/.ruby-version'],
-  DOCKER_SWIFT_CHANGED: [...DOCKER_COMPOSE_DEPENDENCIES, 'scripts/docker/Dockerfile.swift', 'config/.swift-version'],
+  DOCKER_SWIFT_CHANGED: [...DOCKER_COMPOSE_DEPENDENCIES, 'scripts/docker/Dockerfile.swift', SWIFT_CI_VERSION_FILE],
 };
 
 export function getVersionFileForLanguage(lang: Language): string {

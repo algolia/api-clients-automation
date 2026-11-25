@@ -87,7 +87,7 @@
       ]
     },
     {
-      "description": "Move the swift docker tag and its config/.*-version file in one PR so scripts/docker/check-version-drift.sh stays green",
+      "description": "Move the swift docker tag and config/.swift-ci-version in one PR so scripts/docker/check-version-drift.sh stays green",
       "groupName": "swift language version",
       "matchDepNames": [
         "swift",
@@ -404,9 +404,9 @@
     },
     {
       "customType": "regex",
-      "description": "Update .swift-version",
+      "description": "Update the swift CI toolchain version, config/.swift-version is the published minimum and is bumped by hand",
       "managerFilePatterns": [
-        "/.swift-version/"
+        "/(^|/)\\.swift-ci-version$/"
       ],
       "matchStrings": [
         "(?<currentValue>.*)"
