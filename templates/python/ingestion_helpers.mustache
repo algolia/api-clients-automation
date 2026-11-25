@@ -47,11 +47,13 @@
                     _retry_count += 1
 
                 def _validate(_resp: Event | None) -> bool:
-                    if _resp is None or _resp.status is None or _resp.status in ("created", "started", "retried"):
+                    if _resp is None or _resp.status in ("created", "started", "retried"):
                         return False
-                    if _resp.status != "succeeded":
+                    if _resp.status is not None and _resp.status != "succeeded":
+                        _message = (_resp.data or {}).get("message")
+                        _reason = f": {_message}" if _message else ""
                         raise AlgoliaException(
-                            f"ingestion push to index {index_name} did not succeed: event {response.event_id} of run {response.run_id} has status {_resp.status}"
+                            f"ingestion push to index {index_name} did not succeed: event {response.event_id} of run {response.run_id} has status {_resp.status}{_reason}"
                         )
                     return True
 

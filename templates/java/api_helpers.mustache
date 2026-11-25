@@ -137,7 +137,6 @@ public <T> List<WatchResponse> chunkedPush(
             (Event resp) -> {
               if (
                 resp == null ||
-                resp.getStatus() == null ||
                 resp.getStatus() == EventStatus.CREATED ||
                 resp.getStatus() == EventStatus.STARTED ||
                 resp.getStatus() == EventStatus.RETRIED
@@ -145,7 +144,9 @@ public <T> List<WatchResponse> chunkedPush(
                 return false;
               }
 
-              if (resp.getStatus() != EventStatus.SUCCEEDED) {
+              if (resp.getStatus() != null && resp.getStatus() != EventStatus.SUCCEEDED) {
+                Object message = resp.getData() == null ? null : resp.getData().get("message");
+
                 throw new AlgoliaRuntimeException(
                   "ingestion push to index " +
                   indexName +
@@ -154,7 +155,8 @@ public <T> List<WatchResponse> chunkedPush(
                   " of run " +
                   response.getRunID() +
                   " has status " +
-                  resp.getStatus()
+                  resp.getStatus() +
+                  (message == null ? "" : ": " + message)
                 );
               }
 

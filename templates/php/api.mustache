@@ -470,14 +470,16 @@ use Algolia\AlgoliaSearch\Exceptions\NotFoundException;
                         $event = $this->getEvent($response['runID'], $response['eventID']);
                         $status = $event['status'] ?? null;
 
-                        if ('succeeded' === $status) {
+                        if (in_array($status, ['created', 'started', 'retried'], true)) {
+                            // still in progress, poll again
+                        } elseif (null === $status || 'succeeded' === $status) {
                             $ok = true;
 
                             break;
-                        }
+                        } else {
+                            $message = $event['data']['message'] ?? null;
 
-                        if (!in_array($status, [null, 'created', 'started', 'retried'], true)) {
-                            throw new AlgoliaException('ingestion push to index '.$indexName.' did not succeed: event '.$response['eventID'].' of run '.$response['runID'].' has status '.$status);
+                            throw new AlgoliaException('ingestion push to index '.$indexName.' did not succeed: event '.$response['eventID'].' of run '.$response['runID'].' has status '.$status.(is_string($message) && '' !== $message ? ': '.$message : ''));
                         }
                     } catch (NotFoundException $e) {
                         // just retry

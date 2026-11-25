@@ -168,19 +168,30 @@ public partial class IngestionClient : IIngestionClient
               },
               eventResponse =>
               {
-                var status = eventResponse?.Status;
+                if (eventResponse == null)
+                {
+                  return false;
+                }
+
+                var status = eventResponse.Status;
                 switch (status)
                 {
                   case null:
+                  case EventStatus.Succeeded:
+                    return true;
                   case EventStatus.Created:
                   case EventStatus.Started:
                   case EventStatus.Retried:
                     return false;
-                  case EventStatus.Succeeded:
-                    return true;
                   default:
+                    var reason =
+                      eventResponse.Data != null
+                      && eventResponse.Data.TryGetValue("message", out var message)
+                      && !string.IsNullOrEmpty(message?.ToString())
+                        ? $": {message}"
+                        : "";
                     throw new AlgoliaException(
-                      $"ingestion push to index {indexName} did not succeed: event {resp.EventID} of run {resp.RunID} has status {status.ToString().ToLowerInvariant()}"
+                      $"ingestion push to index {indexName} did not succeed: event {resp.EventID} of run {resp.RunID} has status {status.ToString().ToLowerInvariant()}{reason}"
                     );
                 }
               },

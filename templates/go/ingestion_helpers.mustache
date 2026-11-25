@@ -51,13 +51,20 @@ func (c *APIClient) ChunkedPush(indexName string, objects []map[string]any, acti
 					}
 
 					status := response.Status.Get()
-					if status == nil || *status == EVENT_STATUS_CREATED || *status == EVENT_STATUS_STARTED || *status == EVENT_STATUS_RETRIED {
+					if status == nil || *status == EVENT_STATUS_SUCCEEDED {
+						return true, nil
+					}
+
+					if *status == EVENT_STATUS_CREATED || *status == EVENT_STATUS_STARTED || *status == EVENT_STATUS_RETRIED {
 						return false, nil
 					}
 
-					if *status != EVENT_STATUS_SUCCEEDED {
-						return true, reportError("ingestion push to index %s did not succeed: event %s of run %s has status %s", indexName, *resp.EventID, resp.RunID, *status)
+					reason := ""
+					if message, ok := response.Data["message"].(string); ok && message != "" {
+						reason = ": " + message
 					}
+
+					return true, reportError("ingestion push to index %s did not succeed: event %s of run %s has status %s%s", indexName, *resp.EventID, resp.RunID, *status, reason)
 
 					return true, nil
 				},

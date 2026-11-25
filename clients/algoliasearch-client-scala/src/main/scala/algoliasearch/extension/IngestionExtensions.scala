@@ -117,15 +117,20 @@ trait IngestionExtensions {
                   case e: AlgoliaApiException if e.httpErrorCode == 404 => None
                 },
             until = (event: Option[IngestionEvent]) =>
-              event.flatMap(_.status) match {
-                case None | Some(null) | Some(IngestionEventStatus.Created) | Some(IngestionEventStatus.Started) |
-                    Some(IngestionEventStatus.Retried) =>
-                  false
-                case Some(IngestionEventStatus.Succeeded) => true
-                case Some(status) =>
-                  throw new AlgoliaClientException(
-                    s"ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status"
-                  )
+              event match {
+                case None => false
+                case Some(e) =>
+                  e.status match {
+                    case None | Some(null) | Some(IngestionEventStatus.Succeeded) => true
+                    case Some(IngestionEventStatus.Created) | Some(IngestionEventStatus.Started) |
+                        Some(IngestionEventStatus.Retried) =>
+                      false
+                    case Some(status) =>
+                      val reason = e.data.flatMap(_.get("message")).collect { case m: String if m.nonEmpty => s": $m" }
+                      throw new AlgoliaClientException(
+                        s"ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status${reason.getOrElse("")}"
+                      )
+                  }
               },
             maxRetries = maxRetries,
             delay = retries => math.min(retries * 1500, 5000L)

@@ -336,13 +336,26 @@ private func waitForIngestionEvent(
             case .none, .created, .started, .retried, .succeeded:
                 return event
             case let .some(status):
+                var reason = ""
+                if let message = event.data?["message"]?.value as? String, !message.isEmpty {
+                    reason = ": \(message)"
+                }
                 throw AlgoliaError.runtimeError(
-                    "ingestion push to index \(indexName) did not succeed: event \(eventID) of run \(runID) has status \(status.rawValue)"
+                    "ingestion push to index \(indexName) did not succeed: event \(eventID) of run \(runID) has status \(status.rawValue)\(reason)"
                 )
             }
         },
         validate: { response in
-            response?.status == .succeeded
+            guard let response else {
+                return false
+            }
+
+            switch response.status {
+            case .none, .succeeded:
+                return true
+            default:
+                return false
+            }
         },
         aggregator: { _ in
             retryCount += 1

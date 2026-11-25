@@ -103,6 +103,7 @@ function addRoutes(app: Express): void {
       runID: req.params.runID,
       type: 'record',
       batchSize: 1,
+      data: { message: 'unretryable error from the destination' },
       publishedAt: '2022-05-12T06:24:30.049Z',
     });
   });

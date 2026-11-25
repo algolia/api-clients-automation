@@ -287,16 +287,19 @@ Future<void> _waitForEvent({
       }
     },
     until: (event) {
-      final status = event?.status;
-      if (status == null ||
-          status == ingestion.EventStatus.created ||
+      if (event == null) return false;
+      final status = event.status;
+      if (status == null) return true;
+      if (status == ingestion.EventStatus.created ||
           status == ingestion.EventStatus.started ||
           status == ingestion.EventStatus.retried) {
         return false;
       }
       if (status != ingestion.EventStatus.succeeded) {
+        final message = event.data?['message'];
+        final reason = message is String && message.isNotEmpty ? ': $message' : '';
         throw StateError(
-            'ingestion push to index $indexName did not succeed: event $eventID of run $runID has status $status');
+            'ingestion push to index $indexName did not succeed: event $eventID of run $runID has status $status$reason');
       }
       return true;
     },

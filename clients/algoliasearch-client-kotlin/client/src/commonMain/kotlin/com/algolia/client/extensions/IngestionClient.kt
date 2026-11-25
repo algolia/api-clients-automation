@@ -15,6 +15,8 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 
 /**
@@ -105,16 +107,20 @@ private suspend fun IngestionClient.pollEvent(
         }
       },
       until = { result ->
-        when (val status = result.getOrNull()?.status) {
-          null,
+        val event = result.getOrNull()
+        when (val status = event?.status) {
           EventStatus.Created,
           EventStatus.Started,
           EventStatus.Retried -> false
+          null -> event != null
           EventStatus.Succeeded -> true
-          else ->
+          else -> {
+            val message = (event?.data?.get("message") as? JsonPrimitive)?.contentOrNull
+            val reason = if (message.isNullOrEmpty()) "" else ": $message"
             throw AlgoliaClientException(
-              "ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status"
+              "ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status$reason"
             )
+          }
         }
       },
       maxRetries = maxRetries,
