@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.29.0@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
 # versions must match the config/.*-version files (CI checks the drift), refresh pins with scripts/docker/update-pins.sh
-FROM dart:3.14.0@sha256:c78970229c8944bd6076caf4e5977ef569ba66750d301a2149f63b41a6725cec AS dart-builder
+FROM dart:3.14.1@sha256:95cfdb6a4b37150917161d2d097e4e74b706ede349423140b2a82c9ac4ee9f93 AS dart-builder
 FROM mcr.microsoft.com/dotnet/sdk:10.0.404@sha256:fe0fd4e93bd2fbb47c883b7a6369e5c8d3db8bf01cdc5981f6ee35fbdf3ff4fb AS csharp-builder
 FROM golang:1.27.4-alpine@sha256:0a5f7fe796599ff487605987432e7619ae45beeb2fba4c2ce0b907879932aebf AS go-builder
 FROM python:3.11.13-trixie@sha256:16e9aaa3fdc728525d4bf3ce02fc311a18c87222005facc3e3c2a5795d297fe1 AS python-builder
