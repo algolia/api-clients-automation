@@ -7,7 +7,10 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.*;
 import java.util.stream.StreamSupport;
+import org.openapitools.codegen.CodegenComposedSchemas;
+import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenProperty;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -220,8 +223,47 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
   public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
     Map<String, ModelsMap> models = super.postProcessAllModels(objs);
     GenericPropagator.propagateGenericsToModels(models);
+    markUnusedGenerics(models);
     EmptyObject.markModels(openAPI, models);
     return models;
+  }
+
+  /**
+   * A composed model (allOf/oneOf/anyOf) can be flagged as generic because of its own properties
+   * while none of its composed schemas actually forwards the `T`. The emitted type parameter is
+   * then unused, which linters strip (breaking references such as `Foo<T>`), so we flag it to be
+   * emitted as `_T`: positional type arguments keep working for consumers.
+   */
+  private void markUnusedGenerics(Map<String, ModelsMap> models) {
+    for (ModelsMap modelsMap : models.values()) {
+      for (ModelMap modelMap : modelsMap.getModels()) {
+        CodegenModel model = modelMap.getModel();
+        CodegenComposedSchemas composed = model.getComposedSchemas();
+        if (composed == null || model.interfaces == null || model.interfaces.isEmpty()) {
+          continue;
+        }
+        boolean hasGenericParameter =
+          (boolean) model.vendorExtensions.getOrDefault("x-has-child-generic", false) ||
+          (boolean) model.vendorExtensions.getOrDefault("x-is-generic", false);
+        if (!hasGenericParameter) {
+          continue;
+        }
+        boolean forwardsGeneric = false;
+        for (List<CodegenProperty> schemas : Arrays.asList(composed.getOneOf(), composed.getAllOf(), composed.getAnyOf())) {
+          if (schemas == null) {
+            continue;
+          }
+          for (CodegenProperty schema : schemas) {
+            if ((boolean) schema.vendorExtensions.getOrDefault("x-has-child-generic", false)) {
+              forwardsGeneric = true;
+            }
+          }
+        }
+        if (!forwardsGeneric) {
+          model.vendorExtensions.put("x-unused-generic", true);
+        }
+      }
+    }
   }
 
   /** Provides an opportunity to inspect and modify operation data before the code is generated. */
