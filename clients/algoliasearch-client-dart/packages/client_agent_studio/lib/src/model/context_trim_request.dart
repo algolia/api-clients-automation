@@ -48,6 +48,7 @@ final class ContextTrimRequest {
 
   @override
   int get hashCode =>
+      0 +
       messages.hashCode +
       keepLastMessages.hashCode +
       maxTokensEstimate.hashCode +

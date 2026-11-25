@@ -33,7 +33,7 @@ final class ShopifyMarket {
 
   @override
   int get hashCode =>
-      countries.hashCode + currencies.hashCode + locales.hashCode;
+      0 + countries.hashCode + currencies.hashCode + locales.hashCode;
 
   factory ShopifyMarket.fromJson(Map<String, dynamic> json) =>
       _$ShopifyMarketFromJson(json);

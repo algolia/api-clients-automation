@@ -22,7 +22,7 @@ final class DictionaryLanguage {
       other is DictionaryLanguage && other.nbCustomEntries == nbCustomEntries;
 
   @override
-  int get hashCode => nbCustomEntries.hashCode;
+  int get hashCode => 0 + nbCustomEntries.hashCode;
 
   factory DictionaryLanguage.fromJson(Map<String, dynamic> json) =>
       _$DictionaryLanguageFromJson(json);

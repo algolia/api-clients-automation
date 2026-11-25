@@ -22,7 +22,7 @@ final class HideConsequenceObject {
       other is HideConsequenceObject && other.objectID == objectID;
 
   @override
-  int get hashCode => objectID.hashCode;
+  int get hashCode => 0 + objectID.hashCode;
 
   factory HideConsequenceObject.fromJson(Map<String, dynamic> json) =>
       _$HideConsequenceObjectFromJson(json);

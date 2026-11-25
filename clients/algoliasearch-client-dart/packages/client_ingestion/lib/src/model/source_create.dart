@@ -51,6 +51,7 @@ final class SourceCreate {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       name.hashCode +
       input.hashCode +

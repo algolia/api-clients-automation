@@ -22,7 +22,7 @@ final class FetchedIndexAbTestTarget {
       other is FetchedIndexAbTestTarget && other.indexName == indexName;
 
   @override
-  int get hashCode => indexName.hashCode;
+  int get hashCode => 0 + indexName.hashCode;
 
   factory FetchedIndexAbTestTarget.fromJson(Map<String, dynamic> json) =>
       _$FetchedIndexAbTestTargetFromJson(json);

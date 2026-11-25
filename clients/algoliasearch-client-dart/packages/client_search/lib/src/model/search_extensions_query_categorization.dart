@@ -30,7 +30,7 @@ final class SearchExtensionsQueryCategorization {
 
   @override
   int get hashCode =>
-      enableCategoriesRetrieval.hashCode + enableAutoFiltering.hashCode;
+      0 + enableCategoriesRetrieval.hashCode + enableAutoFiltering.hashCode;
 
   factory SearchExtensionsQueryCategorization.fromJson(
           Map<String, dynamic> json) =>

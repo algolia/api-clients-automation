@@ -32,7 +32,7 @@ final class EstimateABTestRequest {
           other.variants == variants;
 
   @override
-  int get hashCode => configuration.hashCode + variants.hashCode;
+  int get hashCode => 0 + configuration.hashCode + variants.hashCode;
 
   factory EstimateABTestRequest.fromJson(Map<String, dynamic> json) =>
       _$EstimateABTestRequestFromJson(json);

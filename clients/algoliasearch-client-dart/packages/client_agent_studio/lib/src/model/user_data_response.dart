@@ -29,7 +29,7 @@ final class UserDataResponse {
           other.memories == memories;
 
   @override
-  int get hashCode => conversations.hashCode + memories.hashCode;
+  int get hashCode => 0 + conversations.hashCode + memories.hashCode;
 
   factory UserDataResponse.fromJson(Map<String, dynamic> json) =>
       _$UserDataResponseFromJson(json);

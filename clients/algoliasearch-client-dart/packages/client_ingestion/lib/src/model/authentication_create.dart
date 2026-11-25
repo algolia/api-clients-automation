@@ -49,6 +49,7 @@ final class AuthenticationCreate {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       name.hashCode +
       (platform == null ? 0 : platform.hashCode) +

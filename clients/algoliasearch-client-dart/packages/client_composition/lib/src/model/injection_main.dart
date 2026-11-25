@@ -25,7 +25,7 @@ final class InjectionMain {
       other is InjectionMain && other.source == source;
 
   @override
-  int get hashCode => source.hashCode;
+  int get hashCode => 0 + source.hashCode;
 
   factory InjectionMain.fromJson(Map<String, dynamic> json) =>
       _$InjectionMainFromJson(json);

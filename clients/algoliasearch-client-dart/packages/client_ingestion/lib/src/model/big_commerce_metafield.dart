@@ -29,7 +29,7 @@ final class BigCommerceMetafield {
           other.key == key;
 
   @override
-  int get hashCode => namespace.hashCode + key.hashCode;
+  int get hashCode => 0 + namespace.hashCode + key.hashCode;
 
   factory BigCommerceMetafield.fromJson(Map<String, dynamic> json) =>
       _$BigCommerceMetafieldFromJson(json);

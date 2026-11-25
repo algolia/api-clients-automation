@@ -49,6 +49,7 @@ final class InjectionMainRecommend {
 
   @override
   int get hashCode =>
+      0 +
       indexName.hashCode +
       model.hashCode +
       threshold.hashCode +

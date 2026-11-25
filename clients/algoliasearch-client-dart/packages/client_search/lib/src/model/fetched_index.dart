@@ -102,6 +102,7 @@ final class FetchedIndex {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       createdAt.hashCode +
       updatedAt.hashCode +

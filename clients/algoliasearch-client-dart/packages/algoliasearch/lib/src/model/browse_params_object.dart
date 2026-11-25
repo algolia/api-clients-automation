@@ -524,6 +524,7 @@ final class BrowseParamsObject {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       similarQuery.hashCode +
       filters.hashCode +

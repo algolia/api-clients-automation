@@ -35,7 +35,7 @@ final class RunListResponse {
           other.window == window;
 
   @override
-  int get hashCode => runs.hashCode + pagination.hashCode + window.hashCode;
+  int get hashCode => 0 + runs.hashCode + pagination.hashCode + window.hashCode;
 
   factory RunListResponse.fromJson(Map<String, dynamic> json) =>
       _$RunListResponseFromJson(json);

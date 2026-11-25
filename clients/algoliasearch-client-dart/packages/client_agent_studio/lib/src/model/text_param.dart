@@ -28,7 +28,7 @@ final class TextParam {
 
   @override
   int get hashCode =>
-      exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
+      0 + exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
 
   factory TextParam.fromJson(Map<String, dynamic> json) =>
       _$TextParamFromJson(json);

@@ -21,7 +21,7 @@ final class ResultCard {
       identical(this, other) || other is ResultCard && other.enabled == enabled;
 
   @override
-  int get hashCode => enabled.hashCode;
+  int get hashCode => 0 + enabled.hashCode;
 
   factory ResultCard.fromJson(Map<String, dynamic> json) =>
       _$ResultCardFromJson(json);

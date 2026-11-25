@@ -32,7 +32,8 @@ final class ClientToolsArgsSchema {
           other.required_ == required_;
 
   @override
-  int get hashCode => type.hashCode + properties.hashCode + required_.hashCode;
+  int get hashCode =>
+      0 + type.hashCode + properties.hashCode + required_.hashCode;
 
   factory ClientToolsArgsSchema.fromJson(Map<String, dynamic> json) =>
       _$ClientToolsArgsSchemaFromJson(json);

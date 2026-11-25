@@ -21,7 +21,7 @@ final class BaseProviderInput {
       other is BaseProviderInput && other.apiKey == apiKey;
 
   @override
-  int get hashCode => apiKey.hashCode;
+  int get hashCode => 0 + apiKey.hashCode;
 
   factory BaseProviderInput.fromJson(Map<String, dynamic> json) =>
       _$BaseProviderInputFromJson(json);

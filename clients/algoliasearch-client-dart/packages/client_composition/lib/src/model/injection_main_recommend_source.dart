@@ -22,7 +22,7 @@ final class InjectionMainRecommendSource {
       other is InjectionMainRecommendSource && other.recommend == recommend;
 
   @override
-  int get hashCode => recommend.hashCode;
+  int get hashCode => 0 + recommend.hashCode;
 
   factory InjectionMainRecommendSource.fromJson(Map<String, dynamic> json) =>
       _$InjectionMainRecommendSourceFromJson(json);

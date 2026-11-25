@@ -29,7 +29,7 @@ final class AuthAlgoliaPartial {
           other.apiKey == apiKey;
 
   @override
-  int get hashCode => appID.hashCode + apiKey.hashCode;
+  int get hashCode => 0 + appID.hashCode + apiKey.hashCode;
 
   factory AuthAlgoliaPartial.fromJson(Map<String, dynamic> json) =>
       _$AuthAlgoliaPartialFromJson(json);

@@ -30,7 +30,7 @@ final class FeatureSettings {
 
   @override
   int get hashCode =>
-      name.hashCode + (settings == null ? 0 : settings.hashCode);
+      0 + name.hashCode + (settings == null ? 0 : settings.hashCode);
 
   factory FeatureSettings.fromJson(Map<String, dynamic> json) =>
       _$FeatureSettingsFromJson(json);

@@ -21,7 +21,7 @@ final class DestinationSearch {
       other is DestinationSearch && other.destinationIDs == destinationIDs;
 
   @override
-  int get hashCode => destinationIDs.hashCode;
+  int get hashCode => 0 + destinationIDs.hashCode;
 
   factory DestinationSearch.fromJson(Map<String, dynamic> json) =>
       _$DestinationSearchFromJson(json);

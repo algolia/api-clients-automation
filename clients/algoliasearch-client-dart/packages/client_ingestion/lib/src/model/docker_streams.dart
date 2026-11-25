@@ -35,7 +35,8 @@ final class DockerStreams {
           other.syncMode == syncMode;
 
   @override
-  int get hashCode => name.hashCode + properties.hashCode + syncMode.hashCode;
+  int get hashCode =>
+      0 + name.hashCode + properties.hashCode + syncMode.hashCode;
 
   factory DockerStreams.fromJson(Map<String, dynamic> json) =>
       _$DockerStreamsFromJson(json);

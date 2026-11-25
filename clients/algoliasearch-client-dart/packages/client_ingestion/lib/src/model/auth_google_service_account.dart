@@ -29,7 +29,7 @@ final class AuthGoogleServiceAccount {
           other.privateKey == privateKey;
 
   @override
-  int get hashCode => clientEmail.hashCode + privateKey.hashCode;
+  int get hashCode => 0 + clientEmail.hashCode + privateKey.hashCode;
 
   factory AuthGoogleServiceAccount.fromJson(Map<String, dynamic> json) =>
       _$AuthGoogleServiceAccountFromJson(json);

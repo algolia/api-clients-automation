@@ -66,6 +66,7 @@ final class AlgoliaGroupedResultsToolConfig {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       isTerminal.hashCode +
       minGroups.hashCode +

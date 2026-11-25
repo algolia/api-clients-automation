@@ -54,6 +54,7 @@ final class TaskUpdateV1 {
 
   @override
   int get hashCode =>
+      0 +
       destinationID.hashCode +
       trigger.hashCode +
       input.hashCode +

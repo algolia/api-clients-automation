@@ -36,6 +36,7 @@ final class ReplaceAllObjectsWithTransformationResponse {
 
   @override
   int get hashCode =>
+      0 +
       copyOperationResponse.hashCode +
       watchResponses.hashCode +
       moveOperationResponse.hashCode;

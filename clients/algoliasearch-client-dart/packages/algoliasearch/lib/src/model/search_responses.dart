@@ -25,7 +25,7 @@ final class SearchResponses {
       other is SearchResponses && other.results == results;
 
   @override
-  int get hashCode => results.hashCode;
+  int get hashCode => 0 + results.hashCode;
 
   factory SearchResponses.fromJson(Map<String, dynamic> json) =>
       _$SearchResponsesFromJson(json);

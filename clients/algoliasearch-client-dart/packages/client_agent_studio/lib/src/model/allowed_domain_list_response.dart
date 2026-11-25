@@ -22,7 +22,7 @@ final class AllowedDomainListResponse {
       other is AllowedDomainListResponse && other.domains == domains;
 
   @override
-  int get hashCode => domains.hashCode;
+  int get hashCode => 0 + domains.hashCode;
 
   factory AllowedDomainListResponse.fromJson(Map<String, dynamic> json) =>
       _$AllowedDomainListResponseFromJson(json);

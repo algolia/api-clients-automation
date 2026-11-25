@@ -42,6 +42,7 @@ final class BayesianMetricResult {
 
   @override
   int get hashCode =>
+      0 +
       probabilityToBeBetter.hashCode +
       relativeEffectCILow.hashCode +
       relativeEffectCIHigh.hashCode +

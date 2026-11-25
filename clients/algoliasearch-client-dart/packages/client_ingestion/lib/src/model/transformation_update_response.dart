@@ -29,7 +29,7 @@ final class TransformationUpdateResponse {
           other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => transformationID.hashCode + updatedAt.hashCode;
+  int get hashCode => 0 + transformationID.hashCode + updatedAt.hashCode;
 
   factory TransformationUpdateResponse.fromJson(Map<String, dynamic> json) =>
       _$TransformationUpdateResponseFromJson(json);

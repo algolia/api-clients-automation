@@ -56,6 +56,7 @@ final class TransformationCreate {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       type.hashCode +
       input.hashCode +

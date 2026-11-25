@@ -52,6 +52,7 @@ final class SearchUserIdsResponse {
 
   @override
   int get hashCode =>
+      0 +
       hits.hashCode +
       nbHits.hashCode +
       page.hashCode +

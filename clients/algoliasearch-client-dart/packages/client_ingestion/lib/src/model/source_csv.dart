@@ -49,6 +49,7 @@ final class SourceCSV {
 
   @override
   int get hashCode =>
+      0 +
       url.hashCode +
       uniqueIDColumn.hashCode +
       mapping.hashCode +

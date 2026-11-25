@@ -22,7 +22,7 @@ final class CompositionMultifeedBehavior {
       other is CompositionMultifeedBehavior && other.multifeed == multifeed;
 
   @override
-  int get hashCode => multifeed.hashCode;
+  int get hashCode => 0 + multifeed.hashCode;
 
   factory CompositionMultifeedBehavior.fromJson(Map<String, dynamic> json) =>
       _$CompositionMultifeedBehaviorFromJson(json);

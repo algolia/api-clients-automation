@@ -50,6 +50,7 @@ final class TransformationTry {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       input.hashCode +
       sampleRecord.hashCode +

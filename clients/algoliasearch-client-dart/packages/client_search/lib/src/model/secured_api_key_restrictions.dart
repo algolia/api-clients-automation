@@ -54,6 +54,7 @@ final class SecuredApiKeyRestrictions {
 
   @override
   int get hashCode =>
+      0 +
       searchParams.hashCode +
       filters.hashCode +
       validUntil.hashCode +

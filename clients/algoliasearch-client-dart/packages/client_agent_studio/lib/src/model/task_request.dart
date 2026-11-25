@@ -42,7 +42,11 @@ final class TaskRequest {
 
   @override
   int get hashCode =>
-      task.hashCode + kind.hashCode + input.hashCode + configuration.hashCode;
+      0 +
+      task.hashCode +
+      kind.hashCode +
+      input.hashCode +
+      configuration.hashCode;
 
   factory TaskRequest.fromJson(Map<String, dynamic> json) =>
       _$TaskRequestFromJson(json);

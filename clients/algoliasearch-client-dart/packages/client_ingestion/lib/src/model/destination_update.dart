@@ -41,6 +41,7 @@ final class DestinationUpdate {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       input.hashCode +
       authenticationID.hashCode +

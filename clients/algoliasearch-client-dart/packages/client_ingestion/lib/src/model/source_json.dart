@@ -35,7 +35,8 @@ final class SourceJSON {
           other.method == method;
 
   @override
-  int get hashCode => url.hashCode + uniqueIDColumn.hashCode + method.hashCode;
+  int get hashCode =>
+      0 + url.hashCode + uniqueIDColumn.hashCode + method.hashCode;
 
   factory SourceJSON.fromJson(Map<String, dynamic> json) =>
       _$SourceJSONFromJson(json);

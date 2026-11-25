@@ -22,7 +22,7 @@ final class VariantMetadata {
       other is VariantMetadata && other.filterEffects == filterEffects;
 
   @override
-  int get hashCode => filterEffects.hashCode;
+  int get hashCode => 0 + filterEffects.hashCode;
 
   factory VariantMetadata.fromJson(Map<String, dynamic> json) =>
       _$VariantMetadataFromJson(json);

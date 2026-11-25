@@ -542,6 +542,7 @@ final class SearchForHits {
 
   @override
   int get hashCode =>
+      0 +
       params.hashCode +
       query.hashCode +
       similarQuery.hashCode +

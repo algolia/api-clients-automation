@@ -54,6 +54,7 @@ final class CompactionStats {
 
   @override
   int get hashCode =>
+      0 +
       compacted.hashCode +
       chunksProcessed.hashCode +
       passes.hashCode +

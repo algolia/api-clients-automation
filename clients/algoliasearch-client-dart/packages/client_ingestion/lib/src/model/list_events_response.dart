@@ -35,7 +35,8 @@ final class ListEventsResponse {
           other.window == window;
 
   @override
-  int get hashCode => events.hashCode + pagination.hashCode + window.hashCode;
+  int get hashCode =>
+      0 + events.hashCode + pagination.hashCode + window.hashCode;
 
   factory ListEventsResponse.fromJson(Map<String, dynamic> json) =>
       _$ListEventsResponseFromJson(json);

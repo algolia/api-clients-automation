@@ -34,7 +34,7 @@ final class OpenAICompatibleProviderInput {
 
   @override
   int get hashCode =>
-      apiKey.hashCode + baseUrl.hashCode + defaultModel.hashCode;
+      0 + apiKey.hashCode + baseUrl.hashCode + defaultModel.hashCode;
 
   factory OpenAICompatibleProviderInput.fromJson(Map<String, dynamic> json) =>
       _$OpenAICompatibleProviderInputFromJson(json);

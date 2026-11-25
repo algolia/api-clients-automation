@@ -63,6 +63,7 @@ final class Variant {
 
   @override
   int get hashCode =>
+      0 +
       description.hashCode +
       estimatedSampleSize.hashCode +
       index.hashCode +

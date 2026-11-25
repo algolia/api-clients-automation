@@ -35,7 +35,8 @@ final class UpdatedAtWithObjectIdResponse {
           other.objectID == objectID;
 
   @override
-  int get hashCode => taskID.hashCode + updatedAt.hashCode + objectID.hashCode;
+  int get hashCode =>
+      0 + taskID.hashCode + updatedAt.hashCode + objectID.hashCode;
 
   factory UpdatedAtWithObjectIdResponse.fromJson(Map<String, dynamic> json) =>
       _$UpdatedAtWithObjectIdResponseFromJson(json);

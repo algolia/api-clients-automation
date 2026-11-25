@@ -40,6 +40,7 @@ final class ContextResponse {
 
   @override
   int get hashCode =>
+      0 +
       messages.hashCode +
       stats.hashCode +
       (compaction == null ? 0 : compaction.hashCode);

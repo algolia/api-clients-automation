@@ -29,7 +29,7 @@ final class TransformationCreateResponse {
           other.createdAt == createdAt;
 
   @override
-  int get hashCode => transformationID.hashCode + createdAt.hashCode;
+  int get hashCode => 0 + transformationID.hashCode + createdAt.hashCode;
 
   factory TransformationCreateResponse.fromJson(Map<String, dynamic> json) =>
       _$TransformationCreateResponseFromJson(json);

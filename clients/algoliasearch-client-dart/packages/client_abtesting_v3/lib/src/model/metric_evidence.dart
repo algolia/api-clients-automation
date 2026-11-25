@@ -22,7 +22,7 @@ final class MetricEvidence {
       other is MetricEvidence && other.status == status;
 
   @override
-  int get hashCode => status.hashCode;
+  int get hashCode => 0 + status.hashCode;
 
   factory MetricEvidence.fromJson(Map<String, dynamic> json) =>
       _$MetricEvidenceFromJson(json);

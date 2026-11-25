@@ -22,7 +22,7 @@ final class BaseSearchSource {
       other is BaseSearchSource && other.index == index;
 
   @override
-  int get hashCode => index.hashCode;
+  int get hashCode => 0 + index.hashCode;
 
   factory BaseSearchSource.fromJson(Map<String, dynamic> json) =>
       _$BaseSearchSourceFromJson(json);

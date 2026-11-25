@@ -29,7 +29,7 @@ final class OnDemandTrigger {
           other.lastRun == lastRun;
 
   @override
-  int get hashCode => type.hashCode + lastRun.hashCode;
+  int get hashCode => 0 + type.hashCode + lastRun.hashCode;
 
   factory OnDemandTrigger.fromJson(Map<String, dynamic> json) =>
       _$OnDemandTriggerFromJson(json);

@@ -67,6 +67,7 @@ final class ApiKey {
 
   @override
   int get hashCode =>
+      0 +
       acl.hashCode +
       description.hashCode +
       indexes.hashCode +

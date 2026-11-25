@@ -27,7 +27,8 @@ final class RunProgress {
           other.receivedNbOfEvents == receivedNbOfEvents;
 
   @override
-  int get hashCode => expectedNbOfEvents.hashCode + receivedNbOfEvents.hashCode;
+  int get hashCode =>
+      0 + expectedNbOfEvents.hashCode + receivedNbOfEvents.hashCode;
 
   factory RunProgress.fromJson(Map<String, dynamic> json) =>
       _$RunProgressFromJson(json);

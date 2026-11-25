@@ -72,6 +72,7 @@ final class AgentConfigUpdate {
 
   @override
   int get hashCode =>
+      0 +
       (name == null ? 0 : name.hashCode) +
       (description == null ? 0 : description.hashCode) +
       (providerId == null ? 0 : providerId.hashCode) +

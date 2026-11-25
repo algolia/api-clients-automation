@@ -27,7 +27,7 @@ final class ReasoningPartV4 {
           other.reasoning == reasoning;
 
   @override
-  int get hashCode => type.hashCode + reasoning.hashCode;
+  int get hashCode => 0 + type.hashCode + reasoning.hashCode;
 
   factory ReasoningPartV4.fromJson(Map<String, dynamic> json) =>
       _$ReasoningPartV4FromJson(json);

@@ -65,6 +65,7 @@ final class SourceUpdateCommercetools {
 
   @override
   int get hashCode =>
+      0 +
       storeKeys.hashCode +
       locales.hashCode +
       url.hashCode +

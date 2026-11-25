@@ -37,7 +37,7 @@ final class Injection {
 
   @override
   int get hashCode =>
-      main.hashCode + injectedItems.hashCode + deduplication.hashCode;
+      0 + main.hashCode + injectedItems.hashCode + deduplication.hashCode;
 
   factory Injection.fromJson(Map<String, dynamic> json) =>
       _$InjectionFromJson(json);

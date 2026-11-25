@@ -29,7 +29,7 @@ final class ConflictResponse {
           other.message == message;
 
   @override
-  int get hashCode => status.hashCode + message.hashCode;
+  int get hashCode => 0 + status.hashCode + message.hashCode;
 
   factory ConflictResponse.fromJson(Map<String, dynamic> json) =>
       _$ConflictResponseFromJson(json);

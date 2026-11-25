@@ -37,7 +37,7 @@ final class Consequence {
           other.params == params;
 
   @override
-  int get hashCode => hide.hashCode + promote.hashCode + params.hashCode;
+  int get hashCode => 0 + hide.hashCode + promote.hashCode + params.hashCode;
 
   factory Consequence.fromJson(Map<String, dynamic> json) =>
       _$ConsequenceFromJson(json);

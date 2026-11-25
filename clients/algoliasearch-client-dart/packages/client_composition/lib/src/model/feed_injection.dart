@@ -22,7 +22,7 @@ final class FeedInjection {
       other is FeedInjection && other.injection == injection;
 
   @override
-  int get hashCode => injection.hashCode;
+  int get hashCode => 0 + injection.hashCode;
 
   factory FeedInjection.fromJson(Map<String, dynamic> json) =>
       _$FeedInjectionFromJson(json);

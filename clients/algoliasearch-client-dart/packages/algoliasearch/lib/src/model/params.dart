@@ -49,6 +49,7 @@ final class Params {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       automaticFacetFilters.hashCode +
       automaticOptionalFacetFilters.hashCode +

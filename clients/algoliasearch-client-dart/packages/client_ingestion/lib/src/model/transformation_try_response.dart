@@ -29,7 +29,7 @@ final class TransformationTryResponse {
           other.error == error;
 
   @override
-  int get hashCode => payloads.hashCode + error.hashCode;
+  int get hashCode => 0 + payloads.hashCode + error.hashCode;
 
   factory TransformationTryResponse.fromJson(Map<String, dynamic> json) =>
       _$TransformationTryResponseFromJson(json);

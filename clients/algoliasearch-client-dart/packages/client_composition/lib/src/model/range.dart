@@ -27,7 +27,7 @@ final class Range {
       other is Range && other.from == from && other.value == value;
 
   @override
-  int get hashCode => from.hashCode + value.hashCode;
+  int get hashCode => 0 + from.hashCode + value.hashCode;
 
   factory Range.fromJson(Map<String, dynamic> json) => _$RangeFromJson(json);
 

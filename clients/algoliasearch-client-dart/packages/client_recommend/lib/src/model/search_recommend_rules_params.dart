@@ -71,6 +71,7 @@ final class SearchRecommendRulesParams {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       context.hashCode +
       page.hashCode +

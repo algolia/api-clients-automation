@@ -36,7 +36,7 @@ final class MetricMetadata {
 
   @override
   int get hashCode =>
-      winsorizedValue.hashCode + mean.hashCode + userCount.hashCode;
+      0 + winsorizedValue.hashCode + mean.hashCode + userCount.hashCode;
 
   factory MetricMetadata.fromJson(Map<String, dynamic> json) =>
       _$MetricMetadataFromJson(json);

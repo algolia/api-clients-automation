@@ -49,6 +49,7 @@ final class FetchedIndexAbTest {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       version.hashCode +
       type.hashCode +

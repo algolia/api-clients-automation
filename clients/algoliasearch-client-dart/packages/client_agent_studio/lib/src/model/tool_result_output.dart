@@ -26,7 +26,7 @@ final class ToolResultOutput {
       other is ToolResultOutput && other.type == type && other.value == value;
 
   @override
-  int get hashCode => type.hashCode + (value == null ? 0 : value.hashCode);
+  int get hashCode => 0 + type.hashCode + (value == null ? 0 : value.hashCode);
 
   factory ToolResultOutput.fromJson(Map<String, dynamic> json) =>
       _$ToolResultOutputFromJson(json);

@@ -60,6 +60,7 @@ final class ContextCompactRequest {
 
   @override
   int get hashCode =>
+      0 +
       providerID.hashCode +
       model.hashCode +
       messages.hashCode +

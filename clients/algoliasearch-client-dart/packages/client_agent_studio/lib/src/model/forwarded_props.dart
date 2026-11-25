@@ -35,7 +35,7 @@ final class ForwardedProps {
 
   @override
   int get hashCode =>
-      algolia.hashCode + toolApprovals.hashCode + configuration.hashCode;
+      0 + algolia.hashCode + toolApprovals.hashCode + configuration.hashCode;
 
   factory ForwardedProps.fromJson(Map<String, dynamic> json) =>
       _$ForwardedPropsFromJson(json);

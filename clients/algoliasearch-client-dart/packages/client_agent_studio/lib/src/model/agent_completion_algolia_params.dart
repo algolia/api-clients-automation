@@ -35,6 +35,7 @@ final class AgentCompletionAlgoliaParams {
 
   @override
   int get hashCode =>
+      0 +
       mcpServers.hashCode +
       (searchParameters == null ? 0 : searchParameters.hashCode) +
       indices.hashCode;

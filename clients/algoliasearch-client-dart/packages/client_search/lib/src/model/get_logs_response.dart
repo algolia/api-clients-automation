@@ -21,7 +21,7 @@ final class GetLogsResponse {
       identical(this, other) || other is GetLogsResponse && other.logs == logs;
 
   @override
-  int get hashCode => logs.hashCode;
+  int get hashCode => 0 + logs.hashCode;
 
   factory GetLogsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetLogsResponseFromJson(json);

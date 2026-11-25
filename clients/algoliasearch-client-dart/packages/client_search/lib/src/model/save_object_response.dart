@@ -35,7 +35,8 @@ final class SaveObjectResponse {
           other.objectID == objectID;
 
   @override
-  int get hashCode => createdAt.hashCode + taskID.hashCode + objectID.hashCode;
+  int get hashCode =>
+      0 + createdAt.hashCode + taskID.hashCode + objectID.hashCode;
 
   factory SaveObjectResponse.fromJson(Map<String, dynamic> json) =>
       _$SaveObjectResponseFromJson(json);

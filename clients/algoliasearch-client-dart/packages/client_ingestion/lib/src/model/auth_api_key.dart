@@ -21,7 +21,7 @@ final class AuthAPIKey {
       identical(this, other) || other is AuthAPIKey && other.key == key;
 
   @override
-  int get hashCode => key.hashCode;
+  int get hashCode => 0 + key.hashCode;
 
   factory AuthAPIKey.fromJson(Map<String, dynamic> json) =>
       _$AuthAPIKeyFromJson(json);

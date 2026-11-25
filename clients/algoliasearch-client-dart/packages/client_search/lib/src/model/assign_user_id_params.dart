@@ -22,7 +22,7 @@ final class AssignUserIdParams {
       other is AssignUserIdParams && other.cluster == cluster;
 
   @override
-  int get hashCode => cluster.hashCode;
+  int get hashCode => 0 + cluster.hashCode;
 
   factory AssignUserIdParams.fromJson(Map<String, dynamic> json) =>
       _$AssignUserIdParamsFromJson(json);

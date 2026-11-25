@@ -31,7 +31,7 @@ final class MinimumDetectableEffect {
           other.metric == metric;
 
   @override
-  int get hashCode => size.hashCode + metric.hashCode;
+  int get hashCode => 0 + size.hashCode + metric.hashCode;
 
   factory MinimumDetectableEffect.fromJson(Map<String, dynamic> json) =>
       _$MinimumDetectableEffectFromJson(json);

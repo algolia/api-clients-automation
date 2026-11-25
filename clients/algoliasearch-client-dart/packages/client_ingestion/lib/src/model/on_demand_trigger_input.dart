@@ -22,7 +22,7 @@ final class OnDemandTriggerInput {
       other is OnDemandTriggerInput && other.type == type;
 
   @override
-  int get hashCode => type.hashCode;
+  int get hashCode => 0 + type.hashCode;
 
   factory OnDemandTriggerInput.fromJson(Map<String, dynamic> json) =>
       _$OnDemandTriggerInputFromJson(json);

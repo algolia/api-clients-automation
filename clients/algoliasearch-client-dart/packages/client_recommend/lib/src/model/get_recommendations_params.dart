@@ -28,7 +28,7 @@ final class GetRecommendationsParams {
       other is GetRecommendationsParams && other.requests == requests;
 
   @override
-  int get hashCode => requests.hashCode;
+  int get hashCode => 0 + requests.hashCode;
 
   factory GetRecommendationsParams.fromJson(Map<String, dynamic> json) =>
       _$GetRecommendationsParamsFromJson(json);

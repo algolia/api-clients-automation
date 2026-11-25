@@ -22,7 +22,7 @@ final class BatchParams {
       other is BatchParams && other.requests == requests;
 
   @override
-  int get hashCode => requests.hashCode;
+  int get hashCode => 0 + requests.hashCode;
 
   factory BatchParams.fromJson(Map<String, dynamic> json) =>
       _$BatchParamsFromJson(json);

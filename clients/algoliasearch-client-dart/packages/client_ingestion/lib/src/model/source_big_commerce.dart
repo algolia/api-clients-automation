@@ -46,6 +46,7 @@ final class SourceBigCommerce {
 
   @override
   int get hashCode =>
+      0 +
       storeHash.hashCode +
       channel.hashCode +
       customFields.hashCode +

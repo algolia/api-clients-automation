@@ -36,7 +36,7 @@ final class FrequentlyBoughtTogether {
 
   @override
   int get hashCode =>
-      model.hashCode + objectID.hashCode + fallbackParameters.hashCode;
+      0 + model.hashCode + objectID.hashCode + fallbackParameters.hashCode;
 
   factory FrequentlyBoughtTogether.fromJson(Map<String, dynamic> json) =>
       _$FrequentlyBoughtTogetherFromJson(json);

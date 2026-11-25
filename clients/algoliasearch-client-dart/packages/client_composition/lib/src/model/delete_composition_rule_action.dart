@@ -22,7 +22,7 @@ final class DeleteCompositionRuleAction {
       other is DeleteCompositionRuleAction && other.objectID == objectID;
 
   @override
-  int get hashCode => objectID.hashCode;
+  int get hashCode => 0 + objectID.hashCode;
 
   factory DeleteCompositionRuleAction.fromJson(Map<String, dynamic> json) =>
       _$DeleteCompositionRuleActionFromJson(json);

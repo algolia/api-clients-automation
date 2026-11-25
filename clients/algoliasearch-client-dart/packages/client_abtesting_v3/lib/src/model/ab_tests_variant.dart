@@ -38,7 +38,7 @@ final class AbTestsVariant {
 
   @override
   int get hashCode =>
-      index.hashCode + trafficPercentage.hashCode + description.hashCode;
+      0 + index.hashCode + trafficPercentage.hashCode + description.hashCode;
 
   factory AbTestsVariant.fromJson(Map<String, dynamic> json) =>
       _$AbTestsVariantFromJson(json);

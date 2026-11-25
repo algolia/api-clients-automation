@@ -57,6 +57,7 @@ final class McpServerToolConfig {
 
   @override
   int get hashCode =>
+      0 +
       url.hashCode +
       transport.hashCode +
       headers.hashCode +

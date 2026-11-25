@@ -21,7 +21,7 @@ final class FeedRequest {
       identical(this, other) || other is FeedRequest && other.params == params;
 
   @override
-  int get hashCode => params.hashCode;
+  int get hashCode => 0 + params.hashCode;
 
   factory FeedRequest.fromJson(Map<String, dynamic> json) =>
       _$FeedRequestFromJson(json);

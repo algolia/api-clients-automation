@@ -29,7 +29,7 @@ final class ListTasksResponse {
           other.pagination == pagination;
 
   @override
-  int get hashCode => tasks.hashCode + pagination.hashCode;
+  int get hashCode => 0 + tasks.hashCode + pagination.hashCode;
 
   factory ListTasksResponse.fromJson(Map<String, dynamic> json) =>
       _$ListTasksResponseFromJson(json);

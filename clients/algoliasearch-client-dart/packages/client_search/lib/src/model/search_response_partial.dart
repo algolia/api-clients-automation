@@ -228,6 +228,7 @@ final class SearchResponsePartial {
 
   @override
   int get hashCode =>
+      0 +
       abTestID.hashCode +
       abTestVariantID.hashCode +
       aroundLatLng.hashCode +

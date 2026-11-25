@@ -39,6 +39,7 @@ final class ToolCallAGUI {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       type.hashCode +
       function_.hashCode +

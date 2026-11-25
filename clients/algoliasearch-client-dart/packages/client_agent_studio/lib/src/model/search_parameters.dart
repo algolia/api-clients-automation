@@ -406,6 +406,7 @@ final class SearchParameters {
 
   @override
   int get hashCode =>
+      0 +
       (queryType == null ? 0 : queryType.hashCode) +
       (similarQuery == null ? 0 : similarQuery.hashCode) +
       (queryLanguages == null ? 0 : queryLanguages.hashCode) +

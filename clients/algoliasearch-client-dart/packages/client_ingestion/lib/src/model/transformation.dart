@@ -80,6 +80,7 @@ final class Transformation {
 
   @override
   int get hashCode =>
+      0 +
       transformationID.hashCode +
       authenticationIDs.hashCode +
       type.hashCode +

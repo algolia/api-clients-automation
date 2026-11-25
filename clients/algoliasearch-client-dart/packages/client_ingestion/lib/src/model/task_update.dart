@@ -71,6 +71,7 @@ final class TaskUpdate {
 
   @override
   int get hashCode =>
+      0 +
       destinationID.hashCode +
       cron.hashCode +
       input.hashCode +

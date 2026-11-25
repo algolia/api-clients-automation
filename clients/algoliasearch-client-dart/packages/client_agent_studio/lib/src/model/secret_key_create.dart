@@ -29,7 +29,7 @@ final class SecretKeyCreate {
           other.agentIds == agentIds;
 
   @override
-  int get hashCode => name.hashCode + agentIds.hashCode;
+  int get hashCode => 0 + name.hashCode + agentIds.hashCode;
 
   factory SecretKeyCreate.fromJson(Map<String, dynamic> json) =>
       _$SecretKeyCreateFromJson(json);

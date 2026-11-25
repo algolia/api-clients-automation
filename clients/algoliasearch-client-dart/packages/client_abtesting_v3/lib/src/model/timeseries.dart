@@ -30,7 +30,7 @@ final class Timeseries {
           other.variants == variants;
 
   @override
-  int get hashCode => abTestID.hashCode + variants.hashCode;
+  int get hashCode => 0 + abTestID.hashCode + variants.hashCode;
 
   factory Timeseries.fromJson(Map<String, dynamic> json) =>
       _$TimeseriesFromJson(json);

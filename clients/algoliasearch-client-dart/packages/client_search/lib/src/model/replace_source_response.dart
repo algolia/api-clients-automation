@@ -22,7 +22,7 @@ final class ReplaceSourceResponse {
       other is ReplaceSourceResponse && other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => updatedAt.hashCode;
+  int get hashCode => 0 + updatedAt.hashCode;
 
   factory ReplaceSourceResponse.fromJson(Map<String, dynamic> json) =>
       _$ReplaceSourceResponseFromJson(json);

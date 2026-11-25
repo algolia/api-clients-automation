@@ -33,7 +33,8 @@ final class AguiResume {
           other.payload == payload;
 
   @override
-  int get hashCode => interruptId.hashCode + status.hashCode + payload.hashCode;
+  int get hashCode =>
+      0 + interruptId.hashCode + status.hashCode + payload.hashCode;
 
   factory AguiResume.fromJson(Map<String, dynamic> json) =>
       _$AguiResumeFromJson(json);

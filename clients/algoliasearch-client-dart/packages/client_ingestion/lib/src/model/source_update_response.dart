@@ -35,7 +35,8 @@ final class SourceUpdateResponse {
           other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => sourceID.hashCode + name.hashCode + updatedAt.hashCode;
+  int get hashCode =>
+      0 + sourceID.hashCode + name.hashCode + updatedAt.hashCode;
 
   factory SourceUpdateResponse.fromJson(Map<String, dynamic> json) =>
       _$SourceUpdateResponseFromJson(json);

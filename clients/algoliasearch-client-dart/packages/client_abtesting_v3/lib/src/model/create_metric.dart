@@ -29,7 +29,7 @@ final class CreateMetric {
           other.dimension == dimension;
 
   @override
-  int get hashCode => name.hashCode + dimension.hashCode;
+  int get hashCode => 0 + name.hashCode + dimension.hashCode;
 
   factory CreateMetric.fromJson(Map<String, dynamic> json) =>
       _$CreateMetricFromJson(json);

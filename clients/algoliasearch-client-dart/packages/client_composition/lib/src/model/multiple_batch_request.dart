@@ -31,7 +31,7 @@ final class MultipleBatchRequest {
           other.body == body;
 
   @override
-  int get hashCode => action.hashCode + body.hashCode;
+  int get hashCode => 0 + action.hashCode + body.hashCode;
 
   factory MultipleBatchRequest.fromJson(Map<String, dynamic> json) =>
       _$MultipleBatchRequestFromJson(json);

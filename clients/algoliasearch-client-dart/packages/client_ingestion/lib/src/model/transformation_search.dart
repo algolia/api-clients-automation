@@ -22,7 +22,7 @@ final class TransformationSearch {
           other.transformationIDs == transformationIDs;
 
   @override
-  int get hashCode => transformationIDs.hashCode;
+  int get hashCode => 0 + transformationIDs.hashCode;
 
   factory TransformationSearch.fromJson(Map<String, dynamic> json) =>
       _$TransformationSearchFromJson(json);

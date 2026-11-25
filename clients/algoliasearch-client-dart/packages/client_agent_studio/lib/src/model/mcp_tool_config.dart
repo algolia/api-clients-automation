@@ -28,6 +28,7 @@ final class McpToolConfig {
 
   @override
   int get hashCode =>
+      0 +
       (requiresApproval == null ? 0 : requiresApproval.hashCode) +
       (alias == null ? 0 : alias.hashCode);
 

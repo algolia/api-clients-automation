@@ -42,6 +42,7 @@ final class FetchedIndexAbTestVariant {
 
   @override
   int get hashCode =>
+      0 +
       indexName.hashCode +
       percentage.hashCode +
       customSearchParameters.hashCode +

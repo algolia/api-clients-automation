@@ -22,7 +22,7 @@ final class AllowedDomainBulkDelete {
       other is AllowedDomainBulkDelete && other.domainIds == domainIds;
 
   @override
-  int get hashCode => domainIds.hashCode;
+  int get hashCode => 0 + domainIds.hashCode;
 
   factory AllowedDomainBulkDelete.fromJson(Map<String, dynamic> json) =>
       _$AllowedDomainBulkDeleteFromJson(json);

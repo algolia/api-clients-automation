@@ -50,6 +50,7 @@ final class Composition {
 
   @override
   int get hashCode =>
+      0 +
       objectID.hashCode +
       name.hashCode +
       description.hashCode +

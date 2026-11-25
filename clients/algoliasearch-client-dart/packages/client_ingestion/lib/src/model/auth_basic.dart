@@ -29,7 +29,7 @@ final class AuthBasic {
           other.password == password;
 
   @override
-  int get hashCode => username.hashCode + password.hashCode;
+  int get hashCode => 0 + username.hashCode + password.hashCode;
 
   factory AuthBasic.fromJson(Map<String, dynamic> json) =>
       _$AuthBasicFromJson(json);

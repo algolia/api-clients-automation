@@ -35,7 +35,7 @@ final class ABTestResponse {
           other.taskID == taskID;
 
   @override
-  int get hashCode => index.hashCode + abTestID.hashCode + taskID.hashCode;
+  int get hashCode => 0 + index.hashCode + abTestID.hashCode + taskID.hashCode;
 
   factory ABTestResponse.fromJson(Map<String, dynamic> json) =>
       _$ABTestResponseFromJson(json);

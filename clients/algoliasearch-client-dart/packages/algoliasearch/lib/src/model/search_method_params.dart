@@ -31,7 +31,7 @@ final class SearchMethodParams {
           other.strategy == strategy;
 
   @override
-  int get hashCode => requests.hashCode + strategy.hashCode;
+  int get hashCode => 0 + requests.hashCode + strategy.hashCode;
 
   factory SearchMethodParams.fromJson(Map<String, dynamic> json) =>
       _$SearchMethodParamsFromJson(json);

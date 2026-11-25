@@ -54,6 +54,7 @@ final class Instantsearch {
 
   @override
   int get hashCode =>
+      0 +
       eventName.hashCode +
       eventType.hashCode +
       userToken.hashCode +

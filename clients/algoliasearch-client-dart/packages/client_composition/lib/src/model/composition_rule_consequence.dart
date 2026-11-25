@@ -24,7 +24,7 @@ final class CompositionRuleConsequence {
       other is CompositionRuleConsequence && other.behavior == behavior;
 
   @override
-  int get hashCode => behavior.hashCode;
+  int get hashCode => 0 + behavior.hashCode;
 
   factory CompositionRuleConsequence.fromJson(Map<String, dynamic> json) =>
       _$CompositionRuleConsequenceFromJson(json);

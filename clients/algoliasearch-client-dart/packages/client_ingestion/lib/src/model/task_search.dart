@@ -20,7 +20,7 @@ final class TaskSearch {
       identical(this, other) || other is TaskSearch && other.taskIDs == taskIDs;
 
   @override
-  int get hashCode => taskIDs.hashCode;
+  int get hashCode => 0 + taskIDs.hashCode;
 
   factory TaskSearch.fromJson(Map<String, dynamic> json) =>
       _$TaskSearchFromJson(json);

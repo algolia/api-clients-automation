@@ -22,7 +22,7 @@ final class CustomSearchParams {
           other.customSearchParameters == customSearchParameters;
 
   @override
-  int get hashCode => customSearchParameters.hashCode;
+  int get hashCode => 0 + customSearchParameters.hashCode;
 
   factory CustomSearchParams.fromJson(Map<String, dynamic> json) =>
       _$CustomSearchParamsFromJson(json);

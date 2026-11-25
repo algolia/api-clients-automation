@@ -24,7 +24,7 @@ final class Policies {
       other is Policies && other.criticalThreshold == criticalThreshold;
 
   @override
-  int get hashCode => criticalThreshold.hashCode;
+  int get hashCode => 0 + criticalThreshold.hashCode;
 
   factory Policies.fromJson(Map<String, dynamic> json) =>
       _$PoliciesFromJson(json);

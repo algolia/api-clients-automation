@@ -37,7 +37,7 @@ final class OperationIndexParams {
 
   @override
   int get hashCode =>
-      operation.hashCode + destination.hashCode + scope.hashCode;
+      0 + operation.hashCode + destination.hashCode + scope.hashCode;
 
   factory OperationIndexParams.fromJson(Map<String, dynamic> json) =>
       _$OperationIndexParamsFromJson(json);

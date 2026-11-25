@@ -29,7 +29,7 @@ final class BatchResponse {
           other.objectIDs == objectIDs;
 
   @override
-  int get hashCode => taskID.hashCode + objectIDs.hashCode;
+  int get hashCode => 0 + taskID.hashCode + objectIDs.hashCode;
 
   factory BatchResponse.fromJson(Map<String, dynamic> json) =>
       _$BatchResponseFromJson(json);

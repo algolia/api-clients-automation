@@ -42,6 +42,7 @@ final class MappingKitAction {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       enabled.hashCode +
       trigger.hashCode +

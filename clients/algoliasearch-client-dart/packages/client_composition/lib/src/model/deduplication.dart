@@ -22,7 +22,7 @@ final class Deduplication {
       other is Deduplication && other.positioning == positioning;
 
   @override
-  int get hashCode => positioning.hashCode;
+  int get hashCode => 0 + positioning.hashCode;
 
   factory Deduplication.fromJson(Map<String, dynamic> json) =>
       _$DeduplicationFromJson(json);

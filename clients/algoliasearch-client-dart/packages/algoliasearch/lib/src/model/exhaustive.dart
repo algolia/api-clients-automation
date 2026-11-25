@@ -48,6 +48,7 @@ final class Exhaustive {
 
   @override
   int get hashCode =>
+      0 +
       facetsCount.hashCode +
       facetValues.hashCode +
       nbHits.hashCode +

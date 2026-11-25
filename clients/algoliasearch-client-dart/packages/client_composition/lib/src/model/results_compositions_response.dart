@@ -29,7 +29,7 @@ final class ResultsCompositionsResponse {
           other.compositions == compositions;
 
   @override
-  int get hashCode => feedID.hashCode + compositions.hashCode;
+  int get hashCode => 0 + feedID.hashCode + compositions.hashCode;
 
   factory ResultsCompositionsResponse.fromJson(Map<String, dynamic> json) =>
       _$ResultsCompositionsResponseFromJson(json);

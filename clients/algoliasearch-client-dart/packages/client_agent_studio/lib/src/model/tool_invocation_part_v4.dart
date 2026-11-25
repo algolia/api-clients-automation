@@ -28,7 +28,7 @@ final class ToolInvocationPartV4 {
           other.toolInvocation == toolInvocation;
 
   @override
-  int get hashCode => type.hashCode + toolInvocation.hashCode;
+  int get hashCode => 0 + type.hashCode + toolInvocation.hashCode;
 
   factory ToolInvocationPartV4.fromJson(Map<String, dynamic> json) =>
       _$ToolInvocationPartV4FromJson(json);

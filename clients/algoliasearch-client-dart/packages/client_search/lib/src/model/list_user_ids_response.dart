@@ -23,7 +23,7 @@ final class ListUserIdsResponse {
       other is ListUserIdsResponse && other.userIDs == userIDs;
 
   @override
-  int get hashCode => userIDs.hashCode;
+  int get hashCode => 0 + userIDs.hashCode;
 
   factory ListUserIdsResponse.fromJson(Map<String, dynamic> json) =>
       _$ListUserIdsResponseFromJson(json);

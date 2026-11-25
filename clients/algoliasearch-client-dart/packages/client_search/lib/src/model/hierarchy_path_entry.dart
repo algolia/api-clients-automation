@@ -35,7 +35,8 @@ final class HierarchyPathEntry {
           other.depth == depth;
 
   @override
-  int get hashCode => facetName.hashCode + facetValue.hashCode + depth.hashCode;
+  int get hashCode =>
+      0 + facetName.hashCode + facetValue.hashCode + depth.hashCode;
 
   factory HierarchyPathEntry.fromJson(Map<String, dynamic> json) =>
       _$HierarchyPathEntryFromJson(json);

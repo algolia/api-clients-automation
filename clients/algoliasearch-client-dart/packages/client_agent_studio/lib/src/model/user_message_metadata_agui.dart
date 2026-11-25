@@ -21,7 +21,7 @@ final class UserMessageMetadataAGUI {
       other is UserMessageMetadataAGUI && other.turnContext == turnContext;
 
   @override
-  int get hashCode => turnContext.hashCode;
+  int get hashCode => 0 + turnContext.hashCode;
 
   factory UserMessageMetadataAGUI.fromJson(Map<String, dynamic> json) =>
       _$UserMessageMetadataAGUIFromJson(json);

@@ -43,6 +43,7 @@ final class ToolCallResultPartAGUI {
 
   @override
   int get hashCode =>
+      0 +
       toolCallId.hashCode +
       state.hashCode +
       type.hashCode +

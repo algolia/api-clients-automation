@@ -36,7 +36,7 @@ final class DestinationCreateResponse {
 
   @override
   int get hashCode =>
-      destinationID.hashCode + name.hashCode + createdAt.hashCode;
+      0 + destinationID.hashCode + name.hashCode + createdAt.hashCode;
 
   factory DestinationCreateResponse.fromJson(Map<String, dynamic> json) =>
       _$DestinationCreateResponseFromJson(json);

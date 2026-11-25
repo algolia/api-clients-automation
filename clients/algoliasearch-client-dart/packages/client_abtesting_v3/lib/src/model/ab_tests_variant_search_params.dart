@@ -43,6 +43,7 @@ final class AbTestsVariantSearchParams {
 
   @override
   int get hashCode =>
+      0 +
       index.hashCode +
       trafficPercentage.hashCode +
       description.hashCode +

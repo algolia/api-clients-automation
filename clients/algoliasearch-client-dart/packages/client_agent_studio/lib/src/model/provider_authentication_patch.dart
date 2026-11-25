@@ -37,7 +37,9 @@ final class ProviderAuthenticationPatch {
 
   @override
   int get hashCode =>
-      (name == null ? 0 : name.hashCode) + (input == null ? 0 : input.hashCode);
+      0 +
+      (name == null ? 0 : name.hashCode) +
+      (input == null ? 0 : input.hashCode);
 
   factory ProviderAuthenticationPatch.fromJson(Map<String, dynamic> json) =>
       _$ProviderAuthenticationPatchFromJson(json);

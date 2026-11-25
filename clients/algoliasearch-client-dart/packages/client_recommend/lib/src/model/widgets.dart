@@ -30,7 +30,7 @@ final class Widgets {
           other.resultCard == resultCard;
 
   @override
-  int get hashCode => banners.hashCode + resultCard.hashCode;
+  int get hashCode => 0 + banners.hashCode + resultCard.hashCode;
 
   factory Widgets.fromJson(Map<String, dynamic> json) =>
       _$WidgetsFromJson(json);

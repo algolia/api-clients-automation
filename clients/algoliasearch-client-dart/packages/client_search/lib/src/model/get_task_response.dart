@@ -11,10 +11,16 @@ final class GetTaskResponse {
   /// Returns a new [GetTaskResponse] instance.
   const GetTaskResponse({
     required this.status,
+    this.pendingTask,
   });
 
   @JsonKey(name: r'status')
   final TaskStatus status;
+
+  /// Indicates whether the index has pending tasks. This value is deprecated and always `false`. Don't use it.
+  @Deprecated('pendingTask has been deprecated')
+  @JsonKey(name: r'pendingTask')
+  final bool? pendingTask;
 
   @override
   bool operator ==(Object other) =>
@@ -22,7 +28,7 @@ final class GetTaskResponse {
       other is GetTaskResponse && other.status == status;
 
   @override
-  int get hashCode => status.hashCode;
+  int get hashCode => 0 + status.hashCode;
 
   factory GetTaskResponse.fromJson(Map<String, dynamic> json) =>
       _$GetTaskResponseFromJson(json);

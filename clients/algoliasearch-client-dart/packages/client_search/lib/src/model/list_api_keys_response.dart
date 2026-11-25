@@ -23,7 +23,7 @@ final class ListApiKeysResponse {
       other is ListApiKeysResponse && other.keys == keys;
 
   @override
-  int get hashCode => keys.hashCode;
+  int get hashCode => 0 + keys.hashCode;
 
   factory ListApiKeysResponse.fromJson(Map<String, dynamic> json) =>
       _$ListApiKeysResponseFromJson(json);

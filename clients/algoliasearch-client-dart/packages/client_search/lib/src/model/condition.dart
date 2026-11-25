@@ -48,6 +48,7 @@ final class Condition {
 
   @override
   int get hashCode =>
+      0 +
       pattern.hashCode +
       anchoring.hashCode +
       alternatives.hashCode +

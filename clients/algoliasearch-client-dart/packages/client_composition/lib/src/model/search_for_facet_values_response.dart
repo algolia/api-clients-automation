@@ -23,7 +23,7 @@ final class SearchForFacetValuesResponse {
       other is SearchForFacetValuesResponse && other.results == results;
 
   @override
-  int get hashCode => results.hashCode;
+  int get hashCode => 0 + results.hashCode;
 
   factory SearchForFacetValuesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchForFacetValuesResponseFromJson(json);

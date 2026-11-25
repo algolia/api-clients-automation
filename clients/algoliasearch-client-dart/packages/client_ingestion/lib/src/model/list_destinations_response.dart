@@ -29,7 +29,7 @@ final class ListDestinationsResponse {
           other.pagination == pagination;
 
   @override
-  int get hashCode => destinations.hashCode + pagination.hashCode;
+  int get hashCode => 0 + destinations.hashCode + pagination.hashCode;
 
   factory ListDestinationsResponse.fromJson(Map<String, dynamic> json) =>
       _$ListDestinationsResponseFromJson(json);

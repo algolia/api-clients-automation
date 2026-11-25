@@ -30,7 +30,7 @@ final class EstimateConfiguration {
           other.minimumDetectableEffect == minimumDetectableEffect;
 
   @override
-  int get hashCode => filters.hashCode + minimumDetectableEffect.hashCode;
+  int get hashCode => 0 + filters.hashCode + minimumDetectableEffect.hashCode;
 
   factory EstimateConfiguration.fromJson(Map<String, dynamic> json) =>
       _$EstimateConfigurationFromJson(json);

@@ -63,6 +63,7 @@ final class ToolApprovalRequestPart {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       toolCallId.hashCode +
       toolName.hashCode +

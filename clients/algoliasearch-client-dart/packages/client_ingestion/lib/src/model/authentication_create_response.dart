@@ -36,7 +36,7 @@ final class AuthenticationCreateResponse {
 
   @override
   int get hashCode =>
-      authenticationID.hashCode + name.hashCode + createdAt.hashCode;
+      0 + authenticationID.hashCode + name.hashCode + createdAt.hashCode;
 
   factory AuthenticationCreateResponse.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationCreateResponseFromJson(json);

@@ -37,7 +37,8 @@ final class BaseRecommendSource {
           other.threshold == threshold;
 
   @override
-  int get hashCode => indexName.hashCode + model.hashCode + threshold.hashCode;
+  int get hashCode =>
+      0 + indexName.hashCode + model.hashCode + threshold.hashCode;
 
   factory BaseRecommendSource.fromJson(Map<String, dynamic> json) =>
       _$BaseRecommendSourceFromJson(json);

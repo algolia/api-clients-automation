@@ -20,7 +20,7 @@ final class TaskResponse {
       identical(this, other) || other is TaskResponse && other.output == output;
 
   @override
-  int get hashCode => output.hashCode;
+  int get hashCode => 0 + output.hashCode;
 
   factory TaskResponse.fromJson(Map<String, dynamic> json) =>
       _$TaskResponseFromJson(json);

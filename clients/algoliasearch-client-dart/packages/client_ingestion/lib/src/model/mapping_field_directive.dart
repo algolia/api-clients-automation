@@ -29,7 +29,7 @@ final class MappingFieldDirective {
           other.value == value;
 
   @override
-  int get hashCode => fieldKey.hashCode + value.hashCode;
+  int get hashCode => 0 + fieldKey.hashCode + value.hashCode;
 
   factory MappingFieldDirective.fromJson(Map<String, dynamic> json) =>
       _$MappingFieldDirectiveFromJson(json);

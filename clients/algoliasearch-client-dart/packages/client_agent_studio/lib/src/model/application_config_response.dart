@@ -22,7 +22,7 @@ final class ApplicationConfigResponse {
           other.maxRetentionDays == maxRetentionDays;
 
   @override
-  int get hashCode => maxRetentionDays.hashCode;
+  int get hashCode => 0 + maxRetentionDays.hashCode;
 
   factory ApplicationConfigResponse.fromJson(Map<String, dynamic> json) =>
       _$ApplicationConfigResponseFromJson(json);

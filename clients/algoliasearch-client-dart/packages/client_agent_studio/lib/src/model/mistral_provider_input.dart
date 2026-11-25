@@ -28,7 +28,7 @@ final class MistralProviderInput {
 
   @override
   int get hashCode =>
-      apiKey.hashCode + (baseUrl == null ? 0 : baseUrl.hashCode);
+      0 + apiKey.hashCode + (baseUrl == null ? 0 : baseUrl.hashCode);
 
   factory MistralProviderInput.fromJson(Map<String, dynamic> json) =>
       _$MistralProviderInputFromJson(json);

@@ -27,7 +27,7 @@ final class ScheduleTriggerInput {
       other is ScheduleTriggerInput && other.type == type && other.cron == cron;
 
   @override
-  int get hashCode => type.hashCode + cron.hashCode;
+  int get hashCode => 0 + type.hashCode + cron.hashCode;
 
   factory ScheduleTriggerInput.fromJson(Map<String, dynamic> json) =>
       _$ScheduleTriggerInputFromJson(json);

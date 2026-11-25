@@ -21,7 +21,7 @@ final class Notifications {
       identical(this, other) || other is Notifications && other.email == email;
 
   @override
-  int get hashCode => email.hashCode;
+  int get hashCode => 0 + email.hashCode;
 
   factory Notifications.fromJson(Map<String, dynamic> json) =>
       _$NotificationsFromJson(json);

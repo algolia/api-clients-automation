@@ -29,7 +29,7 @@ final class EstimateABTestResponse {
           other.sampleSizes == sampleSizes;
 
   @override
-  int get hashCode => durationDays.hashCode + sampleSizes.hashCode;
+  int get hashCode => 0 + durationDays.hashCode + sampleSizes.hashCode;
 
   factory EstimateABTestResponse.fromJson(Map<String, dynamic> json) =>
       _$EstimateABTestResponseFromJson(json);

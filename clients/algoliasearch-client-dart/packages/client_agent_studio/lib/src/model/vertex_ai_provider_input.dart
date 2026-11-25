@@ -39,6 +39,7 @@ final class VertexAIProviderInput {
 
   @override
   int get hashCode =>
+      0 +
       (apiKey == null ? 0 : apiKey.hashCode) +
       (project == null ? 0 : project.hashCode) +
       (location == null ? 0 : location.hashCode) +

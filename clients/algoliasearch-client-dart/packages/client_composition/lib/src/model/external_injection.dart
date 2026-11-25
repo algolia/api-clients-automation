@@ -29,7 +29,7 @@ final class ExternalInjection {
           other.metadata == metadata;
 
   @override
-  int get hashCode => objectID.hashCode + metadata.hashCode;
+  int get hashCode => 0 + objectID.hashCode + metadata.hashCode;
 
   factory ExternalInjection.fromJson(Map<String, dynamic> json) =>
       _$ExternalInjectionFromJson(json);

@@ -23,7 +23,7 @@ final class GetTopUserIdsResponse {
       other is GetTopUserIdsResponse && other.topUsers == topUsers;
 
   @override
-  int get hashCode => topUsers.hashCode;
+  int get hashCode => 0 + topUsers.hashCode;
 
   factory GetTopUserIdsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetTopUserIdsResponseFromJson(json);

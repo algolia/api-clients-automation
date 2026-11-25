@@ -76,6 +76,7 @@ final class TaskCreateV1 {
 
   @override
   int get hashCode =>
+      0 +
       sourceID.hashCode +
       destinationID.hashCode +
       trigger.hashCode +

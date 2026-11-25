@@ -29,7 +29,7 @@ final class SnippetResultOption {
           other.matchLevel == matchLevel;
 
   @override
-  int get hashCode => value.hashCode + matchLevel.hashCode;
+  int get hashCode => 0 + value.hashCode + matchLevel.hashCode;
 
   factory SnippetResultOption.fromJson(Map<String, dynamic> json) =>
       _$SnippetResultOptionFromJson(json);

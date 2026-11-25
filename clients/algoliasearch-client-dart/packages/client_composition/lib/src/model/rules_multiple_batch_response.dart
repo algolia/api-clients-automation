@@ -22,7 +22,7 @@ final class RulesMultipleBatchResponse {
       other is RulesMultipleBatchResponse && other.taskID == taskID;
 
   @override
-  int get hashCode => taskID.hashCode;
+  int get hashCode => 0 + taskID.hashCode;
 
   factory RulesMultipleBatchResponse.fromJson(Map<String, dynamic> json) =>
       _$RulesMultipleBatchResponseFromJson(json);

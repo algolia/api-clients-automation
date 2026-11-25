@@ -115,6 +115,7 @@ final class Log {
 
   @override
   int get hashCode =>
+      0 +
       cid.hashCode +
       timestamp.hashCode +
       method.hashCode +

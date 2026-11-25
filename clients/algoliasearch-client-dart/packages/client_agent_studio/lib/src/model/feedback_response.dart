@@ -63,6 +63,7 @@ final class FeedbackResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       agentId.hashCode +
       messageId.hashCode +

@@ -24,7 +24,7 @@ final class ApplicationConfigPatch {
 
   @override
   int get hashCode =>
-      (maxRetentionDays == null ? 0 : maxRetentionDays.hashCode);
+      0 + (maxRetentionDays == null ? 0 : maxRetentionDays.hashCode);
 
   factory ApplicationConfigPatch.fromJson(Map<String, dynamic> json) =>
       _$ApplicationConfigPatchFromJson(json);

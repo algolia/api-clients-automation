@@ -22,7 +22,7 @@ final class GlobalRequestScope {
       other is GlobalRequestScope && other.global == global;
 
   @override
-  int get hashCode => global.hashCode;
+  int get hashCode => 0 + global.hashCode;
 
   factory GlobalRequestScope.fromJson(Map<String, dynamic> json) =>
       _$GlobalRequestScopeFromJson(json);

@@ -29,7 +29,7 @@ final class FilterEffects {
           other.emptySearch == emptySearch;
 
   @override
-  int get hashCode => outliers.hashCode + emptySearch.hashCode;
+  int get hashCode => 0 + outliers.hashCode + emptySearch.hashCode;
 
   factory FilterEffects.fromJson(Map<String, dynamic> json) =>
       _$FilterEffectsFromJson(json);

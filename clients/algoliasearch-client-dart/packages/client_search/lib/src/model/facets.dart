@@ -21,7 +21,7 @@ final class Facets {
       identical(this, other) || other is Facets && other.order == order;
 
   @override
-  int get hashCode => order.hashCode;
+  int get hashCode => 0 + order.hashCode;
 
   factory Facets.fromJson(Map<String, dynamic> json) => _$FacetsFromJson(json);
 

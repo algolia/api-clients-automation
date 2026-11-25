@@ -22,7 +22,7 @@ final class RunTaskPayload {
       other is RunTaskPayload && other.runMetadata == runMetadata;
 
   @override
-  int get hashCode => runMetadata.hashCode;
+  int get hashCode => 0 + runMetadata.hashCode;
 
   factory RunTaskPayload.fromJson(Map<String, dynamic> json) =>
       _$RunTaskPayloadFromJson(json);

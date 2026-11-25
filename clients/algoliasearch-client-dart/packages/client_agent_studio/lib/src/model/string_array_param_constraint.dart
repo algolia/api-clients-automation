@@ -21,7 +21,7 @@ final class StringArrayParamConstraint {
       other is StringArrayParamConstraint && other.values == values;
 
   @override
-  int get hashCode => (values == null ? 0 : values.hashCode);
+  int get hashCode => 0 + (values == null ? 0 : values.hashCode);
 
   factory StringArrayParamConstraint.fromJson(Map<String, dynamic> json) =>
       _$StringArrayParamConstraintFromJson(json);

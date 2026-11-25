@@ -22,7 +22,7 @@ final class TaskIDResponse {
       other is TaskIDResponse && other.taskID == taskID;
 
   @override
-  int get hashCode => taskID.hashCode;
+  int get hashCode => 0 + taskID.hashCode;
 
   factory TaskIDResponse.fromJson(Map<String, dynamic> json) =>
       _$TaskIDResponseFromJson(json);

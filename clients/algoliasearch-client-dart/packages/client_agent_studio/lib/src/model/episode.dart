@@ -42,6 +42,7 @@ final class Episode {
 
   @override
   int get hashCode =>
+      0 +
       observation.hashCode +
       thoughts.hashCode +
       action.hashCode +

@@ -42,6 +42,7 @@ final class UserId {
 
   @override
   int get hashCode =>
+      0 +
       userID.hashCode +
       clusterName.hashCode +
       nbRecords.hashCode +

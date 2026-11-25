@@ -25,7 +25,7 @@ final class TextPartV4 {
       other is TextPartV4 && other.type == type && other.text == text;
 
   @override
-  int get hashCode => type.hashCode + text.hashCode;
+  int get hashCode => 0 + type.hashCode + text.hashCode;
 
   factory TextPartV4.fromJson(Map<String, dynamic> json) =>
       _$TextPartV4FromJson(json);

@@ -35,7 +35,8 @@ final class SourceCreateResponse {
           other.createdAt == createdAt;
 
   @override
-  int get hashCode => sourceID.hashCode + name.hashCode + createdAt.hashCode;
+  int get hashCode =>
+      0 + sourceID.hashCode + name.hashCode + createdAt.hashCode;
 
   factory SourceCreateResponse.fromJson(Map<String, dynamic> json) =>
       _$SourceCreateResponseFromJson(json);

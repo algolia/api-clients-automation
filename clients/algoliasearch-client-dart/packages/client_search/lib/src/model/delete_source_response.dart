@@ -22,7 +22,7 @@ final class DeleteSourceResponse {
       other is DeleteSourceResponse && other.deletedAt == deletedAt;
 
   @override
-  int get hashCode => deletedAt.hashCode;
+  int get hashCode => 0 + deletedAt.hashCode;
 
   factory DeleteSourceResponse.fromJson(Map<String, dynamic> json) =>
       _$DeleteSourceResponseFromJson(json);

@@ -30,6 +30,7 @@ final class SecretKeyPatch {
 
   @override
   int get hashCode =>
+      0 +
       (name == null ? 0 : name.hashCode) +
       (agentIds == null ? 0 : agentIds.hashCode);
 

@@ -40,7 +40,7 @@ final class AssistantMessageV5 {
 
   @override
   int get hashCode =>
-      (id == null ? 0 : id.hashCode) + role.hashCode + parts.hashCode;
+      0 + (id == null ? 0 : id.hashCode) + role.hashCode + parts.hashCode;
 
   factory AssistantMessageV5.fromJson(Map<String, dynamic> json) =>
       _$AssistantMessageV5FromJson(json);

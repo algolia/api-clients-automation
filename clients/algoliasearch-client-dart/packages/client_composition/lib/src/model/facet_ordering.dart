@@ -30,7 +30,7 @@ final class FacetOrdering {
           other.values == values;
 
   @override
-  int get hashCode => facets.hashCode + values.hashCode;
+  int get hashCode => 0 + facets.hashCode + values.hashCode;
 
   factory FacetOrdering.fromJson(Map<String, dynamic> json) =>
       _$FacetOrderingFromJson(json);

@@ -84,6 +84,7 @@ final class MetricResult {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       updatedAt.hashCode +
       value.hashCode +

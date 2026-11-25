@@ -57,6 +57,7 @@ final class SearchCompositionRulesParams {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       anchoring.hashCode +
       context.hashCode +

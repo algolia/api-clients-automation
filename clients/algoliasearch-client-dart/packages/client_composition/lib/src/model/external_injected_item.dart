@@ -22,7 +22,7 @@ final class ExternalInjectedItem {
       other is ExternalInjectedItem && other.items == items;
 
   @override
-  int get hashCode => items.hashCode;
+  int get hashCode => 0 + items.hashCode;
 
   factory ExternalInjectedItem.fromJson(Map<String, dynamic> json) =>
       _$ExternalInjectedItemFromJson(json);

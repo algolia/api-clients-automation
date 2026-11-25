@@ -58,6 +58,7 @@ final class AddABTestsRequest {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       hypothesis.hashCode +
       variants.hashCode +

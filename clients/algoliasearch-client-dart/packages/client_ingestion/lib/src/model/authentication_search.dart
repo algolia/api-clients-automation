@@ -22,7 +22,7 @@ final class AuthenticationSearch {
           other.authenticationIDs == authenticationIDs;
 
   @override
-  int get hashCode => authenticationIDs.hashCode;
+  int get hashCode => 0 + authenticationIDs.hashCode;
 
   factory AuthenticationSearch.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationSearchFromJson(json);

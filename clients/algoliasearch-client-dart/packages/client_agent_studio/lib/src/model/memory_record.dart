@@ -102,6 +102,7 @@ final class MemoryRecord {
 
   @override
   int get hashCode =>
+      0 +
       memoryType.hashCode +
       (episode == null ? 0 : episode.hashCode) +
       text.hashCode +

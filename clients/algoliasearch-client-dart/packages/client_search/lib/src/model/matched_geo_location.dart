@@ -35,7 +35,7 @@ final class MatchedGeoLocation {
           other.distance == distance;
 
   @override
-  int get hashCode => lat.hashCode + lng.hashCode + distance.hashCode;
+  int get hashCode => 0 + lat.hashCode + lng.hashCode + distance.hashCode;
 
   factory MatchedGeoLocation.fromJson(Map<String, dynamic> json) =>
       _$MatchedGeoLocationFromJson(json);

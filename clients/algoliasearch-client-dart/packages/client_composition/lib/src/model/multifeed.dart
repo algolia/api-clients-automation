@@ -30,7 +30,7 @@ final class Multifeed {
           other.feedsOrder == feedsOrder;
 
   @override
-  int get hashCode => feeds.hashCode + feedsOrder.hashCode;
+  int get hashCode => 0 + feeds.hashCode + feedsOrder.hashCode;
 
   factory Multifeed.fromJson(Map<String, dynamic> json) =>
       _$MultifeedFromJson(json);

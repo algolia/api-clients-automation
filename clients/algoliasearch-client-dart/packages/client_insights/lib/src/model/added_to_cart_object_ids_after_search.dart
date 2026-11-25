@@ -93,6 +93,7 @@ final class AddedToCartObjectIDsAfterSearch {
 
   @override
   int get hashCode =>
+      0 +
       eventName.hashCode +
       eventType.hashCode +
       eventSubtype.hashCode +

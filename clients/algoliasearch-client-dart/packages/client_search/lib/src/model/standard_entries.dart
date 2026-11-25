@@ -36,6 +36,7 @@ final class StandardEntries {
 
   @override
   int get hashCode =>
+      0 +
       (plurals == null ? 0 : plurals.hashCode) +
       (stopwords == null ? 0 : stopwords.hashCode) +
       (compounds == null ? 0 : compounds.hashCode);

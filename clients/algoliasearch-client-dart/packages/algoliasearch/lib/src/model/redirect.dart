@@ -21,7 +21,7 @@ final class Redirect {
       identical(this, other) || other is Redirect && other.index == index;
 
   @override
-  int get hashCode => index.hashCode;
+  int get hashCode => 0 + index.hashCode;
 
   factory Redirect.fromJson(Map<String, dynamic> json) =>
       _$RedirectFromJson(json);

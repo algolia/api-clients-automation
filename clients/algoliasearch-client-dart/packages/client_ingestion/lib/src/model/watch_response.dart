@@ -55,6 +55,7 @@ final class WatchResponse {
 
   @override
   int get hashCode =>
+      0 +
       runID.hashCode +
       eventID.hashCode +
       data.hashCode +

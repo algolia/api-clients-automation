@@ -425,6 +425,7 @@ final class SettingsResponse {
 
   @override
   int get hashCode =>
+      0 +
       attributesForFaceting.hashCode +
       replicas.hashCode +
       paginationLimitedTo.hashCode +

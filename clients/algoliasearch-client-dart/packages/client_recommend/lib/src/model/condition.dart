@@ -38,7 +38,7 @@ final class Condition {
 
   @override
   int get hashCode =>
-      filters.hashCode + context.hashCode + requestScope.hashCode;
+      0 + filters.hashCode + context.hashCode + requestScope.hashCode;
 
   factory Condition.fromJson(Map<String, dynamic> json) =>
       _$ConditionFromJson(json);

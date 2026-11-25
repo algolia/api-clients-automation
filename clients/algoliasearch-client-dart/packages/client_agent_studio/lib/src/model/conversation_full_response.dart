@@ -112,6 +112,7 @@ final class ConversationFullResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       agentId.hashCode +
       (title == null ? 0 : title.hashCode) +

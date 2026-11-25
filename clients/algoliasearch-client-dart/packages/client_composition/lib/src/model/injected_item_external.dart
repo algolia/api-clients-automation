@@ -35,7 +35,7 @@ final class InjectedItemExternal {
           other.params == params;
 
   @override
-  int get hashCode => index.hashCode + ordering.hashCode + params.hashCode;
+  int get hashCode => 0 + index.hashCode + ordering.hashCode + params.hashCode;
 
   factory InjectedItemExternal.fromJson(Map<String, dynamic> json) =>
       _$InjectedItemExternalFromJson(json);

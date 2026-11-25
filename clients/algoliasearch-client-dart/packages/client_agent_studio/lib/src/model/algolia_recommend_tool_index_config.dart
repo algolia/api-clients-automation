@@ -33,7 +33,7 @@ final class AlgoliaRecommendToolIndexConfig {
 
   @override
   int get hashCode =>
-      index.hashCode + modelName.hashCode + description.hashCode;
+      0 + index.hashCode + modelName.hashCode + description.hashCode;
 
   factory AlgoliaRecommendToolIndexConfig.fromJson(Map<String, dynamic> json) =>
       _$AlgoliaRecommendToolIndexConfigFromJson(json);

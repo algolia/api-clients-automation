@@ -23,7 +23,7 @@ final class ResultsCompositionInfoResponse {
           other.injectedItems == injectedItems;
 
   @override
-  int get hashCode => injectedItems.hashCode;
+  int get hashCode => 0 + injectedItems.hashCode;
 
   factory ResultsCompositionInfoResponse.fromJson(Map<String, dynamic> json) =>
       _$ResultsCompositionInfoResponseFromJson(json);

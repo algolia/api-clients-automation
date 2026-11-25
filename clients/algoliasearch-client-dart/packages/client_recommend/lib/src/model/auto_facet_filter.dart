@@ -29,7 +29,7 @@ final class AutoFacetFilter {
           other.negative == negative;
 
   @override
-  int get hashCode => facet.hashCode + negative.hashCode;
+  int get hashCode => 0 + facet.hashCode + negative.hashCode;
 
   factory AutoFacetFilter.fromJson(Map<String, dynamic> json) =>
       _$AutoFacetFilterFromJson(json);

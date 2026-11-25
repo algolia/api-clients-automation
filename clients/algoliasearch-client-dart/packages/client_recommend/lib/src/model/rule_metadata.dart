@@ -22,7 +22,7 @@ final class RuleMetadata {
       other is RuleMetadata && other.lastUpdate == lastUpdate;
 
   @override
-  int get hashCode => lastUpdate.hashCode;
+  int get hashCode => 0 + lastUpdate.hashCode;
 
   factory RuleMetadata.fromJson(Map<String, dynamic> json) =>
       _$RuleMetadataFromJson(json);

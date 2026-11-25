@@ -27,7 +27,7 @@ final class CompositionIdRankingInfo {
           other.injectedItemKey == injectedItemKey;
 
   @override
-  int get hashCode => index.hashCode + injectedItemKey.hashCode;
+  int get hashCode => 0 + index.hashCode + injectedItemKey.hashCode;
 
   factory CompositionIdRankingInfo.fromJson(Map<String, dynamic> json) =>
       _$CompositionIdRankingInfoFromJson(json);

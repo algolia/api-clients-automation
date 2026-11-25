@@ -23,7 +23,7 @@ final class GetDictionarySettingsResponse {
           other.disableStandardEntries == disableStandardEntries;
 
   @override
-  int get hashCode => disableStandardEntries.hashCode;
+  int get hashCode => 0 + disableStandardEntries.hashCode;
 
   factory GetDictionarySettingsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetDictionarySettingsResponseFromJson(json);

@@ -22,7 +22,7 @@ final class SearchParamsString {
       other is SearchParamsString && other.params == params;
 
   @override
-  int get hashCode => params.hashCode;
+  int get hashCode => 0 + params.hashCode;
 
   factory SearchParamsString.fromJson(Map<String, dynamic> json) =>
       _$SearchParamsStringFromJson(json);

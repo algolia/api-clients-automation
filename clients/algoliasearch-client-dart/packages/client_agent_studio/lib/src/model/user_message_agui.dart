@@ -50,6 +50,7 @@ final class UserMessageAGUI {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       role.hashCode +
       (parts == null ? 0 : parts.hashCode) +

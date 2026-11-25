@@ -27,7 +27,7 @@ final class FunctionCallAGUI {
           other.arguments == arguments;
 
   @override
-  int get hashCode => name.hashCode + arguments.hashCode;
+  int get hashCode => 0 + name.hashCode + arguments.hashCode;
 
   factory FunctionCallAGUI.fromJson(Map<String, dynamic> json) =>
       _$FunctionCallAGUIFromJson(json);

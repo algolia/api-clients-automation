@@ -36,7 +36,7 @@ final class LogQuery {
 
   @override
   int get hashCode =>
-      indexName.hashCode + userToken.hashCode + queryId.hashCode;
+      0 + indexName.hashCode + userToken.hashCode + queryId.hashCode;
 
   factory LogQuery.fromJson(Map<String, dynamic> json) =>
       _$LogQueryFromJson(json);

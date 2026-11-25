@@ -58,6 +58,7 @@ final class SecretKeyResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       name.hashCode +
       value.hashCode +

@@ -29,7 +29,7 @@ final class HasPendingMappingsResponse {
           other.clusters == clusters;
 
   @override
-  int get hashCode => pending.hashCode + clusters.hashCode;
+  int get hashCode => 0 + pending.hashCode + clusters.hashCode;
 
   factory HasPendingMappingsResponse.fromJson(Map<String, dynamic> json) =>
       _$HasPendingMappingsResponseFromJson(json);

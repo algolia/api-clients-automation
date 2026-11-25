@@ -29,7 +29,7 @@ final class AddApiKeyResponse {
           other.createdAt == createdAt;
 
   @override
-  int get hashCode => key.hashCode + createdAt.hashCode;
+  int get hashCode => 0 + key.hashCode + createdAt.hashCode;
 
   factory AddApiKeyResponse.fromJson(Map<String, dynamic> json) =>
       _$AddApiKeyResponseFromJson(json);

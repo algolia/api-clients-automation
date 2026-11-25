@@ -29,7 +29,7 @@ final class Source {
           other.description == description;
 
   @override
-  int get hashCode => source.hashCode + description.hashCode;
+  int get hashCode => 0 + source.hashCode + description.hashCode;
 
   factory Source.fromJson(Map<String, dynamic> json) => _$SourceFromJson(json);
 

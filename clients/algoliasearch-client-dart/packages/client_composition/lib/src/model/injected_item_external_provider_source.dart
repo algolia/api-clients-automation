@@ -23,7 +23,7 @@ final class InjectedItemExternalProviderSource {
           other.externalProvider == externalProvider;
 
   @override
-  int get hashCode => externalProvider.hashCode;
+  int get hashCode => 0 + externalProvider.hashCode;
 
   factory InjectedItemExternalProviderSource.fromJson(
           Map<String, dynamic> json) =>

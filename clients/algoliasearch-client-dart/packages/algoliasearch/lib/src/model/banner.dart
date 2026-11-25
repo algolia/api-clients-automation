@@ -27,7 +27,7 @@ final class Banner {
       other is Banner && other.image == image && other.link == link;
 
   @override
-  int get hashCode => image.hashCode + link.hashCode;
+  int get hashCode => 0 + image.hashCode + link.hashCode;
 
   factory Banner.fromJson(Map<String, dynamic> json) => _$BannerFromJson(json);
 

@@ -20,7 +20,7 @@ final class StartStepPart {
       identical(this, other) || other is StartStepPart && other.type == type;
 
   @override
-  int get hashCode => type.hashCode;
+  int get hashCode => 0 + type.hashCode;
 
   factory StartStepPart.fromJson(Map<String, dynamic> json) =>
       _$StartStepPartFromJson(json);

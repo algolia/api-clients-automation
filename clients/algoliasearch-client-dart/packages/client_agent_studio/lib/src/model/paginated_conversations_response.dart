@@ -35,7 +35,7 @@ final class PaginatedConversationsResponse {
 
   @override
   int get hashCode =>
-      data.hashCode + pagination.hashCode + analyticsDegraded.hashCode;
+      0 + data.hashCode + pagination.hashCode + analyticsDegraded.hashCode;
 
   factory PaginatedConversationsResponse.fromJson(Map<String, dynamic> json) =>
       _$PaginatedConversationsResponseFromJson(json);

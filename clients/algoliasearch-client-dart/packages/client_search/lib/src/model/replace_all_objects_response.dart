@@ -36,6 +36,7 @@ final class ReplaceAllObjectsResponse {
 
   @override
   int get hashCode =>
+      0 +
       copyOperationResponse.hashCode +
       batchResponses.hashCode +
       moveOperationResponse.hashCode;

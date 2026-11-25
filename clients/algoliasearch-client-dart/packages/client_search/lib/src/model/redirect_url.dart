@@ -20,7 +20,7 @@ final class RedirectURL {
       identical(this, other) || other is RedirectURL && other.url == url;
 
   @override
-  int get hashCode => url.hashCode;
+  int get hashCode => 0 + url.hashCode;
 
   factory RedirectURL.fromJson(Map<String, dynamic> json) =>
       _$RedirectURLFromJson(json);

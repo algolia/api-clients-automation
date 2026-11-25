@@ -35,7 +35,8 @@ final class AutomaticFacetFilter {
           other.disjunctive == disjunctive;
 
   @override
-  int get hashCode => facet.hashCode + score.hashCode + disjunctive.hashCode;
+  int get hashCode =>
+      0 + facet.hashCode + score.hashCode + disjunctive.hashCode;
 
   factory AutomaticFacetFilter.fromJson(Map<String, dynamic> json) =>
       _$AutomaticFacetFilterFromJson(json);

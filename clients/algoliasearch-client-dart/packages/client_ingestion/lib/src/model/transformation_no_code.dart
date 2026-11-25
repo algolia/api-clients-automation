@@ -21,7 +21,7 @@ final class TransformationNoCode {
       other is TransformationNoCode && other.steps == steps;
 
   @override
-  int get hashCode => steps.hashCode;
+  int get hashCode => 0 + steps.hashCode;
 
   factory TransformationNoCode.fromJson(Map<String, dynamic> json) =>
       _$TransformationNoCodeFromJson(json);

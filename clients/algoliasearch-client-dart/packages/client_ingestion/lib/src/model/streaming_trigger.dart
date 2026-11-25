@@ -21,7 +21,7 @@ final class StreamingTrigger {
       identical(this, other) || other is StreamingTrigger && other.type == type;
 
   @override
-  int get hashCode => type.hashCode;
+  int get hashCode => 0 + type.hashCode;
 
   factory StreamingTrigger.fromJson(Map<String, dynamic> json) =>
       _$StreamingTriggerFromJson(json);

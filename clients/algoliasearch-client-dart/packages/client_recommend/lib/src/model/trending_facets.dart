@@ -52,6 +52,7 @@ final class TrendingFacets {
 
   @override
   int get hashCode =>
+      0 +
       indexName.hashCode +
       threshold.hashCode +
       maxRecommendations.hashCode +

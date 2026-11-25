@@ -22,7 +22,7 @@ final class GetTaskResponse {
       other is GetTaskResponse && other.status == status;
 
   @override
-  int get hashCode => status.hashCode;
+  int get hashCode => 0 + status.hashCode;
 
   factory GetTaskResponse.fromJson(Map<String, dynamic> json) =>
       _$GetTaskResponseFromJson(json);

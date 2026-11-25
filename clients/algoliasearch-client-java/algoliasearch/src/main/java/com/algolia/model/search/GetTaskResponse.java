@@ -13,6 +13,9 @@ public class GetTaskResponse {
   @JsonProperty("status")
   private TaskStatus status;
 
+  @JsonProperty("pendingTask")
+  private Boolean pendingTask;
+
   public GetTaskResponse setStatus(TaskStatus status) {
     this.status = status;
     return this;
@@ -24,6 +27,23 @@ public class GetTaskResponse {
     return status;
   }
 
+  public GetTaskResponse setPendingTask(Boolean pendingTask) {
+    this.pendingTask = pendingTask;
+    return this;
+  }
+
+  /**
+   * Indicates whether the index has pending tasks. This value is deprecated and always `false`.
+   * Don't use it.
+   *
+   * @deprecated
+   */
+  @Deprecated
+  @javax.annotation.Nullable
+  public Boolean getPendingTask() {
+    return pendingTask;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -33,12 +53,12 @@ public class GetTaskResponse {
       return false;
     }
     GetTaskResponse getTaskResponse = (GetTaskResponse) o;
-    return Objects.equals(this.status, getTaskResponse.status);
+    return Objects.equals(this.status, getTaskResponse.status) && Objects.equals(this.pendingTask, getTaskResponse.pendingTask);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status);
+    return Objects.hash(status, pendingTask);
   }
 
   @Override
@@ -46,6 +66,7 @@ public class GetTaskResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetTaskResponse {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    pendingTask: ").append(toIndentedString(pendingTask)).append("\n");
     sb.append("}");
     return sb.toString();
   }
