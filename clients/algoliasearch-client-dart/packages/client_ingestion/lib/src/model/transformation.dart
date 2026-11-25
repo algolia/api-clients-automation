@@ -70,6 +70,7 @@ final class Transformation {
       other is Transformation &&
           other.transformationID == transformationID &&
           other.authenticationIDs == authenticationIDs &&
+          other.code == code &&
           other.type == type &&
           other.input == input &&
           other.name == name &&
@@ -82,6 +83,7 @@ final class Transformation {
   int get hashCode =>
       transformationID.hashCode +
       authenticationIDs.hashCode +
+      code.hashCode +
       type.hashCode +
       input.hashCode +
       name.hashCode +

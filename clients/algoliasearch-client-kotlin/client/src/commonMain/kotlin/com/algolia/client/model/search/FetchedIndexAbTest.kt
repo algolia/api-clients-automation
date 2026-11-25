@@ -8,7 +8,9 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
 /**
- * A/B test metadata. Only present if the index is part of an active A/B test.
+ * A/B test metadata. Only present if the index is part of an active A/B test. This field is
+ * deprecated and can be missing even when the index is part of an active A/B test. To list your A/B
+ * tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
  *
  * @param id A/B test ID.
  * @param variants A/B test variants.
@@ -17,6 +19,7 @@ import kotlinx.serialization.json.*
  *   `index-configuration`.
  * @param target
  */
+@Deprecated(message = "This schema is deprecated.")
 @Serializable
 public data class FetchedIndexAbTest(
 

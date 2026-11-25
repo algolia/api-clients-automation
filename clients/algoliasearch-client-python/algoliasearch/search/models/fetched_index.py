@@ -73,7 +73,7 @@ class FetchedIndex(BaseModel):
     """ Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas). """
     ab_test: Optional[FetchedIndexAbTest] = None
     source_ab_test: Optional[str] = None
-    """ Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index. """
+    """ Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.  """
 
     model_config = ConfigDict(
         strict=False,

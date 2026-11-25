@@ -31,9 +31,13 @@ public struct FetchedIndex: Codable, JSONEncodable {
     public var replicas: [String]?
     /// Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
     public var virtual: Bool?
+    @available(*, deprecated, message: "This property is deprecated.")
     public var abTest: FetchedIndexAbTest?
     /// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test
-    /// configured on another index.
+    /// configured on another index.  This field is deprecated and can be missing even when this index participates in
+    /// an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing
+    /// API v3 (`GET /3/abtests`) instead.
+    @available(*, deprecated, message: "This property is deprecated.")
     public var sourceABTest: String?
 
     public init(

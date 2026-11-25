@@ -208,7 +208,12 @@ public class FetchedIndex {
     return this;
   }
 
-  /** Get abTest */
+  /**
+   * Get abTest
+   *
+   * @deprecated
+   */
+  @Deprecated
   @javax.annotation.Nullable
   public FetchedIndexAbTest getAbTest() {
     return abTest;
@@ -221,8 +226,13 @@ public class FetchedIndex {
 
   /**
    * Name of the index that owns the A/B test configuration. Only present when this index
-   * participates in an A/B test configured on another index.
+   * participates in an A/B test configured on another index. This field is deprecated and can be
+   * missing even when this index participates in an A/B test configured on another index. To list
+   * your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
+   *
+   * @deprecated
    */
+  @Deprecated
   @javax.annotation.Nullable
   public String getSourceABTest() {
     return sourceABTest;

@@ -43,6 +43,7 @@ final class TransformationTry {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TransformationTry &&
+          other.code == code &&
           other.type == type &&
           other.input == input &&
           other.sampleRecord == sampleRecord &&
@@ -50,6 +51,7 @@ final class TransformationTry {
 
   @override
   int get hashCode =>
+      code.hashCode +
       type.hashCode +
       input.hashCode +
       sampleRecord.hashCode +

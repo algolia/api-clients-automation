@@ -9,7 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** A/B test metadata. Only present if the index is part of an active A/B test. */
+/**
+ * A/B test metadata. Only present if the index is part of an active A/B test. This field is
+ * deprecated and can be missing even when the index is part of an active A/B test. To list your A/B
+ * tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
+ *
+ * @deprecated
+ */
+@Deprecated
 public class FetchedIndexAbTest {
 
   @JsonProperty("id")

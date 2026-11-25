@@ -74,10 +74,12 @@ final class FetchedIndex {
   @JsonKey(name: r'virtual')
   final bool? virtual;
 
+  @Deprecated('abTest has been deprecated')
   @JsonKey(name: r'abTest')
   final FetchedIndexAbTest? abTest;
 
-  /// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+  /// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
+  @Deprecated('sourceABTest has been deprecated')
   @JsonKey(name: r'sourceABTest')
   final String? sourceABTest;
 

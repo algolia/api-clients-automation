@@ -29,7 +29,10 @@ import kotlinx.serialization.json.*
  *   [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
  * @param abTest
  * @param sourceABTest Name of the index that owns the A/B test configuration. Only present when
- *   this index participates in an A/B test configured on another index.
+ *   this index participates in an A/B test configured on another index. This field is deprecated
+ *   and can be missing even when this index participates in an A/B test configured on another
+ *   index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET
+ *   /3/abtests`) instead.
  */
 @Serializable
 public data class FetchedIndex(
@@ -78,11 +81,17 @@ public data class FetchedIndex(
    * [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
    */
   @SerialName(value = "virtual") val virtual: Boolean? = null,
-  @SerialName(value = "abTest") val abTest: FetchedIndexAbTest? = null,
+  @Deprecated(message = "This property is deprecated.")
+  @SerialName(value = "abTest")
+  val abTest: FetchedIndexAbTest? = null,
 
   /**
    * Name of the index that owns the A/B test configuration. Only present when this index
-   * participates in an A/B test configured on another index.
+   * participates in an A/B test configured on another index. This field is deprecated and can be
+   * missing even when this index participates in an A/B test configured on another index. To list
+   * your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
    */
-  @SerialName(value = "sourceABTest") val sourceABTest: String? = null,
+  @Deprecated(message = "This property is deprecated.")
+  @SerialName(value = "sourceABTest")
+  val sourceABTest: String? = null,
 ) {}

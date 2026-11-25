@@ -9361,7 +9361,8 @@
       "fetchedIndexAbTest": {
         "title": "abTest",
         "type": "object",
-        "description": "A/B test metadata. Only present if the index is part of an active A/B test.",
+        "deprecated": true,
+        "description": "A/B test metadata. Only present if the index is part of an active A/B test.\n\nThis field is deprecated and can be missing even when the index is part of an active A/B test.\nTo list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.\n",
         "properties": {
           "id": {
             "type": "integer",
@@ -9471,7 +9472,8 @@
           },
           "sourceABTest": {
             "type": "string",
-            "description": "Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.",
+            "deprecated": true,
+            "description": "Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.\n\nThis field is deprecated and can be missing even when this index participates in an A/B test configured on another index.\nTo list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.\n",
             "example": "movies_dev_a"
           }
         },

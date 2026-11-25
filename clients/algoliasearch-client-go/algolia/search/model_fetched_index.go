@@ -40,10 +40,12 @@ type FetchedIndex struct {
 	// Example: ["T02_push","T2replica"]
 	Replicas []string `json:"replicas,omitempty"`
 	// Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-	Virtual *bool               `json:"virtual,omitempty"`
-	AbTest  *FetchedIndexAbTest `json:"abTest,omitempty"`
-	// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+	Virtual *bool `json:"virtual,omitempty"`
+	// Deprecated
+	AbTest *FetchedIndexAbTest `json:"abTest,omitempty"`
+	// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
 	// Example: movies_dev_a
+	// Deprecated
 	SourceABTest *string `json:"sourceABTest,omitempty"`
 }
 
@@ -482,6 +484,7 @@ func (o *FetchedIndex) SetVirtual(v bool) *FetchedIndex {
 }
 
 // GetAbTest returns the AbTest field value if set, zero value otherwise.
+// Deprecated.
 func (o *FetchedIndex) GetAbTest() FetchedIndexAbTest {
 	if o == nil || o.AbTest == nil {
 		var ret FetchedIndexAbTest
@@ -494,6 +497,7 @@ func (o *FetchedIndex) GetAbTest() FetchedIndexAbTest {
 
 // GetAbTestOk returns a tuple with the AbTest field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated.
 func (o *FetchedIndex) GetAbTestOk() (*FetchedIndexAbTest, bool) {
 	if o == nil || o.AbTest == nil {
 		return nil, false
@@ -512,6 +516,7 @@ func (o *FetchedIndex) HasAbTest() bool {
 }
 
 // SetAbTest gets a reference to the given FetchedIndexAbTest and assigns it to the AbTest field.
+// Deprecated.
 func (o *FetchedIndex) SetAbTest(v *FetchedIndexAbTest) *FetchedIndex {
 	o.AbTest = v
 
@@ -519,6 +524,7 @@ func (o *FetchedIndex) SetAbTest(v *FetchedIndexAbTest) *FetchedIndex {
 }
 
 // GetSourceABTest returns the SourceABTest field value if set, zero value otherwise.
+// Deprecated.
 func (o *FetchedIndex) GetSourceABTest() string {
 	if o == nil || o.SourceABTest == nil {
 		var ret string
@@ -531,6 +537,7 @@ func (o *FetchedIndex) GetSourceABTest() string {
 
 // GetSourceABTestOk returns a tuple with the SourceABTest field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated.
 func (o *FetchedIndex) GetSourceABTestOk() (*string, bool) {
 	if o == nil || o.SourceABTest == nil {
 		return nil, false
@@ -549,6 +556,7 @@ func (o *FetchedIndex) HasSourceABTest() bool {
 }
 
 // SetSourceABTest gets a reference to the given string and assigns it to the SourceABTest field.
+// Deprecated.
 func (o *FetchedIndex) SetSourceABTest(v string) *FetchedIndex {
 	o.SourceABTest = &v
 
@@ -648,8 +656,8 @@ var FetchedIndexFieldDescriptions = map[string]string{
 	"primary":              "Only present if the index is a replica. Contains the name of the related primary index.",
 	"replicas":             "Only present if the index is a primary index with replicas. Contains the names of all linked replicas.",
 	"virtual":              "Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).",
-	"abTest":               "A/B test metadata. Only present if the index is part of an active A/B test.",
-	"sourceABTest":         "Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.",
+	"abTest":               "A/B test metadata. Only present if the index is part of an active A/B test.\n\nThis field is deprecated and can be missing even when the index is part of an active A/B test.\nTo list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.\n",
+	"sourceABTest":         "Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.\n\nThis field is deprecated and can be missing even when this index participates in an A/B test configured on another index.\nTo list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.\n",
 }
 
 // FieldDescription returns the spec description for a field by its JSON name, or an empty string if the field has no description.

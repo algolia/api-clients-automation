@@ -577,6 +577,8 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
      * Gets abTest.
      *
      * @return null|FetchedIndexAbTest
+     *
+     * @deprecated
      */
     public function getAbTest()
     {
@@ -589,6 +591,8 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
      * @param null|FetchedIndexAbTest $abTest abTest
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setAbTest($abTest)
     {
@@ -601,6 +605,8 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
      * Gets sourceABTest.
      *
      * @return null|string
+     *
+     * @deprecated
      */
     public function getSourceABTest()
     {
@@ -610,9 +616,11 @@ class FetchedIndex extends AbstractModel implements ModelInterface, \ArrayAccess
     /**
      * Sets sourceABTest.
      *
-     * @param null|string $sourceABTest Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+     * @param null|string $sourceABTest Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
      *
      * @return self
+     *
+     * @deprecated
      */
     public function setSourceABTest($sourceABTest)
     {

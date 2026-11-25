@@ -67,7 +67,9 @@ package algoliasearch.search
   *   replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
   * @param sourceABTest
   *   Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test
-  *   configured on another index.
+  *   configured on another index. This field is deprecated and can be missing even when this index participates in an
+  *   A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3
+  *   (`GET /3/abtests`) instead.
   */
 case class FetchedIndex(
     name: String,

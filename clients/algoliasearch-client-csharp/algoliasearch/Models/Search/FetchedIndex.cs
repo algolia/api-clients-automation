@@ -145,13 +145,15 @@ public partial class FetchedIndex
   /// Gets or Sets AbTest
   /// </summary>
   [JsonPropertyName("abTest")]
+  [Obsolete]
   public FetchedIndexAbTest AbTest { get; set; }
 
   /// <summary>
-  /// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+  /// Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
   /// </summary>
-  /// <value>Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.</value>
+  /// <value>Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead. </value>
   [JsonPropertyName("sourceABTest")]
+  [Obsolete]
   public string SourceABTest { get; set; }
 
   /// <summary>

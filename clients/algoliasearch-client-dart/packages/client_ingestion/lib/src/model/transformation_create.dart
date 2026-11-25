@@ -48,6 +48,7 @@ final class TransformationCreate {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TransformationCreate &&
+          other.code == code &&
           other.name == name &&
           other.type == type &&
           other.input == input &&
@@ -56,6 +57,7 @@ final class TransformationCreate {
 
   @override
   int get hashCode =>
+      code.hashCode +
       name.hashCode +
       type.hashCode +
       input.hashCode +

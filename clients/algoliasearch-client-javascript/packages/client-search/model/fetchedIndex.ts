@@ -66,7 +66,7 @@ export type FetchedIndex = {
   abTest?: FetchedIndexAbTest | undefined;
 
   /**
-   * Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
+   * Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.  This field is deprecated and can be missing even when this index participates in an A/B test configured on another index. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
    */
   sourceABTest?: string | undefined;
 };

@@ -40,7 +40,7 @@ def _alias_generator(name: str) -> str:
 
 class FetchedIndexAbTest(BaseModel):
     """
-    A/B test metadata. Only present if the index is part of an active A/B test.
+    A/B test metadata. Only present if the index is part of an active A/B test.  This field is deprecated and can be missing even when the index is part of an active A/B test. To list your A/B tests and the indices they use, use the A/B Testing API v3 (`GET /3/abtests`) instead.
     """
 
     id: int

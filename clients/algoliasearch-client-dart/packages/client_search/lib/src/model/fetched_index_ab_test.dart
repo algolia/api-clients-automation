@@ -7,6 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'fetched_index_ab_test.g.dart';
 
+@Deprecated('FetchedIndexAbTest has been deprecated')
 @JsonSerializable()
 final class FetchedIndexAbTest {
   /// Returns a new [FetchedIndexAbTest] instance.

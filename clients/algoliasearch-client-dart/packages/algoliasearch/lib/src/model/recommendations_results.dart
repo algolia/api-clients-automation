@@ -186,6 +186,9 @@ final class RecommendationsResults {
           other.automaticRadius == automaticRadius &&
           other.exhaustive == exhaustive &&
           other.appliedRules == appliedRules &&
+          other.exhaustiveFacetsCount == exhaustiveFacetsCount &&
+          other.exhaustiveNbHits == exhaustiveNbHits &&
+          other.exhaustiveTypo == exhaustiveTypo &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
           other.index == index &&
@@ -217,6 +220,9 @@ final class RecommendationsResults {
       automaticRadius.hashCode +
       exhaustive.hashCode +
       appliedRules.hashCode +
+      exhaustiveFacetsCount.hashCode +
+      exhaustiveNbHits.hashCode +
+      exhaustiveTypo.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
       index.hashCode +
