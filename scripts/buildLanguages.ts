@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import { YARN_HARDENED_MODE_PREFIX, createClientName, run, toAbsolutePath } from './common.ts';
+import { YARN_HARDENED_MODE_PREFIX, run, toAbsolutePath } from './common.ts';
 import { getLanguageFolder, getSwiftBuildFolder } from './config.ts';
 import { formatter } from './formatter.ts';
 import { updatePlaygroundLanguageVersion } from './playground.ts';
@@ -63,13 +63,9 @@ async function buildLanguage(
         break;
       }
 
-      let fileNames = '';
-
-      if (buildType !== 'guides' && buildType !== 'playground') {
-        fileNames = gens.reduce((prev, curr) => `${prev} ${createClientName(curr.client, curr.language)}.ts`, '');
-      }
-
-      await run(`yarn tsc ${fileNames} --noEmit`, {
+      // TypeScript 6 rejects (TS5112) files on the command line next to a tsconfig.json: rely on the tsconfig
+      // of snippets, guides and playground, which already includes all their files.
+      await run(`yarn tsc --noEmit`, {
         cwd: buildType === 'playground' ? `${cwd}/node` : `${cwd}/src`,
         language,
       });
