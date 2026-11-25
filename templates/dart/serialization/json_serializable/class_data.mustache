@@ -62,14 +62,14 @@ final class {{{classname}}}{
   @override
   bool operator ==(Object other) => identical(this, other) || other is {{{classname}}}{{#hasVars}} &&{{/hasVars}}
   {{#vars}}
-     {{^deprecated}}other.{{{name}}} == {{{name}}}{{^-last}} &&{{/-last}}{{/deprecated}}
+     other.{{{name}}} == {{{name}}}{{^-last}} &&{{/-last}}
   {{/vars}}
     ;
 
   @override
   int get hashCode =>{{^hasVars}} runtimeType.hashCode{{/hasVars}}
   {{#vars}}
-    {{^deprecated}}{{#isNullable}}({{{name}}} == null ? 0 : {{{name}}}.hashCode){{/isNullable}}{{^isNullable}}{{{name}}}.hashCode{{/isNullable}}{{^-last}} +{{/-last}}{{/deprecated}}
+    {{#isNullable}}({{{name}}} == null ? 0 : {{{name}}}.hashCode){{/isNullable}}{{^isNullable}}{{{name}}}.hashCode{{/isNullable}}{{^-last}} +{{/-last}}
   {{/vars}}
     ;
 
