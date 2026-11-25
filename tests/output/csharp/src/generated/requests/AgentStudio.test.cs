@@ -261,6 +261,67 @@ public class AgentStudioClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "createAgentCompletion with all parameters")]
+  public async Task CreateAgentCompletionTest1()
+  {
+    await client.CreateAgentCompletionAsync(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      Enum.Parse<CompatibilityMode>("AiSdk4"),
+      new AgentCompletionRequestUnion(
+        new AgentCompletionRequest
+        {
+          Messages = new MessagesUnion(
+            new List<MessageV4>
+            {
+              new MessageV4(new UserMessageV4 { Role = "user", Content = "Hello, how are you?" }),
+            }
+          ),
+        }
+      ),
+      false,
+      false,
+      false,
+      false,
+      "secure-user-token",
+      true
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal(
+      "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions",
+      req.Path
+    );
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"compatibilityMode\":\"ai-sdk-4\",\"stream\":\"false\",\"cache\":\"false\",\"memory\":\"false\",\"analytics\":\"false\",\"ephemeral\":\"true\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+    var expectedHeaders = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"x-algolia-secure-user-token\":\"secure-user-token\"}"
+    );
+    var actualHeaders = req.Headers;
+    foreach (var expectedHeader in expectedHeaders)
+    {
+      string actualHeaderValue;
+      actualHeaders.TryGetValue(expectedHeader.Key, out actualHeaderValue);
+      Assert.Equal(expectedHeader.Value, actualHeaderValue);
+    }
+  }
+
   [Fact(DisplayName = "createAgentTask with required parameters")]
   public async Task CreateAgentTaskTest()
   {
@@ -986,13 +1047,14 @@ public class AgentStudioClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "deleteAgentConversations with date filters")]
+  [Fact(DisplayName = "deleteAgentConversations with all filters")]
   public async Task DeleteAgentConversationsTest1()
   {
     await client.DeleteAgentConversationsAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-06-30"
+      "2024-06-30",
+      true
     );
 
     var req = _echo.LastResponse;
@@ -1003,7 +1065,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\"}"
+      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-06-30\",\"ephemeral\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -1098,13 +1160,14 @@ public class AgentStudioClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "exportConversations with date filters")]
+  [Fact(DisplayName = "exportConversations with all filters")]
   public async Task ExportConversationsTest1()
   {
     await client.ExportConversationsAsync(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-12-31"
+      "2024-12-31",
+      true
     );
 
     var req = _echo.LastResponse;
@@ -1115,7 +1178,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\"}"
+      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"ephemeral\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -1385,7 +1448,8 @@ public class AgentStudioClientRequestTests
       true,
       false,
       true,
-      "secure-user-token"
+      "secure-user-token",
+      true
     );
 
     var req = _echo.LastResponse;
@@ -1396,7 +1460,7 @@ public class AgentStudioClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\"}"
+      "{\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"includeFeedback\":\"true\",\"feedbackVote\":\"1\",\"page\":\"2\",\"limit\":\"10\",\"includeImpactAnalytics\":\"true\",\"clicked\":\"true\",\"converted\":\"false\",\"hasAlgoliaSearch\":\"true\",\"ephemeral\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -1491,6 +1555,17 @@ public class AgentStudioClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
+  }
+
+  [Fact(DisplayName = "listConversationUsage")]
+  public async Task ListConversationUsageTest()
+  {
+    await client.ListConversationUsageAsync();
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/agent-studio/1/configuration/conversation-usage", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "listModels")]

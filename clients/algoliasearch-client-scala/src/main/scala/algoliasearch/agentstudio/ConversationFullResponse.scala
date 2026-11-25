@@ -54,5 +54,6 @@ case class ConversationFullResponse(
     feedback: Option[Seq[FeedbackResponse]] = scala.None,
     impactAnalytics: Option[ImpactAnalytics] = scala.None,
     messages: Seq[MessageResponse],
-    analyticsDegraded: Option[Boolean] = scala.None
+    analyticsDegraded: Option[Boolean] = scala.None,
+    isEphemeral: Option[Boolean] = scala.None
 )

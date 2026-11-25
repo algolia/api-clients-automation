@@ -1,10 +1,9 @@
+import AlgoliaCore
+import AlgoliaSearch
 import Foundation
 #if os(Linux) // For linux interop
     import FoundationNetworking
 #endif
-
-import AlgoliaCore
-import AlgoliaSearch
 
 func mcmSearchWithout() async throws {
     let getAppIDFor = { (_: String) in "" } // Implement your own logic here

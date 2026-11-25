@@ -230,6 +230,38 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
+    #[TestDox('createAgentCompletion with all parameters')]
+    public function testCreateAgentCompletion1(): void
+    {
+        $client = $this->getClient();
+        $client->createAgentCompletion(
+            '76710f1b-8231-42e5-b0d1-f43aac618e15',
+            'ai-sdk-4',
+            ['messages' => [
+                ['role' => 'user',
+                    'content' => 'Hello, how are you?',
+                ],
+            ],
+            ],
+            false,
+            false,
+            false,
+            false,
+            'secure-user-token',
+            true,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions',
+                'method' => 'POST',
+                'body' => json_decode('{"messages":[{"role":"user","content":"Hello, how are you?"}]}'),
+                'queryParameters' => json_decode('{"compatibilityMode":"ai-sdk-4","stream":"false","cache":"false","memory":"false","analytics":"false","ephemeral":"true"}', true),
+                'headers' => json_decode('{"x-algolia-secure-user-token":"secure-user-token"}', true),
+            ],
+        ]);
+    }
+
     #[TestDox('createAgentTask with required parameters')]
     public function testCreateAgentTask(): void
     {
@@ -865,7 +897,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('deleteAgentConversations with date filters')]
+    #[TestDox('deleteAgentConversations with all filters')]
     public function testDeleteAgentConversations1(): void
     {
         $client = $this->getClient();
@@ -873,6 +905,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
             '2024-01-01',
             '2024-06-30',
+            true,
         );
 
         $this->assertRequests([
@@ -880,7 +913,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'DELETE',
                 'expectEmptyBody' => true,
-                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-06-30"}', true),
+                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-06-30","ephemeral":"true"}', true),
             ],
         ]);
     }
@@ -989,7 +1022,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
         ]);
     }
 
-    #[TestDox('exportConversations with date filters')]
+    #[TestDox('exportConversations with all filters')]
     public function testExportConversations1(): void
     {
         $client = $this->getClient();
@@ -997,6 +1030,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             '76710f1b-8231-42e5-b0d1-f43aac618e15',
             '2024-01-01',
             '2024-12-31',
+            true,
         );
 
         $this->assertRequests([
@@ -1004,7 +1038,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export',
                 'method' => 'GET',
                 'expectEmptyBody' => true,
-                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31"}', true),
+                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","ephemeral":"true"}', true),
             ],
         ]);
     }
@@ -1333,6 +1367,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
             false,
             true,
             'secure-user-token',
+            true,
         );
 
         $this->assertRequests([
@@ -1340,7 +1375,7 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'path' => '/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations',
                 'method' => 'GET',
                 'expectEmptyBody' => true,
-                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}', true),
+                'queryParameters' => json_decode('{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true","ephemeral":"true"}', true),
                 'headers' => json_decode('{"x-algolia-secure-user-token":"secure-user-token"}', true),
             ],
         ]);
@@ -1414,6 +1449,21 @@ class AgentStudioTest extends TestCase implements HttpClientInterface
                 'method' => 'GET',
                 'expectEmptyBody' => true,
                 'queryParameters' => json_decode('{"page":"1","limit":"2"}', true),
+            ],
+        ]);
+    }
+
+    #[TestDox('listConversationUsage')]
+    public function testListConversationUsage(): void
+    {
+        $client = $this->getClient();
+        $client->listConversationUsage();
+
+        $this->assertRequests([
+            [
+                'path' => '/agent-studio/1/configuration/conversation-usage',
+                'method' => 'GET',
+                'expectEmptyBody' => true,
             ],
         ]);
     }

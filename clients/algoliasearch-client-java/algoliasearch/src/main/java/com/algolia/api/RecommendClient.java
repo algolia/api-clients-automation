@@ -275,8 +275,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RecommendUpdatedAtResponse batchRecommendRules(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public RecommendUpdatedAtResponse batchRecommendRules(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.batchRecommendRules(indexName, model, null, null);
   }
 
@@ -302,8 +304,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response batchRecommendRulesWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public Response batchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.batchRecommendRulesWithHTTPInfo(indexName, model, null, null);
   }
 
@@ -543,8 +547,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<RecommendUpdatedAtResponse> batchRecommendRulesAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.batchRecommendRulesAsync(indexName, model, null, null);
   }
 
@@ -570,8 +576,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> batchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.batchRecommendRulesWithHTTPInfoAsync(indexName, model, null, null);
   }
 
@@ -584,8 +592,11 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customDelete(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
   }
 
@@ -598,8 +609,11 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customDeleteWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -729,8 +743,10 @@ public class RecommendClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -742,8 +758,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customDeleteAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, requestOptions);
   }
 
@@ -755,8 +773,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -789,8 +809,11 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customGet(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customGet(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
   }
 
@@ -803,8 +826,11 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customGetWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -934,8 +960,10 @@ public class RecommendClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -947,8 +975,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customGetAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customGetAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, requestOptions);
   }
 
@@ -960,8 +990,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -995,8 +1027,12 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPost(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
   }
 
@@ -1151,8 +1187,11 @@ public class RecommendClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
   }
 
@@ -1164,8 +1203,11 @@ public class RecommendClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -1177,8 +1219,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, requestOptions);
   }
 
@@ -1190,8 +1234,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -1225,8 +1271,12 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPut(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
   }
 
@@ -1381,8 +1431,11 @@ public class RecommendClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
   }
 
@@ -1394,8 +1447,11 @@ public class RecommendClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -1407,8 +1463,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, requestOptions);
   }
 
@@ -1420,8 +1478,10 @@ public class RecommendClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -1497,8 +1557,11 @@ public class RecommendClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DeletedAtResponse deleteRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
-    throws AlgoliaRuntimeException {
+  public DeletedAtResponse deleteRecommendRule(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
     return this.deleteRecommendRule(indexName, model, objectID, null);
   }
 
@@ -1512,8 +1575,11 @@ public class RecommendClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteRecommendRuleWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
-    throws AlgoliaRuntimeException {
+  public Response deleteRecommendRuleWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
     return this.deleteRecommendRuleWithHTTPInfo(indexName, model, objectID, null);
   }
 
@@ -1671,8 +1737,11 @@ public class RecommendClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RecommendRule getRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
-    throws AlgoliaRuntimeException {
+  public RecommendRule getRecommendRule(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendRule(indexName, model, objectID, null);
   }
 
@@ -1686,8 +1755,11 @@ public class RecommendClient extends ApiClient {
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getRecommendRuleWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
-    throws AlgoliaRuntimeException {
+  public Response getRecommendRuleWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull String objectID
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendRuleWithHTTPInfo(indexName, model, objectID, null);
   }
 
@@ -1855,8 +1927,11 @@ public class RecommendClient extends ApiClient {
    * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetRecommendTaskResponse getRecommendStatus(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull Long taskID)
-    throws AlgoliaRuntimeException {
+  public GetRecommendTaskResponse getRecommendStatus(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull Long taskID
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendStatus(indexName, model, taskID, null);
   }
 
@@ -1872,8 +1947,11 @@ public class RecommendClient extends ApiClient {
    * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getRecommendStatusWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull Long taskID)
-    throws AlgoliaRuntimeException {
+  public Response getRecommendStatusWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model,
+    @Nonnull Long taskID
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendStatusWithHTTPInfo(indexName, model, taskID, null);
   }
 
@@ -2021,8 +2099,9 @@ public class RecommendClient extends ApiClient {
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetRecommendationsResponse getRecommendations(@Nonnull GetRecommendationsParams getRecommendationsParams)
-    throws AlgoliaRuntimeException {
+  public GetRecommendationsResponse getRecommendations(
+    @Nonnull GetRecommendationsParams getRecommendationsParams
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendations(getRecommendationsParams, null);
   }
 
@@ -2032,8 +2111,9 @@ public class RecommendClient extends ApiClient {
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getRecommendationsWithHTTPInfo(@Nonnull GetRecommendationsParams getRecommendationsParams)
-    throws AlgoliaRuntimeException {
+  public Response getRecommendationsWithHTTPInfo(
+    @Nonnull GetRecommendationsParams getRecommendationsParams
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendationsWithHTTPInfo(getRecommendationsParams, null);
   }
 
@@ -2095,8 +2175,9 @@ public class RecommendClient extends ApiClient {
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetRecommendationsResponse> getRecommendationsAsync(@Nonnull GetRecommendationsParams getRecommendationsParams)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetRecommendationsResponse> getRecommendationsAsync(
+    @Nonnull GetRecommendationsParams getRecommendationsParams
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendationsAsync(getRecommendationsParams, null);
   }
 
@@ -2106,8 +2187,9 @@ public class RecommendClient extends ApiClient {
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getRecommendationsWithHTTPInfoAsync(@Nonnull GetRecommendationsParams getRecommendationsParams)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getRecommendationsWithHTTPInfoAsync(
+    @Nonnull GetRecommendationsParams getRecommendationsParams
+  ) throws AlgoliaRuntimeException {
     return this.getRecommendationsWithHTTPInfoAsync(getRecommendationsParams, null);
   }
 
@@ -2243,8 +2325,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SearchRecommendRulesResponse searchRecommendRules(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public SearchRecommendRulesResponse searchRecommendRules(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.searchRecommendRules(indexName, model, null, null);
   }
 
@@ -2258,8 +2342,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response searchRecommendRulesWithHTTPInfo(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public Response searchRecommendRulesWithHTTPInfo(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.searchRecommendRulesWithHTTPInfo(indexName, model, null, null);
   }
 
@@ -2434,8 +2520,10 @@ public class RecommendClient extends ApiClient {
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(@Nonnull String indexName, @Nonnull RecommendModels model)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> searchRecommendRulesWithHTTPInfoAsync(
+    @Nonnull String indexName,
+    @Nonnull RecommendModels model
+  ) throws AlgoliaRuntimeException {
     return this.searchRecommendRulesWithHTTPInfoAsync(indexName, model, null, null);
   }
 }

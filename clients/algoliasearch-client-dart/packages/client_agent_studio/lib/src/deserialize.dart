@@ -8,6 +8,7 @@ import 'package:algolia_client_agent_studio/src/model/agent_test_configuration.d
 import 'package:algolia_client_agent_studio/src/model/agent_with_version_response.dart';
 import 'package:algolia_client_agent_studio/src/model/agui_completion_request.dart';
 import 'package:algolia_client_agent_studio/src/model/agui_resume.dart';
+import 'package:algolia_client_agent_studio/src/model/algolia_compare_products_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_compat_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_grouped_results_tool_config.dart';
 import 'package:algolia_client_agent_studio/src/model/algolia_managed_llm_create_input.dart';
@@ -43,6 +44,7 @@ import 'package:algolia_client_agent_studio/src/model/context_trim_request.dart'
 import 'package:algolia_client_agent_studio/src/model/conversation_base_response.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_full_response.dart';
 import 'package:algolia_client_agent_studio/src/model/conversation_metadata.dart';
+import 'package:algolia_client_agent_studio/src/model/conversation_usage_response.dart';
 import 'package:algolia_client_agent_studio/src/model/data_guardrail_violation_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/data_part_v5.dart';
 import 'package:algolia_client_agent_studio/src/model/episode.dart';
@@ -186,6 +188,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AguiResume':
       return AguiResume.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AlgoliaCompareProductsToolConfig':
+      return AlgoliaCompareProductsToolConfig.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AlgoliaGroupedResultsCompatToolConfig':
       return AlgoliaGroupedResultsCompatToolConfig.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -285,6 +290,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ConversationMetadata':
       return ConversationMetadata.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConversationUsageResponse':
+      return ConversationUsageResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'DataGuardrailViolationPartV5':
       return DataGuardrailViolationPartV5.fromJson(

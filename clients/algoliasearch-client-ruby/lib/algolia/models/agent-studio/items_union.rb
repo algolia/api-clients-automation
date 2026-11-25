@@ -9,9 +9,10 @@ module Algolia
   module AgentStudio
     module ItemsUnion
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
+            :"AlgoliaCompareProductsToolConfig",
             :"AlgoliaGroupedResultsCompatToolConfig",
             :"AlgoliaGroupedResultsToolConfig",
             :"AlgoliaRecommendToolConfig",
@@ -35,6 +36,8 @@ module Algolia
           # - TODO: logging when debugging is set.
           if data.is_a?(Hash) && data.key?("type")
             case data["type"]
+            when "algolia_compare_products"
+              return find_and_cast_into_type(:"AlgoliaCompareProductsToolConfig", data)
             when "algolia_display_results"
               return find_and_cast_into_type(:"AlgoliaGroupedResultsCompatToolConfig", data)
             when "algolia_grouped_results"

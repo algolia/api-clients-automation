@@ -682,6 +682,24 @@ paths:
               - type: 'null'
             title: x-Algolia-Secure-User-Token
           description: The X-Algolia-Secure-User-Token.
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Set to true to not retain the conversation: it is processed and
+              analyzed like any other, but removed by the next cleanup run
+              instead of being kept in the history. Overrides the agent's
+              ephemeralConversations setting; omit to use it.
+            title: ephemeral
+          description: >-
+            Set to true to not retain the conversation: it is processed and
+            analyzed like any other, but removed by the next cleanup run instead
+            of being kept in the history. Overrides the agent's
+            ephemeralConversations setting; omit to use it.
       requestBody:
         required: true
         content:
@@ -838,6 +856,20 @@ paths:
               - type: 'null'
             title: x-Algolia-Secure-User-Token
           description: The X-Algolia-Secure-User-Token.
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
       responses:
         '200':
           description: Successful Response.
@@ -889,6 +921,20 @@ paths:
               YYYY-MM-DD).
             title: enddate
           description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
       responses:
         '204':
           description: Successful Response.
@@ -937,6 +983,20 @@ paths:
               YYYY-MM-DD).
             title: enddate
           description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
       responses:
         '200':
           description: Successful Response.
@@ -1239,6 +1299,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationConfigResponse'
+        '422':
+          description: Validation Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /1/configuration/conversation-usage:
+    get:
+      tags:
+        - agent-studio
+      operationId: listConversationUsage
+      x-acl:
+        - logs
+      summary: Get Conversation Usage
+      description: Live conversations counted against the per-application limit.
+      responses:
+        '200':
+          description: Successful Response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationUsageResponse'
         '422':
           description: Validation Error.
           content:
@@ -2010,6 +2092,34 @@ components:
       enum:
         - draft
         - published
+    AlgoliaCompareProductsToolConfig:
+      description: Configuration for the algolia_compare_products tool.
+      properties:
+        name:
+          const: algolia_compare_products
+          default: algolia_compare_products
+          title: name
+          type: string
+        type:
+          const: algolia_compare_products
+          default: algolia_compare_products
+          title: type
+          type: string
+        description:
+          oneOf:
+            - maxLength: 200
+              minLength: 1
+              type: string
+            - type: 'null'
+          default: null
+          description: >-
+            What the tool does, as the agent reads it. Leave unset to use the
+            default description.
+          title: description
+      title: algoliaCompareProductsToolConfig
+      type: object
+      required:
+        - type
     AlgoliaRecommendToolIndexConfig:
       properties:
         index:
@@ -3089,11 +3199,13 @@ components:
         - $ref: '#/components/schemas/ClientSideToolConfig'
         - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         propertyName: type
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
           algolia_search_index: '#/components/schemas/AlgoliaSearchToolConfig'
           client_side: '#/components/schemas/ClientSideToolConfig'
@@ -3244,11 +3356,13 @@ components:
         - $ref: '#/components/schemas/ClientSideToolConfig'
         - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         propertyName: type
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
           algolia_search_index: '#/components/schemas/AlgoliaSearchToolConfig'
           client_side: '#/components/schemas/ClientSideToolConfig'
@@ -3581,10 +3695,12 @@ components:
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
         - $ref: '#/components/schemas/AlgoliaGroupedResultsToolConfig'
         - $ref: '#/components/schemas/AlgoliaGroupedResultsCompatToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_display_results: '#/components/schemas/AlgoliaGroupedResultsCompatToolConfig'
           algolia_grouped_results: '#/components/schemas/AlgoliaGroupedResultsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
@@ -4843,6 +4959,10 @@ components:
           oneOf:
             - $ref: '#/components/schemas/ImpactAnalytics'
             - type: 'null'
+        isEphemeral:
+          type: boolean
+          title: isephemeral
+          default: false
       type: object
       required:
         - id
@@ -5317,6 +5437,10 @@ components:
           type: boolean
           title: analyticsdegraded
           default: false
+        isEphemeral:
+          type: boolean
+          title: isephemeral
+          default: false
       type: object
       required:
         - id
@@ -5395,6 +5519,23 @@ components:
           default: 90
       type: object
       title: applicationConfigPatch
+    ConversationUsageResponse:
+      properties:
+        liveConversations:
+          type: integer
+          title: liveconversations
+        limit:
+          type: integer
+          title: limit
+        atLimit:
+          type: boolean
+          title: atlimit
+      type: object
+      required:
+        - liveConversations
+        - limit
+        - atLimit
+      title: conversationUsageResponse
     VoteEnum:
       type: integer
       enum:

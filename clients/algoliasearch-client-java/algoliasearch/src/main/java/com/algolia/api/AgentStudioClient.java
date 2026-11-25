@@ -119,8 +119,10 @@ public class AgentStudioClient extends ApiClient {
    * @param allowedDomainBulkInsert (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response bulkCreateAllowedDomainsWithHTTPInfo(@Nonnull String agentId, @Nonnull AllowedDomainBulkInsert allowedDomainBulkInsert)
-    throws AlgoliaRuntimeException {
+  public Response bulkCreateAllowedDomainsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull AllowedDomainBulkInsert allowedDomainBulkInsert
+  ) throws AlgoliaRuntimeException {
     return this.bulkCreateAllowedDomainsWithHTTPInfo(agentId, allowedDomainBulkInsert, null);
   }
 
@@ -254,8 +256,10 @@ public class AgentStudioClient extends ApiClient {
    * @param allowedDomainBulkDelete (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void bulkDeleteAllowedDomains(@Nonnull String agentId, @Nonnull AllowedDomainBulkDelete allowedDomainBulkDelete)
-    throws AlgoliaRuntimeException {
+  public void bulkDeleteAllowedDomains(
+    @Nonnull String agentId,
+    @Nonnull AllowedDomainBulkDelete allowedDomainBulkDelete
+  ) throws AlgoliaRuntimeException {
     this.bulkDeleteAllowedDomains(agentId, allowedDomainBulkDelete, null);
   }
 
@@ -266,8 +270,10 @@ public class AgentStudioClient extends ApiClient {
    * @param allowedDomainBulkDelete (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response bulkDeleteAllowedDomainsWithHTTPInfo(@Nonnull String agentId, @Nonnull AllowedDomainBulkDelete allowedDomainBulkDelete)
-    throws AlgoliaRuntimeException {
+  public Response bulkDeleteAllowedDomainsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull AllowedDomainBulkDelete allowedDomainBulkDelete
+  ) throws AlgoliaRuntimeException {
     return this.bulkDeleteAllowedDomainsWithHTTPInfo(agentId, allowedDomainBulkDelete, null);
   }
 
@@ -379,8 +385,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ContextResponse compactContext(@Nonnull ContextCompactRequest contextCompactRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ContextResponse compactContext(
+    @Nonnull ContextCompactRequest contextCompactRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(compactContextAsync(contextCompactRequest, requestOptions));
   }
 
@@ -404,8 +412,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response compactContextWithHTTPInfo(@Nonnull ContextCompactRequest contextCompactRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response compactContextWithHTTPInfo(
+    @Nonnull ContextCompactRequest contextCompactRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(compactContextWithHTTPInfoAsync(contextCompactRequest, requestOptions));
   }
 
@@ -539,8 +549,9 @@ public class AgentStudioClient extends ApiClient {
    * @param contextCompactRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ContextResponse> compactContextAsync(@Nonnull ContextCompactRequest contextCompactRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ContextResponse> compactContextAsync(
+    @Nonnull ContextCompactRequest contextCompactRequest
+  ) throws AlgoliaRuntimeException {
     return this.compactContextAsync(contextCompactRequest, null);
   }
 
@@ -562,8 +573,9 @@ public class AgentStudioClient extends ApiClient {
    * @param contextCompactRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> compactContextWithHTTPInfoAsync(@Nonnull ContextCompactRequest contextCompactRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> compactContextWithHTTPInfoAsync(
+    @Nonnull ContextCompactRequest contextCompactRequest
+  ) throws AlgoliaRuntimeException {
     return this.compactContextWithHTTPInfoAsync(contextCompactRequest, null);
   }
 
@@ -575,8 +587,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AgentWithVersionResponse createAgent(@Nonnull AgentConfigCreate agentConfigCreate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AgentWithVersionResponse createAgent(
+    @Nonnull AgentConfigCreate agentConfigCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(createAgentAsync(agentConfigCreate, requestOptions));
   }
 
@@ -588,8 +602,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response createAgentWithHTTPInfo(@Nonnull AgentConfigCreate agentConfigCreate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response createAgentWithHTTPInfo(
+    @Nonnull AgentConfigCreate agentConfigCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(createAgentWithHTTPInfoAsync(agentConfigCreate, requestOptions));
   }
 
@@ -655,8 +671,9 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AgentWithVersionResponse> createAgentAsync(@Nonnull AgentConfigCreate agentConfigCreate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AgentWithVersionResponse> createAgentAsync(
+    @Nonnull AgentConfigCreate agentConfigCreate
+  ) throws AlgoliaRuntimeException {
     return this.createAgentAsync(agentConfigCreate, null);
   }
 
@@ -666,8 +683,9 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> createAgentWithHTTPInfoAsync(@Nonnull AgentConfigCreate agentConfigCreate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> createAgentWithHTTPInfoAsync(
+    @Nonnull AgentConfigCreate agentConfigCreate
+  ) throws AlgoliaRuntimeException {
     return this.createAgentWithHTTPInfoAsync(agentConfigCreate, null);
   }
 
@@ -712,8 +730,10 @@ public class AgentStudioClient extends ApiClient {
    * @param allowedDomainCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AllowedDomainResponse createAgentAllowedDomain(@Nonnull String agentId, @Nonnull AllowedDomainCreate allowedDomainCreate)
-    throws AlgoliaRuntimeException {
+  public AllowedDomainResponse createAgentAllowedDomain(
+    @Nonnull String agentId,
+    @Nonnull AllowedDomainCreate allowedDomainCreate
+  ) throws AlgoliaRuntimeException {
     return this.createAgentAllowedDomain(agentId, allowedDomainCreate, null);
   }
 
@@ -724,8 +744,10 @@ public class AgentStudioClient extends ApiClient {
    * @param allowedDomainCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response createAgentAllowedDomainWithHTTPInfo(@Nonnull String agentId, @Nonnull AllowedDomainCreate allowedDomainCreate)
-    throws AlgoliaRuntimeException {
+  public Response createAgentAllowedDomainWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull AllowedDomainCreate allowedDomainCreate
+  ) throws AlgoliaRuntimeException {
     return this.createAgentAllowedDomainWithHTTPInfo(agentId, allowedDomainCreate, null);
   }
 
@@ -832,6 +854,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -845,6 +870,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -857,6 +883,7 @@ public class AgentStudioClient extends ApiClient {
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -879,6 +906,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -892,6 +922,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -904,6 +935,7 @@ public class AgentStudioClient extends ApiClient {
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -926,6 +958,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Map<String, Object> createAgentCompletion(
@@ -936,7 +971,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletion(
       agentId,
@@ -947,6 +983,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -968,6 +1005,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response createAgentCompletionWithHTTPInfo(
@@ -978,7 +1018,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfo(
       agentId,
@@ -989,6 +1030,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1013,7 +1055,18 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, requestOptions);
+    return this.createAgentCompletion(
+      agentId,
+      compatibilityMode,
+      agentCompletionRequest,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -1040,6 +1093,7 @@ public class AgentStudioClient extends ApiClient {
       agentId,
       compatibilityMode,
       agentCompletionRequest,
+      null,
       null,
       null,
       null,
@@ -1066,7 +1120,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1086,7 +1140,18 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletionWithHTTPInfo(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletionWithHTTPInfo(
+      agentId,
+      compatibilityMode,
+      agentCompletionRequest,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
   }
 
   /**
@@ -1107,6 +1172,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1120,6 +1188,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.");
@@ -1142,6 +1211,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("cache", cache)
       .addQueryParameter("memory", memory)
       .addQueryParameter("analytics", analytics)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Map<String, Object>>() {});
   }
@@ -1164,6 +1234,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1177,6 +1250,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.");
@@ -1199,6 +1273,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("cache", cache)
       .addQueryParameter("memory", memory)
       .addQueryParameter("analytics", analytics)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -1221,6 +1296,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
@@ -1231,7 +1309,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionAsync(
       agentId,
@@ -1242,6 +1321,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1264,6 +1344,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
@@ -1274,7 +1357,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfoAsync(
       agentId,
@@ -1285,6 +1369,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1319,6 +1404,7 @@ public class AgentStudioClient extends ApiClient {
       null,
       null,
       null,
+      null,
       requestOptions
     );
   }
@@ -1353,6 +1439,7 @@ public class AgentStudioClient extends ApiClient {
       null,
       null,
       null,
+      null,
       requestOptions
     );
   }
@@ -1375,7 +1462,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletionAsync(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletionAsync(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1400,6 +1487,7 @@ public class AgentStudioClient extends ApiClient {
       agentId,
       compatibilityMode,
       agentCompletionRequest,
+      null,
       null,
       null,
       null,
@@ -1522,8 +1610,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TaskResponse createAgentTask(@Nonnull String agentId, @Nonnull TaskRequest taskRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public TaskResponse createAgentTask(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.createAgentTask(agentId, taskRequest, null, null, null, requestOptions);
   }
 
@@ -1747,8 +1838,10 @@ public class AgentStudioClient extends ApiClient {
    * @param taskRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TaskResponse> createAgentTaskAsync(@Nonnull String agentId, @Nonnull TaskRequest taskRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<TaskResponse> createAgentTaskAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest
+  ) throws AlgoliaRuntimeException {
     return this.createAgentTaskAsync(agentId, taskRequest, null, null, null, null);
   }
 
@@ -1761,8 +1854,10 @@ public class AgentStudioClient extends ApiClient {
    * @param taskRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(@Nonnull String agentId, @Nonnull TaskRequest taskRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> createAgentTaskWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nonnull TaskRequest taskRequest
+  ) throws AlgoliaRuntimeException {
     return this.createAgentTaskWithHTTPInfoAsync(agentId, taskRequest, null, null, null, null);
   }
 
@@ -1774,8 +1869,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public FeedbackResponse createFeedback(@Nonnull FeedbackCreationRequest feedbackCreationRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public FeedbackResponse createFeedback(
+    @Nonnull FeedbackCreationRequest feedbackCreationRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(createFeedbackAsync(feedbackCreationRequest, requestOptions));
   }
 
@@ -1864,8 +1961,9 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackCreationRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<FeedbackResponse> createFeedbackAsync(@Nonnull FeedbackCreationRequest feedbackCreationRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<FeedbackResponse> createFeedbackAsync(
+    @Nonnull FeedbackCreationRequest feedbackCreationRequest
+  ) throws AlgoliaRuntimeException {
     return this.createFeedbackAsync(feedbackCreationRequest, null);
   }
 
@@ -1875,8 +1973,9 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackCreationRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> createFeedbackWithHTTPInfoAsync(@Nonnull FeedbackCreationRequest feedbackCreationRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> createFeedbackWithHTTPInfoAsync(
+    @Nonnull FeedbackCreationRequest feedbackCreationRequest
+  ) throws AlgoliaRuntimeException {
     return this.createFeedbackWithHTTPInfoAsync(feedbackCreationRequest, null);
   }
 
@@ -1916,8 +2015,9 @@ public class AgentStudioClient extends ApiClient {
    * @param providerAuthenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ProviderAuthenticationResponse createProvider(@Nonnull ProviderAuthenticationCreate providerAuthenticationCreate)
-    throws AlgoliaRuntimeException {
+  public ProviderAuthenticationResponse createProvider(
+    @Nonnull ProviderAuthenticationCreate providerAuthenticationCreate
+  ) throws AlgoliaRuntimeException {
     return this.createProvider(providerAuthenticationCreate, null);
   }
 
@@ -1927,8 +2027,9 @@ public class AgentStudioClient extends ApiClient {
    * @param providerAuthenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response createProviderWithHTTPInfo(@Nonnull ProviderAuthenticationCreate providerAuthenticationCreate)
-    throws AlgoliaRuntimeException {
+  public Response createProviderWithHTTPInfo(
+    @Nonnull ProviderAuthenticationCreate providerAuthenticationCreate
+  ) throws AlgoliaRuntimeException {
     return this.createProviderWithHTTPInfo(providerAuthenticationCreate, null);
   }
 
@@ -2000,8 +2101,9 @@ public class AgentStudioClient extends ApiClient {
    * @param providerAuthenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> createProviderWithHTTPInfoAsync(@Nonnull ProviderAuthenticationCreate providerAuthenticationCreate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> createProviderWithHTTPInfoAsync(
+    @Nonnull ProviderAuthenticationCreate providerAuthenticationCreate
+  ) throws AlgoliaRuntimeException {
     return this.createProviderWithHTTPInfoAsync(providerAuthenticationCreate, null);
   }
 
@@ -2013,8 +2115,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SecretKeyResponse createSecretKey(@Nonnull SecretKeyCreate secretKeyCreate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public SecretKeyResponse createSecretKey(
+    @Nonnull SecretKeyCreate secretKeyCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(createSecretKeyAsync(secretKeyCreate, requestOptions));
   }
 
@@ -2026,8 +2130,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response createSecretKeyWithHTTPInfo(@Nonnull SecretKeyCreate secretKeyCreate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response createSecretKeyWithHTTPInfo(
+    @Nonnull SecretKeyCreate secretKeyCreate,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(createSecretKeyWithHTTPInfoAsync(secretKeyCreate, requestOptions));
   }
 
@@ -2093,8 +2199,9 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SecretKeyResponse> createSecretKeyAsync(@Nonnull SecretKeyCreate secretKeyCreate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<SecretKeyResponse> createSecretKeyAsync(
+    @Nonnull SecretKeyCreate secretKeyCreate
+  ) throws AlgoliaRuntimeException {
     return this.createSecretKeyAsync(secretKeyCreate, null);
   }
 
@@ -2104,8 +2211,9 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> createSecretKeyWithHTTPInfoAsync(@Nonnull SecretKeyCreate secretKeyCreate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> createSecretKeyWithHTTPInfoAsync(
+    @Nonnull SecretKeyCreate secretKeyCreate
+  ) throws AlgoliaRuntimeException {
     return this.createSecretKeyWithHTTPInfoAsync(secretKeyCreate, null);
   }
 
@@ -2118,8 +2226,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customDelete(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
   }
 
@@ -2132,8 +2243,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customDeleteWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -2271,8 +2385,10 @@ public class AgentStudioClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -2284,8 +2400,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customDeleteAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, requestOptions);
   }
 
@@ -2297,8 +2415,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -2331,8 +2451,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customGet(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customGet(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
   }
 
@@ -2345,8 +2468,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customGetWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -2484,8 +2610,10 @@ public class AgentStudioClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -2497,8 +2625,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customGetAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customGetAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, requestOptions);
   }
 
@@ -2510,8 +2640,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -2545,8 +2677,12 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPost(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
   }
 
@@ -2701,8 +2837,11 @@ public class AgentStudioClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
   }
 
@@ -2714,8 +2853,11 @@ public class AgentStudioClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -2727,8 +2869,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, requestOptions);
   }
 
@@ -2740,8 +2884,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -2775,8 +2921,12 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPut(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
   }
 
@@ -2931,8 +3081,11 @@ public class AgentStudioClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
   }
 
@@ -2944,8 +3097,11 @@ public class AgentStudioClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -2957,8 +3113,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, requestOptions);
   }
 
@@ -2970,8 +3128,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -3048,8 +3208,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteAgentAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteAgentAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `deleteAgent`.");
 
@@ -3065,8 +3227,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteAgentWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteAgentWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `deleteAgent`.");
 
@@ -3100,13 +3264,20 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteAgentConversations(@Nonnull String agentId, String startDate, String endDate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    LaunderThrowable.await(deleteAgentConversationsAsync(agentId, startDate, endDate, requestOptions));
+  public void deleteAgentConversations(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    LaunderThrowable.await(deleteAgentConversationsAsync(agentId, startDate, endDate, ephemeral, requestOptions));
     return;
   }
 
@@ -3116,6 +3287,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3124,9 +3297,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3135,10 +3309,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteAgentConversations(@Nonnull String agentId, String startDate, String endDate) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, startDate, endDate, null);
+  public void deleteAgentConversations(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    this.deleteAgentConversations(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3147,11 +3328,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, startDate, endDate, null);
+  public Response deleteAgentConversationsWithHTTPInfo(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3163,7 +3350,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteAgentConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, null, null, requestOptions);
+    this.deleteAgentConversations(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3174,9 +3361,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, requestOptions);
+  public Response deleteAgentConversationsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3186,7 +3375,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteAgentConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, null, null, null);
+    this.deleteAgentConversations(agentId, null, null, null, null);
   }
 
   /**
@@ -3196,7 +3385,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null);
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null, null);
   }
 
   /**
@@ -3205,6 +3394,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3213,6 +3404,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.");
@@ -3223,6 +3415,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("DELETE")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, null);
   }
@@ -3233,6 +3426,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3241,6 +3436,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.");
@@ -3251,6 +3447,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("DELETE")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, null);
   }
@@ -3261,11 +3458,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, startDate, endDate, null);
+  public CompletableFuture<Void> deleteAgentConversationsAsync(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3274,11 +3477,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, null);
+  public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3289,9 +3498,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, null, null, requestOptions);
+  public CompletableFuture<Void> deleteAgentConversationsAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3306,7 +3517,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, requestOptions);
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3316,7 +3527,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, null, null, null);
+    return this.deleteAgentConversationsAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -3326,7 +3537,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null);
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -3338,8 +3549,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteAllowedDomain(@Nonnull String domainId, @Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public void deleteAllowedDomain(
+    @Nonnull String domainId,
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     LaunderThrowable.await(deleteAllowedDomainAsync(domainId, agentId, requestOptions));
     return;
   }
@@ -3444,8 +3658,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteAllowedDomainAsync(@Nonnull String domainId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteAllowedDomainAsync(
+    @Nonnull String domainId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.deleteAllowedDomainAsync(domainId, agentId, null);
   }
 
@@ -3456,8 +3672,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteAllowedDomainWithHTTPInfoAsync(@Nonnull String domainId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteAllowedDomainWithHTTPInfoAsync(
+    @Nonnull String domainId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.deleteAllowedDomainWithHTTPInfoAsync(domainId, agentId, null);
   }
 
@@ -3470,8 +3688,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteConversation(@Nonnull String conversationId, @Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public void deleteConversation(
+    @Nonnull String conversationId,
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     LaunderThrowable.await(deleteConversationAsync(conversationId, agentId, requestOptions));
     return;
   }
@@ -3576,8 +3797,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteConversationAsync(@Nonnull String conversationId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteConversationAsync(
+    @Nonnull String conversationId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.deleteConversationAsync(conversationId, agentId, null);
   }
 
@@ -3588,8 +3811,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteConversationWithHTTPInfoAsync(@Nonnull String conversationId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteConversationWithHTTPInfoAsync(
+    @Nonnull String conversationId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.deleteConversationWithHTTPInfoAsync(conversationId, agentId, null);
   }
 
@@ -3614,8 +3839,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteProviderWithHTTPInfo(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response deleteProviderWithHTTPInfo(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteProviderWithHTTPInfoAsync(providerId, requestOptions));
   }
 
@@ -3647,8 +3874,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteProviderAsync(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteProviderAsync(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(providerId, "Parameter `providerId` is required when calling `deleteProvider`.");
     Parameters.requireNonEmpty(providerId, "Parameter `providerId` is required when calling `deleteProvider`.");
 
@@ -3664,8 +3893,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteProviderWithHTTPInfoAsync(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteProviderWithHTTPInfoAsync(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(providerId, "Parameter `providerId` is required when calling `deleteProvider`.");
     Parameters.requireNonEmpty(providerId, "Parameter `providerId` is required when calling `deleteProvider`.");
 
@@ -3714,8 +3945,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteSecretKeyWithHTTPInfo(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response deleteSecretKeyWithHTTPInfo(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteSecretKeyWithHTTPInfoAsync(secretKeyId, requestOptions));
   }
 
@@ -3747,8 +3980,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteSecretKeyAsync(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteSecretKeyAsync(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.");
     Parameters.requireNonEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.");
 
@@ -3767,8 +4002,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteSecretKeyWithHTTPInfoAsync(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteSecretKeyWithHTTPInfoAsync(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.");
     Parameters.requireNonEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `deleteSecretKey`.");
 
@@ -3820,8 +4057,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response deleteUserDataWithHTTPInfo(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response deleteUserDataWithHTTPInfo(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(deleteUserDataWithHTTPInfoAsync(userToken, requestOptions));
   }
 
@@ -3854,8 +4093,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteUserDataAsync(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> deleteUserDataAsync(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `deleteUserData`.");
     Parameters.requireNonEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserData`.");
 
@@ -3872,8 +4113,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteUserDataWithHTTPInfoAsync(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteUserDataWithHTTPInfoAsync(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `deleteUserData`.");
     Parameters.requireNonEmpty(userToken, "Parameter `userToken` is required when calling `deleteUserData`.");
 
@@ -3909,6 +4152,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3917,9 +4162,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(exportConversationsAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(exportConversationsAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3928,6 +4174,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3936,9 +4184,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3947,11 +4196,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<ConversationFullResponse> exportConversations(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, startDate, endDate, null);
+  public List<ConversationFullResponse> exportConversations(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversations(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3960,11 +4215,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response exportConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, startDate, endDate, null);
+  public Response exportConversationsWithHTTPInfo(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsWithHTTPInfo(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3975,9 +4236,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<ConversationFullResponse> exportConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, null, null, requestOptions);
+  public List<ConversationFullResponse> exportConversations(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversations(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3988,9 +4251,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response exportConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, null, null, requestOptions);
+  public Response exportConversationsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsWithHTTPInfo(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4000,7 +4265,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<ConversationFullResponse> exportConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, null, null, null);
+    return this.exportConversations(agentId, null, null, null, null);
   }
 
   /**
@@ -4010,7 +4275,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response exportConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, null, null, null);
+    return this.exportConversationsWithHTTPInfo(agentId, null, null, null, null);
   }
 
   /**
@@ -4019,6 +4284,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4027,6 +4294,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.");
@@ -4037,6 +4305,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<List<ConversationFullResponse>>() {});
   }
@@ -4047,6 +4316,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4055,6 +4326,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.");
@@ -4065,6 +4337,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -4075,14 +4348,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<ConversationFullResponse>> exportConversationsAsync(
     @Nonnull String agentId,
     String startDate,
-    String endDate
+    String endDate,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, startDate, endDate, null);
+    return this.exportConversationsAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -4091,11 +4367,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, null);
+  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -4110,7 +4392,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, null, null, requestOptions);
+    return this.exportConversationsAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4121,9 +4403,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, requestOptions);
+  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4132,9 +4416,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<List<ConversationFullResponse>> exportConversationsAsync(@Nonnull String agentId)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, null, null, null);
+  public CompletableFuture<List<ConversationFullResponse>> exportConversationsAsync(
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -4144,7 +4429,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null);
+    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -4155,8 +4440,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AgentWithVersionResponse getAgent(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AgentWithVersionResponse getAgent(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getAgentAsync(agentId, requestOptions));
   }
 
@@ -4200,8 +4487,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AgentWithVersionResponse> getAgentAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AgentWithVersionResponse> getAgentAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `getAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `getAgent`.");
 
@@ -4217,8 +4506,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getAgentWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getAgentWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `getAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `getAgent`.");
 
@@ -4255,8 +4546,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AllowedDomainResponse getAllowedDomain(@Nonnull String domainId, @Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AllowedDomainResponse getAllowedDomain(
+    @Nonnull String domainId,
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getAllowedDomainAsync(domainId, agentId, requestOptions));
   }
 
@@ -4269,8 +4563,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getAllowedDomainWithHTTPInfo(@Nonnull String domainId, @Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getAllowedDomainWithHTTPInfo(
+    @Nonnull String domainId,
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getAllowedDomainWithHTTPInfoAsync(domainId, agentId, requestOptions));
   }
 
@@ -4357,8 +4654,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AllowedDomainResponse> getAllowedDomainAsync(@Nonnull String domainId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AllowedDomainResponse> getAllowedDomainAsync(
+    @Nonnull String domainId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.getAllowedDomainAsync(domainId, agentId, null);
   }
 
@@ -4369,8 +4668,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getAllowedDomainWithHTTPInfoAsync(@Nonnull String domainId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getAllowedDomainWithHTTPInfoAsync(
+    @Nonnull String domainId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.getAllowedDomainWithHTTPInfoAsync(domainId, agentId, null);
   }
 
@@ -4421,8 +4722,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ApplicationConfigResponse> getConfigurationAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ApplicationConfigResponse> getConfigurationAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration").setMethod("GET").build();
 
     return executeAsync(request, requestOptions, new TypeReference<ApplicationConfigResponse>() {});
@@ -4435,8 +4737,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getConfigurationWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getConfigurationWithHTTPInfoAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration").setMethod("GET").build();
 
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -4841,8 +5144,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ConversationFullResponse> getConversationAsync(@Nonnull String conversationId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ConversationFullResponse> getConversationAsync(
+    @Nonnull String conversationId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.getConversationAsync(conversationId, agentId, null, null, null, null, null);
   }
 
@@ -4853,8 +5158,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getConversationWithHTTPInfoAsync(@Nonnull String conversationId, @Nonnull String agentId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getConversationWithHTTPInfoAsync(
+    @Nonnull String conversationId,
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
     return this.getConversationWithHTTPInfoAsync(conversationId, agentId, null, null, null, null, null);
   }
 
@@ -4866,8 +5173,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ProviderAuthenticationResponse getProvider(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ProviderAuthenticationResponse getProvider(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getProviderAsync(providerId, requestOptions));
   }
 
@@ -4879,8 +5188,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getProviderWithHTTPInfo(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getProviderWithHTTPInfo(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getProviderWithHTTPInfoAsync(providerId, requestOptions));
   }
 
@@ -4931,8 +5242,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getProviderWithHTTPInfoAsync(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getProviderWithHTTPInfoAsync(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(providerId, "Parameter `providerId` is required when calling `getProvider`.");
     Parameters.requireNonEmpty(providerId, "Parameter `providerId` is required when calling `getProvider`.");
 
@@ -4968,8 +5281,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SecretKeyResponse getSecretKey(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public SecretKeyResponse getSecretKey(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getSecretKeyAsync(secretKeyId, requestOptions));
   }
 
@@ -4981,8 +5296,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getSecretKeyWithHTTPInfo(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getSecretKeyWithHTTPInfo(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getSecretKeyWithHTTPInfoAsync(secretKeyId, requestOptions));
   }
 
@@ -5014,8 +5331,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SecretKeyResponse> getSecretKeyAsync(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<SecretKeyResponse> getSecretKeyAsync(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.");
     Parameters.requireNonEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.");
 
@@ -5031,8 +5350,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getSecretKeyWithHTTPInfoAsync(@Nonnull String secretKeyId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getSecretKeyWithHTTPInfoAsync(
+    @Nonnull String secretKeyId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.");
     Parameters.requireNonEmpty(secretKeyId, "Parameter `secretKeyId` is required when calling `getSecretKey`.");
 
@@ -5080,8 +5401,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getUserDataWithHTTPInfo(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getUserDataWithHTTPInfo(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getUserDataWithHTTPInfoAsync(userToken, requestOptions));
   }
 
@@ -5114,8 +5437,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UserDataResponse> getUserDataAsync(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<UserDataResponse> getUserDataAsync(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `getUserData`.");
     Parameters.requireNonEmpty(userToken, "Parameter `userToken` is required when calling `getUserData`.");
 
@@ -5132,8 +5457,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getUserDataWithHTTPInfoAsync(@Nonnull String userToken, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getUserDataWithHTTPInfoAsync(
+    @Nonnull String userToken,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(userToken, "Parameter `userToken` is required when calling `getUserData`.");
     Parameters.requireNonEmpty(userToken, "Parameter `userToken` is required when calling `getUserData`.");
 
@@ -5173,8 +5500,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void invalidateAgentCache(@Nonnull String agentId, String before, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public void invalidateAgentCache(
+    @Nonnull String agentId,
+    String before,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     LaunderThrowable.await(invalidateAgentCacheAsync(agentId, before, requestOptions));
     return;
   }
@@ -5189,8 +5519,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response invalidateAgentCacheWithHTTPInfo(@Nonnull String agentId, String before, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response invalidateAgentCacheWithHTTPInfo(
+    @Nonnull String agentId,
+    String before,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(invalidateAgentCacheWithHTTPInfoAsync(agentId, before, requestOptions));
   }
 
@@ -5240,8 +5573,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response invalidateAgentCacheWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response invalidateAgentCacheWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.invalidateAgentCacheWithHTTPInfo(agentId, null, requestOptions);
   }
 
@@ -5277,8 +5612,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> invalidateAgentCacheAsync(@Nonnull String agentId, String before, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> invalidateAgentCacheAsync(
+    @Nonnull String agentId,
+    String before,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `invalidateAgentCache`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `invalidateAgentCache`.");
 
@@ -5336,8 +5674,10 @@ public class AgentStudioClient extends ApiClient {
    * @param before Delete entries strictly before this date (exclusive, YYYY-MM-DD). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> invalidateAgentCacheWithHTTPInfoAsync(@Nonnull String agentId, String before)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> invalidateAgentCacheWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    String before
+  ) throws AlgoliaRuntimeException {
     return this.invalidateAgentCacheWithHTTPInfoAsync(agentId, before, null);
   }
 
@@ -5350,8 +5690,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> invalidateAgentCacheAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Void> invalidateAgentCacheAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.invalidateAgentCacheAsync(agentId, null, requestOptions);
   }
 
@@ -5364,8 +5706,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> invalidateAgentCacheWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> invalidateAgentCacheWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.invalidateAgentCacheWithHTTPInfoAsync(agentId, null, requestOptions);
   }
 
@@ -5399,8 +5743,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AllowedDomainListResponse listAgentAllowedDomains(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AllowedDomainListResponse listAgentAllowedDomains(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listAgentAllowedDomainsAsync(agentId, requestOptions));
   }
 
@@ -5412,8 +5758,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listAgentAllowedDomainsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listAgentAllowedDomainsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listAgentAllowedDomainsWithHTTPInfoAsync(agentId, requestOptions));
   }
 
@@ -5517,6 +5865,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5534,6 +5884,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -5550,6 +5901,7 @@ public class AgentStudioClient extends ApiClient {
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -5571,6 +5923,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5588,6 +5942,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -5604,6 +5959,7 @@ public class AgentStudioClient extends ApiClient {
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -5625,6 +5981,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public PaginatedConversationsResponse listAgentConversations(
@@ -5639,7 +5997,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversations(
       agentId,
@@ -5654,6 +6013,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5674,6 +6034,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listAgentConversationsWithHTTPInfo(
@@ -5688,7 +6050,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfo(
       agentId,
@@ -5703,6 +6066,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5715,9 +6079,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+  public PaginatedConversationsResponse listAgentConversations(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -5728,10 +6094,13 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listAgentConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listAgentConversationsWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfo(
       agentId,
+      null,
       null,
       null,
       null,
@@ -5754,7 +6123,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5764,7 +6133,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listAgentConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5783,6 +6152,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5800,6 +6171,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.");
@@ -5819,6 +6191,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("clicked", clicked)
       .addQueryParameter("converted", converted)
       .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<PaginatedConversationsResponse>() {});
   }
@@ -5839,6 +6212,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5856,6 +6231,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.");
@@ -5875,6 +6251,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("clicked", clicked)
       .addQueryParameter("converted", converted)
       .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -5895,6 +6272,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(
@@ -5909,7 +6288,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsAsync(
       agentId,
@@ -5924,6 +6304,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5944,6 +6325,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listAgentConversationsWithHTTPInfoAsync(
@@ -5958,7 +6341,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfoAsync(
       agentId,
@@ -5973,6 +6357,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5989,7 +6374,22 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversationsAsync(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -6006,6 +6406,7 @@ public class AgentStudioClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfoAsync(
       agentId,
+      null,
       null,
       null,
       null,
@@ -6027,9 +6428,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(@Nonnull String agentId)
-    throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+  public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(
+    @Nonnull String agentId
+  ) throws AlgoliaRuntimeException {
+    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -6039,7 +6441,22 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfoAsync(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
   }
 
   /**
@@ -6052,8 +6469,12 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public PaginatedAgentsResponse listAgents(Integer page, Integer limit, String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public PaginatedAgentsResponse listAgents(
+    Integer page,
+    Integer limit,
+    String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listAgentsAsync(page, limit, providerId, requestOptions));
   }
 
@@ -6067,8 +6488,12 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listAgentsWithHTTPInfo(Integer page, Integer limit, String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listAgentsWithHTTPInfo(
+    Integer page,
+    Integer limit,
+    String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listAgentsWithHTTPInfoAsync(page, limit, providerId, requestOptions));
   }
 
@@ -6196,8 +6621,11 @@ public class AgentStudioClient extends ApiClient {
    * @param providerId Filter by provider id. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedAgentsResponse> listAgentsAsync(Integer page, Integer limit, String providerId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<PaginatedAgentsResponse> listAgentsAsync(
+    Integer page,
+    Integer limit,
+    String providerId
+  ) throws AlgoliaRuntimeException {
     return this.listAgentsAsync(page, limit, providerId, null);
   }
 
@@ -6209,8 +6637,11 @@ public class AgentStudioClient extends ApiClient {
    * @param providerId Filter by provider id. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> listAgentsWithHTTPInfoAsync(Integer page, Integer limit, String providerId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> listAgentsWithHTTPInfoAsync(
+    Integer page,
+    Integer limit,
+    String providerId
+  ) throws AlgoliaRuntimeException {
     return this.listAgentsWithHTTPInfoAsync(page, limit, providerId, null);
   }
 
@@ -6221,8 +6652,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedAgentsResponse> listAgentsAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<PaginatedAgentsResponse> listAgentsAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listAgentsAsync(null, null, null, requestOptions);
   }
 
@@ -6253,6 +6685,92 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<Response> listAgentsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
     return this.listAgentsWithHTTPInfoAsync(null, null, null, null);
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ConversationUsageResponse listConversationUsage(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listConversationUsageAsync(requestOptions));
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listConversationUsageWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listConversationUsageWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ConversationUsageResponse listConversationUsage() throws AlgoliaRuntimeException {
+    return this.listConversationUsage(null);
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listConversationUsageWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listConversationUsageWithHTTPInfo(null);
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ConversationUsageResponse> listConversationUsageAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration/conversation-usage").setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<ConversationUsageResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listConversationUsageWithHTTPInfoAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration/conversation-usage").setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ConversationUsageResponse> listConversationUsageAsync() throws AlgoliaRuntimeException {
+    return this.listConversationUsageAsync(null);
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listConversationUsageWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listConversationUsageWithHTTPInfoAsync(null);
   }
 
   /**
@@ -6302,8 +6820,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, List<String>>> listModelsAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Map<String, List<String>>> listModelsAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/providers/models").setMethod("GET").build();
 
     return executeAsync(request, requestOptions, new TypeReference<Map<String, List<String>>>() {});
@@ -6348,8 +6867,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<String> listProviderModels(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public List<String> listProviderModels(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listProviderModelsAsync(providerId, requestOptions));
   }
 
@@ -6361,8 +6882,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listProviderModelsWithHTTPInfo(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listProviderModelsWithHTTPInfo(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listProviderModelsWithHTTPInfoAsync(providerId, requestOptions));
   }
 
@@ -6394,8 +6917,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<List<String>> listProviderModelsAsync(@Nonnull String providerId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<List<String>> listProviderModelsAsync(
+    @Nonnull String providerId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(providerId, "Parameter `providerId` is required when calling `listProviderModels`.");
     Parameters.requireNonEmpty(providerId, "Parameter `providerId` is required when calling `listProviderModels`.");
 
@@ -6457,8 +6982,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public PaginatedProviderAuthenticationsResponse listProviders(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public PaginatedProviderAuthenticationsResponse listProviders(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listProvidersAsync(page, limit, requestOptions));
   }
 
@@ -6471,8 +6999,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listProvidersWithHTTPInfo(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listProvidersWithHTTPInfo(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listProvidersWithHTTPInfoAsync(page, limit, requestOptions));
   }
 
@@ -6570,8 +7101,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> listProvidersWithHTTPInfoAsync(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> listProvidersWithHTTPInfoAsync(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
       .setPath("/agent-studio/1/providers")
       .setMethod("GET")
@@ -6588,8 +7122,10 @@ public class AgentStudioClient extends ApiClient {
    * @param limit Items per page. (optional, default to 10)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedProviderAuthenticationsResponse> listProvidersAsync(Integer page, Integer limit)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<PaginatedProviderAuthenticationsResponse> listProvidersAsync(
+    Integer page,
+    Integer limit
+  ) throws AlgoliaRuntimeException {
     return this.listProvidersAsync(page, limit, null);
   }
 
@@ -6611,8 +7147,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedProviderAuthenticationsResponse> listProvidersAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<PaginatedProviderAuthenticationsResponse> listProvidersAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listProvidersAsync(null, null, requestOptions);
   }
 
@@ -6623,8 +7160,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> listProvidersWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> listProvidersWithHTTPInfoAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listProvidersWithHTTPInfoAsync(null, null, requestOptions);
   }
 
@@ -6655,8 +7193,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public PaginatedSecretKeysResponse listSecretKeys(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public PaginatedSecretKeysResponse listSecretKeys(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listSecretKeysAsync(page, limit, requestOptions));
   }
 
@@ -6669,8 +7210,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response listSecretKeysWithHTTPInfo(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response listSecretKeysWithHTTPInfo(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(listSecretKeysWithHTTPInfoAsync(page, limit, requestOptions));
   }
 
@@ -6768,8 +7312,11 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> listSecretKeysWithHTTPInfoAsync(Integer page, Integer limit, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> listSecretKeysWithHTTPInfoAsync(
+    Integer page,
+    Integer limit,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder()
       .setPath("/agent-studio/1/secret-keys")
       .setMethod("GET")
@@ -6808,8 +7355,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<PaginatedSecretKeysResponse> listSecretKeysAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<PaginatedSecretKeysResponse> listSecretKeysAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listSecretKeysAsync(null, null, requestOptions);
   }
 
@@ -6820,8 +7368,9 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> listSecretKeysWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> listSecretKeysWithHTTPInfoAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.listSecretKeysWithHTTPInfoAsync(null, null, requestOptions);
   }
 
@@ -6851,8 +7400,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AgentWithVersionResponse publishAgent(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AgentWithVersionResponse publishAgent(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(publishAgentAsync(agentId, requestOptions));
   }
 
@@ -6864,8 +7415,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response publishAgentWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response publishAgentWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(publishAgentWithHTTPInfoAsync(agentId, requestOptions));
   }
 
@@ -6897,8 +7450,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AgentWithVersionResponse> publishAgentAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AgentWithVersionResponse> publishAgentAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `publishAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `publishAgent`.");
 
@@ -6914,8 +7469,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> publishAgentWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> publishAgentWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `publishAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `publishAgent`.");
 
@@ -6955,8 +7512,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ContextResponse trimContext(@Nonnull ContextTrimRequest contextTrimRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ContextResponse trimContext(
+    @Nonnull ContextTrimRequest contextTrimRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(trimContextAsync(contextTrimRequest, requestOptions));
   }
 
@@ -6972,8 +7531,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response trimContextWithHTTPInfo(@Nonnull ContextTrimRequest contextTrimRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response trimContextWithHTTPInfo(
+    @Nonnull ContextTrimRequest contextTrimRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(trimContextWithHTTPInfoAsync(contextTrimRequest, requestOptions));
   }
 
@@ -7070,8 +7631,9 @@ public class AgentStudioClient extends ApiClient {
    * @param contextTrimRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ContextResponse> trimContextAsync(@Nonnull ContextTrimRequest contextTrimRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ContextResponse> trimContextAsync(
+    @Nonnull ContextTrimRequest contextTrimRequest
+  ) throws AlgoliaRuntimeException {
     return this.trimContextAsync(contextTrimRequest, null);
   }
 
@@ -7086,8 +7648,9 @@ public class AgentStudioClient extends ApiClient {
    * @param contextTrimRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> trimContextWithHTTPInfoAsync(@Nonnull ContextTrimRequest contextTrimRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> trimContextWithHTTPInfoAsync(
+    @Nonnull ContextTrimRequest contextTrimRequest
+  ) throws AlgoliaRuntimeException {
     return this.trimContextWithHTTPInfoAsync(contextTrimRequest, null);
   }
 
@@ -7099,8 +7662,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AgentWithVersionResponse unpublishAgent(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public AgentWithVersionResponse unpublishAgent(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(unpublishAgentAsync(agentId, requestOptions));
   }
 
@@ -7112,8 +7677,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response unpublishAgentWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response unpublishAgentWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(unpublishAgentWithHTTPInfoAsync(agentId, requestOptions));
   }
 
@@ -7145,8 +7712,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AgentWithVersionResponse> unpublishAgentAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AgentWithVersionResponse> unpublishAgentAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.");
 
@@ -7162,8 +7731,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> unpublishAgentWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> unpublishAgentWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.");
     Parameters.requireNonEmpty(agentId, "Parameter `agentId` is required when calling `unpublishAgent`.");
 
@@ -7232,8 +7803,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public AgentWithVersionResponse updateAgent(@Nonnull String agentId, @Nonnull AgentConfigUpdate agentConfigUpdate)
-    throws AlgoliaRuntimeException {
+  public AgentWithVersionResponse updateAgent(
+    @Nonnull String agentId,
+    @Nonnull AgentConfigUpdate agentConfigUpdate
+  ) throws AlgoliaRuntimeException {
     return this.updateAgent(agentId, agentConfigUpdate, null);
   }
 
@@ -7244,8 +7817,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response updateAgentWithHTTPInfo(@Nonnull String agentId, @Nonnull AgentConfigUpdate agentConfigUpdate)
-    throws AlgoliaRuntimeException {
+  public Response updateAgentWithHTTPInfo(
+    @Nonnull String agentId,
+    @Nonnull AgentConfigUpdate agentConfigUpdate
+  ) throws AlgoliaRuntimeException {
     return this.updateAgentWithHTTPInfo(agentId, agentConfigUpdate, null);
   }
 
@@ -7310,8 +7885,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<AgentWithVersionResponse> updateAgentAsync(@Nonnull String agentId, @Nonnull AgentConfigUpdate agentConfigUpdate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<AgentWithVersionResponse> updateAgentAsync(
+    @Nonnull String agentId,
+    @Nonnull AgentConfigUpdate agentConfigUpdate
+  ) throws AlgoliaRuntimeException {
     return this.updateAgentAsync(agentId, agentConfigUpdate, null);
   }
 
@@ -7322,8 +7899,10 @@ public class AgentStudioClient extends ApiClient {
    * @param agentConfigUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> updateAgentWithHTTPInfoAsync(@Nonnull String agentId, @Nonnull AgentConfigUpdate agentConfigUpdate)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> updateAgentWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    @Nonnull AgentConfigUpdate agentConfigUpdate
+  ) throws AlgoliaRuntimeException {
     return this.updateAgentWithHTTPInfoAsync(agentId, agentConfigUpdate, null);
   }
 
@@ -7363,8 +7942,9 @@ public class AgentStudioClient extends ApiClient {
    * @param applicationConfigPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ApplicationConfigResponse updateConfiguration(@Nonnull ApplicationConfigPatch applicationConfigPatch)
-    throws AlgoliaRuntimeException {
+  public ApplicationConfigResponse updateConfiguration(
+    @Nonnull ApplicationConfigPatch applicationConfigPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateConfiguration(applicationConfigPatch, null);
   }
 
@@ -7428,8 +8008,9 @@ public class AgentStudioClient extends ApiClient {
    * @param applicationConfigPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ApplicationConfigResponse> updateConfigurationAsync(@Nonnull ApplicationConfigPatch applicationConfigPatch)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ApplicationConfigResponse> updateConfigurationAsync(
+    @Nonnull ApplicationConfigPatch applicationConfigPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateConfigurationAsync(applicationConfigPatch, null);
   }
 
@@ -7439,8 +8020,9 @@ public class AgentStudioClient extends ApiClient {
    * @param applicationConfigPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> updateConfigurationWithHTTPInfoAsync(@Nonnull ApplicationConfigPatch applicationConfigPatch)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> updateConfigurationWithHTTPInfoAsync(
+    @Nonnull ApplicationConfigPatch applicationConfigPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateConfigurationWithHTTPInfoAsync(applicationConfigPatch, null);
   }
 
@@ -7452,8 +8034,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public FeedbackResponse updateFeedback(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public FeedbackResponse updateFeedback(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(updateFeedbackAsync(feedbackUpdateRequest, requestOptions));
   }
 
@@ -7465,8 +8049,10 @@ public class AgentStudioClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response updateFeedbackWithHTTPInfo(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response updateFeedbackWithHTTPInfo(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(updateFeedbackWithHTTPInfoAsync(feedbackUpdateRequest, requestOptions));
   }
 
@@ -7540,8 +8126,9 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackUpdateRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<FeedbackResponse> updateFeedbackAsync(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<FeedbackResponse> updateFeedbackAsync(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest
+  ) throws AlgoliaRuntimeException {
     return this.updateFeedbackAsync(feedbackUpdateRequest, null);
   }
 
@@ -7551,8 +8138,9 @@ public class AgentStudioClient extends ApiClient {
    * @param feedbackUpdateRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> updateFeedbackWithHTTPInfoAsync(@Nonnull FeedbackUpdateRequest feedbackUpdateRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> updateFeedbackWithHTTPInfoAsync(
+    @Nonnull FeedbackUpdateRequest feedbackUpdateRequest
+  ) throws AlgoliaRuntimeException {
     return this.updateFeedbackWithHTTPInfoAsync(feedbackUpdateRequest, null);
   }
 
@@ -7611,8 +8199,10 @@ public class AgentStudioClient extends ApiClient {
    * @param providerAuthenticationPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response updateProviderWithHTTPInfo(@Nonnull String providerId, @Nonnull ProviderAuthenticationPatch providerAuthenticationPatch)
-    throws AlgoliaRuntimeException {
+  public Response updateProviderWithHTTPInfo(
+    @Nonnull String providerId,
+    @Nonnull ProviderAuthenticationPatch providerAuthenticationPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateProviderWithHTTPInfo(providerId, providerAuthenticationPatch, null);
   }
 
@@ -7745,8 +8335,10 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public SecretKeyResponse updateSecretKey(@Nonnull String secretKeyId, @Nonnull SecretKeyPatch secretKeyPatch)
-    throws AlgoliaRuntimeException {
+  public SecretKeyResponse updateSecretKey(
+    @Nonnull String secretKeyId,
+    @Nonnull SecretKeyPatch secretKeyPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateSecretKey(secretKeyId, secretKeyPatch, null);
   }
 
@@ -7757,8 +8349,10 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response updateSecretKeyWithHTTPInfo(@Nonnull String secretKeyId, @Nonnull SecretKeyPatch secretKeyPatch)
-    throws AlgoliaRuntimeException {
+  public Response updateSecretKeyWithHTTPInfo(
+    @Nonnull String secretKeyId,
+    @Nonnull SecretKeyPatch secretKeyPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateSecretKeyWithHTTPInfo(secretKeyId, secretKeyPatch, null);
   }
 
@@ -7823,8 +8417,10 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<SecretKeyResponse> updateSecretKeyAsync(@Nonnull String secretKeyId, @Nonnull SecretKeyPatch secretKeyPatch)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<SecretKeyResponse> updateSecretKeyAsync(
+    @Nonnull String secretKeyId,
+    @Nonnull SecretKeyPatch secretKeyPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateSecretKeyAsync(secretKeyId, secretKeyPatch, null);
   }
 
@@ -7835,8 +8431,10 @@ public class AgentStudioClient extends ApiClient {
    * @param secretKeyPatch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> updateSecretKeyWithHTTPInfoAsync(@Nonnull String secretKeyId, @Nonnull SecretKeyPatch secretKeyPatch)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> updateSecretKeyWithHTTPInfoAsync(
+    @Nonnull String secretKeyId,
+    @Nonnull SecretKeyPatch secretKeyPatch
+  ) throws AlgoliaRuntimeException {
     return this.updateSecretKeyWithHTTPInfoAsync(secretKeyId, secretKeyPatch, null);
   }
 

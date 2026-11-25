@@ -305,6 +305,53 @@ class AgentStudioTest {
     )
   }
 
+  @Test
+  fun `createAgentCompletion with all parameters1`() = runTest {
+    client.runTest(
+      call = {
+        createAgentCompletion(
+          agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+          compatibilityMode = CompatibilityMode.entries.first { it.value == "ai-sdk-4" },
+          agentCompletionRequest =
+            AgentCompletionRequest(
+              messages =
+                MessagesUnion.ofListOfMessageV4(
+                  listOf(
+                    UserMessageV4(
+                      role = "user",
+                      content = "Hello, how are you?",
+                    ),
+                  ),
+                ),
+            ),
+          stream = false,
+          cache = false,
+          memory = false,
+          analytics = false,
+          xAlgoliaSecureUserToken = "secure-user-token",
+          ephemeral = true,
+        )
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions"
+            .toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertContainsAll("""{"x-algolia-secure-user-token":"secure-user-token"}""", it.headers)
+        assertQueryParams(
+          """{"compatibilityMode":"ai-sdk-4","stream":"false","cache":"false","memory":"false","analytics":"false","ephemeral":"true"}""",
+          it.url.encodedParameters,
+        )
+        assertJsonBody(
+          """{"messages":[{"role":"user","content":"Hello, how are you?"}]}""",
+          it.body,
+        )
+      },
+    )
+  }
+
   // createAgentTask
 
   @Test
@@ -1077,13 +1124,14 @@ class AgentStudioTest {
   }
 
   @Test
-  fun `deleteAgentConversations with date filters1`() = runTest {
+  fun `deleteAgentConversations with all filters1`() = runTest {
     client.runTest(
       call = {
         deleteAgentConversations(
           agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
           startDate = "2024-01-01",
           endDate = "2024-06-30",
+          ephemeral = true,
         )
       },
       intercept = {
@@ -1094,7 +1142,7 @@ class AgentStudioTest {
         )
         assertEquals(HttpMethod.parse("DELETE"), it.method)
         assertQueryParams(
-          """{"startDate":"2024-01-01","endDate":"2024-06-30"}""",
+          """{"startDate":"2024-01-01","endDate":"2024-06-30","ephemeral":"true"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
@@ -1234,13 +1282,14 @@ class AgentStudioTest {
   }
 
   @Test
-  fun `exportConversations with date filters1`() = runTest {
+  fun `exportConversations with all filters1`() = runTest {
     client.runTest(
       call = {
         exportConversations(
           agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
           startDate = "2024-01-01",
           endDate = "2024-12-31",
+          ephemeral = true,
         )
       },
       intercept = {
@@ -1251,7 +1300,7 @@ class AgentStudioTest {
         )
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams(
-          """{"startDate":"2024-01-01","endDate":"2024-12-31"}""",
+          """{"startDate":"2024-01-01","endDate":"2024-12-31","ephemeral":"true"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
@@ -1640,6 +1689,7 @@ class AgentStudioTest {
           converted = false,
           hasAlgoliaSearch = true,
           xAlgoliaSecureUserToken = "secure-user-token",
+          ephemeral = true,
         )
       },
       intercept = {
@@ -1651,7 +1701,7 @@ class AgentStudioTest {
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertContainsAll("""{"x-algolia-secure-user-token":"secure-user-token"}""", it.headers)
         assertQueryParams(
-          """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true"}""",
+          """{"startDate":"2024-01-01","endDate":"2024-12-31","includeFeedback":"true","feedbackVote":"1","page":"2","limit":"10","includeImpactAnalytics":"true","clicked":"true","converted":"false","hasAlgoliaSearch":"true","ephemeral":"true"}""",
           it.url.encodedParameters,
         )
         assertNoBody(it.body)
@@ -1730,6 +1780,25 @@ class AgentStudioTest {
         assertEquals("/agent-studio/1/agents".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams("""{"page":"1","limit":"2"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // listConversationUsage
+
+  @Test
+  fun `listConversationUsage`() = runTest {
+    client.runTest(
+      call = {
+        listConversationUsage()
+      },
+      intercept = {
+        assertEquals(
+          "/agent-studio/1/configuration/conversation-usage".toPathSegments(),
+          it.url.pathSegments,
+        )
+        assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
     )

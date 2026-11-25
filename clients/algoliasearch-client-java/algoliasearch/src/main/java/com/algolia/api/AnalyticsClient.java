@@ -82,8 +82,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customDelete(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
   }
 
@@ -96,8 +99,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customDeleteWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -227,8 +233,10 @@ public class AnalyticsClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -240,8 +248,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customDeleteAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, requestOptions);
   }
 
@@ -253,8 +263,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -287,8 +299,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customGet(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customGet(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
   }
 
@@ -301,8 +316,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customGetWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -432,8 +450,10 @@ public class AnalyticsClient extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -445,8 +465,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customGetAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customGetAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, requestOptions);
   }
 
@@ -458,8 +480,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -493,8 +517,12 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPost(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
   }
 
@@ -649,8 +677,11 @@ public class AnalyticsClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
   }
 
@@ -662,8 +693,11 @@ public class AnalyticsClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -675,8 +709,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, requestOptions);
   }
 
@@ -688,8 +724,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -723,8 +761,12 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPut(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
   }
 
@@ -879,8 +921,11 @@ public class AnalyticsClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
   }
 
@@ -892,8 +937,11 @@ public class AnalyticsClient extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -905,8 +953,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, requestOptions);
   }
 
@@ -918,8 +968,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -1027,8 +1079,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetAddToCartRateResponse getAddToCartRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRate(index, startDate, endDate, tags, null);
   }
 
@@ -1052,8 +1108,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getAddToCartRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getAddToCartRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -1074,8 +1134,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetAddToCartRateResponse getAddToCartRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRate(index, null, null, null, requestOptions);
   }
 
@@ -1096,8 +1158,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getAddToCartRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getAddToCartRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -1274,8 +1338,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -1296,8 +1364,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -1318,8 +1388,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getAddToCartRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAddToCartRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -1436,8 +1508,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetAverageClickPositionResponse getAverageClickPosition(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getAverageClickPosition(index, startDate, endDate, tags, null);
   }
 
@@ -1458,8 +1534,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getAverageClickPositionWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getAverageClickPositionWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getAverageClickPositionWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -1477,8 +1557,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetAverageClickPositionResponse getAverageClickPosition(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAverageClickPosition(index, null, null, null, requestOptions);
   }
 
@@ -1496,8 +1578,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getAverageClickPositionWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getAverageClickPositionWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getAverageClickPositionWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -1719,8 +1803,9 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(@Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getAverageClickPositionAsync(index, null, null, null, null);
   }
 
@@ -1806,8 +1891,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetClickPositionsResponse getClickPositions(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetClickPositionsResponse getClickPositions(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositions(index, startDate, endDate, tags, null);
   }
 
@@ -1825,8 +1914,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getClickPositionsWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getClickPositionsWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositionsWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -1841,8 +1934,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetClickPositionsResponse getClickPositions(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetClickPositionsResponse getClickPositions(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositions(index, null, null, null, requestOptions);
   }
 
@@ -1857,8 +1952,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getClickPositionsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getClickPositionsWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositionsWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -2019,8 +2116,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositionsAsync(index, null, null, null, requestOptions);
   }
 
@@ -2035,8 +2134,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getClickPositionsWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickPositionsWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -2138,8 +2239,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetClickThroughRateResponse getClickThroughRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getClickThroughRate(index, startDate, endDate, tags, null);
   }
 
@@ -2159,8 +2264,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getClickThroughRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getClickThroughRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getClickThroughRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -2177,8 +2286,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetClickThroughRateResponse getClickThroughRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickThroughRate(index, null, null, null, requestOptions);
   }
 
@@ -2195,8 +2306,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getClickThroughRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getClickThroughRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickThroughRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -2391,8 +2504,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getClickThroughRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getClickThroughRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -2498,8 +2613,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversionRateResponse getConversionRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetConversionRateResponse getConversionRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRate(index, startDate, endDate, tags, null);
   }
 
@@ -2519,8 +2638,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getConversionRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getConversionRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -2537,8 +2660,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversionRateResponse getConversionRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetConversionRateResponse getConversionRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRate(index, null, null, null, requestOptions);
   }
 
@@ -2555,8 +2680,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getConversionRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getConversionRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -2731,8 +2858,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -2749,8 +2878,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getConversionRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getConversionRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -2856,8 +2987,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetNoClickRateResponse getNoClickRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetNoClickRateResponse getNoClickRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRate(index, startDate, endDate, tags, null);
   }
 
@@ -2877,8 +3012,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getNoClickRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getNoClickRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -2895,8 +3034,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetNoClickRateResponse getNoClickRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetNoClickRateResponse getNoClickRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRate(index, null, null, null, requestOptions);
   }
 
@@ -2913,8 +3054,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getNoClickRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getNoClickRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -3042,8 +3185,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateAsync(index, startDate, endDate, tags, null);
   }
 
@@ -3063,8 +3210,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -3081,8 +3232,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -3099,8 +3252,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getNoClickRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoClickRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -3200,8 +3355,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetNoResultsRateResponse getNoResultsRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRate(index, startDate, endDate, tags, null);
   }
 
@@ -3219,8 +3378,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getNoResultsRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getNoResultsRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -3235,8 +3398,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetNoResultsRateResponse getNoResultsRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRate(index, null, null, null, requestOptions);
   }
 
@@ -3251,8 +3416,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getNoResultsRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getNoResultsRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -3393,8 +3560,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -3409,8 +3580,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -3425,8 +3598,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getNoResultsRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getNoResultsRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -3540,8 +3715,9 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getPatternsFieldsWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getPatternsFieldsWithHTTPInfoAsync(
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/3/patterns/fields").setMethod("GET").build();
 
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
@@ -3654,8 +3830,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetPurchaseRateResponse getPurchaseRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRate(index, startDate, endDate, tags, null);
   }
 
@@ -3678,8 +3858,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getPurchaseRateWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getPurchaseRateWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -3699,8 +3883,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetPurchaseRateResponse getPurchaseRate(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRate(index, null, null, null, requestOptions);
   }
 
@@ -3720,8 +3906,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getPurchaseRateWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getPurchaseRateWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -3892,8 +4080,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -3913,8 +4105,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateAsync(index, null, null, null, requestOptions);
   }
 
@@ -3934,8 +4128,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getPurchaseRateWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getPurchaseRateWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -4067,8 +4263,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getRevenueWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getRevenueWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getRevenueWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -4230,8 +4430,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetRevenue> getRevenueAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getRevenueAsync(index, startDate, endDate, tags, null);
   }
 
@@ -4251,8 +4455,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getRevenueWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -4269,8 +4477,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetRevenue> getRevenueAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getRevenueAsync(index, null, null, null, requestOptions);
   }
 
@@ -4287,8 +4497,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getRevenueWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getRevenueWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -4382,8 +4594,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetSearchesCountResponse getSearchesCount(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetSearchesCountResponse getSearchesCount(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCount(index, startDate, endDate, tags, null);
   }
 
@@ -4399,8 +4615,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getSearchesCountWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getSearchesCountWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCountWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -4413,8 +4633,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetSearchesCountResponse getSearchesCount(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetSearchesCountResponse getSearchesCount(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCount(index, null, null, null, requestOptions);
   }
 
@@ -4427,8 +4649,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getSearchesCountWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getSearchesCountWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCountWithHTTPInfo(index, null, null, null, requestOptions);
   }
 
@@ -4561,8 +4785,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCountWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -4576,8 +4804,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCountAsync(index, null, null, null, requestOptions);
   }
 
@@ -4591,8 +4821,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getSearchesCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesCountWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -4740,8 +4972,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetSearchesNoClicksResponse getSearchesNoClicks(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetSearchesNoClicksResponse getSearchesNoClicks(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicks(index, null, null, null, null, null, requestOptions);
   }
 
@@ -4755,8 +4989,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getSearchesNoClicksWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getSearchesNoClicksWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicksWithHTTPInfo(index, null, null, null, null, null, requestOptions);
   }
 
@@ -4947,8 +5183,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getSearchesNoClicksWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoClicksWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5086,8 +5324,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetSearchesNoResultsResponse getSearchesNoResults(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetSearchesNoResultsResponse getSearchesNoResults(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoResults(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5099,8 +5339,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getSearchesNoResultsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getSearchesNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoResultsWithHTTPInfo(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5275,8 +5517,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getSearchesNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getSearchesNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5362,8 +5606,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetStatusResponse> getStatusAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetStatusResponse> getStatusAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getStatus`.");
     Parameters.requireNonEmpty(index, "Parameter `index` is required when calling `getStatus`.");
 
@@ -5381,8 +5627,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getStatusWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getStatusWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getStatus`.");
     Parameters.requireNonEmpty(index, "Parameter `index` is required when calling `getStatus`.");
 
@@ -5524,8 +5772,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetTopCountriesResponse getTopCountries(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetTopCountriesResponse getTopCountries(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopCountries(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5537,8 +5787,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getTopCountriesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getTopCountriesWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopCountriesWithHTTPInfo(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5698,8 +5950,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopCountriesAsync(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5711,8 +5965,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopCountriesWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopCountriesWithHTTPInfoAsync(index, null, null, null, null, null, requestOptions);
   }
 
@@ -5861,8 +6117,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetTopFilterAttributesResponse getTopFilterAttributes(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetTopFilterAttributesResponse getTopFilterAttributes(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributes(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -5875,8 +6133,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getTopFilterAttributesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getTopFilterAttributesWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributesWithHTTPInfo(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -6069,8 +6329,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopFilterAttributesWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributesWithHTTPInfoAsync(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -6081,8 +6343,9 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(@Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterAttributesAsync(index, null, null, null, null, null, null, null);
   }
 
@@ -6267,8 +6530,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetTopFilterForAttributeResponse getTopFilterForAttribute(@Nonnull String attribute, @Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public GetTopFilterForAttributeResponse getTopFilterForAttribute(
+    @Nonnull String attribute,
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterForAttribute(attribute, index, null, null, null, null, null, null, null);
   }
 
@@ -6491,8 +6756,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(@Nonnull String attribute, @Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
+    @Nonnull String attribute,
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterForAttributeAsync(attribute, index, null, null, null, null, null, null, null);
   }
 
@@ -6505,8 +6772,10 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(@Nonnull String attribute, @Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopFilterForAttributeWithHTTPInfoAsync(
+    @Nonnull String attribute,
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getTopFilterForAttributeWithHTTPInfoAsync(attribute, index, null, null, null, null, null, null, null);
   }
 
@@ -6640,8 +6909,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetTopFiltersNoResultsResponse getTopFiltersNoResults(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResults(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -6655,8 +6926,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getTopFiltersNoResultsWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getTopFiltersNoResultsWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResultsWithHTTPInfo(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -6863,8 +7136,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopFiltersNoResultsWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResultsWithHTTPInfoAsync(index, null, null, null, null, null, null, requestOptions);
   }
 
@@ -6877,8 +7152,9 @@ public class AnalyticsClient extends ApiClient {
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(@Nonnull String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
+    @Nonnull String index
+  ) throws AlgoliaRuntimeException {
     return this.getTopFiltersNoResultsAsync(index, null, null, null, null, null, null, null);
   }
 
@@ -7381,8 +7657,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopHitsAsync(index, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -7404,8 +7682,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopHitsWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopHitsWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -7697,8 +7977,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetTopSearchesResponse getTopSearches(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetTopSearchesResponse getTopSearches(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopSearches(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -7720,8 +8002,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getTopSearchesWithHTTPInfo(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getTopSearchesWithHTTPInfo(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopSearchesWithHTTPInfo(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -8036,8 +8320,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -8060,8 +8346,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTopSearchesWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTopSearchesWithHTTPInfoAsync(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
@@ -8179,8 +8467,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsersCountResponse getUsersCount(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public GetUsersCountResponse getUsersCount(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCount(index, startDate, endDate, tags, null);
   }
 
@@ -8200,8 +8492,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getUsersCountWithHTTPInfo(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public Response getUsersCountWithHTTPInfo(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCountWithHTTPInfo(index, startDate, endDate, tags, null);
   }
 
@@ -8218,8 +8514,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetUsersCountResponse getUsersCount(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public GetUsersCountResponse getUsersCount(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCount(index, null, null, null, requestOptions);
   }
 
@@ -8364,8 +8662,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCountAsync(index, startDate, endDate, tags, null);
   }
 
@@ -8385,8 +8687,12 @@ public class AnalyticsClient extends ApiClient {
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index, String startDate, String endDate, String tags)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCountWithHTTPInfoAsync(index, startDate, endDate, tags, null);
   }
 
@@ -8403,8 +8709,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCountAsync(index, null, null, null, requestOptions);
   }
 
@@ -8421,8 +8729,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(@Nonnull String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getUsersCountWithHTTPInfoAsync(
+    @Nonnull String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getUsersCountWithHTTPInfoAsync(index, null, null, null, requestOptions);
   }
 
@@ -8512,8 +8822,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, Object> queryPatternsDistribution(@Nonnull DistributionPayload distributionPayload, String index)
-    throws AlgoliaRuntimeException {
+  public Map<String, Object> queryPatternsDistribution(
+    @Nonnull DistributionPayload distributionPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsDistribution(distributionPayload, index, null);
   }
 
@@ -8529,8 +8841,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsDistributionWithHTTPInfo(@Nonnull DistributionPayload distributionPayload, String index)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsDistributionWithHTTPInfo(
+    @Nonnull DistributionPayload distributionPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsDistributionWithHTTPInfo(distributionPayload, index, null);
   }
 
@@ -8739,8 +9053,9 @@ public class AnalyticsClient extends ApiClient {
    * @param distributionPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(@Nonnull DistributionPayload distributionPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Map<String, Object>> queryPatternsDistributionAsync(
+    @Nonnull DistributionPayload distributionPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsDistributionAsync(distributionPayload, null, null);
   }
 
@@ -8753,8 +9068,9 @@ public class AnalyticsClient extends ApiClient {
    * @param distributionPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(@Nonnull DistributionPayload distributionPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsDistributionWithHTTPInfoAsync(
+    @Nonnull DistributionPayload distributionPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsDistributionWithHTTPInfoAsync(distributionPayload, null, null);
   }
 
@@ -8840,8 +9156,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Map<String, Object> queryPatternsScalar(@Nonnull ScalarPayload scalarPayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Map<String, Object> queryPatternsScalar(
+    @Nonnull ScalarPayload scalarPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalar(scalarPayload, null, requestOptions);
   }
 
@@ -8855,8 +9173,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsScalarWithHTTPInfo(@Nonnull ScalarPayload scalarPayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsScalarWithHTTPInfo(
+    @Nonnull ScalarPayload scalarPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalarWithHTTPInfo(scalarPayload, null, requestOptions);
   }
 
@@ -8953,8 +9273,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(@Nonnull ScalarPayload scalarPayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalarAsync(scalarPayload, index, null);
   }
 
@@ -8969,8 +9291,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(@Nonnull ScalarPayload scalarPayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(
+    @Nonnull ScalarPayload scalarPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalarWithHTTPInfoAsync(scalarPayload, index, null);
   }
 
@@ -9016,8 +9340,9 @@ public class AnalyticsClient extends ApiClient {
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(@Nonnull ScalarPayload scalarPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Map<String, Object>> queryPatternsScalarAsync(
+    @Nonnull ScalarPayload scalarPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalarAsync(scalarPayload, null, null);
   }
 
@@ -9029,8 +9354,9 @@ public class AnalyticsClient extends ApiClient {
    * @param scalarPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(@Nonnull ScalarPayload scalarPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsScalarWithHTTPInfoAsync(
+    @Nonnull ScalarPayload scalarPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsScalarWithHTTPInfoAsync(scalarPayload, null, null);
   }
 
@@ -9047,8 +9373,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload, String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public TableResponse queryPatternsTable(
+    @Nonnull TablePayload tablePayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(queryPatternsTableAsync(tablePayload, index, requestOptions));
   }
 
@@ -9065,8 +9394,11 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload, String index, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsTableWithHTTPInfo(
+    @Nonnull TablePayload tablePayload,
+    String index,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(queryPatternsTableWithHTTPInfoAsync(tablePayload, index, requestOptions));
   }
 
@@ -9110,8 +9442,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TableResponse queryPatternsTable(@Nonnull TablePayload tablePayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public TableResponse queryPatternsTable(
+    @Nonnull TablePayload tablePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTable(tablePayload, null, requestOptions);
   }
 
@@ -9125,8 +9459,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsTableWithHTTPInfo(@Nonnull TablePayload tablePayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsTableWithHTTPInfo(
+    @Nonnull TablePayload tablePayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTableWithHTTPInfo(tablePayload, null, requestOptions);
   }
 
@@ -9226,8 +9562,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TableResponse> queryPatternsTableAsync(@Nonnull TablePayload tablePayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<TableResponse> queryPatternsTableAsync(
+    @Nonnull TablePayload tablePayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTableAsync(tablePayload, index, null);
   }
 
@@ -9243,8 +9581,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(@Nonnull TablePayload tablePayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(
+    @Nonnull TablePayload tablePayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTableWithHTTPInfoAsync(tablePayload, index, null);
   }
 
@@ -9306,8 +9646,9 @@ public class AnalyticsClient extends ApiClient {
    * @param tablePayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(@Nonnull TablePayload tablePayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsTableWithHTTPInfoAsync(
+    @Nonnull TablePayload tablePayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTableWithHTTPInfoAsync(tablePayload, null, null);
   }
 
@@ -9364,8 +9705,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TimeseriesResponse queryPatternsTimeseries(@Nonnull TimeseriesPayload timeseriesPayload, String index)
-    throws AlgoliaRuntimeException {
+  public TimeseriesResponse queryPatternsTimeseries(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseries(timeseriesPayload, index, null);
   }
 
@@ -9380,8 +9723,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsTimeseriesWithHTTPInfo(@Nonnull TimeseriesPayload timeseriesPayload, String index)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsTimeseriesWithHTTPInfo(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesWithHTTPInfo(timeseriesPayload, index, null);
   }
 
@@ -9395,8 +9740,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public TimeseriesResponse queryPatternsTimeseries(@Nonnull TimeseriesPayload timeseriesPayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public TimeseriesResponse queryPatternsTimeseries(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseries(timeseriesPayload, null, requestOptions);
   }
 
@@ -9410,8 +9757,10 @@ public class AnalyticsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response queryPatternsTimeseriesWithHTTPInfo(@Nonnull TimeseriesPayload timeseriesPayload, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response queryPatternsTimeseriesWithHTTPInfo(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesWithHTTPInfo(timeseriesPayload, null, requestOptions);
   }
 
@@ -9508,8 +9857,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(@Nonnull TimeseriesPayload timeseriesPayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesAsync(timeseriesPayload, index, null);
   }
 
@@ -9524,8 +9875,10 @@ public class AnalyticsClient extends ApiClient {
    *     body's `indices` parameter; optional for unrestricted keys. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(@Nonnull TimeseriesPayload timeseriesPayload, String index)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload,
+    String index
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, index, null);
   }
 
@@ -9571,8 +9924,9 @@ public class AnalyticsClient extends ApiClient {
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(@Nonnull TimeseriesPayload timeseriesPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<TimeseriesResponse> queryPatternsTimeseriesAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesAsync(timeseriesPayload, null, null);
   }
 
@@ -9584,8 +9938,9 @@ public class AnalyticsClient extends ApiClient {
    * @param timeseriesPayload (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(@Nonnull TimeseriesPayload timeseriesPayload)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> queryPatternsTimeseriesWithHTTPInfoAsync(
+    @Nonnull TimeseriesPayload timeseriesPayload
+  ) throws AlgoliaRuntimeException {
     return this.queryPatternsTimeseriesWithHTTPInfoAsync(timeseriesPayload, null, null);
   }
 }

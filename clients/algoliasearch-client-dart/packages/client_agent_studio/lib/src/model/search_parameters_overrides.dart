@@ -65,6 +65,7 @@ final class SearchParametersOverrides {
   /// - [List<AlgoliaRecommendToolConfig>]
   /// - [List<AlgoliaSearchToolConfig>]
   /// - [List<McpServerToolConfig>]
+  /// - [List<AlgoliaCompareProductsToolConfig>]
   /// - [String]
   @JsonKey(name: r'facetFilters')
   final dynamic facetFilters;
