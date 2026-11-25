@@ -337,7 +337,7 @@ __metadata:
     "@types/node": "npm:26.6.6"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.7"
-    tsup: "npm:8.5.1"
+    tsup: "npm:9.0.0"
     typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
