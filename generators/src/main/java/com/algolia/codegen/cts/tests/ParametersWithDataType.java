@@ -28,7 +28,8 @@ public class ParametersWithDataType {
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
-    throws CTSException, JsonMappingException, JsonProcessingException {
+    throws CTSException, JsonMappingException, JsonProcessingException
+  {
     this.enhanceParameters(parameters, bundle, null);
   }
 
@@ -52,7 +53,8 @@ public class ParametersWithDataType {
    * @param operation (optional) The model in which to look for spec
    */
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle, CodegenOperation operation)
-    throws CTSException, JsonMappingException, JsonProcessingException {
+    throws CTSException, JsonMappingException, JsonProcessingException
+  {
     if (parameters != null && parameters.size() == 0) {
       bundle.put("parameters", "{}");
       return;
@@ -285,8 +287,13 @@ public class ParametersWithDataType {
     }
   }
 
-  private void handleArray(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int depth)
-    throws CTSException {
+  private void handleArray(
+    String paramName,
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec,
+    int depth
+  ) throws CTSException {
     List<Object> items = (List<Object>) param;
 
     List<Object> values = new ArrayList<>();
@@ -468,8 +475,13 @@ public class ParametersWithDataType {
     return paramName;
   }
 
-  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int depth)
-    throws CTSException {
+  private void handleObject(
+    String paramName,
+    Object param,
+    Map<String, Object> testOutput,
+    boolean isSimpleObject,
+    int depth
+  ) throws CTSException {
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
@@ -484,8 +496,13 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleMap(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int depth)
-    throws CTSException {
+  private void handleMap(
+    String paramName,
+    Object param,
+    Map<String, Object> testOutput,
+    IJsonSchemaValidationProperties spec,
+    int depth
+  ) throws CTSException {
     if (spec.getHasVars()) {
       throw new CTSException("Spec has vars.");
     }
