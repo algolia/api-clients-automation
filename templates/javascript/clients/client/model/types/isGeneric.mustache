@@ -1,4 +1,9 @@
 {{! parameter that is generic and have a default value }}
+{{! `_T` when the type parameter is not forwarded anywhere, so that `no-unused-vars` autofixes do not strip it }}
+{{#vendorExtensions.x-unused-generic}}
+  <_T = Record<string, unknown>>
+{{/vendorExtensions.x-unused-generic}}
+{{^vendorExtensions.x-unused-generic}}
 {{#vendorExtensions.x-has-child-generic}}
   <T = Record<string, unknown>>
 {{/vendorExtensions.x-has-child-generic}}
@@ -7,3 +12,4 @@
   <T = Record<string, unknown>>
 {{/vendorExtensions.x-is-generic}}
 {{/vendorExtensions.x-has-child-generic}}
+{{/vendorExtensions.x-unused-generic}}

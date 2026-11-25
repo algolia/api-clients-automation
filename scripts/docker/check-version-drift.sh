@@ -385,7 +385,7 @@ check Dockerfile.base golang .go-version
 check Dockerfile.base python .python-version
 check Dockerfile.base php .php-version
 check Dockerfile.ruby ruby .ruby-version
-check Dockerfile.swift swift .swift-version
+check Dockerfile.swift swift .swift-ci-version
 
 # no config/.*-version file governs these two, renovate owns their versions
 check_digest Dockerfile.base composer

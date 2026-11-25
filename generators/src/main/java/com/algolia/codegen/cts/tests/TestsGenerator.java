@@ -30,8 +30,11 @@ public abstract class TestsGenerator {
 
   public abstract void addSupportingFiles(List<SupportingFile> supportingFiles, String outputFolder, String extension);
 
-  public abstract void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle)
-    throws Exception;
+  public abstract void run(
+    Map<String, CodegenModel> models,
+    Map<String, CodegenOperation> operations,
+    Map<String, Object> bundle
+  ) throws Exception;
 
   protected <T> Map<String, T> loadCTS(String path, String clientName, Class<T> jsonType) throws Exception {
     if (!available()) {
@@ -103,7 +106,8 @@ public abstract class TestsGenerator {
   }
 
   protected void addRequestOptions(ParametersWithDataType paramsType, RequestOptions req, Map<String, Object> output)
-    throws JsonMappingException, JsonProcessingException {
+    throws JsonMappingException, JsonProcessingException
+  {
     output.put("hasRequestOptions", req != null);
     if (req != null) {
       Map<String, Object> requestOptions = new HashMap<>();
