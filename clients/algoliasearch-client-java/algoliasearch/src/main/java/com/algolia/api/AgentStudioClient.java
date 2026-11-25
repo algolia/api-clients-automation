@@ -832,6 +832,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -845,6 +848,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -857,6 +861,7 @@ public class AgentStudioClient extends ApiClient {
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -879,6 +884,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -892,6 +900,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -904,6 +913,7 @@ public class AgentStudioClient extends ApiClient {
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -926,6 +936,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Map<String, Object> createAgentCompletion(
@@ -936,7 +949,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletion(
       agentId,
@@ -947,6 +961,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -968,6 +983,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response createAgentCompletionWithHTTPInfo(
@@ -978,7 +996,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfo(
       agentId,
@@ -989,6 +1008,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1013,7 +1033,18 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, requestOptions);
+    return this.createAgentCompletion(
+      agentId,
+      compatibilityMode,
+      agentCompletionRequest,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -1040,6 +1071,7 @@ public class AgentStudioClient extends ApiClient {
       agentId,
       compatibilityMode,
       agentCompletionRequest,
+      null,
       null,
       null,
       null,
@@ -1066,7 +1098,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletion(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1086,7 +1118,18 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletionWithHTTPInfo(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletionWithHTTPInfo(
+      agentId,
+      compatibilityMode,
+      agentCompletionRequest,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
   }
 
   /**
@@ -1107,6 +1150,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1120,6 +1166,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.");
@@ -1142,6 +1189,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("cache", cache)
       .addQueryParameter("memory", memory)
       .addQueryParameter("analytics", analytics)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Map<String, Object>>() {});
   }
@@ -1164,6 +1212,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1177,6 +1228,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean memory,
     Boolean analytics,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.");
@@ -1199,6 +1251,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("cache", cache)
       .addQueryParameter("memory", memory)
       .addQueryParameter("analytics", analytics)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -1221,6 +1274,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Map<String, Object>> createAgentCompletionAsync(
@@ -1231,7 +1287,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionAsync(
       agentId,
@@ -1242,6 +1299,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1264,6 +1322,9 @@ public class AgentStudioClient extends ApiClient {
    *     Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and
    *     query-suggestions training. Useful for offline-eval workflows. (optional, default to true)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Set to true to not retain the conversation: it is processed and analyzed like
+   *     any other, but removed by the next cleanup run instead of being kept in the history.
+   *     Overrides the agent's ephemeralConversations setting; omit to use it. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> createAgentCompletionWithHTTPInfoAsync(
@@ -1274,7 +1335,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean cache,
     Boolean memory,
     Boolean analytics,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.createAgentCompletionWithHTTPInfoAsync(
       agentId,
@@ -1285,6 +1347,7 @@ public class AgentStudioClient extends ApiClient {
       memory,
       analytics,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -1319,6 +1382,7 @@ public class AgentStudioClient extends ApiClient {
       null,
       null,
       null,
+      null,
       requestOptions
     );
   }
@@ -1353,6 +1417,7 @@ public class AgentStudioClient extends ApiClient {
       null,
       null,
       null,
+      null,
       requestOptions
     );
   }
@@ -1375,7 +1440,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull CompatibilityMode compatibilityMode,
     @Nonnull AgentCompletionRequestUnion agentCompletionRequest
   ) throws AlgoliaRuntimeException {
-    return this.createAgentCompletionAsync(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null);
+    return this.createAgentCompletionAsync(agentId, compatibilityMode, agentCompletionRequest, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1400,6 +1465,7 @@ public class AgentStudioClient extends ApiClient {
       agentId,
       compatibilityMode,
       agentCompletionRequest,
+      null,
       null,
       null,
       null,
@@ -3100,13 +3166,20 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteAgentConversations(@Nonnull String agentId, String startDate, String endDate, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    LaunderThrowable.await(deleteAgentConversationsAsync(agentId, startDate, endDate, requestOptions));
+  public void deleteAgentConversations(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    LaunderThrowable.await(deleteAgentConversationsAsync(agentId, startDate, endDate, ephemeral, requestOptions));
     return;
   }
 
@@ -3116,6 +3189,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3124,9 +3199,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3135,23 +3211,28 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void deleteAgentConversations(@Nonnull String agentId, String startDate, String endDate) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, startDate, endDate, null);
-  }
-
-  /**
-   * Deletes the conversations matching the given filters.
-   *
-   * @param agentId The agentId. (required)
-   * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
-   * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate)
+  public void deleteAgentConversations(@Nonnull String agentId, String startDate, String endDate, Boolean ephemeral)
     throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, startDate, endDate, null);
+    this.deleteAgentConversations(agentId, startDate, endDate, ephemeral, null);
+  }
+
+  /**
+   * Deletes the conversations matching the given filters.
+   *
+   * @param agentId The agentId. (required)
+   * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
+   * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate, Boolean ephemeral)
+    throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3163,7 +3244,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteAgentConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, null, null, requestOptions);
+    this.deleteAgentConversations(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3176,7 +3257,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, requestOptions);
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3186,7 +3267,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteAgentConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    this.deleteAgentConversations(agentId, null, null, null);
+    this.deleteAgentConversations(agentId, null, null, null, null);
   }
 
   /**
@@ -3196,7 +3277,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response deleteAgentConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null);
+    return this.deleteAgentConversationsWithHTTPInfo(agentId, null, null, null, null);
   }
 
   /**
@@ -3205,6 +3286,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3213,6 +3296,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.");
@@ -3223,6 +3307,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("DELETE")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, null);
   }
@@ -3233,6 +3318,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3241,6 +3328,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.");
@@ -3251,6 +3339,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("DELETE")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, null);
   }
@@ -3261,11 +3350,13 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId, String startDate, String endDate)
+  public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId, String startDate, String endDate, Boolean ephemeral)
     throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, startDate, endDate, null);
+    return this.deleteAgentConversationsAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3274,11 +3365,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, null);
+  public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3291,7 +3388,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, null, null, requestOptions);
+    return this.deleteAgentConversationsAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3306,7 +3403,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, requestOptions);
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3316,7 +3413,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Void> deleteAgentConversationsAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsAsync(agentId, null, null, null);
+    return this.deleteAgentConversationsAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -3326,7 +3423,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> deleteAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null);
+    return this.deleteAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -3909,6 +4006,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3917,9 +4016,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(exportConversationsAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(exportConversationsAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3928,6 +4028,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3936,9 +4038,10 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, requestOptions));
+    return LaunderThrowable.await(exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, requestOptions));
   }
 
   /**
@@ -3947,11 +4050,13 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<ConversationFullResponse> exportConversations(@Nonnull String agentId, String startDate, String endDate)
+  public List<ConversationFullResponse> exportConversations(@Nonnull String agentId, String startDate, String endDate, Boolean ephemeral)
     throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, startDate, endDate, null);
+    return this.exportConversations(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3960,11 +4065,13 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response exportConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate)
+  public Response exportConversationsWithHTTPInfo(@Nonnull String agentId, String startDate, String endDate, Boolean ephemeral)
     throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, startDate, endDate, null);
+    return this.exportConversationsWithHTTPInfo(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -3977,7 +4084,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public List<ConversationFullResponse> exportConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, null, null, requestOptions);
+    return this.exportConversations(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -3990,7 +4097,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public Response exportConversationsWithHTTPInfo(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, null, null, requestOptions);
+    return this.exportConversationsWithHTTPInfo(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4000,7 +4107,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public List<ConversationFullResponse> exportConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversations(agentId, null, null, null);
+    return this.exportConversations(agentId, null, null, null, null);
   }
 
   /**
@@ -4010,7 +4117,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response exportConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfo(agentId, null, null, null);
+    return this.exportConversationsWithHTTPInfo(agentId, null, null, null, null);
   }
 
   /**
@@ -4019,6 +4126,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4027,6 +4136,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.");
@@ -4037,6 +4147,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<List<ConversationFullResponse>>() {});
   }
@@ -4047,6 +4158,8 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4055,6 +4168,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     String startDate,
     String endDate,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.");
@@ -4065,6 +4179,7 @@ public class AgentStudioClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -4075,14 +4190,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<List<ConversationFullResponse>> exportConversationsAsync(
     @Nonnull String agentId,
     String startDate,
-    String endDate
+    String endDate,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, startDate, endDate, null);
+    return this.exportConversationsAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -4091,11 +4209,17 @@ public class AgentStudioClient extends ApiClient {
    * @param agentId The agentId. (required)
    * @param startDate Filter conversations created after this date (format: YYYY-MM-DD). (optional)
    * @param endDate Filter conversations created before this date (format: YYYY-MM-DD). (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId, String startDate, String endDate)
-    throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, null);
+  public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(
+    @Nonnull String agentId,
+    String startDate,
+    String endDate,
+    Boolean ephemeral
+  ) throws AlgoliaRuntimeException {
+    return this.exportConversationsWithHTTPInfoAsync(agentId, startDate, endDate, ephemeral, null);
   }
 
   /**
@@ -4110,7 +4234,7 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, null, null, requestOptions);
+    return this.exportConversationsAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4123,7 +4247,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, requestOptions);
+    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null, requestOptions);
   }
 
   /**
@@ -4134,7 +4258,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<List<ConversationFullResponse>> exportConversationsAsync(@Nonnull String agentId)
     throws AlgoliaRuntimeException {
-    return this.exportConversationsAsync(agentId, null, null, null);
+    return this.exportConversationsAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -4144,7 +4268,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> exportConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null);
+    return this.exportConversationsWithHTTPInfoAsync(agentId, null, null, null, null);
   }
 
   /**
@@ -5517,6 +5641,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5534,6 +5660,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -5550,6 +5677,7 @@ public class AgentStudioClient extends ApiClient {
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -5571,6 +5699,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5588,6 +5718,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
@@ -5604,6 +5735,7 @@ public class AgentStudioClient extends ApiClient {
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
         requestOptions
       )
     );
@@ -5625,6 +5757,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public PaginatedConversationsResponse listAgentConversations(
@@ -5639,7 +5773,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversations(
       agentId,
@@ -5654,6 +5789,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5674,6 +5810,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listAgentConversationsWithHTTPInfo(
@@ -5688,7 +5826,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfo(
       agentId,
@@ -5703,6 +5842,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5717,7 +5857,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId, @Nullable RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
@@ -5743,6 +5883,7 @@ public class AgentStudioClient extends ApiClient {
       null,
       null,
       null,
+      null,
       requestOptions
     );
   }
@@ -5754,7 +5895,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public PaginatedConversationsResponse listAgentConversations(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversations(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5764,7 +5905,7 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Response listAgentConversationsWithHTTPInfo(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfo(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -5783,6 +5924,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5800,6 +5943,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.");
@@ -5819,6 +5963,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("clicked", clicked)
       .addQueryParameter("converted", converted)
       .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<PaginatedConversationsResponse>() {});
   }
@@ -5839,6 +5984,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5856,6 +6003,7 @@ public class AgentStudioClient extends ApiClient {
     Boolean converted,
     Boolean hasAlgoliaSearch,
     String xAlgoliaSecureUserToken,
+    Boolean ephemeral,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.");
@@ -5875,6 +6023,7 @@ public class AgentStudioClient extends ApiClient {
       .addQueryParameter("clicked", clicked)
       .addQueryParameter("converted", converted)
       .addQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
+      .addQueryParameter("ephemeral", ephemeral)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<Response>() {});
   }
@@ -5895,6 +6044,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(
@@ -5909,7 +6060,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsAsync(
       agentId,
@@ -5924,6 +6076,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5944,6 +6097,8 @@ public class AgentStudioClient extends ApiClient {
    * @param converted Filter by conversations with at least one conversion. (optional)
    * @param hasAlgoliaSearch Filter by conversations where the search tool was used. (optional)
    * @param xAlgoliaSecureUserToken The X-Algolia-Secure-User-Token. (optional)
+   * @param ephemeral Filter by ephemeral (not retained) conversations; omit to include both.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listAgentConversationsWithHTTPInfoAsync(
@@ -5958,7 +6113,8 @@ public class AgentStudioClient extends ApiClient {
     Boolean clicked,
     Boolean converted,
     Boolean hasAlgoliaSearch,
-    String xAlgoliaSecureUserToken
+    String xAlgoliaSecureUserToken,
+    Boolean ephemeral
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfoAsync(
       agentId,
@@ -5973,6 +6129,7 @@ public class AgentStudioClient extends ApiClient {
       converted,
       hasAlgoliaSearch,
       xAlgoliaSecureUserToken,
+      ephemeral,
       null
     );
   }
@@ -5989,7 +6146,22 @@ public class AgentStudioClient extends ApiClient {
     @Nonnull String agentId,
     @Nullable RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, requestOptions);
+    return this.listAgentConversationsAsync(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      requestOptions
+    );
   }
 
   /**
@@ -6006,6 +6178,7 @@ public class AgentStudioClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     return this.listAgentConversationsWithHTTPInfoAsync(
       agentId,
+      null,
       null,
       null,
       null,
@@ -6029,7 +6202,7 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<PaginatedConversationsResponse> listAgentConversationsAsync(@Nonnull String agentId)
     throws AlgoliaRuntimeException {
-    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -6039,7 +6212,22 @@ public class AgentStudioClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Response> listAgentConversationsWithHTTPInfoAsync(@Nonnull String agentId) throws AlgoliaRuntimeException {
-    return this.listAgentConversationsWithHTTPInfoAsync(agentId, null, null, null, null, null, null, null, null, null, null, null, null);
+    return this.listAgentConversationsWithHTTPInfoAsync(
+      agentId,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
   }
 
   /**
@@ -6253,6 +6441,90 @@ public class AgentStudioClient extends ApiClient {
    */
   public CompletableFuture<Response> listAgentsWithHTTPInfoAsync() throws AlgoliaRuntimeException {
     return this.listAgentsWithHTTPInfoAsync(null, null, null, null);
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ConversationUsageResponse listConversationUsage(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listConversationUsageAsync(requestOptions));
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listConversationUsageWithHTTPInfo(@Nullable RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(listConversationUsageWithHTTPInfoAsync(requestOptions));
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public ConversationUsageResponse listConversationUsage() throws AlgoliaRuntimeException {
+    return this.listConversationUsage(null);
+  }
+
+  /**
+   * Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public Response listConversationUsageWithHTTPInfo() throws AlgoliaRuntimeException {
+    return this.listConversationUsageWithHTTPInfo(null);
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ConversationUsageResponse> listConversationUsageAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration/conversation-usage").setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<ConversationUsageResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listConversationUsageWithHTTPInfoAsync(@Nullable RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/agent-studio/1/configuration/conversation-usage").setMethod("GET").build();
+    return executeAsync(request, requestOptions, new TypeReference<Response>() {});
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<ConversationUsageResponse> listConversationUsageAsync() throws AlgoliaRuntimeException {
+    return this.listConversationUsageAsync(null);
+  }
+
+  /**
+   * (asynchronously) Live conversations counted against the per-application limit.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<Response> listConversationUsageWithHTTPInfoAsync() throws AlgoliaRuntimeException {
+    return this.listConversationUsageWithHTTPInfoAsync(null);
   }
 
   /**

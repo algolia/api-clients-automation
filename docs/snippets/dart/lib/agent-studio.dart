@@ -228,6 +228,40 @@ void snippetForcreateAgentCompletion() async {
   // SEPARATOR<
 }
 
+// Snippet for the createAgentCompletion method.
+//
+// createAgentCompletion with all parameters
+void snippetForcreateAgentCompletion1() async {
+  // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.createAgentCompletion(
+    agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
+    compatibilityMode: CompatibilityMode.fromJson("ai-sdk-4"),
+    agentCompletionRequest: AgentCompletionRequest(
+      messages: [
+        UserMessageV4(
+          role: "user",
+          content: "Hello, how are you?",
+        ),
+      ],
+    ),
+    stream: false,
+    cache: false,
+    memory: false,
+    analytics: false,
+    xAlgoliaSecureUserToken: "secure-user-token",
+    ephemeral: true,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
 // Snippet for the createAgentTask method.
 //
 // createAgentTask with required parameters
@@ -951,9 +985,9 @@ void snippetFordeleteAgentConversations() async {
 
 // Snippet for the deleteAgentConversations method.
 //
-// deleteAgentConversations with date filters
+// deleteAgentConversations with all filters
 void snippetFordeleteAgentConversations1() async {
-  // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+  // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
   // Initialize the client
   final client = AgentStudioClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -963,6 +997,7 @@ void snippetFordeleteAgentConversations1() async {
     agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
     startDate: "2024-01-01",
     endDate: "2024-06-30",
+    ephemeral: true,
   );
   // >LOG
   // SEPARATOR<
@@ -1076,9 +1111,9 @@ void snippetForexportConversations() async {
 
 // Snippet for the exportConversations method.
 //
-// exportConversations with date filters
+// exportConversations with all filters
 void snippetForexportConversations1() async {
-  // >SEPARATOR exportConversations exportConversations with date filters
+  // >SEPARATOR exportConversations exportConversations with all filters
   // Initialize the client
   final client = AgentStudioClient(
       appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -1088,6 +1123,7 @@ void snippetForexportConversations1() async {
     agentId: "76710f1b-8231-42e5-b0d1-f43aac618e15",
     startDate: "2024-01-01",
     endDate: "2024-12-31",
+    ephemeral: true,
   );
   // >LOG
   // print the response
@@ -1456,6 +1492,7 @@ void snippetForlistAgentConversations1() async {
     converted: false,
     hasAlgoliaSearch: true,
     xAlgoliaSecureUserToken: "secure-user-token",
+    ephemeral: true,
   );
   // >LOG
   // print the response
@@ -1535,6 +1572,23 @@ void snippetForlistAgents2() async {
     limit: 2,
     providerId: null,
   );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the listConversationUsage method.
+//
+// listConversationUsage
+void snippetForlistConversationUsage() async {
+  // >SEPARATOR listConversationUsage default
+  // Initialize the client
+  final client = AgentStudioClient(
+      appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.listConversationUsage();
   // >LOG
   // print the response
   print(response);

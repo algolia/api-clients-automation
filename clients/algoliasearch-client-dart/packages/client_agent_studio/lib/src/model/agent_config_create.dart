@@ -49,6 +49,7 @@ final class AgentConfigCreate {
   /// One of types:
   /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaSearchToolConfig]
+  /// - [AlgoliaCompareProductsToolConfig]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
   /// - [UnknownToolConfig]

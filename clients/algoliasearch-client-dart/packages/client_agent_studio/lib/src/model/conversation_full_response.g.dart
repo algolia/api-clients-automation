@@ -55,6 +55,7 @@ ConversationFullResponse _$ConversationFullResponseFromJson(
                   .toList()),
           analyticsDegraded:
               $checkedConvert('analyticsDegraded', (v) => v as bool?),
+          isEphemeral: $checkedConvert('isEphemeral', (v) => v as bool?),
         );
         return val;
       },
@@ -88,5 +89,6 @@ Map<String, dynamic> _$ConversationFullResponseToJson(
   writeNotNull('impactAnalytics', instance.impactAnalytics?.toJson());
   val['messages'] = instance.messages.map((e) => e.toJson()).toList();
   writeNotNull('analyticsDegraded', instance.analyticsDegraded);
+  writeNotNull('isEphemeral', instance.isEphemeral);
   return val;
 }

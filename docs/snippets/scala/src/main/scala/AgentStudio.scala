@@ -264,6 +264,47 @@ class SnippetAgentStudioClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the createAgentCompletion method.
+    *
+    * createAgentCompletion with all parameters
+    */
+  def snippetForAgentStudioClientCreateAgentCompletion1(): Unit = {
+    // >SEPARATOR createAgentCompletion createAgentCompletion with all parameters
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.createAgentCompletion(
+        agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
+        compatibilityMode = CompatibilityMode.withName("ai-sdk-4"),
+        agentCompletionRequest = AgentCompletionRequest(
+          messages = Some(
+            MessagesUnion(
+              Seq(
+                UserMessageV4(
+                  role = "user",
+                  content = "Hello, how are you?"
+                )
+              )
+            )
+          )
+        ),
+        stream = Some(false),
+        cache = Some(false),
+        memory = Some(false),
+        analytics = Some(false),
+        xAlgoliaSecureUserToken = Some("secure-user-token"),
+        ephemeral = Some(true)
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
   /** Snippet for the createAgentTask method.
     *
     * createAgentTask with required parameters
@@ -1005,10 +1046,10 @@ class SnippetAgentStudioClient {
 
   /** Snippet for the deleteAgentConversations method.
     *
-    * deleteAgentConversations with date filters
+    * deleteAgentConversations with all filters
     */
   def snippetForAgentStudioClientDeleteAgentConversations1(): Unit = {
-    // >SEPARATOR deleteAgentConversations deleteAgentConversations with date filters
+    // >SEPARATOR deleteAgentConversations deleteAgentConversations with all filters
     // Initialize the client
     val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1017,7 +1058,8 @@ class SnippetAgentStudioClient {
       client.deleteAgentConversations(
         agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
         startDate = Some("2024-01-01"),
-        endDate = Some("2024-06-30")
+        endDate = Some("2024-06-30"),
+        ephemeral = Some(true)
       ),
       Duration(100, "sec")
     )
@@ -1151,10 +1193,10 @@ class SnippetAgentStudioClient {
 
   /** Snippet for the exportConversations method.
     *
-    * exportConversations with date filters
+    * exportConversations with all filters
     */
   def snippetForAgentStudioClientExportConversations1(): Unit = {
-    // >SEPARATOR exportConversations exportConversations with date filters
+    // >SEPARATOR exportConversations exportConversations with all filters
     // Initialize the client
     val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -1163,7 +1205,8 @@ class SnippetAgentStudioClient {
       client.exportConversations(
         agentId = "76710f1b-8231-42e5-b0d1-f43aac618e15",
         startDate = Some("2024-01-01"),
-        endDate = Some("2024-12-31")
+        endDate = Some("2024-12-31"),
+        ephemeral = Some(true)
       ),
       Duration(100, "sec")
     )
@@ -1590,7 +1633,8 @@ class SnippetAgentStudioClient {
         clicked = Some(true),
         converted = Some(false),
         hasAlgoliaSearch = Some(true),
-        xAlgoliaSecureUserToken = Some("secure-user-token")
+        xAlgoliaSecureUserToken = Some("secure-user-token"),
+        ephemeral = Some(true)
       ),
       Duration(100, "sec")
     )
@@ -1682,6 +1726,27 @@ class SnippetAgentStudioClient {
         page = Some(1),
         limit = Some(2),
         providerId = None
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the listConversationUsage method.
+    *
+    * listConversationUsage
+    */
+  def snippetForAgentStudioClientListConversationUsage(): Unit = {
+    // >SEPARATOR listConversationUsage default
+    // Initialize the client
+    val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.listConversationUsage(
       ),
       Duration(100, "sec")
     )

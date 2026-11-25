@@ -3376,6 +3376,24 @@ paths:
             default: true
             title: cache
           description: Use cached responses if available.
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Set to true to not retain the conversation: it is processed and
+              analyzed like any other, but removed by the next cleanup run
+              instead of being kept in the history. Overrides the agent's
+              ephemeralConversations setting; omit to use it.
+            title: ephemeral
+          description: >-
+            Set to true to not retain the conversation: it is processed and
+            analyzed like any other, but removed by the next cleanup run instead
+            of being kept in the history. Overrides the agent's
+            ephemeralConversations setting; omit to use it.
         - name: memory
           in: query
           required: false
@@ -3742,7 +3760,7 @@ paths:
           label: curl
           source: |-
             curl --request POST \
-              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/completions?compatibilityMode=ai-sdk-4&stream=true&cache=true&memory=false&analytics=true' \
+              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/completions?compatibilityMode=ai-sdk-4&stream=true&cache=true&memory=false&analytics=true&ephemeral=true' \
               --header 'accept: application/json' \
               --header 'content-type: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
@@ -3884,6 +3902,20 @@ paths:
               YYYY-MM-DD).
             title: enddate
           description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
         - name: feedbackVote
           in: query
           required: false
@@ -4210,7 +4242,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations?startDate=lorem&endDate=lorem&includeFeedback=true&feedbackVote=0&page=1&limit=20&includeImpactAnalytics=true&clicked=true&converted=true&hasAlgoliaSearch=true' \
+              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations?startDate=lorem&endDate=lorem&includeFeedback=true&feedbackVote=0&page=1&limit=20&includeImpactAnalytics=true&clicked=true&converted=true&hasAlgoliaSearch=true&ephemeral=true' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID' \
@@ -4243,6 +4275,20 @@ paths:
               YYYY-MM-DD).
             title: enddate
           description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
         - name: startDate
           in: query
           required: false
@@ -4426,7 +4472,7 @@ paths:
           label: curl
           source: |-
             curl --request DELETE \
-              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations?startDate=lorem&endDate=lorem' \
+              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations?startDate=lorem&endDate=lorem&ephemeral=true' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/agents/{agentId}/conversations/export:
@@ -4458,6 +4504,20 @@ paths:
               YYYY-MM-DD).
             title: enddate
           description: 'Filter conversations created before this date (format: YYYY-MM-DD).'
+        - name: ephemeral
+          in: query
+          required: false
+          schema:
+            oneOf:
+              - type: boolean
+              - type: 'null'
+            description: >-
+              Filter by ephemeral (not retained) conversations; omit to include
+              both.
+            title: ephemeral
+          description: >-
+            Filter by ephemeral (not retained) conversations; omit to include
+            both.
         - name: startDate
           in: query
           required: false
@@ -4708,7 +4768,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations/export?startDate=lorem&endDate=lorem' \
+              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations/export?startDate=lorem&endDate=lorem&ephemeral=true' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -5021,7 +5081,7 @@ paths:
           label: curl
           source: |-
             curl --request GET \
-              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations/export?startDate=lorem&endDate=lorem' \
+              --url 'https://example.algolia.net/agent-studio/1/agents/lorem/conversations/export?startDate=lorem&endDate=lorem&ephemeral=true' \
               --header 'accept: application/json' \
               --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
               --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
@@ -6617,6 +6677,238 @@ paths:
               "maxRetentionDays": 42
             }
             '
+  /1/configuration/conversation-usage:
+    get:
+      tags:
+        - Configurations
+      operationId: listConversationUsage
+      x-acl:
+        - logs
+      summary: Get Conversation Usage
+      description: Live conversations counted against the per-application limit.
+      responses:
+        '200':
+          description: Successful Response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationUsageResponse'
+        '422':
+          description: Validation Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |-
+            // Initialize the client
+            var client = new AgentStudioClient(
+              new AgentStudioConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+            );
+
+            // Call the API
+            var response = await client.ListConversationUsageAsync();
+
+            // print the response
+            Console.WriteLine(response);
+        - lang: dart
+          label: Dart
+          source: |-
+            // Initialize the client
+            final client = AgentStudioClient(
+                appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+            // Call the API
+            final response = await client.listConversationUsage();
+
+            // print the response
+            print(response);
+        - lang: go
+          label: Go
+          source: >-
+            // Initialize the client
+
+            client, err := agentStudio.NewClient("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err := client.ListConversationUsage()
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+
+            // print the response
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >-
+            // Initialize the client
+
+            AgentStudioClient client = new
+            AgentStudioClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+
+            // Call the API
+
+            ConversationUsageResponse response = client.listConversationUsage();
+
+
+            // print the response
+
+            System.out.println(response);
+        - lang: javascript
+          label: JavaScript
+          source: >-
+            // Initialize the client
+
+            const client = agentStudioClient('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.listConversationUsage();
+
+
+
+            // print the response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >-
+            // Initialize the client
+
+            val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            var response = client.listConversationUsage()
+
+
+
+            // print the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >-
+            // Initialize the client
+
+            $client = AgentStudioClient::create('ALGOLIA_APPLICATION_ID',
+            'ALGOLIA_API_KEY');
+
+
+            // Call the API
+
+            $response = $client->listConversationUsage();
+
+
+
+            // print the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >-
+            # Initialize the client
+
+            # In an asynchronous context, you can use AgentStudioClient instead,
+            which exposes the exact same methods.
+
+            client = AgentStudioClientSync("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.list_conversation_usage()
+
+
+
+            # print the response
+
+            print(response)
+        - lang: ruby
+          label: Ruby
+          source: >-
+            # Initialize the client
+
+            client = Algolia::AgentStudioClient.create("ALGOLIA_APPLICATION_ID",
+            "ALGOLIA_API_KEY")
+
+
+            # Call the API
+
+            response = client.list_conversation_usage
+
+
+
+            # print the response
+
+            puts(response)
+        - lang: scala
+          label: Scala
+          source: >-
+            // Initialize the client
+
+            val client = AgentStudioClient(appId = "ALGOLIA_APPLICATION_ID",
+            apiKey = "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            val response = Await.result(
+              client.listConversationUsage(
+              ),
+              Duration(100, "sec")
+            )
+
+
+            // print the response
+
+            println(response)
+        - lang: swift
+          label: Swift
+          source: >-
+            // Initialize the client
+
+            let client = try AgentStudioClient(appID: "ALGOLIA_APPLICATION_ID",
+            apiKey: "ALGOLIA_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.listConversationUsage()
+
+
+            // print the response
+
+            print(response)
+        - lang: cURL
+          label: curl
+          source: |-
+            curl --request GET \
+              --url https://example.algolia.net/agent-studio/1/configuration/conversation-usage \
+              --header 'accept: application/json' \
+              --header 'x-algolia-api-key: ALGOLIA_API_KEY' \
+              --header 'x-algolia-application-id: ALGOLIA_APPLICATION_ID'
   /1/feedback:
     post:
       tags:
@@ -12480,6 +12772,34 @@ components:
       enum:
         - draft
         - published
+    AlgoliaCompareProductsToolConfig:
+      description: Configuration for the algolia_compare_products tool.
+      properties:
+        type:
+          const: algolia_compare_products
+          default: algolia_compare_products
+          title: type
+          type: string
+        description:
+          oneOf:
+            - maxLength: 200
+              minLength: 1
+              type: string
+            - type: 'null'
+          default: null
+          description: >-
+            What the tool does, as the agent reads it. Leave unset to use the
+            default description.
+          title: description
+        name:
+          const: algolia_compare_products
+          default: algolia_compare_products
+          title: name
+          type: string
+      title: algoliaCompareProductsToolConfig
+      type: object
+      required:
+        - type
     AlgoliaRecommendToolIndexConfig:
       properties:
         index:
@@ -13559,11 +13879,13 @@ components:
         - $ref: '#/components/schemas/ClientSideToolConfig'
         - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         propertyName: type
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
           algolia_search_index: '#/components/schemas/AlgoliaSearchToolConfig'
           client_side: '#/components/schemas/ClientSideToolConfig'
@@ -13714,11 +14036,13 @@ components:
         - $ref: '#/components/schemas/ClientSideToolConfig'
         - $ref: '#/components/schemas/AlgoliaSearchToolConfig'
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         propertyName: type
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
           algolia_search_index: '#/components/schemas/AlgoliaSearchToolConfig'
           client_side: '#/components/schemas/ClientSideToolConfig'
@@ -14051,10 +14375,12 @@ components:
         - $ref: '#/components/schemas/AlgoliaRecommendToolConfig'
         - $ref: '#/components/schemas/AlgoliaGroupedResultsToolConfig'
         - $ref: '#/components/schemas/AlgoliaGroupedResultsCompatToolConfig'
+        - $ref: '#/components/schemas/AlgoliaCompareProductsToolConfig'
         - $ref: '#/components/schemas/McpServerToolConfig'
         - $ref: '#/components/schemas/UnknownToolConfig'
       discriminator:
         mapping:
+          algolia_compare_products: '#/components/schemas/AlgoliaCompareProductsToolConfig'
           algolia_display_results: '#/components/schemas/AlgoliaGroupedResultsCompatToolConfig'
           algolia_grouped_results: '#/components/schemas/AlgoliaGroupedResultsToolConfig'
           algolia_recommend: '#/components/schemas/AlgoliaRecommendToolConfig'
@@ -15278,6 +15604,10 @@ components:
           oneOf:
             - $ref: '#/components/schemas/ImpactAnalytics'
             - type: 'null'
+        isEphemeral:
+          type: boolean
+          title: isephemeral
+          default: false
         isFromDashboard:
           type: boolean
           title: isfromdashboard
@@ -15752,6 +16082,10 @@ components:
           oneOf:
             - $ref: '#/components/schemas/ImpactAnalytics'
             - type: 'null'
+        isEphemeral:
+          type: boolean
+          title: isephemeral
+          default: false
         isFromDashboard:
           type: boolean
           title: isfromdashboard
@@ -15865,6 +16199,23 @@ components:
           default: 90
       type: object
       title: applicationConfigPatch
+    ConversationUsageResponse:
+      properties:
+        atLimit:
+          type: boolean
+          title: atlimit
+        limit:
+          type: integer
+          title: limit
+        liveConversations:
+          type: integer
+          title: liveconversations
+      type: object
+      required:
+        - liveConversations
+        - limit
+        - atLimit
+      title: conversationUsageResponse
     VoteEnum:
       type: integer
       enum:

@@ -178,6 +178,45 @@ class TestAgentStudioClient < Test::Unit::TestCase
     )
   end
 
+  # createAgentCompletion with all parameters
+  def test_create_agent_completion1
+    req = @client.create_agent_completion_with_http_info(
+      "76710f1b-8231-42e5-b0d1-f43aac618e15",
+      "ai-sdk-4",
+      Algolia::AgentStudio::AgentCompletionRequest.new(
+        messages: [Algolia::AgentStudio::UserMessageV4.new(role: "user", content: "Hello, how are you?")]
+      ),
+      false,
+      false,
+      false,
+      false,
+      "secure-user-token",
+      true
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions", req.path)
+    assert_equal(
+      {
+        :"compatibilityMode" => "ai-sdk-4",
+        :"stream" => "false",
+        :"cache" => "false",
+        :"memory" => "false",
+        :"analytics" => "false",
+        :"ephemeral" => "true"
+      }.to_a,
+      req.query_params.to_a
+    )
+    assert(
+      ({:"x-algolia-secure-user-token" => "secure-user-token"}.transform_keys(&:to_s).to_a - req.headers.to_a).empty?,
+      req.headers.to_s
+    )
+    assert_equal(
+      JSON.parse("{\"messages\":[{\"role\":\"user\",\"content\":\"Hello, how are you?\"}]}"),
+      JSON.parse(req.body)
+    )
+  end
+
   # createAgentTask with required parameters
   def test_create_agent_task
     req = @client.create_agent_task_with_http_info(
@@ -631,17 +670,21 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # deleteAgentConversations with date filters
+  # deleteAgentConversations with all filters
   def test_delete_agent_conversations1
     req = @client.delete_agent_conversations_with_http_info(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-06-30"
+      "2024-06-30",
+      true
     )
 
     assert_equal(:delete, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations", req.path)
-    assert_equal({:"startDate" => "2024-01-01", :"endDate" => "2024-06-30"}.to_a, req.query_params.to_a)
+    assert_equal(
+      {:"startDate" => "2024-01-01", :"endDate" => "2024-06-30", :"ephemeral" => "true"}.to_a,
+      req.query_params.to_a
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -728,17 +771,21 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert(req.body.nil?, "body is not nil")
   end
 
-  # exportConversations with date filters
+  # exportConversations with all filters
   def test_export_conversations1
     req = @client.export_conversations_with_http_info(
       "76710f1b-8231-42e5-b0d1-f43aac618e15",
       "2024-01-01",
-      "2024-12-31"
+      "2024-12-31",
+      true
     )
 
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export", req.path)
-    assert_equal({:"startDate" => "2024-01-01", :"endDate" => "2024-12-31"}.to_a, req.query_params.to_a)
+    assert_equal(
+      {:"startDate" => "2024-01-01", :"endDate" => "2024-12-31", :"ephemeral" => "true"}.to_a,
+      req.query_params.to_a
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")
@@ -989,7 +1036,8 @@ class TestAgentStudioClient < Test::Unit::TestCase
       true,
       false,
       true,
-      "secure-user-token"
+      "secure-user-token",
+      true
     )
 
     assert_equal(:get, req.method)
@@ -1005,7 +1053,8 @@ class TestAgentStudioClient < Test::Unit::TestCase
         :"includeImpactAnalytics" => "true",
         :"clicked" => "true",
         :"converted" => "false",
-        :"hasAlgoliaSearch" => "true"
+        :"hasAlgoliaSearch" => "true",
+        :"ephemeral" => "true"
       }.to_a,
       req.query_params.to_a
     )
@@ -1063,6 +1112,18 @@ class TestAgentStudioClient < Test::Unit::TestCase
     assert_equal(:get, req.method)
     assert_equal("/agent-studio/1/agents", req.path)
     assert_equal({:"page" => "1", :"limit" => "2"}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, "body is not nil")
+  end
+
+  # listConversationUsage
+  def test_list_conversation_usage
+    req = @client.list_conversation_usage_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal("/agent-studio/1/configuration/conversation-usage", req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
     assert(req.body.nil?, "body is not nil")

@@ -56,6 +56,7 @@ final class AgentWithVersionResponse {
   /// One of types:
   /// - [AlgoliaRecommendToolConfig]
   /// - [AlgoliaSearchToolConfig]
+  /// - [AlgoliaCompareProductsToolConfig]
   /// - [McpServerToolConfig]
   /// - [ClientSideToolConfig]
   /// - [UnknownToolConfig]

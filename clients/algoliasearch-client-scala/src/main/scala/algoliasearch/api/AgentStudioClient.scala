@@ -19,6 +19,7 @@ import algoliasearch.agentstudio.ContextCompactRequest
 import algoliasearch.agentstudio.ContextResponse
 import algoliasearch.agentstudio.ContextTrimRequest
 import algoliasearch.agentstudio.ConversationFullResponse
+import algoliasearch.agentstudio.ConversationUsageResponse
 import algoliasearch.agentstudio.ErrorBase
 import algoliasearch.agentstudio.FeedbackCreationRequest
 import algoliasearch.agentstudio.FeedbackResponse
@@ -414,6 +415,10 @@ class AgentStudioClient(
     *   Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
+    * @param ephemeral
+    *   Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next
+    *   cleanup run instead of being kept in the history. Overrides the agent's ephemeralConversations setting; omit to
+    *   use it.
     */
   def createAgentCompletion(
       agentId: String,
@@ -424,6 +429,7 @@ class AgentStudioClient(
       memory: Option[Boolean] = None,
       analytics: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Map[String, Any]] = Future {
     execute[Map[String, Any]](
@@ -435,7 +441,8 @@ class AgentStudioClient(
         cache = cache,
         memory = memory,
         analytics = analytics,
-        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ephemeral = ephemeral
       ),
       requestOptions
     )
@@ -462,6 +469,10 @@ class AgentStudioClient(
     *   Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
+    * @param ephemeral
+    *   Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next
+    *   cleanup run instead of being kept in the history. Overrides the agent's ephemeralConversations setting; omit to
+    *   use it.
     */
   def createAgentCompletionWithHTTPInfo(
       agentId: String,
@@ -472,6 +483,7 @@ class AgentStudioClient(
       memory: Option[Boolean] = None,
       analytics: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Map[String, Any]]] = Future {
     executeWithHttpInfo[Map[String, Any]](
@@ -483,7 +495,8 @@ class AgentStudioClient(
         cache = cache,
         memory = memory,
         analytics = analytics,
-        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ephemeral = ephemeral
       ),
       requestOptions
     )
@@ -500,7 +513,8 @@ class AgentStudioClient(
       cache: Option[Boolean] = None,
       memory: Option[Boolean] = None,
       analytics: Option[Boolean] = None,
-      xAlgoliaSecureUserToken: Option[String] = None
+      xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None
   ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `createAgentCompletion`.")
@@ -521,6 +535,7 @@ class AgentStudioClient(
       .withQueryParameter("cache", cache)
       .withQueryParameter("memory", memory)
       .withQueryParameter("analytics", analytics)
+      .withQueryParameter("ephemeral", ephemeral)
       .build()
   }
 
@@ -1004,15 +1019,23 @@ class AgentStudioClient(
     *   Filter conversations created after this date (format: YYYY-MM-DD).
     * @param endDate
     *   Filter conversations created before this date (format: YYYY-MM-DD).
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def deleteAgentConversations(
       agentId: String,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Unit] = Future {
     execute[Unit](
-      deleteAgentConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      deleteAgentConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        ephemeral = ephemeral
+      ),
       requestOptions
     )
   }
@@ -1029,15 +1052,23 @@ class AgentStudioClient(
     *   Filter conversations created after this date (format: YYYY-MM-DD).
     * @param endDate
     *   Filter conversations created before this date (format: YYYY-MM-DD).
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def deleteAgentConversationsWithHTTPInfo(
       agentId: String,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Unit]] = Future {
     executeWithHttpInfo[Unit](
-      deleteAgentConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      deleteAgentConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        ephemeral = ephemeral
+      ),
       requestOptions
     )
   }
@@ -1048,7 +1079,8 @@ class AgentStudioClient(
   private def deleteAgentConversationsHttpRequest(
       agentId: String,
       startDate: Option[String] = None,
-      endDate: Option[String] = None
+      endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None
   ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `deleteAgentConversations`.")
@@ -1059,6 +1091,7 @@ class AgentStudioClient(
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations")
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
+      .withQueryParameter("ephemeral", ephemeral)
       .build()
   }
 
@@ -1302,15 +1335,23 @@ class AgentStudioClient(
     *   Filter conversations created after this date (format: YYYY-MM-DD).
     * @param endDate
     *   Filter conversations created before this date (format: YYYY-MM-DD).
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def exportConversations(
       agentId: String,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[Seq[ConversationFullResponse]] = Future {
     execute[Seq[ConversationFullResponse]](
-      exportConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      exportConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        ephemeral = ephemeral
+      ),
       requestOptions
     )
   }
@@ -1327,15 +1368,23 @@ class AgentStudioClient(
     *   Filter conversations created after this date (format: YYYY-MM-DD).
     * @param endDate
     *   Filter conversations created before this date (format: YYYY-MM-DD).
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def exportConversationsWithHTTPInfo(
       agentId: String,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[Seq[ConversationFullResponse]]] = Future {
     executeWithHttpInfo[Seq[ConversationFullResponse]](
-      exportConversationsHttpRequest(agentId = agentId, startDate = startDate, endDate = endDate),
+      exportConversationsHttpRequest(
+        agentId = agentId,
+        startDate = startDate,
+        endDate = endDate,
+        ephemeral = ephemeral
+      ),
       requestOptions
     )
   }
@@ -1346,7 +1395,8 @@ class AgentStudioClient(
   private def exportConversationsHttpRequest(
       agentId: String,
       startDate: Option[String] = None,
-      endDate: Option[String] = None
+      endDate: Option[String] = None,
+      ephemeral: Option[Boolean] = None
   ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `exportConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `exportConversations`.")
@@ -1357,6 +1407,7 @@ class AgentStudioClient(
       .withPath(s"/agent-studio/1/agents/${escape(agentId)}/conversations/export")
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
+      .withQueryParameter("ephemeral", ephemeral)
       .build()
   }
 
@@ -1846,6 +1897,8 @@ class AgentStudioClient(
     *   Filter by conversations where the search tool was used.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def listAgentConversations(
       agentId: String,
@@ -1860,6 +1913,7 @@ class AgentStudioClient(
       converted: Option[Boolean] = None,
       hasAlgoliaSearch: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[PaginatedConversationsResponse] = Future {
     execute[PaginatedConversationsResponse](
@@ -1875,7 +1929,8 @@ class AgentStudioClient(
         clicked = clicked,
         converted = converted,
         hasAlgoliaSearch = hasAlgoliaSearch,
-        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ephemeral = ephemeral
       ),
       requestOptions
     )
@@ -1911,6 +1966,8 @@ class AgentStudioClient(
     *   Filter by conversations where the search tool was used.
     * @param xAlgoliaSecureUserToken
     *   The X-Algolia-Secure-User-Token.
+    * @param ephemeral
+    *   Filter by ephemeral (not retained) conversations; omit to include both.
     */
   def listAgentConversationsWithHTTPInfo(
       agentId: String,
@@ -1925,6 +1982,7 @@ class AgentStudioClient(
       converted: Option[Boolean] = None,
       hasAlgoliaSearch: Option[Boolean] = None,
       xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None,
       requestOptions: Option[RequestOptions] = None
   )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[PaginatedConversationsResponse]] = Future {
     executeWithHttpInfo[PaginatedConversationsResponse](
@@ -1940,7 +1998,8 @@ class AgentStudioClient(
         clicked = clicked,
         converted = converted,
         hasAlgoliaSearch = hasAlgoliaSearch,
-        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken
+        xAlgoliaSecureUserToken = xAlgoliaSecureUserToken,
+        ephemeral = ephemeral
       ),
       requestOptions
     )
@@ -1961,7 +2020,8 @@ class AgentStudioClient(
       clicked: Option[Boolean] = None,
       converted: Option[Boolean] = None,
       hasAlgoliaSearch: Option[Boolean] = None,
-      xAlgoliaSecureUserToken: Option[String] = None
+      xAlgoliaSecureUserToken: Option[String] = None,
+      ephemeral: Option[Boolean] = None
   ): HttpRequest = {
     requireNotNull(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.")
     requireNotEmpty(agentId, "Parameter `agentId` is required when calling `listAgentConversations`.")
@@ -1981,6 +2041,7 @@ class AgentStudioClient(
       .withQueryParameter("clicked", clicked)
       .withQueryParameter("converted", converted)
       .withQueryParameter("hasAlgoliaSearch", hasAlgoliaSearch)
+      .withQueryParameter("ephemeral", ephemeral)
       .build()
   }
 
@@ -2047,6 +2108,41 @@ class AgentStudioClient(
       .withQueryParameter("page", page)
       .withQueryParameter("limit", limit)
       .withQueryParameter("providerId", providerId)
+      .build()
+  }
+
+  /** Live conversations counted against the per-application limit.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    */
+  def listConversationUsage(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[ConversationUsageResponse] = Future {
+    execute[ConversationUsageResponse](listConversationUsageHttpRequest(), requestOptions)
+  }
+
+  /** Variant of `listConversationUsage` that returns the full HTTP response: status code, headers, raw body and
+    * deserialized data.
+    *
+    * Required API Key ACLs:
+    *   - logs
+    */
+  def listConversationUsageWithHTTPInfo(
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[AlgoliaHttpResponse[ConversationUsageResponse]] = Future {
+    executeWithHttpInfo[ConversationUsageResponse](listConversationUsageHttpRequest(), requestOptions)
+  }
+
+  /** Validates the parameters and builds the request shared by `listConversationUsage` and
+    * `listConversationUsageWithHTTPInfo`.
+    */
+  private def listConversationUsageHttpRequest(): HttpRequest = {
+
+    HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/agent-studio/1/configuration/conversation-usage")
       .build()
   }
 

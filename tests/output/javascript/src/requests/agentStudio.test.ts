@@ -163,6 +163,33 @@ describe('createAgentCompletion', () => {
     expect(req.searchParams).toStrictEqual({ compatibilityMode: 'ai-sdk-4' });
   });
 
+  test('createAgentCompletion with all parameters', async () => {
+    const req = (await client.createAgentCompletion({
+      agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
+      compatibilityMode: 'ai-sdk-4',
+      agentCompletionRequest: { messages: [{ role: 'user', content: 'Hello, how are you?' }] },
+      stream: false,
+      cache: false,
+      memory: false,
+      analytics: false,
+      xAlgoliaSecureUserToken: 'secure-user-token',
+      ephemeral: true,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/completions');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ messages: [{ role: 'user', content: 'Hello, how are you?' }] });
+    expect(req.searchParams).toStrictEqual({
+      compatibilityMode: 'ai-sdk-4',
+      stream: 'false',
+      cache: 'false',
+      memory: 'false',
+      analytics: 'false',
+      ephemeral: 'true',
+    });
+    expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-secure-user-token': 'secure-user-token' }));
+  });
+
   test('createAgentCompletion streaming with simple messages', async () => {
     const events: ServerSentEvent[] = [];
     for await (const event of client.createAgentCompletionStreamRaw({
@@ -679,17 +706,18 @@ describe('deleteAgentConversations', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('deleteAgentConversations with date filters', async () => {
+  test('deleteAgentConversations with all filters', async () => {
     const req = (await client.deleteAgentConversations({
       agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
       startDate: '2024-01-01',
       endDate: '2024-06-30',
+      ephemeral: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({ startDate: '2024-01-01', endDate: '2024-06-30' });
+    expect(req.searchParams).toStrictEqual({ startDate: '2024-01-01', endDate: '2024-06-30', ephemeral: 'true' });
   });
 });
 
@@ -774,17 +802,18 @@ describe('exportConversations', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('exportConversations with date filters', async () => {
+  test('exportConversations with all filters', async () => {
     const req = (await client.exportConversations({
       agentId: '76710f1b-8231-42e5-b0d1-f43aac618e15',
       startDate: '2024-01-01',
       endDate: '2024-12-31',
+      ephemeral: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations/export');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual({ startDate: '2024-01-01', endDate: '2024-12-31' });
+    expect(req.searchParams).toStrictEqual({ startDate: '2024-01-01', endDate: '2024-12-31', ephemeral: 'true' });
   });
 
   test('e2e export conversations', async () => {
@@ -1019,6 +1048,7 @@ describe('listAgentConversations', () => {
       converted: false,
       hasAlgoliaSearch: true,
       xAlgoliaSecureUserToken: 'secure-user-token',
+      ephemeral: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/agent-studio/1/agents/76710f1b-8231-42e5-b0d1-f43aac618e15/conversations');
@@ -1035,6 +1065,7 @@ describe('listAgentConversations', () => {
       clicked: 'true',
       converted: 'false',
       hasAlgoliaSearch: 'true',
+      ephemeral: 'true',
     });
     expect(req.headers).toEqual(expect.objectContaining({ 'x-algolia-secure-user-token': 'secure-user-token' }));
   });
@@ -1085,6 +1116,17 @@ describe('listAgents', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({ page: '1', limit: '2' });
+  });
+});
+
+describe('listConversationUsage', () => {
+  test('listConversationUsage', async () => {
+    const req = (await client.listConversationUsage()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/agent-studio/1/configuration/conversation-usage');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
