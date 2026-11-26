@@ -84,6 +84,24 @@ void expectParams(Map<String, dynamic> actual, String expected) {
   );
 }
 
+/// Expects [block] to throw an error whose whole message matches [pattern].
+Future<void> expectErrorMatches(String pattern, Function block) async {
+  try {
+    await block();
+  } on SkipException catch (_) {
+    TestHandle.current.markSkipped('Skip non-nullable params test');
+    return;
+  } on StateError catch (e) {
+    expect(e.message, matches(RegExp('^(?:$pattern)\$')));
+    return;
+  } on ArgumentError catch (e) {
+    expect(e.message, matches(RegExp('^(?:$pattern)\$')));
+    return;
+  }
+
+  fail('expected an error matching $pattern');
+}
+
 Future<void> expectError(String message, Function block) async {
   try {
     await block();

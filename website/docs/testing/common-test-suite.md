@@ -284,6 +284,8 @@ There are currently 3 servers:
 
 The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
 
+A step can expect an error with `"expected": { "error": "..." }`, which matches the error message exactly, or with `"expected": { "errorRegex": "..." }`, which matches the whole error message against a regular expression (for example, when the message contains a random temporary index name). Both accept either a single string or an object keyed by language. Avoid backslashes in `errorRegex`, they are not escaped consistently across languages: use character classes such as `[0-9]` instead of `\d`.
+
 The tests also include helpers from the seach client, the specs are defined in [this](https://github.com/algolia/api-clients-automation/tree/main/specs/search/helpers/README.md) folder, and are only used for tests for now.
 
 ### Benchmark tests

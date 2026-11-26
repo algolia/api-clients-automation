@@ -16,7 +16,12 @@ describe('{{testType}}', () => {
           {{#dynamicTemplate}}{{/dynamicTemplate}}
           throw new Error('test is expected to throw error');
         } catch(e) {
+          {{#isErrorRegex}}
+          expect((e as Error).message).toMatch(new RegExp("^(?:{{{expectedError}}})$"));
+          {{/isErrorRegex}}
+          {{^isErrorRegex}}
           expect((e as Error).message).toMatch("{{{expectedError}}}");
+          {{/isErrorRegex}}
         }
       {{/isError}}
       {{^isError}}
