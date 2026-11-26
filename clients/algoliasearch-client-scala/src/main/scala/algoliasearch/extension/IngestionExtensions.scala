@@ -128,7 +128,8 @@ trait IngestionExtensions {
                     case Some(status) =>
                       val reason = e.data.flatMap(_.get("message")).collect { case m: String if m.nonEmpty => s": $m" }
                       throw new AlgoliaClientException(
-                        s"ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status${reason.getOrElse("")}"
+                        s"ingestion push to index $indexName did not succeed: event $eventID of run ${response.runID} has status $status${reason
+                            .getOrElse("")}"
                       )
                   }
               },

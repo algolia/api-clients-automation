@@ -3289,7 +3289,7 @@ func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
 	   call replaceAllObjectsWithTransformation without error
 	*/
 
-	// >SEPARATOR replaceAllObjectsWithTransformation default
+	// >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
 	// Initialize the client
 	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 	if err != nil {
@@ -3314,6 +3314,36 @@ func SnippetForReplaceAllObjectsWithTransformationOfSearch() {
 		},
 		search.WithBatchSize(3),
 	)
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// >LOG
+	// print the response
+	print(response)
+	// SEPARATOR<
+}
+
+func SnippetForReplaceAllObjectsWithTransformationOfSearch1() {
+	/*
+	   Snippet for the replaceAllObjectsWithTransformation method.
+
+	   replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+	*/
+
+	// >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+	// Initialize the client
+	client, err := search.NewClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ReplaceAllObjectsWithTransformation(
+		"<YOUR_INDEX_NAME>",
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(2))
 	if err != nil {
 		// handle the eventual error
 		panic(err)

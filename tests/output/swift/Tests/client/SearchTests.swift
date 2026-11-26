@@ -916,6 +916,44 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
+    /// replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    func testReplaceAllObjectsWithTransformationTest1() async throws {
+        let transformationOptions = TransformationOptions(
+            region: Region(rawValue: "us"),
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6699")!)]
+        )
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://" +
+                    (ProcessInfo.processInfo.environment["CI"] == "true" ? "localhost" : "host.docker.internal") +
+                    ":6699")!)],
+            transformationOptions: transformationOptions
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        do {
+            let response = try await client.replaceAllObjectsWithTransformation(
+                indexName: "cts_e2e_replace_all_objects_with_transformation_failed_swift",
+                objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+                batchSize: 2
+            )
+
+            XCTFail("Expected an error to be thrown")
+        } catch {
+            XCTAssertNotNil(
+                error.localizedDescription.range(
+                    of: "^(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_swift_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_swift has status failed: unretryable error from the destination)$",
+                    options: .regularExpression
+                ),
+                error.localizedDescription
+            )
+        }
+    }
+
     /// the Request-ID stays stable across retries
     func testRequestIdTest0() async throws {
         let configuration = try SearchClientConfiguration(

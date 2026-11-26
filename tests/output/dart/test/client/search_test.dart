@@ -787,6 +787,54 @@ void main() {
     }
   });
 
+  test(
+      'replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails',
+      () async {
+    final requester = RequestInterceptor();
+    final client = SearchClient(
+        appId: "test-app-id",
+        apiKey: "test-api-key",
+        options: ClientOptions(hosts: [
+          Host.create(
+              url:
+                  '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6699',
+              scheme: 'http'),
+        ]),
+        transformationOptions: TransformationOptions(
+            region: "us",
+            ingestionClientOptions: ClientOptions(hosts: [
+              Host.create(
+                  url:
+                      '${io.Platform.environment['CI'] == 'true' ? 'localhost' : 'host.docker.internal'}:6699',
+                  scheme: 'http'),
+            ])));
+
+    await expectErrorMatches(
+      'ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_dart_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_dart has status failed: unretryable error from the destination',
+      () async {
+        try {
+          final res = await client.replaceAllObjectsWithTransformation(
+            indexName:
+                "cts_e2e_replace_all_objects_with_transformation_failed_dart",
+            objects: [
+              {
+                'objectID': "1",
+                'name': "Adam",
+              },
+              {
+                'objectID': "2",
+                'name': "Benoit",
+              },
+            ],
+            batchSize: 2,
+          );
+        } on InterceptionException catch (_) {
+          // Ignore InterceptionException
+        }
+      },
+    );
+  });
+
   test('the Request-ID stays stable across retries', () async {
     final requester = RequestInterceptor();
     final client = SearchClient(

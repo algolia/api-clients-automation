@@ -1184,6 +1184,50 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
   end
 
+  # replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+  def test_replace_all_objects_with_transformation1
+    _transformation_options = Algolia::TransformationOptions.new(
+      "us",
+      hosts: [
+        Algolia::Transport::StatefulHost.new(
+          ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+          protocol: "http://",
+          port: 6699,
+          accept: CallType::READ | CallType::WRITE
+        )
+      ]
+    )
+    client = Algolia::SearchClient.with_transformation(
+      "test-app-id",
+      "test-api-key",
+      _transformation_options,
+      {
+        hosts: [
+          Algolia::Transport::StatefulHost.new(
+            ENV.fetch("CI", nil) == "true" ? "localhost" : "host.docker.internal",
+            protocol: "http://",
+            port: 6699,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ]
+      }
+    )
+
+    begin
+      client.replace_all_objects_with_transformation(
+        "cts_e2e_replace_all_objects_with_transformation_failed_ruby",
+        [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+        2
+      )
+      assert(false, "An error should have been raised")
+    rescue => e
+      assert_match(
+        /\A(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_ruby_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_ruby has status failed: unretryable error from the destination)\z/,
+        e.message
+      )
+    end
+  end
+
   # the Request-ID stays stable across retries
   def test_request_id0
     client = Algolia::SearchClient.create_with_config(

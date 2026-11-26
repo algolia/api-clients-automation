@@ -1391,6 +1391,69 @@ public class SearchClientTests
     }
   }
 
+  [Fact(
+    DisplayName = "replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails"
+  )]
+  public async Task ReplaceAllObjectsWithTransformationTest1()
+  {
+    var transformationOptions = new TransformationOptions("us")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url =
+            Environment.GetEnvironmentVariable("CI") == "true"
+              ? "localhost"
+              : "host.docker.internal",
+          Port = 6699,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+      },
+    };
+    var client = SearchClient.WithTransformation(
+      new SearchConfig("test-app-id", "test-api-key")
+      {
+        CustomHosts = new List<StatefulHost>
+        {
+          new()
+          {
+            Scheme = HttpScheme.Http,
+            Url =
+              Environment.GetEnvironmentVariable("CI") == "true"
+                ? "localhost"
+                : "host.docker.internal",
+            Port = 6699,
+            Up = true,
+            LastUse = DateTime.UtcNow,
+            Accept = CallType.Read | CallType.Write,
+          },
+        },
+      },
+      transformationOptions
+    );
+
+    _ex = await Assert.ThrowsAnyAsync<Exception>(async () =>
+    {
+      var res = await client.ReplaceAllObjectsWithTransformationAsync(
+        "cts_e2e_replace_all_objects_with_transformation_failed_csharp",
+        new List<Object>
+        {
+          new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+          new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        },
+        2
+      );
+    });
+    Assert.Matches(
+      "^(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_csharp_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_csharp has status failed: unretryable error from the destination)$",
+      _ex.Message
+    );
+  }
+
   [Fact(DisplayName = "the Request-ID stays stable across retries")]
   public async Task RequestIdTest0()
   {

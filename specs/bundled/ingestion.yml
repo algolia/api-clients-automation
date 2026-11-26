@@ -1939,7 +1939,9 @@ paths:
           name: waitForTasks
           description: >-
             Whether to wait until every `batch` task has been processed. This
-            may take longer but is more reliable.
+            may take longer but is more reliable. When `true`, the method throws
+            an error if the ingestion event of any batch doesn't succeed (for
+            example, its status is `failed` or `critical`).
           required: false
           schema:
             type: boolean

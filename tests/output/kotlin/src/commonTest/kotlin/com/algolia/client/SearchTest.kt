@@ -1791,6 +1791,85 @@ class SearchTest {
   }
 
   @Test
+  fun `replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails`() =
+    runTest {
+      val client =
+        SearchClient.withTransformation(
+          appId = "test-app-id",
+          apiKey = "test-api-key",
+          transformationOptions =
+            TransformationOptions(
+              region = "us",
+              clientOptions =
+                ClientOptions(
+                  hosts =
+                    listOf(
+                      Host(
+                        url =
+                          if (System.getenv("CI") == "true") "localhost"
+                          else "host.docker.internal",
+                        protocol = "http",
+                        port = 6699,
+                      ),
+                    ),
+                ),
+            ),
+          options =
+            ClientOptions(
+              hosts =
+                listOf(
+                  Host(
+                    url =
+                      if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+                    protocol = "http",
+                    port = 6699,
+                  ),
+                ),
+            ),
+        )
+
+      assertFails {
+        client.replaceAllObjectsWithTransformation(
+          indexName = "cts_e2e_replace_all_objects_with_transformation_failed_kotlin",
+          objects =
+            listOf(
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("1"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Adam"),
+                )
+              },
+              buildJsonObject {
+                put(
+                  "objectID",
+                  JsonPrimitive("2"),
+                )
+                put(
+                  "name",
+                  JsonPrimitive("Benoit"),
+                )
+              },
+            ),
+          batchSize = 2,
+        )
+      }
+        .let { error ->
+          assertError(
+            error,
+            "ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_kotlin_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_kotlin has status failed: unretryable error from the destination"
+              .replace(
+                "%localhost%",
+                if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              ),
+          )
+        }
+    }
+
+  @Test
   fun `the Request-ID stays stable across retries`() = runTest {
     val client =
       SearchClient(

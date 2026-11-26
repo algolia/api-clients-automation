@@ -1329,6 +1329,66 @@ class TestSearchClient:
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
 
+    async def test_replace_all_objects_with_transformation_1(self):
+        """
+        replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+        """
+
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6699,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6699,
+                )
+            ]
+        )
+        _client = SearchClient.create_with_config(config=_config)
+        try:
+            await _client.replace_all_objects_with_transformation(
+                index_name="cts_e2e_replace_all_objects_with_transformation_failed_python",
+                objects=[
+                    {
+                        "objectID": "1",
+                        "name": "Adam",
+                    },
+                    {
+                        "objectID": "2",
+                        "name": "Benoit",
+                    },
+                ],
+                batch_size=2,
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                compile(
+                    "ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_python_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_python has status failed: unretryable error from the destination"
+                ).fullmatch(str(e))
+                is not None
+            ), str(e)
+
     async def test_request_id_0(self):
         """
         the Request-ID stays stable across retries
@@ -3472,6 +3532,66 @@ class TestSearchClientSync:
         ) == loads(
             """{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"watchResponses":[{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82921","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82922","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82923","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"},{"runID":"b1b7a982-524c-40d2-bb7f-48aab075abda_python","eventID":"113b2068-6337-4c85-b5c2-e7b213d82924","message":"OK","createdAt":"2022-05-12T06:24:30.049Z"}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}"""
         )
+
+    def test_replace_all_objects_with_transformation_1(self):
+        """
+        replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+        """
+
+        _transformation_options = TransformationOptions(
+            region="us",
+            hosts=HostsCollection(
+                [
+                    Host(
+                        url="localhost"
+                        if environ.get("CI") == "true"
+                        else "host.docker.internal",
+                        scheme="http",
+                        port=6699,
+                    )
+                ]
+            ),
+        )
+        _config = SearchConfig(
+            "test-app-id",
+            "test-api-key",
+            transformation_options=_transformation_options,
+        )
+        _config.hosts = HostsCollection(
+            [
+                Host(
+                    url="localhost"
+                    if environ.get("CI") == "true"
+                    else "host.docker.internal",
+                    scheme="http",
+                    port=6699,
+                )
+            ]
+        )
+        _client = SearchClientSync.create_with_config(config=_config)
+        try:
+            _client.replace_all_objects_with_transformation(
+                index_name="cts_e2e_replace_all_objects_with_transformation_failed_python",
+                objects=[
+                    {
+                        "objectID": "1",
+                        "name": "Adam",
+                    },
+                    {
+                        "objectID": "2",
+                        "name": "Benoit",
+                    },
+                ],
+                batch_size=2,
+            )
+            assert False
+        except (ValueError, Exception) as e:
+            assert (
+                compile(
+                    "ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_python_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_python has status failed: unretryable error from the destination"
+                ).fullmatch(str(e))
+                is not None
+            ), str(e)
 
     def test_request_id_0(self):
         """

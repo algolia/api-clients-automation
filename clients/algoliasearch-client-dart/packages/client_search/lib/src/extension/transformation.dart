@@ -297,7 +297,8 @@ Future<void> _waitForEvent({
       }
       if (status != ingestion.EventStatus.succeeded) {
         final message = event.data?['message'];
-        final reason = message is String && message.isNotEmpty ? ': $message' : '';
+        final reason =
+            message is String && message.isNotEmpty ? ': $message' : '';
         throw StateError(
             'ingestion push to index $indexName did not succeed: event $eventID of run $runID has status $status$reason');
       }

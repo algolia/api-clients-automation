@@ -4495,7 +4495,7 @@
         ],
         "operationId": "replaceAllObjectsWithTransformation",
         "summary": "Replace all records in an index",
-        "description": "Replace all records in your index with a new set of records by using the Transformation pipeline in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).\n\nThis method replaces all records without downtime. It performs these operations:\n  1. Copy settings, synonyms, and rules from your original index to a temporary index.\n  2. Add your new records to the temporary index.\n  3. Replace your original index with the temporary index.\n\nNotes:\n- Use the `safe` parameter to run these (asynchronous) operations in sequence.\n- If there's an error during one of these steps, the temporary index isn't deleted.\n- This operation is rate-limited.\n- This method creates a temporary index, which temporarily doubles your record count.\n- Algolia doesn't count the three days with the highest number of records toward your monthly usage.\n- If you're on a legacy plan (before July 2020), this method counts two operations toward your usage (in addition to the number of records): `copySettings` and `moveIndex`.\n- The API key you use for this operation must have access to the index `YourIndex` and the temporary index `YourIndex_tmp`.\n",
+        "description": "Replace all records in your index with a new set of records by using the Transformation pipeline in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).\n\nThis method replaces all records without downtime. It performs these operations:\n  1. Copy settings, synonyms, and rules from your original index to a temporary index.\n  2. Add your new records to the temporary index.\n  3. Replace your original index with the temporary index.\n\nNotes:\n- Use the `safe` parameter to run these (asynchronous) operations in sequence.\n- The method waits for every ingestion event of the pushed records to succeed before replacing your original index. If ingestion of any record batch fails (for example, the event status is `failed` or `critical`), the method throws an error, leaves your original index untouched, and tries to delete the temporary index.\n- This operation is rate-limited.\n- This method creates a temporary index, which temporarily doubles your record count.\n- Algolia doesn't count the three days with the highest number of records toward your monthly usage.\n- If you're on a legacy plan (before July 2020), this method counts two operations toward your usage (in addition to the number of records): `copySettings` and `moveIndex`.\n- The API key you use for this operation must have access to the index `YourIndex` and the temporary index `YourIndex_tmp`.\n",
         "parameters": [
           {
             "in": "query",
@@ -4788,7 +4788,7 @@
           {
             "in": "query",
             "name": "waitForTasks",
-            "description": "Whether to wait until every `batch` task has been processed. This may take longer but is more reliable.",
+            "description": "Whether to wait until every `batch` task has been processed. This may take longer but is more reliable. When `true`, the method throws an error if the ingestion event of any batch doesn't succeed (for example, its status is `failed` or `critical`).",
             "required": false,
             "schema": {
               "type": "boolean",
@@ -5097,7 +5097,7 @@
           {
             "in": "query",
             "name": "waitForTasks",
-            "description": "Whether to wait until every `batch` task has been processed. This may take longer but is more reliable.",
+            "description": "Whether to wait until every `batch` task has been processed. This may take longer but is more reliable. When `true`, the method throws an error if the ingestion event of any batch doesn't succeed (for example, its status is `failed` or `critical`).",
             "required": false,
             "schema": {
               "type": "boolean",
