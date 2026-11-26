@@ -29,7 +29,7 @@ final class FacetRequestScope {
           other.facetValue == facetValue;
 
   @override
-  int get hashCode => facetName.hashCode + facetValue.hashCode;
+  int get hashCode => 0 + facetName.hashCode + facetValue.hashCode;
 
   factory FacetRequestScope.fromJson(Map<String, dynamic> json) =>
       _$FacetRequestScopeFromJson(json);

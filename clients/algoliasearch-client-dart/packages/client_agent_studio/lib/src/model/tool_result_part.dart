@@ -64,6 +64,7 @@ final class ToolResultPart {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       toolCallId.hashCode +
       toolName.hashCode +

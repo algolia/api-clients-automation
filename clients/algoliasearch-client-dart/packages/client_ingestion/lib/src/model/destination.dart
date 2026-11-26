@@ -71,6 +71,7 @@ final class Destination {
 
   @override
   int get hashCode =>
+      0 +
       destinationID.hashCode +
       type.hashCode +
       name.hashCode +

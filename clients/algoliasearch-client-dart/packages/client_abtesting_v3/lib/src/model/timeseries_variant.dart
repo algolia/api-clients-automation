@@ -22,7 +22,7 @@ final class TimeseriesVariant {
       other is TimeseriesVariant && other.dates == dates;
 
   @override
-  int get hashCode => dates.hashCode;
+  int get hashCode => 0 + dates.hashCode;
 
   factory TimeseriesVariant.fromJson(Map<String, dynamic> json) =>
       _$TimeseriesVariantFromJson(json);

@@ -43,6 +43,7 @@ final class RequestBody {
 
   @override
   int get hashCode =>
+      0 +
       params.hashCode +
       feedsOrder.hashCode +
       externalProvider.hashCode +

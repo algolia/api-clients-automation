@@ -37,6 +37,7 @@ final class ListABTestsResponse {
 
   @override
   int get hashCode =>
+      0 +
       (abtests == null ? 0 : abtests.hashCode) +
       count.hashCode +
       total.hashCode;

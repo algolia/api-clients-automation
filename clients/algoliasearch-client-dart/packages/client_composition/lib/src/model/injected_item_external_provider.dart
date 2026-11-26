@@ -48,6 +48,7 @@ final class InjectedItemExternalProvider {
 
   @override
   int get hashCode =>
+      0 +
       index.hashCode +
       configurationID.hashCode +
       configurationParams.hashCode +

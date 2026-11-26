@@ -63,6 +63,7 @@ final class ProviderAuthenticationResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       name.hashCode +
       providerName.hashCode +

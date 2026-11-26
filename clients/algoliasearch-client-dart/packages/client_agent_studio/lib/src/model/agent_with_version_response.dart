@@ -96,6 +96,7 @@ final class AgentWithVersionResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       name.hashCode +
       (description == null ? 0 : description.hashCode) +

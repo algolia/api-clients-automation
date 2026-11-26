@@ -32,7 +32,7 @@ final class ReasoningPartAGUI {
           other.stepId == stepId;
 
   @override
-  int get hashCode => type.hashCode + content.hashCode + stepId.hashCode;
+  int get hashCode => 0 + type.hashCode + content.hashCode + stepId.hashCode;
 
   factory ReasoningPartAGUI.fromJson(Map<String, dynamic> json) =>
       _$ReasoningPartAGUIFromJson(json);

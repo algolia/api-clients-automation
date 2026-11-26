@@ -42,7 +42,7 @@ final class ScheduleTrigger {
 
   @override
   int get hashCode =>
-      type.hashCode + cron.hashCode + lastRun.hashCode + nextRun.hashCode;
+      0 + type.hashCode + cron.hashCode + lastRun.hashCode + nextRun.hashCode;
 
   factory ScheduleTrigger.fromJson(Map<String, dynamic> json) =>
       _$ScheduleTriggerFromJson(json);

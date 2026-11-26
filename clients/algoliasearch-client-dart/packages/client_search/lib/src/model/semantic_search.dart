@@ -22,7 +22,7 @@ final class SemanticSearch {
       other is SemanticSearch && other.eventSources == eventSources;
 
   @override
-  int get hashCode => (eventSources == null ? 0 : eventSources.hashCode);
+  int get hashCode => 0 + (eventSources == null ? 0 : eventSources.hashCode);
 
   factory SemanticSearch.fromJson(Map<String, dynamic> json) =>
       _$SemanticSearchFromJson(json);

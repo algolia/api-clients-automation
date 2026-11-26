@@ -63,6 +63,7 @@ final class IndexSearchParameters {
 
   @override
   int get hashCode =>
+      0 +
       (query == null ? 0 : query.hashCode) +
       hitsPerPage.hashCode +
       page.hashCode +

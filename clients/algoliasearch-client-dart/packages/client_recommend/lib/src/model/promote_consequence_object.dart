@@ -30,7 +30,7 @@ final class PromoteConsequenceObject {
           other.position == position;
 
   @override
-  int get hashCode => objectID.hashCode + position.hashCode;
+  int get hashCode => 0 + objectID.hashCode + position.hashCode;
 
   factory PromoteConsequenceObject.fromJson(Map<String, dynamic> json) =>
       _$PromoteConsequenceObjectFromJson(json);

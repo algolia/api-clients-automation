@@ -36,7 +36,7 @@ final class AuthenticationUpdate {
           other.input == input;
 
   @override
-  int get hashCode => name.hashCode + input.hashCode;
+  int get hashCode => 0 + name.hashCode + input.hashCode;
 
   factory AuthenticationUpdate.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationUpdateFromJson(json);

@@ -22,7 +22,7 @@ final class DockerStreamsInput {
       other is DockerStreamsInput && other.streams == streams;
 
   @override
-  int get hashCode => streams.hashCode;
+  int get hashCode => 0 + streams.hashCode;
 
   factory DockerStreamsInput.fromJson(Map<String, dynamic> json) =>
       _$DockerStreamsInputFromJson(json);

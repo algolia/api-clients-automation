@@ -41,7 +41,8 @@ final class FacetStats {
           other.sum == sum;
 
   @override
-  int get hashCode => min.hashCode + max.hashCode + avg.hashCode + sum.hashCode;
+  int get hashCode =>
+      0 + min.hashCode + max.hashCode + avg.hashCode + sum.hashCode;
 
   factory FacetStats.fromJson(Map<String, dynamic> json) =>
       _$FacetStatsFromJson(json);

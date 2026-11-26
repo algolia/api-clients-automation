@@ -22,7 +22,7 @@ final class InjectedItemMetadata {
       other is InjectedItemMetadata && other.hits == hits;
 
   @override
-  int get hashCode => hits.hashCode;
+  int get hashCode => 0 + hits.hashCode;
 
   factory InjectedItemMetadata.fromJson(Map<String, dynamic> json) =>
       _$InjectedItemMetadataFromJson(json);

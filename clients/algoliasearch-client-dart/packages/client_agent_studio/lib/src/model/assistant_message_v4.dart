@@ -49,6 +49,7 @@ final class AssistantMessageV4 {
 
   @override
   int get hashCode =>
+      0 +
       (id == null ? 0 : id.hashCode) +
       role.hashCode +
       content.hashCode +

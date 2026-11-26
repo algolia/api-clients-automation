@@ -42,6 +42,7 @@ final class TrendingItems {
 
   @override
   int get hashCode =>
+      0 +
       facetName.hashCode +
       facetValue.hashCode +
       model.hashCode +

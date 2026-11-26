@@ -62,6 +62,7 @@ final class AgentTestConfiguration {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       providerId.hashCode +
       model.hashCode +

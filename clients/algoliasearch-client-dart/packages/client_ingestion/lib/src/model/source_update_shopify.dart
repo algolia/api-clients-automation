@@ -22,7 +22,7 @@ final class SourceUpdateShopify {
       other is SourceUpdateShopify && other.featureFlags == featureFlags;
 
   @override
-  int get hashCode => featureFlags.hashCode;
+  int get hashCode => 0 + featureFlags.hashCode;
 
   factory SourceUpdateShopify.fromJson(Map<String, dynamic> json) =>
       _$SourceUpdateShopifyFromJson(json);

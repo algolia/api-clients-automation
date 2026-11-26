@@ -48,6 +48,7 @@ final class AuthOAuth {
 
   @override
   int get hashCode =>
+      0 +
       url.hashCode +
       clientId.hashCode +
       clientSecret.hashCode +

@@ -29,7 +29,7 @@ final class Decision {
           other.declaredAt == declaredAt;
 
   @override
-  int get hashCode => winnerVariantId.hashCode + declaredAt.hashCode;
+  int get hashCode => 0 + winnerVariantId.hashCode + declaredAt.hashCode;
 
   factory Decision.fromJson(Map<String, dynamic> json) =>
       _$DecisionFromJson(json);

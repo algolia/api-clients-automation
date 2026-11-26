@@ -20,7 +20,7 @@ final class BannerLink {
       identical(this, other) || other is BannerLink && other.url == url;
 
   @override
-  int get hashCode => url.hashCode;
+  int get hashCode => 0 + url.hashCode;
 
   factory BannerLink.fromJson(Map<String, dynamic> json) =>
       _$BannerLinkFromJson(json);

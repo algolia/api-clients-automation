@@ -46,6 +46,7 @@ final class BaseRecommendRequest {
 
   @override
   int get hashCode =>
+      0 +
       indexName.hashCode +
       threshold.hashCode +
       maxRecommendations.hashCode +

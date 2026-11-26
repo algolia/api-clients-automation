@@ -71,6 +71,7 @@ final class Rule {
 
   @override
   int get hashCode =>
+      0 +
       objectID.hashCode +
       conditions.hashCode +
       consequence.hashCode +

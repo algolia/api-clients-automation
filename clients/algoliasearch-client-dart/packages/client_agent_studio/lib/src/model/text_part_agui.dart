@@ -25,7 +25,7 @@ final class TextPartAGUI {
       other is TextPartAGUI && other.type == type && other.content == content;
 
   @override
-  int get hashCode => type.hashCode + content.hashCode;
+  int get hashCode => 0 + type.hashCode + content.hashCode;
 
   factory TextPartAGUI.fromJson(Map<String, dynamic> json) =>
       _$TextPartAGUIFromJson(json);

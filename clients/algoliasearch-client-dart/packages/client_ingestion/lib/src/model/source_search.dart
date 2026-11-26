@@ -21,7 +21,7 @@ final class SourceSearch {
       other is SourceSearch && other.sourceIDs == sourceIDs;
 
   @override
-  int get hashCode => sourceIDs.hashCode;
+  int get hashCode => 0 + sourceIDs.hashCode;
 
   factory SourceSearch.fromJson(Map<String, dynamic> json) =>
       _$SourceSearchFromJson(json);

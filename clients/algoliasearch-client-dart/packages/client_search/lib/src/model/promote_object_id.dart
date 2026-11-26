@@ -29,7 +29,7 @@ final class PromoteObjectID {
           other.position == position;
 
   @override
-  int get hashCode => objectID.hashCode + position.hashCode;
+  int get hashCode => 0 + objectID.hashCode + position.hashCode;
 
   factory PromoteObjectID.fromJson(Map<String, dynamic> json) =>
       _$PromoteObjectIDFromJson(json);

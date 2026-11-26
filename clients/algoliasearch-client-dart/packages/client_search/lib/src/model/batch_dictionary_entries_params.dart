@@ -32,7 +32,7 @@ final class BatchDictionaryEntriesParams {
 
   @override
   int get hashCode =>
-      clearExistingDictionaryEntries.hashCode + requests.hashCode;
+      0 + clearExistingDictionaryEntries.hashCode + requests.hashCode;
 
   factory BatchDictionaryEntriesParams.fromJson(Map<String, dynamic> json) =>
       _$BatchDictionaryEntriesParamsFromJson(json);

@@ -82,6 +82,7 @@ final class TaskReplace {
 
   @override
   int get hashCode =>
+      0 +
       destinationID.hashCode +
       action.hashCode +
       subscriptionAction.hashCode +

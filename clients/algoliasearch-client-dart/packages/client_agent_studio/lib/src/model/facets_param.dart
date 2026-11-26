@@ -28,7 +28,7 @@ final class FacetsParam {
 
   @override
   int get hashCode =>
-      exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
+      0 + exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
 
   factory FacetsParam.fromJson(Map<String, dynamic> json) =>
       _$FacetsParamFromJson(json);

@@ -36,6 +36,7 @@ final class CommercetoolsCustomFields {
 
   @override
   int get hashCode =>
+      0 +
       (inventory == null ? 0 : inventory.hashCode) +
       (price == null ? 0 : price.hashCode) +
       (category == null ? 0 : category.hashCode);

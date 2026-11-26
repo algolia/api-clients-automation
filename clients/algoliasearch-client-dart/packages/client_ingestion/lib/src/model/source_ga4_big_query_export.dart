@@ -36,7 +36,7 @@ final class SourceGA4BigQueryExport {
 
   @override
   int get hashCode =>
-      projectID.hashCode + datasetID.hashCode + tablePrefix.hashCode;
+      0 + projectID.hashCode + datasetID.hashCode + tablePrefix.hashCode;
 
   factory SourceGA4BigQueryExport.fromJson(Map<String, dynamic> json) =>
       _$SourceGA4BigQueryExportFromJson(json);

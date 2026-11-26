@@ -570,6 +570,7 @@ final class FallbackParams {
 
   @override
   int get hashCode =>
+      0 +
       similarQuery.hashCode +
       filters.hashCode +
       optionalFilters.hashCode +

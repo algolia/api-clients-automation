@@ -36,7 +36,7 @@ final class RelatedProducts {
 
   @override
   int get hashCode =>
-      model.hashCode + objectID.hashCode + fallbackParameters.hashCode;
+      0 + model.hashCode + objectID.hashCode + fallbackParameters.hashCode;
 
   factory RelatedProducts.fromJson(Map<String, dynamic> json) =>
       _$RelatedProductsFromJson(json);

@@ -29,7 +29,7 @@ final class GetObjectsResponse {
           other.results == results;
 
   @override
-  int get hashCode => message.hashCode + results.hashCode;
+  int get hashCode => 0 + message.hashCode + results.hashCode;
 
   factory GetObjectsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetObjectsResponseFromJson(json);

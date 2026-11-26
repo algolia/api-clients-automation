@@ -21,7 +21,7 @@ final class ConversationMetadata {
       other is ConversationMetadata && other.cachedAt == cachedAt;
 
   @override
-  int get hashCode => (cachedAt == null ? 0 : cachedAt.hashCode);
+  int get hashCode => 0 + (cachedAt == null ? 0 : cachedAt.hashCode);
 
   factory ConversationMetadata.fromJson(Map<String, dynamic> json) =>
       _$ConversationMetadataFromJson(json);

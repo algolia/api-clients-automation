@@ -21,7 +21,7 @@ final class Cursor {
       identical(this, other) || other is Cursor && other.cursor == cursor;
 
   @override
-  int get hashCode => cursor.hashCode;
+  int get hashCode => 0 + cursor.hashCode;
 
   factory Cursor.fromJson(Map<String, dynamic> json) => _$CursorFromJson(json);
 

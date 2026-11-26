@@ -60,6 +60,7 @@ final class SourceBigQuery {
 
   @override
   int get hashCode =>
+      0 +
       projectID.hashCode +
       datasetID.hashCode +
       dataType.hashCode +

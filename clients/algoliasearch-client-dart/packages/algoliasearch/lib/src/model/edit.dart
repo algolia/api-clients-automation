@@ -35,7 +35,7 @@ final class Edit {
           other.insert == insert;
 
   @override
-  int get hashCode => type.hashCode + delete.hashCode + insert.hashCode;
+  int get hashCode => 0 + type.hashCode + delete.hashCode + insert.hashCode;
 
   factory Edit.fromJson(Map<String, dynamic> json) => _$EditFromJson(json);
 

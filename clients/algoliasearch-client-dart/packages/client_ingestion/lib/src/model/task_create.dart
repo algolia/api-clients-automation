@@ -88,6 +88,7 @@ final class TaskCreate {
 
   @override
   int get hashCode =>
+      0 +
       sourceID.hashCode +
       destinationID.hashCode +
       action.hashCode +

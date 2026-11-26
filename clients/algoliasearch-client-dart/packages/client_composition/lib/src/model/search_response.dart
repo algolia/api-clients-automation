@@ -38,7 +38,7 @@ final class SearchResponse {
 
   @override
   int get hashCode =>
-      compositions.hashCode + results.hashCode + errors.hashCode;
+      0 + compositions.hashCode + results.hashCode + errors.hashCode;
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchResponseFromJson(json);

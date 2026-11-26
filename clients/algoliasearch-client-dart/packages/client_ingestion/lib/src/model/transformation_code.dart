@@ -22,7 +22,7 @@ final class TransformationCode {
       other is TransformationCode && other.code == code;
 
   @override
-  int get hashCode => code.hashCode;
+  int get hashCode => 0 + code.hashCode;
 
   factory TransformationCode.fromJson(Map<String, dynamic> json) =>
       _$TransformationCodeFromJson(json);

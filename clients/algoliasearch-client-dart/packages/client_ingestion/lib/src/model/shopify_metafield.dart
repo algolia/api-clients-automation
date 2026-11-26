@@ -32,7 +32,7 @@ final class ShopifyMetafield {
           other.value == value;
 
   @override
-  int get hashCode => namespace.hashCode + key.hashCode + value.hashCode;
+  int get hashCode => 0 + namespace.hashCode + key.hashCode + value.hashCode;
 
   factory ShopifyMetafield.fromJson(Map<String, dynamic> json) =>
       _$ShopifyMetafieldFromJson(json);

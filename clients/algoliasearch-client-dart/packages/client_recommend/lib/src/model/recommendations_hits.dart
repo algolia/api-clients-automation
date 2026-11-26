@@ -24,7 +24,7 @@ final class RecommendationsHits {
       other is RecommendationsHits && other.hits == hits;
 
   @override
-  int get hashCode => hits.hashCode;
+  int get hashCode => 0 + hits.hashCode;
 
   factory RecommendationsHits.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsHitsFromJson(json);

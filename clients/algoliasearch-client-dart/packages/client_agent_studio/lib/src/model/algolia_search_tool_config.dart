@@ -45,6 +45,7 @@ final class AlgoliaSearchToolConfig {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       type.hashCode +
       indices.hashCode +

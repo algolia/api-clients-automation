@@ -26,7 +26,7 @@ final class NumberParamConstraint {
 
   @override
   int get hashCode =>
-      (min == null ? 0 : min.hashCode) + (max == null ? 0 : max.hashCode);
+      0 + (min == null ? 0 : min.hashCode) + (max == null ? 0 : max.hashCode);
 
   factory NumberParamConstraint.fromJson(Map<String, dynamic> json) =>
       _$NumberParamConstraintFromJson(json);

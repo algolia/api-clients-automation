@@ -45,6 +45,7 @@ final class AzureOpenAIProviderInput {
 
   @override
   int get hashCode =>
+      0 +
       apiKey.hashCode +
       azureEndpoint.hashCode +
       azureDeployment.hashCode +

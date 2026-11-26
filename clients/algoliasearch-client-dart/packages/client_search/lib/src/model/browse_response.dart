@@ -234,6 +234,7 @@ final class BrowseResponse {
 
   @override
   int get hashCode =>
+      0 +
       abTestID.hashCode +
       abTestVariantID.hashCode +
       aroundLatLng.hashCode +

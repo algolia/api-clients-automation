@@ -124,6 +124,7 @@ final class Task {
 
   @override
   int get hashCode =>
+      0 +
       taskID.hashCode +
       sourceID.hashCode +
       destinationID.hashCode +

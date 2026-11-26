@@ -29,7 +29,7 @@ final class TaskUpdateResponse {
           other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => taskID.hashCode + updatedAt.hashCode;
+  int get hashCode => 0 + taskID.hashCode + updatedAt.hashCode;
 
   factory TaskUpdateResponse.fromJson(Map<String, dynamic> json) =>
       _$TaskUpdateResponseFromJson(json);

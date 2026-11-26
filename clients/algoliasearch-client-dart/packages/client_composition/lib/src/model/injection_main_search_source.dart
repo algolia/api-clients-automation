@@ -22,7 +22,7 @@ final class InjectionMainSearchSource {
       other is InjectionMainSearchSource && other.search == search;
 
   @override
-  int get hashCode => search.hashCode;
+  int get hashCode => 0 + search.hashCode;
 
   factory InjectionMainSearchSource.fromJson(Map<String, dynamic> json) =>
       _$InjectionMainSearchSourceFromJson(json);

@@ -39,7 +39,7 @@ final class UserHighlightResult {
           other.clusterName == clusterName;
 
   @override
-  int get hashCode => userID.hashCode + clusterName.hashCode;
+  int get hashCode => 0 + userID.hashCode + clusterName.hashCode;
 
   factory UserHighlightResult.fromJson(Map<String, dynamic> json) =>
       _$UserHighlightResultFromJson(json);

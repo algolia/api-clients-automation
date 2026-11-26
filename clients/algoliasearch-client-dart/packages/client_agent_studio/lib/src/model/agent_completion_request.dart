@@ -52,6 +52,7 @@ final class AgentCompletionRequest {
 
   @override
   int get hashCode =>
+      0 +
       configuration.hashCode +
       messages.hashCode +
       id.hashCode +

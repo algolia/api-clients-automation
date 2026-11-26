@@ -29,7 +29,7 @@ final class SourceShopify {
           other.shopURL == shopURL;
 
   @override
-  int get hashCode => featureFlags.hashCode + shopURL.hashCode;
+  int get hashCode => 0 + featureFlags.hashCode + shopURL.hashCode;
 
   factory SourceShopify.fromJson(Map<String, dynamic> json) =>
       _$SourceShopifyFromJson(json);

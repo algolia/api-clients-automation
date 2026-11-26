@@ -61,6 +61,7 @@ final class RecommendRule {
 
   @override
   int get hashCode =>
+      0 +
       metadata.hashCode +
       objectID.hashCode +
       condition.hashCode +

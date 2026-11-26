@@ -22,7 +22,7 @@ final class GetRecommendationsResponse {
       other is GetRecommendationsResponse && other.results == results;
 
   @override
-  int get hashCode => results.hashCode;
+  int get hashCode => 0 + results.hashCode;
 
   factory GetRecommendationsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetRecommendationsResponseFromJson(json);

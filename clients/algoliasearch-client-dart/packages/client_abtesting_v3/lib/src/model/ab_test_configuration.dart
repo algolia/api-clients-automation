@@ -49,6 +49,7 @@ final class ABTestConfiguration {
 
   @override
   int get hashCode =>
+      0 +
       minimumDetectableEffect.hashCode +
       filters.hashCode +
       errorCorrection.hashCode +

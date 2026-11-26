@@ -45,7 +45,11 @@ final class SearchDictionaryEntriesParams {
 
   @override
   int get hashCode =>
-      query.hashCode + page.hashCode + hitsPerPage.hashCode + language.hashCode;
+      0 +
+      query.hashCode +
+      page.hashCode +
+      hitsPerPage.hashCode +
+      language.hashCode;
 
   factory SearchDictionaryEntriesParams.fromJson(Map<String, dynamic> json) =>
       _$SearchDictionaryEntriesParamsFromJson(json);

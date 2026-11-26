@@ -79,6 +79,7 @@ final class DeleteByParams {
 
   @override
   int get hashCode =>
+      0 +
       facetFilters.hashCode +
       filters.hashCode +
       numericFilters.hashCode +

@@ -30,7 +30,7 @@ final class ABTestSettingsResponse {
           other.controlIndexInUse == controlIndexInUse;
 
   @override
-  int get hashCode => abtestSettings.hashCode + controlIndexInUse.hashCode;
+  int get hashCode => 0 + abtestSettings.hashCode + controlIndexInUse.hashCode;
 
   factory ABTestSettingsResponse.fromJson(Map<String, dynamic> json) =>
       _$ABTestSettingsResponseFromJson(json);

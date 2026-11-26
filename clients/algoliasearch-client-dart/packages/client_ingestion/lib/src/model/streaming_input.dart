@@ -22,7 +22,7 @@ final class StreamingInput {
       other is StreamingInput && other.mapping == mapping;
 
   @override
-  int get hashCode => mapping.hashCode;
+  int get hashCode => 0 + mapping.hashCode;
 
   factory StreamingInput.fromJson(Map<String, dynamic> json) =>
       _$StreamingInputFromJson(json);

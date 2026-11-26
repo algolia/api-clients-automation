@@ -36,7 +36,10 @@ final class GetObjectsRequest {
 
   @override
   int get hashCode =>
-      attributesToRetrieve.hashCode + objectID.hashCode + indexName.hashCode;
+      0 +
+      attributesToRetrieve.hashCode +
+      objectID.hashCode +
+      indexName.hashCode;
 
   factory GetObjectsRequest.fromJson(Map<String, dynamic> json) =>
       _$GetObjectsRequestFromJson(json);

@@ -21,7 +21,7 @@ final class RedirectRuleIndexData {
       other is RedirectRuleIndexData && other.ruleObjectID == ruleObjectID;
 
   @override
-  int get hashCode => ruleObjectID.hashCode;
+  int get hashCode => 0 + ruleObjectID.hashCode;
 
   factory RedirectRuleIndexData.fromJson(Map<String, dynamic> json) =>
       _$RedirectRuleIndexDataFromJson(json);

@@ -84,6 +84,7 @@ final class ToolPartV5 {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       toolCallId.hashCode +
       state.hashCode +

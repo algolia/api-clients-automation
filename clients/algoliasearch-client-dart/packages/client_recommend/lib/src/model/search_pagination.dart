@@ -45,7 +45,11 @@ final class SearchPagination {
 
   @override
   int get hashCode =>
-      page.hashCode + nbHits.hashCode + nbPages.hashCode + hitsPerPage.hashCode;
+      0 +
+      page.hashCode +
+      nbHits.hashCode +
+      nbPages.hashCode +
+      hitsPerPage.hashCode;
 
   factory SearchPagination.fromJson(Map<String, dynamic> json) =>
       _$SearchPaginationFromJson(json);

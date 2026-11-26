@@ -29,7 +29,7 @@ final class SourceDocker {
           other.configuration == configuration;
 
   @override
-  int get hashCode => image.hashCode + configuration.hashCode;
+  int get hashCode => 0 + image.hashCode + configuration.hashCode;
 
   factory SourceDocker.fromJson(Map<String, dynamic> json) =>
       _$SourceDockerFromJson(json);

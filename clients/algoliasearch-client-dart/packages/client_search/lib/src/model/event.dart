@@ -60,6 +60,7 @@ final class Event {
 
   @override
   int get hashCode =>
+      0 +
       eventID.hashCode +
       runID.hashCode +
       (status == null ? 0 : status.hashCode) +

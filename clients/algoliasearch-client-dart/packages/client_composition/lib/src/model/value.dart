@@ -35,7 +35,8 @@ final class Value {
           other.hide == hide;
 
   @override
-  int get hashCode => order.hashCode + sortRemainingBy.hashCode + hide.hashCode;
+  int get hashCode =>
+      0 + order.hashCode + sortRemainingBy.hashCode + hide.hashCode;
 
   factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
 

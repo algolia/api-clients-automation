@@ -35,7 +35,7 @@ final class SaveSynonymResponse {
           other.id == id;
 
   @override
-  int get hashCode => taskID.hashCode + updatedAt.hashCode + id.hashCode;
+  int get hashCode => 0 + taskID.hashCode + updatedAt.hashCode + id.hashCode;
 
   factory SaveSynonymResponse.fromJson(Map<String, dynamic> json) =>
       _$SaveSynonymResponseFromJson(json);

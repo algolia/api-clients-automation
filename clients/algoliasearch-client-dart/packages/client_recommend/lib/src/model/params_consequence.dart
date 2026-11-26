@@ -37,6 +37,7 @@ final class ParamsConsequence {
 
   @override
   int get hashCode =>
+      0 +
       automaticFacetFilters.hashCode +
       filters.hashCode +
       optionalFilters.hashCode;

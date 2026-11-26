@@ -97,6 +97,7 @@ final class Run {
 
   @override
   int get hashCode =>
+      0 +
       runID.hashCode +
       appID.hashCode +
       taskID.hashCode +

@@ -38,6 +38,7 @@ final class ImpactAnalytics {
 
   @override
   int get hashCode =>
+      0 +
       hasView.hashCode +
       hasClick.hashCode +
       hasConversion.hashCode +

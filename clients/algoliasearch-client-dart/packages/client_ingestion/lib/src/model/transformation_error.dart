@@ -29,7 +29,7 @@ final class TransformationError {
           other.message == message;
 
   @override
-  int get hashCode => code.hashCode + message.hashCode;
+  int get hashCode => 0 + code.hashCode + message.hashCode;
 
   factory TransformationError.fromJson(Map<String, dynamic> json) =>
       _$TransformationErrorFromJson(json);

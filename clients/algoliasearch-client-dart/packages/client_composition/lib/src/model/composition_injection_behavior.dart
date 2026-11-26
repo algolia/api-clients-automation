@@ -22,7 +22,7 @@ final class CompositionInjectionBehavior {
       other is CompositionInjectionBehavior && other.injection == injection;
 
   @override
-  int get hashCode => injection.hashCode;
+  int get hashCode => 0 + injection.hashCode;
 
   factory CompositionInjectionBehavior.fromJson(Map<String, dynamic> json) =>
       _$CompositionInjectionBehaviorFromJson(json);

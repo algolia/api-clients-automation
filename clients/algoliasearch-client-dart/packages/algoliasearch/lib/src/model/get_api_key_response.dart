@@ -79,6 +79,7 @@ final class GetApiKeyResponse {
 
   @override
   int get hashCode =>
+      0 +
       value.hashCode +
       createdAt.hashCode +
       acl.hashCode +

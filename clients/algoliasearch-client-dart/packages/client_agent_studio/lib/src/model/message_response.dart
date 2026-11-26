@@ -114,6 +114,7 @@ final class MessageResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       conversationId.hashCode +
       role.hashCode +

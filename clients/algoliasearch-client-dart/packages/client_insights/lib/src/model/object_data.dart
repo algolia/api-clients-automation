@@ -39,7 +39,8 @@ final class ObjectData {
           other.discount == discount;
 
   @override
-  int get hashCode => price.hashCode + quantity.hashCode + discount.hashCode;
+  int get hashCode =>
+      0 + price.hashCode + quantity.hashCode + discount.hashCode;
 
   factory ObjectData.fromJson(Map<String, dynamic> json) =>
       _$ObjectDataFromJson(json);

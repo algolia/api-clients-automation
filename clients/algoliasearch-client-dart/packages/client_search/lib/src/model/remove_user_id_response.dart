@@ -22,7 +22,7 @@ final class RemoveUserIdResponse {
       other is RemoveUserIdResponse && other.deletedAt == deletedAt;
 
   @override
-  int get hashCode => deletedAt.hashCode;
+  int get hashCode => 0 + deletedAt.hashCode;
 
   factory RemoveUserIdResponse.fromJson(Map<String, dynamic> json) =>
       _$RemoveUserIdResponseFromJson(json);

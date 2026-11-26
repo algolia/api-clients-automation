@@ -22,7 +22,7 @@ final class CompositionRankingInfo {
       other is CompositionRankingInfo && other.composed == composed;
 
   @override
-  int get hashCode => composed.hashCode;
+  int get hashCode => 0 + composed.hashCode;
 
   factory CompositionRankingInfo.fromJson(Map<String, dynamic> json) =>
       _$CompositionRankingInfoFromJson(json);

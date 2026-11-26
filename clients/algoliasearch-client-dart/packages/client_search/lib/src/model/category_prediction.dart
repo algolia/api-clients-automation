@@ -30,7 +30,7 @@ final class CategoryPrediction {
           other.hierarchyPath == hierarchyPath;
 
   @override
-  int get hashCode => bin.hashCode + hierarchyPath.hashCode;
+  int get hashCode => 0 + bin.hashCode + hierarchyPath.hashCode;
 
   factory CategoryPrediction.fromJson(Map<String, dynamic> json) =>
       _$CategoryPredictionFromJson(json);

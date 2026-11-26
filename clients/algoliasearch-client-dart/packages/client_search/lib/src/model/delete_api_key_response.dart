@@ -22,7 +22,7 @@ final class DeleteApiKeyResponse {
       other is DeleteApiKeyResponse && other.deletedAt == deletedAt;
 
   @override
-  int get hashCode => deletedAt.hashCode;
+  int get hashCode => 0 + deletedAt.hashCode;
 
   factory DeleteApiKeyResponse.fromJson(Map<String, dynamic> json) =>
       _$DeleteApiKeyResponseFromJson(json);

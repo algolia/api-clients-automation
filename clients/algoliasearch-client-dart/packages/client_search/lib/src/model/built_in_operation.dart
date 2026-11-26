@@ -31,7 +31,7 @@ final class BuiltInOperation {
           other.value == value;
 
   @override
-  int get hashCode => operation.hashCode + value.hashCode;
+  int get hashCode => 0 + operation.hashCode + value.hashCode;
 
   factory BuiltInOperation.fromJson(Map<String, dynamic> json) =>
       _$BuiltInOperationFromJson(json);

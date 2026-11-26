@@ -22,7 +22,7 @@ final class IndexSettingsFacets {
       other is IndexSettingsFacets && other.order == order;
 
   @override
-  int get hashCode => order.hashCode;
+  int get hashCode => 0 + order.hashCode;
 
   factory IndexSettingsFacets.fromJson(Map<String, dynamic> json) =>
       _$IndexSettingsFacetsFromJson(json);

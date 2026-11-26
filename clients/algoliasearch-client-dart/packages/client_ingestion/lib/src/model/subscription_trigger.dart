@@ -22,7 +22,7 @@ final class SubscriptionTrigger {
       other is SubscriptionTrigger && other.type == type;
 
   @override
-  int get hashCode => type.hashCode;
+  int get hashCode => 0 + type.hashCode;
 
   factory SubscriptionTrigger.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionTriggerFromJson(json);

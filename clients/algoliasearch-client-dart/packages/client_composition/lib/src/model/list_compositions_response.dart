@@ -49,6 +49,7 @@ final class ListCompositionsResponse {
 
   @override
   int get hashCode =>
+      0 +
       items.hashCode +
       nbPages.hashCode +
       page.hashCode +

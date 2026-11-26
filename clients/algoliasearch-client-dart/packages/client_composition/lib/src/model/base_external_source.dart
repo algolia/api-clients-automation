@@ -29,7 +29,7 @@ final class BaseExternalSource {
           other.ordering == ordering;
 
   @override
-  int get hashCode => index.hashCode + ordering.hashCode;
+  int get hashCode => 0 + index.hashCode + ordering.hashCode;
 
   factory BaseExternalSource.fromJson(Map<String, dynamic> json) =>
       _$BaseExternalSourceFromJson(json);

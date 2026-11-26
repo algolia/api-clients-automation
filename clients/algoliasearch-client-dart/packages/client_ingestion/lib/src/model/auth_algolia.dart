@@ -27,7 +27,7 @@ final class AuthAlgolia {
       other is AuthAlgolia && other.appID == appID && other.apiKey == apiKey;
 
   @override
-  int get hashCode => appID.hashCode + apiKey.hashCode;
+  int get hashCode => 0 + appID.hashCode + apiKey.hashCode;
 
   factory AuthAlgolia.fromJson(Map<String, dynamic> json) =>
       _$AuthAlgoliaFromJson(json);

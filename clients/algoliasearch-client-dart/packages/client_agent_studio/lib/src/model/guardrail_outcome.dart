@@ -34,6 +34,7 @@ final class GuardrailOutcome {
 
   @override
   int get hashCode =>
+      0 +
       blocked.hashCode +
       category.hashCode +
       (guardrailType == null ? 0 : guardrailType.hashCode);

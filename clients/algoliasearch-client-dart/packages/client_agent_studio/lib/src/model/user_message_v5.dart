@@ -40,6 +40,7 @@ final class UserMessageV5 {
 
   @override
   int get hashCode =>
+      0 +
       (id == null ? 0 : id.hashCode) +
       role.hashCode +
       parts.hashCode +

@@ -48,6 +48,7 @@ final class RunSourcePayload {
 
   @override
   int get hashCode =>
+      0 +
       indexToInclude.hashCode +
       indexToExclude.hashCode +
       entityIDs.hashCode +

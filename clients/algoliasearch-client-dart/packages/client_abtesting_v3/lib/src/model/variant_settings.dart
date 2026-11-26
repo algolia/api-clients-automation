@@ -67,6 +67,7 @@ final class VariantSettings {
 
   @override
   int get hashCode =>
+      0 +
       variantId.hashCode +
       applied.hashCode +
       featuresSettings.hashCode +

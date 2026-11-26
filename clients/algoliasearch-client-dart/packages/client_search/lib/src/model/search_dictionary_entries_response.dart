@@ -44,7 +44,7 @@ final class SearchDictionaryEntriesResponse {
 
   @override
   int get hashCode =>
-      hits.hashCode + page.hashCode + nbHits.hashCode + nbPages.hashCode;
+      0 + hits.hashCode + page.hashCode + nbHits.hashCode + nbPages.hashCode;
 
   factory SearchDictionaryEntriesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchDictionaryEntriesResponseFromJson(json);

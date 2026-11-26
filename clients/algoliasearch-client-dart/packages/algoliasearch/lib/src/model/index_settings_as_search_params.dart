@@ -295,6 +295,7 @@ final class IndexSettingsAsSearchParams {
 
   @override
   int get hashCode =>
+      0 +
       attributesToRetrieve.hashCode +
       ranking.hashCode +
       relevancyStrictness.hashCode +

@@ -48,6 +48,7 @@ final class MetricsFilter {
 
   @override
   int get hashCode =>
+      0 +
       domain.hashCode +
       name.hashCode +
       trackEffects.hashCode +

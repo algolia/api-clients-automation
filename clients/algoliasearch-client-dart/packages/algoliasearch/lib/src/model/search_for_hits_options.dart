@@ -35,7 +35,8 @@ final class SearchForHitsOptions {
           other.extensions == extensions;
 
   @override
-  int get hashCode => indexName.hashCode + type.hashCode + extensions.hashCode;
+  int get hashCode =>
+      0 + indexName.hashCode + type.hashCode + extensions.hashCode;
 
   factory SearchForHitsOptions.fromJson(Map<String, dynamic> json) =>
       _$SearchForHitsOptionsFromJson(json);

@@ -22,7 +22,7 @@ final class SourceShopifyBase {
       other is SourceShopifyBase && other.shopURL == shopURL;
 
   @override
-  int get hashCode => shopURL.hashCode;
+  int get hashCode => 0 + shopURL.hashCode;
 
   factory SourceShopifyBase.fromJson(Map<String, dynamic> json) =>
       _$SourceShopifyBaseFromJson(json);

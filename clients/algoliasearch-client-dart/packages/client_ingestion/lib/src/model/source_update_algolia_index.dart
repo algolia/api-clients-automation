@@ -29,7 +29,7 @@ final class SourceUpdateAlgoliaIndex {
           other.filters == filters;
 
   @override
-  int get hashCode => indexName.hashCode + filters.hashCode;
+  int get hashCode => 0 + indexName.hashCode + filters.hashCode;
 
   factory SourceUpdateAlgoliaIndex.fromJson(Map<String, dynamic> json) =>
       _$SourceUpdateAlgoliaIndexFromJson(json);

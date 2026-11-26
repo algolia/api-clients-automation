@@ -29,7 +29,7 @@ final class Window {
           other.endDate == endDate;
 
   @override
-  int get hashCode => startDate.hashCode + endDate.hashCode;
+  int get hashCode => 0 + startDate.hashCode + endDate.hashCode;
 
   factory Window.fromJson(Map<String, dynamic> json) => _$WindowFromJson(json);
 

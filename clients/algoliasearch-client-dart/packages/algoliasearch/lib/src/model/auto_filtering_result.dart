@@ -48,6 +48,7 @@ final class AutoFilteringResult {
 
   @override
   int get hashCode =>
+      0 +
       enabled.hashCode +
       maxDepth.hashCode +
       facetFilters.hashCode +

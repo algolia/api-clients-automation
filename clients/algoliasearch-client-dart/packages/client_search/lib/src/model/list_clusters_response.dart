@@ -22,7 +22,7 @@ final class ListClustersResponse {
       other is ListClustersResponse && other.topUsers == topUsers;
 
   @override
-  int get hashCode => topUsers.hashCode;
+  int get hashCode => 0 + topUsers.hashCode;
 
   factory ListClustersResponse.fromJson(Map<String, dynamic> json) =>
       _$ListClustersResponseFromJson(json);

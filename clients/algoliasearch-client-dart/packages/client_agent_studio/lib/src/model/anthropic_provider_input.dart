@@ -34,6 +34,7 @@ final class AnthropicProviderInput {
 
   @override
   int get hashCode =>
+      0 +
       apiKey.hashCode +
       (baseUrl == null ? 0 : baseUrl.hashCode) +
       (workspaceId == null ? 0 : workspaceId.hashCode);

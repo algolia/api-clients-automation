@@ -44,7 +44,7 @@ final class SourceUpdate {
 
   @override
   int get hashCode =>
-      name.hashCode + input.hashCode + authenticationID.hashCode;
+      0 + name.hashCode + input.hashCode + authenticationID.hashCode;
 
   factory SourceUpdate.fromJson(Map<String, dynamic> json) =>
       _$SourceUpdateFromJson(json);

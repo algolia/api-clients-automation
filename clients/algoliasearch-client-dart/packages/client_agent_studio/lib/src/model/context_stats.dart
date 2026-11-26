@@ -48,6 +48,7 @@ final class ContextStats {
 
   @override
   int get hashCode =>
+      0 +
       messagesBefore.hashCode +
       messagesAfter.hashCode +
       tokensBeforeEstimate.hashCode +

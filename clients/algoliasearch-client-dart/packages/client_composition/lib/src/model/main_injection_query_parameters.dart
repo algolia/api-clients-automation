@@ -357,6 +357,7 @@ final class MainInjectionQueryParameters {
 
   @override
   int get hashCode =>
+      0 +
       advancedSyntax.hashCode +
       advancedSyntaxFeatures.hashCode +
       allowTyposOnNumericTokens.hashCode +

@@ -22,7 +22,7 @@ final class ManagedProviderResponseInput {
           other.defaultModel == defaultModel;
 
   @override
-  int get hashCode => defaultModel.hashCode;
+  int get hashCode => 0 + defaultModel.hashCode;
 
   factory ManagedProviderResponseInput.fromJson(Map<String, dynamic> json) =>
       _$ManagedProviderResponseInputFromJson(json);

@@ -29,7 +29,7 @@ final class RecommendUpdatedAtResponse {
           other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => taskID.hashCode + updatedAt.hashCode;
+  int get hashCode => 0 + taskID.hashCode + updatedAt.hashCode;
 
   factory RecommendUpdatedAtResponse.fromJson(Map<String, dynamic> json) =>
       _$RecommendUpdatedAtResponseFromJson(json);

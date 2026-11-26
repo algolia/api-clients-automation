@@ -22,7 +22,7 @@ final class ConsequenceRedirect {
       other is ConsequenceRedirect && other.indexName == indexName;
 
   @override
-  int get hashCode => indexName.hashCode;
+  int get hashCode => 0 + indexName.hashCode;
 
   factory ConsequenceRedirect.fromJson(Map<String, dynamic> json) =>
       _$ConsequenceRedirectFromJson(json);

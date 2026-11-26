@@ -22,7 +22,7 @@ final class GetObjectsParams {
       other is GetObjectsParams && other.requests == requests;
 
   @override
-  int get hashCode => requests.hashCode;
+  int get hashCode => 0 + requests.hashCode;
 
   factory GetObjectsParams.fromJson(Map<String, dynamic> json) =>
       _$GetObjectsParamsFromJson(json);

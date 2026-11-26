@@ -29,7 +29,7 @@ final class BatchDictionaryEntriesRequest {
           other.body == body;
 
   @override
-  int get hashCode => action.hashCode + body.hashCode;
+  int get hashCode => 0 + action.hashCode + body.hashCode;
 
   factory BatchDictionaryEntriesRequest.fromJson(Map<String, dynamic> json) =>
       _$BatchDictionaryEntriesRequestFromJson(json);

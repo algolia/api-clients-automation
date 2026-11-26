@@ -28,7 +28,7 @@ final class DataGuardrailViolationPartV5 {
           other.data == data;
 
   @override
-  int get hashCode => type.hashCode + data.hashCode;
+  int get hashCode => 0 + type.hashCode + data.hashCode;
 
   factory DataGuardrailViolationPartV5.fromJson(Map<String, dynamic> json) =>
       _$DataGuardrailViolationPartV5FromJson(json);

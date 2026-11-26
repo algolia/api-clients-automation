@@ -23,7 +23,7 @@ final class SaveSettingsRequest {
           other.saveFeaturesSettings == saveFeaturesSettings;
 
   @override
-  int get hashCode => saveFeaturesSettings.hashCode;
+  int get hashCode => 0 + saveFeaturesSettings.hashCode;
 
   factory SaveSettingsRequest.fromJson(Map<String, dynamic> json) =>
       _$SaveSettingsRequestFromJson(json);

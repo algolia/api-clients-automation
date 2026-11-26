@@ -23,7 +23,7 @@ final class CompositionBaseSearchResponse {
           other.compositions == compositions;
 
   @override
-  int get hashCode => compositions.hashCode;
+  int get hashCode => 0 + compositions.hashCode;
 
   factory CompositionBaseSearchResponse.fromJson(Map<String, dynamic> json) =>
       _$CompositionBaseSearchResponseFromJson(json);

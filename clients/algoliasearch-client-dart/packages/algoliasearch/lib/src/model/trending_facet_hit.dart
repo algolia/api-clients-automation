@@ -37,7 +37,8 @@ final class TrendingFacetHit {
           other.facetValue == facetValue;
 
   @override
-  int get hashCode => score.hashCode + facetName.hashCode + facetValue.hashCode;
+  int get hashCode =>
+      0 + score.hashCode + facetName.hashCode + facetValue.hashCode;
 
   factory TrendingFacetHit.fromJson(Map<String, dynamic> json) =>
       _$TrendingFacetHitFromJson(json);

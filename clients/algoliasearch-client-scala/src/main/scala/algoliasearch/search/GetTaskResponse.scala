@@ -41,7 +41,11 @@ package algoliasearch.search
 import algoliasearch.search.TaskStatus._
 
 /** GetTaskResponse
+  *
+  * @param pendingTask
+  *   Indicates whether the index has pending tasks. This value is deprecated and always `false`. Don't use it.
   */
 case class GetTaskResponse(
-    status: TaskStatus
+    status: TaskStatus,
+    pendingTask: Option[Boolean] = scala.None
 )

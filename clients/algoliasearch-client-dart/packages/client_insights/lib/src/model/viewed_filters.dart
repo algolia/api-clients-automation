@@ -60,6 +60,7 @@ final class ViewedFilters {
 
   @override
   int get hashCode =>
+      0 +
       eventName.hashCode +
       eventType.hashCode +
       index.hashCode +

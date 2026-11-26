@@ -28,7 +28,7 @@ final class XAIProviderInput {
 
   @override
   int get hashCode =>
-      apiKey.hashCode + (baseUrl == null ? 0 : baseUrl.hashCode);
+      0 + apiKey.hashCode + (baseUrl == null ? 0 : baseUrl.hashCode);
 
   factory XAIProviderInput.fromJson(Map<String, dynamic> json) =>
       _$XAIProviderInputFromJson(json);

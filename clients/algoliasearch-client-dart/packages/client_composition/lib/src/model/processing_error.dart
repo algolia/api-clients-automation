@@ -22,7 +22,7 @@ final class ProcessingError {
       other is ProcessingError && other.message == message;
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => 0 + message.hashCode;
 
   factory ProcessingError.fromJson(Map<String, dynamic> json) =>
       _$ProcessingErrorFromJson(json);

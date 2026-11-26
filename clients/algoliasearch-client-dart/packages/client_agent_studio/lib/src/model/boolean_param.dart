@@ -28,7 +28,7 @@ final class BooleanParam {
 
   @override
   int get hashCode =>
-      exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
+      0 + exposed.hashCode + (default_ == null ? 0 : default_.hashCode);
 
   factory BooleanParam.fromJson(Map<String, dynamic> json) =>
       _$BooleanParamFromJson(json);

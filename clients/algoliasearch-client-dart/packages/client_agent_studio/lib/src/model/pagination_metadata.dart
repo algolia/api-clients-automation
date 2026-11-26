@@ -38,6 +38,7 @@ final class PaginationMetadata {
 
   @override
   int get hashCode =>
+      0 +
       page.hashCode +
       limit.hashCode +
       totalCount.hashCode +

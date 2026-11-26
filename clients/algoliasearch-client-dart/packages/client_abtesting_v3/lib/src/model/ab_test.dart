@@ -85,6 +85,7 @@ final class ABTest {
 
   @override
   int get hashCode =>
+      0 +
       abTestID.hashCode +
       updatedAt.hashCode +
       createdAt.hashCode +

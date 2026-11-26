@@ -29,7 +29,7 @@ final class PaginatedSecretKeysResponse {
           other.pagination == pagination;
 
   @override
-  int get hashCode => data.hashCode + pagination.hashCode;
+  int get hashCode => 0 + data.hashCode + pagination.hashCode;
 
   factory PaginatedSecretKeysResponse.fromJson(Map<String, dynamic> json) =>
       _$PaginatedSecretKeysResponseFromJson(json);

@@ -64,6 +64,7 @@ final class AssistantMessageAGUI {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       role.hashCode +
       content.hashCode +

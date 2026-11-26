@@ -22,7 +22,7 @@ final class SearchParamsQuery {
       other is SearchParamsQuery && other.query == query;
 
   @override
-  int get hashCode => query.hashCode;
+  int get hashCode => 0 + query.hashCode;
 
   factory SearchParamsQuery.fromJson(Map<String, dynamic> json) =>
       _$SearchParamsQueryFromJson(json);

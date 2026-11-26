@@ -29,7 +29,7 @@ final class BigCommerceChannel {
           other.currencies == currencies;
 
   @override
-  int get hashCode => id.hashCode + currencies.hashCode;
+  int get hashCode => 0 + id.hashCode + currencies.hashCode;
 
   factory BigCommerceChannel.fromJson(Map<String, dynamic> json) =>
       _$BigCommerceChannelFromJson(json);

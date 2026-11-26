@@ -58,6 +58,7 @@ final class Consequence {
 
   @override
   int get hashCode =>
+      0 +
       params.hashCode +
       promote.hashCode +
       filterPromotes.hashCode +

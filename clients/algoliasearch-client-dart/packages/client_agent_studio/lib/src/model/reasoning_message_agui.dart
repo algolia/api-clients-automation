@@ -38,7 +38,11 @@ final class ReasoningMessageAGUI {
 
   @override
   int get hashCode =>
-      id.hashCode + role.hashCode + content.hashCode + encryptedValue.hashCode;
+      0 +
+      id.hashCode +
+      role.hashCode +
+      content.hashCode +
+      encryptedValue.hashCode;
 
   factory ReasoningMessageAGUI.fromJson(Map<String, dynamic> json) =>
       _$ReasoningMessageAGUIFromJson(json);

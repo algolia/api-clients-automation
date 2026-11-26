@@ -48,6 +48,7 @@ final class RedirectRuleIndexMetadata {
 
   @override
   int get hashCode =>
+      0 +
       source.hashCode +
       dest.hashCode +
       reason.hashCode +

@@ -28,7 +28,7 @@ final class MetricDate {
       other is MetricDate && other.date == date && other.metrics == metrics;
 
   @override
-  int get hashCode => date.hashCode + metrics.hashCode;
+  int get hashCode => 0 + date.hashCode + metrics.hashCode;
 
   factory MetricDate.fromJson(Map<String, dynamic> json) =>
       _$MetricDateFromJson(json);

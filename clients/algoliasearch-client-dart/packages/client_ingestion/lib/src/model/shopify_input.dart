@@ -29,7 +29,7 @@ final class ShopifyInput {
           other.market == market;
 
   @override
-  int get hashCode => metafields.hashCode + market.hashCode;
+  int get hashCode => 0 + metafields.hashCode + market.hashCode;
 
   factory ShopifyInput.fromJson(Map<String, dynamic> json) =>
       _$ShopifyInputFromJson(json);

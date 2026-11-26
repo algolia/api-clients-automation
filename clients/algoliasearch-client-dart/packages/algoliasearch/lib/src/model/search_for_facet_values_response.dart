@@ -37,6 +37,7 @@ final class SearchForFacetValuesResponse {
 
   @override
   int get hashCode =>
+      0 +
       facetHits.hashCode +
       exhaustiveFacetsCount.hashCode +
       processingTimeMS.hashCode;

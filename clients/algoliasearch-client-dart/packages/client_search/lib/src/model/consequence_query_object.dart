@@ -30,7 +30,7 @@ final class ConsequenceQueryObject {
           other.edits == edits;
 
   @override
-  int get hashCode => remove.hashCode + edits.hashCode;
+  int get hashCode => 0 + remove.hashCode + edits.hashCode;
 
   factory ConsequenceQueryObject.fromJson(Map<String, dynamic> json) =>
       _$ConsequenceQueryObjectFromJson(json);

@@ -46,7 +46,11 @@ final class ObjectDataAfterSearch {
 
   @override
   int get hashCode =>
-      queryID.hashCode + price.hashCode + quantity.hashCode + discount.hashCode;
+      0 +
+      queryID.hashCode +
+      price.hashCode +
+      quantity.hashCode +
+      discount.hashCode;
 
   factory ObjectDataAfterSearch.fromJson(Map<String, dynamic> json) =>
       _$ObjectDataAfterSearchFromJson(json);

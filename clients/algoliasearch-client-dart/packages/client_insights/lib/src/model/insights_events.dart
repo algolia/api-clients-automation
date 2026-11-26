@@ -36,7 +36,7 @@ final class InsightsEvents {
       other is InsightsEvents && other.events == events;
 
   @override
-  int get hashCode => events.hashCode;
+  int get hashCode => 0 + events.hashCode;
 
   factory InsightsEvents.fromJson(Map<String, dynamic> json) =>
       _$InsightsEventsFromJson(json);

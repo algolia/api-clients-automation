@@ -22,7 +22,7 @@ final class HTTPValidationError {
       other is HTTPValidationError && other.detail == detail;
 
   @override
-  int get hashCode => detail.hashCode;
+  int get hashCode => 0 + detail.hashCode;
 
   factory HTTPValidationError.fromJson(Map<String, dynamic> json) =>
       _$HTTPValidationErrorFromJson(json);

@@ -110,6 +110,7 @@ final class HitRankingInfo {
 
   @override
   int get hashCode =>
+      0 +
       filters.hashCode +
       firstMatchedWord.hashCode +
       geoDistance.hashCode +

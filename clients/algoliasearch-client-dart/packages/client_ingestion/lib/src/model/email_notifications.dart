@@ -22,7 +22,7 @@ final class EmailNotifications {
       other is EmailNotifications && other.enabled == enabled;
 
   @override
-  int get hashCode => enabled.hashCode;
+  int get hashCode => 0 + enabled.hashCode;
 
   factory EmailNotifications.fromJson(Map<String, dynamic> json) =>
       _$EmailNotificationsFromJson(json);

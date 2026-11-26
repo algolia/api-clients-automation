@@ -36,7 +36,10 @@ final class DestinationInput {
 
   @override
   int get hashCode =>
-      indexName.hashCode + recordType.hashCode + attributesToExclude.hashCode;
+      0 +
+      indexName.hashCode +
+      recordType.hashCode +
+      attributesToExclude.hashCode;
 
   factory DestinationInput.fromJson(Map<String, dynamic> json) =>
       _$DestinationInputFromJson(json);

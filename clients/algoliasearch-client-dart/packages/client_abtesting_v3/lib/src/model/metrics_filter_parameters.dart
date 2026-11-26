@@ -29,7 +29,7 @@ final class MetricsFilterParameters {
           other.filterValue == filterValue;
 
   @override
-  int get hashCode => filterAttribute.hashCode + filterValue.hashCode;
+  int get hashCode => 0 + filterAttribute.hashCode + filterValue.hashCode;
 
   factory MetricsFilterParameters.fromJson(Map<String, dynamic> json) =>
       _$MetricsFilterParametersFromJson(json);

@@ -235,6 +235,7 @@ final class BaseSearchParams {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       similarQuery.hashCode +
       filters.hashCode +

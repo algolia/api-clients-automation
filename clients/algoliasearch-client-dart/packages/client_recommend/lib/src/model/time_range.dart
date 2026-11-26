@@ -27,7 +27,7 @@ final class TimeRange {
       other is TimeRange && other.from == from && other.until == until;
 
   @override
-  int get hashCode => from.hashCode + until.hashCode;
+  int get hashCode => 0 + from.hashCode + until.hashCode;
 
   factory TimeRange.fromJson(Map<String, dynamic> json) =>
       _$TimeRangeFromJson(json);

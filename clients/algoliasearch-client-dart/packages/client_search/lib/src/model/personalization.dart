@@ -36,7 +36,7 @@ final class Personalization {
 
   @override
   int get hashCode =>
-      filtersScore.hashCode + rankingScore.hashCode + score.hashCode;
+      0 + filtersScore.hashCode + rankingScore.hashCode + score.hashCode;
 
   factory Personalization.fromJson(Map<String, dynamic> json) =>
       _$PersonalizationFromJson(json);

@@ -23,7 +23,7 @@ final class ResponseExtensions {
           other.queryCategorization == queryCategorization;
 
   @override
-  int get hashCode => queryCategorization.hashCode;
+  int get hashCode => 0 + queryCategorization.hashCode;
 
   factory ResponseExtensions.fromJson(Map<String, dynamic> json) =>
       _$ResponseExtensionsFromJson(json);

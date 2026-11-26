@@ -29,7 +29,7 @@ final class AuthAlgoliaInsights {
           other.apiKey == apiKey;
 
   @override
-  int get hashCode => appID.hashCode + apiKey.hashCode;
+  int get hashCode => 0 + appID.hashCode + apiKey.hashCode;
 
   factory AuthAlgoliaInsights.fromJson(Map<String, dynamic> json) =>
       _$AuthAlgoliaInsightsFromJson(json);

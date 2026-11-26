@@ -22,7 +22,7 @@ final class AllowedDomainCreate {
       other is AllowedDomainCreate && other.domain == domain;
 
   @override
-  int get hashCode => domain.hashCode;
+  int get hashCode => 0 + domain.hashCode;
 
   factory AllowedDomainCreate.fromJson(Map<String, dynamic> json) =>
       _$AllowedDomainCreateFromJson(json);

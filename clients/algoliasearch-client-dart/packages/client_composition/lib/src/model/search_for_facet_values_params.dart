@@ -37,7 +37,7 @@ final class SearchForFacetValuesParams {
 
   @override
   int get hashCode =>
-      query.hashCode + maxFacetHits.hashCode + searchQuery.hashCode;
+      0 + query.hashCode + maxFacetHits.hashCode + searchQuery.hashCode;
 
   factory SearchForFacetValuesParams.fromJson(Map<String, dynamic> json) =>
       _$SearchForFacetValuesParamsFromJson(json);

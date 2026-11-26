@@ -45,7 +45,7 @@ final class SearchSynonymsParams {
 
   @override
   int get hashCode =>
-      query.hashCode + type.hashCode + page.hashCode + hitsPerPage.hashCode;
+      0 + query.hashCode + type.hashCode + page.hashCode + hitsPerPage.hashCode;
 
   factory SearchSynonymsParams.fromJson(Map<String, dynamic> json) =>
       _$SearchSynonymsParamsFromJson(json);

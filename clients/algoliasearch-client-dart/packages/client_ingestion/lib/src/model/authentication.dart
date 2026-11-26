@@ -73,6 +73,7 @@ final class Authentication {
 
   @override
   int get hashCode =>
+      0 +
       authenticationID.hashCode +
       type.hashCode +
       name.hashCode +

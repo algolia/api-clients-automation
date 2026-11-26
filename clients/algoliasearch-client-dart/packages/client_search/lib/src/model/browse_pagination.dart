@@ -45,7 +45,11 @@ final class BrowsePagination {
 
   @override
   int get hashCode =>
-      page.hashCode + nbHits.hashCode + nbPages.hashCode + hitsPerPage.hashCode;
+      0 +
+      page.hashCode +
+      nbHits.hashCode +
+      nbPages.hashCode +
+      hitsPerPage.hashCode;
 
   factory BrowsePagination.fromJson(Map<String, dynamic> json) =>
       _$BrowsePaginationFromJson(json);

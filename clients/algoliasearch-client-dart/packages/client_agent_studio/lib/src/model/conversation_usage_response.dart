@@ -33,7 +33,7 @@ final class ConversationUsageResponse {
 
   @override
   int get hashCode =>
-      liveConversations.hashCode + limit.hashCode + atLimit.hashCode;
+      0 + liveConversations.hashCode + limit.hashCode + atLimit.hashCode;
 
   factory ConversationUsageResponse.fromJson(Map<String, dynamic> json) =>
       _$ConversationUsageResponseFromJson(json);

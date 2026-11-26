@@ -25,7 +25,7 @@ final class DataPartV5 {
       other is DataPartV5 && other.type == type && other.data == data;
 
   @override
-  int get hashCode => type.hashCode + data.hashCode;
+  int get hashCode => 0 + type.hashCode + data.hashCode;
 
   factory DataPartV5.fromJson(Map<String, dynamic> json) =>
       _$DataPartV5FromJson(json);

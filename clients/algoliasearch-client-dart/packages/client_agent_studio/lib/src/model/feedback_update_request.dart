@@ -44,6 +44,7 @@ final class FeedbackUpdateRequest {
 
   @override
   int get hashCode =>
+      0 +
       messageId.hashCode +
       agentId.hashCode +
       (vote == null ? 0 : vote.hashCode) +

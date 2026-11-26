@@ -44,7 +44,8 @@ final class ProviderAuthenticationCreate {
           other.input == input;
 
   @override
-  int get hashCode => name.hashCode + providerName.hashCode + input.hashCode;
+  int get hashCode =>
+      0 + name.hashCode + providerName.hashCode + input.hashCode;
 
   factory ProviderAuthenticationCreate.fromJson(Map<String, dynamic> json) =>
       _$ProviderAuthenticationCreateFromJson(json);

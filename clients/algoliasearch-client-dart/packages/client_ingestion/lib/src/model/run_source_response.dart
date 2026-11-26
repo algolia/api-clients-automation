@@ -29,7 +29,7 @@ final class RunSourceResponse {
           other.createdAt == createdAt;
 
   @override
-  int get hashCode => taskWithRunID.hashCode + createdAt.hashCode;
+  int get hashCode => 0 + taskWithRunID.hashCode + createdAt.hashCode;
 
   factory RunSourceResponse.fromJson(Map<String, dynamic> json) =>
       _$RunSourceResponseFromJson(json);

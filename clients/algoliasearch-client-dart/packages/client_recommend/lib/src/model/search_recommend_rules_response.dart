@@ -44,7 +44,7 @@ final class SearchRecommendRulesResponse {
 
   @override
   int get hashCode =>
-      hits.hashCode + nbHits.hashCode + page.hashCode + nbPages.hashCode;
+      0 + hits.hashCode + nbHits.hashCode + page.hashCode + nbPages.hashCode;
 
   factory SearchRecommendRulesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchRecommendRulesResponseFromJson(json);

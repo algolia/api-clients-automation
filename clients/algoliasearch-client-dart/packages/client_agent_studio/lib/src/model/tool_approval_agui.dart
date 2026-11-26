@@ -32,7 +32,8 @@ final class ToolApprovalAGUI {
           other.approved == approved;
 
   @override
-  int get hashCode => id.hashCode + needsApproval.hashCode + approved.hashCode;
+  int get hashCode =>
+      0 + id.hashCode + needsApproval.hashCode + approved.hashCode;
 
   factory ToolApprovalAGUI.fromJson(Map<String, dynamic> json) =>
       _$ToolApprovalAGUIFromJson(json);

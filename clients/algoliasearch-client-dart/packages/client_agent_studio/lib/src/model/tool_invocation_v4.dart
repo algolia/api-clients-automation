@@ -68,6 +68,7 @@ final class ToolInvocationV4 {
 
   @override
   int get hashCode =>
+      0 +
       toolCallId.hashCode +
       toolName.hashCode +
       args.hashCode +

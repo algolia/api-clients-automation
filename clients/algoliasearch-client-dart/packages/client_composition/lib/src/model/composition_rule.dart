@@ -62,6 +62,7 @@ final class CompositionRule {
 
   @override
   int get hashCode =>
+      0 +
       objectID.hashCode +
       conditions.hashCode +
       consequence.hashCode +

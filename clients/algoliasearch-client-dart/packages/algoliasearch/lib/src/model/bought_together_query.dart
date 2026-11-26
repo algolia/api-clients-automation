@@ -64,6 +64,7 @@ final class BoughtTogetherQuery {
 
   @override
   int get hashCode =>
+      0 +
       indexName.hashCode +
       threshold.hashCode +
       maxRecommendations.hashCode +

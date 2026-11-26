@@ -122,6 +122,7 @@ final class SearchParametersOverrides {
 
   @override
   int get hashCode =>
+      0 +
       filters.hashCode +
       attributesToRetrieve.hashCode +
       restrictSearchableAttributes.hashCode +

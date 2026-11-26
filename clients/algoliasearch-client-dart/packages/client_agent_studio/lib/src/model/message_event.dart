@@ -33,6 +33,7 @@ final class MessageEvent {
 
   @override
   int get hashCode =>
+      0 +
       eventType.hashCode +
       eventName.hashCode +
       (objectId == null ? 0 : objectId.hashCode);

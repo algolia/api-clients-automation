@@ -22,7 +22,7 @@ final class AllowedDomainBulkInsert {
       other is AllowedDomainBulkInsert && other.domains == domains;
 
   @override
-  int get hashCode => domains.hashCode;
+  int get hashCode => 0 + domains.hashCode;
 
   factory AllowedDomainBulkInsert.fromJson(Map<String, dynamic> json) =>
       _$AllowedDomainBulkInsertFromJson(json);

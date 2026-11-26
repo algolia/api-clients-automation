@@ -22,7 +22,7 @@ final class TriggerUpdateInput {
       other is TriggerUpdateInput && other.cron == cron;
 
   @override
-  int get hashCode => cron.hashCode;
+  int get hashCode => 0 + cron.hashCode;
 
   factory TriggerUpdateInput.fromJson(Map<String, dynamic> json) =>
       _$TriggerUpdateInputFromJson(json);

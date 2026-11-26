@@ -29,7 +29,7 @@ final class UpdateApiKeyResponse {
           other.updatedAt == updatedAt;
 
   @override
-  int get hashCode => key.hashCode + updatedAt.hashCode;
+  int get hashCode => 0 + key.hashCode + updatedAt.hashCode;
 
   factory UpdateApiKeyResponse.fromJson(Map<String, dynamic> json) =>
       _$UpdateApiKeyResponseFromJson(json);

@@ -29,7 +29,7 @@ final class EventsResponse {
           other.status == status;
 
   @override
-  int get hashCode => message.hashCode + status.hashCode;
+  int get hashCode => 0 + message.hashCode + status.hashCode;
 
   factory EventsResponse.fromJson(Map<String, dynamic> json) =>
       _$EventsResponseFromJson(json);

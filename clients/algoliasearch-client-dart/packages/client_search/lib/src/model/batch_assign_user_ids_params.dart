@@ -29,7 +29,7 @@ final class BatchAssignUserIdsParams {
           other.users == users;
 
   @override
-  int get hashCode => cluster.hashCode + users.hashCode;
+  int get hashCode => 0 + cluster.hashCode + users.hashCode;
 
   factory BatchAssignUserIdsParams.fromJson(Map<String, dynamic> json) =>
       _$BatchAssignUserIdsParamsFromJson(json);

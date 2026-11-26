@@ -29,7 +29,7 @@ final class AuthGoogleServiceAccountPartial {
           other.privateKey == privateKey;
 
   @override
-  int get hashCode => clientEmail.hashCode + privateKey.hashCode;
+  int get hashCode => 0 + clientEmail.hashCode + privateKey.hashCode;
 
   factory AuthGoogleServiceAccountPartial.fromJson(Map<String, dynamic> json) =>
       _$AuthGoogleServiceAccountPartialFromJson(json);

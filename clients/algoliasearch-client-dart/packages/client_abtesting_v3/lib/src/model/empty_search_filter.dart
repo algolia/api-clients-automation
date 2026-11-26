@@ -29,7 +29,7 @@ final class EmptySearchFilter {
           other.trackedSearchesCount == trackedSearchesCount;
 
   @override
-  int get hashCode => usersCount.hashCode + trackedSearchesCount.hashCode;
+  int get hashCode => 0 + usersCount.hashCode + trackedSearchesCount.hashCode;
 
   factory EmptySearchFilter.fromJson(Map<String, dynamic> json) =>
       _$EmptySearchFilterFromJson(json);

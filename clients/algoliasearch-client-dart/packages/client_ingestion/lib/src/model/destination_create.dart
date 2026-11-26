@@ -47,6 +47,7 @@ final class DestinationCreate {
 
   @override
   int get hashCode =>
+      0 +
       type.hashCode +
       name.hashCode +
       input.hashCode +

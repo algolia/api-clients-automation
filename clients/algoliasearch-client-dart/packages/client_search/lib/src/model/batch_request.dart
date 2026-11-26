@@ -27,7 +27,7 @@ final class BatchRequest {
       other is BatchRequest && other.action == action && other.body == body;
 
   @override
-  int get hashCode => action.hashCode + body.hashCode;
+  int get hashCode => 0 + action.hashCode + body.hashCode;
 
   factory BatchRequest.fromJson(Map<String, dynamic> json) =>
       _$BatchRequestFromJson(json);

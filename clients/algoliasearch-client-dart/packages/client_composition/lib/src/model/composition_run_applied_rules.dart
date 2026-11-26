@@ -22,7 +22,7 @@ final class CompositionRunAppliedRules {
       other is CompositionRunAppliedRules && other.objectID == objectID;
 
   @override
-  int get hashCode => objectID.hashCode;
+  int get hashCode => 0 + objectID.hashCode;
 
   factory CompositionRunAppliedRules.fromJson(Map<String, dynamic> json) =>
       _$CompositionRunAppliedRulesFromJson(json);

@@ -66,6 +66,7 @@ final class SynonymHit {
 
   @override
   int get hashCode =>
+      0 +
       objectID.hashCode +
       type.hashCode +
       synonyms.hashCode +

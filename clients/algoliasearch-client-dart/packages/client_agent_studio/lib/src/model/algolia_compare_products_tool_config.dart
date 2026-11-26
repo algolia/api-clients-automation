@@ -34,6 +34,7 @@ final class AlgoliaCompareProductsToolConfig {
 
   @override
   int get hashCode =>
+      0 +
       name.hashCode +
       type.hashCode +
       (description == null ? 0 : description.hashCode);

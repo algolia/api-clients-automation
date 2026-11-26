@@ -34,6 +34,7 @@ final class NumberParam {
 
   @override
   int get hashCode =>
+      0 +
       exposed.hashCode +
       (default_ == null ? 0 : default_.hashCode) +
       (constraint == null ? 0 : constraint.hashCode);

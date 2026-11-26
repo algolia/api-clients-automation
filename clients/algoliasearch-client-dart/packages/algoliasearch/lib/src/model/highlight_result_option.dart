@@ -42,6 +42,7 @@ final class HighlightResultOption {
 
   @override
   int get hashCode =>
+      0 +
       value.hashCode +
       matchLevel.hashCode +
       matchedWords.hashCode +

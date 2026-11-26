@@ -57,6 +57,7 @@ final class AguiCompletionRequest {
 
   @override
   int get hashCode =>
+      0 +
       threadId.hashCode +
       runId.hashCode +
       parentRunId.hashCode +

@@ -48,6 +48,7 @@ final class AllowedDomainResponse {
 
   @override
   int get hashCode =>
+      0 +
       id.hashCode +
       appId.hashCode +
       agentId.hashCode +

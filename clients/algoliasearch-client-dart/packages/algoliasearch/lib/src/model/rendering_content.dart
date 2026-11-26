@@ -36,7 +36,7 @@ final class RenderingContent {
 
   @override
   int get hashCode =>
-      facetOrdering.hashCode + redirect.hashCode + widgets.hashCode;
+      0 + facetOrdering.hashCode + redirect.hashCode + widgets.hashCode;
 
   factory RenderingContent.fromJson(Map<String, dynamic> json) =>
       _$RenderingContentFromJson(json);

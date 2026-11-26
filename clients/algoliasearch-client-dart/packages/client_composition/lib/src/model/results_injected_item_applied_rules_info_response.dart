@@ -23,7 +23,7 @@ final class ResultsInjectedItemAppliedRulesInfoResponse {
           other.objectID == objectID;
 
   @override
-  int get hashCode => objectID.hashCode;
+  int get hashCode => 0 + objectID.hashCode;
 
   factory ResultsInjectedItemAppliedRulesInfoResponse.fromJson(
           Map<String, dynamic> json) =>

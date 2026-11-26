@@ -537,6 +537,7 @@ final class ConsequenceParams {
 
   @override
   int get hashCode =>
+      0 +
       similarQuery.hashCode +
       filters.hashCode +
       facetFilters.hashCode +

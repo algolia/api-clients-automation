@@ -22,7 +22,7 @@ final class SourceUpdateDocker {
       other is SourceUpdateDocker && other.configuration == configuration;
 
   @override
-  int get hashCode => configuration.hashCode;
+  int get hashCode => 0 + configuration.hashCode;
 
   factory SourceUpdateDocker.fromJson(Map<String, dynamic> json) =>
       _$SourceUpdateDockerFromJson(json);

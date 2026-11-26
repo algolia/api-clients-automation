@@ -257,6 +257,7 @@ final class BaseRecommendIndexSettings {
 
   @override
   int get hashCode =>
+      0 +
       attributesToRetrieve.hashCode +
       relevancyStrictness.hashCode +
       attributesToHighlight.hashCode +

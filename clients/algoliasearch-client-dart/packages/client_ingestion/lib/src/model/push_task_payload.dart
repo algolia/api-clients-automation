@@ -29,7 +29,7 @@ final class PushTaskPayload {
           other.records == records;
 
   @override
-  int get hashCode => action.hashCode + records.hashCode;
+  int get hashCode => 0 + action.hashCode + records.hashCode;
 
   factory PushTaskPayload.fromJson(Map<String, dynamic> json) =>
       _$PushTaskPayloadFromJson(json);

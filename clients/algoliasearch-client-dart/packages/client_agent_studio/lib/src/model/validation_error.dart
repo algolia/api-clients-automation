@@ -35,7 +35,7 @@ final class ValidationError {
           other.type == type;
 
   @override
-  int get hashCode => loc.hashCode + msg.hashCode + type.hashCode;
+  int get hashCode => 0 + loc.hashCode + msg.hashCode + type.hashCode;
 
   factory ValidationError.fromJson(Map<String, dynamic> json) =>
       _$ValidationErrorFromJson(json);

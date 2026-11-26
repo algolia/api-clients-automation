@@ -29,7 +29,7 @@ final class DeletedAtResponse {
           other.deletedAt == deletedAt;
 
   @override
-  int get hashCode => taskID.hashCode + deletedAt.hashCode;
+  int get hashCode => 0 + taskID.hashCode + deletedAt.hashCode;
 
   factory DeletedAtResponse.fromJson(Map<String, dynamic> json) =>
       _$DeletedAtResponseFromJson(json);

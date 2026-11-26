@@ -74,6 +74,7 @@ final class Source {
 
   @override
   int get hashCode =>
+      0 +
       sourceID.hashCode +
       type.hashCode +
       name.hashCode +

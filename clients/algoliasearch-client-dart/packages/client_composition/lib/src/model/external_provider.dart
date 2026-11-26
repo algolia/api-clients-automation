@@ -23,7 +23,7 @@ final class ExternalProvider {
           other.configurationParams == configurationParams;
 
   @override
-  int get hashCode => configurationParams.hashCode;
+  int get hashCode => 0 + configurationParams.hashCode;
 
   factory ExternalProvider.fromJson(Map<String, dynamic> json) =>
       _$ExternalProviderFromJson(json);

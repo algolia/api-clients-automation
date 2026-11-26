@@ -30,7 +30,7 @@ final class ListIndicesResponse {
           other.nbPages == nbPages;
 
   @override
-  int get hashCode => items.hashCode + nbPages.hashCode;
+  int get hashCode => 0 + items.hashCode + nbPages.hashCode;
 
   factory ListIndicesResponse.fromJson(Map<String, dynamic> json) =>
       _$ListIndicesResponseFromJson(json);

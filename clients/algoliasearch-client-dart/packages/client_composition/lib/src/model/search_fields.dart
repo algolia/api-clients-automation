@@ -61,6 +61,7 @@ final class SearchFields {
 
   @override
   int get hashCode =>
+      0 +
       hits.hashCode +
       hitsPerPage.hashCode +
       nbHits.hashCode +

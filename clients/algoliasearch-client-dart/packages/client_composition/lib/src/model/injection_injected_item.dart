@@ -54,6 +54,7 @@ final class InjectionInjectedItem {
 
   @override
   int get hashCode =>
+      0 +
       key.hashCode +
       source.hashCode +
       position.hashCode +

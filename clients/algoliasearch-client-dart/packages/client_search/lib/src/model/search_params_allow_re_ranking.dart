@@ -24,7 +24,7 @@ final class SearchParamsAllowReRanking {
               allowReRankingOnPersonalization;
 
   @override
-  int get hashCode => allowReRankingOnPersonalization.hashCode;
+  int get hashCode => 0 + allowReRankingOnPersonalization.hashCode;
 
   factory SearchParamsAllowReRanking.fromJson(Map<String, dynamic> json) =>
       _$SearchParamsAllowReRankingFromJson(json);

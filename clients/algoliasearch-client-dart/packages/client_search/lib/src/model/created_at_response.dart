@@ -22,7 +22,7 @@ final class CreatedAtResponse {
       other is CreatedAtResponse && other.createdAt == createdAt;
 
   @override
-  int get hashCode => createdAt.hashCode;
+  int get hashCode => 0 + createdAt.hashCode;
 
   factory CreatedAtResponse.fromJson(Map<String, dynamic> json) =>
       _$CreatedAtResponseFromJson(json);

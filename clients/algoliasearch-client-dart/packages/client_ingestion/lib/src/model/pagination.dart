@@ -47,6 +47,7 @@ final class Pagination {
 
   @override
   int get hashCode =>
+      0 +
       nbPages.hashCode +
       page.hashCode +
       nbItems.hashCode +

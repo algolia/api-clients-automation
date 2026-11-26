@@ -35,7 +35,8 @@ final class FacetHits {
           other.count == count;
 
   @override
-  int get hashCode => value.hashCode + highlighted.hashCode + count.hashCode;
+  int get hashCode =>
+      0 + value.hashCode + highlighted.hashCode + count.hashCode;
 
   factory FacetHits.fromJson(Map<String, dynamic> json) =>
       _$FacetHitsFromJson(json);

@@ -49,6 +49,7 @@ final class QueryCategorization {
 
   @override
   int get hashCode =>
+      0 +
       normalizedQuery.hashCode +
       count.hashCode +
       type.hashCode +

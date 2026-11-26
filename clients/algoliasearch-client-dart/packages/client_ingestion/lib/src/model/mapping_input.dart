@@ -29,7 +29,7 @@ final class MappingInput {
           other.actions == actions;
 
   @override
-  int get hashCode => format.hashCode + actions.hashCode;
+  int get hashCode => 0 + format.hashCode + actions.hashCode;
 
   factory MappingInput.fromJson(Map<String, dynamic> json) =>
       _$MappingInputFromJson(json);

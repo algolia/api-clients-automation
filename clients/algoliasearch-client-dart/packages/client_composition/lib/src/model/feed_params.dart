@@ -200,6 +200,7 @@ final class FeedParams {
 
   @override
   int get hashCode =>
+      0 +
       analytics.hashCode +
       analyticsTags.hashCode +
       aroundLatLng.hashCode +

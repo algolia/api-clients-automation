@@ -22,7 +22,7 @@ final class WithPrimary {
       other is WithPrimary && other.primary == primary;
 
   @override
-  int get hashCode => primary.hashCode;
+  int get hashCode => 0 + primary.hashCode;
 
   factory WithPrimary.fromJson(Map<String, dynamic> json) =>
       _$WithPrimaryFromJson(json);

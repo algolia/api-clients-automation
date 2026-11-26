@@ -22,7 +22,7 @@ final class CompositionRulesBatchParams {
       other is CompositionRulesBatchParams && other.requests == requests;
 
   @override
-  int get hashCode => requests.hashCode;
+  int get hashCode => 0 + requests.hashCode;
 
   factory CompositionRulesBatchParams.fromJson(Map<String, dynamic> json) =>
       _$CompositionRulesBatchParamsFromJson(json);

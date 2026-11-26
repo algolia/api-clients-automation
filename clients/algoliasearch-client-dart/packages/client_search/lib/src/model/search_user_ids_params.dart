@@ -44,6 +44,7 @@ final class SearchUserIdsParams {
 
   @override
   int get hashCode =>
+      0 +
       query.hashCode +
       clusterName.hashCode +
       page.hashCode +
