@@ -81,8 +81,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ABTestResponse addABTests(@Nonnull AddABTestsRequest addABTestsRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ABTestResponse addABTests(
+    @Nonnull AddABTestsRequest addABTestsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(addABTestsAsync(addABTestsRequest, requestOptions));
   }
 
@@ -94,8 +96,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response addABTestsWithHTTPInfo(@Nonnull AddABTestsRequest addABTestsRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response addABTestsWithHTTPInfo(
+    @Nonnull AddABTestsRequest addABTestsRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(addABTestsWithHTTPInfoAsync(addABTestsRequest, requestOptions));
   }
 
@@ -171,8 +175,9 @@ public class AbtestingV3Client extends ApiClient {
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> addABTestsWithHTTPInfoAsync(@Nonnull AddABTestsRequest addABTestsRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> addABTestsWithHTTPInfoAsync(
+    @Nonnull AddABTestsRequest addABTestsRequest
+  ) throws AlgoliaRuntimeException {
     return this.addABTestsWithHTTPInfoAsync(addABTestsRequest, null);
   }
 
@@ -191,8 +196,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void applyVariantSettings(@Nonnull Integer id, @Nonnull Integer variantId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public void applyVariantSettings(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     LaunderThrowable.await(applyVariantSettingsAsync(id, variantId, requestOptions));
     return;
   }
@@ -212,8 +220,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response applyVariantSettingsWithHTTPInfo(@Nonnull Integer id, @Nonnull Integer variantId, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response applyVariantSettingsWithHTTPInfo(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(applyVariantSettingsWithHTTPInfoAsync(id, variantId, requestOptions));
   }
 
@@ -343,8 +354,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param variantId One-based index of the A/B test variant. The control is variant 1. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> applyVariantSettingsWithHTTPInfoAsync(@Nonnull Integer id, @Nonnull Integer variantId)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> applyVariantSettingsWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId
+  ) throws AlgoliaRuntimeException {
     return this.applyVariantSettingsWithHTTPInfoAsync(id, variantId, null);
   }
 
@@ -357,8 +370,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customDelete(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customDelete(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteAsync(path, parameters, requestOptions));
   }
 
@@ -371,8 +387,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customDeleteWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customDeleteWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customDeleteWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -502,8 +521,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -515,8 +536,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customDeleteAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customDeleteAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteAsync(path, null, requestOptions);
   }
 
@@ -528,8 +551,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customDeleteWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customDeleteWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -562,8 +587,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customGet(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customGet(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetAsync(path, parameters, requestOptions));
   }
 
@@ -576,8 +604,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response customGetWithHTTPInfo(@Nonnull String path, Map<String, Object> parameters, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response customGetWithHTTPInfo(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customGetWithHTTPInfoAsync(path, parameters, requestOptions));
   }
 
@@ -707,8 +738,10 @@ public class AbtestingV3Client extends ApiClient {
    * @param parameters Query parameters to apply to the current query. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, parameters, null);
   }
 
@@ -720,8 +753,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customGetAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customGetAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetAsync(path, null, requestOptions);
   }
 
@@ -733,8 +768,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customGetWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customGetWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customGetWithHTTPInfoAsync(path, null, requestOptions);
   }
 
@@ -768,8 +805,12 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPost(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPost(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPostAsync(path, parameters, body, requestOptions));
   }
 
@@ -924,8 +965,11 @@ public class AbtestingV3Client extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, parameters, body, null);
   }
 
@@ -937,8 +981,11 @@ public class AbtestingV3Client extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -950,8 +997,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPostAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPostAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostAsync(path, null, null, requestOptions);
   }
 
@@ -963,8 +1012,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPostWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPostWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPostWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -998,8 +1049,12 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Object customPut(@Nonnull String path, Map<String, Object> parameters, Object body, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Object customPut(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(customPutAsync(path, parameters, body, requestOptions));
   }
 
@@ -1154,8 +1209,11 @@ public class AbtestingV3Client extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, parameters, body, null);
   }
 
@@ -1167,8 +1225,11 @@ public class AbtestingV3Client extends ApiClient {
    * @param body Parameters to send with the custom request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, Map<String, Object> parameters, Object body)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    Map<String, Object> parameters,
+    Object body
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, parameters, body, null);
   }
 
@@ -1180,8 +1241,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Object> customPutAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Object> customPutAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutAsync(path, null, null, requestOptions);
   }
 
@@ -1193,8 +1256,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> customPutWithHTTPInfoAsync(@Nonnull String path, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> customPutWithHTTPInfoAsync(
+    @Nonnull String path,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.customPutWithHTTPInfoAsync(path, null, null, requestOptions);
   }
 
@@ -1270,8 +1335,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ABTestResponse> deleteABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ABTestResponse> deleteABTestAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `deleteABTest`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}", id).setMethod("DELETE").build();
@@ -1287,8 +1354,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> deleteABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> deleteABTestWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `deleteABTest`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}", id).setMethod("DELETE").build();
@@ -1341,8 +1410,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response estimateABTestWithHTTPInfo(@Nonnull EstimateABTestRequest estimateABTestRequest, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response estimateABTestWithHTTPInfo(
+    @Nonnull EstimateABTestRequest estimateABTestRequest,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(estimateABTestWithHTTPInfoAsync(estimateABTestRequest, requestOptions));
   }
 
@@ -1413,8 +1484,9 @@ public class AbtestingV3Client extends ApiClient {
    * @param estimateABTestRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(@Nonnull EstimateABTestRequest estimateABTestRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<EstimateABTestResponse> estimateABTestAsync(
+    @Nonnull EstimateABTestRequest estimateABTestRequest
+  ) throws AlgoliaRuntimeException {
     return this.estimateABTestAsync(estimateABTestRequest, null);
   }
 
@@ -1425,8 +1497,9 @@ public class AbtestingV3Client extends ApiClient {
    * @param estimateABTestRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> estimateABTestWithHTTPInfoAsync(@Nonnull EstimateABTestRequest estimateABTestRequest)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> estimateABTestWithHTTPInfoAsync(
+    @Nonnull EstimateABTestRequest estimateABTestRequest
+  ) throws AlgoliaRuntimeException {
     return this.estimateABTestWithHTTPInfoAsync(estimateABTestRequest, null);
   }
 
@@ -1442,8 +1515,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ABTest getABTest(@Nonnull Integer id, List<AnalysisMethod> methods, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ABTest getABTest(
+    @Nonnull Integer id,
+    List<AnalysisMethod> methods,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestAsync(id, methods, requestOptions));
   }
 
@@ -1459,8 +1535,11 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getABTestWithHTTPInfo(@Nonnull Integer id, List<AnalysisMethod> methods, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getABTestWithHTTPInfo(
+    @Nonnull Integer id,
+    List<AnalysisMethod> methods,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestWithHTTPInfoAsync(id, methods, requestOptions));
   }
 
@@ -1614,8 +1693,10 @@ public class AbtestingV3Client extends ApiClient {
    *     test configuration or compute missing results. Duplicate values aren't allowed. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id, List<AnalysisMethod> methods)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    List<AnalysisMethod> methods
+  ) throws AlgoliaRuntimeException {
     return this.getABTestWithHTTPInfoAsync(id, methods, null);
   }
 
@@ -1627,8 +1708,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ABTest> getABTestAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getABTestAsync(id, null, requestOptions);
   }
 
@@ -1640,8 +1723,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getABTestWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getABTestWithHTTPInfoAsync(id, null, requestOptions);
   }
 
@@ -1677,8 +1762,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public ABTestSettingsResponse getABTestSettings(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ABTestSettingsResponse getABTestSettings(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestSettingsAsync(id, requestOptions));
   }
 
@@ -1694,8 +1781,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public Response getABTestSettingsWithHTTPInfo(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public Response getABTestSettingsWithHTTPInfo(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getABTestSettingsWithHTTPInfoAsync(id, requestOptions));
   }
 
@@ -1739,8 +1828,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ABTestSettingsResponse> getABTestSettingsAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ABTestSettingsResponse> getABTestSettingsAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTestSettings`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/settings", id).setMethod("GET").build();
@@ -1760,8 +1851,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getABTestSettingsWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getABTestSettingsWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `getABTestSettings`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/settings", id).setMethod("GET").build();
@@ -2073,8 +2166,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Timeseries> getTimeseriesAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Timeseries> getTimeseriesAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTimeseriesAsync(id, null, null, null, null, requestOptions);
   }
 
@@ -2086,8 +2181,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> getTimeseriesWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> getTimeseriesWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     return this.getTimeseriesWithHTTPInfoAsync(id, null, null, null, null, requestOptions);
   }
 
@@ -2511,8 +2608,11 @@ public class AbtestingV3Client extends ApiClient {
    * @param saveSettingsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public void saveVariantSettings(@Nonnull Integer id, @Nonnull Integer variantId, @Nonnull SaveSettingsRequest saveSettingsRequest)
-    throws AlgoliaRuntimeException {
+  public void saveVariantSettings(
+    @Nonnull Integer id,
+    @Nonnull Integer variantId,
+    @Nonnull SaveSettingsRequest saveSettingsRequest
+  ) throws AlgoliaRuntimeException {
     this.saveVariantSettings(id, variantId, saveSettingsRequest, null);
   }
 
@@ -2705,8 +2805,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<ABTestResponse> stopABTestAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<ABTestResponse> stopABTestAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `stopABTest`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/stop", id).setMethod("POST").build();
@@ -2722,8 +2824,10 @@ public class AbtestingV3Client extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<Response> stopABTestWithHTTPInfoAsync(@Nonnull Integer id, @Nullable RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<Response> stopABTestWithHTTPInfoAsync(
+    @Nonnull Integer id,
+    @Nullable RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(id, "Parameter `id` is required when calling `stopABTest`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/3/abtests/{id}/stop", id).setMethod("POST").build();

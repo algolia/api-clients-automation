@@ -1,10 +1,9 @@
+import AlgoliaCore
+import AlgoliaSearch
 import Foundation
 #if os(Linux) // For linux interop
     import FoundationNetworking
 #endif
-
-import AlgoliaCore
-import AlgoliaSearch
 
 func globalAlgoliaUserToken() async throws {
     let configuration = try SearchClientConfiguration(

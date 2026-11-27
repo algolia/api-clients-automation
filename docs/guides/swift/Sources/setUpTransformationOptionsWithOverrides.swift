@@ -1,10 +1,9 @@
+import AlgoliaCore
+import AlgoliaSearch
 import Foundation
 #if os(Linux) // For linux interop
     import FoundationNetworking
 #endif
-
-import AlgoliaCore
-import AlgoliaSearch
 
 func setUpTransformationOptionsWithOverrides() async throws {
     // Override the Ingestion API defaults. Any option you don't set keeps its default.

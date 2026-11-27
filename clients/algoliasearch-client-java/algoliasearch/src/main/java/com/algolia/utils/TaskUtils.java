@@ -14,8 +14,12 @@ public class TaskUtils {
   public static final int DEFAULT_MAX_RETRIES = 100;
   public static final IntUnaryOperator DEFAULT_TIMEOUT = (int retries) -> Math.min(retries * 200, 5000);
 
-  public static <T> T retryUntil(Supplier<T> func, Predicate<T> validate, int maxRetries, IntUnaryOperator timeout)
-    throws AlgoliaRuntimeException {
+  public static <T> T retryUntil(
+    Supplier<T> func,
+    Predicate<T> validate,
+    int maxRetries,
+    IntUnaryOperator timeout
+  ) throws AlgoliaRuntimeException {
     if (timeout == null) {
       timeout = DEFAULT_TIMEOUT;
     }

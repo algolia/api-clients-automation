@@ -609,9 +609,8 @@ public class CompositionClientRequestTests
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
     }
-    Assert.DoesNotContain(
-      req.Headers,
-      h => h.Key.Equals("request-id", StringComparison.OrdinalIgnoreCase)
+    Assert.DoesNotContain(req.Headers, h =>
+      h.Key.Equals("request-id", StringComparison.OrdinalIgnoreCase)
     );
   }
 
