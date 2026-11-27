@@ -898,6 +898,31 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails')]
+    public function test1replaceAllObjectsWithTransformation(): void
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6699'])->setTransformationOptions((new TransformationOptions('us'))->setFullHosts(['http://'.('true' == getenv('CI') ? 'localhost' : 'host.docker.internal').':6699'])));
+
+        try {
+            $res = $client->replaceAllObjectsWithTransformation(
+                'cts_e2e_replace_all_objects_with_transformation_failed_php',
+                [
+                    ['objectID' => '1',
+                        'name' => 'Adam',
+                    ],
+
+                    ['objectID' => '2',
+                        'name' => 'Benoit',
+                    ],
+                ],
+                2,
+            );
+            $this->fail('Expected exception to be thrown');
+        } catch (\Exception $e) {
+            $this->assertMatchesRegularExpression('~^(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_php_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_php has status failed: unretryable error from the destination)$~', $e->getMessage());
+        }
+    }
+
     #[TestDox('the Request-ID stays stable across retries')]
     public function test0requestId(): void
     {

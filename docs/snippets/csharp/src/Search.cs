@@ -2620,7 +2620,7 @@ public class SnippetSearchClient
   /// </summary>
   public async Task SnippetForSearchClientReplaceAllObjectsWithTransformation()
   {
-    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
     // Initialize the client
     var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
 
@@ -2641,6 +2641,33 @@ public class SnippetSearchClient
         new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } },
       },
       3
+    );
+    // >LOG
+    // print the response
+    Console.WriteLine(response);
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ReplaceAllObjectsWithTransformation method.
+  ///
+  /// replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+  /// </summary>
+  public async Task SnippetForSearchClientReplaceAllObjectsWithTransformation1()
+  {
+    // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY"));
+
+    // Call the API
+    var response = await client.ReplaceAllObjectsWithTransformationAsync(
+      "<YOUR_INDEX_NAME>",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+      },
+      2
     );
     // >LOG
     // print the response

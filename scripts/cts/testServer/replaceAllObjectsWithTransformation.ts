@@ -138,11 +138,11 @@ function addRoutes(app: Express): void {
 
     raowtState[lang].getEventCount++;
 
+    // a successful push is reported by a `log` event that carries no status
     res.json({
-      status: 'succeeded',
       eventID: req.params.eventID,
       runID: req.params.runID,
-      type: 'fetch',
+      type: 'log',
       batchSize: 1,
       publishedAt: '2022-05-12T06:24:30.049Z',
     });

@@ -3,7 +3,7 @@ package algoliasearch.client
 
 import algoliasearch.api.IngestionClient
 import algoliasearch.config.*
-import algoliasearch.{EchoInterceptor, assertError}
+import algoliasearch.{EchoInterceptor, assertError, assertErrorMatches}
 import algoliasearch.ingestion.*
 import algoliasearch.exception.*
 import org.json4s.*

@@ -3,7 +3,7 @@ package algoliasearch.client
 
 import algoliasearch.api.SearchClient
 import algoliasearch.config.*
-import algoliasearch.{EchoInterceptor, assertError}
+import algoliasearch.{EchoInterceptor, assertError, assertErrorMatches}
 import algoliasearch.search.*
 import algoliasearch.exception.*
 import algoliasearch.extension.SearchClientExtensions
@@ -1286,6 +1286,58 @@ class SearchTest extends AnyFunSuite {
         parse(write(res)) == parse(
           "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"watchResponses\":[{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82921\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82922\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82923\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"},{\"runID\":\"b1b7a982-524c-40d2-bb7f-48aab075abda_scala\",\"eventID\":\"113b2068-6337-4c85-b5c2-e7b213d82924\",\"message\":\"OK\",\"createdAt\":\"2022-05-12T06:24:30.049Z\"}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
         )
+      )
+    }
+  }
+
+  test("replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails") {
+
+    val ingestionClientOptions = ClientOptions
+      .builder()
+      .withHosts(
+        List(
+          Host(
+            if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+            Set(CallType.Read, CallType.Write),
+            "http",
+            Option(6699)
+          )
+        )
+      )
+      .build()
+    val transformationOptions = TransformationOptions(region = "us", clientOptions = Some(ingestionClientOptions))
+    val client = SearchClient.withTransformation(
+      appId = "test-app-id",
+      apiKey = "test-api-key",
+      transformationOptions = transformationOptions,
+      clientOptions = ClientOptions
+        .builder()
+        .withHosts(
+          List(
+            Host(
+              if (System.getenv("CI") == "true") "localhost" else "host.docker.internal",
+              Set(CallType.Read, CallType.Write),
+              "http",
+              Option(6699)
+            )
+          )
+        )
+        .build()
+    )
+
+    assertErrorMatches(
+      "ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_scala_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_scala has status failed: unretryable error from the destination"
+    ) {
+      var res = Await.result(
+        client.replaceAllObjectsWithTransformation(
+          indexName = "cts_e2e_replace_all_objects_with_transformation_failed_scala",
+          objects = Seq(
+            JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+            JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+          ),
+          batchSize = 2
+        ),
+        Duration.Inf
       )
     }
   }

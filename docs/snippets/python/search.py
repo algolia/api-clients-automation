@@ -2927,7 +2927,7 @@ def snippet_for_replace_all_objects_with_transformation():
 
     call replaceAllObjectsWithTransformation without error
     """
-    # >SEPARATOR replaceAllObjectsWithTransformation default
+    # >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
     # Initialize the client
     # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
     client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
@@ -2978,6 +2978,39 @@ def snippet_for_replace_all_objects_with_transformation():
             },
         ],
         batch_size=3,
+    )
+
+    # >LOG
+    # print the response
+    print(response)
+    # SEPARATOR<
+
+
+def snippet_for_replace_all_objects_with_transformation1():
+    """
+    Snippet for the replaceAllObjectsWithTransformation method.
+
+    replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    """
+    # >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    # Initialize the client
+    # In an asynchronous context, you can use SearchClient instead, which exposes the exact same methods.
+    client = SearchClientSync("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+    # Call the API
+    response = client.replace_all_objects_with_transformation(
+        index_name="<YOUR_INDEX_NAME>",
+        objects=[
+            {
+                "objectID": "1",
+                "name": "Adam",
+            },
+            {
+                "objectID": "2",
+                "name": "Benoit",
+            },
+        ],
+        batch_size=2,
     )
 
     # >LOG

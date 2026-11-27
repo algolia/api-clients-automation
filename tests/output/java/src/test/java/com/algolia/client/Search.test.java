@@ -1413,6 +1413,75 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails")
+  void replaceAllObjectsWithTransformationTest1() {
+    ClientOptions ingestionOptions = ClientOptions.builder()
+      .setHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6699
+          )
+        )
+      )
+      .build();
+    TransformationOptions transformationOptions = new TransformationOptions("us", ingestionOptions);
+    SearchClient client = SearchClient.withTransformation(
+      "test-app-id",
+      "test-api-key",
+      transformationOptions,
+      withCustomHosts(
+        Arrays.asList(
+          new Host(
+            "true".equals(System.getenv("CI")) ? "localhost" : "host.docker.internal",
+            EnumSet.of(CallType.READ, CallType.WRITE),
+            "http",
+            6699
+          )
+        ),
+        false
+      )
+    );
+
+    {
+      Exception exception = assertThrows(Exception.class, () -> {
+        ReplaceAllObjectsWithTransformationResponse res = client.replaceAllObjectsWithTransformation(
+          "cts_e2e_replace_all_objects_with_transformation_failed_java",
+          Arrays.asList(
+            new HashMap() {
+              {
+                put("objectID", "1");
+                put("name", "Adam");
+              }
+            },
+            new HashMap() {
+              {
+                put("objectID", "2");
+                put("name", "Benoit");
+              }
+            }
+          ),
+          2
+        );
+      });
+      assertTrue(
+        exception
+          .getMessage()
+          .matches(
+            "ingestion push to index" +
+              " cts_e2e_replace_all_objects_with_transformation_failed_java_tmp_[0-9]+" +
+              " did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run" +
+              " b1b7a982-524c-40d2-bb7f-48aab075abda_java has status failed: unretryable" +
+              " error from the destination"
+          ),
+        exception.getMessage()
+      );
+    }
+  }
+
+  @Test
   @DisplayName("the Request-ID stays stable across retries")
   void requestIdTest0() {
     SearchClient client = new SearchClient(

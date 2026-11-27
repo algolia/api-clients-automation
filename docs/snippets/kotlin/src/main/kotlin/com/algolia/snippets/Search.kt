@@ -2399,7 +2399,8 @@ class SnippetSearchClient {
   }
 
   suspend fun snippetForReplaceAllObjectsWithTransformation() {
-    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation
+    // without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2451,6 +2452,38 @@ class SnippetSearchClient {
             },
           ),
         batchSize = 3,
+      )
+
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForReplaceAllObjectsWithTransformation1() {
+    // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not
+    // move the tmp index when ingestion fails
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    var response =
+      client.replaceAllObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects =
+          listOf(
+            buildJsonObject {
+              put("objectID", JsonPrimitive("1"))
+              put("name", JsonPrimitive("Adam"))
+            },
+            buildJsonObject {
+              put("objectID", JsonPrimitive("2"))
+              put("name", JsonPrimitive("Benoit"))
+            },
+          ),
+        batchSize = 2,
       )
 
     // >LOG

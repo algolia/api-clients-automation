@@ -2388,7 +2388,8 @@ class SnippetSearchClient {
   //
   // call replaceAllObjectsWithTransformation without error
   void snippetForReplaceAllObjectsWithTransformation() throws Exception {
-    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation
+    // without error
     // Initialize the client
     SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
 
@@ -2458,6 +2459,40 @@ class SnippetSearchClient {
         }
       ),
       3
+    );
+    // >LOG
+    // print the response
+    System.out.println(response);
+    // SEPARATOR<
+  }
+
+  // Snippet for the replaceAllObjectsWithTransformation method.
+  //
+  // replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+  void snippetForReplaceAllObjectsWithTransformation1() throws Exception {
+    // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not
+    // move the tmp index when ingestion fails
+    // Initialize the client
+    SearchClient client = new SearchClient("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY");
+
+    // Call the API
+    ReplaceAllObjectsWithTransformationResponse response = client.replaceAllObjectsWithTransformation(
+      "<YOUR_INDEX_NAME>",
+      Arrays.asList(
+        new HashMap() {
+          {
+            put("objectID", "1");
+            put("name", "Adam");
+          }
+        },
+        new HashMap() {
+          {
+            put("objectID", "2");
+            put("name", "Benoit");
+          }
+        }
+      ),
+      2
     );
     // >LOG
     // print the response

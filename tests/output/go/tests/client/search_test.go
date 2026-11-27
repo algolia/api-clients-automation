@@ -1470,6 +1470,51 @@ func TestSearchreplaceAllObjectsWithTransformation0(t *testing.T) {
 	}
 }
 
+// replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails.
+func TestSearchreplaceAllObjectsWithTransformation1(t *testing.T) {
+	var (
+		err error
+		res any
+	)
+
+	_ = res
+	echo := &tests.EchoRequester{}
+
+	var (
+		client *search.APIClient
+		cfg    search.SearchConfiguration
+	)
+
+	_ = client
+	_ = echo
+	transformationOptions := search.TransformationOptions{
+		Region: "us",
+		Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6699", call.IsReadWrite)},
+	}
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", tests.GetLocalhost()+":6699", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	err = client.SetTransformationOptions(transformationOptions)
+	require.NoError(t, err)
+
+	require.NoError(t, err)
+	res, err = client.ReplaceAllObjectsWithTransformation(
+		"cts_e2e_replace_all_objects_with_transformation_failed_go",
+		[]map[string]any{{"objectID": "1", "name": "Adam"}, {"objectID": "2", "name": "Benoit"}}, search.WithBatchSize(2))
+	require.Error(t, err)
+	require.Regexp(
+		t,
+		"^(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_go_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_go has status failed: unretryable error from the destination)$",
+		err.Error(),
+	)
+}
+
 // the Request-ID stays stable across retries.
 func TestSearchrequestId0(t *testing.T) {
 	var (

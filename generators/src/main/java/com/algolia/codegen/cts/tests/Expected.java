@@ -4,6 +4,7 @@ public class Expected {
 
   public String type;
   public Object error;
+  public Object errorRegex;
   public Object match;
 
   public String toString() {
@@ -11,6 +12,7 @@ public class Expected {
     sb.append("class Expected {\n");
     sb.append("    type: ").append(type).append("\n");
     sb.append("    error: ").append(error).append("\n");
+    sb.append("    errorRegex: ").append(errorRegex).append("\n");
     sb.append("    match: ").append(match).append("\n");
     sb.append("}");
     return sb.toString();

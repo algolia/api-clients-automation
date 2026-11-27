@@ -2129,7 +2129,7 @@ end
 #
 # call replaceAllObjectsWithTransformation without error
 def snippet_for_replace_all_objects_with_transformation
-  # >SEPARATOR replaceAllObjectsWithTransformation default
+  # >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
   # Initialize the client
   client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
 
@@ -2149,6 +2149,27 @@ def snippet_for_replace_all_objects_with_transformation
       {objectID: "10", name: "Julia"}
     ],
     3
+  )
+
+  # >LOG
+  # print the response
+  puts(response)
+  # SEPARATOR<
+end
+
+# Snippet for the replaceAllObjectsWithTransformation method.
+#
+# replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+def snippet_for_replace_all_objects_with_transformation1
+  # >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+  # Initialize the client
+  client = Algolia::SearchClient.create("ALGOLIA_APPLICATION_ID", "ALGOLIA_API_KEY")
+
+  # Call the API
+  response = client.replace_all_objects_with_transformation(
+    "<YOUR_INDEX_NAME>",
+    [{objectID: "1", name: "Adam"}, {objectID: "2", name: "Benoit"}],
+    2
   )
 
   # >LOG

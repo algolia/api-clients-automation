@@ -14186,7 +14186,11 @@ public class SearchClient extends ApiClient {
         .setWatchResponses(ingestionResponseToSearchResponse(watchResponses))
         .setMoveOperationResponse(moveOperationResponse);
     } catch (Exception e) {
-      deleteIndex(tmpIndexName, helperRequestOptions);
+      try {
+        deleteIndex(tmpIndexName, helperRequestOptions);
+      } catch (Exception deleteException) {
+        e.addSuppressed(deleteException);
+      }
 
       throw e;
     }

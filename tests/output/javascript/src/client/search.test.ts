@@ -1003,6 +1003,49 @@ describe('replaceAllObjectsWithTransformation', () => {
       });
     }
   }, 25000);
+
+  test('replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails', async () => {
+    const client = algoliasearch('test-app-id', 'test-api-key', {
+      hosts: [
+        {
+          url: 'localhost',
+          port: 6699,
+          accept: 'readWrite',
+          protocol: 'http',
+        },
+      ],
+      transformationOptions: {
+        region: 'us',
+        hosts: [
+          {
+            url: 'localhost',
+            port: 6699,
+            accept: 'readWrite',
+            protocol: 'http',
+          },
+        ],
+      },
+    });
+
+    try {
+      // @ts-ignore
+      const result = await client.replaceAllObjectsWithTransformation({
+        indexName: 'cts_e2e_replace_all_objects_with_transformation_failed_javascript',
+        objects: [
+          { objectID: '1', name: 'Adam' },
+          { objectID: '2', name: 'Benoit' },
+        ],
+        batchSize: 2,
+      });
+      throw new Error('test is expected to throw error');
+    } catch (e) {
+      expect((e as Error).message).toMatch(
+        new RegExp(
+          '^(?:ingestion push to index cts_e2e_replace_all_objects_with_transformation_failed_javascript_tmp_[0-9]+ did not succeed: event 113b2068-6337-4c85-b5c2-e7b213d82921 of run b1b7a982-524c-40d2-bb7f-48aab075abda_javascript has status failed: unretryable error from the destination)$',
+        ),
+      );
+    }
+  }, 25000);
 });
 
 describe('requestId', () => {

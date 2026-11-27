@@ -3822,8 +3822,11 @@ paths:
         - Use the `safe` parameter to run these (asynchronous) operations in
         sequence.
 
-        - If there's an error during one of these steps, the temporary index
-        isn't deleted.
+        - The method waits for every ingestion event of the pushed records to
+        succeed before replacing your original index. If ingestion of any record
+        batch fails (for example, the event status is `failed` or `critical`),
+        the method throws an error, leaves your original index untouched, and
+        tries to delete the temporary index.
 
         - This operation is rate-limited.
 
@@ -4072,7 +4075,9 @@ paths:
           name: waitForTasks
           description: >-
             Whether to wait until every `batch` task has been processed. This
-            may take longer but is more reliable.
+            may take longer but is more reliable. When `true`, the method throws
+            an error if the ingestion event of any batch doesn't succeed (for
+            example, its status is `failed` or `critical`).
           required: false
           schema:
             type: boolean
@@ -4323,7 +4328,9 @@ paths:
           name: waitForTasks
           description: >-
             Whether to wait until every `batch` task has been processed. This
-            may take longer but is more reliable.
+            may take longer but is more reliable. When `true`, the method throws
+            an error if the ingestion event of any batch doesn't succeed (for
+            example, its status is `failed` or `critical`).
           required: false
           schema:
             type: boolean

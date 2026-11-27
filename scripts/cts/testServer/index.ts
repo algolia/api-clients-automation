@@ -23,6 +23,7 @@ import { replaceAllObjectsServer } from './replaceAllObjects.ts';
 import { replaceAllObjectsServerFailed } from './replaceAllObjectsFailed.ts';
 import { replaceAllObjectsScopesServer } from './replaceAllObjectsScopes.ts';
 import { replaceAllObjectsWithTransformationServer } from './replaceAllObjectsWithTransformation.ts';
+import { replaceAllObjectsWithTransformationFailedServer } from './replaceAllObjectsWithTransformationFailed.ts';
 import { requestIdServer, requestIdServerBis, requestIdServerTer } from './requestId.ts';
 import { successServer } from './success.ts';
 import { timeoutServer } from './timeout.ts';
@@ -53,6 +54,7 @@ export async function startTestServer(suites: Record<CTSType, boolean>): Promise
       pushMockServer(),
       pushMockServerRetriedOnce(),
       replaceAllObjectsWithTransformationServer(),
+      replaceAllObjectsWithTransformationFailedServer(),
       chunkedPushWaitServer(),
       noContentServer(),
       requestIdServer(),

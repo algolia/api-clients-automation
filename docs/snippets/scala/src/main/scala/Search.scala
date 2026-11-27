@@ -2771,7 +2771,7 @@ class SnippetSearchClient {
     * call replaceAllObjectsWithTransformation without error
     */
   def snippetForSearchClientReplaceAllObjectsWithTransformation(): Unit = {
-    // >SEPARATOR replaceAllObjectsWithTransformation default
+    // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
     // Initialize the client
     val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
 
@@ -2792,6 +2792,33 @@ class SnippetSearchClient {
           JObject(List(JField("objectID", JString("10")), JField("name", JString("Julia"))))
         ),
         batchSize = 3
+      ),
+      Duration(100, "sec")
+    )
+    // >LOG
+    // print the response
+    println(response)
+    // SEPARATOR<
+  }
+
+  /** Snippet for the replaceAllObjectsWithTransformation method.
+    *
+    * replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    */
+  def snippetForSearchClientReplaceAllObjectsWithTransformation1(): Unit = {
+    // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    // Initialize the client
+    val client = SearchClient(appId = "ALGOLIA_APPLICATION_ID", apiKey = "ALGOLIA_API_KEY")
+
+    // Call the API
+    val response = Await.result(
+      client.replaceAllObjectsWithTransformation(
+        indexName = "<YOUR_INDEX_NAME>",
+        objects = Seq(
+          JObject(List(JField("objectID", JString("1")), JField("name", JString("Adam")))),
+          JObject(List(JField("objectID", JString("2")), JField("name", JString("Benoit"))))
+        ),
+        batchSize = 2
       ),
       Duration(100, "sec")
     )

@@ -10238,7 +10238,32 @@ public class IngestionClient extends ApiClient {
               }
             },
             (Event resp) -> {
-              return resp != null;
+              if (
+                resp == null ||
+                resp.getStatus() == EventStatus.CREATED ||
+                resp.getStatus() == EventStatus.STARTED ||
+                resp.getStatus() == EventStatus.RETRIED
+              ) {
+                return false;
+              }
+
+              if (resp.getStatus() != null && resp.getStatus() != EventStatus.SUCCEEDED) {
+                Object message = resp.getData() == null ? null : resp.getData().get("message");
+
+                throw new AlgoliaRuntimeException(
+                  "ingestion push to index " +
+                    indexName +
+                    " did not succeed: event " +
+                    response.getEventID() +
+                    " of run " +
+                    response.getRunID() +
+                    " has status " +
+                    resp.getStatus() +
+                    (message == null ? "" : ": " + message)
+                );
+              }
+
+              return true;
             },
             maxRetries,
             retries -> Math.min(retries * 1500, 5000)

@@ -3,7 +3,7 @@ package algoliasearch.client
 
 import algoliasearch.api.AnalyticsClient
 import algoliasearch.config.*
-import algoliasearch.{EchoInterceptor, assertError}
+import algoliasearch.{EchoInterceptor, assertError, assertErrorMatches}
 import algoliasearch.analytics.*
 import algoliasearch.exception.*
 import org.json4s.*

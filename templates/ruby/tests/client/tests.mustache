@@ -18,7 +18,12 @@
       {{#dynamicTemplate}}{{/dynamicTemplate}}
       assert(false, 'An error should have been raised')
     rescue => e
+      {{#isErrorRegex}}
+      assert_match(/\A(?:{{{expectedError}}})\z/, e.message)
+      {{/isErrorRegex}}
+      {{^isErrorRegex}}
       assert_equal({{#lambda.codeIdentifier}}%q({{{expectedError}}}){{/lambda.codeIdentifier}}.sub('%localhost%', ENV.fetch('CI', nil) == 'true' ? 'localhost' : 'host.docker.internal'), e.message)
+      {{/isErrorRegex}}
     end
     {{/isError}}
     {{^isError}}

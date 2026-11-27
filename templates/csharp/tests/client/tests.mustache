@@ -11,7 +11,12 @@
     {{/times}}
       {{#isError}}
         _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{#dynamicTemplate}}{{/dynamicTemplate}} });
+        {{#isErrorRegex}}
+        Assert.Matches("^(?:{{{expectedError}}})$", _ex.Message);
+        {{/isErrorRegex}}
+        {{^isErrorRegex}}
         Assert.Equal("{{{expectedError}}}".ToLowerInvariant(), _ex.Message.ToLowerInvariant());
+        {{/isErrorRegex}}
 
       {{/isError}}
       {{^isError}}

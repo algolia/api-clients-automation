@@ -20,7 +20,13 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{/times}}
   {{#isError}}
   {{#dynamicTemplate}}{{/dynamicTemplate}}
+  {{#isErrorRegex}}
+  require.Error(t, err)
+  require.Regexp(t, "^(?:{{{expectedError}}})$", err.Error())
+  {{/isErrorRegex}}
+  {{^isErrorRegex}}
   require.EqualError(t, err, "{{{expectedError}}}")
+  {{/isErrorRegex}}
   {{/isError}}
   {{^isError}}
   {{#shouldScope}}

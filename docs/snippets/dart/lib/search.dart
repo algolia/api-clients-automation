@@ -2195,7 +2195,7 @@ void snippetForremoveUserId() async {
 //
 // call replaceAllObjectsWithTransformation without error
 void snippetForreplaceAllObjectsWithTransformation() async {
-  // >SEPARATOR replaceAllObjectsWithTransformation default
+  // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
   // Initialize the client
   final client =
       SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
@@ -2246,6 +2246,36 @@ void snippetForreplaceAllObjectsWithTransformation() async {
       },
     ],
     batchSize: 3,
+  );
+  // >LOG
+  // print the response
+  print(response);
+  // SEPARATOR<
+}
+
+// Snippet for the replaceAllObjectsWithTransformation method.
+//
+// replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+void snippetForreplaceAllObjectsWithTransformation1() async {
+  // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+  // Initialize the client
+  final client =
+      SearchClient(appId: 'ALGOLIA_APPLICATION_ID', apiKey: 'ALGOLIA_API_KEY');
+
+  // Call the API
+  final response = await client.replaceAllObjectsWithTransformation(
+    indexName: "<YOUR_INDEX_NAME>",
+    objects: [
+      {
+        'objectID': "1",
+        'name': "Adam",
+      },
+      {
+        'objectID': "2",
+        'name': "Benoit",
+      },
+    ],
+    batchSize: 2,
   );
   // >LOG
   // print the response

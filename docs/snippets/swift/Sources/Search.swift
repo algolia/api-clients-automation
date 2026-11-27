@@ -2103,7 +2103,7 @@ final class SearchClientSnippet {
     ///
     /// call replaceAllObjectsWithTransformation without error
     func snippetForReplaceAllObjectsWithTransformation() async throws {
-        // >SEPARATOR replaceAllObjectsWithTransformation default
+        // >SEPARATOR replaceAllObjectsWithTransformation call replaceAllObjectsWithTransformation without error
         // Initialize the client
         let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
 
@@ -2123,6 +2123,27 @@ final class SearchClientSnippet {
                 ["objectID": "10", "name": "Julia"],
             ],
             batchSize: 3
+        )
+        // >LOG
+        // print the response
+        print(response)
+        // SEPARATOR<
+    }
+
+    /// Snippet for the replaceAllObjectsWithTransformation method.
+    ///
+    /// replaceAllObjectsWithTransformation should not move the tmp index when ingestion fails
+    func snippetForReplaceAllObjectsWithTransformation1() async throws {
+        // >SEPARATOR replaceAllObjectsWithTransformation replaceAllObjectsWithTransformation should not move the tmp
+        // index when ingestion fails
+        // Initialize the client
+        let client = try SearchClient(appID: "ALGOLIA_APPLICATION_ID", apiKey: "ALGOLIA_API_KEY")
+
+        // Call the API
+        let response = try await client.replaceAllObjectsWithTransformation(
+            indexName: "<YOUR_INDEX_NAME>",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            batchSize: 2
         )
         // >LOG
         // print the response

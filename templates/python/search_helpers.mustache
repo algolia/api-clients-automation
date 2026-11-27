@@ -508,7 +508,10 @@
               move_operation_response=move_operation_response,
           )
         except Exception as e:
-          {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name, request_options=search_request_options)
+          try:
+            {{^isSyncClient}}await {{/isSyncClient}}self.delete_index(tmp_index_name, request_options=search_request_options)
+          except Exception:
+            pass
 
           raise e
 
