@@ -6,13 +6,14 @@
     "test": "tsc --noEmit && vitest run"
   },
   "dependencies": {
+    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch",
     "@algolia/composition": "link:../../../clients/algoliasearch-client-javascript/packages/composition",
-    "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing",
-    "algoliasearch": "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
+    "@algolia/requester-testing": "link:../../../clients/algoliasearch-client-javascript/packages/requester-testing"
   },
   "devDependencies": {
-    "@types/node": "26.5.1",
-    "typescript": "5.9.3",
-    "vitest": "4.1.11"
+    "@types/node": "26.6.6",
+    "typescript": "6.0.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   }
 }

@@ -82,7 +82,9 @@ Be careful to check for glob patterns!
 
 ### Language Version Files
 
-In `config/`: `.java-version`, `.python-version`, `.ruby-version`, `.go-version`, `.swift-version`, `.php-version`, `.dart-version`, `.csharp-version`. Node.js: root `.nvmrc` (read by `nvm use`).
+In `config/`: `.java-version`, `.python-version`, `.ruby-version`, `.go-version`, `.swift-version`, `.swift-ci-version`, `.php-version`, `.dart-version`, `.csharp-version`. Node.js: root `.nvmrc` (read by `nvm use`).
+
+Swift has two: `.swift-version` is the published minimum (rendered into the generated `Package.swift` swift-tools-version and the podspec, bumped by hand, not by Renovate), `.swift-ci-version` is the toolchain of the Docker image and CI (bumped by Renovate).
 
 ## COMMANDS
 
