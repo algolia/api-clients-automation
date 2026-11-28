@@ -168,4 +168,32 @@ describe('browser local storage cache', () => {
 
     expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(expectedValue);
   });
+
+  test('accepts a storage that only implements getItem, setItem and removeItem', async () => {
+    const items = new Map<string, string>();
+    const cache = createBrowserLocalStorageCache({
+      key: version,
+      localStorage: {
+        getItem: (key) => items.get(key) ?? null,
+        setItem: (key, value) => {
+          items.set(key, value);
+        },
+        removeItem: (key) => {
+          items.delete(key);
+        },
+      },
+    });
+    const defaultValue = (): DefaultValue => Promise.resolve({ bar: 2 });
+
+    await cache.set({ key: 'foo' }, { bar: 1 });
+
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 1 });
+    expect(missMock.mock.calls.length).toBe(0);
+    expect(items.has(`algolia-client-js-${version}`)).toBe(true);
+    expect(localStorage.length).toBe(0);
+
+    await cache.clear();
+
+    expect(items.size).toBe(0);
+  });
 });

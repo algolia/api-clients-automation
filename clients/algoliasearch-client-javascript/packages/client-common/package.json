@@ -32,7 +32,8 @@
     "build": "yarn clean && yarn tsup",
     "clean": "rm -rf ./dist || true",
     "test": "tsc --noEmit && vitest --run",
-    "test:bundle": "publint . && attw --pack ."
+    "test:bundle": "publint . && attw --pack . && yarn test:types:nodom",
+    "test:types:nodom": "tsc --project tsconfig.nodom.json"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",

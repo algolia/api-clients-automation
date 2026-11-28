@@ -1,11 +1,17 @@
-import type { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions, Cache, CacheEvents } from '../types';
+import type {
+  BrowserLocalStorage,
+  BrowserLocalStorageCacheItem,
+  BrowserLocalStorageOptions,
+  Cache,
+  CacheEvents,
+} from '../types';
 
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
-  let storage: Storage;
+  let storage: BrowserLocalStorage;
   // We've changed the namespace to avoid conflicts with v4, as this version is a huge breaking change
   const namespaceKey = `algolia-client-js-${options.key}`;
 
-  function getStorage(): Storage {
+  function getStorage(): BrowserLocalStorage {
     if (storage === undefined) {
       storage = options.localStorage || window.localStorage;
     }
