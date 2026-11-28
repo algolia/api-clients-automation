@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
+    "skipLibCheck": false,
+    "strict": true,
+    "target": "ES2023",
+    "types": []
+  },
+  "files": ["nodom-globals.d.ts", "dist/common.d.ts", "dist/common.d.cts"]
+}
