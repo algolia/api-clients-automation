@@ -30,7 +30,7 @@
     "@types/express": "5.0.6",
     "@types/folder-hash": "4.0.5",
     "@types/fs-extra": "11.0.4",
-    "@types/node": "26.6.6",
+    "@types/node": "26.6.10",
     "@types/semver": "7.8.0",
     "@types/spinnies": "0.5.3",
     "algoliasearch": "5.65.0",
@@ -44,11 +44,11 @@
     "folder-hash": "4.1.4",
     "fs-extra": "11.4.1",
     "js-yaml": "5.5.0",
-    "knip": "6.46.1",
+    "knip": "6.48.0",
     "micromatch": "4.0.8",
     "semver": "7.8.6",
     "spinnies": "0.5.1",
     "typescript": "6.0.3",
-    "vitest": "4.1.11"
+    "vitest": "4.1.12"
   }
 }

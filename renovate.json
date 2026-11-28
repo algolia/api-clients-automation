@@ -192,6 +192,16 @@
       "allowedVersions": "<3.14"
     },
     {
+      "description": "github.com/kinbiko/jsonassert 1.2.0 requires Go 1.22, but the Go client declares go 1.21.11 and the CI matrix tests it, so `go mod tidy` in the CTS generation fails on go@1.21.11. Hold it below 1.2.0 until the minimum supported Go version moves to 1.22.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/kinbiko/jsonassert"
+      ],
+      "allowedVersions": "<1.2.0"
+    },
+    {
       "description": "Maven Central rate limits (429) the shared egress IPs of hosted Renovate, and Renovate aborts the whole run with an external-host-error on any 429 from repo.maven.apache.org or repo1.maven.org. Look the sbt libraries up on Google's Central mirror instead, a 429 there only skips that package. The mirror stamps files with its own copy time, so release timestamps (and the minimumReleaseAge gate) lag the real publish date by up to a day. Builds still resolve from Maven Central. Gradle dependencies are left alone because they declare several repositories (plugins.gradle.org, Google, ...) that a registryUrls override would replace.",
       "matchDatasources": [
         "sbt-package"

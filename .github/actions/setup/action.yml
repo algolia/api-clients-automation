@@ -155,7 +155,7 @@ runs:
     # Ruby
     - name: Install Ruby
       if: ${{ inputs.language == 'ruby' }}
-      uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0 # v1.342.0
+      uses: ruby/setup-ruby@78c62f2208e480ce3d5ae4dfd9b9e181acf48b63 # v1.344.0
       with:
         ruby-version: ${{ inputs.version }}
         bundler-cache: true
@@ -177,7 +177,7 @@ runs:
     # Scala
     - name: Install sbt
       if: ${{ inputs.language == 'scala' }}
-      uses: sbt/setup-sbt@7e114eae4f32ec3f93c851c2793376a77f384409 # v1.5.15
+      uses: sbt/setup-sbt@20cf087132cf939c160f0e53f87ba33634003e3e # v1.5.16
 
     # Swift deps
     - name: Install swift
