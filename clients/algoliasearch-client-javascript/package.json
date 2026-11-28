@@ -16,7 +16,7 @@
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "26.6.7",
+    "@types/node": "26.6.10",
     "bundlewatch": "1.2.0",
     "execa": "10.2.1",
     "lerna": "9.0.7",

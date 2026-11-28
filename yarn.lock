@@ -3141,12 +3141,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:26.6.7":
-  version: 26.6.7
-  resolution: "@types/node@npm:26.6.7"
+"@types/node@npm:26.6.10":
+  version: 26.6.10
+  resolution: "@types/node@npm:26.6.10"
   dependencies:
     undici-types: "npm:~8.9.0"
-  checksum: 10/6990282cd7f25609da26bca026f9ab62c94bf67b82c38b81608a8d6b34d51b7e91a95831b0dc55fa9c9d8066bc3b0def95308b1a61a275e6dd228ef82689bc44
+  checksum: 10/b4cd3369bcff5fa639b54748a6abda6e860e0c188a9b4c9f60cb6b58e683eff86697d1fc10eea1ce2c59c5daf21a91752387613b8b931062700a61b9b5ed2bf4
   languageName: node
   linkType: hard
 
@@ -8466,7 +8466,7 @@ __metadata:
     "@types/express": "npm:5.0.6"
     "@types/folder-hash": "npm:4.0.5"
     "@types/fs-extra": "npm:11.0.4"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     "@types/semver": "npm:7.8.0"
     "@types/spinnies": "npm:0.5.3"
     algoliasearch: "npm:5.65.0"

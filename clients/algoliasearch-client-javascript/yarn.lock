@@ -14,7 +14,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.8"
     tsup: "npm:9.0.0"
@@ -31,7 +31,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.8"
     tsup: "npm:9.0.0"
@@ -48,7 +48,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.8"
     tsup: "npm:9.0.0"
@@ -95,7 +95,7 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     jsdom: "npm:31.0.1"
     publint: "npm:0.3.25"
     ts-node: "npm:10.9.2"
@@ -183,7 +183,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.8"
     tsup: "npm:9.0.0"
@@ -214,7 +214,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     jsdom: "npm:31.0.1"
     publint: "npm:0.3.25"
     ts-node: "npm:10.9.2"
@@ -265,7 +265,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     jsdom: "npm:31.0.1"
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
@@ -282,7 +282,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     cross-fetch: "npm:4.1.0"
     nock: "npm:15.0.6"
     publint: "npm:0.3.25"
@@ -299,7 +299,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     nock: "npm:15.0.6"
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
@@ -318,7 +318,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     tsup: "npm:9.0.0"
     typescript: "npm:6.0.3"
@@ -334,7 +334,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.65.0"
     "@algolia/requester-node-http": "npm:5.65.0"
     "@arethetypeswrong/cli": "npm:0.18.5"
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     publint: "npm:0.3.25"
     rollup: "npm:4.68.8"
     tsup: "npm:9.0.0"
@@ -3036,7 +3036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:26.6.10":
   version: 26.6.10
   resolution: "@types/node@npm:26.6.10"
   dependencies:
@@ -3051,15 +3051,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~8.9.0"
   checksum: 10/07c6c6fc1f5cc89c700ac9ebcebd42b000fef234bf0b80e9461a8f077105f15faf16df95b83745e0c0e37338d1fbc28cb402ef27b5787fd7a57b492c926ff7ae
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:26.6.7":
-  version: 26.6.7
-  resolution: "@types/node@npm:26.6.7"
-  dependencies:
-    undici-types: "npm:~8.9.0"
-  checksum: 10/6990282cd7f25609da26bca026f9ab62c94bf67b82c38b81608a8d6b34d51b7e91a95831b0dc55fa9c9d8066bc3b0def95308b1a61a275e6dd228ef82689bc44
   languageName: node
   linkType: hard
 
@@ -3266,7 +3257,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
-    "@types/node": "npm:26.6.7"
+    "@types/node": "npm:26.6.10"
     bundlewatch: "npm:1.2.0"
     execa: "npm:10.2.1"
     lerna: "npm:9.0.7"
