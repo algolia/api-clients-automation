@@ -4,6 +4,7 @@ from sys import version_info
 from time import sleep
 from typing import Iterator, Optional
 
+from requests import ConnectionError as RequestsConnectionError
 from requests import Request, Session, Timeout
 
 if version_info >= (3, 11):
@@ -129,6 +130,15 @@ class TransporterSync(BaseTransporter):
                         host=host.url,
                         error_message=str(e),
                         is_timed_out_error=True,
+                    )
+                except RequestsConnectionError as e:
+                    response = ApiResponse(
+                        verb=verb,
+                        path=path,
+                        url=url,
+                        host=host.url,
+                        error_message=str(e),
+                        is_network_error=True,
                     )
 
                 correlation_id = get_correlation_id(response.headers)

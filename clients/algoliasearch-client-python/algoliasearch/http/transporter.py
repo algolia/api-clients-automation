@@ -3,7 +3,7 @@ from gzip import compress as gzip_compress
 from json import dumps, loads
 from typing import AsyncIterator, List, Optional
 
-from aiohttp import ClientSession, ClientTimeout, TCPConnector
+from aiohttp import ClientConnectionError, ClientSession, ClientTimeout, TCPConnector
 
 from algoliasearch.http.api_response import ApiResponse
 from algoliasearch.http.base_config import BaseConfig
@@ -115,6 +115,15 @@ class Transporter(BaseTransporter):
                         host=host.url,
                         error_message=str(e),
                         is_timed_out_error=True,
+                    )
+                except ClientConnectionError as e:
+                    response = ApiResponse(
+                        verb=verb,
+                        path=path,
+                        url=url,
+                        host=host.url,
+                        error_message=str(e),
+                        is_network_error=True,
                     )
 
                 correlation_id = get_correlation_id(response.headers)
