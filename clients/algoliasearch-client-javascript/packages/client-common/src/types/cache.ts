@@ -38,6 +38,15 @@ export type MemoryCacheOptions = {
   serializable?: boolean | undefined;
 };
 
+/**
+ * The methods of the DOM `Storage` interface the cache uses, declared here so the types compile without the DOM lib.
+ */
+export type BrowserLocalStorage = {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+};
+
 export type BrowserLocalStorageOptions = {
   /**
    * The cache key.
@@ -52,7 +61,7 @@ export type BrowserLocalStorageOptions = {
   /**
    * The native local storage implementation.
    */
-  localStorage?: Storage | undefined;
+  localStorage?: BrowserLocalStorage | undefined;
 };
 
 export type BrowserLocalStorageCacheItem = {
